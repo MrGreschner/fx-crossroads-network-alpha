@@ -1,0 +1,14 @@
+{
+  "id": "antiseptic_drone",
+  "name": "Antiseptic Drone",
+  "sprite": "antiseptic_drone",
+  "health": 105,
+  "speed": 90,
+  "damage": 11,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_drone",
+  "description": "A contaminated medical drone that backs away and lobs disinfectant pools: avoid their green rings.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

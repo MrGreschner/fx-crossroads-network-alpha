@@ -1,0 +1,18 @@
+{
+  "id": "sluice_beetle",
+  "name": "Sluice Beetle",
+  "sprite": "sluice_beetle",
+  "health": 120,
+  "speed": 65,
+  "damage": 15,
+  "behaviour": "chase",
+  "aggro_range": 450,
+  "shot_speed": 270,
+  "shot_cooldown": 2.8,
+  "expansion_only": true,
+  "custom_attack": "lob",
+  "lob_speed": 310,
+  "blast_radius": 95,
+  "skill_cooldown": 4.0,
+  "attack_color": "#7bd9f0"
+}

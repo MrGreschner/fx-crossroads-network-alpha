@@ -1,0 +1,98 @@
+{
+  "id": "robot",
+  "name": "Bolt Ironcore",
+  "sprite": "robot",
+  "run_cost": 0,
+  "max_health": 130,
+  "speed": 220,
+  "lore": "Reclaimed from Neon Crucible, Bolt broke his factory oath to defend living towns. His iron chassis folds into the ancient saw that once built the Crossroads bridges.",
+  "primary": {
+    "name": "Piston Jab",
+    "style": "piston_jab",
+    "damage": 30,
+    "cooldown": 0.6,
+    "description": "Extend a mechanical fist at foes directly ahead: 30 damage within 100 units."
+  },
+  "secondary": {
+    "name": "Missile Volley",
+    "style": "missile_volley",
+    "damage": 14,
+    "cooldown": 7,
+    "description": "Launch four guided missiles in a short volley. Each travels visibly, turns toward a foe and deals 14 direct damage plus 6 splash to other foes within 58 units. Walls stop missiles."
+  },
+  "special": {
+    "name": "Iron Tempest",
+    "style": "saw_transform",
+    "damage": 0,
+    "contact_damage": 12,
+    "cooldown": 24,
+    "description": "Fold into a giant spinning saw for 6s (0.45s to transform). Touching the 78-unit blade deals 12 damage every 0.3s. Move at 42% speed; no dodge or normal attacks. Primary becomes Shock Stomp: 16 damage within 170, 0.4s stun then 2.5s slow, with a 2.6s cooldown. Take 30% less damage while transformed. Each enemy you defeat during the form adds 1 second to its remaining duration.",
+    "reduction": 0.3
+  },
+  "passive": "Overclock Reserve: three successful Piston Jabs prime the next Missile Volley with one extra missile. Missing a jab gives no charge.",
+  "passive_effect": "overclock_reserve",
+  "mastery": {
+    "title": "Iron Tempest Commander",
+    "technique": {
+      "name": "Armored Tempest",
+      "ability": "special",
+      "description": "Saw form reduces damage taken by 45% instead of 30%, but contact damage is 20% lower.",
+      "multiply": {
+        "contact_damage": 0.8
+      },
+      "set": {
+        "reduction": 0.45
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Railcore Driver",
+      "ability": "secondary",
+      "description": "Replace missile volley with a charged piercing rail lane for 46 damage. No homing or explosion, but can hit a row of enemies.",
+      "attack": {
+        "name": "Railcore Driver",
+        "style": "master_lance",
+        "damage": 46,
+        "cooldown": 5,
+        "color": "#e49791",
+        "range": 480,
+        "width": 42,
+        "charge": 0.7,
+        "duration": 1.5,
+        "description": "Replace missile volley with a charged piercing rail lane for 46 damage. No homing or explosion, but can hit a row of enemies.",
+        "visual_texture": "res://assets/mastery_robot_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

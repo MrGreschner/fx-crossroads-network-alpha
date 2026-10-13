@@ -1,0 +1,11 @@
+{
+  "id": "coil_singer",
+  "name": "Coil Singer",
+  "sprite": "coil_singer",
+  "health": 85,
+  "speed": 110,
+  "damage": 11,
+  "behaviour": "chase",
+  "aggro_range": 750,
+  "expansion_only": true
+}

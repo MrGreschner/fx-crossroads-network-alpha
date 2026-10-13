@@ -1,0 +1,144 @@
+[gd_scene format=3]
+
+[node name="Practice" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+
+position = Vector2(400, 600)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+
+position = Vector2(250, 600)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+
+position = Vector2(250, 600)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+
+position = Vector2(1600, 600)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Dummy0" type="Marker2D" parent="Enemies"]
+
+position = Vector2(900, 600)
+
+metadata/enemy_id = "training_dummy"
+
+[node name="Dummy1" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1100, 440)
+
+metadata/enemy_id = "training_dummy"
+
+[node name="Dummy2" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1100, 760)
+
+metadata/enemy_id = "training_dummy"
+
+[node name="Dummy3" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1450, 600)
+
+metadata/enemy_id = "training_dummy"
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Yard" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(200,300,1600,300,1600,900,200,900)
+
+metadata/tile = "path"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Tree0" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(250, 1000)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Tree1" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(170, 180)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Tree2" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(470, 1000)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Tree3" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(850, 180)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Tree4" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(690, 1000)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Tree5" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(800, 220)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Tree6" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(910, 1000)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+
+[node name="Tree8" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1130, 1000)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+
+[node name="Tree10" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1350, 1000)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+
+
+[node name="CentralDummy" type="Marker2D" parent="Enemies"]
+position = Vector2(1100, 600)
+metadata/enemy_id = "training_dummy"
+
+[node name="MovingDummy" type="Marker2D" parent="Enemies"]
+position = Vector2(1560, 600)
+metadata/enemy_id = "training_runner"
+
+[node name="AllyDummy" type="Marker2D" parent="Points"]
+position = Vector2(650, 620)

@@ -1,0 +1,16 @@
+{
+  "id": "quarantine_warden",
+  "name": "Quarantine Warden",
+  "sprite": "quarantine_warden",
+  "health": 850,
+  "speed": 105,
+  "damage": 18,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_warden",
+  "description": "A mobile isolation-ward guardian with a dash, crossfire needles, spore mortar and pulse shockwave. Defeat it before the Plague Director.",
+  "shot_cooldown": 3.2,
+  "secondary_boss": true,
+  "boss": true,
+  "expansion_only": true
+}

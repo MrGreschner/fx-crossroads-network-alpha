@@ -1,0 +1,14 @@
+{
+  "id": "moonlit_puppeteer",
+  "name": "Moonlit Puppeteer",
+  "sprite": "moonlit_puppeteer",
+  "health": 125,
+  "speed": 80,
+  "damage": 12,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_puppet",
+  "description": "A silver puppet master who stays back and casts crossing ribbons toward your last position.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

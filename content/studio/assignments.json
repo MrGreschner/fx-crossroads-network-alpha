@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Playtesting",
+    "summary": "Find three improvements that would make FX Crossroads clearer, fairer or more enjoyable.",
+    "body": "Choose areas to test: controls, menus, mobile interaction, combat, progression, multiplayer or performance. Record your device, hero, mode and the exact steps. Separate bugs from design suggestions. Repeat a problem to see whether it is consistent.",
+    "task": "For each of three findings, explain the problem, who it affects, your proposed change and how you would verify the fix.",
+    "deliver": "A test report listing what you tested and how, three evidence-backed improvements, and a reflection on your process. Include screenshots or short clips where useful. Studio test reports can support your evidence.",
+    "criteria": "Can someone else reproduce your finding? Is your solution practical? Did you explain what worked well too?"
+  },
+  {
+    "title": "Heroes & enemies",
+    "summary": "Design a new character that adds a useful role and belongs in the Crossroads world.",
+    "body": "Create four poses, attacks and readable counterplay in Hero Workshop or Enemy Lab. Alternate Forms can change appearance during an ability. Finalize your project, then playtest it; a Student submission freezes the art and values for review.",
+    "task": "Choose a gap in the roster. Create a rough concept, get peer feedback, then build and test one distinctive mechanic.",
+    "deliver": "Finalized hero or enemy JSON, original artwork and a short test report. Add brief intent, one revision and credits.",
+    "criteria": "Readable at game size; attacks match their graphics; strengths have limits; lore fits the world."
+  },
+  {
+    "title": "Behaviour redesign",
+    "summary": "Improve how a character or enemy behaves without losing its identity.",
+    "body": "Use Behaviour Lab to change movement and decisions. Keep the same enemy art and attacks while testing different code, so your comparison isolates the behaviour.",
+    "task": "Pick one frustrating or repetitive behaviour. Sketch the decisions, prototype the supported parts, and compare before and after.",
+    "deliver": "A behaviour diagram or pseudocode, prototype or proposed code changes, and a comparison report with evidence.",
+    "criteria": "Predictable enough to learn, varied enough to stay interesting, and fair to different hero roles."
+  },
+  {
+    "title": "Realm design",
+    "summary": "Make a place worth exploring, with a clear route and memorable encounters.",
+    "body": "Use Object & Raster Lab to make props, then Realm Builder to paint terrain and place objects and enemies. Set movement/projectile blocking separately. Record a vision first, check that spawn and exit connect, and Finalize & Play to test the route.",
+    "task": "Redesign an existing realm section or plan a new one. Walk a partner through the map and ask where they would go next.",
+    "deliver": "Portable realm JSON, at least three matching props, a short vision and test summary. Optional screenshots show before/after routes.",
+    "criteria": "Clear navigation, reliable collision, readable hazards, balanced pacing and sensible performance."
+  },
+  {
+    "title": "Tutorial & promotion",
+    "summary": "Help a new player understand the game, or make them curious enough to try it.",
+    "body": "A tutorial teaches one task at a time. A promotional video shows a strong hook and the game\u2019s identity. Plan audience, script, shot list, captions, audio and length. Use spectator views for clear action footage. Label staged GameDev footage when relevant.",
+    "task": "Storyboard a short tutorial or trailer. Test it with someone who has not played: what did they learn or want to try?",
+    "deliver": "Storyboard and script, finished video, and a reflection on editing choices and audience feedback.",
+    "criteria": "Readable captions, clear sound, accurate claims, focused pacing and a purposeful call to action."
+  },
+  {
+    "title": "Music & sound",
+    "summary": "Give a location or action its own sound while keeping play information clear.",
+    "body": "Choose a mood and purpose. Music should loop cleanly; sound effects should tell players about attacks, danger, healing or success. Leave space for important cues. Use original or appropriately licensed material and record credits.",
+    "task": "Create a short looping background track or a small set of related effects. Compare it at normal and quiet volume during play.",
+    "deliver": "Audio files, a cue sheet explaining where each sound belongs, licence or authorship details, and listening-test feedback.",
+    "criteria": "Clean loop points, balanced volume, clear cues, no clipping and a style that fits FX Crossroads."
+  }
+]

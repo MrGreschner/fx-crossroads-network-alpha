@@ -1,0 +1,103 @@
+{
+  "id": "beaver",
+  "name": "Alderjaw",
+  "sprite": "beaver",
+  "run_cost": 0,
+  "max_health": 140,
+  "speed": 215,
+  "lore": "An alder-bank beaver who builds bridges by daylight and fells corrupted timber by moonlight.",
+  "primary": {
+    "name": "Bite",
+    "style": "beaver_bite",
+    "damage": 28,
+    "cooldown": 0.55,
+    "description": "Snap your incisors at enemies directly ahead within 90 units."
+  },
+  "secondary": {
+    "name": "Tail Slap",
+    "style": "tail_slap",
+    "damage": 26,
+    "cooldown": 6,
+    "description": "Tap for a tail slap: 26 damage, 80 knockback and 1.2s stun. Hold up to 1.3s to push up to 160 and stun up to 2s; release to strike.",
+    "hold_charge": {
+      "seconds": 1.3,
+      "damage": 1.2,
+      "knockback": 2.0,
+      "stun": 1.65
+    }
+  },
+  "special": {
+    "name": "Timber",
+    "style": "timber_fall",
+    "damage": 65,
+    "cooldown": 18,
+    "description": "An upright tree shakes and falls over 1.1s, striking a 380-unit line for 65 damage and a 1.8s stun. Walls stop the fall; enemies can escape the warning."
+  },
+  "passive": "Alder Armour: each different foe you stun grants 2% damage reduction for 8s, up to 20%. Stunning the same foe refreshes its stack.",
+  "passive_effect": "alder_armour",
+  "mastery": {
+    "title": "Timber Guardian",
+    "technique": {
+      "name": "Heavy Bite",
+      "ability": "primary",
+      "description": "Bite 25% harder, but recover 35% slower.",
+      "multiply": {
+        "damage": 1.25,
+        "cooldown": 1.35
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Beaver\u2019s Breakwater",
+      "ability": "special",
+      "description": "Build a 3s breakwater of six 5-damage pulses with slow. Replaces the falling tree\u2019s big line hit and stun.",
+      "attack": {
+        "name": "Beaver\u2019s Breakwater",
+        "style": "master_fountain",
+        "damage": 5,
+        "cooldown": 12,
+        "color": "#c6bb8a",
+        "range": 170,
+        "radius": 125,
+        "heal": 0,
+        "duration": 3,
+        "slow_duration": 0.6,
+        "slow": 0.65,
+        "description": "Build a 3s breakwater of six 5-damage pulses with slow. Replaces the falling tree\u2019s big line hit and stun.",
+        "visual_texture": "res://assets/mastery_beaver_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

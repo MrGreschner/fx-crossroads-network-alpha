@@ -1,0 +1,802 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/quarantine.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/path.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ram_0.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/portal.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/merchant.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/plague_director.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/barricade.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/shambler_idle.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/spore_thrower_idle.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/hazmat_raider_idle.png" id="10"]
+
+[node name="Zombie" type="Node2D"]
+
+[node name="Floor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 8500, 0, 8500, 1450, 0, 1450)
+color = Color(0.184314, 0.223529, 0.188235, 1)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Road" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(0, 650, 8500, 650, 8500, 800, 0, 800)
+color = Color(0.55, 0.57, 0.60, 1)
+metadata/tile = "path"
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Sprite2D" parent="Points"]
+position = Vector2(250, 725)
+texture = ExtResource("3")
+scale = Vector2(2, 2)
+
+[node name="ReturnGate" type="Sprite2D" parent="Points"]
+position = Vector2(90, 725)
+texture = ExtResource("4")
+scale = Vector2(2, 2)
+
+[node name="Merchant" type="Sprite2D" parent="Points"]
+position = Vector2(4250, 725)
+texture = ExtResource("5")
+scale = Vector2(2, 2)
+
+[node name="Boss" type="Sprite2D" parent="Points"]
+position = Vector2(8200, 725)
+texture = ExtResource("6")
+scale = Vector2(2, 2)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy_001" type="Sprite2D" parent="Enemies"]
+position = Vector2(620, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_002" type="Sprite2D" parent="Enemies"]
+position = Vector2(728, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_003" type="Sprite2D" parent="Enemies"]
+position = Vector2(837, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_004" type="Sprite2D" parent="Enemies"]
+position = Vector2(946, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_005" type="Sprite2D" parent="Enemies"]
+position = Vector2(1055, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_006" type="Sprite2D" parent="Enemies"]
+position = Vector2(1164, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_007" type="Sprite2D" parent="Enemies"]
+position = Vector2(1272, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_008" type="Sprite2D" parent="Enemies"]
+position = Vector2(1381, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_009" type="Sprite2D" parent="Enemies"]
+position = Vector2(1490, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_010" type="Sprite2D" parent="Enemies"]
+position = Vector2(1599, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_011" type="Sprite2D" parent="Enemies"]
+position = Vector2(1708, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_012" type="Sprite2D" parent="Enemies"]
+position = Vector2(1817, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_013" type="Sprite2D" parent="Enemies"]
+position = Vector2(1925, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_014" type="Sprite2D" parent="Enemies"]
+position = Vector2(2034, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_015" type="Sprite2D" parent="Enemies"]
+position = Vector2(2143, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_016" type="Sprite2D" parent="Enemies"]
+position = Vector2(2252, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_017" type="Sprite2D" parent="Enemies"]
+position = Vector2(2361, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_018" type="Sprite2D" parent="Enemies"]
+position = Vector2(2470, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_019" type="Sprite2D" parent="Enemies"]
+position = Vector2(2578, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_020" type="Sprite2D" parent="Enemies"]
+position = Vector2(2687, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_021" type="Sprite2D" parent="Enemies"]
+position = Vector2(2796, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_022" type="Sprite2D" parent="Enemies"]
+position = Vector2(2905, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_023" type="Sprite2D" parent="Enemies"]
+position = Vector2(3014, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_024" type="Sprite2D" parent="Enemies"]
+position = Vector2(3122, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_025" type="Sprite2D" parent="Enemies"]
+position = Vector2(3231, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_026" type="Sprite2D" parent="Enemies"]
+position = Vector2(3340, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_027" type="Sprite2D" parent="Enemies"]
+position = Vector2(3449, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_028" type="Sprite2D" parent="Enemies"]
+position = Vector2(3558, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_029" type="Sprite2D" parent="Enemies"]
+position = Vector2(3667, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_030" type="Sprite2D" parent="Enemies"]
+position = Vector2(3775, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_031" type="Sprite2D" parent="Enemies"]
+position = Vector2(3884, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_032" type="Sprite2D" parent="Enemies"]
+position = Vector2(3993, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_033" type="Sprite2D" parent="Enemies"]
+position = Vector2(4102, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_034" type="Sprite2D" parent="Enemies"]
+position = Vector2(4211, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_035" type="Sprite2D" parent="Enemies"]
+position = Vector2(4320, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_036" type="Sprite2D" parent="Enemies"]
+position = Vector2(4428, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_037" type="Sprite2D" parent="Enemies"]
+position = Vector2(4537, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_038" type="Sprite2D" parent="Enemies"]
+position = Vector2(4646, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_039" type="Sprite2D" parent="Enemies"]
+position = Vector2(4755, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_040" type="Sprite2D" parent="Enemies"]
+position = Vector2(4864, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_041" type="Sprite2D" parent="Enemies"]
+position = Vector2(4972, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_042" type="Sprite2D" parent="Enemies"]
+position = Vector2(5081, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_043" type="Sprite2D" parent="Enemies"]
+position = Vector2(5190, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_044" type="Sprite2D" parent="Enemies"]
+position = Vector2(5299, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_045" type="Sprite2D" parent="Enemies"]
+position = Vector2(5408, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_046" type="Sprite2D" parent="Enemies"]
+position = Vector2(5517, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_047" type="Sprite2D" parent="Enemies"]
+position = Vector2(5625, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_048" type="Sprite2D" parent="Enemies"]
+position = Vector2(5734, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_049" type="Sprite2D" parent="Enemies"]
+position = Vector2(5843, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_050" type="Sprite2D" parent="Enemies"]
+position = Vector2(5952, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_051" type="Sprite2D" parent="Enemies"]
+position = Vector2(6061, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_052" type="Sprite2D" parent="Enemies"]
+position = Vector2(6170, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_053" type="Sprite2D" parent="Enemies"]
+position = Vector2(6278, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_054" type="Sprite2D" parent="Enemies"]
+position = Vector2(6387, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_055" type="Sprite2D" parent="Enemies"]
+position = Vector2(6496, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_056" type="Sprite2D" parent="Enemies"]
+position = Vector2(6605, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_057" type="Sprite2D" parent="Enemies"]
+position = Vector2(6714, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_058" type="Sprite2D" parent="Enemies"]
+position = Vector2(6822, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_059" type="Sprite2D" parent="Enemies"]
+position = Vector2(6931, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_060" type="Sprite2D" parent="Enemies"]
+position = Vector2(7040, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_061" type="Sprite2D" parent="Enemies"]
+position = Vector2(7149, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_062" type="Sprite2D" parent="Enemies"]
+position = Vector2(7258, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_063" type="Sprite2D" parent="Enemies"]
+position = Vector2(7367, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_064" type="Sprite2D" parent="Enemies"]
+position = Vector2(7475, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_065" type="Sprite2D" parent="Enemies"]
+position = Vector2(7584, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Enemy_066" type="Sprite2D" parent="Enemies"]
+position = Vector2(7693, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "shambler"
+
+[node name="Enemy_067" type="Sprite2D" parent="Enemies"]
+position = Vector2(7802, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_068" type="Sprite2D" parent="Enemies"]
+position = Vector2(7911, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "hazmat_raider"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Barricade_01" type="Sprite2D" parent="Obstacles"]
+position = Vector2(570, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_02" type="Sprite2D" parent="Obstacles"]
+position = Vector2(738, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_03" type="Sprite2D" parent="Obstacles"]
+position = Vector2(907, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_04" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1076, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_05" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1245, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_06" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1414, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_07" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1583, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_08" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1752, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_09" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1921, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_10" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2090, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_11" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2258, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_12" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2427, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_13" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2596, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_14" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2765, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_15" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2934, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_16" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3103, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_17" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3272, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_18" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3441, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_19" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3610, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_20" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3778, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_21" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3947, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_22" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4116, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_23" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4285, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_24" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4454, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_25" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4623, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_26" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4792, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_27" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4961, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_28" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5130, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_29" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5298, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_30" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5467, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_31" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5636, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_32" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5805, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_33" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5974, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_34" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6143, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_35" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6312, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_36" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6481, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_37" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6650, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_38" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6818, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_39" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6987, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_40" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7156, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_41" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7325, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_42" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7494, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_43" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7663, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_44" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7832, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="Barricade_45" type="Sprite2D" parent="Obstacles"]
+position = Vector2(8001, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "barricade"
+metadata/radius = 42.0
+
+[node name="V143_quarantine_hound_0" type="Node2D" parent="Enemies"]
+position = Vector2(1650, 725)
+metadata/enemy_id = "quarantine_hound"
+
+[node name="V143_quarantine_hound_1" type="Node2D" parent="Enemies"]
+position = Vector2(5100, 900)
+metadata/enemy_id = "quarantine_hound"
+
+[node name="V143_antiseptic_drone_0" type="Node2D" parent="Enemies"]
+position = Vector2(2450, 725)
+metadata/enemy_id = "antiseptic_drone"
+
+[node name="V143_antiseptic_drone_1" type="Node2D" parent="Enemies"]
+position = Vector2(5750, 600)
+metadata/enemy_id = "antiseptic_drone"
+
+[node name="V143_spore_orderly_0" type="Node2D" parent="Enemies"]
+position = Vector2(3200, 900)
+metadata/enemy_id = "spore_orderly"
+
+[node name="V143_spore_orderly_1" type="Node2D" parent="Enemies"]
+position = Vector2(6600, 725)
+metadata/enemy_id = "spore_orderly"
+
+[node name="V143_quarantine_warden_0" type="Node2D" parent="Enemies"]
+position = Vector2(4100, 725)
+metadata/enemy_id = "quarantine_warden"

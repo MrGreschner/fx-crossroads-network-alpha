@@ -1,0 +1,12 @@
+{
+  "id": "continuum_crown",
+  "name": "Continuum: Crown Shell",
+  "sprite": "continuum_crown",
+  "health": 1700,
+  "speed": 150,
+  "damage": 15,
+  "behaviour": "custom",
+  "custom_attack": "crown_logic",
+  "aggro_range": 850,
+  "expansion_only": true
+}

@@ -1,0 +1,14 @@
+{
+  "id": "dewcap_guard",
+  "name": "Dewcap Guard",
+  "sprite": "dewcap_guard",
+  "health": 138,
+  "speed": 66,
+  "damage": 12,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true,
+  "shot_cooldown": 2.8,
+  "shot_speed": 260,
+  "description": "A sturdy mushroom shieldbearer that warns before a close-range spore stomp."
+}

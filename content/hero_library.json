@@ -1,0 +1,933 @@
+{
+  "ram": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A young ram from the Crossroads, proving that courage can begin with one small step.",
+    "passive_brief": "Recover 4 HP on a kill."
+  },
+  "basketball": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Summoner"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "An enchanted basketball that escaped the academy court to chase a much bigger game.",
+    "passive_brief": "Heal for 8% of damage dealt."
+  },
+  "book": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A forgotten spellbook that woke on a library shelf and decided to write its own adventures.",
+    "passive_brief": "Primary recharges 20% faster."
+  },
+  "cat": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A streetwise cat who knows every roof, shortcut and secret supper in the Crossroads.",
+    "passive_brief": "Primary recharges 20% faster."
+  },
+  "goalie": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A steadfast hockey guardian who treats every companion like a teammate worth defending.",
+    "passive_brief": "Melee attackers are slowed for 3s."
+  },
+  "baseball": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A wandering academy batter who trades stadium lights for the strange skies beyond town.",
+    "passive_brief": "Bat Sweep recharges 20% faster."
+  },
+  "golfer": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A calm course scout who reads the curves of wild paths as carefully as the greens.",
+    "passive_brief": "Recover 4 HP on a kill."
+  },
+  "soccer": {
+    "role": "Support",
+    "tags": [
+      "Support"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Protect or sustain your team; playable solo.",
+    "lore": "A lively enchanted football carrying the academy spirit into every unlikely team.",
+    "passive_brief": "Primary recharges 20% faster."
+  },
+  "welder": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A forge worker who learned to mend town gates and burn away the darkness beyond them.",
+    "passive_brief": "Take 10% less damage."
+  },
+  "medic": {
+    "role": "Support",
+    "tags": [
+      "Support"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Protect or sustain your team; playable solo.",
+    "lore": "A masked field healer who goes where others retreat, carrying remedies for stranger dangers.",
+    "passive_brief": "Recover health on a kill."
+  },
+  "navigator": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A stargazer who follows wandering constellations to chart roads between broken worlds.",
+    "passive_brief": "Seeking Orb sends two tracking shots."
+  },
+  "ferryman": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "silverfall",
+    "summary": "Close attacks and positioning.",
+    "lore": "An otter ferryman from Silverfall Reach, guiding lost travelers through the mist.",
+    "passive_brief": "Skipping Stones bounce to one extra foe."
+  },
+  "dawnblade": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "clockwork_orchard",
+    "summary": "Close attacks and positioning.",
+    "lore": "A wandering swordswoman who keeps the old orchard roads safe.",
+    "passive_brief": "Sword Cut applies bleeding: 2 DPS for 4s."
+  },
+  "stormscribe": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "clockwork_orchard",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A wizard who reads the weather in the orchard clock towers.",
+    "passive_brief": "Primary recharges 20% faster."
+  },
+  "vesper": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A bat courier who carries lost stars between broken observatories.",
+    "passive_brief": "Secondary recharges 20% faster."
+  },
+  "sunflower": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Summoner"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "sunfield",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A sunlit garden guardian who followed a lost dawn to the Crossroads.",
+    "passive_brief": "Recover 4 HP on a kill."
+  },
+  "snowman": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A snow sculpture determined to see every season without losing his winter heart.",
+    "passive_brief": "Take 10% less damage."
+  },
+  "veyra": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "ebonwake",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "An exile of Ebonwake who stole the Citadel\u2019s forbidden ledger and learned to turn cruel magic against its masters.",
+    "passive_brief": "Returned snared bolts slow for 1s."
+  },
+  "drum": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A forgotten marching drum with a heartbeat loud enough to wake a realm.",
+    "passive_brief": "Nearby allies and you deal 8% more damage."
+  },
+  "magnet": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A living horseshoe magnet drawn to the strange forces between realms.",
+    "passive_brief": "Keep three anchors for Live Wire."
+  },
+  "pippa": {
+    "role": "Support",
+    "tags": [
+      "Support"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "petalbrook",
+    "summary": "Protect or sustain your team; playable solo.",
+    "lore": "A red panda ribbon-weaver from Petalbrook Canopy.",
+    "passive_brief": "Fern healing grants a brief 20% speed boost."
+  },
+  "spindle": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A carved spinning top whose restless dance keeps forgotten winds alive.",
+    "passive_brief": "Orbit Dance lasts one extra second."
+  },
+  "patch": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Summoner"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A forgotten arcade controller awakened by Crossroads magic.",
+    "passive_brief": "Bit Buddies last two extra seconds."
+  },
+  "bracken": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "moonburrow",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A fox sapper from Moonburrow Hollow, guarding the moonstone warrens from unstable mines and the restless Warren King.",
+    "passive_brief": "Mine blast radius grows by 20."
+  },
+  "elara": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "moonveil",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A human prism mage who guards Moonveil\u2019s mirrors from the jealous Marquis.",
+    "passive_brief": "Spiral shards travel 60 farther."
+  },
+  "aurel": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A copper-scaled star dragon, small enough to fit through a town gate and old enough to remember when the sky was closer.",
+    "passive_brief": "Meteor blasts gain 12 radius."
+  },
+  "rune_duelist": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A human swordsman who stitches glowing runes into every step of a duel.",
+    "passive_brief": "Runes last five extra seconds."
+  },
+  "garrick": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A wandering male rune smith with a weathered beard and a hammer inscribed with three old promises: courage, swiftness and shelter.",
+    "passive_brief": "Ward cleanses burn, bleed and poison."
+  },
+  "nera": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "brasslock",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A lantern courier from Brasslock Borough who unlocks impossible routes with enchanted keys and a ghostly last tram.",
+    "passive_brief": "Corkscrew Key pierces one extra foe."
+  },
+  "teapot": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A runaway porcelain teapot whose mischievous woodland brew is delicious to friends and bitter to monsters.",
+    "passive_brief": "Landing on poisoned foes restores health."
+  },
+  "rook": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A travelling bridge keeper with a brass gauntlet and a salvaged chain.",
+    "passive_brief": "Grapnel hits empower the next Chain Sweep."
+  },
+  "beaver": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "An alder-bank beaver who builds bridges by daylight and fells corrupted timber by moonlight.",
+    "passive_brief": "Stunning foes grants armour, up to 20%."
+  },
+  "iris": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A travelling tutor who carries enchanted chalk and turns forgotten lessons into pathways of light.",
+    "passive_brief": "Erasing chalk lines restores health."
+  },
+  "robot": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "neon_crucible",
+    "summary": "Close attacks and positioning.",
+    "lore": "Reclaimed from Neon Crucible, Bolt broke his factory oath to defend living towns.",
+    "passive_brief": "Three landed jabs add a volley missile."
+  },
+  "cloudloom": {
+    "role": "Support",
+    "tags": [
+      "Support"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Protect or sustain your team; playable solo.",
+    "lore": "A wandering weather-weaver who stitches stray clouds into rain and safe winds.",
+    "passive_brief": "Wind lanes catch shots and return sparks."
+  },
+  "cairnheart": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A badger stonecarver who carries the patient strength of the old hill roads.",
+    "passive_brief": "Fault Steps hits grant up to 20% armour."
+  },
+  "caelum": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A copper-cloaked mirror craftswoman with a braided mane and a polished hand mirror.",
+    "passive_brief": "Prism Fold also slows foes for 2s."
+  },
+  "dustdevil": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "An enchanted brass vacuum from the town workshops.",
+    "passive_brief": "A poison pulse triggers every 6s."
+  },
+  "velvetwing": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A silk-winged moth who weaves moonlit threads to keep lost travelers safe.",
+    "passive_brief": "Tripline grants armour and poison reprisal."
+  },
+  "wanderlight": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "wayfarer",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "The antlered lantern guardian of Wayfarer Wilds, keeping a story for every trail.",
+    "passive_brief": "Compass Turn grants a brief speed boost."
+  },
+  "kage": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "moonveil",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A masked night runner from the rooftops of Moonveil.",
+    "passive_brief": "Windwheel marks empower Twin Fang."
+  },
+  "agent": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A quiet Crossroads operative whose red lenses find threats hiding between the worlds.",
+    "passive_brief": "Marked foes take stronger Ambush hits."
+  },
+  "thistlebond": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Summoner",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A hedgehog envoy from the forest beyond town.",
+    "passive_brief": "Two or more marked foes are poisoned."
+  },
+  "chronicle": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Protect or sustain your team; playable solo.",
+    "lore": "A patient keeper of misplaced seconds, whose brass hourglass turns battlefield positions into promises.",
+    "passive_brief": "Second Needle marks last six seconds."
+  },
+  "ripplejaw": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A stubborn river fish in a tideglass harness, determined to explore beyond the riverbank.",
+    "passive_brief": "Deflect every third moving projectile."
+  },
+  "hearthwarden": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A mountain guardian carrying a traveling forge so no companion has to face the cold alone.",
+    "passive_brief": "Third hammer hit grants brief armour."
+  },
+  "gopher": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "quarry",
+    "summary": "Close attacks and positioning.",
+    "lore": "A quarry gopher who knows the old mine tunnels better than the roads above them.",
+    "passive_brief": "Surfacing after Pounce grants 12% armour."
+  },
+  "nullweaver": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A masked rift tailor who mends tears in reality with impossible needlework.",
+    "passive_brief": "Rift seams briefly slow struck foes."
+  },
+  "snail": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "quarry",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A volcanic snail carrying a living furnace, slowly seeking a place warm enough to call home.",
+    "passive_brief": "Nearby foes lose up to 40 armour points."
+  },
+  "kite": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A sky smuggler riding a patched sail, collecting stories from places no road can reach.",
+    "passive_brief": "Completing a swing grants brief armour."
+  },
+  "tidewright": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "confluence",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "An otter sluice engineer from Confluence Foundry, keeping its waterways alive beside Spark Keeper.",
+    "passive_brief": "Water fields grant 8% ally protection."
+  },
+  "cantor": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "confluence",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "An otter conductor from Confluence Foundry, powering its copper halls beside Tide Keeper.",
+    "passive_brief": "Lightning fields grant a speed boost."
+  },
+  "shuttle": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "An animated wooden weaving shuttle whose rose-coloured thread repairs forgotten roads.",
+    "passive_brief": "Finishing Seam Ride grants brief armour."
+  },
+  "regent": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Aim, distance and attack timing.",
+    "lore": "A masked keeper of discarded seconds, rescuing futures that almost never happened.",
+    "passive_brief": "Rewinding grants brief 20% protection."
+  },
+  "morrow": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Summoner",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Protect or sustain your team; playable solo.",
+    "lore": "A gentle shepherd of forgotten spirits, lending the fallen one last chance to protect the living.",
+    "passive_brief": "Raise a third ranged echo; echoes gain HP."
+  },
+  "mantis": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Close attacks and positioning.",
+    "lore": "A glimmering insect duelist who studies every opponent as patiently as a falling leaf.",
+    "passive_brief": "A successful guard can restore 8 HP."
+  },
+  "briar": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "grove",
+    "summary": "Juggle bouncing acorns, kick them into bigger blasts and vault along a delayed trail.",
+    "lore": "A woodland hare from Whispering Grove, collecting acorns that refuse to stay on the ground.",
+    "passive_brief": "Landing Canopy Crossing grants armour."
+  },
+  "recess": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Control"
+    ],
+    "difficulty": "Easy to learn",
+    "home_realm": "elementary",
+    "summary": "Sustain the team, cleanse harmful effects and create safe crossings. Works solo too.",
+    "lore": "An owl playground guardian from Firstbell Elementary, guiding small adventurers safely home.",
+    "passive_brief": "Snack Break grants 10% ally protection."
+  },
+  "votary": {
+    "role": "Melee",
+    "tags": [
+      "Melee"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Trade your health for offence, then recover some through precisely aimed returning blades.",
+    "lore": "A human oath-singer who carries an old promise written in crimson ink.",
+    "passive_brief": "Spending health grants brief protection."
+  },
+  "teacher": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Ranged",
+      "Control",
+      "Support"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "town",
+    "summary": "Hybrid strikes, hold-and-release crowd control and magic-door positioning.",
+    "lore": "A professional ram teacher of St.",
+    "passive_brief": "Knowledge hits grant a brief ally ward."
+  },
+  "lumen": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Ranged"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim darts to heal friends or hurt foes.",
+    "lore": "A lantern-bearing courier delivering warmth and hope along the most dangerous roads.",
+    "passive_brief": "Healing darts grant brief ally protection."
+  },
+  "harbor": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Place safe crossings and projectile cover.",
+    "lore": "A penguin harbour guide who lights safe crossings for anyone caught far from shore.",
+    "passive_brief": "Harbor Note grants a brief 10% ally ward."
+  },
+  "mosaic": {
+    "role": "Summoner",
+    "tags": [
+      "Summoner",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Grow separate tiles or combine them into a guardian.",
+    "lore": "An axolotl gardener who grows living mosaic tiles from fragments of forgotten gardens.",
+    "passive_brief": "Tiles move faster; capacity stays five."
+  },
+  "apiary": {
+    "role": "Summoner",
+    "tags": [
+      "Summoner",
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Deploy a hive and guide a ranged swarm.",
+    "lore": "A human beekeeper-engineer who built a clockwork swarm to preserve the wild gardens.",
+    "passive_brief": "Drone capacity increases to four."
+  },
+  "bailiff": {
+    "role": "Control",
+    "tags": [
+      "Control",
+      "Ranged"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Slow enemies and rearrange dangerous fights.",
+    "lore": "A patient tortoise with a cane, settling woodland disputes with gentle but unbending authority.",
+    "passive_brief": "Traffic Order grants 20% armour for 2s."
+  },
+  "tempo": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "summary": "Time your twelve-second stance cycle. Poison and shadow are special stances.",
+    "home_realm": "",
+    "lore": "A traveling martial artist whose twelve-second bell keeps body, breath and shadow in balance.",
+    "passive_brief": "Natural stance changes restore 4 HP."
+  },
+  "quill": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Summoner"
+    ],
+    "difficulty": "Technical",
+    "summary": "Bound into close combat, or equip mastery to command a quillpack.",
+    "home_realm": "",
+    "lore": "A brave porcupine whose springing quills carry the wild woodland into every battle.",
+    "passive_brief": "Claws and lunges grant brief armour."
+  },
+  "cindervane": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "",
+    "summary": "Practice close feather rhythm and aimed curling leaps.",
+    "lore": "A proud ember phoenix who carries a spark of dawn through even the darkest defeat.",
+    "passive_brief": "Revive at half HP; once every two minutes."
+  },
+  "tova": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "lantern_marsh",
+    "summary": "Keep allies together with stepping lights and a lantern refuge.",
+    "lore": "A lantern newt who guides lost travellers through Lanternmarsh. Her reed tongue and waylights keep nearby companions fighting together.",
+    "passive_brief": "Aura \u2022 nearby allies gain 2 HP on hit"
+  },
+  "merrymask": {
+    "role": "Summoner",
+    "tags": [
+      "Summoner",
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Snap crossed puppet strings, call understudies and close the curtain.",
+    "lore": "A wooden theatre puppet who snaps crossed strings, calls understudies and closes the curtain on enemies.",
+    "passive_brief": "Scissors hits restore nearby puppet HP."
+  },
+  "dunecook": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "A living dessert chef: chop, simmer custard and serve a healing banquet.",
+    "lore": "A walking layer cake in a chef hat, bringing sweet comfort to hungry Crossroads adventurers.",
+    "passive_brief": "Pot-side chops grant brief protection."
+  },
+  "dustmarshal": {
+    "role": "Ranged",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "",
+    "summary": "Aim a pistol shot, hogtie enemies, then stampede or call deputies.",
+    "lore": "A bison frontier marshal keeping the roads safe with a steady aim and stubborn kindness.",
+    "passive_brief": "Shooting a tied foe restores 3 HP."
+  },
+  "wick": {
+    "role": "Control",
+    "tags": [
+      "Ranged",
+      "Control",
+      "Support"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "lantern_marsh",
+    "summary": "Frighten groups, scatter mixed treat patches and amplify allied critical bonuses.",
+    "lore": "A jack-o'-lantern from Lanternmarsh's autumn festival. Its brave little candle turns scary evenings into generous celebrations.",
+    "passive_brief": "Rotating candle aura: +50% critical bonus, +15% received healing."
+  },
+  "cobbleclaw": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Support",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "silverfall",
+    "summary": "Catch shots in a stone shell, then scuttle through foes with a banked counterattack.",
+    "lore": "A small masonry crab from Silverfall Reach, carrying a shell of polished river stones. It catches trouble in its claws and returns it with interest.",
+    "passive_brief": "Each banked shot adds 3% damage reduction (max 12%)."
+  },
+  "twisterspell": {
+    "role": "Control",
+    "tags": [
+      "Ranged",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "silverfall",
+    "summary": "Grow and release weather funnels, connect lightning circuits and drop warned hail.",
+    "lore": "A cheerful weather apprentice who collects river mist in her hat. She tends Crossroads\u2019 new Mistglass Spire, turning unruly breezes into carefully bottled spells.",
+    "passive_brief": "Lightning links at 3 funnels \u2022 full-charge zaps"
+  },
+  "hollow_rider": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "moonveil",
+    "summary": "Wind up a scythe, slam a spectral lantern and ride a ghostly horse.",
+    "lore": "An empty suit of armour carries a pumpkin lantern through Moonveil\u2019s midnight roads. His spectral mare remembers every traveller he has guided home.",
+    "passive_brief": "Lantern Courage: hitting an enemy with Lantern Toll grants 12% damage reduction for 2 seconds."
+  },
+  "hazel_hex": {
+    "role": "Control",
+    "tags": [
+      "Ranged",
+      "Control",
+      "Support"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "lantern_marsh",
+    "summary": "Spin poison shots, bomb a broom route and brew a helpful cauldron.",
+    "lore": "Lantern Marsh\u2019s kindly witch ties glowing embers to spinning spell-chains. Her broom delivers remedies\u2014and a few surprises\u2014to friends along the swamp roads.",
+    "passive_brief": "Ember Infusion: Broom Express bomb burns last one extra second."
+  },
+  "echo_dancer": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "folded_coast",
+    "summary": "Place delayed blade echoes, feint back and replay a three-step combo.",
+    "lore": "A travelling ribbon-swordsman from the Folded Coast who learned to dance between seconds. Every step leaves a memory; every memory can become another blade.",
+    "passive_brief": "Lingering Applause: afterimage damage increases from 50% to 65% of the direct primary hit."
+  },
+  "little_menace": {
+    "role": "Melee",
+    "tags": [
+      "Melee",
+      "Control"
+    ],
+    "difficulty": "Technical",
+    "home_realm": "grove",
+    "summary": "Three fast punches, pocket-sized movement and a dangerous health trade.",
+    "lore": "This mouse brawler carries a pocketful of shrinking charms and an oversized sense of courage. Small does not mean safe: his boldest strike spends his own heartbeats.",
+    "passive_brief": "Small Courage: landing all three punches grants 10% damage reduction for 1.5s."
+  },
+  "hearth_herald": {
+    "role": "Support",
+    "tags": [
+      "Support",
+      "Melee"
+    ],
+    "difficulty": "Some practice",
+    "home_realm": "quarry",
+    "summary": "Enchant ally attacks with fire, share protective warmth and plant a healing banner.",
+    "lore": "An armadillo firekeeper from Ember Quarry carries the first coal of her village in a brass lantern. Her shell shelters travellers; her songs lend their weapons a little borrowed warmth.",
+    "passive_brief": "Nearby allies \u2022 10% damage reduction \u2022 170 reach"
+  }
+}

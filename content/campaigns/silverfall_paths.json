@@ -1,0 +1,2223 @@
+{
+  "id": "silverfall",
+  "name": "Silverfall Reach",
+  "size": [
+    10500,
+    7600
+  ],
+  "spawn": [
+    520,
+    6200
+  ],
+  "exit": [
+    9470,
+    1500
+  ],
+  "boss_type": "crowned_torrent",
+  "floors": [
+    {
+      "name": "Ferryman\u2019s Landing",
+      "rect": [
+        180,
+        5600,
+        1550,
+        1550
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "Reed\u2019s Hearth",
+      "rect": [
+        2500,
+        4100,
+        1450,
+        1450
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "Mist Orchard",
+      "rect": [
+        5000,
+        4200,
+        1300,
+        2000
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "Moonwater Jetty",
+      "rect": [
+        4400,
+        1400,
+        1500,
+        1600
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "Upper Cascade",
+      "rect": [
+        7000,
+        1400,
+        1450,
+        2000
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "Torrent Crown",
+      "rect": [
+        8700,
+        750,
+        1500,
+        1900
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "Root Observatory",
+      "rect": [
+        1700,
+        1700,
+        1350,
+        1600
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        870.0,
+        6120.0,
+        1110,
+        260
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1720.0,
+        4670.0,
+        260,
+        1710
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1720.0,
+        4670.0,
+        1710,
+        260
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3170.0,
+        4670.0,
+        2460,
+        260
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        5380.0,
+        5480.0,
+        1940,
+        240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        7080.0,
+        2480.0,
+        240,
+        3240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        7080.0,
+        2480.0,
+        2440,
+        240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        9280.0,
+        1480.0,
+        240,
+        1240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2980.0,
+        3230.0,
+        240,
+        1690
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2280.0,
+        3230.0,
+        940,
+        240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2280.0,
+        2280.0,
+        240,
+        1190
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2280.0,
+        2280.0,
+        2840,
+        240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        4880.0,
+        2280.0,
+        2990,
+        240
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        5445.0,
+        3795.0,
+        210,
+        1110
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3995.0,
+        3795.0,
+        1660,
+        210
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3995.0,
+        2445.0,
+        210,
+        1560
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3995.0,
+        2445.0,
+        1110,
+        210
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        5745.0,
+        4485.0,
+        610,
+        210
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "Far-bank Dock",
+      "rect": [
+        8970,
+        4290,
+        550,
+        700
+      ],
+      "kind": "river",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        9075.0,
+        4445.0,
+        930,
+        210
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        9795.0,
+        2495.0,
+        210,
+        2160
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        9295.0,
+        2495.0,
+        710,
+        210
+      ],
+      "kind": "bridge",
+      "stage": 0
+    },
+    {
+      "name": "Reed\u2019s Riverside Hearth",
+      "rect": [
+        3320,
+        6490,
+        800,
+        690
+      ],
+      "kind": "house",
+      "stage": 0
+    },
+    {
+      "name": "Canopy Tea Room",
+      "rect": [
+        250,
+        2260,
+        800,
+        780
+      ],
+      "kind": "house",
+      "stage": 0
+    },
+    {
+      "name": "Mistkeeper Observatory",
+      "rect": [
+        7920,
+        6210,
+        800,
+        760
+      ],
+      "kind": "house",
+      "stage": 0
+    }
+  ],
+  "props": [
+    {
+      "kind": "grand_tree",
+      "pos": [
+        400,
+        5860
+      ],
+      "scale": 2.2,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1600,
+        6790
+      ],
+      "scale": 2.8,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2810,
+        4450
+      ],
+      "scale": 3,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3630,
+        5380
+      ],
+      "scale": 2.4,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2080,
+        2200
+      ],
+      "scale": 2.5,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5810,
+        5530
+      ],
+      "scale": 3.2,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5350,
+        1850
+      ],
+      "scale": 2.9,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7820,
+        1820
+      ],
+      "scale": 3,
+      "solid": 65
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9070,
+        1050
+      ],
+      "scale": 2.7,
+      "solid": 65
+    },
+    {
+      "kind": "treehouse",
+      "pos": [
+        3000,
+        4910
+      ],
+      "scale": 1.4,
+      "solid": 0
+    },
+    {
+      "kind": "treehouse",
+      "pos": [
+        5470,
+        2110
+      ],
+      "scale": 1.4,
+      "solid": 0
+    },
+    {
+      "kind": "treehouse",
+      "pos": [
+        7550,
+        2680
+      ],
+      "scale": 1.4,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        260,
+        5630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        260,
+        7125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        500,
+        5630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        500,
+        7125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        740,
+        5630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        740,
+        7125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        980,
+        5630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        980,
+        7125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1220,
+        5630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1220,
+        7125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1460,
+        5630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1460,
+        7125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2580,
+        4130
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2580,
+        5525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2820,
+        4130
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2820,
+        5525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3060,
+        4130
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3060,
+        5525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3300,
+        4130
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3300,
+        5525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3540,
+        4130
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3540,
+        5525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3780,
+        4130
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3780,
+        5525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5080,
+        4230
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5080,
+        6175
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5320,
+        4230
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5320,
+        6175
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5560,
+        4230
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5560,
+        6175
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5800,
+        4230
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5800,
+        6175
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6040,
+        4230
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6040,
+        6175
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4480,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4480,
+        2975
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4720,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4720,
+        2975
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4960,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4960,
+        2975
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5200,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5200,
+        2975
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5440,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5440,
+        2975
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5680,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5680,
+        2975
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7080,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7080,
+        3375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7320,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7320,
+        3375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7560,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7560,
+        3375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7800,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7800,
+        3375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8040,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8040,
+        3375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8280,
+        1430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8280,
+        3375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8780,
+        780
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8780,
+        2625
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9020,
+        780
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9020,
+        2625
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9260,
+        780
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9260,
+        2625
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9500,
+        780
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9500,
+        2625
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9740,
+        780
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9740,
+        2625
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9980,
+        780
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9980,
+        2625
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1780,
+        1730
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1780,
+        3275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2020,
+        1730
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2020,
+        3275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2260,
+        1730
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2260,
+        3275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2500,
+        1730
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2500,
+        3275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2740,
+        1730
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2740,
+        3275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9050,
+        4320
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9050,
+        4965
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9290,
+        4320
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9290,
+        4965
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        390,
+        6510
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        390,
+        6840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        690,
+        5850
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        690,
+        6180
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        690,
+        6510
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        690,
+        6840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        990,
+        5850
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        990,
+        6510
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        990,
+        6840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1290,
+        5850
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1290,
+        6510
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1290,
+        6840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2710,
+        4350
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2710,
+        5010
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2710,
+        5340
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3010,
+        5340
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3310,
+        4350
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3310,
+        5010
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3310,
+        5340
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3610,
+        4350
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3610,
+        5010
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        4450
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        5110
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        5440
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        5770
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5510,
+        5770
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5810,
+        4780
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5810,
+        5110
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6110,
+        4780
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6110,
+        5110
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6110,
+        5770
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4610,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4610,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4910,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4910,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5210,
+        2640
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5510,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5510,
+        2640
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7210,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7210,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7510,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7510,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7510,
+        2970
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7810,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7810,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8110,
+        1650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8110,
+        1980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8110,
+        2310
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8110,
+        2970
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8910,
+        1000
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8910,
+        1330
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8910,
+        1660
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8910,
+        1990
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9210,
+        1000
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9210,
+        1330
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9210,
+        1660
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9210,
+        1990
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9210,
+        2320
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9510,
+        1000
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9510,
+        1330
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9810,
+        1000
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9810,
+        1330
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9810,
+        1660
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9810,
+        1990
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        9810,
+        2320
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1910,
+        1950
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1910,
+        2280
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1910,
+        2610
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1910,
+        2940
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2210,
+        1950
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2210,
+        2280
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2210,
+        2610
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2210,
+        2940
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2810,
+        2610
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2810,
+        2940
+      ],
+      "scale": 1.35,
+      "solid": 38
+    }
+  ],
+  "grass": [],
+  "mud": [],
+  "falls": [
+    [
+      1750,
+      5350,
+      320,
+      850
+    ],
+    [
+      3580,
+      3280,
+      600,
+      1150
+    ],
+    [
+      6610,
+      1480,
+      290,
+      1370
+    ],
+    [
+      8380,
+      400,
+      240,
+      2300
+    ]
+  ],
+  "secrets": [
+    {
+      "id": "Reed\u2019s river journal",
+      "name": "Reed\u2019s river journal",
+      "pos": [
+        3850,
+        6810
+      ],
+      "amount": 45,
+      "kind": "gold"
+    },
+    {
+      "id": "Canopy tea",
+      "name": "Canopy tea",
+      "pos": [
+        780,
+        2590
+      ],
+      "amount": 35,
+      "kind": "heal"
+    },
+    {
+      "id": "Mistkeeper\u2019s keepsake",
+      "name": "Mistkeeper\u2019s keepsake",
+      "pos": [
+        8440,
+        6610
+      ],
+      "amount": 70,
+      "kind": "gold"
+    },
+    {
+      "id": "Root observatory",
+      "name": "Root observatory",
+      "pos": [
+        2600,
+        1990
+      ],
+      "amount": 60,
+      "kind": "gold"
+    }
+  ],
+  "spawns": [
+    {
+      "type": "cascade_heron",
+      "pos": [
+        1290,
+        6270
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sluice_beetle",
+      "pos": [
+        3100,
+        5160
+      ],
+      "stage": 0
+    },
+    {
+      "type": "ripple_eel",
+      "pos": [
+        3590,
+        4530
+      ],
+      "stage": 0
+    },
+    {
+      "type": "tidebinder",
+      "pos": [
+        2490,
+        2830
+      ],
+      "stage": 0
+    },
+    {
+      "type": "cascade_heron",
+      "pos": [
+        2820,
+        1990
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sluice_beetle",
+      "pos": [
+        4770,
+        2520
+      ],
+      "stage": 0
+    },
+    {
+      "type": "ripple_eel",
+      "pos": [
+        5650,
+        2730
+      ],
+      "stage": 0
+    },
+    {
+      "type": "tidebinder",
+      "pos": [
+        5490,
+        5020
+      ],
+      "stage": 0
+    },
+    {
+      "type": "cascade_heron",
+      "pos": [
+        5900,
+        5830
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sluice_beetle",
+      "pos": [
+        7230,
+        3700
+      ],
+      "stage": 0
+    },
+    {
+      "type": "ripple_eel",
+      "pos": [
+        7880,
+        2920
+      ],
+      "stage": 0
+    },
+    {
+      "type": "tidebinder",
+      "pos": [
+        7530,
+        2230
+      ],
+      "stage": 0
+    },
+    {
+      "type": "cascade_heron",
+      "pos": [
+        9000,
+        2410
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sluice_beetle",
+      "pos": [
+        9610,
+        1920
+      ],
+      "stage": 0
+    },
+    {
+      "type": "ripple_eel",
+      "pos": [
+        9740,
+        1190
+      ],
+      "stage": 0
+    }
+  ],
+  "stages": [
+    "Explore bridges, treehouses and the lake; either shore route works",
+    "Defeat the Crowned Torrent at the upper falls"
+  ],
+  "gates": [],
+  "lake": [
+    6350,
+    3650,
+    2550,
+    1750
+  ],
+  "raft": {
+    "docks": [
+      [
+        6250,
+        4590
+      ],
+      [
+        9100,
+        4590
+      ]
+    ],
+    "route": [
+      [
+        6250,
+        4590
+      ],
+      [
+        6800,
+        4590
+      ],
+      [
+        8150,
+        4590
+      ],
+      [
+        9100,
+        4590
+      ]
+    ],
+    "speed": 260
+  },
+  "background": "#275c69",
+  "houses": [
+    {
+      "name": "Reed\u2019s Riverside Hearth",
+      "outside": [
+        3000,
+        4910
+      ],
+      "inside": [
+        3700,
+        6800
+      ]
+    },
+    {
+      "name": "Canopy Tea Room",
+      "outside": [
+        5470,
+        2110
+      ],
+      "inside": [
+        650,
+        2650
+      ]
+    },
+    {
+      "name": "Mistkeeper Observatory",
+      "outside": [
+        7550,
+        2680
+      ],
+      "inside": [
+        8300,
+        6550
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "pos": [
+        3100,
+        4800
+      ],
+      "level": 3
+    },
+    {
+      "pos": [
+        5100,
+        2400
+      ],
+      "level": 5
+    },
+    {
+      "pos": [
+        5500,
+        5200
+      ],
+      "level": 5
+    }
+  ]
+}

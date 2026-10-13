@@ -1,0 +1,13 @@
+{
+  "id": "spore_thrower",
+  "name": "Spore Thrower",
+  "sprite": "spore_thrower",
+  "health": 113,
+  "speed": 75,
+  "damage": 13,
+  "aggro_range": 630,
+  "behaviour": "dual_ranged",
+  "shot_speed": 315,
+  "shot_cooldown": 2.2,
+  "secondary_cooldown": 4.5
+}

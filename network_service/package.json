@@ -1,0 +1,15 @@
+{
+  "name": "fx-crossroads-authority",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node gateway.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

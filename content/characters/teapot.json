@@ -1,0 +1,99 @@
+{
+  "id": "teapot",
+  "name": "Tumblebrew",
+  "sprite": "teapot",
+  "run_cost": 0,
+  "max_health": 105,
+  "speed": 235,
+  "lore": "A runaway porcelain teapot whose mischievous woodland brew is delicious to friends and bitter to monsters.",
+  "primary": {
+    "name": "Spout Shot",
+    "style": "tea_shot",
+    "damage": 18,
+    "cooldown": 0.85,
+    "description": "Pour two curling tea drops for 9 damage each. Hits poison for 1 damage per second over 4s; poison refreshes rather than stacks.",
+    "range": 440,
+    "speed": 360
+  },
+  "secondary": {
+    "name": "Tumble Pour",
+    "style": "tumble_pour",
+    "damage": 12,
+    "cooldown": 7,
+    "description": "Hop three times along a 240-unit path in 0.9s, leaving three 3s poison puddles. Landing hits deal 12 damage once per foe; puddles poison for 1 damage/s. Walls stop you; you remain vulnerable."
+  },
+  "special": {
+    "name": "Bitter Bloom",
+    "style": "bitter_bloom",
+    "damage": 38,
+    "cooldown": 18,
+    "description": "Place a giant brewing cup up to 220 units ahead. After 1s it erupts across a 150-unit radius for 38 damage and poison (2 damage/s for 4s). Walls block the splash."
+  },
+  "passive": "Fresh Pour: landing on a poisoned foe restores 2 health, once per different foe per Tumble Pour, up to 6 health.",
+  "passive_effect": "fresh_pour",
+  "mastery": {
+    "title": "Grand Tea Alchemist",
+    "technique": {
+      "name": "Ember Infusion",
+      "ability": "primary",
+      "description": "Spout Shot applies burn instead of poison (same 1 damage/s for 4s). Its cooldown is 15% longer; other attacks stay poisonous.",
+      "multiply": {
+        "cooldown": 1.15
+      },
+      "set": {
+        "tea_element": "burn"
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Porcelain Crescents",
+      "ability": "special",
+      "description": "Two porcelain crescents curve back for 26 per leg with mild poison. Trades the stationary Bitter Bloom for moving cuts.",
+      "attack": {
+        "name": "Porcelain Crescents",
+        "style": "master_pincer",
+        "damage": 26,
+        "cooldown": 12,
+        "color": "#e2c397",
+        "range": 300,
+        "width": 95,
+        "duration": 1.65,
+        "poison_duration": 2,
+        "poison_damage": 1,
+        "description": "Two porcelain crescents curve back for 26 per leg with mild poison. Trades the stationary Bitter Bloom for moving cuts.",
+        "visual_texture": "res://assets/mastery_teapot_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

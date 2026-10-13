@@ -1,0 +1,12 @@
+{
+  "id": "echo_bat",
+  "name": "Echo Bat",
+  "sprite": "echo_bat",
+  "health": 65,
+  "speed": 65,
+  "damage": 9,
+  "behaviour": "custom",
+  "custom_attack": "echo_return",
+  "aggro_range": 800,
+  "expansion_only": true
+}

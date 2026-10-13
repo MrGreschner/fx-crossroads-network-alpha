@@ -1,0 +1,97 @@
+{
+  "id": "kite",
+  "name": "Kite Corsair",
+  "sprite": "kite",
+  "max_health": 100,
+  "speed": 280,
+  "run_cost": 0,
+  "lore": "A sky smuggler riding a patched sail. Movement builds momentum and banks gradually; release movement to brake. The small blue gauge shows how much extra force your next Sail Needle carries.",
+  "primary": {
+    "name": "Sail Needle",
+    "style": "sail_needle",
+    "damage": 18,
+    "cooldown": 0.65,
+    "description": "Fire a fast wind needle for 18 damage, plus up to 12 more from your actual gliding speed. The first foe or wall stops it.",
+    "range": 520,
+    "color": "#b5efff"
+  },
+  "secondary": {
+    "name": "Windlass Swing",
+    "style": "windlass_swing",
+    "damage": 28,
+    "cooldown": 5,
+    "description": "Hold secondary to orbit your aimed anchor, accelerating up to 480 speed. Release to launch toward your current aim. Maximum hold 4s; walls stop the orbit. Each foe takes 28 damage once.",
+    "range": 360,
+    "color": "#b5efff",
+    "duration": 4
+  },
+  "special": {
+    "name": "Storm Delivery",
+    "style": "storm_delivery",
+    "damage": 42,
+    "cooldown": 16,
+    "description": "Three parachute parcels land around your aim point after staggered warnings. Each blasts for 42 and pushes foes away. Their wind pads grant allies 20% speed for 1.5s while crossed.",
+    "range": 430,
+    "color": "#b5efff"
+  },
+  "passive": "Updraft Reserve: Completing Windlass Swing grants 15% damage reduction for 2s.",
+  "passive_effect": "updraft_reserve",
+  "mastery": {
+    "title": "Captain of the Unbroken Wind",
+    "technique": {
+      "name": "Long Tack",
+      "ability": "secondary",
+      "description": "Windlass Swing reaches 480 instead of 360, but deals 18 instead of 28 damage.",
+      "set": {
+        "range": 480,
+        "damage": 18
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Headwind Harpoon",
+      "ability": "primary",
+      "description": "Replace momentum-powered needles with 26-damage harpoons. They pull foes slightly and slow them for 1.5s, but fire more slowly and gain no movement damage.",
+      "attack": {
+        "name": "Headwind Harpoon",
+        "style": "headwind_harpoon",
+        "damage": 26,
+        "cooldown": 0.9,
+        "description": "Fire a harpoon for 26 damage, pulling a hit foe 35 toward you and slowing it by 40% for 1.5s. No momentum bonus.",
+        "range": 470,
+        "color": "#b5efff"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,1454 @@
+{
+  "id": "high_school",
+  "name": "Crossroads High",
+  "spawn": [
+    4050,
+    5550
+  ],
+  "exit": [
+    4050,
+    5550
+  ],
+  "merchant": [
+    4700,
+    5500
+  ],
+  "rooms": [
+    {
+      "id": "street",
+      "name": "CROSSROADS HIGH \u2022 SCHOOL STREET",
+      "rect": [
+        300,
+        5050,
+        7400,
+        1000
+      ],
+      "theme": "street"
+    },
+    {
+      "id": "entry",
+      "name": "",
+      "rect": [
+        3300,
+        4650,
+        1450,
+        600
+      ],
+      "theme": "yard"
+    },
+    {
+      "id": "foyer",
+      "name": "MAIN ENTRANCE",
+      "rect": [
+        3300,
+        3800,
+        1450,
+        1050
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "hall",
+      "name": "GROUND FLOOR \u2022 DEPARTMENT HALL",
+      "rect": [
+        1100,
+        2550,
+        5950,
+        750
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "foyer_link",
+      "name": "",
+      "rect": [
+        3500,
+        3150,
+        1000,
+        900
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "gym",
+      "name": "ATHLETICS \u2022 IRON HALL",
+      "rect": [
+        1100,
+        3250,
+        2000,
+        1600
+      ],
+      "theme": "wood"
+    },
+    {
+      "id": "gym_link",
+      "name": "",
+      "rect": [
+        1900,
+        3100,
+        600,
+        300
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "kitchen",
+      "name": "FOODS \u2022 THE ENCHANTED KITCHEN",
+      "rect": [
+        1100,
+        900,
+        2000,
+        1500
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "kitchen_link",
+      "name": "",
+      "rect": [
+        1900,
+        2250,
+        600,
+        500
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "drama",
+      "name": "DRAMA \u2022 THE BLACK BOX",
+      "rect": [
+        4750,
+        900,
+        2200,
+        1500
+      ],
+      "theme": "stage"
+    },
+    {
+      "id": "drama_link",
+      "name": "",
+      "rect": [
+        5550,
+        2250,
+        600,
+        500
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "library",
+      "name": "STUDENT COMMONS",
+      "rect": [
+        5000,
+        3450,
+        1850,
+        1400
+      ],
+      "theme": "carpet"
+    },
+    {
+      "id": "library_link",
+      "name": "",
+      "rect": [
+        5500,
+        3150,
+        500,
+        450
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "upper_hall",
+      "name": "UPPER FLOOR \u2022 THE FINAL EXAM",
+      "rect": [
+        9200,
+        2550,
+        5850,
+        800
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "upper_foyer",
+      "name": "",
+      "rect": [
+        11100,
+        3150,
+        1500,
+        1200
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "math_room",
+      "name": "MATHEMATICS & SCIENCE",
+      "rect": [
+        9200,
+        3600,
+        1500,
+        1100
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "math_link",
+      "name": "",
+      "rect": [
+        9650,
+        3200,
+        500,
+        550
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "humanities",
+      "name": "HUMANITIES",
+      "rect": [
+        13300,
+        3600,
+        1700,
+        1100
+      ],
+      "theme": "carpet"
+    },
+    {
+      "id": "humanities_link",
+      "name": "",
+      "rect": [
+        13900,
+        3200,
+        500,
+        550
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "exam",
+      "name": "THE FINAL EXAM",
+      "rect": [
+        10900,
+        650,
+        2300,
+        1650
+      ],
+      "theme": "exam"
+    },
+    {
+      "id": "exam_link",
+      "name": "",
+      "rect": [
+        11600,
+        2150,
+        700,
+        650
+      ],
+      "theme": "tile"
+    }
+  ],
+  "doors": [
+    {
+      "id": "front",
+      "pos": [
+        4050,
+        4900
+      ],
+      "size": [
+        1450,
+        45
+      ],
+      "requires": "",
+      "label": "Open door"
+    },
+    {
+      "id": "gym",
+      "pos": [
+        2200,
+        3260
+      ],
+      "size": [
+        600,
+        45
+      ],
+      "requires": "arrival",
+      "label": "Open door"
+    },
+    {
+      "id": "kitchen",
+      "pos": [
+        2200,
+        2400
+      ],
+      "size": [
+        600,
+        45
+      ],
+      "requires": "arrival",
+      "label": "Open door"
+    },
+    {
+      "id": "drama",
+      "pos": [
+        5850,
+        2400
+      ],
+      "size": [
+        600,
+        45
+      ],
+      "requires": "arrival",
+      "label": "Open door"
+    },
+    {
+      "id": "commons",
+      "pos": [
+        5750,
+        3450
+      ],
+      "size": [
+        500,
+        45
+      ],
+      "requires": "arrival",
+      "label": "Open door"
+    },
+    {
+      "id": "exam",
+      "pos": [
+        11950,
+        2300
+      ],
+      "size": [
+        700,
+        50
+      ],
+      "requires": "upper",
+      "label": "Clear the upstairs hallway to unlock the exam"
+    }
+  ],
+  "props": [
+    {
+      "kind": "school_desk",
+      "pos": [
+        9380,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        9600,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        9820,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        9380,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        9600,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        9820,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_board",
+      "pos": [
+        9950.0,
+        3680
+      ],
+      "size": [
+        230,
+        95
+      ],
+      "solid": [
+        210,
+        42
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        13480,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        13700,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        13920,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        14140,
+        3840
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        13480,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        13700,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        13920,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        14140,
+        4080
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_board",
+      "pos": [
+        14150.0,
+        3680
+      ],
+      "size": [
+        230,
+        95
+      ],
+      "solid": [
+        210,
+        42
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        11080,
+        890
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        11300,
+        890
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        11520,
+        890
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        11080,
+        1130
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        11300,
+        1130
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        11520,
+        1130
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_board",
+      "pos": [
+        12050.0,
+        730
+      ],
+      "size": [
+        230,
+        95
+      ],
+      "solid": [
+        210,
+        42
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        1400,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        1800,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        2200,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        6000,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        6400,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        6800,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        9600,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        10000,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        13500,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        14000,
+        2670
+      ],
+      "size": [
+        90,
+        125
+      ],
+      "solid": [
+        70,
+        48
+      ]
+    },
+    {
+      "kind": "school_curtain",
+      "pos": [
+        5850,
+        1020
+      ],
+      "size": [
+        470,
+        170
+      ],
+      "solid": [
+        370,
+        60
+      ]
+    },
+    {
+      "kind": "school_oven",
+      "pos": [
+        1300,
+        1100
+      ],
+      "size": [
+        200,
+        155
+      ],
+      "solid": [
+        165,
+        70
+      ]
+    },
+    {
+      "kind": "school_counter",
+      "pos": [
+        2800,
+        1100
+      ],
+      "size": [
+        220,
+        110
+      ],
+      "solid": [
+        195,
+        65
+      ]
+    },
+    {
+      "kind": "school_weightbench",
+      "pos": [
+        1450,
+        3400
+      ],
+      "size": [
+        250,
+        110
+      ],
+      "solid": [
+        205,
+        60
+      ]
+    },
+    {
+      "kind": "school_weightbench",
+      "pos": [
+        2750,
+        3400
+      ],
+      "size": [
+        250,
+        110
+      ],
+      "solid": [
+        205,
+        60
+      ]
+    },
+    {
+      "kind": "school_hoop",
+      "pos": [
+        2100,
+        3450
+      ],
+      "size": [
+        145,
+        160
+      ],
+      "solid": [
+        80,
+        50
+      ]
+    },
+    {
+      "kind": "school_bookshelf",
+      "pos": [
+        5400,
+        3670
+      ],
+      "size": [
+        220,
+        115
+      ],
+      "solid": [
+        195,
+        65
+      ]
+    },
+    {
+      "kind": "school_bookshelf",
+      "pos": [
+        6400,
+        3670
+      ],
+      "size": [
+        220,
+        115
+      ],
+      "solid": [
+        195,
+        65
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        1600,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        2600,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        3100,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        3600,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        4100,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        4600,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        5100,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        5600,
+        2685
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_bench",
+      "pos": [
+        1780.0,
+        5450
+      ],
+      "size": [
+        180,
+        95
+      ],
+      "solid": [
+        140,
+        48
+      ]
+    },
+    {
+      "kind": "school_bench",
+      "pos": [
+        5628.0,
+        5450
+      ],
+      "size": [
+        180,
+        95
+      ],
+      "solid": [
+        140,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        10400,
+        2690
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        11000,
+        2690
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        13000,
+        2690
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        14400,
+        2690
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "pos": [
+        4370,
+        2870
+      ],
+      "end": [
+        11750,
+        3850
+      ],
+      "requires": "departments",
+      "name": "Upstairs \u2022 Final Exam"
+    },
+    {
+      "pos": [
+        11750,
+        3850
+      ],
+      "end": [
+        4370,
+        2870
+      ],
+      "requires": "departments",
+      "name": "Downstairs \u2022 street exit"
+    }
+  ],
+  "gears": [],
+  "groups": {
+    "arrival": [
+      {
+        "type": "gravel_skater",
+        "pos": [
+          4050,
+          5200
+        ],
+        "hp": 124
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          3800,
+          4200
+        ],
+        "hp": 50
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          4250,
+          4000
+        ],
+        "hp": 44
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          4050,
+          3450
+        ],
+        "hp": 65
+      },
+      {
+        "type": "gravel_skater",
+        "pos": [
+          3550,
+          2900
+        ],
+        "hp": 124
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          4800,
+          2900
+        ],
+        "hp": 50
+      }
+    ],
+    "gym": [
+      {
+        "type": "gravel_skater",
+        "pos": [
+          1550,
+          3650
+        ],
+        "hp": 130
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          2550,
+          3650
+        ],
+        "hp": 68
+      },
+      {
+        "type": "hall_monitor",
+        "pos": [
+          1650,
+          4150
+        ],
+        "hp": 110
+      },
+      {
+        "type": "gravel_skater",
+        "pos": [
+          2600,
+          4400
+        ],
+        "hp": 130
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          2050,
+          4650
+        ],
+        "hp": 68
+      }
+    ],
+    "kitchen": [
+      {
+        "type": "culture_blob",
+        "pos": [
+          1650,
+          1450
+        ],
+        "hp": 52
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          2600,
+          1450
+        ],
+        "hp": 48
+      },
+      {
+        "type": "hall_monitor",
+        "pos": [
+          1550,
+          2100
+        ],
+        "hp": 115
+      },
+      {
+        "type": "culture_blob",
+        "pos": [
+          2550,
+          2100
+        ],
+        "hp": 52
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          2300,
+          1800
+        ],
+        "hp": 48
+      }
+    ],
+    "drama": [
+      {
+        "type": "gravel_skater",
+        "pos": [
+          5150,
+          1400
+        ],
+        "hp": 136
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          6500,
+          1400
+        ],
+        "hp": 48
+      },
+      {
+        "type": "hall_monitor",
+        "pos": [
+          5200,
+          2050
+        ],
+        "hp": 115
+      },
+      {
+        "type": "gravel_skater",
+        "pos": [
+          6500,
+          2100
+        ],
+        "hp": 136
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          5900,
+          1900
+        ],
+        "hp": 48
+      }
+    ],
+    "upper": [
+      {
+        "type": "hall_monitor",
+        "pos": [
+          11750,
+          3300
+        ],
+        "hp": 130
+      },
+      {
+        "type": "gravel_skater",
+        "pos": [
+          10750,
+          2900
+        ],
+        "hp": 153
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          12850,
+          2900
+        ],
+        "hp": 55
+      },
+      {
+        "type": "culture_blob",
+        "pos": [
+          9800,
+          4200
+        ],
+        "hp": 58
+      },
+      {
+        "type": "hall_monitor",
+        "pos": [
+          14300,
+          4150
+        ],
+        "hp": 130
+      },
+      {
+        "type": "gravel_skater",
+        "pos": [
+          9900,
+          2850
+        ],
+        "hp": 153
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          14100,
+          2850
+        ],
+        "hp": 55
+      },
+      {
+        "type": "culture_blob",
+        "pos": [
+          12300,
+          3150
+        ],
+        "hp": 58
+      }
+    ]
+  },
+  "stages": [],
+  "departments": [
+    {
+      "id": "drama",
+      "boss": "spotlight_sovereign",
+      "pos": [
+        5880,
+        1430
+      ]
+    },
+    {
+      "id": "kitchen",
+      "boss": "layercake_golem",
+      "pos": [
+        2150,
+        1520
+      ]
+    },
+    {
+      "id": "gym",
+      "boss": "iron_barbell",
+      "pos": [
+        2150,
+        4100
+      ]
+    }
+  ]
+}

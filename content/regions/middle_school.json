@@ -1,0 +1,17 @@
+{
+  "id": "middle_school",
+  "name": "Crossbell Middle School",
+  "size": [
+    8600,
+    7000
+  ],
+  "terrain": "school_tile",
+  "scene": "res://scenes/realms/middle_school.tscn",
+  "school_campaign": "res://content/schools/middle_school.json",
+  "boss_sprite": "bellwork_colossus",
+  "boss_health": 1100,
+  "xp_per_level": 3,
+  "difficulty_label": "Medium \u2014 three clubs, a cafeteria guardian and the bell tower",
+  "description": "Recover the Quiet, Curiosity and Teamwork bell gears from three school wings. Break the cafeteria guardian\u2019s spell, climb to the rooftop and stop the Bellwork Colossus before returning to the street.",
+  "difficulty_tier": "medium"
+}

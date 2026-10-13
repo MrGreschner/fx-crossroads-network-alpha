@@ -1,0 +1,114 @@
+{
+  "id": "bracken",
+  "name": "Bracken of Moonburrow",
+  "sprite": "bracken",
+  "max_health": 115,
+  "speed": 245,
+  "run_cost": 0,
+  "lore": "A fox sapper from Moonburrow Hollow, guarding the moonstone warrens from unstable mines and the restless Warren King.",
+  "primary": {
+    "name": "Moonstone Mines",
+    "style": "manual_mines",
+    "damage": 38,
+    "cooldown": 0.65,
+    "range": 100,
+    "radius": 95,
+    "duration": 12,
+    "color": "#edbf77",
+    "description": "Clicks one and two plant a mine nearby in your aim direction. Click three detonates both for 38 damage each within 95 units. Mines expire after 12 seconds."
+  },
+  "secondary": {
+    "name": "Burrow Bloom",
+    "style": "ground_sequence",
+    "damage": 12,
+    "cooldown": 5.5,
+    "count": 3,
+    "spacing": 85,
+    "interval": 0.24,
+    "radius": 65,
+    "slow_duration": 1.5,
+    "color": "#c9a4eb",
+    "description": "Three ground eruptions advance along your aim. Each deals 12 damage and slows enemies for 1.5 seconds."
+  },
+  "special": {
+    "name": "Foxfire Escape",
+    "style": "blink_bomb",
+    "damage": 62,
+    "cooldown": 15,
+    "range": 280,
+    "radius": 115,
+    "fuse": 1,
+    "color": "#edbf77",
+    "description": "Teleport up to 280 units along your aim, stopping before walls. Leave a glowing bomb at your old position; after 1 second it explodes for 62 damage within 115 units."
+  },
+  "passive": "Wide Fuse: mine explosions gain 20 units of radius.",
+  "passive_effect": "wide_mines",
+  "mastery": {
+    "title": "Moonburrow Demolitionist",
+    "technique": {
+      "name": "Clockwork Grenades",
+      "ability": "primary",
+      "description": "Throw up to three timed grenades. They explode after 1.4s without a detonation click, dealing 20% less damage. Reach becomes 190.",
+      "multiply": {
+        "damage": 0.8
+      },
+      "set": {
+        "timed_mines": true,
+        "duration": 1.4,
+        "range": 190
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Burrow Cover",
+      "ability": "special",
+      "description": "Place a 3s burrow field with six 4-damage pulses, small 1HP ally heals and slow. Gives up teleporting and the departure bomb.",
+      "attack": {
+        "name": "Burrow Cover",
+        "style": "master_fountain",
+        "damage": 4,
+        "cooldown": 12,
+        "color": "#a7bf80",
+        "range": 120,
+        "radius": 120,
+        "heal": 1,
+        "duration": 3,
+        "slow_duration": 0.6,
+        "slow": 0.7,
+        "description": "Place a 3s burrow field with six 4-damage pulses, small 1HP ally heals and slow. Gives up teleporting and the departure bomb.",
+        "visual_texture": "res://assets/mastery_bracken_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

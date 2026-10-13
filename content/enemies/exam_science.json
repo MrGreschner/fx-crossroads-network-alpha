@@ -1,0 +1,12 @@
+{
+  "id": "exam_science",
+  "name": "Final Exam: Science",
+  "sprite": "exam_science",
+  "health": 2000,
+  "speed": 100,
+  "damage": 24,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_exam_science",
+  "expansion_only": true
+}

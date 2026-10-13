@@ -1,0 +1,10 @@
+{
+  "id": "iron_bark",
+  "name": "Iron Bark",
+  "cost": 32,
+  "effect": "armor",
+  "amount": 6,
+  "description": "Reduce each hit by 6.",
+  "duration": 3,
+  "radius": 145
+}

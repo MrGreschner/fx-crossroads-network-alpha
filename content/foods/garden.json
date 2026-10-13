@@ -1,0 +1,166 @@
+{
+  "orchard0": {
+    "name": "Sunapple Sapling",
+    "family": "orchard",
+    "tier": 0,
+    "need": 0,
+    "food": "sunapple",
+    "cost": 6
+  },
+  "orchard1": {
+    "name": "Iron Plum Tree",
+    "family": "orchard",
+    "tier": 1,
+    "need": 1,
+    "food": "iron_plum",
+    "cost": 8
+  },
+  "orchard2": {
+    "name": "Clear Peach Tree",
+    "family": "orchard",
+    "tier": 2,
+    "need": 3,
+    "food": "clear_peach",
+    "cost": 10
+  },
+  "orchard3": {
+    "name": "Golden Apple Tree",
+    "family": "orchard",
+    "tier": 3,
+    "need": 6,
+    "food": "golden_apple",
+    "cost": 12
+  },
+  "river0": {
+    "name": "Mint Patch",
+    "family": "river",
+    "tier": 0,
+    "need": 0,
+    "food": "mint_leaf",
+    "cost": 6
+  },
+  "river1": {
+    "name": "Cool Cucumber Vine",
+    "family": "river",
+    "tier": 1,
+    "need": 1,
+    "food": "cool_cucumber",
+    "cost": 8
+  },
+  "river2": {
+    "name": "River Melon Vine",
+    "family": "river",
+    "tier": 2,
+    "need": 3,
+    "food": "river_melon",
+    "cost": 10
+  },
+  "river3": {
+    "name": "Star Melon Vine",
+    "family": "river",
+    "tier": 3,
+    "need": 6,
+    "food": "star_melon",
+    "cost": 12
+  },
+  "roots0": {
+    "name": "Berry Bed",
+    "family": "roots",
+    "tier": 0,
+    "need": 0,
+    "food": "berry_bun",
+    "cost": 6
+  },
+  "roots1": {
+    "name": "Roasting Roots",
+    "family": "roots",
+    "tier": 1,
+    "need": 1,
+    "food": "root_roast",
+    "cost": 8
+  },
+  "roots2": {
+    "name": "Stew Garden",
+    "family": "roots",
+    "tier": 2,
+    "need": 3,
+    "food": "hearty_stew",
+    "cost": 10
+  },
+  "roots3": {
+    "name": "Silver Pear Tree",
+    "family": "roots",
+    "tier": 3,
+    "need": 6,
+    "food": "silver_pear",
+    "cost": 12
+  },
+  "flowers0": {
+    "name": "Antidote Pear Seed",
+    "family": "flowers",
+    "tier": 0,
+    "need": 0,
+    "food": "antidote_pear",
+    "cost": 8
+  },
+  "flowers1": {
+    "name": "Moonberry Bush",
+    "family": "flowers",
+    "tier": 1,
+    "need": 1,
+    "food": "moonberry_tart",
+    "cost": 8
+  },
+  "flowers2": {
+    "name": "Tea Blossom",
+    "family": "flowers",
+    "tier": 2,
+    "need": 3,
+    "food": "cleansing_tea",
+    "cost": 10
+  },
+  "flowers3": {
+    "name": "Dawn Bloom",
+    "family": "flowers",
+    "tier": 3,
+    "need": 6,
+    "food": "dawn_bloom",
+    "cost": 12
+  },
+  "forage_sun": {
+    "name": "Sunleaf Tea Shrub",
+    "family": "flowers",
+    "tier": 4,
+    "need": 0,
+    "food": "forage_sun_food",
+    "cost": 8,
+    "rare": true
+  },
+  "forage_mint": {
+    "name": "River Mint Patch",
+    "family": "river",
+    "tier": 4,
+    "need": 0,
+    "food": "forage_mint_food",
+    "cost": 8,
+    "rare": true
+  },
+  "forage_moon": {
+    "name": "Mooncap Nursery",
+    "family": "roots",
+    "tier": 4,
+    "need": 0,
+    "food": "forage_moon_food",
+    "cost": 8,
+    "rare": true
+  },
+  "forage_glow": {
+    "name": "Glowberry Bush",
+    "family": "orchard",
+    "tier": 4,
+    "need": 0,
+    "food": "forage_glow_food",
+    "cost": 8,
+    "rare": true
+  }
+}

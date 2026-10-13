@@ -1,0 +1,70 @@
+extends SceneTree
+var failures:=0
+func check(ok:bool,label:String)->void:
+ if not ok:failures+=1;print("FAIL: ",label)
+func _initialize()->void:call_deferred("run")
+func choose(g:Node,id:String)->void:
+ g.character_id=id;g.selected_character=id;g.hero=g.characters[id];g.health=g.max_health();g.level=10;g.cooldowns={"primary":0.0,"secondary":0.0,"special":0.0};g.enemies.clear();g.adventure.combat.setup("practice");g.position_in_world=Vector2(1000,1000);g.test_target=Vector2(1200,1000)
+func run()->void:
+ root.set_meta("fx_intro_seen",true)
+ var g=load("res://scenes/main.tscn").instantiate();g.set_script(load("res://tests/v82_input_game.gd"));root.add_child(g);await process_frame;g.set_process(false);g.legacy.set_process(false);g.hero_hall.set_process(false);g.presentation.asked=true;g.inventory.clear();g.legacy.data=g.legacy.defaults()
+ check(g.characters.size()>=60,"60 available heroes")
+ for id in g.characters:check(int(g.characters[id].get("run_cost",0))==0,"all heroes unlocked "+id)
+ for id in ["briar","recess","votary","teacher"]:
+  for pose in ["idle","walk1","walk2","attack"]:check(ResourceLoader.exists("res://assets/"+id+"_"+pose+".png"),"four poses "+id+pose)
+  check(g.characters[id].mastery.technique.ability!=g.characters[id].mastery.final_technique.ability,"independent mastery slots "+id)
+ var hall=g.hero_hall;g.mode="town";g.menu="characters";hall._process(.01)
+ check(hall.panel.visible and hall.shown.size()>=60,"native full roster opens")
+ hall.favourite("teacher");check(hall.shown[0]=="teacher","favourite pinned")
+ var portable:Dictionary=g.legacy.bundle();check(g.legacy.validate(portable) and portable.progress.favourites.has("teacher"),"favourites included in valid portable profile")
+ var bad:Dictionary=portable.duplicate(true);bad.progress.tasks=[];check(not g.legacy.validate(bad),"malformed tasks rejected without crashing")
+ bad=portable.duplicate(true);bad.progress.favourites=[3];check(not g.legacy.validate(bad),"invalid favourite types rejected")
+ hall.filter_role("Support");check("recess" in hall.shown and "teacher" in hall.shown and "votary" not in hall.shown,"role filter uses tags")
+ hall.role="All";hall.difficulty="Easy to learn";hall.refresh();check("recess" in hall.shown and "briar" not in hall.shown,"difficulty filter")
+ hall.difficulty="Any difficulty";hall.query="teacher";hall.refresh();check(hall.shown==["teacher"],"name search")
+ hall.query="";hall.refresh();hall.select("teacher");hall.close();check(g.menu.is_empty() and not hall.panel.visible and g.selected_character=="teacher","selection closes without stuck controls")
+ # Backup recovers the last successfully written profile after a truncated save.
+ var store=load("res://scripts/profile_store.gd");var path:="user://v86-save-test.json";store.erase(path)
+ check(store.write(path,{"name":"first"})==OK and store.write(path,{"name":"second"})==OK,"save writes succeed")
+ var file:=FileAccess.open(path,FileAccess.WRITE);file.store_string("{");file.close();check(store.read(path).get("name","")=="first","truncated primary recovers last-good backup");store.erase(path)
+ g.enter_region("practice");g.menu="";g.obstacles.clear();g.scenery_tiles.clear();g.invulnerable_time=0
+ var c=g.adventure.combat;var r=c.release_heroes
+ choose(g,"teacher");g.adventure.spawn("bramble",Vector2(1060,1000),500,false);g.test_target=Vector2(1060,1000);g.fire("primary")
+ for n in 8:c.step(.02)
+ check(float(g.enemies[0].hp)<=475,"teacher melee and projectile both hit close foe")
+ r.holding("solo",true);g.cooldowns.secondary=0;g.fire("secondary");check(r.classes.has("solo"),"held classroom starts")
+ var start:Vector2=g.enemies[0].pos;r.step(.1);check(c.stunned(c.npc_key(g.enemies[0])) and g.enemies[0].pos.x<start.x,"caught enemy cannot attack and is pulled")
+ check(absf(c.speed_factor("p:solo")-.45)<.01,"teacher moves at45 percent while holding")
+ check(c.v56.catch_shot(Vector2(1120,1000),Vector2(1100,1000),"enemy",15,"#ffffff"),"capture incoming projectile")
+ check(r.classes.solo.captured.size()==1,"captured projectile is visible")
+ var hp:float=g.enemies[0].hp;r.step(.5);check(float(g.enemies[0].hp)<hp,"pull ticks damage")
+ r.holding("solo",false);r.step(.01);check(not r.classes.has("solo") and g.enemies[0].pos.x>1100,"release pushes and destroys captured shots")
+ g.position_in_world=Vector2(1000,1000);g.health=80;g.test_target=Vector2(1250,1000);g.cooldowns.special=0;g.pulse();r.step(.21)
+ check(g.position_in_world.distance_to(Vector2(1250,1000))<1 and g.health==92,"master key teleport and capped heal")
+ check(absf(c.reduction("solo")-.2)<.01,"master key ward")
+ var ticket:Dictionary=g.hero.mastery.final_technique.attack;c.v79.prepare("solo",ticket,Vector2.RIGHT,Vector2(1400,1000));r.cast("solo",ticket,Vector2.RIGHT,0);r.step(.21);r.step(3.1)
+ check(g.position_in_world.distance_to(Vector2(1250,1000))<1,"return ticket safely returns")
+ choose(g,"briar");g.adventure.spawn("bramble",Vector2(1100,1000),500,false);g.test_target=Vector2(1300,1000);g.fire("primary");r.step(.2);g.fire("secondary")
+ check(r.shots[0].style=="charged_acorn" and float(r.shots[0].damage)==27,"kick upgrades a nearby airborne acorn")
+ for n in 30:r.step(.025)
+ check(float(g.enemies[0].hp)>=445,"acorn cannot repeatedly damage same foe")
+ g.cooldowns.special=0;g.pulse();for_step(r,30,.03)
+ check(not r.locked("solo") and g.position_in_world.distance_to(Vector2(1300,1000))<1,"canopy crossing lands at exact aimed point")
+ check(c.effect_time("p:solo","guard")>0,"woodland passive ward on landing")
+ choose(g,"recess");g.health=80;g.test_target=g.position_in_world;c.apply_status("p:solo","poison",5,"enemy",2);g.fire("secondary");for_step(r,40,.09)
+ check(g.health>=92 and c.effect_time("p:solo","poison")==0,"snack heals and cleanses")
+ g.cooldowns.special=0;g.test_target=Vector2(1300,1000);g.pulse();check(r.fields.any(func(f):return f.style=="patrol"),"patrol special dispatch")
+ choose(g,"votary");g.adventure.spawn("bramble",Vector2(1060,1000),500,false);g.health=60;g.fire("primary");check(g.health==56 and float(r.debt.solo)==4,"health cost recorded without enemy damage")
+ g.fire("secondary");check(g.health==46 and absf(c.reduction("solo")-.45)<.01,"covenant health cost and ward")
+ g.cooldowns.primary=0;g.fire("primary");check(g.health==45,"one crescent hit restores3 after cost4")
+ g.health=1;g.cooldowns.primary=0;g.fire("primary");check(g.health>=1,"spending health never kills owner")
+ g.cooldowns.special=0;g.pulse();check(r.shots.size()==5 and float(r.debt.solo)==0,"debt launches five blades and consumes reserve")
+ for id in ["briar","recess","votary","teacher"]:
+  choose(g,id)
+  for alt in [g.hero.mastery.technique,g.hero.mastery.final_technique]:
+   var stats:Dictionary=alt.get("attack",g.hero[alt.ability].duplicate(true))
+   for key in alt.get("set",{}):stats[key]=alt.set[key]
+   c.v79.prepare("solo",stats,Vector2.RIGHT,g.test_target);check(r.cast("solo",stats,Vector2.RIGHT,float(stats.damage)),"mastery style implemented "+id);r.step(.1)
+ print("v86 release failures: ",failures);g.queue_free();await process_frame;quit(failures)
+func for_step(r:Node,count:int,delta:float)->void:
+ for n in count:r.step(delta)

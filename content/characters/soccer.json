@@ -1,0 +1,103 @@
+{
+  "id": "soccer",
+  "name": "Crosswind Striker",
+  "sprite": "soccer",
+  "max_health": 105,
+  "speed": 250,
+  "run_cost": 0,
+  "primary": {
+    "name": "Driven Shot",
+    "style": "projectile",
+    "damage": 21,
+    "cooldown": 0.7,
+    "range": 420,
+    "speed": 610,
+    "color": "#e8f3ed"
+  },
+  "secondary": {
+    "name": "Slide Tackle",
+    "style": "charge",
+    "damage": 30,
+    "cooldown": 3.8,
+    "range": 190,
+    "speed": 600,
+    "color": "#a0efd3"
+  },
+  "special": {
+    "name": "Team Huddle",
+    "style": "heal_zone",
+    "damage": 0,
+    "cooldown": 15,
+    "duration": 5,
+    "radius": 125,
+    "heal_per_tick": 6,
+    "color": "#91efad"
+  },
+  "passive": "Second Wind: primary cooldown is 20% shorter.",
+  "passive_effect": "quick_primary",
+  "mastery": {
+    "title": "Crosswind Captain",
+    "technique": {
+      "name": "Wider Huddle",
+      "ability": "special",
+      "description": "Heal across a 35% wider radius, restoring 4 HP per tick instead of 6.",
+      "multiply": {
+        "radius": 1.35,
+        "heal_per_tick": 0.6666666666666666
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Corner-Kick Markers",
+      "ability": "secondary",
+      "description": "Lob two delayed goal markers for 16 damage each. Trades the charge and its movement for careful ranged placement.",
+      "attack": {
+        "name": "Corner-Kick Markers",
+        "style": "master_sigils",
+        "damage": 16,
+        "cooldown": 4,
+        "color": "#d8edb3",
+        "range": 260,
+        "radius": 58,
+        "count": 2,
+        "spacing": 55,
+        "charge": 0.45,
+        "duration": 1.8,
+        "description": "Lob two delayed goal markers for 16 damage each. Trades the charge and its movement for careful ranged placement.",
+        "visual_texture": "res://assets/mastery_soccer_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

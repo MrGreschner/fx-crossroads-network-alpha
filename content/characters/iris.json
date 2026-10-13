@@ -1,0 +1,101 @@
+{
+  "id": "iris",
+  "name": "Iris Chalkbinder",
+  "sprite": "iris",
+  "run_cost": 0,
+  "max_health": 105,
+  "speed": 235,
+  "lore": "A travelling tutor who carries enchanted chalk and turns forgotten lessons into pathways of light.",
+  "primary": {
+    "name": "Chalkstroke",
+    "style": "chalkstroke",
+    "damage": 16,
+    "cooldown": 0.7,
+    "range": 250,
+    "duration": 4,
+    "description": "Draw a 250-unit chalk line over 0.45s. It lasts 4s and damages each enemy touching it once for 16. Keep up to three lines; walls stop the drawing."
+  },
+  "secondary": {
+    "name": "Erase & Release",
+    "style": "erase_release",
+    "damage": 12,
+    "cooldown": 7,
+    "description": "Erase your chalk lines. Each releases two seeking chalk shards for 12 damage each. With no lines, release one shard."
+  },
+  "special": {
+    "name": "Living Blackboard",
+    "style": "chalk_grid",
+    "damage": 7,
+    "cooldown": 18,
+    "range": 180,
+    "duration": 4,
+    "description": "Draw a 300 by 220 grid ahead for 4s. Enemies inside move 35% slower and take 7 damage every half-second. Walls block its damage."
+  },
+  "passive": "Second Draft: Erase & Release heals you for 3 health per erased line.",
+  "passive_effect": "second_draft",
+  "mastery": {
+    "title": "Chalk Grandmaster",
+    "technique": {
+      "name": "Patient Chalk",
+      "ability": "primary",
+      "description": "Chalk lines remain 50% longer, but deal 20% less contact damage.",
+      "multiply": {
+        "duration": 1.5,
+        "damage": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "The Last Underline",
+      "ability": "special",
+      "description": "Draw a charged 72-damage underline that slows for 1s. Replaces the chalk grid with one narrow piercing sentence.",
+      "attack": {
+        "name": "The Last Underline",
+        "style": "master_lance",
+        "damage": 72,
+        "cooldown": 12,
+        "color": "#e7dfb0",
+        "range": 500,
+        "width": 48,
+        "charge": 0.75,
+        "duration": 1.5,
+        "slow_duration": 1,
+        "slow": 0.7,
+        "description": "Draw a charged 72-damage underline that slows for 1s. Replaces the chalk grid with one narrow piercing sentence.",
+        "visual_texture": "res://assets/mastery_iris_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

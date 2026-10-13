@@ -1,0 +1,96 @@
+{
+  "id": "cindervane",
+  "name": "Cindervane",
+  "sprite": "cindervane",
+  "max_health": 115,
+  "speed": 225,
+  "run_cost": 0,
+  "lore": "A proud ember phoenix. Close wing cuts bank up to three feathers; spend the rhythm on a curving ascent. Glowing tail embers and unfurled wings mark its flight.",
+  "primary": {
+    "name": "Wing Cuts",
+    "style": "v90_wing",
+    "damage": 12,
+    "cooldown": 0.75,
+    "range": 100,
+    "description": "Two timed wing cuts, 12 damage each. Land a cut to bank a feather (up to three)."
+  },
+  "secondary": {
+    "name": "Cinder Ascent",
+    "style": "v90_ascent",
+    "damage": 20,
+    "cooldown": 6,
+    "range": 210,
+    "description": "Banked feathers extend a curling leap, each adds 35 reach. Land for 20 damage and burn. The phoenix unfurls its wings."
+  },
+  "special": {
+    "name": "Phoenix Ring",
+    "style": "v90_phoenix",
+    "damage": 10,
+    "cooldown": 16,
+    "range": 145,
+    "description": "Three rotating wing sweeps over 1.2s, each 10 damage and burn. Spend all banked feathers to heal 3 HP per feather. Leave a stationary smoke ring for 5.5 seconds; allied heroes inside have a 12% chance to dodge each incoming direct hit. Does not dodge damage-over-time."
+  },
+  "passive": "Ash Rebirth: on defeat, return at the same spot after 3 seconds with 50% maximum health. Once per 120 seconds; unlocked at level 5.",
+  "passive_effect": "ash_rebirth",
+  "mastery": {
+    "title": "Emberwing Sovereign",
+    "technique": {
+      "name": "Patient Wings",
+      "ability": "primary",
+      "attack": {
+        "name": "Patient Wings",
+        "style": "v90_wing",
+        "damage": 15,
+        "cooldown": 1,
+        "range": 120,
+        "description": "Two heavier cuts, 15 each; longer recovery."
+      },
+      "description": "Longer reach and heavier cuts, slower rhythm."
+    },
+    "final_technique": {
+      "name": "Ash Nest",
+      "ability": "special",
+      "attack": {
+        "name": "Ash Nest",
+        "style": "v90_nest",
+        "damage": 0,
+        "cooldown": 20,
+        "range": 150,
+        "description": "Leave a six-second ash nest. Allies inside heal 3 HP/sec; enemies take 3 burn damage/sec."
+      },
+      "description": "Trade the three offensive sweeps for a small stationary refuge."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

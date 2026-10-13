@@ -1,0 +1,12 @@
+{
+  "id": "mercy_cantor",
+  "name": "Mercy Cantor",
+  "sprite": "mercy_cantor",
+  "health": 110,
+  "speed": 82,
+  "damage": 10,
+  "behaviour": "custom",
+  "custom_attack": "v43_mercy_cantor",
+  "aggro_range": 720,
+  "expansion_only": true
+}

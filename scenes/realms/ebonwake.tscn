@@ -1,0 +1,127 @@
+[gd_scene format=3]
+
+[node name="Ebonwake" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+position = Vector2(430, 2700)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+position = Vector2(250, 2700)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+position = Vector2(760, 2500)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+position = Vector2(7750, 3500)
+
+[node name="Enemy0" type="Marker2D" parent="Enemies"]
+position = Vector2(1100, 2400)
+metadata/enemy_id = "ashen_revenant"
+
+[node name="Enemy1" type="Marker2D" parent="Enemies"]
+position = Vector2(1250, 2950)
+metadata/enemy_id = "gravity_husk"
+
+[node name="Enemy2" type="Marker2D" parent="Enemies"]
+position = Vector2(2500, 1800)
+metadata/enemy_id = "mercy_cantor"
+
+[node name="Enemy3" type="Marker2D" parent="Enemies"]
+position = Vector2(2150, 2300)
+metadata/enemy_id = "ashen_revenant"
+
+[node name="Enemy4" type="Marker2D" parent="Enemies"]
+position = Vector2(2950, 2100)
+metadata/enemy_id = "ashen_revenant"
+
+[node name="Enemy5" type="Marker2D" parent="Enemies"]
+position = Vector2(3100, 1300)
+metadata/enemy_id = "chrysalis_knight"
+
+[node name="Enemy6" type="Marker2D" parent="Enemies"]
+position = Vector2(2550, 1100)
+metadata/enemy_id = "singularity_oracle"
+
+[node name="Enemy7" type="Marker2D" parent="Enemies"]
+position = Vector2(4400, 1200)
+metadata/enemy_id = "brood_reliquary"
+
+[node name="Enemy8" type="Marker2D" parent="Enemies"]
+position = Vector2(5250, 1500)
+metadata/enemy_id = "brood_reliquary"
+
+[node name="Enemy9" type="Marker2D" parent="Enemies"]
+position = Vector2(4550, 2000)
+metadata/enemy_id = "ashen_revenant"
+
+[node name="Enemy10" type="Marker2D" parent="Enemies"]
+position = Vector2(5200, 1000)
+metadata/enemy_id = "mercy_cantor"
+
+[node name="Enemy11" type="Marker2D" parent="Enemies"]
+position = Vector2(4900, 1850)
+metadata/enemy_id = "singularity_oracle"
+
+[node name="Enemy12" type="Marker2D" parent="Enemies"]
+position = Vector2(4780, 2800)
+metadata/enemy_id = "gravity_husk"
+
+[node name="Enemy13" type="Marker2D" parent="Enemies"]
+position = Vector2(4450, 3800)
+metadata/enemy_id = "chrysalis_knight"
+
+[node name="Enemy14" type="Marker2D" parent="Enemies"]
+position = Vector2(5350, 4200)
+metadata/enemy_id = "chrysalis_knight"
+
+[node name="Enemy15" type="Marker2D" parent="Enemies"]
+position = Vector2(4700, 4800)
+metadata/enemy_id = "chrysalis_knight"
+
+[node name="Enemy16" type="Marker2D" parent="Enemies"]
+position = Vector2(5300, 4800)
+metadata/enemy_id = "mercy_cantor"
+
+[node name="Enemy17" type="Marker2D" parent="Enemies"]
+position = Vector2(4250, 5100)
+metadata/enemy_id = "ashen_revenant"
+
+[node name="Enemy18" type="Marker2D" parent="Enemies"]
+position = Vector2(4500, 4500)
+metadata/enemy_id = "brood_reliquary"
+
+[node name="Enemy19" type="Marker2D" parent="Enemies"]
+position = Vector2(5450, 3700)
+metadata/enemy_id = "singularity_oracle"
+
+[node name="Enemy20" type="Marker2D" parent="Enemies"]
+position = Vector2(6100, 4150)
+metadata/enemy_id = "gravity_husk"
+
+[node name="Enemy21" type="Marker2D" parent="Enemies"]
+position = Vector2(6800, 3000)
+metadata/enemy_id = "ashen_revenant"
+
+[node name="Enemy22" type="Marker2D" parent="Enemies"]
+position = Vector2(8150, 2800)
+metadata/enemy_id = "chrysalis_knight"
+
+[node name="Enemy23" type="Marker2D" parent="Enemies"]
+position = Vector2(8100, 4100)
+metadata/enemy_id = "mercy_cantor"
+
+[node name="Enemy24" type="Marker2D" parent="Enemies"]
+position = Vector2(7100, 4050)
+metadata/enemy_id = "brood_reliquary"
+
+[node name="Enemy25" type="Marker2D" parent="Enemies"]
+position = Vector2(7550, 2900)
+metadata/enemy_id = "singularity_oracle"

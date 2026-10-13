@@ -1,0 +1,107 @@
+{
+  "id": "snowman",
+  "sprite": "snowman",
+  "run_cost": 0,
+  "name": "Snowdrift",
+  "max_health": 130,
+  "speed": 180,
+  "lore": "An abandoned snow sculpture determined to see every season. Moves with a gentle icy glide: acceleration, gradual turns and a short coast when released.",
+  "primary": {
+    "name": "Snowball",
+    "style": "projectile",
+    "damage": 18,
+    "cooldown": 0.65,
+    "range": 360,
+    "speed": 360,
+    "color": "#e9f7ff"
+  },
+  "secondary": {
+    "name": "Ice Chill",
+    "style": "chill_aura",
+    "damage": 0,
+    "cooldown": 10,
+    "duration": 4,
+    "radius": 145,
+    "slow": 0.55,
+    "reduction": 0.3,
+    "description": "For 4 seconds, nearby enemies move 45% slower and you take 30% less damage."
+  },
+  "special": {
+    "name": "Rolling Snowball",
+    "style": "rolling_snow",
+    "damage": 22,
+    "cooldown": 13,
+    "range": 480,
+    "speed": 250,
+    "description": "A growing snowball explodes on impact: 22\u201358 damage, knockback, and six small snowballs dealing 5 damage each."
+  },
+  "passive": "Packed Snow: take 10% less damage.",
+  "passive_effect": "guard",
+  "mastery": {
+    "title": "Winter Sovereign",
+    "technique": {
+      "name": "Patient Winter",
+      "ability": "secondary",
+      "description": "Ice Chill lasts 50% longer, but recharges 50% slower.",
+      "multiply": {
+        "duration": 1.5,
+        "cooldown": 1.5
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Snowdrift Orchard",
+      "ability": "special",
+      "description": "Three snow blooms burst after a warning for 20 each and 2s slow. Trades the growing snowball and fragments for predictable ground coverage.",
+      "attack": {
+        "name": "Snowdrift Orchard",
+        "style": "master_sigils",
+        "damage": 20,
+        "cooldown": 12,
+        "color": "#b9e7f1",
+        "range": 260,
+        "radius": 75,
+        "count": 3,
+        "spacing": 65,
+        "charge": 0.55,
+        "duration": 1.8,
+        "slow_duration": 2,
+        "slow": 0.65,
+        "description": "Three snow blooms burst after a warning for 20 each and 2s slow. Trades the growing snowball and fragments for predictable ground coverage.",
+        "visual_texture": "res://assets/mastery_snowman_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

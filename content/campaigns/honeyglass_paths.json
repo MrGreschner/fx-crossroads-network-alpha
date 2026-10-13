@@ -1,0 +1,1330 @@
+{
+  "id": "honeyglass",
+  "name": "Honeyglass Gardens",
+  "size": [
+    8600,
+    5400
+  ],
+  "spawn": [
+    420,
+    3700
+  ],
+  "exit": [
+    7800,
+    1200
+  ],
+  "boss_type": "glass_queen",
+  "floors": [
+    {
+      "name": "Wildflower Approach",
+      "rect": [
+        120,
+        3150,
+        1450,
+        1200
+      ],
+      "kind": "meadow",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "kind": "trail",
+      "stage": 0,
+      "poly": [
+        [
+          1120.0,
+          3594.0
+        ],
+        [
+          1121.826891219729,
+          3584.815597623238
+        ],
+        [
+          1127.029437251523,
+          3577.0294372515227
+        ],
+        [
+          1134.8155976232379,
+          3571.826891219729
+        ],
+        [
+          1144.0,
+          3570.0
+        ],
+        [
+          2006.0,
+          3570.0
+        ],
+        [
+          2015.1844023767621,
+          3571.826891219729
+        ],
+        [
+          2022.970562748477,
+          3577.0294372515227
+        ],
+        [
+          2028.173108780271,
+          3584.815597623238
+        ],
+        [
+          2030.0,
+          3594.0
+        ],
+        [
+          2030.0,
+          3806.0
+        ],
+        [
+          2028.173108780271,
+          3815.184402376762
+        ],
+        [
+          2022.970562748477,
+          3822.9705627484773
+        ],
+        [
+          2015.1844023767621,
+          3828.173108780271
+        ],
+        [
+          2006.0,
+          3830.0
+        ],
+        [
+          1144.0,
+          3830.0
+        ],
+        [
+          1134.8155976232379,
+          3828.173108780271
+        ],
+        [
+          1127.029437251523,
+          3822.9705627484773
+        ],
+        [
+          1121.826891219729,
+          3815.184402376762
+        ],
+        [
+          1120.0,
+          3806.0
+        ]
+      ]
+    },
+    {
+      "name": "Amber Vestibule",
+      "poly": [
+        [
+          2360,
+          3700
+        ],
+        [
+          2130,
+          4098
+        ],
+        [
+          1670,
+          4098
+        ],
+        [
+          1440,
+          3700
+        ],
+        [
+          1670,
+          3302
+        ],
+        [
+          2130,
+          3302
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Apiary Gallery",
+      "poly": [
+        [
+          3410,
+          3700
+        ],
+        [
+          3180,
+          4098
+        ],
+        [
+          2720,
+          4098
+        ],
+        [
+          2490,
+          3700
+        ],
+        [
+          2720,
+          3302
+        ],
+        [
+          3180,
+          3302
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Prism Nursery",
+      "poly": [
+        [
+          3410,
+          2400
+        ],
+        [
+          3180,
+          2798
+        ],
+        [
+          2720,
+          2798
+        ],
+        [
+          2490,
+          2400
+        ],
+        [
+          2720,
+          2002
+        ],
+        [
+          3180,
+          2002
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Secret Nectar Cell",
+      "poly": [
+        [
+          2360,
+          2400
+        ],
+        [
+          2130,
+          2798
+        ],
+        [
+          1670,
+          2798
+        ],
+        [
+          1440,
+          2400
+        ],
+        [
+          1670,
+          2002
+        ],
+        [
+          2130,
+          2002
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Honeydew Junction",
+      "poly": [
+        [
+          3410,
+          1100
+        ],
+        [
+          3180,
+          1498
+        ],
+        [
+          2720,
+          1498
+        ],
+        [
+          2490,
+          1100
+        ],
+        [
+          2720,
+          702
+        ],
+        [
+          3180,
+          702
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Glass Orchard",
+      "poly": [
+        [
+          4560,
+          1100
+        ],
+        [
+          4330,
+          1498
+        ],
+        [
+          3870,
+          1498
+        ],
+        [
+          3640,
+          1100
+        ],
+        [
+          3870,
+          702
+        ],
+        [
+          4330,
+          702
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Comb Crossroads",
+      "poly": [
+        [
+          4560,
+          2400
+        ],
+        [
+          4330,
+          2798
+        ],
+        [
+          3870,
+          2798
+        ],
+        [
+          3640,
+          2400
+        ],
+        [
+          3870,
+          2002
+        ],
+        [
+          4330,
+          2002
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Garden Airlock",
+      "poly": [
+        [
+          5710,
+          2400
+        ],
+        [
+          5480,
+          2798
+        ],
+        [
+          5020,
+          2798
+        ],
+        [
+          4790,
+          2400
+        ],
+        [
+          5020,
+          2002
+        ],
+        [
+          5480,
+          2002
+        ]
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1795.0,
+        3595.0,
+        1260,
+        210
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2845.0,
+        2295.0,
+        210,
+        1510
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2845.0,
+        995.0,
+        210,
+        1510
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2845.0,
+        995.0,
+        1360,
+        210
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3995.0,
+        995.0,
+        210,
+        1510
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3995.0,
+        2295.0,
+        1360,
+        210
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1795.0,
+        2295.0,
+        210,
+        1510
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1795.0,
+        2295.0,
+        1260,
+        210
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2845.0,
+        2295.0,
+        1360,
+        210
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "The Giant Blossom Garden",
+      "rect": [
+        5600,
+        1550,
+        1650,
+        2400
+      ],
+      "kind": "meadow",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        5120.0,
+        2270.0,
+        1110,
+        260
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "Queen Mellifera\u2019s Crown Chamber",
+      "poly": [
+        [
+          8420,
+          1200
+        ],
+        [
+          8110,
+          1737
+        ],
+        [
+          7490,
+          1737
+        ],
+        [
+          7180,
+          1200
+        ],
+        [
+          7490,
+          663
+        ],
+        [
+          8110,
+          663
+        ]
+      ],
+      "kind": "glass",
+      "stage": 1
+    },
+    {
+      "name": "",
+      "rect": [
+        6485.0,
+        1085.0,
+        230,
+        1130
+      ],
+      "kind": "glass",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        6485.0,
+        1085.0,
+        1430,
+        230
+      ],
+      "kind": "glass",
+      "stage": 0
+    }
+  ],
+  "props": [
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5800,
+        1800
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5940,
+        2850
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        7040,
+        2300
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6700,
+        3760
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        7060,
+        3350
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        1220,
+        4080
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        2060,
+        3910
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        3110,
+        3910
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        3110,
+        2610
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        2060,
+        2610
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        3110,
+        1310
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        4260,
+        1310
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        4260,
+        2610
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "honey_lamp",
+      "pos": [
+        5410,
+        2610
+      ],
+      "scale": 1,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        200,
+        3180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        200,
+        4325
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        440,
+        3180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        440,
+        4325
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        680,
+        3180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        680,
+        4325
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        920,
+        3180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        920,
+        4325
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1160,
+        3180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1160,
+        4325
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1400,
+        3180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1400,
+        4325
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5680,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5680,
+        3925
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5920,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5920,
+        3925
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6160,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6160,
+        3925
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6400,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6400,
+        3925
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6640,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6880,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6880,
+        3925
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        330,
+        4060
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        630,
+        3730
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        630,
+        4060
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        930,
+        3730
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        930,
+        4060
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5810,
+        2130
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5810,
+        3120
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5810,
+        3450
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6110,
+        3450
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6410,
+        2130
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6410,
+        2460
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6410,
+        2790
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6410,
+        3120
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6710,
+        2460
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6710,
+        3120
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        6710,
+        3450
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        7010,
+        2790
+      ],
+      "scale": 0.9,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        1700.0,
+        3480.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        2750.0,
+        3480.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        2750.0,
+        2180.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        1700.0,
+        2180.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        3900.0,
+        880.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        3900.0,
+        2180.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5050.0,
+        2180.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        7600.0,
+        980.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        8000.0,
+        1420.0
+      ],
+      "scale": 0.75,
+      "solid": 28
+    }
+  ],
+  "grass": [],
+  "mud": [],
+  "falls": [],
+  "secrets": [
+    {
+      "id": "Nectar alcove",
+      "name": "Nectar alcove",
+      "pos": [
+        1880,
+        2390
+      ],
+      "amount": 40,
+      "kind": "gold"
+    },
+    {
+      "id": "Garden spring",
+      "name": "Garden spring",
+      "pos": [
+        6950,
+        1850
+      ],
+      "amount": 25,
+      "kind": "heal"
+    }
+  ],
+  "spawns": [
+    {
+      "type": "honey_beetle",
+      "pos": [
+        1100,
+        3500
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        1700,
+        3700
+      ],
+      "stage": 0
+    },
+    {
+      "type": "amber_hornet",
+      "pos": [
+        2090,
+        3500
+      ],
+      "stage": 0
+    },
+    {
+      "type": "honey_beetle",
+      "pos": [
+        2780,
+        3800
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        3160,
+        3500
+      ],
+      "stage": 0
+    },
+    {
+      "type": "amber_hornet",
+      "pos": [
+        2800,
+        2450
+      ],
+      "stage": 0
+    },
+    {
+      "type": "honey_beetle",
+      "pos": [
+        3120,
+        2190
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        1890,
+        2200
+      ],
+      "stage": 0
+    },
+    {
+      "type": "amber_hornet",
+      "pos": [
+        3100,
+        1150
+      ],
+      "stage": 0
+    },
+    {
+      "type": "honey_beetle",
+      "pos": [
+        2780,
+        950
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        4030,
+        850
+      ],
+      "stage": 0
+    },
+    {
+      "type": "amber_hornet",
+      "pos": [
+        4250,
+        1260
+      ],
+      "stage": 0
+    },
+    {
+      "type": "honey_beetle",
+      "pos": [
+        4000,
+        2500
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        4340,
+        2250
+      ],
+      "stage": 0
+    },
+    {
+      "type": "amber_hornet",
+      "pos": [
+        5240,
+        2480
+      ],
+      "stage": 0
+    },
+    {
+      "type": "honey_beetle",
+      "pos": [
+        6130,
+        2250
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        6760,
+        2700
+      ],
+      "stage": 0
+    },
+    {
+      "type": "amber_hornet",
+      "pos": [
+        6320,
+        3360
+      ],
+      "stage": 0
+    },
+    {
+      "type": "honey_beetle",
+      "pos": [
+        6000,
+        3180
+      ],
+      "stage": 0
+    },
+    {
+      "type": "seed_blossom",
+      "pos": [
+        6880,
+        3510
+      ],
+      "stage": 0
+    }
+  ],
+  "stages": [
+    "Explore the honeycomb maze and clear its garden defenders",
+    "Enter the Crown Chamber and defeat Queen Mellifera"
+  ],
+  "gates": [
+    {
+      "rect": [
+        7230,
+        1090,
+        65,
+        220
+      ],
+      "stage": 1,
+      "name": "Crown seal: clear the maze and garden"
+    }
+  ],
+  "lake": [],
+  "raft": {},
+  "background": "#587557",
+  "checkpoints": [
+    {
+      "pos": [
+        2950,
+        3700
+      ],
+      "level": 3
+    },
+    {
+      "pos": [
+        6100,
+        2400
+      ],
+      "level": 5
+    }
+  ]
+}

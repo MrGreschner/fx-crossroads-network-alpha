@@ -1,0 +1,11 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const events={},nodes=[],storage={};
+const sandbox={window:{addEventListener:(n,f)=>events[n]=f},navigator:{userAgent:'Test Browser'},localStorage:{getItem:k=>storage[k],setItem:(k,v)=>storage[k]=v},document:{addEventListener:(n,f)=>events[n]=f,createElement:()=>({style:{},append(){},click(){}}),body:{append:n=>nodes.push(n)}},console:{error(){}},URL:{createObjectURL(){return 'blob:test'},revokeObjectURL(){}},Blob:class{},setTimeout(){}};
+vm.runInNewContext(fs.readFileSync('web/diagnostics.js','utf8'),sandbox);
+sandbox.window.fxDiagnostics.sample({fps:30,packet_bytes:500});
+assert.equal(JSON.parse(Object.values(storage)[0]).latest.fps,30);
+events.webglcontextlost();assert.equal(nodes.length,1);
+assert.equal(JSON.parse(Object.values(storage)[0]).events.at(-1).kind,'webgl-context-lost');
+for(let n=0;n<120;n++)events.error({message:'Error '+n});
+assert.equal(JSON.parse(Object.values(storage)[0]).events.length,80);
+sandbox.window.fxDiagnostics.download();console.log('V72 browser diagnostics: passed');

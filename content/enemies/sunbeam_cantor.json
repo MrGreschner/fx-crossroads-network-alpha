@@ -1,0 +1,11 @@
+{
+  "id": "sunbeam_cantor",
+  "name": "Solstice Cantor",
+  "sprite": "sunbeam_cantor",
+  "health": 100,
+  "speed": 65,
+  "damage": 12,
+  "behaviour": "ranged",
+  "aggro_range": 700,
+  "expansion_only": true
+}

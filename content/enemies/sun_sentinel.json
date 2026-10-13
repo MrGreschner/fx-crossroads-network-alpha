@@ -1,0 +1,12 @@
+{
+  "id": "sun_sentinel",
+  "name": "Sun Sentinel",
+  "sprite": "sun_sentinel",
+  "health": 92,
+  "speed": 98,
+  "damage": 8,
+  "aggro_range": 570,
+  "behaviour": "burst_ranged",
+  "shot_speed": 310,
+  "shot_cooldown": 3.4
+}

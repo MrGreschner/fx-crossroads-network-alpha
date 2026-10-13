@@ -1,0 +1,10 @@
+{
+  "id": "glacier_hound",
+  "name": "Glacier Hound",
+  "sprite": "glacier_hound",
+  "health": 135,
+  "speed": 167,
+  "damage": 15,
+  "aggro_range": 630,
+  "behaviour": "charger"
+}

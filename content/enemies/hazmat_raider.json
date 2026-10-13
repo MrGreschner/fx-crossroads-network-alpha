@@ -1,0 +1,10 @@
+{
+  "id": "hazmat_raider",
+  "name": "Hazmat Raider",
+  "sprite": "hazmat_raider",
+  "health": 154,
+  "speed": 108,
+  "damage": 17,
+  "aggro_range": 630,
+  "behaviour": "charger"
+}

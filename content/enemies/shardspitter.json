@@ -1,0 +1,12 @@
+{
+  "id": "shardspitter",
+  "name": "Shardspitter",
+  "sprite": "shardspitter",
+  "health": 75,
+  "speed": 115,
+  "damage": 9,
+  "behaviour": "custom",
+  "custom_attack": "burrow_shards",
+  "aggro_range": 800,
+  "expansion_only": true
+}

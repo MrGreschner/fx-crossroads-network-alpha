@@ -1,0 +1,18 @@
+{
+  "id": "moonveil",
+  "name": "Moonveil Masquerade",
+  "size": [
+    7600,
+    3600
+  ],
+  "terrain": "moonveil_court",
+  "scene": "res://scenes/realms/moonveil.tscn",
+  "boss_sprite": "mirror_marquis",
+  "boss_enemy": "mirror_marquis",
+  "boss_health": 1200,
+  "xp_per_level": 4,
+  "unlock_cost": 0,
+  "difficulty_label": "Medium \u2014 moving mirrors and split lances",
+  "description": "A moonlit festival city with silver canals, glass gardens and mirror courts. The Mirror Marquis circles and dashes while prism lances split in flight.",
+  "difficulty_tier": "medium"
+}

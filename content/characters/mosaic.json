@@ -1,0 +1,104 @@
+{
+  "id": "mosaic",
+  "name": "Mosaic Tender",
+  "sprite": "mosaic",
+  "max_health": 130,
+  "speed": 220,
+  "run_cost": 0,
+  "lore": "An axolotl gardener who grows living tiles. Five pieces can fight separately or, when the area is quiet, assemble into one colourful guardian. Split them again to surround a target.",
+  "primary": {
+    "name": "Living Tile",
+    "style": "mosaic_seed",
+    "damage": 7,
+    "cooldown": 1.15,
+    "range": 600,
+    "description": "Summon a living tile. Click an enemy within 600 reach to mark it: your tiles prioritize that foe. Five pieces normally; a merged guardian can have two extra single companions. Small tiles last 14s; merged tiles gain 3s per extra piece (up to 26s).",
+    "ui_brief": "Summon + mark target \u2022 guardian + 2 small companions"
+  },
+  "secondary": {
+    "name": "Scatter Pattern",
+    "style": "mosaic_scatter",
+    "damage": 0,
+    "cooldown": 6,
+    "range": 350,
+    "description": "Split merged tiles into their original pieces without restoring health. All tiles gain +35% movement speed and +40% attack speed for 4s, even if none need splitting. Rally toward your aim; merging waits 6s.",
+    "ui_brief": "Split + rally \u2022 4s speed / attack boost"
+  },
+  "special": {
+    "name": "Bubble Bloom",
+    "style": "mosaic_bubbles",
+    "damage": 9,
+    "cooldown": 17,
+    "range": 430,
+    "description": "Hold up to 1.2s, then release five bubbles in a fan. Each deals 9\u201314.4 damage on contact and leaves a 3-second slowing splash when it pops. No minions required.",
+    "hold_charge": {
+      "seconds": 1.2,
+      "damage": 1.6,
+      "size": 1.8
+    },
+    "ui_brief": "Charged bubble fan \u2022 contact damage + slow splashes"
+  },
+  "passive": "Tessellated Steps: Your tiles move 15 faster without changing the five-piece capacity.",
+  "passive_effect": "tessellated",
+  "mastery": {
+    "title": "Architect of Living Mosaics",
+    "technique": {
+      "name": "Protective Pattern",
+      "ability": "secondary",
+      "attack": {
+        "name": "Protective Pattern",
+        "style": "mosaic_ward",
+        "damage": 0,
+        "cooldown": 8,
+        "range": 0,
+        "description": "Give your existing tiles 30% damage reduction for 3s. Does not split or rally them."
+      },
+      "description": "Replace Scatter with short companion protection."
+    },
+    "final_technique": {
+      "name": "Shatter Parade",
+      "ability": "special",
+      "attack": {
+        "name": "Shatter Parade",
+        "style": "mosaic_parade",
+        "damage": 15,
+        "cooldown": 20,
+        "range": 380,
+        "description": "Your tiles rush the aimed point and burst for 15 damage per piece, then disappear. No empowered guardian remains."
+      },
+      "description": "Spend all pieces on delayed bursts instead of the bubble volley."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

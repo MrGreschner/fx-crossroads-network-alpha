@@ -1,0 +1,111 @@
+{
+  "id": "sunflower",
+  "sprite": "sunflower",
+  "run_cost": 0,
+  "name": "Sunpetal",
+  "max_health": 100,
+  "speed": 210,
+  "lore": "A sunlit garden guardian who followed a lost dawn to the Crossroads.",
+  "primary": {
+    "name": "Bullet Seed",
+    "style": "burst_projectile",
+    "damage": 5,
+    "cooldown": 0.75,
+    "count": 4,
+    "spread": 0,
+    "range": 360,
+    "speed": 480,
+    "color": "#b5dc79",
+    "bonus_split": true,
+    "burst_interval": 0.1,
+    "description": "Fire four seeds consecutively along your aim in a short burst. Each deals 5 damage; equipment bonuses are divided across the burst."
+  },
+  "secondary": {
+    "name": "Kindle Bloom",
+    "style": "bloom_seed",
+    "damage": 8,
+    "cooldown": 12,
+    "range": 330,
+    "bloom_delay": 3,
+    "duration": 8,
+    "heal": 3,
+    "radius": 140,
+    "shot_interval": 1.2,
+    "description": "Lob a seed at your aimed spot. It plants, blooms after 3 seconds, then fires 8-damage fireballs at nearby enemies and heals you/allies for 3 HP per second within 140 units for 8 seconds. Maximum two plants per hero."
+  },
+  "special": {
+    "name": "Solarbeam",
+    "style": "charged_beam",
+    "damage": 120,
+    "cooldown": 16,
+    "charge": 2.5,
+    "width": 140,
+    "range": 620,
+    "description": "Charge for 2.5 seconds, then fire a wide beam for 120 damage. Move slowly while charging; stunning interrupts it."
+  },
+  "passive": "Sun-fed: recover 4 health after defeating an enemy.",
+  "passive_effect": "heal_on_kill",
+  "mastery": {
+    "title": "Radiant Bloom",
+    "technique": {
+      "name": "Focused Sun",
+      "ability": "special",
+      "description": "Charge Solarbeam 30% faster, but fire a 35% narrower beam.",
+      "multiply": {
+        "charge": 0.7,
+        "width": 0.65
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Sunthorn",
+      "ability": "primary",
+      "description": "A slim charged sunthorn pierces a lane for 19 damage. Replaces the four-seed burst; stronger single hit but slower and narrower.",
+      "attack": {
+        "name": "Sunthorn",
+        "style": "master_lance",
+        "damage": 19,
+        "cooldown": 0.85,
+        "color": "#edd77c",
+        "range": 360,
+        "width": 24,
+        "charge": 0.25,
+        "duration": 1.5,
+        "description": "A slim charged sunthorn pierces a lane for 19 damage. Replaces the four-seed burst; stronger single hit but slower and narrower.",
+        "visual_texture": "res://assets/mastery_sunflower_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

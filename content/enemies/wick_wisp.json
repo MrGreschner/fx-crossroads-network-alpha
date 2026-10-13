@@ -1,0 +1,18 @@
+{
+  "id": "wick_wisp",
+  "name": "Wick Wisp",
+  "sprite": "wick_wisp",
+  "health": 78,
+  "speed": 80,
+  "damage": 12,
+  "behaviour": "chase",
+  "aggro_range": 420,
+  "shot_speed": 230,
+  "shot_cooldown": 2.6,
+  "expansion_only": true,
+  "custom_attack": "lob",
+  "lob_speed": 300,
+  "blast_radius": 75,
+  "skill_cooldown": 3.8,
+  "attack_color": "#ffbb76"
+}

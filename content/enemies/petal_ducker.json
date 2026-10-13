@@ -1,0 +1,11 @@
+{
+  "id": "petal_ducker",
+  "name": "Petal Ducker",
+  "sprite": "petal_ducker",
+  "health": 72,
+  "speed": 110,
+  "damage": 12,
+  "behaviour": "ranged",
+  "aggro_range": 700,
+  "expansion_only": true
+}

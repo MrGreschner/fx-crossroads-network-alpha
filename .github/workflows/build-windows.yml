@@ -1,0 +1,22 @@
+name: Build FX Crossroads Windows
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Windows edition with native WebRTC
+        shell: pwsh
+        run: |
+          $builder = Get-ChildItem -Recurse -Filter build_windows.ps1 | Select-Object -First 1
+          if (-not $builder) { throw 'Windows build script missing.' }
+          & $builder.FullName
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FX-Crossroads-Windows-v126
+          path: '**/exports/FX_Crossroads_Windows_v126.zip'
+          if-no-files-found: error

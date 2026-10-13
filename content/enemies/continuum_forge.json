@@ -1,0 +1,12 @@
+{
+  "id": "continuum_forge",
+  "name": "Continuum: Forge Shell",
+  "sprite": "continuum_forge",
+  "health": 800,
+  "speed": 90,
+  "damage": 15,
+  "behaviour": "custom",
+  "custom_attack": "forge_logic",
+  "aggro_range": 850,
+  "expansion_only": true
+}

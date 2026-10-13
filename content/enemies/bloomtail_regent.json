@@ -1,0 +1,11 @@
+{
+  "id": "bloomtail_regent",
+  "name": "Bloomtail Regent",
+  "sprite": "bloomtail_regent",
+  "health": 1000,
+  "speed": 120,
+  "damage": 12,
+  "behaviour": "chase",
+  "aggro_range": 700,
+  "expansion_only": true
+}

@@ -1,0 +1,96 @@
+{
+  "id": "tempo",
+  "name": "Tempo Monk",
+  "sprite": "tempo",
+  "max_health": 125,
+  "speed": 230,
+  "run_cost": 0,
+  "lore": "A travelling martial artist whose twelve-second bell alternates close fists and distant flame. The ring shows the current stance and the time until it changes.",
+  "primary": {
+    "name": "Bullet Punch / Throwing Dagger",
+    "style": "monk_primary",
+    "damage": 24,
+    "cooldown": 0.8,
+    "range": 85,
+    "description": "Melee: three fast directional jabs, 8 damage each; landing all three slows for 1s. Every 12s swap to ranged: 16-damage dagger, 420 reach, 0.8s cooldown."
+  },
+  "secondary": {
+    "name": "Triple Kick / Fire Breath",
+    "style": "monk_secondary",
+    "damage": 14,
+    "cooldown": 6,
+    "range": 240,
+    "description": "Melee: leap between up to three foes, 14 damage and 0.7s stun each. Ranged: narrow 2s fire stream, 6 damage per 0.25s tick plus 2 burn damage each second for 3s."
+  },
+  "special": {
+    "name": "Venom Discipline",
+    "style": "monk_poison_form",
+    "damage": 0,
+    "cooldown": 24,
+    "range": 0,
+    "description": "For 12s enter poison stance: a close poison jab and a spinning ring of eight poison darts. Natural stance timer pauses, then resumes with a fresh 12s."
+  },
+  "passive": "Measured Breath: each natural stance change restores 4 HP.",
+  "passive_effect": "measured_breath",
+  "mastery": {
+    "title": "Keeper of Three Disciplines",
+    "technique": {
+      "name": "Heavy Discipline",
+      "ability": "primary",
+      "attack": {
+        "name": "Heavy Discipline",
+        "style": "monk_weighted",
+        "damage": 24,
+        "cooldown": 0.8,
+        "range": 85,
+        "description": "All stance primary attacks deal 25% more damage and recover 35% slower."
+      },
+      "description": "Stronger primary attacks in every form, with a slower rhythm."
+    },
+    "final_technique": {
+      "name": "Shadow Discipline",
+      "ability": "special",
+      "attack": {
+        "name": "Shadow Discipline",
+        "style": "monk_shadow_form",
+        "damage": 0,
+        "cooldown": 28,
+        "range": 0,
+        "description": "For 12s enter shadow stance. Primary dashes through foes for 22 damage; secondary grants 1.5s immunity, heals 6 HP and lets you move."
+      },
+      "description": "Replace poison stance with mobility and a short defensive veil; special recharges slower."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

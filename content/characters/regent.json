@@ -1,0 +1,97 @@
+{
+  "id": "regent",
+  "name": "Paradox Regent",
+  "sprite": "regent",
+  "max_health": 110,
+  "speed": 245,
+  "run_cost": 0,
+  "lore": "A masked keeper of discarded seconds. Aim where your projectile should split, record your recent path, rewind safely along it, then replay the last three shots from their original places. Planning beats frantic firing.",
+  "primary": {
+    "name": "Forked Second",
+    "style": "paradox_split",
+    "damage": 26,
+    "cooldown": 0.8,
+    "range": 420,
+    "description": "Travel to your aimed point (up to 420), then split sideways into two 16.9-damage shards. Hitting a foe or wall before the split ends the shot.",
+    "color": "#8ddedc"
+  },
+  "secondary": {
+    "name": "Unwritten Footsteps",
+    "style": "history_rewind",
+    "damage": 32,
+    "cooldown": 9,
+    "range": 420,
+    "description": "Retrace up to 3 seconds of your own recent path instantly. Each crossed foe takes damage once. Walls stop the rewind; health is not restored.",
+    "color": "#8ddedc"
+  },
+  "special": {
+    "name": "Royal Reprise",
+    "style": "royal_reprise",
+    "damage": 30,
+    "cooldown": 19,
+    "range": 420,
+    "description": "Replay your last three primaries from their recorded origins and directions, including sideways splits. Origins behind a wall are skipped. Replays do not record more replays.",
+    "color": "#8ddedc"
+  },
+  "passive": "Borrowed Moment: Rewinding grants 20% damage reduction for 1s.",
+  "passive_effect": "borrowed_moment",
+  "mastery": {
+    "title": "Sovereign of the Unwritten Hour",
+    "technique": {
+      "name": "Patient Second",
+      "ability": "primary",
+      "description": "Primary reaches 540 instead of 420 and deals 30 instead of 26, but fires every 1.05s instead of 0.8s.",
+      "set": {
+        "range": 540,
+        "damage": 30,
+        "cooldown": 1.05
+      }
+    },
+    "final_technique": {
+      "name": "The Still Hour",
+      "ability": "special",
+      "description": "Replace recorded shots with a 150-radius time cage: 15 damage per second for 4s and 40% slow. More reliable control, less burst.",
+      "attack": {
+        "name": "The Still Hour",
+        "style": "time_cage",
+        "damage": 15,
+        "cooldown": 20,
+        "range": 400,
+        "description": "Aim a clockwork cage. Four seconds of damage pulses and slowing time.",
+        "color": "#8ddedc"
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

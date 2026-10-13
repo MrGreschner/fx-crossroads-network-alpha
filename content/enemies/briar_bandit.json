@@ -1,0 +1,11 @@
+{
+  "id": "briar_bandit",
+  "name": "Briar Bandit",
+  "sprite": "briar_bandit",
+  "health": 90,
+  "speed": 125,
+  "damage": 11,
+  "behaviour": "chase",
+  "aggro_range": 560,
+  "expansion_only": true
+}

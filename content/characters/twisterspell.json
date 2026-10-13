@@ -1,0 +1,104 @@
+{
+  "id": "twisterspell",
+  "sprite": "twisterspell",
+  "name": "Twisterspell",
+  "max_health": 110,
+  "speed": 220,
+  "run_cost": 0,
+  "lore": "A cheerful weather apprentice who collects river mist in her hat. She tends Crossroads\u2019 new Mistglass Spire, turning unruly breezes into carefully bottled spells.",
+  "primary": {
+    "name": "Pocket Twister",
+    "style": "twister_charge",
+    "damage": 6,
+    "cooldown": 0.55,
+    "range": 350,
+    "description": "Hold LMB, then release a curved funnel. Charge caps at 1.6s: 6\u201314.4 damage per 0.5s and 36\u201361 radius. Up to four funnels last 4.2s. All slow 30%; full charge strongly pulls foes from nearby. Lightning unlocks with the passive.",
+    "radius": 36,
+    "max_funnels": 4,
+    "ui_brief": "Charged funnel \u2022 wider damage area \u2022 strong full-charge pull"
+  },
+  "secondary": {
+    "name": "Whirlaway",
+    "style": "twister_stride",
+    "damage": 7,
+    "cooldown": 9,
+    "range": 48,
+    "description": "Become a controllable tornado for 3 seconds: +20% speed with a gentle weaving path. Swallow nearby hostile projectiles, deal 7 damage every 0.5s and slow nearby foes 30%. No invulnerability.",
+    "duration": 3
+  },
+  "special": {
+    "name": "Hail, Please!",
+    "style": "twister_hail",
+    "damage": 16,
+    "cooldown": 23,
+    "range": 210,
+    "description": "Stand still and channel for 2 seconds, then summon 12 hailstones over 3.6 seconds around the casting spot. Each warned landing deals 16 damage and stuns foes for 0.6s. Ice never hits allies.",
+    "charge_time": 2
+  },
+  "passive": "Storm Circuit: three or more primary funnels arc lightning between them every 1.25s. Enemies crossing a link take 8 damage and a 0.35s stun. A full-charge funnel can also zap a nearby foe for 10 damage every 1.5s. A foe can be shocked at most once per second per caster.",
+  "passive_effect": "weather_circuit",
+  "mastery": {
+    "title": "Keeper of the Turning Sky",
+    "technique": {
+      "name": "Wide Forecast",
+      "ability": "primary",
+      "description": "Trade four funnels for two wider ones: slightly lower damage and no three-funnel circuit, but full-charge direct lightning still works.",
+      "attack": {
+        "name": "Wide Forecast",
+        "style": "twister_charge",
+        "damage": 5,
+        "cooldown": 0.75,
+        "range": 350,
+        "description": "Charge wider, lighter funnels: 5\u201312 damage per 0.5s, 48\u201382 radius. Maximum two. Full charge strongly pulls and, with Storm Circuit unlocked, zaps nearby foes.",
+        "radius": 48,
+        "max_funnels": 2
+      }
+    },
+    "final_technique": {
+      "name": "Sleet Stitch",
+      "ability": "special",
+      "description": "Trade random surrounding hail and brief stuns for a directed line of heavier ice and longer slows.",
+      "attack": {
+        "name": "Sleet Stitch",
+        "style": "twister_sleet",
+        "damage": 20,
+        "cooldown": 23,
+        "range": 310,
+        "description": "Channel in place for 1 second, then stitch 12 warned icy landings along the aimed corridor. Each deals 20 damage and slows 45% for 3 seconds; no stun.",
+        "charge_time": 1
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

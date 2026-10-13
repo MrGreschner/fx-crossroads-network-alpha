@@ -1,0 +1,1 @@
+Alpha 1 input hotfix: binds WASD, E, Space, Shift and both mouse buttons on direct alpha startup. Previously only action names were registered by the arcade scene; town startup normally supplied the events. Physical input regression added at network_tests/input_bindings.gd.

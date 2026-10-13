@@ -1,0 +1,7 @@
+{
+  "id": "plague_director",
+  "name": "Plague Director",
+  "sprite": "plague_director",
+  "secondary": "sporeburst",
+  "damage": 28
+}

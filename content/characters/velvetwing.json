@@ -1,0 +1,103 @@
+{
+  "id": "velvetwing",
+  "name": "Velvetwing",
+  "sprite": "velvetwing",
+  "max_health": 105,
+  "speed": 235,
+  "run_cost": 0,
+  "primary": {
+    "name": "Threaded Needles",
+    "style": "threaded_needles",
+    "damage": 12,
+    "cooldown": 0.75,
+    "range": 440,
+    "speed": 460,
+    "color": "#dcbbeb",
+    "description": "Two silk needles converge ahead of you, then cross and spread apart. 12 damage per needle; 440 reach."
+  },
+  "secondary": {
+    "name": "Silk Tripline",
+    "style": "silk_tripline",
+    "damage": 22,
+    "cooldown": 6,
+    "range": 260,
+    "duration": 4,
+    "color": "#dccced",
+    "description": "Weave three silk lines ahead of you. They arm after 0.6s and last 4s. A crossing enemy snaps a line for 22 damage and a 2s slow. Each enemy is caught once per cast."
+  },
+  "special": {
+    "name": "Lunar Loom",
+    "style": "lunar_loom",
+    "damage": 18,
+    "cooldown": 15,
+    "range": 360,
+    "duration": 3.4,
+    "color": "#f2d99d",
+    "description": "Two luminous wings sweep out and meet, linger for 1 second in a 60-unit field (6 damage each 0.25s), then split and return to you. Outward and returning passes each hit once for 18 damage. Walls block damage."
+  },
+  "passive": "Soft Landing: Silk Tripline surrounds you with a faint orb and grants 15% damage reduction for 2.5 seconds. Enemies that melee-hit you during this protection are poisoned for 2 damage every 0.5 seconds for 3 seconds.",
+  "passive_effect": "soft_landing",
+  "mastery": {
+    "title": "Lunar Silkkeeper",
+    "technique": {
+      "name": "Patient Silk",
+      "ability": "secondary",
+      "description": "Silk Tripline lasts 50% longer, dealing 20% less snap damage.",
+      "multiply": {
+        "duration": 1.5,
+        "damage": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Silken Scythes",
+      "ability": "primary",
+      "description": "Two short silk sweeps replace the needles. Hit each enemy once for 22; close-range coverage at the cost of ranged safety.",
+      "attack": {
+        "name": "Silken Scythes",
+        "style": "master_fan",
+        "damage": 22,
+        "cooldown": 0.8,
+        "color": "#e2c5d5",
+        "range": 150,
+        "count": 2,
+        "charge": 0.15,
+        "duration": 1.1,
+        "description": "Two short silk sweeps replace the needles. Hit each enemy once for 22; close-range coverage at the cost of ranged safety.",
+        "visual_texture": "res://assets/mastery_velvetwing_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

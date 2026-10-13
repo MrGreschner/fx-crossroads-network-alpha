@@ -1,0 +1,12 @@
+{
+  "id": "sweep_drone",
+  "name": "Sweep Drone",
+  "sprite": "sweep_drone",
+  "health": 80,
+  "speed": 115,
+  "damage": 15,
+  "behaviour": "ranged",
+  "custom_attack": "scan_sweep",
+  "aggro_range": 850,
+  "expansion_only": true
+}

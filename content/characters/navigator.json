@@ -1,0 +1,116 @@
+{
+  "id": "navigator",
+  "name": "Star Navigator",
+  "sprite": "navigator",
+  "max_health": 95,
+  "speed": 235,
+  "primary": {
+    "name": "Pulse Bolt",
+    "style": "projectile",
+    "damage": 26,
+    "cooldown": 0.75,
+    "range": 340,
+    "speed": 480,
+    "arc_degrees": 70,
+    "color": "#b8a9ff"
+  },
+  "secondary": {
+    "name": "Seeking Orb",
+    "style": "homing",
+    "damage": 27,
+    "cooldown": 4.0,
+    "range": 350,
+    "speed": 350,
+    "duration": 1.1,
+    "reduction": 0.9,
+    "reflect": true,
+    "color": "#b8a9ff",
+    "splash_radius": 75,
+    "splash_damage": 8,
+    "spread": 0.16,
+    "hold_charge": {
+      "seconds": 1.4,
+      "damage": 1.65,
+      "size": 2.0,
+      "splash": 1.35
+    },
+    "description": "Hold secondary up to 1.4s to grow a seeking star. Release for 27\u201344.6 damage plus a small splash. Twin Stars still launches two missiles."
+  },
+  "special": {
+    "name": "Orbital Beam",
+    "style": "beam",
+    "damage": 76,
+    "cooldown": 12.0,
+    "radius": 500,
+    "duration": 4,
+    "color": "#b8a9ff"
+  },
+  "passive": "Twin Stars: Seeking Orb launches two tracking projectiles.",
+  "passive_effect": "twin_orbs",
+  "run_cost": 0,
+  "mastery": {
+    "title": "Celestial Pathfinder",
+    "technique": {
+      "name": "Deep Space",
+      "ability": "secondary",
+      "description": "Seeking Orb splash covers 50% more radius; direct damage falls 25%.",
+      "multiply": {
+        "splash_radius": 1.5,
+        "damage": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Falling Compass",
+      "ability": "special",
+      "description": "Three delayed star-chart impacts replace the beam. Each deals 22; spaced craters reward prediction rather than immediate line hits.",
+      "attack": {
+        "name": "Falling Compass",
+        "style": "master_sigils",
+        "damage": 22,
+        "cooldown": 11,
+        "color": "#abcff0",
+        "range": 300,
+        "radius": 72,
+        "count": 3,
+        "spacing": 80,
+        "charge": 0.55,
+        "duration": 1.8,
+        "description": "Three delayed star-chart impacts replace the beam. Each deals 22; spaced craters reward prediction rather than immediate line hits.",
+        "visual_texture": "res://assets/mastery_navigator_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

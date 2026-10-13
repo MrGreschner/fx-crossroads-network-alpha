@@ -1,0 +1,12 @@
+{
+  "id": "last_creditor",
+  "name": "The Last Creditor",
+  "sprite": "last_creditor",
+  "health": 2400,
+  "speed": 108,
+  "damage": 30,
+  "behaviour": "custom",
+  "custom_attack": "v43_last_creditor",
+  "aggro_range": 720,
+  "expansion_only": true
+}

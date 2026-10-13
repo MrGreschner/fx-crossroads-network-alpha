@@ -1,0 +1,12 @@
+{
+  "id": "magnet_hauler",
+  "name": "Magnet Hauler",
+  "sprite": "magnet_hauler",
+  "health": 190,
+  "speed": 72,
+  "damage": 15,
+  "behaviour": "melee",
+  "custom_attack": "magnet_tether",
+  "aggro_range": 850,
+  "expansion_only": true
+}

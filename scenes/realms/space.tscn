@@ -1,0 +1,774 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/space.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/path.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ram_0.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/portal.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/merchant.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/signal_core.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/satellite.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/drone_idle.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/star_mine_idle.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/void_seeker_idle.png" id="10"]
+
+[node name="Space" type="Node2D"]
+
+[node name="Floor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 8200, 0, 8200, 1450, 0, 1450)
+color = Color(0.090196, 0.117647, 0.243137, 1)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Road" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(0, 650, 8200, 650, 8200, 800, 0, 800)
+color = Color(0.55, 0.57, 0.60, 1)
+metadata/tile = "path"
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Sprite2D" parent="Points"]
+position = Vector2(250, 725)
+texture = ExtResource("3")
+scale = Vector2(2, 2)
+
+[node name="ReturnGate" type="Sprite2D" parent="Points"]
+position = Vector2(90, 725)
+texture = ExtResource("4")
+scale = Vector2(2, 2)
+
+[node name="Merchant" type="Sprite2D" parent="Points"]
+position = Vector2(4100, 725)
+texture = ExtResource("5")
+scale = Vector2(2, 2)
+
+[node name="Boss" type="Sprite2D" parent="Points"]
+position = Vector2(7900, 725)
+texture = ExtResource("6")
+scale = Vector2(2, 2)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy_001" type="Sprite2D" parent="Enemies"]
+position = Vector2(620, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_002" type="Sprite2D" parent="Enemies"]
+position = Vector2(724, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_003" type="Sprite2D" parent="Enemies"]
+position = Vector2(828, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_004" type="Sprite2D" parent="Enemies"]
+position = Vector2(933, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_005" type="Sprite2D" parent="Enemies"]
+position = Vector2(1037, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_006" type="Sprite2D" parent="Enemies"]
+position = Vector2(1142, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_007" type="Sprite2D" parent="Enemies"]
+position = Vector2(1246, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_008" type="Sprite2D" parent="Enemies"]
+position = Vector2(1350, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_009" type="Sprite2D" parent="Enemies"]
+position = Vector2(1455, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_010" type="Sprite2D" parent="Enemies"]
+position = Vector2(1559, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_011" type="Sprite2D" parent="Enemies"]
+position = Vector2(1664, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_012" type="Sprite2D" parent="Enemies"]
+position = Vector2(1768, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_013" type="Sprite2D" parent="Enemies"]
+position = Vector2(1872, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_014" type="Sprite2D" parent="Enemies"]
+position = Vector2(1977, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_015" type="Sprite2D" parent="Enemies"]
+position = Vector2(2081, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_016" type="Sprite2D" parent="Enemies"]
+position = Vector2(2186, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_017" type="Sprite2D" parent="Enemies"]
+position = Vector2(2290, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_018" type="Sprite2D" parent="Enemies"]
+position = Vector2(2395, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_019" type="Sprite2D" parent="Enemies"]
+position = Vector2(2499, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_020" type="Sprite2D" parent="Enemies"]
+position = Vector2(2603, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_021" type="Sprite2D" parent="Enemies"]
+position = Vector2(2708, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_022" type="Sprite2D" parent="Enemies"]
+position = Vector2(2812, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_023" type="Sprite2D" parent="Enemies"]
+position = Vector2(2917, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_024" type="Sprite2D" parent="Enemies"]
+position = Vector2(3021, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_025" type="Sprite2D" parent="Enemies"]
+position = Vector2(3125, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_026" type="Sprite2D" parent="Enemies"]
+position = Vector2(3230, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_027" type="Sprite2D" parent="Enemies"]
+position = Vector2(3334, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_028" type="Sprite2D" parent="Enemies"]
+position = Vector2(3439, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_029" type="Sprite2D" parent="Enemies"]
+position = Vector2(3543, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_030" type="Sprite2D" parent="Enemies"]
+position = Vector2(3647, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_031" type="Sprite2D" parent="Enemies"]
+position = Vector2(3752, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_032" type="Sprite2D" parent="Enemies"]
+position = Vector2(3856, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_033" type="Sprite2D" parent="Enemies"]
+position = Vector2(3961, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_034" type="Sprite2D" parent="Enemies"]
+position = Vector2(4065, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_035" type="Sprite2D" parent="Enemies"]
+position = Vector2(4170, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_036" type="Sprite2D" parent="Enemies"]
+position = Vector2(4274, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_037" type="Sprite2D" parent="Enemies"]
+position = Vector2(4378, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_038" type="Sprite2D" parent="Enemies"]
+position = Vector2(4483, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_039" type="Sprite2D" parent="Enemies"]
+position = Vector2(4587, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_040" type="Sprite2D" parent="Enemies"]
+position = Vector2(4692, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_041" type="Sprite2D" parent="Enemies"]
+position = Vector2(4796, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_042" type="Sprite2D" parent="Enemies"]
+position = Vector2(4900, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_043" type="Sprite2D" parent="Enemies"]
+position = Vector2(5005, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_044" type="Sprite2D" parent="Enemies"]
+position = Vector2(5109, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_045" type="Sprite2D" parent="Enemies"]
+position = Vector2(5214, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_046" type="Sprite2D" parent="Enemies"]
+position = Vector2(5318, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_047" type="Sprite2D" parent="Enemies"]
+position = Vector2(5422, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_048" type="Sprite2D" parent="Enemies"]
+position = Vector2(5527, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_049" type="Sprite2D" parent="Enemies"]
+position = Vector2(5631, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_050" type="Sprite2D" parent="Enemies"]
+position = Vector2(5736, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_051" type="Sprite2D" parent="Enemies"]
+position = Vector2(5840, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_052" type="Sprite2D" parent="Enemies"]
+position = Vector2(5945, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_053" type="Sprite2D" parent="Enemies"]
+position = Vector2(6049, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_054" type="Sprite2D" parent="Enemies"]
+position = Vector2(6153, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_055" type="Sprite2D" parent="Enemies"]
+position = Vector2(6258, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_056" type="Sprite2D" parent="Enemies"]
+position = Vector2(6362, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_057" type="Sprite2D" parent="Enemies"]
+position = Vector2(6467, 560)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_058" type="Sprite2D" parent="Enemies"]
+position = Vector2(6571, 890)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_059" type="Sprite2D" parent="Enemies"]
+position = Vector2(6675, 340)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_060" type="Sprite2D" parent="Enemies"]
+position = Vector2(6780, 1120)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_061" type="Sprite2D" parent="Enemies"]
+position = Vector2(6884, 400)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_062" type="Sprite2D" parent="Enemies"]
+position = Vector2(6989, 1050)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_063" type="Sprite2D" parent="Enemies"]
+position = Vector2(7093, 560)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_064" type="Sprite2D" parent="Enemies"]
+position = Vector2(7197, 890)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_065" type="Sprite2D" parent="Enemies"]
+position = Vector2(7302, 340)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Enemy_066" type="Sprite2D" parent="Enemies"]
+position = Vector2(7406, 1120)
+texture = ExtResource("8")
+scale = Vector2(2, 2)
+metadata/enemy_id = "drone"
+
+[node name="Enemy_067" type="Sprite2D" parent="Enemies"]
+position = Vector2(7511, 400)
+texture = ExtResource("9")
+scale = Vector2(2, 2)
+metadata/enemy_id = "star_mine"
+
+[node name="Enemy_068" type="Sprite2D" parent="Enemies"]
+position = Vector2(7615, 1050)
+texture = ExtResource("10")
+scale = Vector2(2, 2)
+metadata/enemy_id = "void_seeker"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Satellite_01" type="Sprite2D" parent="Obstacles"]
+position = Vector2(570, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_02" type="Sprite2D" parent="Obstacles"]
+position = Vector2(732, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_03" type="Sprite2D" parent="Obstacles"]
+position = Vector2(894, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_04" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1056, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_05" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1218, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_06" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1381, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_07" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1543, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_08" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1705, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_09" type="Sprite2D" parent="Obstacles"]
+position = Vector2(1867, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_10" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2030, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_11" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2192, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_12" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2354, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_13" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2516, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_14" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2678, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_15" type="Sprite2D" parent="Obstacles"]
+position = Vector2(2841, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_16" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3003, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_17" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3165, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_18" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3327, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_19" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3490, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_20" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3652, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_21" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3814, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_22" type="Sprite2D" parent="Obstacles"]
+position = Vector2(3976, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_23" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4138, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_24" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4301, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_25" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4463, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_26" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4625, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_27" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4787, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_28" type="Sprite2D" parent="Obstacles"]
+position = Vector2(4950, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_29" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5112, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_30" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5274, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_31" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5436, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_32" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5598, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_33" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5761, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_34" type="Sprite2D" parent="Obstacles"]
+position = Vector2(5923, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_35" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6085, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_36" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6247, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_37" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6410, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_38" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6572, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_39" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6734, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_40" type="Sprite2D" parent="Obstacles"]
+position = Vector2(6896, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_41" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7058, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_42" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7221, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_43" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7383, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_44" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7545, 250)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0
+
+[node name="Satellite_45" type="Sprite2D" parent="Obstacles"]
+position = Vector2(7707, 1200)
+texture = ExtResource("7")
+scale = Vector2(2, 2)
+metadata/kind = "satellite"
+metadata/radius = 42.0

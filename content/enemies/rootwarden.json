@@ -1,0 +1,12 @@
+{
+  "id": "rootwarden",
+  "name": "Rootwarden",
+  "sprite": "rootwarden",
+  "health": 155,
+  "speed": 42,
+  "damage": 17,
+  "behaviour": "custom",
+  "custom_attack": "root_wave",
+  "aggro_range": 800,
+  "expansion_only": true
+}

@@ -1,0 +1,12 @@
+{
+  "id": "lodge_guard",
+  "name": "Barkskin Phial",
+  "effect": "lodge_guard",
+  "amount": 15,
+  "duration": 4,
+  "cost": 0,
+  "sprite": "lodges/lodge_guard",
+  "shop": false,
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
+}

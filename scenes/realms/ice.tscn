@@ -1,0 +1,2087 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ram_0.png" id="1"]
+
+[ext_resource type="Texture2D" path="res://assets/portal.png" id="2"]
+
+[ext_resource type="Texture2D" path="res://assets/merchant.png" id="3"]
+
+[ext_resource type="Texture2D" path="res://assets/cryowarden.png" id="4"]
+
+[ext_resource type="Texture2D" path="res://assets/frostling_idle.png" id="5"]
+
+[ext_resource type="Texture2D" path="res://assets/glacier_hound_idle.png" id="6"]
+
+[ext_resource type="Texture2D" path="res://assets/ice_archer_idle.png" id="7"]
+
+[ext_resource type="Texture2D" path="res://assets/ice_pillar.png" id="8"]
+
+[ext_resource type="Texture2D" path="res://assets/snow_oracle_idle.png" id="9"]
+
+[node name="Ice" type="Node2D"]
+
+[node name="Floor" type="Polygon2D" parent="."]
+
+polygon = PackedVector2Array(0, 0, 6200, 0, 6200, 1900, 0, 1900)
+
+color = Color(0.70, 0.82, 0.85, 1)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Trail_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(230.0, 1105.0, 1200.0, 1105.0, 1200.0, 815.0, 230.0, 815.0)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "packed_snow"
+
+[node name="Trail_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(1232.31, 1101.35, 2282.31, 861.35, 2217.69, 578.65, 1167.69, 818.65)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "packed_snow"
+
+[node name="Trail_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(2204.51, 857.68, 3354.51, 1237.68, 3445.49, 962.32, 2295.49, 582.32)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "packed_snow"
+
+[node name="Trail_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(3441.56, 1238.92, 4611.56, 888.92, 4528.44, 611.08, 3358.44, 961.08)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "packed_snow"
+
+[node name="Trail_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(4545.6, 892.93, 5775.6, 1102.93, 5824.4, 817.07, 4594.4, 607.07)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "packed_snow"
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Sprite2D" parent="Points"]
+
+position = Vector2(230, 960)
+
+texture = ExtResource("1")
+
+scale = Vector2(2, 2)
+
+[node name="ReturnGate" type="Sprite2D" parent="Points"]
+
+position = Vector2(80, 960)
+
+texture = ExtResource("2")
+
+scale = Vector2(2, 2)
+
+[node name="Merchant" type="Sprite2D" parent="Points"]
+
+position = Vector2(2250, 875)
+
+texture = ExtResource("3")
+
+scale = Vector2(2, 2)
+
+[node name="Boss" type="Sprite2D" parent="Points"]
+
+position = Vector2(5860, 960)
+
+texture = ExtResource("4")
+
+scale = Vector2(2, 2)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy_000" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(850, 960)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_001" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1014, 1060)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_002" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1178, 860)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_003" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1341, 968)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_004" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1505, 730)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_005" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1669, 1063)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Enemy_006" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1833, 575)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_007" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1997, 918)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_008" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2160, 580)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_009" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2324, 954)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Enemy_010" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2488, 559)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_011" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2652, 993)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_012" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2816, 747)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_013" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2979, 1171)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Enemy_014" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3143, 775)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "glacier_hound"
+
+[node name="Enemy_015" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3307, 1209)
+
+texture = ExtResource("9")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "snow_oracle"
+
+[node name="Enemy_016" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3471, 919)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_017" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3634, 1240)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Enemy_018" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3798, 741)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "glacier_hound"
+
+[node name="Enemy_019" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3962, 1072)
+
+texture = ExtResource("9")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "snow_oracle"
+
+[node name="Enemy_020" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4126, 723)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_021" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4290, 1044)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Enemy_022" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4453, 545)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "glacier_hound"
+
+[node name="Enemy_023" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4617, 898)
+
+texture = ExtResource("9")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "snow_oracle"
+
+[node name="Enemy_024" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4781, 626)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_025" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4945, 1024)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Enemy_026" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(5109, 602)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "glacier_hound"
+
+[node name="Enemy_027" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(5272, 1010)
+
+texture = ExtResource("9")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "snow_oracle"
+
+[node name="Enemy_028" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(5436, 738)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "frostling"
+
+[node name="Enemy_029" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(5600, 1136)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "ice_archer"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Obstacle_000" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(329, 194)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_001" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(301, 427)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_002" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(318, 1534)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_003" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(333, 1733)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_004" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(465, 149)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_005" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(437, 413)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_006" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(433, 1532)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_007" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(441, 1702)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_008" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(617, 155)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_009" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(607, 348)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_010" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(662, 1469)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_011" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(624, 1723)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_012" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(770, 187)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_013" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(786, 347)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_014" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(825, 1539)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_015" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(787, 1695)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_016" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(937, 180)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_017" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(969, 414)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_018" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(939, 1531)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_019" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(961, 1750)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_020" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1151, 181)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_021" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1096, 340)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_022" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1152, 1469)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_023" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1112, 1698)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_024" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1322, 189)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_025" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1306, 368)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_026" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1297, 1479)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_027" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1317, 1728)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_028" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1466, 183)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_029" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1446, 365)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_030" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1450, 1519)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_031" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1478, 1770)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_032" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1624, 138)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_033" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1592, 409)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_034" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1635, 1551)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_035" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1614, 1682)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_036" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1766, 168)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_037" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1758, 379)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_038" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1800, 1510)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_039" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1799, 1681)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_040" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1978, 188)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_041" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1949, 373)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_042" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1953, 1507)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_043" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1943, 1719)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_044" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2137, 182)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_045" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2082, 356)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_046" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2149, 1465)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_047" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2089, 1723)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_048" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2303, 184)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_049" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2284, 345)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_050" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2301, 1533)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_051" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2308, 1769)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_052" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2478, 168)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_053" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2435, 412)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_054" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2414, 1529)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_055" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2450, 1732)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_056" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2575, 187)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_057" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2587, 396)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_058" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2617, 1505)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_059" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2608, 1727)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_060" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2795, 174)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_061" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2805, 394)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_062" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2805, 1486)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_063" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2796, 1734)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_064" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2960, 203)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_065" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2933, 386)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_066" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2969, 1554)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_067" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2911, 1751)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_068" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3109, 151)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_069" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3097, 390)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_070" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3117, 1484)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_071" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3081, 1746)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_072" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3272, 143)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_073" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3272, 395)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_074" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3296, 1520)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_075" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3274, 1712)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_076" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3429, 147)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_077" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3457, 364)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_078" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3431, 1551)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_079" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3446, 1691)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_080" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3579, 203)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_081" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3570, 391)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_082" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3580, 1537)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_083" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3576, 1717)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_084" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3767, 127)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_085" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3743, 370)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_086" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3731, 1503)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_087" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3789, 1681)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_088" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3952, 126)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_089" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3955, 343)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_090" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3951, 1538)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_091" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3960, 1725)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_092" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4114, 179)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_093" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4070, 429)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_094" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4109, 1518)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_095" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4111, 1718)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_096" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4259, 196)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_097" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4247, 343)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_098" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4277, 1515)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_099" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4264, 1689)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_100" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4450, 137)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_101" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4410, 426)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_102" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4434, 1542)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_103" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4403, 1708)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_104" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4576, 157)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_105" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4625, 340)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_106" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4591, 1509)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_107" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4564, 1757)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_108" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4780, 133)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_109" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4753, 388)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_110" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4756, 1523)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_111" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4787, 1721)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_112" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4945, 166)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_113" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4905, 360)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_114" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4942, 1537)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_115" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4928, 1708)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_116" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5120, 180)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_117" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5108, 395)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_118" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5053, 1525)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_119" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5101, 1719)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_120" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5234, 193)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_121" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5215, 419)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_122" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5217, 1499)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_123" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5279, 1726)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_124" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5435, 165)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_125" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5402, 414)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_126" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5423, 1496)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_127" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5418, 1768)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_128" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5574, 168)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_129" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5597, 425)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_130" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5595, 1545)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_131" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5573, 1691)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_132" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5736, 203)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_133" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5726, 385)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_134" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5728, 1472)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_135" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5741, 1698)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_136" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5922, 213)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_137" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5935, 385)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_138" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5929, 1496)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0
+
+[node name="Obstacle_139" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5943, 1711)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "ice_pillar"
+
+metadata/radius = 29.0

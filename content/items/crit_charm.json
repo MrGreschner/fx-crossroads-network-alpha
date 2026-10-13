@@ -1,0 +1,10 @@
+{
+  "id": "crit_charm",
+  "name": "Crit Charm",
+  "cost": 48,
+  "effect": "bonus_damage",
+  "amount": 8,
+  "description": "Add 8 damage to attacks.",
+  "duration": 3,
+  "radius": 145
+}

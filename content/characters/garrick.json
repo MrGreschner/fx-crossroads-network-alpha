@@ -1,0 +1,102 @@
+{
+  "id": "garrick",
+  "name": "Garrick Runebearer",
+  "sprite": "garrick",
+  "run_cost": 0,
+  "max_health": 125,
+  "speed": 225,
+  "lore": "A wandering male rune smith with a weathered beard and a hammer inscribed with three old promises: courage, swiftness and shelter.",
+  "primary": {
+    "name": "Rune Hammer",
+    "style": "rune_hammer",
+    "damage": 24,
+    "cooldown": 0.8,
+    "range": 400,
+    "speed": 430,
+    "splash_radius": 65,
+    "splash_damage": 8,
+    "description": "Throw a spinning rune hammer for 24 damage. Walls stop it. Splash reaches 65 units around the impact."
+  },
+  "secondary": {
+    "name": "Threefold Oath",
+    "style": "rune_cycle",
+    "damage": 0,
+    "cooldown": 6,
+    "duration": 4.5,
+    "description": "Each use grants the next rune for 4.5s: Might (+20% damage), Stride (+30% movement), then Ward (35% less damage taken). Only one rune is active at a time. The next rune is shown beside you."
+  },
+  "special": {
+    "name": "Triune Verdict",
+    "style": "triune_verdict",
+    "damage": 28,
+    "cooldown": 20,
+    "range": 240,
+    "description": "Mark a spot ahead. After warnings: a 24-damage hammer seal knocks foes back; a 28-damage crosscut slows; a 38-damage final ring stuns for 0.65s. Each strike has its own area; walls block damage."
+  },
+  "passive": "Purifying Rune: activating Ward removes burn, bleeding and poison from Garrick.",
+  "passive_effect": "purifying_rune",
+  "mastery": {
+    "title": "Oathbound Champion",
+    "technique": {
+      "name": "Heavy Rune",
+      "ability": "primary",
+      "description": "Rune Hammer hits 20% harder but travels 25% slower.",
+      "multiply": {
+        "damage": 1.2,
+        "speed": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Runic Judgement",
+      "ability": "special",
+      "description": "Charge one 80-damage runic lane with a short stun. Replaces the three-rune verdict with a telegraphed piercing line.",
+      "attack": {
+        "name": "Runic Judgement",
+        "style": "master_lance",
+        "damage": 80,
+        "cooldown": 13,
+        "color": "#dfc193",
+        "range": 450,
+        "width": 80,
+        "charge": 0.9,
+        "duration": 1.5,
+        "stun_duration": 0.8,
+        "description": "Charge one 80-damage runic lane with a short stun. Replaces the three-rune verdict with a telegraphed piercing line.",
+        "visual_texture": "res://assets/mastery_garrick_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

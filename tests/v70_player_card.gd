@@ -1,0 +1,61 @@
+extends SceneTree
+var failures:=0
+func check(ok:bool,label:String)->void:
+ if not ok:failures+=1;print("FAIL: ",label)
+func _initialize()->void:call_deferred("run")
+func run()->void:
+ var game=load("res://scenes/main.tscn").instantiate();root.add_child(game);await process_frame;game.set_process(false);game.legacy.set_process(false)
+ var legacy=game.legacy;legacy.data=legacy.defaults();var card=legacy.card
+ check(card.valid(card.defaults()),"fresh card validates")
+ var bad:Dictionary=card.defaults();bad.arena.random.deaths=-1;check(not card.valid(bad),"negative records rejected")
+ legacy.data.erase("card");check(card.state().arena.standard.wins==0,"old profiles migrate")
+ check(not card.portrait_unlocked("ram"),"portrait initially locked")
+ var rec:Dictionary=legacy.record("ram");rec.clears=3;rec.damage=10000;rec.realms=["grove","quarry"]
+ check(card.portrait_unlocked("ram") and not card.portrait_star("ram"),"first technique grants portrait")
+ rec.clears=12;rec.damage=85000;rec.realms=["grove","quarry","sunfield","rift","marsh","other"]
+ check(card.portrait_star("ram") and card.mastered()==1,"final unlock grants star without equipping")
+ for id in card.BADGES:card.cleared(id)
+ card.cleared("grove");check(card.badges().size()==4,"only toughest realms grant stickers")
+ card.state().badges.clear();legacy.data.tasks.realms=["astral_rift"];check(card.badges()==["astral_rift"],"historical clears grant stickers")
+ legacy.data.tasks.damage=0
+ card.sync_match("a","arena",false,"ram",{"kills":2,"deaths":1,"best_kill_streak":2},100,true)
+ card.sync_match("a","arena",false,"ram",{"kills":2,"deaths":1,"best_kill_streak":2},100,true)
+ check(legacy.data.tasks.damage==100 and card.state().arena.standard.kills==2 and card.state().arena.standard.deaths==1,"snapshots do not duplicate damage or KOs")
+ card.arena_result("a",false,"win");card.arena_result("a",false,"win")
+ check(card.state().arena.standard.wins==1,"results deduplicated")
+ card.arena_result("b",true,"win");check(card.state().arena.random.wins==1 and card.state().arena.standard.wins==1,"random records independent")
+ card.arena_result("c",false,"draw");check(card.state().arena.standard.streak==1,"draw preserves unbeaten streak")
+ card.arena_result("d",false,"loss");check(card.state().arena.standard.streak==0 and card.state().arena.standard.best_streak==1,"loss resets current not best")
+ for i in 5:check(card.tier(card.THRESHOLDS[i])==i+1,"trophy threshold "+str(i))
+ card.sync_match("abandoned","arena",true,"ram",{},0);card.recover_abandoned();check(card.state().arena.random.losses==1,"reload ends active streak as loss")
+ card.coop_clear("grove");card.coop_clear("quarry");card.coop_clear("grove")
+ check(legacy.data.tasks.coop_clears==3 and legacy.data.tasks.coop_distinct==2,"co-op projects track repeat and distinct clears")
+ card.descent_cleared(10,1);check(legacy.data.tasks.coop_descent==0,"solo does not unlock expedition")
+ card.descent_cleared(10,2);check(legacy.data.tasks.coop_descent==10,"co-op floor clear unlocks expedition")
+ legacy.data.teacher=true;card.cleared("ebonwake");card.coop_clear("grove");card.wave_cleared(30,2)
+ check(legacy.data.tasks.coop_clears==3 and not legacy.data.town.get("bastion",false),"teacher testing does not earn progression")
+ legacy.data.teacher=false
+ var party=load("res://scenes/arcade.tscn").instantiate();root.add_child(party);await process_frame;party.set_process(false);party.legacy.set_process(false);party.legacy.data=party.legacy.defaults();party.role="host";party.my_id="host";party._add_player("host",0);party._add_player("guest",1);party._set_mode("arena")
+ party.random_builds.guest=party._random_build_payload();party.random_hero_picker.button_pressed=true;party.no_items_picker.button_pressed=true;party.food_loadouts.host="hearty_stew";party._start_match()
+ check(party.arena_random and party.arena_no_items and party.food_slots.host=="" and party.food_loadouts.host=="hearty_stew","random assignment and no-food preserves packed food")
+ for id in party.hero_ids:check(party.characters.has(party.hero_ids[id]),"assigned hero exists")
+ party.inventory.host=["potion"];party._consume("host",0);check(party.inventory.host.size()==1,"item use disabled")
+ party.hero_ids.host="ram";party.hero_ids.guest="ram";party.health.guest=5;party.invincible_until.guest=0;party.inventory.guest=[];party._hurt("guest",10,"host")
+ check(party.arena_records.host.kills==1 and party.arena_records.guest.deaths==1,"PvP knockout records killer and victim")
+ party.health.guest=5;party.inventory.guest=["last_stand"];party._hurt("guest",10,"host")
+ check(party.health.guest>0 and party.arena_records.guest.deaths==1,"last stand rescue is not a death")
+ var guest=load("res://scenes/arcade.tscn").instantiate();root.add_child(guest);await process_frame;guest.set_process(false);guest.legacy.set_process(false);guest.legacy.data=guest.legacy.defaults();guest.role="guest";guest.my_id="guest";guest.host_id="host";guest.match_id=party.match_id;guest._set_mode("arena")
+ var result:Dictionary=JSON.parse_string(JSON.stringify(party._snapshot()));result.results="Arena complete";result.active=false;result.arena_outcomes={"host":"win","guest":"loss"};result.contributions.guest={"damage":123.0};result.arena_records.guest={"kills":3,"npc_kills":4,"deaths":2,"kill_streak":0,"best_kill_streak":3}
+ guest._packet("host",result);guest._packet("host",result)
+ check(guest.legacy.card.state().arena.random.kills==3 and guest.legacy.card.state().arena.random.deaths==2 and guest.legacy.card.state().arena.random.losses==1 and guest.legacy.data.tasks.damage==123,"guest reads final counters before results and deduplicates final packets")
+ guest.queue_free()
+ var snapshot:Dictionary=party._snapshot();check(snapshot.arena_random and snapshot.arena_no_items and snapshot.party_size==2,"rules and party size travel in snapshot")
+ party._set_mode("defense");party.wave=30;party.defense_cleared_wave=0;party.opponents.assign([{"defense_wave":30}]);party._track_card_progress()
+ check(not party.legacy.data.town.get("bastion",false),"wave 30 starting does not upgrade wall")
+ party.wave=31;party.opponents.assign([{"defense_wave":31}]);party._track_card_progress()
+ check(party.legacy.data.town.bastion and party.defense_cleared_wave==30,"clearing wave 30 upgrades wall with newer enemies alive")
+ check(legacy.validate(legacy.bundle()),"card export validates")
+ print("V70 player card: ",failures," failures")
+ for instance in [party,game]:
+  for voice in instance.journey.voices:voice.stop()
+ party.queue_free();game.queue_free();await create_timer(.2).timeout;quit(1 if failures else 0)

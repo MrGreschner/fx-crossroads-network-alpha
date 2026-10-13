@@ -1,0 +1,9 @@
+# Version 32 — Bracken and the frontier
+
+Bracken is a fox sapper, hero 22, with original idle/walk/attack pixel art. Two primary uses plant nearby moonstone mines, and the third detonates both. Mines expire after 12 seconds, are owned per player, and clear on death or a new floor. His secondary is three staggered ground eruptions that slow enemies; his special extends this into a six-burst stunning faultline. His passive expands mine radius at level five. New shared manual_mines and ground_sequence attack styles are documented for students.
+
+Gate Defence has six frontier camp clusters, roadside banners and ruined arches, and an explorable northwestern spring clearing connected to the main northern road. Pilgrim’s Spring at (6400,7300) heals living players within 135 units for 3 health per second. It does not revive or count as character ability healing. Nearby obstacles were cleared for access. Three long enemy approach roads and upgrade buildings remain.
+
+Ram Descent retains current HP across floors instead of adding 40 HP. Character abilities, items and level-up effects still work. Taking damage displays a brief coral hit ring and sprite flash; guests receive the hit effect too. Floor changes display a short dark fade and floor-number title for host and guests, without taking away player control.
+
+Godot tests pass for mine setup/detonation/damage/passive/expiry, staggered casts, network payloads and host multiplayer detonation, no floor recovery, floor-transition trigger, hit feedback and guest events, frontier scenery loading, fountain access/healing/stat exclusion and no resurrection. Gate Defence ranged movement regression checks pass. Physical browser/mobile playtesting remains for the fresh exported build. Includes all version 31 and earlier content. Export v32 for itch.io; no Render changes required.

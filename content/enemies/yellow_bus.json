@@ -1,0 +1,12 @@
+{
+  "id": "yellow_bus",
+  "name": "The Last Bus",
+  "sprite": "yellow_bus",
+  "health": 650,
+  "speed": 42,
+  "damage": 18,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_yellow_bus",
+  "expansion_only": true
+}

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="120" viewBox="0 0 96 120">
+<g stroke="#423c32" stroke-width="2.5" stroke-linejoin="round">
+<!-- broad shoulders, sturdy boots and patched garden apron -->
+<path d="M28 70L20 86 26 102H70L76 86 67 70Z" fill="#936c49"/>
+<path d="M33 96L31 111H44L45 96M52 96L53 111H67L63 95" fill="#566253"/>
+<path d="M30 108H44V116H27V112ZM53 108H67L70 112V116H53Z" fill="#4d4336"/>
+<path d="M30 73L38 68H57L65 74 63 103H33Z" fill="#698f7b"/>
+<path d="M38 69L38 84M58 69L58 84" stroke="#afc2a0" stroke-width="4"/>
+<path d="M41 87H56V98H41Z" fill="#3f6c60"/>
+<path d="M47 87V95M42 91H56" stroke="#b7c8a6" stroke-width="1"/>
+<!-- distinct swept ox horns, ears and square muzzle -->
+<path d="M29 33Q7 31 10 12Q15 25 33 21L35 36ZM65 33Q87 31 85 12Q80 25 63 21L61 36Z" fill="#f0deb3"/>
+<path d="M30 38Q10 31 12 46L29 51M65 38Q85 31 84 46L66 51" fill="#a88257"/>
+<path d="M19 40L29 46M76 40L66 46" stroke="#cfac77" stroke-width="3"/>
+<path d="M31 27Q48 21 65 27L69 52 59 72H37L27 52Z" fill="#ac8055"/>
+<path d="M35 34L43 30 46 52 34 53Z" fill="#c4996a" stroke="none"/>
+<path d="M43 29H53L55 53H41Z" fill="#e5c695" stroke="none"/>
+<path d="M28 51Q48 43 69 51L66 64Q48 78 30 64Z" fill="#d4b17d"/>
+<path d="M33 43H41M55 43H63" stroke="#544033"/>
+<ellipse cx="38" cy="46" rx="2.5" ry="3.5" fill="#263b38" stroke="none"/>
+<ellipse cx="58" cy="46" rx="2.5" ry="3.5" fill="#263b38" stroke="none"/>
+<circle cx="38.6" cy="45" r=".9" fill="#fff2d3" stroke="none"/>
+<circle cx="58.6" cy="45" r=".9" fill="#fff2d3" stroke="none"/>
+<ellipse cx="39" cy="58" rx="3" ry="2" fill="#69513c" stroke="none"/>
+<ellipse cx="57" cy="58" rx="3" ry="2" fill="#69513c" stroke="none"/>
+<path d="M42 66Q48 69 54 66" fill="none"/>
+<!-- straw hat and a leaf tucked into its band -->
+<path d="M31 20L36 7H60L66 20Z" fill="#d6b76e"/>
+<path d="M24 20Q47 16 72 20L75 26Q48 30 21 26Z" fill="#e6c681"/>
+<path d="M33 16H64" stroke="#796243" stroke-width="4"/>
+<path d="M62 16Q63 3 74 5Q72 15 62 16Z" fill="#799863"/>
+<!-- hoe, rounded hands and metal blade -->
+<path d="M74 67L80 112" stroke="#b8965e" stroke-width="5"/>
+<path d="M79 111H93L91 118H80Z" fill="#8caaa7"/>
+<path d="M68 77Q79 73 80 82Q77 89 69 85Z" fill="#bc9364"/>
+<path d="M25 78Q17 76 16 84Q18 93 28 88Z" fill="#bc9364"/>
+</g></svg>

@@ -1,0 +1,11 @@
+{
+  "id": "depth_sovereign",
+  "name": "Sovereign of the Deep",
+  "sprite": "depth_sovereign",
+  "health": 3000,
+  "speed": 125,
+  "damage": 30,
+  "behaviour": "chase",
+  "expansion_only": true,
+  "aggro_range": 850
+}

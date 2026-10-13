@@ -1,0 +1,22 @@
+{
+  "id": "first_steps",
+  "name": "First Steps",
+  "size": [
+    1800,
+    1200
+  ],
+  "unlock_cost": 0,
+  "background": "#24372c",
+  "accent": "#3e6244",
+  "boss_health": 190,
+  "xp_per_level": 1,
+  "terrain": "forest",
+  "boss_secondary": "stomp",
+  "scene": "res://scenes/realms/first_steps.tscn",
+  "difficulty_label": "First adventure",
+  "enemies": [],
+  "boss_damage": 9,
+  "boss_speed": 65,
+  "boss_name": "Bramble Captain",
+  "boss_sprite": "bramble_boss"
+}

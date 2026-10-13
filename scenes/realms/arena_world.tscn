@@ -1,0 +1,1443 @@
+[gd_scene format=3]
+
+[node name="Arena" type="Node2D"]
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Road0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(220, 2004, 5980, 2004, 5980, 2196, 220, 2196)
+
+metadata/tile = "path"
+
+[node name="Road1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(3000, 220, 3200, 220, 3200, 3980, 3000, 3980)
+
+metadata/tile = "path"
+
+[node name="Road2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(2660, 1730, 3540, 1730, 3540, 2470, 2660, 2470)
+
+metadata/tile = "path"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Cover0" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4506, 334)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover1" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4094, 2736)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover2" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1088, 3672)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover3" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4025, 185)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover4" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4602, 1754)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover5" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(691, 1661)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover6" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2592, 3903)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover7" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(525, 963)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover8" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4741, 2345)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover9" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(970, 1820)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover10" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3771, 1399)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover11" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4605, 624)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover12" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5421, 2402)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover13" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(6012, 1557)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover14" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(580, 1540)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover15" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(552, 307)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover16" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4750, 3827)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover17" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2052, 3935)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover18" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3998, 3948)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover19" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3857, 2517)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover20" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4474, 2477)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover21" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(518, 1806)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover22" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3351, 3526)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover23" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(941, 3158)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover24" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1501, 3193)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover25" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4902, 126)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover26" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(6078, 2916)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover27" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2356, 1772)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover28" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(631, 2512)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover29" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4877, 1749)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover30" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2618, 3737)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover31" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2245, 400)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover32" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2245, 2691)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover33" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2442, 2851)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover34" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5065, 2742)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover35" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4080, 3072)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover36" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5552, 152)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover37" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(279, 3505)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover38" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5482, 365)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover39" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(435, 2601)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover40" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1271, 2741)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover41" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2703, 511)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover42" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4892, 1256)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover43" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4343, 2602)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover44" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4757, 3102)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover45" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4658, 2673)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover46" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1528, 725)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover47" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5335, 3001)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover48" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3535, 3634)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover49" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1901, 297)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover50" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2464, 4021)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover51" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5727, 3597)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover52" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3648, 3733)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover53" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2577, 3394)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover54" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2339, 1510)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover55" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3878, 2978)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover56" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5182, 2751)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover57" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4647, 337)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover58" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2834, 1063)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover59" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5607, 632)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover60" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(341, 474)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover61" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3680, 4065)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover62" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5503, 861)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover63" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3989, 927)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover64" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(672, 3484)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover65" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2775, 262)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover66" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2233, 2351)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover67" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5376, 3306)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover68" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2175, 3840)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover69" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3435, 3322)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover70" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5356, 3720)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover71" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1204, 4009)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover72" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5515, 1096)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover73" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1304, 1275)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover74" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2431, 444)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover75" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3329, 162)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover76" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2358, 2342)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover77" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(990, 3903)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover78" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3858, 3424)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover79" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4249, 653)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover80" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(187, 1390)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover81" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1073, 1447)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover82" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3961, 1754)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover83" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3607, 1552)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover84" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5229, 3614)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover85" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1493, 1612)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover86" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1627, 2843)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover87" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(509, 1284)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover88" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(221, 3342)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover89" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3622, 3877)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover90" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(919, 2968)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover91" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(516, 718)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover92" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5651, 3182)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover93" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1920, 1614)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover94" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(193, 2748)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover95" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1113, 2738)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover96" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(384, 924)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover97" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3999, 2478)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover98" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(6062, 3272)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover99" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1817, 3965)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover100" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5824, 323)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover101" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2865, 3504)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover102" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2760, 723)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover103" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(286, 1630)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover104" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4518, 1404)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover105" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2364, 900)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover106" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3818, 3998)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover107" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4788, 4055)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover108" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3912, 2341)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover109" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(214, 576)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover110" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4410, 2896)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover111" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4665, 1331)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover112" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1676, 1668)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover113" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4300, 1522)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover114" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(197, 1131)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover115" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5122, 3669)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover116" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5662, 1146)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover117" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2052, 2386)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover118" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1996, 1804)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover119" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1115, 2974)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover120" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1377, 2508)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover121" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(730, 3064)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover122" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5754, 219)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover123" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4966, 296)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover124" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4365, 1293)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover125" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(630, 1441)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover126" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1597, 3428)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover127" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3732, 2368)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover128" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4563, 2830)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover129" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1919, 1400)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover130" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5543, 3077)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover131" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2110, 498)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover132" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5950, 3403)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover133" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5656, 2720)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover134" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4148, 1513)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover135" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4067, 605)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover136" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1412, 957)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover137" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1145, 3106)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover138" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3594, 250)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover139" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2116, 788)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover140" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1936, 2377)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover141" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(172, 2596)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover142" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3773, 2953)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover143" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(179, 830)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover144" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2818, 378)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover145" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3972, 3718)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover146" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1831, 2754)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover147" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2505, 860)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover148" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4733, 2461)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover149" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1482, 493)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover150" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1375, 203)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover151" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1379, 1596)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover152" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2058, 2809)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover153" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3783, 3888)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover154" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4158, 3507)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover155" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1206, 3275)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover156" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(664, 3252)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover157" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2648, 1320)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover158" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(2003, 159)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover159" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3685, 933)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover160" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5174, 3152)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover161" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(4160, 918)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover162" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1112, 225)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover163" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5899, 1835)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover164" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1350, 3148)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover165" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3468, 2985)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover166" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1816, 3395)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover167" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(5866, 3750)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover168" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(1819, 540)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Cover169" type="Marker2D" parent="Obstacles"]
+
+position = Vector2(3658, 2939)
+
+metadata/kind = "tree"
+
+metadata/radius = 30.0
+
+[node name="Buildings" type="Node2D" parent="."]
+
+[node name="Supplies" type="Marker2D" parent="Buildings"]
+
+position = Vector2(3100.0, 2550.0)
+
+metadata/sprite = "supply_shop"
+
+[node name="CourtyardCover0" type="Marker2D" parent="Obstacles"]
+position = Vector2(2800, 1820)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover1" type="Marker2D" parent="Obstacles"]
+position = Vector2(2840, 1820)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover2" type="Marker2D" parent="Obstacles"]
+position = Vector2(3360, 1820)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover3" type="Marker2D" parent="Obstacles"]
+position = Vector2(3400, 1820)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover4" type="Marker2D" parent="Obstacles"]
+position = Vector2(2800, 2380)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover5" type="Marker2D" parent="Obstacles"]
+position = Vector2(2840, 2380)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover6" type="Marker2D" parent="Obstacles"]
+position = Vector2(3360, 2380)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover7" type="Marker2D" parent="Obstacles"]
+position = Vector2(3400, 2380)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover8" type="Marker2D" parent="Obstacles"]
+position = Vector2(2540, 2100)
+metadata/kind = "barricade"
+metadata/radius = 24.0
+
+[node name="CourtyardCover9" type="Marker2D" parent="Obstacles"]
+position = Vector2(3660, 2100)
+metadata/kind = "barricade"
+metadata/radius = 24.0

@@ -1,0 +1,102 @@
+{
+  "id": "hearthwarden",
+  "name": "Hearthwarden",
+  "sprite": "hearthwarden",
+  "max_health": 145,
+  "speed": 215,
+  "run_cost": 0,
+  "lore": "A mountain-born guardian whose traveling forge shelters every companion brave enough to stand beside him.",
+  "primary": {
+    "name": "Forge Rhythm",
+    "style": "hearth_combo",
+    "damage": 22,
+    "cooldown": 0.7,
+    "description": "Two close hammer swings hit for 22 each. A third swing within 1.8s deals 33 in a wider arc and pushes foes back. Waiting resets the combo.",
+    "range": 85,
+    "color": "#edba74"
+  },
+  "secondary": {
+    "name": "Rally Standard",
+    "style": "rally_banner",
+    "damage": 0,
+    "cooldown": 9,
+    "description": "Plant a banner up to 120 ahead for 5s. You and allies within 130 take 18% less damage. One banner at a time; enemies receive no protection.",
+    "range": 120,
+    "radius": 130,
+    "duration": 5,
+    "reduction": 0.18,
+    "color": "#edba74"
+  },
+  "special": {
+    "name": "Hold the Line",
+    "style": "shield_march",
+    "damage": 50,
+    "cooldown": 17,
+    "description": "Send a 220-wide shield wall forward for 2.4s. It catches up to 6 moving hostile shots and hits each enemy once for 50, briefly stunning, pushing and slowing them. Walls stop its march; beams and lobbed explosions bypass it.",
+    "width": 220,
+    "color": "#edba74"
+  },
+  "passive": "Steadfast Forge: Completing the third hammer swing grants 15% damage reduction for 2s. A golden ward shows the protection.",
+  "passive_effect": "steadfast_forge",
+  "mastery": {
+    "title": "Keeper of the Unbroken Line",
+    "technique": {
+      "name": "Traveling Standard",
+      "ability": "secondary",
+      "description": "The banner follows you, but its protection drops to 12% and its radius to 90. Same 5s duration.",
+      "set": {
+        "mobile_banner": true,
+        "reduction": 0.12,
+        "radius": 90
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Forgefall",
+      "ability": "special",
+      "description": "Replace the advancing shield with three visible falling anvils in a line. After a 1s windup, each small blast deals 32 and stuns for 0.7s. No projectile interception; 17s cooldown.",
+      "attack": {
+        "name": "Forgefall",
+        "style": "forgefall",
+        "damage": 32,
+        "cooldown": 17,
+        "description": "Three anvils fall after a 1s warning, 0.2s apart. Each 65-radius impact deals 32 and stuns for 0.7s. Lose the shield wall.",
+        "range": 280,
+        "stun_duration": 0.7,
+        "color": "#edba74",
+        "visual_texture": "res://assets/mastery_hearthwarden_v75.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

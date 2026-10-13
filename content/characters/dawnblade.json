@@ -1,0 +1,110 @@
+{
+  "id": "dawnblade",
+  "name": "Mara Dawnblade",
+  "sprite": "dawnblade",
+  "max_health": 130,
+  "speed": 225,
+  "run_cost": 0,
+  "lore": "A wandering swordswoman who keeps the old orchard roads safe.",
+  "primary": {
+    "name": "Sword Cut",
+    "style": "melee",
+    "damage": 28,
+    "cooldown": 0.6,
+    "range": 82,
+    "arc_degrees": 70,
+    "visual": "swing",
+    "color": "#ffe2a0",
+    "hold_charge": {
+      "seconds": 1.0,
+      "damage": 1.65,
+      "knockback": 1
+    },
+    "description": "Tap for a quick directional sword cut (28 damage). Hold up to 1s, then release a heavy 46.2-damage cut with up to 70 knockback. Bleed still applies when unlocked.",
+    "charged_cleave": true
+  },
+  "secondary": {
+    "name": "Riposte Guard",
+    "style": "block",
+    "damage": 0,
+    "cooldown": 5,
+    "duration": 1.2,
+    "reduction": 0.65,
+    "reflect": true
+  },
+  "special": {
+    "name": "Dawn Circle",
+    "style": "dawn_circle",
+    "damage": 48,
+    "cooldown": 10,
+    "range": 115,
+    "radius": 115,
+    "color": "#ffe6b7",
+    "description": "Unleash a bright circular sword sweep for 48 damage within 115 units. A golden boundary, blade trails and radiant burst show its full attack area."
+  },
+  "passive": "Open Wound: Sword Cut causes bleeding for 2 damage per second for 4 seconds. Repeated hits refresh it.",
+  "passive_effect": "primary_bleed",
+  "mastery": {
+    "title": "Dawnblade Champion",
+    "technique": {
+      "name": "Distant Dawn",
+      "ability": "special",
+      "description": "Dawn Circle reaches 40% farther, dealing 25% less damage.",
+      "multiply": {
+        "radius": 1.4,
+        "range": 1.4,
+        "damage": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Dawnblades Aloft",
+      "ability": "primary",
+      "description": "Throw two dawn blades that curve back, 13 per leg. Trades fast close melee for slower ranged timing; her bleed passive still applies.",
+      "attack": {
+        "name": "Dawnblades Aloft",
+        "style": "master_pincer",
+        "damage": 13,
+        "cooldown": 0.95,
+        "color": "#ecc2a5",
+        "range": 270,
+        "width": 65,
+        "duration": 1.65,
+        "description": "Throw two dawn blades that curve back, 13 per leg. Trades fast close melee for slower ranged timing; her bleed passive still applies.",
+        "visual_texture": "res://assets/mastery_dawnblade_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "brood_reliquary",
+  "name": "Brood Reliquary",
+  "sprite": "brood_reliquary",
+  "health": 230,
+  "speed": 0,
+  "damage": 12,
+  "behaviour": "custom",
+  "custom_attack": "v43_brood_reliquary",
+  "aggro_range": 720,
+  "expansion_only": true
+}

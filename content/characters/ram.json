@@ -1,0 +1,106 @@
+{
+  "id": "ram",
+  "name": "Young Ram",
+  "sprite": "ram",
+  "max_health": 120,
+  "speed": 245,
+  "primary": {
+    "name": "Headbutt",
+    "style": "identity_strike",
+    "damage": 28,
+    "cooldown": 0.37,
+    "range": 82,
+    "speed": 520,
+    "color": "#f7dfb5",
+    "arc_degrees": 70,
+    "visual": "horns",
+    "description": "Headbutt with a close pair of horn impacts: 28 damage, 82 reach, 70-degree arc."
+  },
+  "secondary": {
+    "name": "Ram Charge",
+    "style": "charge",
+    "damage": 32,
+    "cooldown": 3.0,
+    "range": 165,
+    "speed": 680,
+    "color": "#a6ddbb"
+  },
+  "special": {
+    "name": "Earthshaker",
+    "style": "ram_quake",
+    "damage": 85,
+    "cooldown": 8.0,
+    "radius": 155,
+    "color": "#e0be85",
+    "description": "Shake a fixed 155-radius patch of ground for 3 seconds. Six pulses deal 85 base damage in total to foes who stay inside. Enemies inside are slowed 65%.",
+    "ui_brief": "Earthquake \u2022 85 damage over 3s \u2022 strong slow"
+  },
+  "passive": "Second Wind: recover 4 health on each enemy defeated.",
+  "passive_effect": "heal_on_kill",
+  "run_cost": 0,
+  "mastery": {
+    "title": "Horn Champion",
+    "technique": {
+      "name": "Longhorn Rush",
+      "ability": "secondary",
+      "description": "Charge 35% farther and 15% faster, but deal 20% less charge damage.",
+      "multiply": {
+        "range": 1.35,
+        "speed": 1.15,
+        "damage": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Faultline Rush",
+      "ability": "special",
+      "description": "Trade the persistent slowing quake for a delayed straight faultline: 70 damage, a brief stun and 360 reach. Narrower coverage and a 10s cooldown.",
+      "attack": {
+        "name": "Faultline Rush",
+        "style": "master_lance",
+        "damage": 70,
+        "cooldown": 10,
+        "color": "#d8b17b",
+        "range": 360,
+        "width": 70,
+        "charge": 0.7,
+        "duration": 1.5,
+        "stun_duration": 0.7,
+        "description": "Trade the persistent slowing quake for a delayed straight faultline: 70 damage, a brief stun and 360 reach. Narrower coverage and a 10s cooldown.",
+        "visual_texture": "res://assets/mastery_ram_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

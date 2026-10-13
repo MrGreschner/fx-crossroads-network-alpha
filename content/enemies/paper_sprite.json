@@ -1,0 +1,12 @@
+{
+  "id": "paper_sprite",
+  "name": "Paper Sprite",
+  "sprite": "paper_sprite",
+  "health": 42,
+  "speed": 105,
+  "damage": 6,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_paper_sprite",
+  "expansion_only": true
+}

@@ -1,0 +1,46 @@
+{
+  "id": "quarry",
+  "name": "The Ember Quarry",
+  "size": [
+    5600,
+    1900
+  ],
+  "unlock_cost": 0,
+  "background": "#38363d",
+  "accent": "#b5816e",
+  "boss_health": 680,
+  "xp_per_level": 4,
+  "terrain": "ash",
+  "boss_split": true,
+  "boss_secondary": "fireball",
+  "scene": "res://scenes/realms/quarry.tscn",
+  "difficulty_label": "Easy",
+  "description": "Follow a mine-cart trail through cooled stone and ember seams. Early imps give way to ranged defenders before the Quarry guardian.",
+  "route_points": [
+    [
+      230,
+      960
+    ],
+    [
+      1180,
+      960
+    ],
+    [
+      2100,
+      650
+    ],
+    [
+      3250,
+      1130
+    ],
+    [
+      4250,
+      720
+    ],
+    [
+      5260,
+      960
+    ]
+  ],
+  "difficulty_tier": "starter"
+}

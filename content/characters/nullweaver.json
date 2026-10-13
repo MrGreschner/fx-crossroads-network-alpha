@@ -1,0 +1,94 @@
+{
+  "id": "nullweaver",
+  "name": "Nullweaver",
+  "sprite": "nullweaver",
+  "max_health": 95,
+  "speed": 235,
+  "run_cost": 0,
+  "lore": "An eccentric masked rift tailor. Weak pins become deadly lines when carefully placed; aim beyond foes, rotate the seam, and catch them on triangle edges.",
+  "primary": {
+    "name": "Stitch Reality",
+    "style": "rift_pin",
+    "damage": 18,
+    "cooldown": 0.85,
+    "description": "Place a pin up to 280 away for 18 damage in a tiny area. Two pins flash a 25.2-damage seam; a third replaces the oldest. Pins over 600 apart lose their link. Walls block travel.",
+    "range": 280,
+    "link_multiplier": 1.4
+  },
+  "secondary": {
+    "name": "Quarter Turn",
+    "style": "rift_rotate",
+    "damage": 42,
+    "cooldown": 5,
+    "description": "Rotate the line between two pins by 90 degrees over 0.6s. Its sweeping seam hits each foe once. Requires two pins.",
+    "width": 20
+  },
+  "special": {
+    "name": "Impossible Hem",
+    "style": "rift_triangle",
+    "damage": 36,
+    "cooldown": 14,
+    "description": "Hold Space to place a triangle freely with mouse or touch aim; release to cast. After a 0.65s warning, its rotating edges fire in sequence for 36 damage per edge. The empty centre is safe; careful placement can catch a foe twice.",
+    "radius": 125,
+    "range": 500
+  },
+  "passive": "Needle Frost: Rift seams slow struck enemies by 20% for 1s after level 5.",
+  "passive_effect": "needle_frost",
+  "mastery": {
+    "title": "Master of Impossible Seams",
+    "technique": {
+      "name": "Broad Seam",
+      "ability": "secondary",
+      "description": "Sweep twice as wide, but reduce damage from 42 to 30.",
+      "set": {
+        "width": 40,
+        "damage": 30
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Unravel",
+      "ability": "special",
+      "description": "Replace precise triangle edges with three smaller delayed rift bursts in a fan. Easier to land, less potential damage.",
+      "attack": {
+        "name": "Unravel",
+        "style": "rift_scatter",
+        "damage": 26,
+        "cooldown": 14,
+        "description": "Three 60-radius rifts burst after 0.6\u20130.9s, dealing 26 each. Spread them across foes or overlap them.",
+        "range": 180
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

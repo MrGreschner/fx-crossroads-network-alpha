@@ -1,0 +1,12 @@
+{
+  "id": "spotlight_sovereign",
+  "name": "Spotlight Sovereign",
+  "sprite": "spotlight_sovereign",
+  "health": 900,
+  "speed": 115,
+  "damage": 22,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_spotlight_sovereign",
+  "expansion_only": true
+}

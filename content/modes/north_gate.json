@@ -1,0 +1,35 @@
+{
+  "name": "North Gate: Three Roads",
+  "wave_interval": 25,
+  "soldier_interval": 24,
+  "guard_bounty_share": 0.2,
+  "guard_xp_share": 0.2,
+  "party_count_scale": [
+    1.0,
+    1.5,
+    2.05,
+    2.75
+  ],
+  "party_health_scale": [
+    1.0,
+    1.18,
+    1.4,
+    1.65
+  ],
+  "party_damage_scale": [
+    0.82,
+    0.93,
+    1.0,
+    1.08
+  ],
+  "max_active_creeps": 90,
+  "max_guards_per_lane": 8,
+  "rival_respawn_seconds": 14,
+  "rival_level_cap": 12,
+  "wave_30_boss": "tollbreaker",
+  "max_players": 3,
+  "guard_speed": 105,
+  "opening_march_seconds": 8,
+  "opening_march_multiplier": 2,
+  "second_wave_delay": 8
+}

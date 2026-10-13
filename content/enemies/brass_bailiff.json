@@ -1,0 +1,14 @@
+{
+  "id": "brass_bailiff",
+  "name": "Brass Bailiff",
+  "sprite": "brass_bailiff",
+  "health": 155,
+  "speed": 82,
+  "damage": 13,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_bailiff",
+  "description": "A shield-carrying patrol automaton. Its long baton sweep is telegraphed and briefly slows.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

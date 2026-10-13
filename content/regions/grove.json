@@ -1,0 +1,46 @@
+{
+  "id": "grove",
+  "name": "The Whispering Grove",
+  "size": [
+    5600,
+    1900
+  ],
+  "unlock_cost": 0,
+  "background": "#24372c",
+  "accent": "#3e6244",
+  "boss_health": 540,
+  "xp_per_level": 4,
+  "terrain": "forest",
+  "boss_secondary": "stomp",
+  "scene": "res://scenes/realms/grove.tscn",
+  "difficulty_label": "First adventure",
+  "boss_split": false,
+  "description": "Warm forest glades, an open arrival clearing and progressively mixed patrols lead to the Rootwarden clearing.",
+  "route_points": [
+    [
+      230,
+      960
+    ],
+    [
+      1180,
+      960
+    ],
+    [
+      2100,
+      650
+    ],
+    [
+      3250,
+      1130
+    ],
+    [
+      4250,
+      720
+    ],
+    [
+      5260,
+      960
+    ]
+  ],
+  "difficulty_tier": "starter"
+}

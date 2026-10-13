@@ -1,0 +1,10 @@
+{
+  "id": "aegis",
+  "name": "Aegis Capsule",
+  "cost": 65,
+  "effect": "invulnerable",
+  "amount": 3,
+  "description": "Ignore damage for 3 seconds.",
+  "duration": 3,
+  "radius": 145
+}

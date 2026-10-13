@@ -1,0 +1,458 @@
+[gd_scene load_steps=21 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/grass.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/path.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ram_0.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/elder_ram.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/portal.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/character_hall_v65.svg" id="6"]
+[ext_resource type="Texture2D" path="res://assets/supply_vendor_v65.svg" id="7"]
+[ext_resource type="Texture2D" path="res://assets/town_lamp.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/town_banner.png" id="9"]
+
+[ext_resource type="Texture2D" path="res://assets/arena_stadium.svg" id="10"]
+[ext_resource type="Texture2D" path="res://assets/descent_cave.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/town_gate.png" id="12"]
+
+[ext_resource type="Texture2D" path="res://assets/guard_melee.svg" id="13"]
+
+[ext_resource type="Texture2D" path="res://assets/town_fence.svg" id="14"]
+
+[ext_resource type="Texture2D" path="res://assets/arena_hall.png" id="15"]
+
+[ext_resource type="Texture2D" path="res://assets/pond_food_stand.svg" id="16"]
+
+[ext_resource type="Texture2D" path="res://assets/healer_shack.svg" id="17"]
+
+[ext_resource type="Texture2D" path="res://assets/wayfinder_lodge.svg" id="18"]
+
+[ext_resource type="Texture2D" path="res://assets/seedhouse.svg" id="19"]
+
+[ext_resource type="Texture2D" path="res://assets/town_construction.svg" id="20"]
+
+[node name="Town" type="Node2D"]
+
+[node name="Floor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-1400, -560, 3100, -560, 3100, 2400, -1400, 2400)
+color = Color(0.23, 0.42, 0.32, 1)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Sprite2D" parent="Points"]
+position = Vector2(900, 800)
+texture = ExtResource("3")
+visible = false
+
+[node name="Elder" type="Sprite2D" parent="Points"]
+position = Vector2(740, 680)
+texture = ExtResource("4")
+visible = false
+metadata/menu = "elder"
+metadata/hint = "Talk to the Elder Ram"
+
+[node name="CharacterHall" type="Sprite2D" parent="Points"]
+position = Vector2(600, 570)
+texture = ExtResource("6")
+visible = false
+metadata/menu = "characters"
+metadata/hint = "Enter Character Hall"
+
+[node name="SupplyShop" type="Sprite2D" parent="Points"]
+position = Vector2(1290, 635)
+texture = ExtResource("7")
+visible = false
+metadata/menu = "supplies"
+metadata/hint = "Talk to Bartle, the supply vendor"
+
+[node name="Portal" type="Sprite2D" parent="Points"]
+position = Vector2(900, 670)
+texture = ExtResource("5")
+visible = false
+metadata/menu = "portal"
+metadata/hint = "Choose a realm"
+
+[node name="Landmarks" type="Node2D" parent="."]
+
+[node name="CharacterHall" type="Sprite2D" parent="Landmarks"]
+position = Vector2(600, 400)
+texture = ExtResource("6")
+scale = Vector2(1, 1)
+metadata/label = ""
+
+[node name="SupplyShop" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1290, 485)
+texture = ExtResource("7")
+scale = Vector2(1, 1)
+metadata/label = ""
+
+[node name="Portal" type="Sprite2D" parent="Landmarks"]
+position = Vector2(900, 670)
+texture = ExtResource("5")
+scale = Vector2(2.5, 2.5)
+metadata/label = "CHOOSE A REALM"
+
+[node name="ElderRam" type="Sprite2D" parent="Landmarks"]
+position = Vector2(740, 660)
+texture = ExtResource("4")
+scale = Vector2(2, 2)
+metadata/label = "ELDER RAM"
+
+[node name="Lamp1" type="Sprite2D" parent="Landmarks"]
+position = Vector2(420, 580)
+texture = ExtResource("8")
+scale = Vector2(1.5, 1.5)
+
+[node name="Lamp2" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1405, 615)
+texture = ExtResource("8")
+scale = Vector2(1.5, 1.5)
+
+[node name="Lamp3" type="Sprite2D" parent="Landmarks"]
+position = Vector2(705, 470)
+texture = ExtResource("8")
+scale = Vector2(1.5, 1.5)
+
+[node name="Lamp4" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1095, 470)
+texture = ExtResource("8")
+scale = Vector2(1.5, 1.5)
+
+[node name="Lamp5" type="Sprite2D" parent="Landmarks"]
+position = Vector2(650, 845)
+texture = ExtResource("8")
+scale = Vector2(1.5, 1.5)
+
+[node name="Lamp6" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1150, 845)
+texture = ExtResource("8")
+scale = Vector2(1.5, 1.5)
+
+
+
+[node name="Banner3" type="Sprite2D" parent="Landmarks"]
+position = Vector2(660, 960)
+texture = ExtResource("9")
+scale = Vector2(1.5, 1.5)
+
+[node name="Banner4" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1250, 835)
+texture = ExtResource("9")
+scale = Vector2(1.5, 1.5)
+
+[node name="ArenaEntrance" type="Sprite2D" parent="Points"]
+position = Vector2(260, 1165)
+texture = ExtResource("10")
+visible = false
+metadata/menu = "arena_entrance"
+metadata/hint = "Enter PvP Arena rooms"
+
+[node name="GateDefense" type="Sprite2D" parent="Points"]
+position = Vector2(900, 300)
+texture = ExtResource("12")
+visible = false
+metadata/menu = "defense_entrance"
+metadata/hint = "Enter Gate Defense rooms"
+
+[node name="RamDescent" type="Sprite2D" parent="Points"]
+position = Vector2(-1080, 1200)
+texture = ExtResource("11")
+visible = false
+metadata/menu = "descent_entrance"
+metadata/hint = "Enter Ram Descent"
+
+[node name="ArenaGate" type="Sprite2D" parent="Landmarks"]
+position = Vector2(260, 1100)
+texture = ExtResource("10")
+scale = Vector2(1.25, 1.25)
+metadata/label = "GLADIATOR ARENA"
+
+[node name="GateWatch" type="Sprite2D" parent="Landmarks"]
+position = Vector2(900, 215)
+texture = ExtResource("12")
+scale = Vector2(1.6, 1.6)
+metadata/label = "NORTH GATE - DEFENCE"
+
+[node name="DescentStairs" type="Sprite2D" parent="Landmarks"]
+position = Vector2(-1080, 1170)
+texture = ExtResource("11")
+scale = Vector2(1.6, 1.6)
+metadata/label = "RAM DESCENT"
+
+
+
+
+
+[node name="Practice" type="Marker2D" parent="Points"]
+position = Vector2(1550, 1020)
+metadata/menu = "practice_entrance"
+metadata/hint = "Enter the training yard (all attacks unlocked)"
+
+[node name="TrainingYard" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1550, 930)
+texture = ExtResource("15")
+scale = Vector2(2.2, 2.2)
+metadata/label = "TRAINING YARD"
+
+[node name="RamGuardWest" type="Sprite2D" parent="Landmarks"]
+position = Vector2(715, 250)
+texture = ExtResource("13")
+
+[node name="RamGuardEast" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1085, 250)
+texture = ExtResource("13")
+
+[node name="NorthFence0" type="Sprite2D" parent="Landmarks"]
+position = Vector2(80, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence1" type="Sprite2D" parent="Landmarks"]
+position = Vector2(240, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence2" type="Sprite2D" parent="Landmarks"]
+position = Vector2(400, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence3" type="Sprite2D" parent="Landmarks"]
+position = Vector2(560, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence4" type="Sprite2D" parent="Landmarks"]
+position = Vector2(720, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence5" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1080, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence6" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1240, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence7" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1400, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence8" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1560, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence9" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1720, 190)
+texture = ExtResource("14")
+
+[node name="QuestForest" type="Marker2D" parent="Points"]
+position = Vector2(2940, 1160)
+metadata/menu = "quest_entrance"
+metadata/hint = "Enter Wayfarer Wilds • quests solo or with friends"
+
+[node name="PondPantry" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1150, 1040)
+texture = ExtResource("16")
+
+[node name="HealerHouse" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1960, 600)
+texture = ExtResource("17")
+
+[node name="WayfinderLodge" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1580, 635)
+texture = ExtResource("18")
+
+[node name="Seedhouse" type="Sprite2D" parent="Landmarks"]
+position = Vector2(900, 1490)
+texture = ExtResource("19")
+
+[node name="Food" type="Marker2D" parent="Points"]
+position = Vector2(1150, 1150)
+metadata/menu = "food"
+metadata/hint = "Talk to Moss at the Food Stand"
+
+[node name="Healer" type="Marker2D" parent="Points"]
+position = Vector2(1960, 740)
+metadata/menu = "healer"
+metadata/hint = "Talk to Tessa at the Healer House"
+
+[node name="Wayfinder" type="Marker2D" parent="Points"]
+position = Vector2(1580, 790)
+metadata/menu = "wayfinder"
+metadata/hint = "Talk to Scout Alden at the Wayfinder Lodge"
+
+[node name="Seedhouse" type="Marker2D" parent="Points"]
+position = Vector2(900, 1615)
+metadata/menu = "seedhouse"
+metadata/hint = "Talk to Rowan at the Seedhouse"
+
+[node name="NorthFence10" type="Sprite2D" parent="Landmarks"]
+position = Vector2(1880, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence11" type="Sprite2D" parent="Landmarks"]
+position = Vector2(2040, 190)
+texture = ExtResource("14")
+
+[node name="NorthFence12" type="Sprite2D" parent="Landmarks"]
+position = Vector2(2200, 190)
+texture = ExtResource("14")
+
+
+[node name="PlannedStreet_1_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(938.0, 300.0, 938.0, 640.0, 862.0, 640.0, 862.0, 300.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_2_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(900.0, 602.0, 1040.0, 602.0, 1040.0, 678.0, 900.0, 678.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_2_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1078.0, 640.0, 1078.0, 850.0, 1002.0, 850.0, 1002.0, 640.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_3_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(450.0, 812.0, 2110.0, 812.0, 2110.0, 888.0, 450.0, 888.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_4_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(638.0, 570.0, 638.0, 850.0, 562.0, 850.0, 562.0, 570.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_5_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1328.0, 635.0, 1328.0, 850.0, 1252.0, 850.0, 1252.0, 635.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_6_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1998.0, 740.0, 1998.0, 850.0, 1922.0, 850.0, 1922.0, 740.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_7_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1618.0, 790.0, 1618.0, 850.0, 1542.0, 850.0, 1542.0, 790.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_8_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(798.0, 850.0, 798.0, 1180.0, 722.0, 1180.0, 722.0, 850.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_9_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-392.0, 805.0, -392.0, 900.0, -468.0, 900.0, -468.0, 805.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_9_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-430.0, 862.0, 760.0, 862.0, 760.0, 938.0, -430.0, 938.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_10_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-82.0, 775.0, -82.0, 900.0, -158.0, 900.0, -158.0, 775.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_11_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(488.0, 900.0, 488.0, 1165.0, 412.0, 1165.0, 412.0, 900.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_12_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1188.0, 1150.0, 1188.0, 1180.0, 1112.0, 1180.0, 1112.0, 1150.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_13_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(458.0, 530.0, 458.0, 850.0, 382.0, 850.0, 382.0, 530.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_14_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(760.0, 1142.0, 2220.0, 1142.0, 2220.0, 1218.0, 760.0, 1218.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_14_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2182.0, 1180.0, 2182.0, 1150.0, 2258.0, 1150.0, 2258.0, 1180.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_14_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2220.0, 1112.0, 2510.0, 1112.0, 2510.0, 1188.0, 2220.0, 1188.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_15_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1588.0, 1020.0, 1588.0, 1180.0, 1512.0, 1180.0, 1512.0, 1020.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_16_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2128.0, 1165.0, 2128.0, 1180.0, 2052.0, 1180.0, 2052.0, 1165.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_17_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(588.0, 1180.0, 588.0, 1240.0, 512.0, 1240.0, 512.0, 1180.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_18_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(588.0, 1560.0, 588.0, 1740.0, 512.0, 1740.0, 512.0, 1560.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_19_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-1000.0, 1442.0, -560.0, 1442.0, -560.0, 1518.0, -1000.0, 1518.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_19_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-522.0, 1480.0, -522.0, 1740.0, -598.0, 1740.0, -598.0, 1480.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_19_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-560.0, 1702.0, 1600.0, 1702.0, 1600.0, 1778.0, -560.0, 1778.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_20_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-382.0, 1260.0, -382.0, 1480.0, -458.0, 1480.0, -458.0, 1260.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_21_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-1000.0, 2042.0, -560.0, 2042.0, -560.0, 2118.0, -1000.0, 2118.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_21_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(-598.0, 2080.0, -598.0, 1740.0, -522.0, 1740.0, -522.0, 2080.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_22_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(363.0, 2030.0, 363.0, 2120.0, 287.0, 2120.0, 287.0, 2030.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_22_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(325.0, 2158.0, 100.0, 2158.0, 100.0, 2082.0, 325.0, 2082.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_22_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(62.0, 2120.0, 62.0, 1740.0, 138.0, 1740.0, 138.0, 2120.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_23_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(938.0, 1615.0, 938.0, 1740.0, 862.0, 1740.0, 862.0, 1615.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_24_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1413.0, 1520.0, 1413.0, 1740.0, 1337.0, 1740.0, 1337.0, 1520.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_25_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1838.0, 1550.0, 1838.0, 1645.0, 1762.0, 1645.0, 1762.0, 1550.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_25_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1800.0, 1683.0, 1600.0, 1683.0, 1600.0, 1607.0, 1800.0, 1607.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_25_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1638.0, 1645.0, 1638.0, 1740.0, 1562.0, 1740.0, 1562.0, 1645.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_26_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1638.0, 1180.0, 1638.0, 1645.0, 1562.0, 1645.0, 1562.0, 1180.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_27_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2213.0, 1580.0, 2213.0, 1680.0, 2137.0, 1680.0, 2137.0, 1580.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_27_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2175.0, 1718.0, 2000.0, 1718.0, 2000.0, 1642.0, 2175.0, 1642.0)
+metadata/tile = "path"
+
+[node name="PlannedStreet_27_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1962.0, 1680.0, 1962.0, 1180.0, 2038.0, 1180.0, 2038.0, 1680.0)
+metadata/tile = "path"

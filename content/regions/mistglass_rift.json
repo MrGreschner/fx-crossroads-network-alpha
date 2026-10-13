@@ -1,0 +1,16 @@
+{
+  "id": "mistglass_rift",
+  "name": "Mistglass Rift",
+  "size": [
+    1500,
+    1000
+  ],
+  "background": "#15334e",
+  "accent": "#2e6d93",
+  "terrain": "rift",
+  "boss_health": 250,
+  "xp_per_level": 1000,
+  "scene": "res://scenes/realms/mistglass_rift.tscn",
+  "enemies": [],
+  "boss_sprite": "bramble_boss"
+}

@@ -1,0 +1,73 @@
+[gd_scene format=3]
+
+[node name="Descent" type="Node2D"]
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Floor" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(120,120,2280,120,2280,1580,120,1580)
+
+metadata/tile = "path"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Rock0" type="Node2D" parent="Obstacles"]
+
+position = Vector2(650,500)
+
+metadata/kind = "rock"
+
+metadata/radius = 38.0
+
+[node name="Rock1" type="Node2D" parent="Obstacles"]
+
+position = Vector2(1750,500)
+
+metadata/kind = "rock"
+
+metadata/radius = 38.0
+
+[node name="Rock2" type="Node2D" parent="Obstacles"]
+
+position = Vector2(650,1200)
+
+metadata/kind = "rock"
+
+metadata/radius = 38.0
+
+[node name="Rock3" type="Node2D" parent="Obstacles"]
+
+position = Vector2(1750,1200)
+
+metadata/kind = "rock"
+
+metadata/radius = 38.0
+
+[node name="Rock4" type="Node2D" parent="Obstacles"]
+
+position = Vector2(400,850)
+
+metadata/kind = "rock"
+
+metadata/radius = 38.0
+
+[node name="Rock5" type="Node2D" parent="Obstacles"]
+
+position = Vector2(2000,850)
+
+metadata/kind = "rock"
+
+metadata/radius = 38.0
+
+[node name="Buildings" type="Node2D" parent="."]
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+
+position = Vector2(1200,850)
+
+[node name="Enemies" type="Node2D" parent="."]

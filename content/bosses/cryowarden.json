@@ -1,0 +1,7 @@
+{
+  "id": "cryowarden",
+  "name": "Cryowarden",
+  "sprite": "cryowarden",
+  "secondary": "frostburst",
+  "damage": 28
+}

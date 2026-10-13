@@ -1,0 +1,12 @@
+{
+  "id": "lodge_cleanse",
+  "name": "Clearwater Draught",
+  "effect": "cleanse",
+  "amount": 0,
+  "duration": 4,
+  "cost": 0,
+  "sprite": "lodges/lodge_cleanse",
+  "shop": false,
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
+}

@@ -1,0 +1,76 @@
+extends SceneTree
+var failures:=0
+func check(ok:bool,label:String)->void:
+ if not ok:failures+=1;print("FAIL: "+label)
+func _initialize()->void:call_deferred("run")
+func cell(point:Vector2)->Vector2i:return Vector2i(floori(point.x/40),floori(point.y/40))
+func run()->void:
+ var game=load("res://scenes/main.tscn").instantiate();root.add_child(game);await process_frame;game.set_process(false)
+ game.selected_character="rune_duelist";game.start_run(false,"honeyglass");game.enemies.clear();game.position_in_world=Vector2(2000,1500)
+ var combat=game.adventure.combat
+ for x in [1650,1800,1950]:combat.variants.rune("solo",Vector2(x,1500))
+ combat.cast("solo",game.hero.secondary,Vector2.RIGHT,28)
+ check(game.position_in_world==Vector2(1650,1500),"Runestep returns to oldest of three runes")
+ check(game.characters.elara.name=="Prism Mage" and game.characters.bracken.name=="Bracken of Moonburrow","revised names")
+ combat.setup("honeyglass");game.hero=game.characters.nera;game.position_in_world=Vector2(2000,1500);game.adventure.spawn("bramble",Vector2(2210,1500),500,false)
+ combat.cast("solo",game.hero.secondary,Vector2.RIGHT,24)
+ for n in 10:combat.step(.04)
+ var key:String=combat.npc_key(game.enemies[0]);check(combat.effect_time(key,"stun")>1.35,"Latchline gives noticeable 1.5-second stun")
+ game.selected_character="bracken";game.start_run(false,"moonburrow")
+ var hollow=game.adventure.hollow
+ check(hollow.active and game.enemies.size()==30,"new realm loads all 30 enemies")
+ check(hollow.mines.size()>=20 and hollow.props.size()>=50,"mine hazards and scenery")
+ var kinds:Dictionary={}
+ for enemy in game.enemies:
+  kinds[enemy.type]=true;check(hollow.can_stand(enemy.pos),"each enemy starts on clear ground: "+str(enemy.type))
+  var start:=cell(Vector2(350,1750)) if enemy.pos.y<3600 else cell(Vector2(650,5000))
+  check(not hollow.grid.get_id_path(start,cell(enemy.pos)).is_empty(),"every enemy reachable within its layer")
+ check(kinds.size()==6,"six distinct enemy species")
+ for gate in hollow.routes():
+  check(hollow.can_stand(gate.pos) and hollow.can_stand(gate.end),"clear tunnel entrance and arrival")
+ game.position_in_world=hollow.SURFACE_GATES[0];check(hollow.interact("solo") and game.position_in_world.y>4400,"enter underground")
+ hollow.clock+=1.1;game.position_in_world=hollow.CAVE_GATES[0];check(hollow.interact("solo") and game.position_in_world.y<3600,"return to surface")
+ check(not hollow.grid.get_id_path(cell(Vector2(650,5000)),cell(Vector2(3400,6300))).is_empty(),"connected warrens reach boss chamber")
+ game.enemies.clear();hollow.mines.clear();game.position_in_world=Vector2(950,1750);game.health=115;hollow.plant(Vector2(950,1750),false)
+ hollow.step(.01);check(game.health==115 and float(hollow.mines[0].time)>.8,"mine warns before damage")
+ hollow.step(.5);check(game.health==115,"mine offers dodge time")
+ hollow.step(.4);check(game.health==97 and bool(hollow.mines[0].spent),"mine explodes once")
+ game.position_in_world=Vector2(950,1750);game.adventure.spawn("burrowfang",Vector2(1100,1750),85,false);hollow.step(.01)
+ check(bool(game.enemies[0].buried),"melee mole begins visibly burrowing")
+ var before:float=game.enemies[0].hp;game.damage_enemy(0,50);check(game.enemies[0].hp==before,"buried mole is protected until emergence")
+ hollow.step(2.5);check(not bool(game.enemies[0].buried),"burrower emerges")
+ game.damage_enemy(0,10);check(game.enemies[0].hp==before-10,"emerged mole takes damage")
+ game.enemies.clear();game.adventure.spawn("shardspitter",Vector2(1210,1750),75,false);game.enemies[0].buried=false;game.enemies[0].phase_time=5;game.enemies[0].dig_attack=0;hollow.step(.01)
+ check(combat.projectiles.size()>=3,"ranged burrower fires shard fan")
+ game.enemies.clear();combat.projectiles.clear();game.adventure.spawn("echo_bat",Vector2(1220,1750),65,false);game.enemies[0].dig_attack=0;hollow.step(.01)
+ check(combat.projectiles.size()==2 and combat.projectiles[0].style=="echo_bolt","bat uses returning echo shots")
+ for n in 12:combat.step_projectiles(.1)
+ check(combat.projectiles.size()>0 and bool(combat.projectiles[0].get("returned",false)),"echo shots reverse direction")
+ game.enemies.clear();hollow.mines.clear();game.adventure.warnings.clear();game.adventure.spawn("fusehare",Vector2(1200,1750),90,false);game.enemies[0].dig_attack=0;hollow.step(.01)
+ check(hollow.mines.size()==1 and game.adventure.warnings.size()>0,"fusehare plants mine and warns dash")
+ game.enemies.clear();game.adventure.warnings.clear();game.adventure.spawn("rootwarden",Vector2(1200,1750),155,false);game.enemies[0].dig_attack=0;hollow.step(.01)
+ check(game.adventure.warnings.size()==1 and game.adventure.warnings[0].has("wave"),"rootwarden warns travelling root wave")
+ game.enemies.clear();combat.projectiles.clear();game.adventure.spawn("sap_nurse",Vector2(1200,1750),85,false);game.adventure.spawn("fusehare",Vector2(1250,1750),90,false);game.enemies[1].hp=50;game.enemies[0].dig_attack=0;hollow.step(.01)
+ check(game.enemies[1].hp==58 and combat.projectiles.size()>0 and combat.projectiles[0].stats.poison_duration==3,"sap nurse heals nearby ally and sends poison shot")
+ game.enemies.clear();combat.projectiles.clear();hollow.mines.clear();game.adventure.warnings.clear();game.position_in_world=Vector2(3330,6300);game.adventure.spawn("flintroot",Vector2(3400,6300),1250,true)
+ for turn in 3:
+  game.enemies[0].dig_attack=0;game.enemies[0].phase_time=5;game.enemies[0].buried=false;hollow.step(.01)
+ check(hollow.mines.size()>=3 and combat.projectiles.size()>=5 and game.adventure.warnings.size()>0 and game.enemies.size()==2,"Warren King uses mine ring, weaving fan, slam and summon")
+ game.start_run(false,"brasslock");game.set_process(true);game.position_in_world=game.adventure.city.door_rect(game.adventure.city.doors[0]).get_center()-Vector2(0,70)
+ var press:=InputEventKey.new();press.pressed=true;press.physical_keycode=KEY_E;press.keycode=KEY_E;Input.parse_input_event(press)
+ await process_frame;await process_frame
+ check(bool(game.adventure.city.doors[0].open),"real solo Interact input opens a closed Brasslock door")
+ press=InputEventKey.new();press.pressed=false;press.physical_keycode=KEY_E;press.keycode=KEY_E;Input.parse_input_event(press);game.set_process(false)
+ var party=load("res://scenes/arcade.tscn").instantiate();root.add_child(party);await process_frame;party.set_process(false);party.selected_hero="bracken";party._set_mode("defense");party._solo();party._set_mode("coop")
+ for n in party.realm_picker.item_count:
+  if str(party.realm_picker.get_item_metadata(n))=="moonburrow":party.realm_picker.select(n)
+ party._start_match();check(party.opponents.size()==30,"co-op patrols cover surface and tunnels")
+ for slot in 4:check(party.adventure.hollow.can_stand(party._spawn_player(slot)),"four clear co-op starts")
+ party.opponents[0].buried=true
+ var packet:Dictionary=party._snapshot();check(packet.enemies[0].buried and packet.adventure.hollow.mines.size()>0,"burrows and mines synchronize")
+ var saved:Dictionary=packet.enemies[0];party.opponents.clear();party.foes_from_packet(saved);check(bool(party.opponents[0].buried),"guest preserves underground state")
+ party.opponents.clear();party._simulate(.01);check(party.opponents.size()==1 and party.opponents[0].type=="flintroot" and party.opponents[0].pos==Vector2(3400,6300),"co-op Warren King appears in reachable crypt")
+ for voice in game.journey.voices:voice.stop()
+ for voice in party.journey.voices:voice.stop()
+ game.queue_free();party.queue_free();await create_timer(.3).timeout
+ print("V40 FAILURES: "+str(failures));quit(failures)

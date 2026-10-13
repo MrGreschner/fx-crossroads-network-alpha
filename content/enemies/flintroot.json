@@ -1,0 +1,12 @@
+{
+  "id": "flintroot",
+  "name": "Flintroot, the Warren King",
+  "sprite": "flintroot",
+  "health": 1250,
+  "speed": 70,
+  "damage": 23,
+  "behaviour": "custom",
+  "custom_attack": "warren_king",
+  "aggro_range": 800,
+  "expansion_only": true
+}

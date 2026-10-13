@@ -1,0 +1,97 @@
+{
+  "id": "magnet",
+  "sprite": "magnet",
+  "run_cost": 0,
+  "name": "Polarity",
+  "max_health": 110,
+  "speed": 220,
+  "lore": "A living horseshoe magnet drawn to the strange forces between realms.",
+  "primary": {
+    "name": "Anchor Pin",
+    "style": "magnet_pin",
+    "damage": 18,
+    "cooldown": 0.8,
+    "range": 340,
+    "speed": 420,
+    "description": "Fire a magnetic pin for 18 damage. Anchors last 8 seconds; keep two, or three with your level-five passive."
+  },
+  "secondary": {
+    "name": "Attraction",
+    "style": "magnet_pull",
+    "damage": 22,
+    "cooldown": 5,
+    "radius": 170,
+    "description": "Pull enemies near your anchors toward them, dealing 22 damage and briefly slowing them."
+  },
+  "special": {
+    "name": "Live Wire",
+    "style": "magnet_wire",
+    "damage": 9,
+    "cooldown": 14,
+    "description": "Link every owned anchor for 3 seconds. The network deals 9 damage every half-second; crossing wires do not multiply damage. Missing anchors are placed ahead."
+  },
+  "passive": "Threefold Polarity: keep three magnetic anchors; Live Wire connects all three.",
+  "passive_effect": "third_anchor",
+  "mastery": {
+    "title": "Magnetic Architect",
+    "technique": {
+      "name": "Gentle Attraction",
+      "ability": "secondary",
+      "description": "Attraction reaches 40% farther around each pin, dealing 30% less damage.",
+      "multiply": {
+        "radius": 1.4,
+        "damage": 0.7
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Opposed Charges",
+      "ability": "primary",
+      "description": "Two magnetic fragments curl back for 11 damage per leg. They do not create anchors; the special creates fallback pins if needed.",
+      "attack": {
+        "name": "Opposed Charges",
+        "style": "master_pincer",
+        "damage": 11,
+        "cooldown": 0.9,
+        "color": "#cbb4ee",
+        "range": 300,
+        "width": 100,
+        "duration": 1.65,
+        "description": "Two magnetic fragments curl back for 11 damage per leg. They do not create anchors; the special creates fallback pins if needed.",
+        "visual_texture": "res://assets/mastery_magnet_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

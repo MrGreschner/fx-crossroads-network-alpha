@@ -1,0 +1,11 @@
+{
+  "id": "gongbreaker",
+  "name": "Gongbreaker",
+  "sprite": "gongbreaker",
+  "health": 1100,
+  "speed": 35,
+  "damage": 45,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

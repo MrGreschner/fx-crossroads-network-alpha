@@ -1,0 +1,107 @@
+{
+  "id": "hollow_rider",
+  "sprite": "hollow_rider",
+  "name": "Hollow Rider",
+  "max_health": 140,
+  "speed": 215,
+  "run_cost": 0,
+  "lore": "An empty suit of armour carries a pumpkin lantern through Moonveil\u2019s midnight roads. His spectral mare remembers every traveller he has guided home.",
+  "primary": {
+    "name": "Spectral Scythe",
+    "style": "grave_cleave",
+    "damage": 25,
+    "cooldown": 0.65,
+    "range": 95,
+    "description": "Tap for a 25-damage scythe sweep, or hold up to 1.3s for 45 damage. Full charge inflicts bleed for 2 damage/s for 3s.",
+    "ui_brief": "Charged scythe \u2022 25\u201345 damage \u2022 full charge bleeds",
+    "hold_charge": {
+      "seconds": 1.3,
+      "damage": 1.8
+    }
+  },
+  "secondary": {
+    "name": "Lantern Toll",
+    "style": "grave_toll",
+    "damage": 26,
+    "cooldown": 7,
+    "range": 125,
+    "description": "Raise the lantern for 0.3 seconds, then slam a spectral shockwave: 26 damage, knockback and 1.2-second stun within 125 reach.",
+    "ui_brief": "Lantern slam \u2022 26 damage \u2022 knockback + stun"
+  },
+  "special": {
+    "name": "Midnight Gallop",
+    "style": "grave_ride",
+    "damage": 5,
+    "cooldown": 24,
+    "range": 52,
+    "description": "Ride a spectral horse for 5s: +30% speed, +6 primary damage, and 5 hoof damage every 0.75s to nearby foes. No invulnerability.",
+    "ui_brief": "Mounted form \u2022 5 seconds \u2022 faster movement"
+  },
+  "passive": "Lantern Courage: hitting an enemy with Lantern Toll grants 12% damage reduction for 2 seconds.",
+  "passive_effect": "lantern_courage",
+  "mastery": {
+    "title": "Keeper of the Midnight Road",
+    "technique": {
+      "name": "Broad Reaping",
+      "ability": "primary",
+      "description": "A wider sweep trades damage and attack speed for coverage.",
+      "attack": {
+        "name": "Broad Reaping",
+        "style": "grave_cleave",
+        "damage": 19,
+        "cooldown": 0.95,
+        "range": 115,
+        "description": "A wider 115-reach sweep: 19 damage on tap, up to 34.2 charged; full charge bleeds for 2 damage/s for 3s. 0.95s cooldown.",
+        "hold_charge": {
+          "seconds": 1.3,
+          "damage": 1.8
+        }
+      }
+    },
+    "final_technique": {
+      "name": "Last Watch",
+      "ability": "special",
+      "description": "Trade mounted mobility for a targetable stationary guardian.",
+      "attack": {
+        "name": "Last Watch",
+        "style": "grave_guardian",
+        "damage": 14,
+        "cooldown": 24,
+        "range": 120,
+        "description": "A spectral horse guards the spot ahead for 6s: 70 health, 14 melee damage, 120 reach. It can be attacked and killed."
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

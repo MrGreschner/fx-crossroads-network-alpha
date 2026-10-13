@@ -1,0 +1,1656 @@
+{
+  "id": "lantern_marsh",
+  "name": "Lantern Marsh",
+  "size": [
+    8200,
+    6000
+  ],
+  "spawn": [
+    430,
+    4600
+  ],
+  "exit": [
+    7350,
+    1100
+  ],
+  "boss_type": "bellroot",
+  "floors": [
+    {
+      "name": "Lantern Landing",
+      "rect": [
+        180,
+        4000,
+        1250,
+        1450
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "Mosswatch Island",
+      "rect": [
+        2200,
+        2600,
+        1600,
+        1700
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "Bellroot Hollow",
+      "rect": [
+        6500,
+        400,
+        1450,
+        1700
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "The Forgotten Shrine",
+      "rect": [
+        4500,
+        4150,
+        1300,
+        1250
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "Wisp Fen",
+      "rect": [
+        4400,
+        1500,
+        1600,
+        1650
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        715.0,
+        4415.0,
+        1220,
+        270
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1665.0,
+        3415.0,
+        270,
+        1270
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1665.0,
+        3415.0,
+        1370,
+        270
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3015.0,
+        1965.0,
+        270,
+        1470
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        3015.0,
+        1965.0,
+        2220,
+        270
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        4965.0,
+        1965.0,
+        2270,
+        270
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        6965.0,
+        1365.0,
+        270,
+        870
+      ],
+      "kind": "boardwalk",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2985.0,
+        3785.0,
+        230,
+        1080
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        2985.0,
+        4635.0,
+        2180,
+        230
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        4935.0,
+        4635.0,
+        1380,
+        230
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        6085.0,
+        1185.0,
+        230,
+        3680
+      ],
+      "kind": "marsh",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        6085.0,
+        1185.0,
+        1030,
+        230
+      ],
+      "kind": "marsh",
+      "stage": 0
+    }
+  ],
+  "props": [
+    {
+      "kind": "moss_tree",
+      "pos": [
+        400,
+        4200
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        1270,
+        5000
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2380,
+        2770
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3620,
+        3990
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3600,
+        2900
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4580,
+        2780
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5790,
+        1700
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4720,
+        4370
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5590,
+        5110
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6650,
+        630
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7780,
+        1800
+      ],
+      "scale": 1.65,
+      "solid": 55
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        1800,
+        2800
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4020,
+        3305
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6200,
+        3910
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3900,
+        5400
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        1920,
+        2905
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4140,
+        3410
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6320,
+        3700
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4020,
+        5505
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2040,
+        3010
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4260,
+        3200
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6440,
+        3805
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4140,
+        5610
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2160,
+        2800
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4380,
+        3305
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6560,
+        3910
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4260,
+        5400
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2280,
+        2905
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4500,
+        3410
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6680,
+        3700
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4380,
+        5505
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2400,
+        3010
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4620,
+        3200
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6800,
+        3805
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4500,
+        5610
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2520,
+        2800
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4740,
+        3305
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6920,
+        3910
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4620,
+        5400
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2640,
+        2905
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4860,
+        3410
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7040,
+        3700
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4740,
+        5505
+      ],
+      "scale": 1.1,
+      "solid": 35
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        260,
+        4030
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        260,
+        5425
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        500,
+        4030
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        500,
+        5425
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        740,
+        4030
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        740,
+        5425
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        980,
+        4030
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        980,
+        5425
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        1220,
+        4030
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        1220,
+        5425
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2280,
+        2630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2280,
+        4275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2520,
+        2630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2520,
+        4275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2760,
+        2630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2760,
+        4275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3000,
+        2630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3000,
+        4275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3240,
+        2630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3240,
+        4275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3480,
+        2630
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3480,
+        4275
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6580,
+        430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6580,
+        2075
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6820,
+        430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6820,
+        2075
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7060,
+        430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7060,
+        2075
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7300,
+        430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7300,
+        2075
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7540,
+        430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7540,
+        2075
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7780,
+        430
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7780,
+        2075
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4580,
+        4180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4580,
+        5375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4820,
+        4180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4820,
+        5375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5060,
+        4180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5060,
+        5375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5300,
+        4180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5300,
+        5375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5540,
+        4180
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5540,
+        5375
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4480,
+        1530
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4480,
+        3125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4720,
+        1530
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4720,
+        3125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4960,
+        1530
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4960,
+        3125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5200,
+        1530
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5200,
+        3125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5440,
+        1530
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5440,
+        3125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5680,
+        1530
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5680,
+        3125
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        390,
+        4910
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        390,
+        5240
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        690,
+        4250
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        690,
+        4910
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        690,
+        5240
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        990,
+        4250
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        990,
+        4910
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        990,
+        5240
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2410,
+        3180
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2410,
+        3840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2710,
+        3840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3310,
+        3510
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3610,
+        3180
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3610,
+        3510
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3610,
+        3840
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6710,
+        980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        6710,
+        1640
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7010,
+        650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7310,
+        650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7310,
+        1310
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7310,
+        1640
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7610,
+        650
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7610,
+        980
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        7610,
+        1310
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5010,
+        4400
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5010,
+        5060
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5310,
+        4400
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5310,
+        5060
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5610,
+        4400
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4610,
+        1750
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4610,
+        2410
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4910,
+        1750
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4910,
+        2740
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5210,
+        1750
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5210,
+        2410
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5510,
+        1750
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5510,
+        2410
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5510,
+        2740
+      ],
+      "scale": 1.35,
+      "solid": 38
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5810,
+        2410
+      ],
+      "scale": 1.35,
+      "solid": 38
+    }
+  ],
+  "grass": [],
+  "mud": [
+    [
+      2810,
+      4010,
+      570,
+      950
+    ],
+    [
+      4870,
+      4540,
+      830,
+      390
+    ],
+    [
+      6085,
+      2200,
+      230,
+      1850
+    ],
+    [
+      4780,
+      1770,
+      500,
+      780
+    ]
+  ],
+  "falls": [],
+  "secrets": [
+    {
+      "id": "Forgotten shrine",
+      "name": "Forgotten shrine",
+      "pos": [
+        4750,
+        5060
+      ],
+      "amount": 75,
+      "kind": "gold"
+    },
+    {
+      "id": "Lantern keeper\u2019s spring",
+      "name": "Lantern keeper\u2019s spring",
+      "pos": [
+        2460,
+        4010
+      ],
+      "amount": 30,
+      "kind": "heal"
+    },
+    {
+      "id": "Wisp hollow cache",
+      "name": "Wisp hollow cache",
+      "pos": [
+        5760,
+        2880
+      ],
+      "amount": 45,
+      "kind": "gold"
+    }
+  ],
+  "spawns": [
+    {
+      "type": "lantern_crab",
+      "pos": [
+        1000,
+        4480
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        2000,
+        3570
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        2590,
+        3220
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bog_bellringer",
+      "pos": [
+        3310,
+        3920
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        3450,
+        2860
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        3110,
+        2360
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        4900,
+        2350
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bog_bellringer",
+      "pos": [
+        5630,
+        2010
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        5100,
+        2840
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        5210,
+        4700
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        6200,
+        4030
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bog_bellringer",
+      "pos": [
+        6200,
+        2460
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        7110,
+        1920
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        6990,
+        1090
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        7660,
+        1550
+      ],
+      "stage": 0
+    }
+  ],
+  "stages": [
+    "Explore the raised banks; black water is impassable, mud slows you",
+    "Reach Bellroot Hollow and defeat its guardian"
+  ],
+  "gates": [],
+  "lake": [],
+  "raft": {},
+  "background": "#183d39",
+  "checkpoints": [
+    {
+      "pos": [
+        3000,
+        3500
+      ],
+      "level": 3
+    },
+    {
+      "pos": [
+        5100,
+        2100
+      ],
+      "level": 5
+    }
+  ]
+}

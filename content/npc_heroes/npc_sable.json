@@ -1,0 +1,40 @@
+{
+  "id": "npc_sable",
+  "name": "Sable Voss",
+  "sprite": "npc_sable",
+  "npc_only": true,
+  "max_health": 130,
+  "speed": 235,
+  "primary": {
+    "name": "Violet Bolt",
+    "style": "projectile",
+    "damage": 17,
+    "cooldown": 1.1,
+    "range": 620,
+    "speed": 420,
+    "color": "#cf9cee"
+  },
+  "secondary": {
+    "name": "Snare Bomb",
+    "style": "target_aoe",
+    "damage": 21,
+    "cooldown": 7,
+    "range": 450,
+    "travel_speed": 340,
+    "blast_radius": 85,
+    "slow_duration": 1.6,
+    "slow": 0.65
+  },
+  "special": {
+    "name": "Crossfire",
+    "style": "projectile",
+    "damage": 18,
+    "cooldown": 11,
+    "range": 620,
+    "count": 3,
+    "spread": 0.22,
+    "speed": 400,
+    "color": "#dcadef"
+  },
+  "passive_effect": ""
+}

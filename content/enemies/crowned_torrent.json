@@ -1,0 +1,13 @@
+{
+  "id": "crowned_torrent",
+  "name": "Crowned Torrent",
+  "sprite": "crowned_torrent",
+  "health": 950,
+  "speed": 65,
+  "damage": 17,
+  "behaviour": "chase",
+  "aggro_range": 450,
+  "shot_speed": 270,
+  "shot_cooldown": 2.8,
+  "expansion_only": true
+}

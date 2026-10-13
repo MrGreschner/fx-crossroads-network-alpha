@@ -1,0 +1,107 @@
+{
+  "id": "elara",
+  "name": "Prism Mage",
+  "sprite": "elara",
+  "run_cost": 0,
+  "max_health": 105,
+  "speed": 240,
+  "lore": "A human prism mage who guards Moonveil\u2019s mirrors from the jealous Marquis.",
+  "primary": {
+    "name": "Prism Lance",
+    "style": "split_lance",
+    "damage": 20,
+    "cooldown": 0.9,
+    "range": 440,
+    "speed": 410,
+    "split_distance": 150,
+    "color": "#b9dfff",
+    "description": "Fire a 20-damage lance. After 150 units it splits into two diverging 13-damage bolts."
+  },
+  "secondary": {
+    "name": "Prism Unfurl",
+    "style": "spiral_shards",
+    "damage": 14,
+    "cooldown": 6,
+    "duration": 2,
+    "radius": 250,
+    "color": "#c7ddf4",
+    "description": "Three glass shards spiral outward from your casting spot for 2 seconds, reaching 250 units. Each shard can hit each enemy once for 14 damage; walls stop shards."
+  },
+  "special": {
+    "name": "Moonlit Procession",
+    "style": "ground_sequence",
+    "damage": 22,
+    "cooldown": 15,
+    "count": 5,
+    "spacing": 90,
+    "interval": 0.2,
+    "radius": 75,
+    "slow_duration": 2,
+    "color": "#c5b2f4",
+    "description": "Five moonlight blooms advance along your aim, each dealing 22 damage and slowing enemies for 2 seconds."
+  },
+  "passive": "Far Refraction: outward spirals reach 60 units farther.",
+  "passive_effect": "far_refraction",
+  "mastery": {
+    "title": "Prismatic Archmage",
+    "technique": {
+      "name": "Distant Procession",
+      "ability": "special",
+      "description": "Moonlight blooms are spaced 40% farther apart, with 20% smaller radii.",
+      "multiply": {
+        "spacing": 1.4,
+        "radius": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Prismatic Handshake",
+      "ability": "primary",
+      "description": "Link up to three visible enemies with delayed prism strikes for 15 each. Multi-target reach replaces the split lance; slower, and needs nearby targets.",
+      "attack": {
+        "name": "Prismatic Handshake",
+        "style": "master_chain",
+        "damage": 15,
+        "cooldown": 1.05,
+        "color": "#dac6f0",
+        "range": 220,
+        "count": 3,
+        "duration": 1.8,
+        "description": "Link up to three visible enemies with delayed prism strikes for 15 each. Multi-target reach replaces the split lance; slower, and needs nearby targets.",
+        "visual_texture": "res://assets/mastery_elara_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "imp",
+  "name": "Hollow Imp",
+  "sprite": "imp",
+  "health": 27,
+  "speed": 135,
+  "damage": 7,
+  "aggro_range": 430,
+  "behaviour": "chase"
+}

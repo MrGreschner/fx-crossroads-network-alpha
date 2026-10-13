@@ -1,0 +1,12 @@
+{
+  "id": "backpack_biter",
+  "name": "Backpack Biter",
+  "sprite": "backpack_biter",
+  "health": 62,
+  "speed": 90,
+  "damage": 9,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_backpack_biter",
+  "expansion_only": true
+}

@@ -1,0 +1,14 @@
+{
+  "id": "drone",
+  "name": "Patrol Drone",
+  "sprite": "drone",
+  "health": 87,
+  "speed": 138,
+  "damage": 10,
+  "aggro_range": 630,
+  "behaviour": "ranged",
+  "shot_speed": 315,
+  "shot_cooldown": 2.2,
+  "secondary_cooldown": 4.5,
+  "flying": true
+}

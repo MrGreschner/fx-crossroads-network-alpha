@@ -1,0 +1,9 @@
+{
+  "id": "rush_tonic",
+  "name": "Rush Tonic",
+  "cost": 40,
+  "effect": "haste",
+  "amount": 30,
+  "description": "Move 30% faster for five seconds.",
+  "duration": 5
+}

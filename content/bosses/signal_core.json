@@ -1,0 +1,7 @@
+{
+  "id": "signal_core",
+  "name": "Signal Core",
+  "sprite": "signal_core",
+  "secondary": "seekerstorm",
+  "damage": 28
+}

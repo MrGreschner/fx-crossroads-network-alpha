@@ -1,0 +1,18 @@
+{
+  "id": "brasslock",
+  "name": "Brasslock Borough",
+  "size": [
+    3840,
+    2560
+  ],
+  "terrain": "city_cobble",
+  "scene": "res://scenes/realms/brasslock.tscn",
+  "boss_sprite": "lockmaster_regent",
+  "boss_enemy": "lockmaster_regent",
+  "boss_health": 1450,
+  "xp_per_level": 4,
+  "unlock_cost": 0,
+  "difficulty_label": "Hard \u2014 confined streets, hinged doors and ricochet patrols",
+  "description": "A dense lantern city: fifteen divided buildings, forty-five working doors, tight alleys, shelves and workshops. Copper Constables bank shots off masonry; Grate Witches erupt drains in advancing sequences. Face the mobile Lockmaster Regent at the courthouse after clearing the borough.",
+  "difficulty_tier": "hard"
+}

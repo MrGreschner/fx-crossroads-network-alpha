@@ -1,0 +1,223 @@
+[gd_scene format=3]
+
+[node name="FoldedCoast" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+
+position = Vector2(450,1500)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+
+position = Vector2(350,1500)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+
+position = Vector2(750,1650)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+
+position = Vector2(5200,1500)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="Buildings" type="Node2D" parent="."]
+
+[node name="Enemy0" type="Marker2D" parent="Enemies"]
+
+position = Vector2(850,650)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy1" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1110,860)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy2" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1370,1070)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy3" type="Marker2D" parent="Enemies"]
+
+position = Vector2(850,1280)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy4" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1110,1490)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy5" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1370,1700)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy6" type="Marker2D" parent="Enemies"]
+
+position = Vector2(850,1910)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy7" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1110,2120)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy8" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1370,2330)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy9" type="Marker2D" parent="Enemies"]
+
+position = Vector2(850,2540)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy10" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2810,650)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy11" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3070,860)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy12" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2550,1070)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy13" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2810,1280)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy14" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3070,1490)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy15" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2550,1700)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy16" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2810,1910)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy17" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3070,2120)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy18" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2550,2330)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy19" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2810,2540)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy20" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5270,650)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy21" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4750,860)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy22" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5010,1070)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy23" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5270,1280)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy24" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4750,1490)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy25" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5010,1700)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy26" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5270,1910)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy27" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4750,2120)
+
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy28" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5010,2330)
+
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy29" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5270,2540)
+
+metadata/enemy_id = "foldwing"
+
+[node name="V103Enemy0" type="Marker2D" parent="Enemies"]
+position = Vector2(1320, 1800)
+metadata/enemy_id = "crease_sentry"
+
+[node name="V103Enemy1" type="Marker2D" parent="Enemies"]
+position = Vector2(2700, 1700)
+metadata/enemy_id = "crease_sentry"
+
+[node name="V103Enemy2" type="Marker2D" parent="Enemies"]
+position = Vector2(5050, 950)
+metadata/enemy_id = "crease_sentry"

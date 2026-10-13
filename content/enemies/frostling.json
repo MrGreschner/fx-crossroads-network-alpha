@@ -1,0 +1,10 @@
+{
+  "id": "frostling",
+  "name": "Frostling",
+  "sprite": "frostling",
+  "health": 74,
+  "speed": 105,
+  "damage": 11,
+  "aggro_range": 630,
+  "behaviour": "chase"
+}

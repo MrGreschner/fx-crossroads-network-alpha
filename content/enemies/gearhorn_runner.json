@@ -1,0 +1,14 @@
+{
+  "id": "gearhorn_runner",
+  "name": "Gearhorn Runner",
+  "sprite": "gearhorn_runner",
+  "health": 125,
+  "speed": 110,
+  "damage": 14,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_gear",
+  "description": "A clockwork beetle that winds up a straight charge, then fires bouncing gear teeth.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

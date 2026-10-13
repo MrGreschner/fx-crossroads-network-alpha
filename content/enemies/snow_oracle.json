@@ -1,0 +1,13 @@
+{
+  "id": "snow_oracle",
+  "name": "Snow Oracle",
+  "sprite": "snow_oracle",
+  "health": 115,
+  "speed": 72,
+  "damage": 11,
+  "aggro_range": 630,
+  "behaviour": "homing",
+  "shot_speed": 225,
+  "shot_cooldown": 3.0,
+  "secondary_cooldown": 4.5
+}

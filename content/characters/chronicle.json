@@ -1,0 +1,109 @@
+{
+  "id": "chronicle",
+  "name": "Chronicle Keeper",
+  "sprite": "chronicle",
+  "max_health": 110,
+  "speed": 235,
+  "run_cost": 0,
+  "lore": "A patient keeper of misplaced seconds, whose brass hourglass turns battlefield positions into promises.",
+  "primary": {
+    "name": "Second Needle",
+    "style": "time_dart",
+    "damage": 19,
+    "cooldown": 0.8,
+    "description": "Fire a clock needle for 19 damage. A hit stores that foe\u2019s position for 4s, up to 3 marked foes. Repeated hits refresh the mark without replacing its first position.",
+    "range": 450,
+    "speed": 450,
+    "color": "#a6dddd",
+    "rewind_mark": true
+  },
+  "secondary": {
+    "name": "Rewind Chime",
+    "style": "rewind_chime",
+    "damage": 24,
+    "cooldown": 5,
+    "description": "Consume your marks within 550 reach: each foe takes 24 damage, is stunned for 0.5s and slides back toward its recorded position. Walls stop the rewind; bosses take damage and stun but cannot be moved.",
+    "range": 550,
+    "stun_duration": 0.5,
+    "color": "#e7cf8d"
+  },
+  "special": {
+    "name": "Borrowed Moment",
+    "style": "time_bubble",
+    "damage": 40,
+    "cooldown": 16,
+    "description": "Place a 130-radius hourglass field up to 250 ahead. For 2s it slows foes by 30% and holds up to 6 moving hostile bullets. Then burst for 40 damage plus 4 per held bullet (maximum 64). Walls block the field; lobbed bombs and beams are not captured.",
+    "range": 250,
+    "radius": 130,
+    "duration": 2,
+    "slow": 0.7,
+    "color": "#a6dddd"
+  },
+  "passive": "Patient Hands: Second Needle marks last 6 seconds instead of 4, giving you more time to set up a rewind.",
+  "passive_effect": "patient_hands",
+  "mastery": {
+    "title": "Master of Borrowed Time",
+    "technique": {
+      "name": "Restorative Rewind",
+      "ability": "secondary",
+      "description": "Rewind Chime heals you for 2 health per rewound foe (up to 6), but deals 25% less damage. Displacement and stun stay the same.",
+      "multiply": {
+        "damage": 0.75
+      },
+      "set": {
+        "rewind_heal": 2
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Midnight Meridian",
+      "ability": "special",
+      "description": "Replace the bullet-catching field with a narrow, piercing clock ray: 80 damage, 550 reach and a 0.8s stun after a visible 1s charge. Loses bullet capture and area slow; 16s cooldown.",
+      "attack": {
+        "name": "Midnight Meridian",
+        "style": "master_lance",
+        "damage": 80,
+        "cooldown": 16,
+        "description": "A clock hand draws the line for 1s before a piercing ray hits for 80 damage and stuns for 0.8s. No capture or slow field.",
+        "range": 550,
+        "width": 60,
+        "charge": 1,
+        "duration": 1.7,
+        "stun_duration": 0.8,
+        "color": "#a6dddd",
+        "visual_texture": "res://assets/mastery_chronicle_v69.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "high_school",
+  "name": "Crossroads High",
+  "size": [
+    16000,
+    6500
+  ],
+  "terrain": "school_tile",
+  "scene": "res://scenes/realms/high_school.tscn",
+  "school_campaign": "res://content/schools/high_school.json",
+  "boss_sprite": "exam_math",
+  "boss_health": 2000,
+  "xp_per_level": 3,
+  "difficulty_label": "Hard \u2014 three department bosses and four possible Final Exams",
+  "description": "Defeat the Drama, Foods and Athletics guardians, climb upstairs, and enter the unlocked exam classroom. The host chooses one random Final Exam per run: fire Mathematics, ghostly wind English, slowing ice History, or poisonous Science. Each has four distinct attacks.",
+  "difficulty_tier": "hard"
+}

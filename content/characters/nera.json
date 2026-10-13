@@ -1,0 +1,108 @@
+{
+  "id": "nera",
+  "name": "Nera Lockstep",
+  "sprite": "nera",
+  "run_cost": 0,
+  "max_health": 115,
+  "speed": 245,
+  "lore": "A lantern courier from Brasslock Borough who unlocks impossible routes with enchanted keys and a ghostly last tram.",
+  "primary": {
+    "name": "Corkscrew Key",
+    "style": "corkscrew_key",
+    "damage": 20,
+    "cooldown": 0.8,
+    "range": 430,
+    "speed": 360,
+    "amplitude": 18,
+    "wavelength": 120,
+    "color": "#ffd68e",
+    "description": "Throw a visibly twisting key that pierces up to 2 enemies. Each enemy can only be hit once; walls stop the key."
+  },
+  "secondary": {
+    "name": "Latchline",
+    "style": "latchline",
+    "damage": 24,
+    "cooldown": 5.5,
+    "range": 360,
+    "speed": 500,
+    "color": "#f4cb88",
+    "description": "Fire a chained hook that pulls its first enemy up to 140 units toward you and stuns it for 1.5 seconds. Bosses are pulled a shorter distance. Walls block the chain.",
+    "stun_duration": 1.5
+  },
+  "special": {
+    "name": "Midnight Express",
+    "style": "spectral_tram",
+    "damage": 72,
+    "cooldown": 20,
+    "range": 650,
+    "description": "Mark ghost rails for 0.75 seconds, then send a wide spectral tram forward. It hits each enemy once, knocks them away and stuns for 0.75 seconds. Buildings stop the tram."
+  },
+  "passive": "Master Key: Corkscrew Key can pierce one additional enemy.",
+  "passive_effect": "master_key",
+  "mastery": {
+    "title": "Keeper of Every Lock",
+    "technique": {
+      "name": "Long Latch",
+      "ability": "secondary",
+      "description": "Latchline reaches 40% farther, but recharges 25% slower.",
+      "multiply": {
+        "range": 1.4,
+        "cooldown": 1.25
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Locksmith\u2019s Garden",
+      "ability": "special",
+      "description": "Three delayed key seals deal 24 and briefly stun. Replaces the spectral tram, with no transport or long line sweep.",
+      "attack": {
+        "name": "Locksmith\u2019s Garden",
+        "style": "master_sigils",
+        "damage": 24,
+        "cooldown": 13,
+        "color": "#bcd9cf",
+        "range": 260,
+        "radius": 65,
+        "count": 3,
+        "spacing": 65,
+        "charge": 0.55,
+        "duration": 1.8,
+        "stun_duration": 0.65,
+        "description": "Three delayed key seals deal 24 and briefly stun. Replaces the spectral tram, with no transport or long line sweep.",
+        "visual_texture": "res://assets/mastery_nera_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

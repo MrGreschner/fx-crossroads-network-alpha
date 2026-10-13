@@ -1,0 +1,13 @@
+{
+  "id": "void_seeker",
+  "name": "Void Seeker",
+  "sprite": "void_seeker",
+  "health": 122,
+  "speed": 93,
+  "damage": 15,
+  "aggro_range": 630,
+  "behaviour": "homing",
+  "shot_speed": 225,
+  "shot_cooldown": 3.0,
+  "secondary_cooldown": 4.5
+}

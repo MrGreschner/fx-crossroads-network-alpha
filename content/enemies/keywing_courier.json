@@ -1,0 +1,16 @@
+{
+  "id": "keywing_courier",
+  "name": "Keywing Courier",
+  "sprite": "keywing_courier",
+  "health": 72,
+  "speed": 155,
+  "damage": 8,
+  "behaviour": "custom",
+  "aggro_range": 650,
+  "expansion_only": true,
+  "shot_cooldown": 2.8,
+  "shot_speed": 260,
+  "description": "A fast clockwork keywing bird that flanks and fires a pair of keys.",
+  "custom_attack": "keywing_fan",
+  "flying": true
+}

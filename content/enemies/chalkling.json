@@ -1,0 +1,12 @@
+{
+  "id": "chalkling",
+  "name": "Chalkling",
+  "sprite": "chalkling",
+  "health": 25,
+  "speed": 135,
+  "damage": 5,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_chalkling",
+  "expansion_only": true
+}

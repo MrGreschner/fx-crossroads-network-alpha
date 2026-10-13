@@ -1,0 +1,143 @@
+[gd_scene format=3]
+
+[node name="Moonburrow" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+position = Vector2(350, 1750)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+position = Vector2(180, 1750)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+position = Vector2(950, 1750)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+position = Vector2(3400, 6300)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy1" type="Marker2D" parent="Enemies"]
+position = Vector2(1120, 1580)
+metadata/enemy_id = "burrowfang"
+
+[node name="Enemy2" type="Marker2D" parent="Enemies"]
+position = Vector2(1790, 2100)
+metadata/enemy_id = "burrowfang"
+
+[node name="Enemy3" type="Marker2D" parent="Enemies"]
+position = Vector2(2770, 1750)
+metadata/enemy_id = "burrowfang"
+
+[node name="Enemy4" type="Marker2D" parent="Enemies"]
+position = Vector2(980, 5300)
+metadata/enemy_id = "burrowfang"
+
+[node name="Enemy5" type="Marker2D" parent="Enemies"]
+position = Vector2(2640, 4900)
+metadata/enemy_id = "burrowfang"
+
+[node name="Enemy6" type="Marker2D" parent="Enemies"]
+position = Vector2(1560, 1100)
+metadata/enemy_id = "shardspitter"
+
+[node name="Enemy7" type="Marker2D" parent="Enemies"]
+position = Vector2(3180, 1900)
+metadata/enemy_id = "shardspitter"
+
+[node name="Enemy8" type="Marker2D" parent="Enemies"]
+position = Vector2(4900, 1740)
+metadata/enemy_id = "shardspitter"
+
+[node name="Enemy9" type="Marker2D" parent="Enemies"]
+position = Vector2(2140, 5450)
+metadata/enemy_id = "shardspitter"
+
+[node name="Enemy10" type="Marker2D" parent="Enemies"]
+position = Vector2(5290, 5300)
+metadata/enemy_id = "shardspitter"
+
+[node name="Enemy11" type="Marker2D" parent="Enemies"]
+position = Vector2(1800, 700)
+metadata/enemy_id = "fusehare"
+
+[node name="Enemy12" type="Marker2D" parent="Enemies"]
+position = Vector2(3490, 1750)
+metadata/enemy_id = "fusehare"
+
+[node name="Enemy13" type="Marker2D" parent="Enemies"]
+position = Vector2(4760, 2900)
+metadata/enemy_id = "fusehare"
+
+[node name="Enemy14" type="Marker2D" parent="Enemies"]
+position = Vector2(5540, 2000)
+metadata/enemy_id = "fusehare"
+
+[node name="Enemy15" type="Marker2D" parent="Enemies"]
+position = Vector2(3550, 5600)
+metadata/enemy_id = "fusehare"
+
+[node name="Enemy16" type="Marker2D" parent="Enemies"]
+position = Vector2(1180, 2400)
+metadata/enemy_id = "rootwarden"
+
+[node name="Enemy17" type="Marker2D" parent="Enemies"]
+position = Vector2(2900, 2700)
+metadata/enemy_id = "rootwarden"
+
+[node name="Enemy18" type="Marker2D" parent="Enemies"]
+position = Vector2(5200, 1120)
+metadata/enemy_id = "rootwarden"
+
+[node name="Enemy19" type="Marker2D" parent="Enemies"]
+position = Vector2(4200, 5800)
+metadata/enemy_id = "rootwarden"
+
+[node name="Enemy20" type="Marker2D" parent="Enemies"]
+position = Vector2(5850, 5540)
+metadata/enemy_id = "rootwarden"
+
+[node name="Enemy21" type="Marker2D" parent="Enemies"]
+position = Vector2(3070, 700)
+metadata/enemy_id = "echo_bat"
+
+[node name="Enemy22" type="Marker2D" parent="Enemies"]
+position = Vector2(1220, 4600)
+metadata/enemy_id = "echo_bat"
+
+[node name="Enemy23" type="Marker2D" parent="Enemies"]
+position = Vector2(1940, 4700)
+metadata/enemy_id = "echo_bat"
+
+[node name="Enemy24" type="Marker2D" parent="Enemies"]
+position = Vector2(3430, 5300)
+metadata/enemy_id = "echo_bat"
+
+[node name="Enemy25" type="Marker2D" parent="Enemies"]
+position = Vector2(5150, 4520)
+metadata/enemy_id = "echo_bat"
+
+[node name="Enemy26" type="Marker2D" parent="Enemies"]
+position = Vector2(1610, 1900)
+metadata/enemy_id = "sap_nurse"
+
+[node name="Enemy27" type="Marker2D" parent="Enemies"]
+position = Vector2(3340, 1250)
+metadata/enemy_id = "sap_nurse"
+
+[node name="Enemy28" type="Marker2D" parent="Enemies"]
+position = Vector2(5680, 1750)
+metadata/enemy_id = "sap_nurse"
+
+[node name="Enemy29" type="Marker2D" parent="Enemies"]
+position = Vector2(3800, 4950)
+metadata/enemy_id = "sap_nurse"
+
+[node name="Enemy30" type="Marker2D" parent="Enemies"]
+position = Vector2(3000, 6370)
+metadata/enemy_id = "sap_nurse"

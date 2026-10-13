@@ -1,0 +1,12 @@
+{
+  "id": "copper_constable",
+  "name": "Copper Constable",
+  "sprite": "copper_constable",
+  "health": 115,
+  "speed": 78,
+  "damage": 10,
+  "behaviour": "custom",
+  "custom_attack": "bankshot_volley",
+  "aggro_range": 650,
+  "expansion_only": true
+}

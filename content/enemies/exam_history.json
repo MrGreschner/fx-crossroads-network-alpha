@@ -1,0 +1,12 @@
+{
+  "id": "exam_history",
+  "name": "Final Exam: History",
+  "sprite": "exam_history",
+  "health": 2200,
+  "speed": 70,
+  "damage": 25,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_exam_history",
+  "expansion_only": true
+}

@@ -1,0 +1,8 @@
+{
+  "id": "leech_charm",
+  "name": "Leech Charm",
+  "cost": 70,
+  "effect": "lifesteal",
+  "amount": 6,
+  "description": "Heal 6% of damage dealt while carried."
+}

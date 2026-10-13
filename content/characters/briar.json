@@ -1,0 +1,92 @@
+{
+  "id": "briar",
+  "name": "Briar Skipper",
+  "sprite": "briar",
+  "max_health": 115,
+  "speed": 245,
+  "run_cost": 0,
+  "lore": "A woodland hare from Whispering Grove, collecting acorns that refuse to stay on the ground. Kick a travelling acorn into a larger blast, then vault away across your own leaf trail.",
+  "primary": {
+    "name": "Acorn Hop",
+    "style": "acorn_hop",
+    "damage": 19,
+    "cooldown": 0.85,
+    "range": 390,
+    "description": "A visibly bouncing acorn bursts on each ground contact. An enemy takes damage at most once per acorn. Walls stop it."
+  },
+  "secondary": {
+    "name": "Updraft Kick",
+    "style": "acorn_kick",
+    "damage": 28,
+    "cooldown": 5,
+    "range": 110,
+    "description": "A close kick knocks foes back. Your airborne acorns within 145 become larger blasts, gain 8 damage and turn toward your aim. They cannot hit a previously hit enemy again."
+  },
+  "special": {
+    "name": "Canopy Crossing",
+    "style": "canopy_crossing",
+    "damage": 44,
+    "cooldown": 15,
+    "range": 340,
+    "description": "Leap over a 0.65s arc, dropping three delayed acorns along the route. Each foe takes at most one 44-damage blast and a 1.5s slow. Flight is not invulnerable; walls stop the route."
+  },
+  "passive": "Woodland Footwork: After Canopy Crossing lands, gain 15% damage reduction for 1.5s.",
+  "passive_effect": "woodland_footwork",
+  "mastery": {
+    "title": "Keeper of the Dancing Canopy",
+    "technique": {
+      "name": "Far-Flung Acorns",
+      "ability": "primary",
+      "description": "Reach 520 instead of 390, but damage falls from 19 to 14.",
+      "set": {
+        "range": 520,
+        "damage": 14
+      }
+    },
+    "final_technique": {
+      "name": "Falling Chestnuts",
+      "ability": "secondary",
+      "description": "Replace the kick and acorn upgrade with three bouncing chestnuts in a fan, 14 damage each. 7s cooldown.",
+      "attack": {
+        "name": "Falling Chestnuts",
+        "style": "chestnut_rain",
+        "damage": 14,
+        "cooldown": 7,
+        "range": 360,
+        "description": "Three bouncing chestnuts in a fan. Each enemy is hit once per chestnut. No knockback or acorn enhancement."
+      }
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

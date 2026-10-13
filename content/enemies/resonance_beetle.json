@@ -1,0 +1,11 @@
+{
+  "id": "resonance_beetle",
+  "name": "Resonance Beetle",
+  "sprite": "resonance_beetle",
+  "health": 110,
+  "speed": 92,
+  "damage": 22,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

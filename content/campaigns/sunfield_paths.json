@@ -1,0 +1,1482 @@
+{
+  "id": "sunfield",
+  "name": "Sunfield Expanse",
+  "size": [
+    9400,
+    5100
+  ],
+  "spawn": [
+    450,
+    4100
+  ],
+  "exit": [
+    8600,
+    1000
+  ],
+  "boss_type": "sun_sentinel",
+  "floors": [
+    {
+      "name": "",
+      "rect": [
+        275.0,
+        3975.0,
+        1450,
+        250
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1475.0,
+        2975.0,
+        250,
+        1250
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        1475.0,
+        2975.0,
+        1300,
+        250
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "Whispergrass Fields",
+      "rect": [
+        2350,
+        2450,
+        2550,
+        2100
+      ],
+      "kind": "meadow",
+      "stage": 0
+    },
+    {
+      "name": "Sunflower Terraces",
+      "rect": [
+        5250,
+        1550,
+        2100,
+        2300
+      ],
+      "kind": "meadow",
+      "stage": 0
+    },
+    {
+      "name": "The Solstice Clearing",
+      "rect": [
+        7700,
+        350,
+        1500,
+        1500
+      ],
+      "kind": "meadow",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        4365.0,
+        2965.0,
+        1570,
+        270
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        5665.0,
+        2965.0,
+        1170,
+        270
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        6565.0,
+        965.0,
+        270,
+        2270
+      ],
+      "kind": "trail",
+      "stage": 0
+    },
+    {
+      "name": "",
+      "rect": [
+        6565.0,
+        965.0,
+        2070,
+        270
+      ],
+      "kind": "trail",
+      "stage": 0
+    }
+  ],
+  "props": [
+    {
+      "kind": "grand_tree",
+      "pos": [
+        420,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        510,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        600,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        690,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        780,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        870,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        960,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1050,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1140,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1230,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        1320,
+        3920
+      ],
+      "scale": 1.2,
+      "solid": 42
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        2500,
+        2650
+      ],
+      "scale": 1,
+      "solid": 36
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        4700,
+        4300
+      ],
+      "scale": 1,
+      "solid": 36
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        5600,
+        3670
+      ],
+      "scale": 1,
+      "solid": 36
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        7320,
+        1780
+      ],
+      "scale": 1,
+      "solid": 36
+    },
+    {
+      "kind": "giant_flower",
+      "pos": [
+        8040,
+        520
+      ],
+      "scale": 1,
+      "solid": 36
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2430,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2430,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2670,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2670,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2910,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2910,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3150,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3150,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3390,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3390,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3630,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3630,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3870,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3870,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4110,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4110,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4350,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4350,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4590,
+        2480
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4590,
+        4525
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5330,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5330,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5570,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5570,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5810,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5810,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6050,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6050,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6290,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6290,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6530,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6770,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7010,
+        1580
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7010,
+        3825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7780,
+        380
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7780,
+        1825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8020,
+        380
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8020,
+        1825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8260,
+        380
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8260,
+        1825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8500,
+        380
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8500,
+        1825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8740,
+        380
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8740,
+        1825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8980,
+        380
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8980,
+        1825
+      ],
+      "scale": 0.8,
+      "solid": 0
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2560,
+        3690
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2560,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2560,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2860,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2860,
+        3690
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2860,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2860,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3160,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3160,
+        3360
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3160,
+        3690
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3160,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3160,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3460,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3460,
+        3030
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3460,
+        3360
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3460,
+        3690
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3460,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3460,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3760,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3760,
+        3030
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3760,
+        3360
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3760,
+        3690
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3760,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3760,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4060,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4060,
+        3030
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4060,
+        3360
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4060,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4060,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4360,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4360,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4360,
+        4350
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4660,
+        2700
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4660,
+        3690
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        4660,
+        4020
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5460,
+        1800
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5460,
+        2130
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5460,
+        2460
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5460,
+        2790
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5760,
+        1800
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5760,
+        2130
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        5760,
+        2790
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6060,
+        1800
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6060,
+        2460
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6060,
+        2790
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6360,
+        1800
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6360,
+        2130
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6360,
+        2460
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6360,
+        2790
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7910,
+        600
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        7910,
+        1590
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8210,
+        600
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8210,
+        1590
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8510,
+        1590
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8810,
+        600
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8810,
+        930
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8810,
+        1260
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        8810,
+        1590
+      ],
+      "scale": 1.2,
+      "solid": 38
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        2840,
+        4040
+      ],
+      "scale": 1.1,
+      "solid": 28
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        3730,
+        3240
+      ],
+      "scale": 1.1,
+      "solid": 28
+    },
+    {
+      "kind": "grand_tree",
+      "pos": [
+        6370,
+        2500
+      ],
+      "scale": 1.1,
+      "solid": 28
+    }
+  ],
+  "grass": [],
+  "mud": [],
+  "falls": [],
+  "secrets": [
+    {
+      "id": "Sunken seed cache",
+      "name": "Sunken seed cache",
+      "pos": [
+        2750,
+        4200
+      ],
+      "amount": 40,
+      "kind": "gold"
+    },
+    {
+      "id": "Terrace lookout",
+      "name": "Terrace lookout",
+      "pos": [
+        7090,
+        1770
+      ],
+      "amount": 25,
+      "kind": "heal"
+    },
+    {
+      "pos": [
+        4510,
+        4310
+      ],
+      "kind": "heal",
+      "name": "Sunwell picnic",
+      "id": "sunwell_picnic",
+      "amount": 35
+    }
+  ],
+  "spawns": [
+    {
+      "type": "bramble",
+      "pos": [
+        1200,
+        4100
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bramble",
+      "pos": [
+        1600,
+        3380
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sun_sentinel",
+      "pos": [
+        2800,
+        3300
+      ],
+      "stage": 0
+    },
+    {
+      "type": "archer",
+      "pos": [
+        3210,
+        3070
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sunbeam_cantor",
+      "pos": [
+        4000,
+        3800
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sun_sentinel",
+      "pos": [
+        4430,
+        3720
+      ],
+      "stage": 0
+    },
+    {
+      "type": "archer",
+      "pos": [
+        4180,
+        2900
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sunbeam_cantor",
+      "pos": [
+        5820,
+        2360
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sun_sentinel",
+      "pos": [
+        6190,
+        2080
+      ],
+      "stage": 0
+    },
+    {
+      "type": "archer",
+      "pos": [
+        6580,
+        3330
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sunbeam_cantor",
+      "pos": [
+        7040,
+        2670
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sun_sentinel",
+      "pos": [
+        6850,
+        1760
+      ],
+      "stage": 0
+    },
+    {
+      "type": "archer",
+      "pos": [
+        8040,
+        1310
+      ],
+      "stage": 0
+    },
+    {
+      "type": "sunbeam_cantor",
+      "pos": [
+        8500,
+        680
+      ],
+      "stage": 0
+    },
+    {
+      "type": "saffron_hopper",
+      "pos": [
+        2840,
+        3900
+      ]
+    },
+    {
+      "type": "saffron_hopper",
+      "pos": [
+        3730,
+        3100
+      ]
+    },
+    {
+      "type": "saffron_hopper",
+      "pos": [
+        4420,
+        4150
+      ]
+    },
+    {
+      "type": "saffron_hopper",
+      "pos": [
+        5630,
+        3300
+      ]
+    },
+    {
+      "type": "saffron_hopper",
+      "pos": [
+        6370,
+        2360
+      ]
+    },
+    {
+      "type": "saffron_hopper",
+      "pos": [
+        7220,
+        1830
+      ]
+    }
+  ],
+  "stages": [
+    "Follow the orchard trail into the golden meadows",
+    "Face the moving Solstice guardian"
+  ],
+  "gates": [],
+  "lake": [],
+  "raft": {},
+  "background": "#697e3f",
+  "checkpoints": [
+    {
+      "pos": [
+        2800,
+        3300
+      ],
+      "level": 3
+    },
+    {
+      "pos": [
+        6000,
+        2700
+      ],
+      "level": 5
+    }
+  ],
+  "meadow_details": [
+    {
+      "rect": [
+        2500,
+        2600,
+        2100,
+        1500
+      ],
+      "kind": "golden"
+    },
+    {
+      "rect": [
+        5480,
+        1700,
+        1600,
+        1900
+      ],
+      "kind": "sunflower"
+    },
+    {
+      "rect": [
+        7890,
+        550,
+        1100,
+        1100
+      ],
+      "kind": "solstice"
+    }
+  ]
+}

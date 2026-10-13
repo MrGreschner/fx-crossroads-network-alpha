@@ -1,0 +1,17 @@
+{
+  "id": "astral_rift",
+  "name": "Astral Rift",
+  "size": [
+    8000,
+    3200
+  ],
+  "terrain": "astral_void",
+  "scene": "res://scenes/realms/astral_rift.tscn",
+  "boss_sprite": "eclipse_engine",
+  "boss_health": 1350,
+  "xp_per_level": 4,
+  "boss_secondary": "eclipse",
+  "expansion": "astral",
+  "difficulty_label": "Expert: gravity auras, singularity bursts and void paths",
+  "difficulty_tier": "expert"
+}

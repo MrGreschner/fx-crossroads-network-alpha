@@ -1,0 +1,11 @@
+# v157 — Lodges, gathering and brewing
+
+Challenge Lodge stands northeast of Deepwell Mine in the western clearing. Five level-10 solo trial styles: Last Stand (120s), three-round Boss Rush, Protect the Courier, Changing Rules (four timed conditions), and Perfect Timing (12 foes and warned strikes). Three intensities and three weekly featured trials. Bronze/silver/gold medals earn permanent laurels at 5/15/30 medal points; clearing the weekly set earns an animated lantern until the next Sunday. Trials have no items or food and do not award realm clears, arena records or mastery damage. Use End challenge to leave without a medal.
+
+Gatherers’ Lodge replaces Chimehouse on the east bank. Two crews, expandable to three, gather six ingredients on four routes lasting 5/10/15/20 minutes. Each route has an 18–25% chance of a rare seed; the four discoveries unlock crops at the Seed House. Offline time is included; return and claim each crew once. Device clock controls local timers.
+
+Willowglass Apothecary sits on the southern walk, east of the Studio. Three upgrade tiers and five illustrated recipes: 30 HP tonic, damage-over-time cleanse, 15% movement boost for 4s, 15% damage reduction for 4s, and 45 HP restorative. Recipes consume ingredients, take 60–180 seconds, and produce one bottle. Pack bottles into the existing three item slots; each is consumed once. Barkskin shares the existing reduction system and does not add repeatedly. Potions may travel into ordinary multiplayer modes where items are allowed; no-items arena rules remain enforced.
+
+New buildings, ingredients, potion icons and five cached illustrated arena backgrounds are included. Lodge state travels with Download/Upload Profile. GameDev trials do not award real progress. Weekly rewards use the local device date; these are not server-verified competitive rankings.
+
+Validation: fresh Godot load; gathering/brewing claim and inventory integration; complete profile export validation; five combat trial starts, exits and death handling; medal and weekly reward eligibility; official/custom hero-grid regression; room-service tests; native visual inspection. Online multi-device potion play still needs a classroom smoke test after both clients are updated.

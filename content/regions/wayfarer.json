@@ -1,0 +1,14 @@
+{
+  "id": "wayfarer",
+  "name": "Wayfarer Wilds \u2022 Quest Expedition",
+  "size": [
+    16000,
+    11000
+  ],
+  "terrain": "forest",
+  "scene": "res://scenes/quests/wayfarer.tscn",
+  "xp_per_level": 4,
+  "description": "Five persistent quests across Willowrest, forest dungeons, snowy summit paths and ruined Skyworks water gardens. Solo or co-op.",
+  "quest_campaign": "res://content/quests/wayfarer.json",
+  "difficulty_label": "Quest adventure \u2022 solo or co-op"
+}

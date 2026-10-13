@@ -1,0 +1,12 @@
+{
+  "id": "lodge_stride",
+  "name": "Trailrunner Brew",
+  "effect": "haste",
+  "amount": 15,
+  "duration": 4,
+  "cost": 0,
+  "sprite": "lodges/lodge_stride",
+  "shop": false,
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
+}

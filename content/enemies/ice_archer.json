@@ -1,0 +1,13 @@
+{
+  "id": "ice_archer",
+  "name": "Ice Archer",
+  "sprite": "ice_archer",
+  "health": 92,
+  "speed": 82,
+  "damage": 12,
+  "aggro_range": 630,
+  "behaviour": "ranged",
+  "shot_speed": 315,
+  "shot_cooldown": 2.2,
+  "secondary_cooldown": 4.5
+}

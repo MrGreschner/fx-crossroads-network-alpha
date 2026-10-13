@@ -1,0 +1,11 @@
+{
+  "id": "nectar_keeper",
+  "name": "Nectar Keeper",
+  "sprite": "nectar_keeper",
+  "health": 88,
+  "speed": 75,
+  "damage": 12,
+  "behaviour": "ranged",
+  "aggro_range": 700,
+  "expansion_only": true
+}

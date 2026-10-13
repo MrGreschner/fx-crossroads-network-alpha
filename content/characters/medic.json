@@ -1,0 +1,110 @@
+{
+  "id": "medic",
+  "name": "Quarantine Medic",
+  "sprite": "medic",
+  "max_health": 125,
+  "speed": 235,
+  "primary": {
+    "name": "Boot Kick",
+    "style": "kick",
+    "damage": 29,
+    "cooldown": 0.42,
+    "range": 86,
+    "speed": 480,
+    "arc_degrees": 70,
+    "color": "#9ee8b4",
+    "poison_damage": 2,
+    "poison_duration": 5
+  },
+  "secondary": {
+    "name": "Field Dressing",
+    "style": "heal_wave",
+    "damage": 27,
+    "cooldown": 4.0,
+    "range": 350,
+    "speed": 350,
+    "duration": 1.1,
+    "reduction": 0.9,
+    "reflect": true,
+    "color": "#9ee8b4"
+  },
+  "special": {
+    "name": "Healing Beacon",
+    "style": "heal_wave",
+    "damage": 1,
+    "cooldown": 12.0,
+    "radius": 155,
+    "duration": 4,
+    "color": "#9ee8b4",
+    "heal": 40
+  },
+  "passive": "Triage: heal on kill",
+  "passive_effect": "heal_on_kill",
+  "run_cost": 0,
+  "mastery": {
+    "title": "Field Surgeon",
+    "technique": {
+      "name": "Emergency Dressing",
+      "ability": "secondary",
+      "description": "Field Dressing restores 30% more health, but recharges 40% slower.",
+      "multiply": {
+        "cooldown": 1.4
+      },
+      "set": {
+        "heal": 32.5
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Quarantine Garden",
+      "ability": "special",
+      "description": "Place a 3s cleansing-green garden: six pulses heal allies for 3 and damage enemies for 3, with mild poison. Requires standing in the garden instead of an instant heal.",
+      "attack": {
+        "name": "Quarantine Garden",
+        "style": "master_fountain",
+        "damage": 3,
+        "cooldown": 13,
+        "color": "#b7e5bc",
+        "range": 180,
+        "radius": 130,
+        "heal": 3,
+        "duration": 3,
+        "poison_duration": 3,
+        "poison_damage": 1,
+        "description": "Place a 3s cleansing-green garden: six pulses heal allies for 3 and damage enemies for 3, with mild poison. Requires standing in the garden instead of an instant heal.",
+        "visual_texture": "res://assets/mastery_medic_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

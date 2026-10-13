@@ -1,0 +1,12 @@
+{
+  "id": "eclipse_engine",
+  "name": "Eclipse Engine",
+  "sprite": "eclipse_engine",
+  "health": 1000,
+  "speed": 50,
+  "damage": 26,
+  "behaviour": "chase",
+  "custom_attack": "eclipse",
+  "aggro_range": 500,
+  "expansion_only": true
+}

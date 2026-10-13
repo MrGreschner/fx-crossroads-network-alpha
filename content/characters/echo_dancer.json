@@ -1,0 +1,100 @@
+{
+  "id": "echo_dancer",
+  "sprite": "echo_dancer",
+  "name": "Echo Dancer",
+  "max_health": 115,
+  "speed": 240,
+  "run_cost": 0,
+  "lore": "A travelling ribbon-swordsman from the Folded Coast who learned to dance between seconds. Every step leaves a memory; every memory can become another blade.",
+  "primary": {
+    "name": "Second Step",
+    "style": "echo_cut",
+    "damage": 22,
+    "cooldown": 0.9,
+    "range": 90,
+    "description": "A forward ribbon-sabre cut deals 22 damage. An afterimage repeats half the damage at the same spot 0.45s later. Only the last three origins are remembered, for 5s.",
+    "ui_brief": "Melee cut \u2022 22 damage + a delayed echo"
+  },
+  "secondary": {
+    "name": "Curtain Feint",
+    "style": "echo_feint",
+    "damage": 12,
+    "cooldown": 8,
+    "range": 400,
+    "description": "Return to your most recent strike origin within 400 range along a clear route. The spot you leave bursts for 12 damage within 70 reach. Strike first to set a return spot.",
+    "ui_brief": "Return to last strike \u2022 burst at the spot you leave"
+  },
+  "special": {
+    "name": "Encore",
+    "style": "echo_encore",
+    "damage": 20,
+    "cooldown": 23,
+    "range": 105,
+    "description": "Your last three strike origins replay in order, 0.3s apart, for 20 forward damage each. Position your memories before casting.",
+    "ui_brief": "Replay your last three strikes \u2022 20 damage each"
+  },
+  "passive": "Lingering Applause: afterimage damage increases from 50% to 65% of the direct primary hit.",
+  "passive_effect": "echo_applause",
+  "mastery": {
+    "title": "Virtuoso Between Seconds",
+    "technique": {
+      "name": "Long Ribbon",
+      "ability": "primary",
+      "description": "Trade direct damage for wider strikes and stronger delayed echoes.",
+      "attack": {
+        "name": "Long Ribbon",
+        "style": "echo_cut",
+        "damage": 16,
+        "cooldown": 1,
+        "range": 110,
+        "description": "A 110-reach ribbon cut deals 16 damage; its echo repeats the full damage after 0.45s.",
+        "echo_ratio": 1
+      }
+    },
+    "final_technique": {
+      "name": "Dance Company",
+      "ability": "special",
+      "description": "Trade instant replay damage for three fragile, targetable sword companions.",
+      "attack": {
+        "name": "Dance Company",
+        "style": "echo_company",
+        "damage": 6,
+        "cooldown": 23,
+        "range": 105,
+        "description": "Summon a dancer at each remembered origin for 6s. Each has 24 health and deals 6 melee damage. They can be attacked and killed."
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

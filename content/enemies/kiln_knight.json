@@ -1,0 +1,13 @@
+{
+  "id": "kiln_knight",
+  "name": "Kiln Knight",
+  "sprite": "kiln_knight",
+  "health": 500,
+  "speed": 80,
+  "damage": 16,
+  "behaviour": "chase",
+  "aggro_range": 420,
+  "shot_speed": 230,
+  "shot_cooldown": 2.6,
+  "expansion_only": true
+}

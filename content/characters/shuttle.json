@@ -1,0 +1,96 @@
+{
+  "id": "shuttle",
+  "name": "Shuttlewick",
+  "sprite": "shuttle",
+  "max_health": 115,
+  "speed": 260,
+  "run_cost": 0,
+  "lore": "An animated wooden weaving shuttle that stitches roads from rose-coloured thread. Fire to lay a seam, then ride it; walls always interrupt the route.",
+  "primary": {
+    "name": "Running Stitch",
+    "style": "shuttle_stitch",
+    "damage": 24,
+    "cooldown": 0.7,
+    "range": 360,
+    "description": "Fire a thread needle and leave a visible 360-length seam for 6s. Your next stitch replaces the seam.",
+    "color": "#8ddedc"
+  },
+  "secondary": {
+    "name": "Seam Ride",
+    "style": "seam_ride",
+    "damage": 34,
+    "cooldown": 5,
+    "range": 400,
+    "description": "Zip toward the end of your last seam, cutting each crossed enemy once. Without a seam, dash 140 toward your aim. Walls stop travel.",
+    "color": "#8ddedc"
+  },
+  "special": {
+    "name": "Four-Corner Loom",
+    "style": "loom_cage",
+    "damage": 12,
+    "cooldown": 17,
+    "range": 360,
+    "description": "Weave a 125-radius diamond field for 5s. Pulses once a second and slows foes by 40%.",
+    "color": "#8ddedc"
+  },
+  "passive": "Hemmed In: Completing Seam Ride grants 10% damage reduction for 1.5s.",
+  "passive_effect": "hem_guard",
+  "mastery": {
+    "title": "Weaver of Impossible Roads",
+    "technique": {
+      "name": "Long Seam",
+      "ability": "primary",
+      "description": "Stitches reach 480 instead of 360, but hit for 18 instead of 24.",
+      "set": {
+        "range": 480,
+        "damage": 18
+      }
+    },
+    "final_technique": {
+      "name": "Loose Ends",
+      "ability": "special",
+      "description": "Replace the control field with three heavy thread darts: 36 damage each, 8s cooldown. Requires close alignment to land all three.",
+      "attack": {
+        "name": "Loose Ends",
+        "style": "loom_fan",
+        "damage": 36,
+        "cooldown": 8,
+        "range": 430,
+        "description": "Three heavy needles in a fan; each stops on the first target.",
+        "color": "#8ddedc"
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

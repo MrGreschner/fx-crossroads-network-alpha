@@ -1,0 +1,38 @@
+{
+  "id": "npc_cinder",
+  "name": "Cinder Oracle",
+  "sprite": "npc_cinder",
+  "npc_only": true,
+  "max_health": 115,
+  "speed": 245,
+  "primary": {
+    "name": "Ember Dart",
+    "style": "projectile",
+    "damage": 18,
+    "cooldown": 1.15,
+    "range": 590,
+    "speed": 360,
+    "color": "#ffa563"
+  },
+  "secondary": {
+    "name": "Cinder Fall",
+    "style": "target_aoe",
+    "damage": 23,
+    "cooldown": 6,
+    "range": 460,
+    "travel_speed": 300,
+    "blast_radius": 95,
+    "burn_duration": 3,
+    "burn_damage": 2
+  },
+  "special": {
+    "name": "Ash Ring",
+    "style": "target_aoe",
+    "damage": 35,
+    "cooldown": 13,
+    "range": 430,
+    "travel_speed": 260,
+    "blast_radius": 145
+  },
+  "passive_effect": ""
+}

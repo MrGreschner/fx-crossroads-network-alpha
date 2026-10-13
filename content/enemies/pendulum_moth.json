@@ -1,0 +1,18 @@
+{
+  "id": "pendulum_moth",
+  "name": "Pendulum Moth",
+  "sprite": "pendulum_moth",
+  "health": 85,
+  "speed": 100,
+  "damage": 14,
+  "behaviour": "chase",
+  "aggro_range": 420,
+  "shot_speed": 250,
+  "shot_cooldown": 2.7,
+  "expansion_only": true,
+  "custom_attack": "lob",
+  "lob_speed": 340,
+  "blast_radius": 90,
+  "skill_cooldown": 3.6,
+  "attack_color": "#ffd68a"
+}

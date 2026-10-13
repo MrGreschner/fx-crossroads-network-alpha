@@ -1,0 +1,101 @@
+{
+  "id": "rune_duelist",
+  "name": "Rune Duelist",
+  "sprite": "rune_duelist",
+  "run_cost": 0,
+  "max_health": 125,
+  "speed": 240,
+  "lore": "A human swordsman who stitches glowing runes into every step of a duel.",
+  "primary": {
+    "name": "Inscribed Cut",
+    "style": "rune_slash",
+    "damage": 24,
+    "cooldown": 0.65,
+    "range": 90,
+    "arc_degrees": 75,
+    "color": "#9ee4d5",
+    "description": "A close sword cut deals 24 damage and leaves a rune at your feet. Keep up to 3 runes for 10 seconds; every third cut gains 10 damage."
+  },
+  "secondary": {
+    "name": "Runestep",
+    "style": "rune_step",
+    "damage": 28,
+    "cooldown": 5,
+    "range": 480,
+    "color": "#9ee4d5",
+    "description": "Teleport to your oldest attack rune within 480 units, damaging enemies along the clear route for 28. If that rune is unreachable, make a short forward step instead."
+  },
+  "special": {
+    "name": "Sigil Court",
+    "style": "rune_domain",
+    "damage": 10,
+    "cooldown": 18,
+    "duration": 2.5,
+    "color": "#c6eadd",
+    "description": "Connect your runes into a glowing court for 2.5 seconds. Enemies inside take 10 damage every half-second. Missing runes are formed around you."
+  },
+  "passive": "Lingering Script: your planted runes remain for 5 extra seconds.",
+  "passive_effect": "long_runes",
+  "mastery": {
+    "title": "Master of Sigils",
+    "technique": {
+      "name": "Long Runestep",
+      "ability": "secondary",
+      "description": "Runestep can return 50% farther, for 25% less route damage.",
+      "multiply": {
+        "range": 1.5,
+        "damage": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Twin-Script Return",
+      "ability": "special",
+      "description": "Two large returning runes deal 30 per leg. Replaces the rune domain with a mobile aimed attack, without domain protection.",
+      "attack": {
+        "name": "Twin-Script Return",
+        "style": "master_pincer",
+        "damage": 30,
+        "cooldown": 12,
+        "color": "#ddc7ab",
+        "range": 330,
+        "width": 105,
+        "duration": 1.65,
+        "description": "Two large returning runes deal 30 per leg. Replaces the rune domain with a mobile aimed attack, without domain protection.",
+        "visual_texture": "res://assets/mastery_rune_duelist_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

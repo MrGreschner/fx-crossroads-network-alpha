@@ -1,0 +1,19 @@
+{
+  "id": "petalbrook",
+  "name": "Petalbrook Canopy",
+  "terrain": "garden_grass",
+  "xp_per_level": 3,
+  "boss_health": 1000,
+  "boss_secondary": "petalstorm",
+  "difficulty_label": "Medium \u2014 ribbon paths, decoys and moving blossom traps",
+  "size": [
+    7800,
+    5900
+  ],
+  "scene": "res://scenes/realms/petalbrook.tscn",
+  "immersive": true,
+  "boss_enemy": "bloomtail_regent",
+  "boss_sprite": "bloomtail_regent",
+  "description": "Follow the ribbon paths and clear the canopy patrols. Optional treasures reward exploration; exit unlocks after its guardian falls.",
+  "difficulty_tier": "medium"
+}

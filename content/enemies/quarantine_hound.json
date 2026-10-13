@@ -1,0 +1,14 @@
+{
+  "id": "quarantine_hound",
+  "name": "Quarantine Hound",
+  "sprite": "quarantine_hound",
+  "health": 115,
+  "speed": 150,
+  "damage": 12,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_hound",
+  "description": "A fast plague hound. Its warned leap leaves a small slowing patch.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

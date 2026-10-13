@@ -1,0 +1,12 @@
+{
+  "id": "gravel_skater",
+  "name": "Gravel Skater",
+  "sprite": "gravel_skater",
+  "health": 118,
+  "speed": 140,
+  "damage": 13,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_gravel_skater",
+  "expansion_only": true
+}

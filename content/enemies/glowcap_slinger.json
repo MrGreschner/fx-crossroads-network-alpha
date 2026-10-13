@@ -1,0 +1,16 @@
+{
+  "id": "glowcap_slinger",
+  "name": "Glowcap Slinger",
+  "sprite": "glowcap_slinger",
+  "health": 85,
+  "speed": 95,
+  "damage": 12,
+  "behaviour": "custom",
+  "aggro_range": 560,
+  "expansion_only": true,
+  "custom_attack": "lob",
+  "skill_cooldown": 4,
+  "lob_speed": 270,
+  "blast_radius": 80,
+  "attack_color": "#ace09b"
+}

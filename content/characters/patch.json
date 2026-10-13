@@ -1,0 +1,106 @@
+{
+  "id": "patch",
+  "name": "Patch",
+  "sprite": "patch",
+  "max_health": 110,
+  "speed": 240,
+  "run_cost": 0,
+  "lore": "A forgotten arcade controller awakened by Crossroads magic. Never travels without a player two.",
+  "primary": {
+    "name": "D-Pad Volley",
+    "style": "cross_shot",
+    "damage": 14,
+    "cooldown": 0.8,
+    "range": 340,
+    "speed": 400,
+    "color": "#84e1dd",
+    "description": "Fire four bolts in a cross: one toward your aim, one behind and one to each side. Each deals 14 damage."
+  },
+  "secondary": {
+    "name": "Reset Pulse",
+    "style": "pulse_wave",
+    "damage": 18,
+    "cooldown": 6,
+    "radius": 135,
+    "clear_projectiles": true,
+    "color": "#b9a7ec",
+    "description": "Send a short expanding pulse for 18 damage and erase hostile projectiles within 135 units."
+  },
+  "special": {
+    "name": "Player Two",
+    "style": "patch_buddies",
+    "damage": 10,
+    "cooldown": 18,
+    "duration": 9,
+    "count": 2,
+    "minion_speed": 255,
+    "minion_sprite": "bit_buddy",
+    "color": "#84e1dd",
+    "description": "Summon two targetable 45-HP Bit Buddies for 9s (11s with passive). Each deals 10 damage per hit. Partners stay separated while following and attacking.",
+    "range": 90
+  },
+  "passive": "Extra Credits: Bit Buddies stay for two additional seconds.",
+  "passive_effect": "long_buddies",
+  "mastery": {
+    "title": "Player One Legend",
+    "technique": {
+      "name": "Patient Partners",
+      "ability": "special",
+      "description": "Bit Buddies last 40% longer, but deal 25% less damage per hit.",
+      "multiply": {
+        "duration": 1.4,
+        "damage": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Patchwork Pincers",
+      "ability": "secondary",
+      "description": "Two sewn crescents return for 18 per leg. Replaces the close pulse wave with ranged timing; no projectile-clearing pulse.",
+      "attack": {
+        "name": "Patchwork Pincers",
+        "style": "master_pincer",
+        "damage": 18,
+        "cooldown": 4,
+        "color": "#c3dd9a",
+        "range": 290,
+        "width": 100,
+        "duration": 1.65,
+        "description": "Two sewn crescents return for 18 per leg. Replaces the close pulse wave with ranged timing; no projectile-clearing pulse.",
+        "visual_texture": "res://assets/mastery_patch_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

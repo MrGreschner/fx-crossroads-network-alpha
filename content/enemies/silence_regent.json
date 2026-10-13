@@ -1,0 +1,11 @@
+{
+  "id": "silence_regent",
+  "name": "Silence Regent",
+  "sprite": "silence_regent",
+  "health": 2400,
+  "speed": 48,
+  "damage": 36,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

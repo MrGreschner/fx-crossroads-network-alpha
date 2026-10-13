@@ -1,0 +1,13 @@
+{
+  "id": "tick_acorn",
+  "name": "Tick Acorn",
+  "sprite": "tick_acorn",
+  "health": 102,
+  "speed": 120,
+  "damage": 12,
+  "behaviour": "chase",
+  "aggro_range": 420,
+  "shot_speed": 250,
+  "shot_cooldown": 2.7,
+  "expansion_only": true
+}

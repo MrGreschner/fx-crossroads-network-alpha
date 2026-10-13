@@ -1,0 +1,12 @@
+{
+  "id": "exalted_wraith",
+  "name": "Exalted Wraith",
+  "sprite": "exalted_wraith",
+  "health": 230,
+  "speed": 150,
+  "damage": 25,
+  "behaviour": "custom",
+  "custom_attack": "v43_exalted_wraith",
+  "aggro_range": 720,
+  "expansion_only": true
+}

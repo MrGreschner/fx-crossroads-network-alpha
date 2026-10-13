@@ -1,0 +1,505 @@
+{
+  "version": 2,
+  "tasks": [
+    {
+      "id": "grove_solo",
+      "title": "The Whispering Grove \u2022 Solo trail",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear The Whispering Grove on your own."
+    },
+    {
+      "id": "grove_party",
+      "title": "The Whispering Grove \u2022 Together",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear The Whispering Grove in co-op with at least one friend."
+    },
+    {
+      "id": "quarry_solo",
+      "title": "The Ember Quarry \u2022 Solo trail",
+      "kind": "realm",
+      "realm": "quarry",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear The Ember Quarry on your own."
+    },
+    {
+      "id": "quarry_party",
+      "title": "The Ember Quarry \u2022 Together",
+      "kind": "realm",
+      "realm": "quarry",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear The Ember Quarry in co-op with at least one friend."
+    },
+    {
+      "id": "honeyglass_solo",
+      "title": "Honeyglass Gardens \u2022 Solo trail",
+      "kind": "realm",
+      "realm": "honeyglass",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Honeyglass Gardens on your own."
+    },
+    {
+      "id": "honeyglass_party",
+      "title": "Honeyglass Gardens \u2022 Together",
+      "kind": "realm",
+      "realm": "honeyglass",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Honeyglass Gardens in co-op with at least one friend."
+    },
+    {
+      "id": "sunfield_solo",
+      "title": "Sunfield Expanse \u2022 Solo trail",
+      "kind": "realm",
+      "realm": "sunfield",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Sunfield Expanse on your own."
+    },
+    {
+      "id": "sunfield_party",
+      "title": "Sunfield Expanse \u2022 Together",
+      "kind": "realm",
+      "realm": "sunfield",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Sunfield Expanse in co-op with at least one friend."
+    },
+    {
+      "id": "ice_solo",
+      "title": "Quick expedition \u2022 Whispering Grove solo",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Whispering Grove on your own."
+    },
+    {
+      "id": "ice_party",
+      "title": "Quick expedition \u2022 Ember Quarry together",
+      "kind": "realm",
+      "realm": "quarry",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Ember Quarry alongside a friend."
+    },
+    {
+      "id": "elementary_solo",
+      "title": "Firstbell Elementary \u2022 Solo trail",
+      "kind": "realm",
+      "realm": "elementary",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Firstbell Elementary on your own."
+    },
+    {
+      "id": "elementary_party",
+      "title": "Firstbell Elementary \u2022 Together",
+      "kind": "realm",
+      "realm": "elementary",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Firstbell Elementary in co-op with at least one friend."
+    },
+    {
+      "id": "silverfall_solo",
+      "title": "Quick expedition \u2022 Whispering Grove solo",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Whispering Grove on your own."
+    },
+    {
+      "id": "silverfall_party",
+      "title": "Quick expedition \u2022 Ember Quarry together",
+      "kind": "realm",
+      "realm": "quarry",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Ember Quarry alongside a friend."
+    },
+    {
+      "id": "lantern_marsh_solo",
+      "title": "Quick expedition \u2022 Sunfield Expanse solo",
+      "kind": "realm",
+      "realm": "sunfield",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Sunfield Expanse on your own."
+    },
+    {
+      "id": "lantern_marsh_party",
+      "title": "Quick expedition \u2022 Firstbell Elementary together",
+      "kind": "realm",
+      "realm": "elementary",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Firstbell Elementary alongside a friend."
+    },
+    {
+      "id": "clockwork_orchard_solo",
+      "title": "The Clockwork Orchard \u2022 Solo trail",
+      "kind": "realm",
+      "realm": "clockwork_orchard",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear The Clockwork Orchard on your own."
+    },
+    {
+      "id": "clockwork_orchard_party",
+      "title": "The Clockwork Orchard \u2022 Together",
+      "kind": "realm",
+      "realm": "clockwork_orchard",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear The Clockwork Orchard in co-op with at least one friend."
+    },
+    {
+      "id": "moonveil_solo",
+      "title": "Quick expedition \u2022 Sunfield Expanse solo",
+      "kind": "realm",
+      "realm": "sunfield",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Sunfield Expanse on your own."
+    },
+    {
+      "id": "moonveil_party",
+      "title": "Quick expedition \u2022 Firstbell Elementary together",
+      "kind": "realm",
+      "realm": "elementary",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Firstbell Elementary alongside a friend."
+    },
+    {
+      "id": "petalbrook_solo",
+      "title": "Quick expedition \u2022 Whispering Grove solo",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Whispering Grove on your own."
+    },
+    {
+      "id": "petalbrook_party",
+      "title": "Quick expedition \u2022 Ember Quarry together",
+      "kind": "realm",
+      "realm": "quarry",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Ember Quarry alongside a friend."
+    },
+    {
+      "id": "moonburrow_solo",
+      "title": "Quick expedition \u2022 Sunfield Expanse solo",
+      "kind": "realm",
+      "realm": "sunfield",
+      "team": "solo",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Sunfield Expanse on your own."
+    },
+    {
+      "id": "moonburrow_party",
+      "title": "Quick expedition \u2022 Firstbell Elementary together",
+      "kind": "realm",
+      "realm": "elementary",
+      "team": "party",
+      "hero": "",
+      "target": 1,
+      "description": "Clear Firstbell Elementary alongside a friend."
+    },
+    {
+      "id": "hero_ram",
+      "title": "Young Ram takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "ram",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_basketball",
+      "title": "Dribble takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "basketball",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_book",
+      "title": "Living Book takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "book",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_cat",
+      "title": "Crossroads Cat takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "cat",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_goalie",
+      "title": "Frostguard takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "goalie",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_baseball",
+      "title": "Diamond Scout takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "baseball",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_golfer",
+      "title": "Fairway Ranger takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "golfer",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_soccer",
+      "title": "Crosswind Striker takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "soccer",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_welder",
+      "title": "Emberwright takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "welder",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_medic",
+      "title": "Quarantine Medic takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "medic",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_navigator",
+      "title": "Star Navigator takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "navigator",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "hero_sunflower",
+      "title": "Sunpetal takes the lead",
+      "kind": "realm",
+      "realm": "grove",
+      "team": "any",
+      "hero": "sunflower",
+      "target": 1,
+      "description": "Clear Whispering Grove with the featured hero on your own."
+    },
+    {
+      "id": "descent_5_solo",
+      "title": "Ram Descent \u2022 clear 5 floors solo",
+      "kind": "descent",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 5,
+      "description": "Clear 5 floors in one attempt on your own."
+    },
+    {
+      "id": "descent_5_party",
+      "title": "Ram Descent \u2022 clear 5 floors together",
+      "kind": "descent",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 5,
+      "description": "Clear 5 floors in one attempt with a friend."
+    },
+    {
+      "id": "descent_10_solo",
+      "title": "Ram Descent \u2022 clear 6 floors solo",
+      "kind": "descent",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 6,
+      "description": "Clear 6 floors in one attempt on your own."
+    },
+    {
+      "id": "descent_10_party",
+      "title": "Ram Descent \u2022 clear 6 floors together",
+      "kind": "descent",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 6,
+      "description": "Clear 6 floors in one attempt with a friend."
+    },
+    {
+      "id": "descent_15_solo",
+      "title": "Ram Descent \u2022 clear 8 floors solo",
+      "kind": "descent",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 8,
+      "description": "Clear 8 floors in one attempt on your own."
+    },
+    {
+      "id": "descent_15_party",
+      "title": "Ram Descent \u2022 clear 8 floors together",
+      "kind": "descent",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 8,
+      "description": "Clear 8 floors in one attempt with a friend."
+    },
+    {
+      "id": "descent_20_solo",
+      "title": "Ram Descent \u2022 clear 10 floors solo",
+      "kind": "descent",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 10,
+      "description": "Clear 10 floors in one attempt on your own."
+    },
+    {
+      "id": "descent_20_party",
+      "title": "Ram Descent \u2022 clear 10 floors together",
+      "kind": "descent",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 10,
+      "description": "Clear 10 floors in one attempt with a friend."
+    },
+    {
+      "id": "defense_5_solo",
+      "title": "North Gate Defence \u2022 clear 5 waves solo",
+      "kind": "defense",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 5,
+      "description": "Clear 5 waves in one attempt on your own."
+    },
+    {
+      "id": "defense_5_party",
+      "title": "North Gate Defence \u2022 clear 5 waves together",
+      "kind": "defense",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 5,
+      "description": "Clear 5 waves in one attempt with a friend."
+    },
+    {
+      "id": "defense_10_solo",
+      "title": "North Gate Defence \u2022 clear 6 waves solo",
+      "kind": "defense",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 6,
+      "description": "Clear 6 waves in one attempt on your own."
+    },
+    {
+      "id": "defense_10_party",
+      "title": "North Gate Defence \u2022 clear 6 waves together",
+      "kind": "defense",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 6,
+      "description": "Clear 6 waves in one attempt with a friend."
+    },
+    {
+      "id": "defense_15_solo",
+      "title": "North Gate Defence \u2022 clear 8 waves solo",
+      "kind": "defense",
+      "realm": "",
+      "team": "solo",
+      "hero": "",
+      "target": 8,
+      "description": "Clear 8 waves in one attempt on your own."
+    },
+    {
+      "id": "defense_15_party",
+      "title": "North Gate Defence \u2022 clear 8 waves together",
+      "kind": "defense",
+      "realm": "",
+      "team": "party",
+      "hero": "",
+      "target": 8,
+      "description": "Clear 8 waves in one attempt with a friend."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "id": "cairnheart",
+  "name": "Cairnheart",
+  "sprite": "cairnheart",
+  "max_health": 145,
+  "speed": 210,
+  "run_cost": 0,
+  "lore": "A badger stonecarver who carries the patient strength of the old hill roads.",
+  "primary": {
+    "name": "Fault Steps",
+    "style": "fault_steps",
+    "damage": 24,
+    "cooldown": 0.8,
+    "description": "Raise three successive stone faults ahead. Each enemy can take 24 damage only once per cast.",
+    "range": 175
+  },
+  "secondary": {
+    "name": "Stone Hoist",
+    "style": "stone_hoist",
+    "damage": 36,
+    "cooldown": 7,
+    "description": "Lift the nearest aimed enemy within 220, briefly stunning it. After 1.2 seconds the cairn collapses for 36 damage within 85.",
+    "range": 220
+  },
+  "special": {
+    "name": "Rolling Rampart",
+    "style": "rolling_rampart",
+    "damage": 62,
+    "cooldown": 18,
+    "description": "Send a 240-unit-wide rampart forward. It hits each enemy once for 62 damage and pushes them back. Walls stop it.",
+    "range": 340
+  },
+  "passive": "Bedrock: each foe hit by Fault Steps grants 5% damage reduction for 3 seconds, up to 20% per cast.",
+  "passive_effect": "bedrock",
+  "mastery": {
+    "title": "Mountain Warden",
+    "technique": {
+      "name": "Heavy Fault",
+      "ability": "primary",
+      "description": "Fault Steps hits 25% harder, but recharges 35% slower.",
+      "multiply": {
+        "damage": 1.25,
+        "cooldown": 1.35
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Standing-Stone Circle",
+      "ability": "special",
+      "description": "Raise a 3s stone circle with six 6-damage pulses and slow. Trades the moving rampart for a stationary siege zone.",
+      "attack": {
+        "name": "Standing-Stone Circle",
+        "style": "master_fountain",
+        "damage": 6,
+        "cooldown": 13,
+        "color": "#d3bd8e",
+        "range": 200,
+        "radius": 140,
+        "heal": 0,
+        "duration": 3,
+        "slow_duration": 0.65,
+        "slow": 0.7,
+        "description": "Raise a 3s stone circle with six 6-damage pulses and slow. Trades the moving rampart for a stationary siege zone.",
+        "visual_texture": "res://assets/mastery_cairnheart_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

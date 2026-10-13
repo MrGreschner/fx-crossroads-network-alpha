@@ -1,0 +1,17 @@
+# v111 — Combat and Training Yard adjustments
+
+## Changes
+- **Hazel Hex — Neighbourhood Brew:** each offensive volley sends an individually aimed splatter at every living enemy within 310 reach and clear line of sight, excluding allies. Volleys are one second apart; splatters retain their visible flight, landing damage and poison pools. Pool and effect limits remain in place. The healing-only mastery alternative remains healing-only.
+- **Hollow Rider — Lantern Toll:** replaces Harvest Hook. Raise the lantern for 0.3 seconds, then slam a spectral radial shockwave for 26 base damage within 125 reach, 55 knockback and a 1.2-second stun. Seven-second cooldown. Hitting a foe triggers Lantern Courage's 12% damage reduction for two seconds when the passive is unlocked. Character Hall summaries, lore metadata, content builders and the ability catalogue reflect the replacement.
+- **Little Menace — Heart on the Line:** visibly charge for one second before the blast and health payment. Movement slows to 35%; other attacks and dodging are unavailable during the charge. Stun or death interrupts it without taking the health cost. The special still costs 50% maximum HP; All In costs 75% with its smaller radius. Insufficient HP can defeat the caster when the charge completes. Practice retains the one-HP safety floor. Charge state travels in existing multiplayer snapshots.
+- **Training Yard:** added a green allied dummy on the left with its own 200 HP pool, initially at 50 HP. Ally-targeting projectiles, healing fields and buffs can target it. Its health bar and active buff names show the result. Press E nearby to reset health and buffs; fully healing it triggers a three-second full-health pause before it resets to 50 HP. It never inherits the player's hero passives or awards combat progress. It exists only in practice.
+- Moved the Hero Book, guide shelter, guide and props left toward the entrance. Moved two trees away from the shelter. Book, guide, ally and return gate have separate, reachable interaction positions. Training guide dialogue explains the new ally target.
+
+## Validation
+Godot 4.5.1 headless checks passed for all-target cauldron volleys and team/range filtering, the new delayed slam and its passive guard, delayed sacrifice/payment, charge movement and attack lock, interruption and mastery cost, friendly actor registration, healing projectile collision, independent dummy health, ally buffs, area healing exactly once per ally, reset behaviour, walkable relocated interactions and town cleanup. v107 minion targeting, v108 training interaction, v109 weather/town and adapted v110 combat regressions also passed. Training layout and the new combat effects were rendered and visually checked. ZIP CRC and complete extraction were verified. Live multi-computer multiplayer and compiled Web/Windows builds were not tested here.
+
+## Publish
+1. Extract the editable ZIP into a fresh folder and open FX_Crossroads/project.godot in Godot. Let the assets import.
+2. Export the Web preset again and upload its exported Web ZIP to itch.io, replacing the browser build. This download is the editable project, not an already exported browser build.
+3. If offering the Windows download, run BUILD_WINDOWS.cmd and upload exports/FX_Crossroads_Windows_v111.zip separately. Keep players on the same version.
+4. **Render: no changes to rooms.mjs, server.mjs, package.json or service settings are required.**

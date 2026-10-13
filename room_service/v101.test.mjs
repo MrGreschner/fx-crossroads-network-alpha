@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {Rooms} from './rooms.mjs';
+test('only host removes guests; removed members release seats and cannot resume or signal',()=>{
+ const r=new Rooms(); const user=()=>{const messages=[];const c=r.connect(m=>messages.push(m));return {c,messages};};
+ const h=user(),g=user(),other=user(), outsider=user();
+ const send=(u,data)=>r.message(u.c,data);
+ send(h,{type:'host',mode:'arena',version:26,seats:2});const code=h.c.room;
+ send(g,{type:'join',code,version:26});
+ send(other,{type:'host',mode:'arena',version:26});
+ send(g,{type:'remove_peer',id:h.c.id,manual:true});assert.equal(h.c.room,code);
+ send(other,{type:'remove_peer',id:g.c.id,manual:true});assert.equal(g.c.room,code);
+ send(h,{type:'remove_peer',id:h.c.id,manual:true});assert.equal(h.c.room,code);
+ send(h,{type:'remove_peer',id:g.c.id,manual:true});assert.equal(g.c.room,'');assert.equal(r.rooms.get(code).members.size,1);
+ assert.equal(g.messages.findLast(m=>m.type==='room_closed').reason,'The host removed you from the room.');
+ assert.equal(h.messages.at(-1).type,'peer_left');
+ const before=h.messages.length;send(g,{type:'signal',to:h.c.id,signal:{kind:'ice'}});assert.equal(h.messages.length,before);
+ r.disconnect(g.c);send(outsider,{type:'resume',token:g.c.token});assert.equal(outsider.messages.at(-1).type,'error');
+ send(outsider,{type:'join',code,version:26});assert.equal(outsider.messages.at(-1).type,'joined');
+});

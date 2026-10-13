@@ -1,0 +1,1080 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/tree.png" id="tree"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_pillar.png" id="oath_pillar"]
+
+[ext_resource type="Texture2D" path="res://assets/marsh_reeds.png" id="marsh_reeds"]
+
+[ext_resource type="Texture2D" path="res://assets/lantern_tree.png" id="lantern_tree"]
+
+[ext_resource type="Texture2D" path="res://assets/briar_arch.png" id="briar_arch"]
+
+[ext_resource type="Texture2D" path="res://assets/kiln_forge.png" id="kiln_forge"]
+
+[ext_resource type="Texture2D" path="res://assets/mirror_shard_env.png" id="mirror_shard_env"]
+
+[ext_resource type="Texture2D" path="res://assets/storm_coil.png" id="storm_coil"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_ruined_arch.png" id="ruin0"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_memorial.png" id="ruin1"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_rubble.png" id="ruin2"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_banner.png" id="ruin3"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_roots.png" id="ruin4"]
+
+[ext_resource type="Texture2D" path="res://assets/oath_crater.png" id="ruin5"]
+
+[node name="Shattered_Oath" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+
+position = Vector2(11130,2730)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+
+position = Vector2(10976,2730)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+
+position = Vector2(11130,2926)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+
+position = Vector2(11340,6160)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Ground0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(420,420,3220,420,3220,3220,420,3220)
+
+metadata/tile = "briar_floor"
+
+[node name="Ground1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(4340,420,7140,420,7140,3220,4340,3220)
+
+metadata/tile = "cinder_floor"
+
+[node name="Ground2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(420,4340,3220,4340,3220,7140,420,7140)
+
+metadata/tile = "mirror_floor"
+
+[node name="Ground3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(4340,4340,7140,4340,7140,7140,4340,7140)
+
+metadata/tile = "storm_floor"
+
+[node name="Ground4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(9520,1540,12880,1540,12880,4060,9520,4060)
+
+metadata/tile = "oath_stone"
+
+[node name="Ground5" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(9520,4760,12880,4760,12880,7560,9520,7560)
+
+metadata/tile = "oath_stone"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Prop0" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(588,588)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop1" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1092,728)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop2" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2450,728)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop3" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3038,588)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop4" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(588,3052)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop5" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1050,2898)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop6" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2450,2926)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop7" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3038,3052)
+
+texture = ExtResource("briar_arch")
+
+metadata/kind = "briar_arch"
+
+metadata/radius = 38.0
+
+[node name="Prop8" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4508,588)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop9" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5012,728)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop10" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6370,728)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop11" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6958,588)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop12" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4508,3052)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop13" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4970,2898)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop14" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6370,2926)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop15" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6958,3052)
+
+texture = ExtResource("kiln_forge")
+
+metadata/kind = "kiln_forge"
+
+metadata/radius = 38.0
+
+[node name="Prop16" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(588,4508)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop17" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1092,4648)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop18" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2450,4648)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop19" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3038,4508)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop20" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(588,6972)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop21" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1050,6818)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop22" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2450,6846)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop23" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3038,6972)
+
+texture = ExtResource("mirror_shard_env")
+
+metadata/kind = "mirror_shard_env"
+
+metadata/radius = 38.0
+
+[node name="Prop24" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4508,4508)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop25" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5012,4648)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop26" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6370,4648)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop27" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6958,4508)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop28" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4508,6972)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop29" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4970,6818)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop30" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6370,6846)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Prop31" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6958,6972)
+
+texture = ExtResource("storm_coil")
+
+metadata/kind = "storm_coil"
+
+metadata/radius = 38.0
+
+[node name="Decorations" type="Node2D" parent="."]
+
+
+; V31 RUINS
+
+[node name="RuinRoad0_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11175.235452790754,2651.613752412713,11052.035452790755,2562.013752412713,10946.164547209246,2707.5862475872873,11069.364547209245,2797.186247587287)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad0_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11021.235452790754,2539.613752412713,10898.035452790755,2450.013752412713,10792.164547209246,2595.5862475872873,10915.364547209245,2685.186247587287)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad0_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10867.235452790754,2427.613752412713,10744.035452790755,2338.013752412713,10638.164547209246,2483.5862475872873,10761.364547209245,2573.186247587287)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad0_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10713.235452790754,2315.613752412713,10590.035452790755,2226.013752412713,10484.164547209246,2371.5862475872873,10607.364547209245,2461.186247587287)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad0_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10559.235452790754,2203.613752412713,10436.035452790755,2114.013752412713,10330.164547209246,2259.5862475872873,10453.364547209245,2349.186247587287)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad1_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11190.635452790755,2797.186247587287,11313.835452790754,2707.5862475872873,11207.964547209245,2562.013752412713,11084.764547209246,2651.613752412713)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad1_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11344.635452790755,2685.186247587287,11467.835452790754,2595.5862475872873,11361.964547209245,2450.013752412713,11238.764547209246,2539.613752412713)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad1_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11498.635452790755,2573.186247587287,11621.835452790754,2483.5862475872873,11515.964547209245,2338.013752412713,11392.764547209246,2427.613752412713)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad1_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11652.635452790755,2461.186247587287,11775.835452790754,2371.5862475872873,11669.964547209245,2226.013752412713,11546.764547209246,2315.613752412713)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad1_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11806.635452790755,2349.186247587287,11929.835452790754,2259.5862475872873,11823.964547209245,2114.013752412713,11700.764547209246,2203.613752412713)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad2_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11130.448217143827,2639.6696114179067,11007.248217143828,2628.4696114179064,10990.951782856173,2807.7303885820934,11114.151782856172,2818.9303885820937)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad2_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10976.448217143827,2625.6696114179067,10853.248217143828,2614.4696114179064,10836.951782856173,2793.7303885820934,10960.151782856172,2804.9303885820937)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad2_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10822.448217143827,2611.6696114179067,10699.248217143828,2600.4696114179064,10682.951782856173,2779.7303885820934,10806.151782856172,2790.9303885820937)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad2_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10668.448217143827,2597.6696114179067,10545.248217143828,2586.4696114179064,10528.951782856173,2765.7303885820934,10652.151782856172,2776.9303885820937)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad2_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(10514.448217143827,2583.6696114179067,10391.248217143828,2572.4696114179064,10374.951782856173,2751.7303885820934,10498.151782856172,2762.9303885820937)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad3_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11145.848217143828,2818.9303885820937,11269.048217143827,2807.7303885820934,11252.751782856172,2628.4696114179064,11129.551782856173,2639.6696114179067)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad3_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11299.848217143828,2804.9303885820937,11423.048217143827,2793.7303885820934,11406.751782856172,2614.4696114179064,11283.551782856173,2625.6696114179067)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad3_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11453.848217143828,2790.9303885820937,11577.048217143827,2779.7303885820934,11560.751782856172,2600.4696114179064,11437.551782856173,2611.6696114179067)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad3_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11607.848217143828,2776.9303885820937,11731.048217143827,2765.7303885820934,11714.751782856172,2586.4696114179064,11591.551782856173,2597.6696114179067)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad3_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11761.848217143828,2762.9303885820937,11885.048217143827,2751.7303885820934,11868.751782856172,2572.4696114179064,11745.551782856173,2583.6696114179067)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad4_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11040.0,2737.28,11040.0,2853.76,11220.0,2853.76,11220.0,2737.28)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad4_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11040.0,2882.88,11040.0,2999.36,11220.0,2999.36,11220.0,2882.88)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad4_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11040.0,3028.48,11040.0,3144.96,11220.0,3144.96,11220.0,3028.48)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad4_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11040.0,3174.08,11040.0,3290.56,11220.0,3290.56,11220.0,3174.08)
+
+metadata/tile = "oath_broken_road"
+
+[node name="RuinRoad4_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(11040.0,3319.68,11040.0,3436.16,11220.0,3436.16,11220.0,3319.68)
+
+metadata/tile = "oath_broken_road"
+
+[node name="NexusRuin0" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9750,3653)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin1" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10160,3339)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin2" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10276,1907)
+
+texture = ExtResource("ruin2")
+
+[node name="NexusRuin5" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12614,2301)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin6" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10303,1865)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin7" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12412,1978)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin9" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11894,3563)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin10" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11854,3419)
+
+texture = ExtResource("ruin4")
+
+[node name="NexusRuin12" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10183,1813)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin13" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11350,3128)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin18" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11405,1975)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin19" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9911,2466)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin21" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10535,2334)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin23" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10052,3526)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin25" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10550,3501)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin26" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12689,3235)
+
+texture = ExtResource("ruin2")
+
+[node name="NexusRuin27" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10493,3084)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin29" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11674,1899)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin30" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10778,3106)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin31" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10901,3099)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin32" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12042,3352)
+
+texture = ExtResource("ruin2")
+
+[node name="NexusRuin33" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11673,3025)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin35" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10954,2452)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin36" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11993,2938)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin37" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10083,2440)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin38" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10489,1847)
+
+texture = ExtResource("ruin2")
+
+[node name="NexusRuin39" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12163,3264)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin40" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12548,2121)
+
+texture = ExtResource("ruin4")
+
+[node name="NexusRuin41" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12442,3365)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin42" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10866,2981)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin43" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12359,2536)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin44" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10166,3592)
+
+texture = ExtResource("ruin2")
+
+[node name="NexusRuin45" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10529,3097)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin46" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11521,3380)
+
+texture = ExtResource("ruin4")
+
+[node name="NexusRuin47" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9898,2213)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin48" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10796,2134)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin49" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12309,2218)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin52" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12622,2352)
+
+texture = ExtResource("ruin4")
+
+[node name="NexusRuin53" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11648,1967)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin54" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11740,3827)
+
+texture = ExtResource("ruin0")
+
+[node name="NexusRuin55" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10838,3255)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin56" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12209,3738)
+
+texture = ExtResource("ruin2")
+
+[node name="NexusRuin57" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12305,1885)
+
+texture = ExtResource("ruin3")
+
+[node name="NexusRuin58" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10158,3718)
+
+texture = ExtResource("ruin4")
+
+[node name="NexusRuin59" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10264,3768)
+
+texture = ExtResource("ruin5")
+
+[node name="NexusRuin61" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11706,3654)
+
+texture = ExtResource("ruin1")
+
+[node name="NexusRuin63" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9745,2126)
+
+texture = ExtResource("ruin3")
+
+[node name="SolidNexusRubble0" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(9820,1830)
+
+texture = ExtResource("ruin2")
+
+metadata/kind = "rock"
+
+metadata/radius = 36.0
+
+[node name="SolidNexusRubble1" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(12520,1830)
+
+texture = ExtResource("ruin2")
+
+metadata/kind = "rock"
+
+metadata/radius = 36.0
+
+[node name="SolidNexusRubble2" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(9820,3770)
+
+texture = ExtResource("ruin2")
+
+metadata/kind = "rock"
+
+metadata/radius = 36.0
+
+[node name="SolidNexusRubble3" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(12520,3770)
+
+texture = ExtResource("ruin2")
+
+metadata/kind = "rock"
+
+metadata/radius = 36.0
+
+[node name="ArenaFrieze0" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9760,4910)
+
+texture = ExtResource("ruin0")
+
+[node name="ArenaFriezeSouth0" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9760,7360)
+
+texture = ExtResource("ruin1")
+
+[node name="ArenaFrieze1" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9950,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth1" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(9950,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze2" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10140,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth2" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10140,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze3" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10330,4910)
+
+texture = ExtResource("ruin3")
+
+[node name="ArenaFriezeSouth3" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10330,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze4" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10520,4910)
+
+texture = ExtResource("ruin0")
+
+[node name="ArenaFriezeSouth4" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10520,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze5" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10710,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth5" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10710,7360)
+
+texture = ExtResource("ruin1")
+
+[node name="ArenaFrieze6" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10900,4910)
+
+texture = ExtResource("ruin3")
+
+[node name="ArenaFriezeSouth6" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(10900,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze7" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11090,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth7" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11090,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze8" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11280,4910)
+
+texture = ExtResource("ruin0")
+
+[node name="ArenaFriezeSouth8" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11280,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze9" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11470,4910)
+
+texture = ExtResource("ruin3")
+
+[node name="ArenaFriezeSouth9" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11470,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze10" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11660,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth10" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11660,7360)
+
+texture = ExtResource("ruin1")
+
+[node name="ArenaFrieze11" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11850,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth11" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(11850,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze12" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12040,4910)
+
+texture = ExtResource("ruin0")
+
+[node name="ArenaFriezeSouth12" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12040,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze13" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12230,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth13" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12230,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze14" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12420,4910)
+
+texture = ExtResource("ruin2")
+
+[node name="ArenaFriezeSouth14" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12420,7360)
+
+texture = ExtResource("ruin4")
+
+[node name="ArenaFrieze15" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12610,4910)
+
+texture = ExtResource("ruin3")
+
+[node name="ArenaFriezeSouth15" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(12610,7360)
+
+texture = ExtResource("ruin1")

@@ -1,0 +1,12 @@
+{
+  "id": "chrysalis_knight",
+  "name": "Chrysalis Knight",
+  "sprite": "chrysalis_knight",
+  "health": 185,
+  "speed": 68,
+  "damage": 22,
+  "behaviour": "custom",
+  "custom_attack": "v43_chrysalis_knight",
+  "aggro_range": 720,
+  "expansion_only": true
+}

@@ -1,0 +1,40 @@
+extends SceneTree
+const S=preload("res://scripts/learning_store.gd")
+const A=preload("res://scripts/education_access.gd")
+const I=preload("res://scripts/education_ipo.gd")
+const Q=preload("res://scripts/learning_auto.gd")
+const T=preload("res://scripts/teacher_store.gd")
+var failures=0
+func check(ok:bool,t:String)->void:
+ print("PASS • " if ok else "FAIL • ",t)
+ if not ok:failures+=1
+func _initialize()->void:call_deferred("run")
+func run()->void:
+ check(not A.student() and not A.teacher(),"new profiles hide curriculum")
+ check(A.unlock("student") and A.student(),"student unlock persisted")
+ var d=S.load_data();d.student="Class alias";check(d.learner_id.length()==32,"stable learner identifier")
+ check(S.note(d,"CSE1110","plan","Input hits and damage. Multiply to get total. Output total.").is_empty(),"active student journals")
+ A.toggle("student",false);check(not A.student() and A.state().student,"toggle hides but retains access")
+ check(not S.note(d,"CSE1110","plan","Should not save").is_empty(),"inactive student cannot record")
+ A.toggle("student",true);check(A.unlock("teacher") and A.teacher(),"teacher access independent")
+ check(S.catalog().COM1145.outcomes.size()==7 and S.catalog().CSE1110.outcomes.size()==5,"supplied main outcomes included")
+ check(S.catalog()["DRAFT-CS1"].archived,"draft compatibility retained but archived")
+ var source="input damage\ninput hits\nlet total = damage * hits\noutput total"
+ var r=I.execute(source,{"damage":12,"hits":3});check(r.error.is_empty() and r.output==[36],"sequential IPO correct")
+ check(not I.execute(source,{"hits":3}).error.is_empty(),"missing input diagnosed")
+ check(not I.execute("output OS.execute(1)",{}).error.is_empty(),"external code rejected")
+ check(not I.execute("output sqrt(4)",{}).error.is_empty(),"function calls rejected")
+ check(not I.execute("output [1,2]",{}).error.is_empty(),"unsupported syntax rejected")
+ check(I.execute('let message = "Hello" + " class"\noutput message',{}).output==["Hello class"],"text variables and concatenation")
+ var program={"format":I.FORMAT,"version":1,"name":"Calculator","code":source,"cases":[{"inputs":{"damage":12,"hits":3},"expected":[36],"error":false},{"inputs":{"hits":1},"expected":[],"error":true}]}
+ check(S.attach(d,"CSE1110","program",program,"Calculator","Student source").is_empty(),"program snapshot validates")
+ var q={"module":"CSE1110","answers":[1,2,0,0]};check(Q.quiz_score(q)==4 and not Q.valid_quiz({"module":"CSE1110","answers":[.5,2,0,0]}),"concept answers recomputed and bounded")
+ check(S.attach(d,"CSE1110","quiz",q,"Concepts","Quiz").is_empty(),"concept check evidence")
+ var checks=Q.checks(d,S.work(d,"CSE1110"));check(checks.size()==2 and checks[0].passed==2 and checks[1].passed==4,"automatic check reexecutes predictions")
+ check(S.submit(d,"CSE1110").is_empty(),"frozen student submission")
+ var code="EDABCDEF";check(T.ingest(code,"Class",d.learner_id,d).is_empty(),"teacher saves received portfolio")
+ var received=d.duplicate(true);received.submissions[0].marks={"1":{"rating":"Meets","feedback":"IPO is clearly explained","score":90}};received.submissions[0].teacher="Teacher";received.submissions[0].reviewed=S.stamp()
+ check(T.ingest(code,"Class",d.learner_id,received).is_empty(),"teacher marking saves")
+ check(T.ingest(code,"Class",d.learner_id,d).is_empty() and T.state().students[code+"-"+d.learner_id].portfolio.submissions[0].marks.size()==1,"new upload preserves matching grades")
+ var wire=preload("res://scripts/education_wire.gd").text({"text":"Élan 日本"});check(JSON.parse_string(wire).text=="Élan 日本" and wire.length()==wire.to_utf8_buffer().size(),"Unicode safe classroom transport")
+ quit(failures)

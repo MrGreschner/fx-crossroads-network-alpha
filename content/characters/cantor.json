@@ -1,0 +1,97 @@
+{
+  "id": "cantor",
+  "name": "Spark Keeper",
+  "sprite": "cantor",
+  "max_health": 105,
+  "speed": 250,
+  "run_cost": 0,
+  "lore": "One of Confluence Foundry\u2019s twin otter keepers, wearing the same copper-trimmed engineer uniform as Tide Keeper. A human conductor who once powered the Foundry with Tide Keeper. Lightning marks meet friendly water marks to discharge; shots, fields and specials all participate. An enemy Spark Keeper cannot trigger your marks.",
+  "primary": {
+    "name": "Copper Note",
+    "style": "volt_note",
+    "damage": 25,
+    "cooldown": 0.75,
+    "range": 460,
+    "description": "Fire a lightning note that marks the first foe for 3s. Hitting a friendly water mark triggers discharge.",
+    "color": "#8ddedc"
+  },
+  "secondary": {
+    "name": "Relay Circle",
+    "style": "relay_field",
+    "damage": 9,
+    "cooldown": 8,
+    "range": 380,
+    "description": "Aim a 95-radius electrical field. Pulses once per second for 4s, marking foes. Overlap a friendly water field for extra discharge.",
+    "color": "#8ddedc",
+    "radius": 95,
+    "duration": 4
+  },
+  "special": {
+    "name": "Thunder Score",
+    "style": "thunder_score",
+    "damage": 24,
+    "cooldown": 20,
+    "range": 430,
+    "description": "After a 1.35s warning, strike repeated lightning chords from your nearby relay fields to the aim point. Without relays, three notes surround the target instead. Four seconds total; each chord pulse hits a foe only once for 24. Water marks discharge on contact.",
+    "color": "#8ddedc"
+  },
+  "passive": "Conductor\u2019s Step: Standing in your lightning field grants 20% movement speed for 1.2s, refreshed while inside.",
+  "passive_effect": "conductors_step",
+  "mastery": {
+    "title": "Voice of the Restored Foundry",
+    "technique": {
+      "name": "Long Refrain",
+      "ability": "secondary",
+      "description": "Relay lasts 6s instead of 4s, but pulses deal 6 instead of 9 damage. Earned by clearing Confluence Foundry in co-op with Tide Keeper and Spark Keeper.",
+      "set": {
+        "duration": 6,
+        "damage": 6
+      }
+    },
+    "final_technique": {
+      "name": "Double Overture",
+      "ability": "primary",
+      "description": "Two successive notes for 20 and 9 damage, but a slower 1s cadence. Both stop on impact.",
+      "attack": {
+        "name": "Double Overture",
+        "style": "volt_lance",
+        "damage": 20,
+        "cooldown": 1,
+        "range": 470,
+        "description": "Two notes for 20 and 9 damage, each applying lightning marks.",
+        "color": "#8ddedc"
+      }
+    },
+    "technique_requirements": {
+      "duet_realm": "confluence",
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

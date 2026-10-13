@@ -1,0 +1,12 @@
+{
+  "id": "gravity_husk",
+  "name": "Gravity Husk",
+  "sprite": "gravity_husk",
+  "health": 190,
+  "speed": 82,
+  "damage": 21,
+  "behaviour": "custom",
+  "custom_attack": "v43_gravity_husk",
+  "aggro_range": 720,
+  "expansion_only": true
+}

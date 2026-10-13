@@ -1,0 +1,78 @@
+extends SceneTree
+var failures:=0
+func check(ok:bool,label:String)->void:
+ if not ok:failures+=1;print("FAIL: ",label)
+func _initialize()->void:call_deferred("run")
+func foe(uid:int,p:Vector2,boss:bool=false)->Dictionary:return {"uid":uid,"pos":p,"hp":1000.0,"max_hp":1000.0,"boss":boss,"type":"bramble","attack_timer":99.0}
+func run()->void:
+ var game=load("res://scenes/main.tscn").instantiate();root.add_child(game);await process_frame;game.set_process(false);game.legacy.set_process(false);game.legacy.data=game.legacy.defaults()
+ game.start_run(false,"practice");game.adventure.immersive.active=false;game.obstacles.clear();game.scenery_tiles.clear();game.character_id="chronicle";game.selected_character="chronicle";game.hero=game.characters.chronicle;game.level=10;game.health=50;game.position_in_world=Vector2(1000,1000)
+ var combat=game.adventure.combat;var keeper=combat.chronicle
+ game.enemies.assign([foe(11,Vector2(1100,1000))]);var enemy:Dictionary=game.enemies[0]
+ check(combat.cast("solo",game.hero.primary,Vector2.RIGHT,19),"new primary dispatches")
+ for n in 10:combat.step_projectiles(.02)
+ check(enemy.hp==981 and keeper.marks.solo.size()==1,"moving needle hits and records a mark")
+ enemy.pos=Vector2(1200,1000);keeper.mark("e:11","solo")
+ check(combat.vec(keeper.marks.solo[0].pos)==Vector2(1100,1000),"refresh preserves original position")
+ check(keeper.marks.solo[0].time==6,"passive adds setup time")
+ combat.cast("solo",game.hero.secondary,Vector2.RIGHT,24)
+ check(enemy.pos==Vector2(1100,1000) and enemy.hp==957 and combat.effect_time("e:11","stun")==.5,"rewind moves and damages with stun")
+ check(keeper.marks.is_empty(),"rewind consumes marks")
+ enemy.pos=Vector2(1100,1000);keeper.mark("e:11","solo");enemy.pos=Vector2(1300,1000);game.obstacles.assign([{"pos":Vector2(1200,1000),"radius":45,"kind":"rock"}]);game.position_in_world=Vector2(1350,1000)
+ combat.cast("solo",game.hero.secondary,Vector2.LEFT,24)
+ check(enemy.pos.x>1240,"rewind cannot cross a wall")
+ game.obstacles.clear();game.position_in_world=Vector2(1000,1000);enemy.boss=true;keeper.mark("e:11","solo");enemy.pos=Vector2(1400,1000);combat.cast("solo",game.hero.secondary,Vector2.RIGHT,24)
+ check(enemy.pos==Vector2(1400,1000),"boss cannot be displaced")
+ enemy.boss=false;enemy.pos=Vector2(1100,1000);keeper.mark("e:11","solo");enemy.pos=Vector2(1200,1000)
+ var support:Dictionary=game.hero.secondary.duplicate(true);support.damage=18;support.rewind_heal=2;combat.cast("solo",support,Vector2.RIGHT,18)
+ check(game.health==52,"support alternate restores only intended heal")
+ keeper.reset();enemy.pos=Vector2(1250,1000);enemy.hp=1000
+ combat.cast("solo",game.hero.special,Vector2.RIGHT,40)
+ check(keeper.fields.size()==1,"time field placed")
+ check(not keeper.catch_shot(Vector2(1150,1000),Vector2(1250,1000),"solo"),"friendly shots not captured")
+ for n in 6:check(keeper.catch_shot(Vector2(1150,1000),Vector2(1250,1000),"enemy"),"hostile shot held")
+ check(not keeper.catch_shot(Vector2(1150,1000),Vector2(1250,1000),"enemy"),"six-shot cap")
+ keeper.step(.5);check(combat.effect_time("e:11","slow")>0,"field slows enemy")
+ var packet:Dictionary=JSON.parse_string(JSON.stringify(combat.snapshot()));combat.receive(packet)
+ check(keeper.fields[0].held.size()==6,"fields and held shots survive network roundtrip")
+ keeper.step(1.5);check(enemy.hp==936 and keeper.fields.is_empty(),"capped stasis burst and expiry")
+ keeper.reset();combat.cast("solo",game.hero.special,Vector2.RIGHT,40)
+ check(not combat.v56.catch_shot(Vector2(1150,1000),Vector2(1250,1000),"enemy",20,"#fff",false),"lobbed bombs bypass stasis")
+ # School return is position-based with hostile return patrol still alive.
+ game.start_run(false,"elementary");var school=game.adventure.school;school.initialize();school.stage=2;school.completed.assign(["school","recess"]);school.start_stage();game.position_in_world=Vector2(3300,2300)
+ school.advance_progress();check(school.stage==2,"return stage waits until reaching street")
+ check(school.remaining("return")>0,"return school patrol exists")
+ game.position_in_world=Vector2(3900,5300);school.advance_progress();school.advance_progress()
+ check(school.stage==3 and school.spawned.has("boss:bus") and school.remaining("return")>0,"bus spawns without clearing return enemies")
+ check(school.guidance(Vector2(3300,2300))==Vector2(3250,5270),"objective points to bus instead of optional patrol")
+ game.position_in_world=Vector2(3300,620)
+ check(is_equal_approx(combat.speed_factor("p:solo"),.8),"playground sand slows player 20 percent")
+ game.position_in_world=Vector2(3250,5200)
+ check(is_equal_approx(combat.speed_factor("p:solo"),1),"street has normal movement speed")
+ var bus:Dictionary={}
+ for e in game.enemies:
+  if str(e.type)=="yellow_bus":bus=e;break
+ school.hazards.clear();game.invulnerable_time=0;game.health=100;game.position_in_world=bus.pos+Vector2(180,0)
+ school.telegraph(bus,bus.pos,380,6,0,{"stun_duration":1.5},Vector2.ZERO,1.3,"horn")
+ for n in 6:school.step_hazards(.1)
+ check(game.health==94 and is_equal_approx(combat.effect_time("p:solo","stun"),1.5),"horn reaches player and stuns 1.5 seconds")
+ for n in 10:school.step_hazards(.1)
+ check(game.health==94 and school.hazards.is_empty(),"horn hits once and expires")
+ school.on_defeat(bus);school.advance_progress();check(school.done and school.remaining("return")>0,"school completes despite surviving patrol")
+ check(game.manifest.characters.size()==44,"44 registered heroes")
+ for pose in ["idle","walk1","walk2","attack"]:check(ResourceLoader.exists("res://assets/chronicle_"+pose+".png"),"new hero pose "+pose)
+ var party=load("res://scenes/arcade.tscn").instantiate();root.add_child(party);await process_frame;party.set_process(false);party._set_mode("defense");party._solo();party.hero_ids[party.my_id]="chronicle";party._start_match();party.opponents.clear();party.levels[party.my_id]=10
+ var pc=party.adventure.combat;var origin:Vector2=party.positions[party.my_id]
+ party.adventure.spawn("bramble",origin+Vector2(100,0),1000,false)
+ pc.cast(party.my_id,party.characters.chronicle.primary,Vector2.RIGHT,19)
+ for n in 10:pc.step_projectiles(.02)
+ check(pc.chronicle.marks.has(party.my_id),"co-op host records travelling mark")
+ pc.cast(party.my_id,party.characters.chronicle.special,Vector2.RIGHT,40)
+ var network:Dictionary=JSON.parse_string(JSON.stringify(party._snapshot()))
+ check(network.adventure.combat.chronicle.fields.size()==1 and network.adventure.combat.chronicle.marks.has(party.my_id),"host publishes time field and marks")
+ party.role="guest";pc.receive(network.adventure.combat);var age:float=pc.chronicle.fields[0].time;pc.chronicle.step(5)
+ check(pc.chronicle.fields[0].time==age,"guest does not apply time-field damage or expiry")
+ for voice in party.journey.voices:voice.stop()
+ party.queue_free()
+ for voice in game.journey.voices:voice.stop()
+ game.queue_free();await process_frame;print("V69: ",failures," failures");quit(1 if failures else 0)

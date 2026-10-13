@@ -1,0 +1,226 @@
+{
+  "berry_bun": {
+    "name": "Berry Bun",
+    "cost": 15,
+    "effect": "heal",
+    "amount": 30,
+    "threshold": 0.6,
+    "colour": "#d79bba",
+    "description": "Automatically eaten after damage leaves you alive at 60% health or less. Restores 30 HP. One use; cannot revive a fallen hero."
+  },
+  "hearty_stew": {
+    "name": "Hearty Stew",
+    "cost": 25,
+    "effect": "heal",
+    "amount": 50,
+    "threshold": 0.35,
+    "colour": "#e9b56e",
+    "description": "Automatically eaten after damage leaves you alive at 35% health or less. Restores 50 HP. One use; cannot prevent a lethal hit."
+  },
+  "antidote_pear": {
+    "name": "Antidote Pear",
+    "cost": 18,
+    "effect": "cleanse",
+    "statuses": [
+      "poison"
+    ],
+    "colour": "#a9d082",
+    "description": "Automatically eaten when poison is applied. Removes poison immediately. One use. Does not remove slow, burn or bleed."
+  },
+  "cleansing_tea": {
+    "name": "Cleansing Tea",
+    "cost": 24,
+    "effect": "cleanse",
+    "statuses": [
+      "poison",
+      "burn",
+      "bleed"
+    ],
+    "colour": "#92c8c3",
+    "description": "Automatically drunk when poison, burn or bleed is applied. Removes all three effects currently on you. One use. Does not remove stun or slow."
+  },
+  "sunapple": {
+    "name": "Sunapple",
+    "cost": 12,
+    "effect": "heal",
+    "amount": 20,
+    "threshold": 0.75,
+    "colour": "#dab77a",
+    "shop": true,
+    "description": "Automatically eaten when alive at 75% HP or less; restores 20 HP. One use, cannot prevent a lethal hit."
+  },
+  "river_melon": {
+    "name": "River Melon",
+    "cost": 19,
+    "effect": "heal",
+    "amount": 36,
+    "threshold": 0.5,
+    "colour": "#dab77a",
+    "shop": true,
+    "description": "Automatically eaten when alive at 50% HP or less; restores 36 HP. One use, cannot prevent a lethal hit."
+  },
+  "root_roast": {
+    "name": "Root Roast",
+    "cost": 22,
+    "effect": "heal",
+    "amount": 42,
+    "threshold": 0.4,
+    "colour": "#dab77a",
+    "shop": true,
+    "description": "Automatically eaten when alive at 40% HP or less; restores 42 HP. One use, cannot prevent a lethal hit."
+  },
+  "moonberry_tart": {
+    "name": "Moonberry Tart",
+    "cost": 18,
+    "effect": "heal",
+    "amount": 32,
+    "threshold": 0.55,
+    "colour": "#dab77a",
+    "shop": true,
+    "description": "Automatically eaten when alive at 55% HP or less; restores 32 HP. One use, cannot prevent a lethal hit."
+  },
+  "mint_leaf": {
+    "name": "Mint Leaf",
+    "cost": 14,
+    "effect": "cleanse",
+    "statuses": [
+      "slow"
+    ],
+    "colour": "#a9c99c",
+    "shop": true,
+    "description": "One automatic use when slow is applied; clears these effects. Does not revive you."
+  },
+  "cool_cucumber": {
+    "name": "Cool Cucumber",
+    "cost": 16,
+    "effect": "cleanse",
+    "statuses": [
+      "burn"
+    ],
+    "colour": "#a9c99c",
+    "shop": true,
+    "description": "One automatic use when burn is applied; clears these effects. Does not revive you."
+  },
+  "iron_plum": {
+    "name": "Iron Plum",
+    "cost": 17,
+    "effect": "cleanse",
+    "statuses": [
+      "bleed"
+    ],
+    "colour": "#a9c99c",
+    "shop": true,
+    "description": "One automatic use when bleed is applied; clears these effects. Does not revive you."
+  },
+  "clear_peach": {
+    "name": "Clear Peach",
+    "cost": 26,
+    "effect": "cleanse",
+    "statuses": [
+      "poison",
+      "burn",
+      "bleed",
+      "slow"
+    ],
+    "colour": "#a9c99c",
+    "shop": true,
+    "description": "One automatic use when poison, burn, bleed, slow is applied; clears these effects. Does not revive you."
+  },
+  "golden_apple": {
+    "name": "Golden Apple",
+    "cost": 0,
+    "effect": "heal",
+    "amount": 45,
+    "threshold": 0.6,
+    "colour": "#dab77a",
+    "shop": false,
+    "description": "Automatically eaten when alive at 60% HP or less; restores 45 HP. One use, cannot prevent a lethal hit."
+  },
+  "star_melon": {
+    "name": "Star Melon",
+    "cost": 0,
+    "effect": "heal",
+    "amount": 55,
+    "threshold": 0.35,
+    "colour": "#dab77a",
+    "shop": false,
+    "description": "Automatically eaten when alive at 35% HP or less; restores 55 HP. One use, cannot prevent a lethal hit."
+  },
+  "silver_pear": {
+    "name": "Silver Pear",
+    "cost": 0,
+    "effect": "cleanse",
+    "statuses": [
+      "poison",
+      "burn",
+      "slow"
+    ],
+    "colour": "#a9c99c",
+    "shop": false,
+    "description": "One automatic use when poison, burn, slow is applied; clears these effects. Does not revive you."
+  },
+  "dawn_bloom": {
+    "name": "Dawn Bloom Tea",
+    "cost": 0,
+    "effect": "cleanse",
+    "statuses": [
+      "poison",
+      "burn",
+      "bleed",
+      "slow"
+    ],
+    "colour": "#a9c99c",
+    "shop": false,
+    "description": "One automatic use when poison, burn, bleed, slow is applied; clears these effects. Does not revive you."
+  },
+  "forage_sun_food": {
+    "name": "Sunleaf Harvest",
+    "cost": 0,
+    "shop": false,
+    "effect": "heal",
+    "amount": 18,
+    "threshold": 0.5,
+    "colour": "#a7c3a0",
+    "description": "A gentle healing harvest from a rare gathered seed."
+  },
+  "forage_mint_food": {
+    "name": "River Harvest",
+    "cost": 0,
+    "shop": false,
+    "effect": "heal",
+    "amount": 20,
+    "threshold": 0.5,
+    "colour": "#a7c3a0",
+    "description": "A gentle healing harvest from a rare gathered seed."
+  },
+  "forage_moon_food": {
+    "name": "Mooncap Harvest",
+    "cost": 0,
+    "shop": false,
+    "effect": "heal",
+    "amount": 22,
+    "threshold": 0.5,
+    "colour": "#a7c3a0",
+    "description": "A gentle healing harvest from a rare gathered seed."
+  },
+  "forage_glow_food": {
+    "name": "Glowberry Harvest",
+    "cost": 0,
+    "shop": false,
+    "effect": "heal",
+    "amount": 24,
+    "threshold": 0.5,
+    "colour": "#a7c3a0",
+    "description": "A gentle healing harvest from a rare gathered seed."
+  },
+  "lodge_apple": {
+    "name": "Lodge Apple",
+    "cost": 0,
+    "shop": false,
+    "effect": "heal",
+    "amount": 20,
+    "threshold": 0.6,
+    "colour": "#d5df8c",
+    "description": "A gift from the Gatherers\u2019 apple tree. Automatically restores 20 HP once when alive at 60% health or less. Cannot revive."
+  }
+}

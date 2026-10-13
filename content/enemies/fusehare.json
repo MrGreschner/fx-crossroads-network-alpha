@@ -1,0 +1,12 @@
+{
+  "id": "fusehare",
+  "name": "Fusehare",
+  "sprite": "fusehare",
+  "health": 90,
+  "speed": 105,
+  "damage": 11,
+  "behaviour": "custom",
+  "custom_attack": "mine_dash",
+  "aggro_range": 800,
+  "expansion_only": true
+}

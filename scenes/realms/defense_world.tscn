@@ -1,0 +1,813 @@
+[gd_scene load_steps=1 format=3]
+
+[node name="NorthGateThreeRoads" type="Node2D"]
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Road0_0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5444,7783,5244,6083,4956,6117,5156,7817)
+metadata/tile = "path"
+
+[node name="Road0_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5241,6135,5691,4335,5409,4265,4959,6065)
+metadata/tile = "path"
+
+[node name="Road0_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5685,4248,5035,2548,4765,2652,5415,4352)
+metadata/tile = "path"
+
+[node name="Road0_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5042,2627,5442,527,5158,473,4758,2573)
+metadata/tile = "path"
+
+[node name="Front0_0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(4890,5890,5310,5890,5310,6310,4890,6310)
+metadata/tile = "path"
+
+[node name="Front0_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5340,4090,5760,4090,5760,4510,5340,4510)
+metadata/tile = "path"
+
+[node name="Front0_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(4690,2390,5110,2390,5110,2810,4690,2810)
+metadata/tile = "path"
+
+[node name="Road1_0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5370,7673,4470,7173,4330,7427,5230,7927)
+metadata/tile = "path"
+
+[node name="Road1_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(4354,7162,3154,7562,3246,7838,4446,7438)
+metadata/tile = "path"
+
+[node name="Road1_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(3257,7567,1857,6967,1743,7233,3143,7833)
+metadata/tile = "path"
+
+[node name="Road1_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1739,6969,239,7669,361,7931,1861,7231)
+metadata/tile = "path"
+
+[node name="Front1_0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(4190,7090,4610,7090,4610,7510,4190,7510)
+metadata/tile = "path"
+
+[node name="Front1_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2990,7490,3410,7490,3410,7910,2990,7910)
+metadata/tile = "path"
+
+[node name="Front1_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1590,6890,2010,6890,2010,7310,1590,7310)
+metadata/tile = "path"
+
+[node name="Road2_0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5365,7930,6365,7430,6235,7170,5235,7670)
+metadata/tile = "path"
+
+[node name="Road2_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(6250,7436,7350,7836,7450,7564,6350,7164)
+metadata/tile = "path"
+
+[node name="Road2_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(7451,7836,9051,7236,8949,6964,7349,7564)
+metadata/tile = "path"
+
+[node name="Road2_3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(8931,7228,10231,7928,10369,7672,9069,6972)
+metadata/tile = "path"
+
+[node name="Front2_0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(6090,7090,6510,7090,6510,7510,6090,7510)
+metadata/tile = "path"
+
+[node name="Front2_1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(7190,7490,7610,7490,7610,7910,7190,7910)
+metadata/tile = "path"
+
+[node name="Front2_2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(8790,6890,9210,6890,9210,7310,8790,7310)
+metadata/tile = "path"
+
+[node name="BaseCourtyard" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(4650,7500,5950,7500,6250,8150,6000,8950,4650,8950,4300,8200)
+metadata/tile = "city_cobble"
+
+[node name="WoodlandTrail0" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(3276,7713,3576,6013,3424,5987,3124,7687)
+metadata/tile = "path"
+
+[node name="WoodlandTrail1" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(3495,6077,5095,6177,5105,6023,3505,5923)
+metadata/tile = "path"
+
+[node name="WoodlandTrail2" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5104,6177,7004,6077,6996,5923,5096,6023)
+metadata/tile = "path"
+
+[node name="WoodlandTrail3" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(6925,6018,7325,7718,7475,7682,7075,5982)
+metadata/tile = "path"
+
+[node name="WoodlandTrail4" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(1870,7133,2570,5633,2430,5567,1730,7067)
+metadata/tile = "path"
+
+[node name="WoodlandTrail5" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2471,5672,3471,6072,3529,5928,2529,5528)
+metadata/tile = "path"
+
+[node name="WoodlandTrail6" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(7017,6076,8817,5676,8783,5524,6983,5924)
+metadata/tile = "path"
+
+[node name="WoodlandTrail7" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(8723,5610,8923,7110,9077,7090,8877,5590)
+metadata/tile = "path"
+
+[node name="BellwoodStream" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(900,4100,9600,4100,9600,4430,900,4430)
+metadata/tile = "river_water"
+
+[node name="NorthBridge" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(5200,4030,5790,4030,5790,4520,5200,4520)
+metadata/tile = "river_bridge"
+
+[node name="MillPond" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(2200,5400,2800,5400,2900,5820,2200,5900)
+metadata/tile = "river_water"
+
+[node name="EmberRuins" type="Polygon2D" parent="GroundPaint"]
+polygon = PackedVector2Array(8400,5250,9080,5250,9080,5900,8400,5900)
+metadata/tile = "oath_stone"
+
+[node name="Buildings" type="Node2D" parent="."]
+
+[node name="Gate" type="Marker2D" parent="Buildings"]
+position = Vector2(5300, 7800)
+metadata/sprite = "town_gate"
+
+[node name="Barracks" type="Marker2D" parent="Buildings"]
+position = Vector2(4710, 8200)
+metadata/sprite = "character_hall"
+
+[node name="Forge" type="Marker2D" parent="Buildings"]
+position = Vector2(5900, 8200)
+metadata/sprite = "supply_shop"
+
+[node name="Archery" type="Marker2D" parent="Buildings"]
+position = Vector2(4690, 8720)
+metadata/sprite = "arena_hall"
+
+[node name="Sanctum" type="Marker2D" parent="Buildings"]
+position = Vector2(5900, 8720)
+metadata/sprite = "house"
+
+[node name="Supplies" type="Marker2D" parent="Buildings"]
+position = Vector2(5310, 8790)
+metadata/sprite = "supply_shop"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Grove0" type="Marker2D" parent="Obstacles"]
+position = Vector2(4773, 7115)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove1" type="Marker2D" parent="Obstacles"]
+position = Vector2(5635, 7029)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove2" type="Marker2D" parent="Obstacles"]
+position = Vector2(4802, 6906)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove3" type="Marker2D" parent="Obstacles"]
+position = Vector2(5625, 6807)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove4" type="Marker2D" parent="Obstacles"]
+position = Vector2(4857, 6704)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove5" type="Marker2D" parent="Obstacles"]
+position = Vector2(5484, 6613)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove6" type="Marker2D" parent="Obstacles"]
+position = Vector2(4775, 6494)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove7" type="Marker2D" parent="Obstacles"]
+position = Vector2(5487, 6390)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove8" type="Marker2D" parent="Obstacles"]
+position = Vector2(4826, 5678)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove9" type="Marker2D" parent="Obstacles"]
+position = Vector2(4913, 5502)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove10" type="Marker2D" parent="Obstacles"]
+position = Vector2(5611, 5668)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove11" type="Marker2D" parent="Obstacles"]
+position = Vector2(4973, 5311)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove12" type="Marker2D" parent="Obstacles"]
+position = Vector2(5605, 5487)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove13" type="Marker2D" parent="Obstacles"]
+position = Vector2(4888, 5077)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove14" type="Marker2D" parent="Obstacles"]
+position = Vector2(5728, 5267)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove15" type="Marker2D" parent="Obstacles"]
+position = Vector2(5038, 4867)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove16" type="Marker2D" parent="Obstacles"]
+position = Vector2(5724, 5081)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove17" type="Marker2D" parent="Obstacles"]
+position = Vector2(5016, 4672)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove18" type="Marker2D" parent="Obstacles"]
+position = Vector2(5826, 4890)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+
+
+[node name="Grove20" type="Marker2D" parent="Obstacles"]
+position = Vector2(5828, 4651)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+
+
+
+
+
+
+[node name="Grove24" type="Marker2D" parent="Obstacles"]
+position = Vector2(5800, 3835)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove25" type="Marker2D" parent="Obstacles"]
+position = Vector2(5068, 3946)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove26" type="Marker2D" parent="Obstacles"]
+position = Vector2(5807, 3649)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove27" type="Marker2D" parent="Obstacles"]
+position = Vector2(4925, 3771)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove28" type="Marker2D" parent="Obstacles"]
+position = Vector2(5648, 3474)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove29" type="Marker2D" parent="Obstacles"]
+position = Vector2(4881, 3562)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove30" type="Marker2D" parent="Obstacles"]
+position = Vector2(5528, 3289)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove31" type="Marker2D" parent="Obstacles"]
+position = Vector2(4713, 3348)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove32" type="Marker2D" parent="Obstacles"]
+position = Vector2(5581, 3062)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove33" type="Marker2D" parent="Obstacles"]
+position = Vector2(4691, 3173)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove34" type="Marker2D" parent="Obstacles"]
+position = Vector2(5406, 2856)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove35" type="Marker2D" parent="Obstacles"]
+position = Vector2(4621, 2948)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove36" type="Marker2D" parent="Obstacles"]
+position = Vector2(5306, 2664)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove37" type="Marker2D" parent="Obstacles"]
+position = Vector2(4494, 2429)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove38" type="Marker2D" parent="Obstacles"]
+position = Vector2(5256, 2584)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove39" type="Marker2D" parent="Obstacles"]
+position = Vector2(4580, 2219)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove40" type="Marker2D" parent="Obstacles"]
+position = Vector2(5400, 2355)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove41" type="Marker2D" parent="Obstacles"]
+position = Vector2(4680, 2000)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove42" type="Marker2D" parent="Obstacles"]
+position = Vector2(5459, 2165)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove43" type="Marker2D" parent="Obstacles"]
+position = Vector2(4576, 1816)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove44" type="Marker2D" parent="Obstacles"]
+position = Vector2(5417, 1959)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove45" type="Marker2D" parent="Obstacles"]
+position = Vector2(4752, 1595)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove46" type="Marker2D" parent="Obstacles"]
+position = Vector2(5390, 1739)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove47" type="Marker2D" parent="Obstacles"]
+position = Vector2(4766, 1376)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove48" type="Marker2D" parent="Obstacles"]
+position = Vector2(5526, 1547)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove49" type="Marker2D" parent="Obstacles"]
+position = Vector2(4725, 1170)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove50" type="Marker2D" parent="Obstacles"]
+position = Vector2(5492, 1344)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove51" type="Marker2D" parent="Obstacles"]
+position = Vector2(4779, 988)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove52" type="Marker2D" parent="Obstacles"]
+position = Vector2(5627, 1125)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove53" type="Marker2D" parent="Obstacles"]
+position = Vector2(4799, 777)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove54" type="Marker2D" parent="Obstacles"]
+position = Vector2(5654, 931)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove55" type="Marker2D" parent="Obstacles"]
+position = Vector2(4863, 573)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove56" type="Marker2D" parent="Obstacles"]
+position = Vector2(5722, 727)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove57" type="Marker2D" parent="Obstacles"]
+position = Vector2(4867, 7150)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove58" type="Marker2D" parent="Obstacles"]
+position = Vector2(4201, 6885)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove59" type="Marker2D" parent="Obstacles"]
+position = Vector2(4227, 7731)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove60" type="Marker2D" parent="Obstacles"]
+position = Vector2(3988, 7098)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove61" type="Marker2D" parent="Obstacles"]
+position = Vector2(4010, 7805)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove62" type="Marker2D" parent="Obstacles"]
+position = Vector2(3771, 7022)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove63" type="Marker2D" parent="Obstacles"]
+position = Vector2(3821, 7845)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove64" type="Marker2D" parent="Obstacles"]
+position = Vector2(3568, 7188)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove65" type="Marker2D" parent="Obstacles"]
+position = Vector2(3635, 8052)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove66" type="Marker2D" parent="Obstacles"]
+position = Vector2(3416, 8019)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove67" type="Marker2D" parent="Obstacles"]
+position = Vector2(2971, 8074)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove68" type="Marker2D" parent="Obstacles"]
+position = Vector2(2760, 7937)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove69" type="Marker2D" parent="Obstacles"]
+position = Vector2(2568, 7921)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove70" type="Marker2D" parent="Obstacles"]
+position = Vector2(2875, 7164)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove71" type="Marker2D" parent="Obstacles"]
+position = Vector2(2394, 7738)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove72" type="Marker2D" parent="Obstacles"]
+position = Vector2(2676, 6998)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove73" type="Marker2D" parent="Obstacles"]
+position = Vector2(2160, 7740)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove74" type="Marker2D" parent="Obstacles"]
+position = Vector2(2474, 6987)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove75" type="Marker2D" parent="Obstacles"]
+position = Vector2(1972, 7546)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove76" type="Marker2D" parent="Obstacles"]
+position = Vector2(2281, 6857)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove77" type="Marker2D" parent="Obstacles"]
+position = Vector2(1820, 7459)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove78" type="Marker2D" parent="Obstacles"]
+position = Vector2(1877, 7530)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove79" type="Marker2D" parent="Obstacles"]
+position = Vector2(1530, 6854)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove80" type="Marker2D" parent="Obstacles"]
+position = Vector2(1699, 7575)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove81" type="Marker2D" parent="Obstacles"]
+position = Vector2(1332, 6808)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove82" type="Marker2D" parent="Obstacles"]
+position = Vector2(1499, 7707)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove83" type="Marker2D" parent="Obstacles"]
+position = Vector2(1133, 6998)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove84" type="Marker2D" parent="Obstacles"]
+position = Vector2(1266, 7779)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove85" type="Marker2D" parent="Obstacles"]
+position = Vector2(993, 7126)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove86" type="Marker2D" parent="Obstacles"]
+position = Vector2(1145, 7799)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove87" type="Marker2D" parent="Obstacles"]
+position = Vector2(775, 7126)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove88" type="Marker2D" parent="Obstacles"]
+position = Vector2(955, 7981)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove89" type="Marker2D" parent="Obstacles"]
+position = Vector2(618, 7247)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove90" type="Marker2D" parent="Obstacles"]
+position = Vector2(740, 7968)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove91" type="Marker2D" parent="Obstacles"]
+position = Vector2(362, 7375)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove92" type="Marker2D" parent="Obstacles"]
+position = Vector2(5794, 7148)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove93" type="Marker2D" parent="Obstacles"]
+position = Vector2(5992, 7051)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove94" type="Marker2D" parent="Obstacles"]
+position = Vector2(6509, 6940)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove95" type="Marker2D" parent="Obstacles"]
+position = Vector2(6748, 7012)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove96" type="Marker2D" parent="Obstacles"]
+position = Vector2(6440, 7713)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove97" type="Marker2D" parent="Obstacles"]
+position = Vector2(6929, 7136)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove98" type="Marker2D" parent="Obstacles"]
+position = Vector2(6635, 7773)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove99" type="Marker2D" parent="Obstacles"]
+position = Vector2(6875, 7873)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove100" type="Marker2D" parent="Obstacles"]
+position = Vector2(7072, 7993)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove101" type="Marker2D" parent="Obstacles"]
+position = Vector2(7628, 8017)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove102" type="Marker2D" parent="Obstacles"]
+position = Vector2(7551, 7204)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove103" type="Marker2D" parent="Obstacles"]
+position = Vector2(7848, 7930)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove104" type="Marker2D" parent="Obstacles"]
+position = Vector2(7733, 7135)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove105" type="Marker2D" parent="Obstacles"]
+position = Vector2(8037, 7880)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove106" type="Marker2D" parent="Obstacles"]
+position = Vector2(7958, 7078)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove107" type="Marker2D" parent="Obstacles"]
+position = Vector2(8255, 7835)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove108" type="Marker2D" parent="Obstacles"]
+position = Vector2(8150, 6959)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove109" type="Marker2D" parent="Obstacles"]
+position = Vector2(8433, 7670)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove110" type="Marker2D" parent="Obstacles"]
+position = Vector2(8356, 6880)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove111" type="Marker2D" parent="Obstacles"]
+position = Vector2(8631, 7619)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove112" type="Marker2D" parent="Obstacles"]
+position = Vector2(8549, 6890)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove113" type="Marker2D" parent="Obstacles"]
+position = Vector2(8788, 7590)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove114" type="Marker2D" parent="Obstacles"]
+position = Vector2(9039, 7525)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove115" type="Marker2D" parent="Obstacles"]
+position = Vector2(9279, 6835)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove116" type="Marker2D" parent="Obstacles"]
+position = Vector2(8876, 7542)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove117" type="Marker2D" parent="Obstacles"]
+position = Vector2(9500, 6856)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove118" type="Marker2D" parent="Obstacles"]
+position = Vector2(9086, 7623)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove119" type="Marker2D" parent="Obstacles"]
+position = Vector2(9644, 7062)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove120" type="Marker2D" parent="Obstacles"]
+position = Vector2(9304, 7749)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove121" type="Marker2D" parent="Obstacles"]
+position = Vector2(9812, 7057)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove122" type="Marker2D" parent="Obstacles"]
+position = Vector2(9462, 7769)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove123" type="Marker2D" parent="Obstacles"]
+position = Vector2(10016, 7271)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove124" type="Marker2D" parent="Obstacles"]
+position = Vector2(9659, 7952)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove125" type="Marker2D" parent="Obstacles"]
+position = Vector2(10194, 7253)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove126" type="Marker2D" parent="Obstacles"]
+position = Vector2(9797, 8054)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove127" type="Marker2D" parent="Obstacles"]
+position = Vector2(10364, 7457)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Grove128" type="Marker2D" parent="Obstacles"]
+position = Vector2(10034, 8026)
+metadata/kind = "tree"
+metadata/radius = 30.0
+
+[node name="Fountains" type="Node2D" parent="."]
+
+[node name="PilgrimsSpring" type="Marker2D" parent="Fountains"]
+position = Vector2(3500,6000)
+
+[node name="EastSpring" type="Marker2D" parent="Fountains"]
+position = Vector2(7000,6000)
+
+[node name="GatewardSpring" type="Marker2D" parent="Fountains"]
+position = Vector2(5300,8400)

@@ -1,0 +1,25 @@
+{
+  "id": "town",
+  "name": "Crossroads Town",
+  "size": [
+    3100,
+    2400
+  ],
+  "background": "#243c39",
+  "accent": "#405f53",
+  "spawn": [
+    900,
+    800
+  ],
+  "gate": {
+    "position": [
+      900,
+      670
+    ],
+    "destination": "grove",
+    "label": "Choose a realm"
+  },
+  "enemies": [],
+  "scene": "res://scenes/town.tscn",
+  "west_extent": -1400
+}

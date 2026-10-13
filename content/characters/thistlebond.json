@@ -1,0 +1,100 @@
+{
+  "id": "thistlebond",
+  "name": "Thistlebond",
+  "sprite": "thistlebond",
+  "run_cost": 0,
+  "max_health": 105,
+  "speed": 240,
+  "lore": "A hedgehog envoy from the forest beyond town. His knotted ribbons bind promises, not prisoners: even a hostile creature can lend the Crossroads eight precious seconds.",
+  "primary": {
+    "name": "Pact Needle",
+    "style": "pact_needle",
+    "damage": 21,
+    "cooldown": 0.75,
+    "range": 450,
+    "description": "Send a traveling green needle that marks the first enemy it hits for 4 seconds. Marks guide Gathering Knot and your converted ally."
+  },
+  "secondary": {
+    "name": "Gathering Knot",
+    "style": "gathering_knot",
+    "damage": 24,
+    "cooldown": 6,
+    "range": 300,
+    "description": "Aim at ground. A glowing knot winds up for 0.45 seconds, then draws marked enemies within 240 reach toward it, dealing 24 damage and slowing them by 35% for 2 seconds. Bosses take damage and slow but cannot be pulled."
+  },
+  "special": {
+    "name": "Change of Heart",
+    "style": "change_of_heart",
+    "damage": 0,
+    "cooldown": 24,
+    "range": 380,
+    "description": "Turn a visible non-boss enemy into an ally for 8 seconds, or until defeated. It keeps its appearance and melee/ranged role, with up to 90 health and balanced attacks. One ally at a time. Conversion grants normal defeat rewards once and counts toward clearing the room; expiry gives no further XP. Cannot convert players or training targets."
+  },
+  "passive": "Binding Thorns: when at least two living enemies bear your Pact Needle marks, each is poisoned for 2 damage per second for 5 seconds. A lone mark does not apply poison.",
+  "passive_effect": "binding_thorns",
+  "mastery": {
+    "title": "Pact Sovereign",
+    "technique": {
+      "name": "Long Pact",
+      "ability": "primary",
+      "description": "Pact Needle reaches 40% farther, for 20% less damage.",
+      "multiply": {
+        "range": 1.4,
+        "damage": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Bramble Fan",
+      "ability": "secondary",
+      "description": "Sweep a close bramble fan, hitting each enemy once for 30 with mild poison. Replaces Gathering Knot: no gathering, so conversion needs manual setup.",
+      "attack": {
+        "name": "Bramble Fan",
+        "style": "master_fan",
+        "damage": 30,
+        "cooldown": 4,
+        "color": "#c0d59a",
+        "range": 170,
+        "count": 3,
+        "charge": 0.15,
+        "duration": 1.1,
+        "poison_duration": 2,
+        "poison_damage": 1,
+        "description": "Sweep a close bramble fan, hitting each enemy once for 30 with mild poison. Replaces Gathering Knot: no gathering, so conversion needs manual setup.",
+        "visual_texture": "res://assets/mastery_thistlebond_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

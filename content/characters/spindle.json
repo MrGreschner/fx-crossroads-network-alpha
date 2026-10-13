@@ -1,0 +1,106 @@
+{
+  "id": "spindle",
+  "sprite": "spindle",
+  "name": "Spindle",
+  "max_health": 105,
+  "speed": 235,
+  "run_cost": 0,
+  "lore": "A carved spinning top whose restless dance keeps forgotten winds alive.",
+  "primary": {
+    "name": "Spiral Dart",
+    "style": "spiral_shot",
+    "damage": 20,
+    "cooldown": 0.8,
+    "range": 360,
+    "speed": 390,
+    "curve": 1.1,
+    "color": "#b0e9df",
+    "description": "Fire a curving spiral dart for 20 damage. Alternate its curve with each shot."
+  },
+  "secondary": {
+    "name": "Orbit Dance",
+    "style": "orbit_shards",
+    "damage": 10,
+    "cooldown": 6,
+    "duration": 2.4,
+    "radius": 95,
+    "count": 3,
+    "description": "Three shards circle you for 2.4 seconds. Each shard can hit each enemy once for 10 damage."
+  },
+  "special": {
+    "name": "Heart of the Whirl",
+    "style": "vortex_field",
+    "damage": 8,
+    "cooldown": 16,
+    "duration": 3,
+    "radius": 200,
+    "description": "Create a vortex ahead of you for 3 seconds. It pulls and slows enemies, dealing 8 damage every half-second."
+  },
+  "passive": "Balanced Spin: Orbit Dance lasts one extra second.",
+  "passive_effect": "long_orbit",
+  "mastery": {
+    "title": "Spiral Virtuoso",
+    "technique": {
+      "name": "Long Orbit",
+      "ability": "secondary",
+      "description": "Orbit Dance reaches 40% farther, dealing 25% less damage per shard.",
+      "multiply": {
+        "radius": 1.4,
+        "damage": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Unspooled Constellation",
+      "ability": "special",
+      "description": "Three delayed thread stars replace the pulling vortex. 24 damage per star, but no crowd pull or sustained field.",
+      "attack": {
+        "name": "Unspooled Constellation",
+        "style": "master_sigils",
+        "damage": 24,
+        "cooldown": 12,
+        "color": "#dbc0ef",
+        "range": 300,
+        "radius": 70,
+        "count": 3,
+        "spacing": 65,
+        "charge": 0.55,
+        "duration": 1.8,
+        "description": "Three delayed thread stars replace the pulling vortex. 24 damage per star, but no crowd pull or sustained field.",
+        "visual_texture": "res://assets/mastery_spindle_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

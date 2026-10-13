@@ -1,0 +1,12 @@
+{
+  "id": "lunchline_leviathan",
+  "name": "Lunchline Leviathan",
+  "sprite": "lunchline_leviathan",
+  "health": 850,
+  "speed": 65,
+  "damage": 18,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_lunchline_leviathan",
+  "expansion_only": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": "chimevault",
+  "name": "The Chimevault",
+  "size": [
+    9000,
+    2400
+  ],
+  "terrain": "ash",
+  "scene": "res://scenes/realms/chimevault.tscn",
+  "boss_sprite": "silence_regent",
+  "boss_health": 2400,
+  "xp_per_level": 4,
+  "expansion": "chimevault",
+  "difficulty_label": "Expert expedition: three maze floors, slow heavy guardians and the Silence Regent",
+  "description": "A buried cathedral of cracked bells. Find the lift on each winding floor while battling travelling sound waves and explosive resonance mines. Every floor must be cleared before the lift opens.",
+  "difficulty_tier": "expert"
+}

@@ -1,0 +1,107 @@
+{
+  "id": "drum",
+  "sprite": "drum",
+  "run_cost": 0,
+  "name": "Backbeat",
+  "max_health": 120,
+  "speed": 205,
+  "lore": "A forgotten marching drum with a heartbeat loud enough to wake a realm.",
+  "primary": {
+    "name": "Sound Wave",
+    "style": "pulse_wave",
+    "damage": 14,
+    "cooldown": 0.7,
+    "radius": 105,
+    "wave_speed": 260,
+    "description": "An expanding sound ring deals 14 damage once and slows enemies by 25% for 1.6 seconds.",
+    "slow_duration": 1.6,
+    "slow": 0.75
+  },
+  "secondary": {
+    "name": "Triple Tempo",
+    "style": "pulse_burst",
+    "damage": 8,
+    "cooldown": 6.5,
+    "radius": 150,
+    "wave_speed": 400,
+    "clear_projectiles": true,
+    "description": "Three expanding pulses deal 8 damage each and erase hostile projectiles. An enemy hit by all three pulses from this cast burns for 3 damage per second for 3 seconds.",
+    "tempo_burn": true
+  },
+  "special": {
+    "name": "Big Bang",
+    "style": "pulse_wave",
+    "damage": 45,
+    "cooldown": 16,
+    "radius": 280,
+    "wave_speed": 500,
+    "stun": 2,
+    "description": "A huge sound ring deals 45 damage and stuns struck enemies for 2 seconds."
+  },
+  "passive": "Drums of War: you and nearby allies deal 8% more damage within your 200-unit aura.",
+  "passive_effect": "war_drums",
+  "mastery": {
+    "title": "War Rhythm Maestro",
+    "technique": {
+      "name": "Faraway Rhythm",
+      "ability": "primary",
+      "description": "Sound Wave reaches 40% farther, for 25% less damage; its slow remains.",
+      "multiply": {
+        "radius": 1.4,
+        "damage": 0.75
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Thunder Roll",
+      "ability": "special",
+      "description": "Send a charged directional thunder lane for 75 damage and 1s stun. Trades the all-around Big Bang for reach and a narrower target area.",
+      "attack": {
+        "name": "Thunder Roll",
+        "style": "master_lance",
+        "damage": 75,
+        "cooldown": 12,
+        "color": "#e0b4df",
+        "range": 460,
+        "width": 70,
+        "charge": 0.8,
+        "duration": 1.5,
+        "stun_duration": 1,
+        "description": "Send a charged directional thunder lane for 75 damage and 1s stun. Trades the all-around Big Bang for reach and a narrower target area.",
+        "visual_texture": "res://assets/mastery_drum_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

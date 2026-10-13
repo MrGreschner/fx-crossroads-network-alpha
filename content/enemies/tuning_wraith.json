@@ -1,0 +1,11 @@
+{
+  "id": "tuning_wraith",
+  "name": "Tuning Wraith",
+  "sprite": "tuning_wraith",
+  "health": 95,
+  "speed": 92,
+  "damage": 19,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

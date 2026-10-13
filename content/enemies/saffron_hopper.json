@@ -1,0 +1,14 @@
+{
+  "id": "saffron_hopper",
+  "name": "Saffron Hopper",
+  "sprite": "saffron_hopper",
+  "health": 78,
+  "speed": 142,
+  "damage": 9,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true,
+  "shot_cooldown": 2.8,
+  "shot_speed": 260,
+  "description": "A quick meadow grasshopper that telegraphs a short leap before landing."
+}

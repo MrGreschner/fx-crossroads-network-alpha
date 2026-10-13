@@ -1,0 +1,11 @@
+{
+  "id": "summit_golem",
+  "name": "Rimebound Golem",
+  "sprite": "summit_golem",
+  "health": 300,
+  "speed": 64,
+  "damage": 24,
+  "aggro_range": 680,
+  "behaviour": "melee",
+  "quest_slam": true
+}

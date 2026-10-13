@@ -1,0 +1,61 @@
+{
+  "id": "shattered_oath",
+  "name": "The Shattered Oath",
+  "size": [
+    14000,
+    8120
+  ],
+  "terrain": "oath_void",
+  "scene": "res://scenes/realms/shattered_oath.tscn",
+  "boss_health": 1300,
+  "xp_per_level": 4,
+  "expansion": "four_trials",
+  "trials": [
+    {
+      "name": "Briar Reliquary",
+      "origin": [
+        420,
+        420
+      ],
+      "tile": "briar_floor",
+      "enemy": "thorn_sentinel",
+      "boss": "briar_matron",
+      "attack": "roots"
+    },
+    {
+      "name": "Cinder Causeway",
+      "origin": [
+        4340,
+        420
+      ],
+      "tile": "cinder_floor",
+      "enemy": "cinder_salamander",
+      "boss": "kiln_knight",
+      "attack": "charge"
+    },
+    {
+      "name": "Mirrorfrost Gallery",
+      "origin": [
+        420,
+        4340
+      ],
+      "tile": "mirror_floor",
+      "enemy": "mirror_moth",
+      "boss": "mirror_oracle",
+      "attack": "mirrors"
+    },
+    {
+      "name": "Stormglass Spire",
+      "origin": [
+        4340,
+        4340
+      ],
+      "tile": "storm_floor",
+      "enemy": "storm_rook",
+      "boss": "storm_archon",
+      "attack": "beam"
+    }
+  ],
+  "difficulty_label": "Extreme: expanded trials, ranged guardians and a mobile XP-stealing Usurper",
+  "difficulty_tier": "extreme"
+}

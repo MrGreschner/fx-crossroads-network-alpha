@@ -1,0 +1,19 @@
+{
+  "id": "space",
+  "name": "Orbital Breach",
+  "size": [
+    8200,
+    1450
+  ],
+  "background": "#171e3e",
+  "accent": "#5d4ca2",
+  "boss_health": 1130,
+  "xp_per_level": 6,
+  "terrain": "space",
+  "boss_secondary": "seekerstorm",
+  "scene": "res://scenes/realms/space.tscn",
+  "boss_sprite": "signal_core",
+  "difficulty": "hard",
+  "difficulty_label": "Challenging",
+  "difficulty_tier": "challenging"
+}

@@ -1,0 +1,96 @@
+{
+  "id": "teacher",
+  "name": "Crossroads Teacher",
+  "sprite": "teacher",
+  "max_health": 135,
+  "speed": 230,
+  "run_cost": 0,
+  "lore": "A professional ram teacher of St. FX, carrying a notebook, a master key and enough patience for even the most chaotic adventuring class. Hero 60 celebrates the school behind the Crossroads.",
+  "primary": {
+    "name": "Advanced Knowledge",
+    "style": "advanced_knowledge",
+    "damage": 14,
+    "cooldown": 0.8,
+    "range": 360,
+    "description": "An aimed close notebook strike deals 14 damage and releases an 11-damage chalk projectile. A close target can take both; the projectile cannot pierce.",
+    "projectile_damage": 11
+  },
+  "secondary": {
+    "name": "Classroom Management",
+    "style": "classroom_management",
+    "damage": 3,
+    "cooldown": 13,
+    "range": 155,
+    "description": "Hold secondary for up to 2.5s: slowly pull nearby foes and capture projectiles. Caught foes cannot attack and take 3 damage every 0.5s. Move at 45% speed. Release to push foes away for 16 damage and destroy captured shots.",
+    "radius": 155,
+    "duration": 2.5,
+    "release_damage": 16
+  },
+  "special": {
+    "name": "Master Key",
+    "style": "master_key",
+    "damage": 0,
+    "cooldown": 15,
+    "range": 500,
+    "description": "Aim a safe destination up to 500 away. Enter a magic door and exit the other after 0.2s, heal 12 HP and gain 20% damage reduction for 2s. Walls and locked boundaries stop the route."
+  },
+  "passive": "Clear Explanation: Advanced Knowledge gives you and friendly heroes within 110 an 8% protective ward for 1s.",
+  "passive_effect": "clear_explanation",
+  "mastery": {
+    "title": "Master of the Crossroads Classroom",
+    "technique": {
+      "name": "Larger Classroom",
+      "ability": "secondary",
+      "description": "Pull radius 195 instead of 155, but release damage falls from 16 to 10. Hold duration and tick damage stay the same.",
+      "set": {
+        "radius": 195,
+        "release_damage": 10
+      }
+    },
+    "final_technique": {
+      "name": "Return Ticket",
+      "ability": "special",
+      "description": "Teleport through paired doors and automatically return to your starting spot after 3s if it remains safe. Heal 6 instead of 12; keep the protective ward. Useful for a brief sortie.",
+      "attack": {
+        "name": "Return Ticket",
+        "style": "return_ticket",
+        "damage": 0,
+        "cooldown": 17,
+        "range": 500,
+        "description": "Teleport out, then return after 3s. Smaller 6 HP heal; the return is automatic and only happens while alive."
+      }
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

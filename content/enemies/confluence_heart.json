@@ -1,0 +1,11 @@
+{
+  "id": "confluence_heart",
+  "name": "The Divided Heart",
+  "sprite": "confluence_heart",
+  "health": 1200,
+  "speed": 80,
+  "damage": 18,
+  "behaviour": "chase",
+  "aggro_range": 750,
+  "expansion_only": true
+}

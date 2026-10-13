@@ -1,0 +1,12 @@
+{
+  "id": "practice",
+  "name": "Crossroads Training Yard",
+  "size": [
+    1800,
+    1200
+  ],
+  "terrain": "grass",
+  "background": "#243c39",
+  "scene": "res://scenes/realms/practice.tscn",
+  "xp_per_level": 5
+}

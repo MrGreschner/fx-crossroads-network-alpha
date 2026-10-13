@@ -1,0 +1,12 @@
+{
+  "id": "singularity_oracle",
+  "name": "Singularity Oracle",
+  "sprite": "singularity_oracle",
+  "health": 125,
+  "speed": 95,
+  "damage": 14,
+  "behaviour": "custom",
+  "custom_attack": "v43_singularity_oracle",
+  "aggro_range": 720,
+  "expansion_only": true
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mirror_marquis",
+  "name": "Mirror Marquis",
+  "sprite": "mirror_marquis",
+  "health": 1200,
+  "speed": 130,
+  "damage": 19,
+  "behaviour": "chase",
+  "custom_attack": "masquerade",
+  "aggro_range": 600,
+  "shot_cooldown": 3.2,
+  "shot_speed": 260,
+  "expansion_only": true
+}

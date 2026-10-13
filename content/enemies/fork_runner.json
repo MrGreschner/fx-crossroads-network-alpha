@@ -1,0 +1,12 @@
+{
+  "id": "fork_runner",
+  "name": "Fork Runner",
+  "sprite": "fork_runner",
+  "health": 80,
+  "speed": 125,
+  "damage": 15,
+  "behaviour": "melee",
+  "custom_attack": "vector_dash",
+  "aggro_range": 850,
+  "expansion_only": true
+}

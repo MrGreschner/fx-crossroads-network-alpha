@@ -1,0 +1,13 @@
+{
+  "id": "storm_rook",
+  "name": "Storm Rook",
+  "sprite": "storm_rook",
+  "health": 65,
+  "speed": 80,
+  "damage": 8,
+  "behaviour": "ranged",
+  "aggro_range": 420,
+  "shot_speed": 230,
+  "shot_cooldown": 2.6,
+  "expansion_only": true
+}

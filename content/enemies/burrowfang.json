@@ -1,0 +1,12 @@
+{
+  "id": "burrowfang",
+  "name": "Burrowfang",
+  "sprite": "burrowfang",
+  "health": 85,
+  "speed": 115,
+  "damage": 14,
+  "behaviour": "custom",
+  "custom_attack": "dig_bite",
+  "aggro_range": 800,
+  "expansion_only": true
+}

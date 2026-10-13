@@ -1,0 +1,7 @@
+.godot
+.git
+**/node_modules
+exports
+build
+*.zip
+*.log

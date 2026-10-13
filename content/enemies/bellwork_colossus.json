@@ -1,0 +1,12 @@
+{
+  "id": "bellwork_colossus",
+  "name": "Bellwork Colossus",
+  "sprite": "bellwork_colossus",
+  "health": 1100,
+  "speed": 85,
+  "damage": 21,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_bellwork_colossus",
+  "expansion_only": true
+}

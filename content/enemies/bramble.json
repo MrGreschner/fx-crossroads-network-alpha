@@ -1,0 +1,1 @@
+{"id":"bramble","name":"Bramble","sprite":"bramble","health":85,"speed":100,"damage":11,"aggro_range":400,"behaviour":"chase"}

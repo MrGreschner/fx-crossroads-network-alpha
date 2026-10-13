@@ -1,0 +1,99 @@
+{
+  "id": "gopher",
+  "name": "Burrowick",
+  "sprite": "gopher",
+  "max_health": 110,
+  "speed": 205,
+  "run_cost": 0,
+  "lore": "A quarry gopher who dips beneath the ground in a smooth digging rhythm. Attacking stops movement and forces a surface. Four visible tunnel sections guide Cave In and slow foes crossing them.",
+  "primary": {
+    "name": "Quarry Claws",
+    "style": "gopher_claw",
+    "damage": 18,
+    "cooldown": 0.7,
+    "description": "Two quick close swipes, 18 damage each. Each hit has a 40% chance to cause bleeding for 3 seconds (2 damage per second).",
+    "range": 80
+  },
+  "secondary": {
+    "name": "Pop-up Pounce",
+    "style": "gopher_dive",
+    "damage": 35,
+    "cooldown": 7,
+    "description": "Burrow up to 560 along a clear path, then erupt in a 65-radius splash and stun for 1s. Attacks and walking pause during the dive.",
+    "range": 560,
+    "radius": 65,
+    "stun_duration": 1
+  },
+  "special": {
+    "name": "Cave In",
+    "style": "gopher_cave",
+    "damage": 65,
+    "cooldown": 15,
+    "description": "Collapse the four numbered tunnel sections after a 0.65s warning. Each enemy takes damage once. Your visible trails also slow crossing enemies by 20%.",
+    "width": 38,
+    "slow_duration": 2,
+    "slow": 0.65
+  },
+  "passive": "Packed Earth: Pop-up Pounce grants 12% damage reduction for 2s after surfacing.",
+  "passive_effect": "packed_earth",
+  "mastery": {
+    "title": "Cartographer of the Deep",
+    "technique": {
+      "name": "Gentle Excavation",
+      "ability": "secondary",
+      "description": "Pounce has a larger 90-radius impact and 1.5s stun, but deals 25 damage.",
+      "set": {
+        "radius": 90,
+        "damage": 25,
+        "stun_duration": 1.5
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Faultline",
+      "ability": "special",
+      "description": "Replace your trail collapse with one aimed 340-range crack. Less damage, reliable reach and a longer slow.",
+      "attack": {
+        "name": "Faultline",
+        "style": "gopher_fault",
+        "damage": 52,
+        "cooldown": 15,
+        "description": "Warn for 0.65s, then crack a straight 340-range strip for 52 damage and a 3s slow.",
+        "width": 32,
+        "slow_duration": 3,
+        "slow": 0.55
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

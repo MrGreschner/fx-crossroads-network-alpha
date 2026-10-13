@@ -1,0 +1,12 @@
+{
+  "id": "cinderling",
+  "name": "Cinderling",
+  "sprite": "cinderling",
+  "health": 32,
+  "speed": 158,
+  "damage": 8,
+  "behaviour": "custom",
+  "custom_attack": "v43_cinderling",
+  "aggro_range": 720,
+  "expansion_only": true
+}

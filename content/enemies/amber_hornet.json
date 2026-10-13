@@ -1,0 +1,12 @@
+{
+  "id": "amber_hornet",
+  "name": "Amber Hornet",
+  "sprite": "amber_hornet",
+  "health": 85,
+  "speed": 100,
+  "damage": 8,
+  "behaviour": "custom",
+  "custom_attack": "honey_halo",
+  "aggro_range": 650,
+  "expansion_only": true
+}

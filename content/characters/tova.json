@@ -1,0 +1,96 @@
+{
+  "id": "tova",
+  "name": "Tova of Lanternmarsh",
+  "sprite": "tova",
+  "max_health": 135,
+  "speed": 200,
+  "run_cost": 0,
+  "lore": "A lantern newt who guides lost travellers through Lanternmarsh. Her reed tongue and waylights keep nearby companions fighting together.",
+  "primary": {
+    "name": "Reed Tap",
+    "style": "v90_reed",
+    "damage": 21,
+    "cooldown": 0.8,
+    "range": 95,
+    "description": "Aim a narrow tongue strike. The tongue and its round tip hit along the visible path for 21 damage; the most injured nearby ally (or you) heals 2 HP."
+  },
+  "secondary": {
+    "name": "Waylight Steps",
+    "style": "v90_steps",
+    "damage": 0,
+    "cooldown": 7,
+    "range": 120,
+    "description": "Three stepping lanterns follow behind you for 4s. Allies touching them heal 2 HP/sec and remove slow once; enemies touching them are slowed."
+  },
+  "special": {
+    "name": "Marsh Haven",
+    "style": "v90_haven",
+    "damage": 0,
+    "cooldown": 18,
+    "range": 145,
+    "description": "A five-second lantern refuge at your feet: allies heal 4 HP/sec and gain 15% protection; foes inside are slowed."
+  },
+  "passive": "Waylight Lifeblood: you and allied heroes within 160 reach heal 2 HP on a successful attack hit, at most once every 0.75 seconds per hero.",
+  "passive_effect": "waylight_life",
+  "mastery": {
+    "title": "Keeper of Marsh Waylights",
+    "technique": {
+      "name": "Long Reed",
+      "ability": "primary",
+      "attack": {
+        "name": "Long Reed",
+        "style": "v90_reed",
+        "damage": 17,
+        "cooldown": 1,
+        "range": 145,
+        "description": "Longer tongue reach, 17 damage and slower recovery; hit healing remains 2."
+      },
+      "description": "Keep an ally safer from farther away, at lower damage frequency."
+    },
+    "final_technique": {
+      "name": "Guiding Spirits",
+      "ability": "special",
+      "attack": {
+        "name": "Guiding Spirits",
+        "style": "v90_guides",
+        "damage": 0,
+        "cooldown": 20,
+        "range": 120,
+        "description": "Summon two lantern spirits for 8s. Each heals the most wounded nearby ally 2 HP/sec and taps enemies for 5."
+      },
+      "description": "Trade a stationary team refuge for two fragile moving helpers."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

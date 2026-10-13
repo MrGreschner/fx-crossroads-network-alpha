@@ -1,0 +1,869 @@
+{
+  "id": "elementary",
+  "name": "Firstbell Elementary",
+  "spawn": [
+    3900,
+    5500
+  ],
+  "exit": [
+    3900,
+    5500
+  ],
+  "merchant": [
+    4550,
+    5300
+  ],
+  "rooms": [
+    {
+      "id": "street",
+      "name": "FIRSTBELL \u2022 SCHOOL STREET",
+      "rect": [
+        300,
+        4800,
+        6500,
+        950
+      ],
+      "theme": "street"
+    },
+    {
+      "id": "entry",
+      "name": "WELCOME TO FIRSTBELL",
+      "rect": [
+        2950,
+        4350,
+        1300,
+        600
+      ],
+      "theme": "yard"
+    },
+    {
+      "id": "foyer",
+      "name": "CUBBIES & WELCOME HALL",
+      "rect": [
+        2900,
+        3500,
+        1400,
+        1100
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "hall",
+      "name": "THE COLOUR HALL",
+      "rect": [
+        1100,
+        2700,
+        4400,
+        950
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "class_a",
+      "name": "SUNSHINE CLASSROOM",
+      "rect": [
+        1100,
+        1100,
+        1600,
+        1400
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "class_b",
+      "name": "STARLIGHT CLASSROOM",
+      "rect": [
+        3650,
+        1100,
+        1850,
+        1400
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "west_link",
+      "name": "",
+      "rect": [
+        1700,
+        2350,
+        400,
+        500
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "east_link",
+      "name": "",
+      "rect": [
+        4300,
+        2350,
+        400,
+        500
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "back_hall",
+      "name": "",
+      "rect": [
+        2850,
+        950,
+        650,
+        1900
+      ],
+      "theme": "tile"
+    },
+    {
+      "id": "playground",
+      "name": "THE ENCHANTED PLAYGROUND",
+      "rect": [
+        1000,
+        250,
+        4700,
+        700
+      ],
+      "theme": "sand"
+    }
+  ],
+  "doors": [
+    {
+      "id": "front",
+      "pos": [
+        3600,
+        4630
+      ],
+      "size": [
+        1300,
+        50
+      ],
+      "requires": "",
+      "label": "Open door"
+    },
+    {
+      "id": "class_a",
+      "pos": [
+        1900,
+        2500
+      ],
+      "size": [
+        400,
+        45
+      ],
+      "requires": "",
+      "label": "Open door"
+    },
+    {
+      "id": "class_b",
+      "pos": [
+        4500,
+        2500
+      ],
+      "size": [
+        400,
+        45
+      ],
+      "requires": "",
+      "label": "Open door"
+    },
+    {
+      "id": "playground",
+      "pos": [
+        3175,
+        950
+      ],
+      "size": [
+        650,
+        100
+      ],
+      "requires": "school",
+      "label": "Clear both classrooms to unlock the playground"
+    }
+  ],
+  "props": [
+    {
+      "kind": "school_desk",
+      "pos": [
+        1280,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        1500,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        1720,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        1280,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        1500,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        1720,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_board",
+      "pos": [
+        1900.0,
+        1180
+      ],
+      "size": [
+        230,
+        95
+      ],
+      "solid": [
+        210,
+        42
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        3830,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        4050,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        4270,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        4490,
+        1340
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        3830,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        4050,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        4270,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_desk",
+      "pos": [
+        4490,
+        1580
+      ],
+      "size": [
+        125,
+        80
+      ],
+      "solid": [
+        105,
+        52
+      ]
+    },
+    {
+      "kind": "school_board",
+      "pos": [
+        4575.0,
+        1180
+      ],
+      "size": [
+        230,
+        95
+      ],
+      "solid": [
+        210,
+        42
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        1250,
+        2830
+      ],
+      "size": [
+        85,
+        125
+      ],
+      "solid": [
+        65,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        1650,
+        2830
+      ],
+      "size": [
+        85,
+        125
+      ],
+      "solid": [
+        65,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        2050,
+        2830
+      ],
+      "size": [
+        85,
+        125
+      ],
+      "solid": [
+        65,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        2450,
+        2830
+      ],
+      "size": [
+        85,
+        125
+      ],
+      "solid": [
+        65,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        4600,
+        2830
+      ],
+      "size": [
+        85,
+        125
+      ],
+      "solid": [
+        65,
+        48
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        5000,
+        2830
+      ],
+      "size": [
+        85,
+        125
+      ],
+      "solid": [
+        65,
+        48
+      ]
+    },
+    {
+      "kind": "school_playframe",
+      "pos": [
+        1900,
+        550
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "solid": [
+        210,
+        95
+      ]
+    },
+    {
+      "kind": "school_slide",
+      "pos": [
+        4800,
+        620
+      ],
+      "size": [
+        250,
+        200
+      ],
+      "solid": [
+        165,
+        85
+      ]
+    },
+    {
+      "kind": "school_bench",
+      "pos": [
+        4550,
+        5000
+      ],
+      "size": [
+        160,
+        90
+      ],
+      "solid": [
+        130,
+        45
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        2600,
+        2835
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        3100,
+        2835
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        3600,
+        2835
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_locker",
+      "pos": [
+        4100,
+        2835
+      ],
+      "size": [
+        115,
+        145
+      ],
+      "solid": [
+        85,
+        50
+      ]
+    },
+    {
+      "kind": "school_bench",
+      "pos": [
+        1600.0,
+        5400
+      ],
+      "size": [
+        180,
+        95
+      ],
+      "solid": [
+        140,
+        48
+      ]
+    },
+    {
+      "kind": "school_bench",
+      "pos": [
+        4980.0,
+        5400
+      ],
+      "size": [
+        180,
+        95
+      ],
+      "solid": [
+        140,
+        48
+      ]
+    }
+  ],
+  "routes": [],
+  "gears": [],
+  "groups": {
+    "school": [
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          3650,
+          4100
+        ],
+        "hp": 48
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          3350,
+          3700
+        ],
+        "hp": 62
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          2250,
+          3150
+        ],
+        "hp": 42
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          4750,
+          3000
+        ],
+        "hp": 48
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          3175,
+          2350
+        ],
+        "hp": 62
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          2350,
+          1550
+        ],
+        "hp": 42
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          1500,
+          2200
+        ],
+        "hp": 48
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          2400,
+          2100
+        ],
+        "hp": 62
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          1550,
+          1400
+        ],
+        "hp": 42
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          4900,
+          1600
+        ],
+        "hp": 48
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          3950,
+          2200
+        ],
+        "hp": 62
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          4950,
+          2150
+        ],
+        "hp": 42
+      }
+    ],
+    "return": [
+      {
+        "type": "paper_sprite",
+        "pos": [
+          3150,
+          1700
+        ],
+        "hp": 42
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          3250,
+          2400
+        ],
+        "hp": 48
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          2200,
+          3000
+        ],
+        "hp": 62
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          4750,
+          3200
+        ],
+        "hp": 42
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          3800,
+          3900
+        ],
+        "hp": 48
+      },
+      {
+        "type": "backpack_biter",
+        "pos": [
+          3150,
+          4150
+        ],
+        "hp": 62
+      },
+      {
+        "type": "paper_sprite",
+        "pos": [
+          3950,
+          4500
+        ],
+        "hp": 42
+      },
+      {
+        "type": "pencil_scrapper",
+        "pos": [
+          5100,
+          2100
+        ],
+        "hp": 48
+      }
+    ]
+  },
+  "stages": [
+    {
+      "id": "school",
+      "text": "Enter the school. Clear the Colour Hall and both classrooms.",
+      "groups": [
+        "school"
+      ]
+    },
+    {
+      "id": "recess",
+      "text": "Defeat the playground guardian. Sand slows movement by 20%; dodge its attacks.",
+      "boss": "recess_ringleader",
+      "pos": [
+        3300,
+        620
+      ],
+      "trigger": [
+        1000,
+        250,
+        4700,
+        700
+      ]
+    },
+    {
+      "id": "return",
+      "text": "Recess is over! Reach the street to face the Last Bus. You can pass the school enemies without defeating them.",
+      "groups": [
+        "return"
+      ],
+      "reach": [
+        300,
+        4800,
+        6500,
+        950
+      ]
+    },
+    {
+      "id": "bus",
+      "text": "Defeat the Last Bus outside: dodge its charge, passengers and expanding Horn wave (1.5s stun).",
+      "boss": "yellow_bus",
+      "pos": [
+        3250,
+        5270
+      ],
+      "trigger": [
+        300,
+        4800,
+        6500,
+        950
+      ]
+    }
+  ]
+}

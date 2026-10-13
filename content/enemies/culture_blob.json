@@ -1,0 +1,12 @@
+{
+  "id": "culture_blob",
+  "name": "Culture Blob",
+  "sprite": "culture_blob",
+  "health": 45,
+  "speed": 90,
+  "damage": 10,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_culture_blob",
+  "expansion_only": true
+}

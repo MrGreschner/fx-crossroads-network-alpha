@@ -1,0 +1,17 @@
+{
+  "id": "ebonwake",
+  "name": "Ebonwake Citadel",
+  "size": [
+    9000,
+    6600
+  ],
+  "terrain": "astral_void",
+  "scene": "res://scenes/realms/ebonwake.tscn",
+  "boss_enemy": "last_creditor",
+  "boss_sprite": "last_creditor",
+  "boss_health": 2400,
+  "xp_per_level": 3,
+  "difficulty_label": "Expert \u2014 healers, reviving revenants, nests and transforming knights",
+  "description": "Veyra\u2019s abandoned citadel hangs above a black sea. Tight bridges connect the infirmary, rookery, chrysalis forge and final court. Finish revenants while fallen, interrupt transformations, and eliminate healers and nests before confronting the Last Creditor.",
+  "difficulty_tier": "expert"
+}

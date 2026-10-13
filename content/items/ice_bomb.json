@@ -1,0 +1,10 @@
+{
+  "id": "ice_bomb",
+  "name": "Ice Bomb",
+  "cost": 26,
+  "effect": "shockwave",
+  "amount": 38,
+  "description": "Blast nearby enemies.",
+  "duration": 3,
+  "radius": 145
+}

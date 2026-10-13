@@ -1,0 +1,17 @@
+{
+  "id": "neon_crucible",
+  "name": "Neon Crucible",
+  "size": [
+    6400,
+    4800
+  ],
+  "terrain": "neon_plate",
+  "scene": "res://scenes/realms/neon_crucible.tscn",
+  "boss_enemy": "continuum_crown",
+  "boss_sprite": "continuum_crown",
+  "boss_health": 1700,
+  "xp_per_level": 3,
+  "difficulty_label": "Hard \u2014 guided missiles, repairing machines and four uploaded boss bodies",
+  "description": "Bolt Ironcore\u2019s lost factory floats above an aether-lit abyss. Explore a foundry, signal archive, coolant reactor and uplink; discover repair bays, wake hidden turrets and break Continuum\u2019s four increasingly dangerous bodies. Each upload sends the same intelligence to a distant backup chassis.",
+  "difficulty_tier": "hard"
+}

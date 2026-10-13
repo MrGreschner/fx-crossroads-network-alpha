@@ -1,0 +1,9 @@
+{
+  "id": "frost_flask",
+  "name": "Frost Flask",
+  "cost": 50,
+  "effect": "shockwave",
+  "amount": 35,
+  "description": "Deal 35 damage to nearby foes once.",
+  "radius": 150
+}

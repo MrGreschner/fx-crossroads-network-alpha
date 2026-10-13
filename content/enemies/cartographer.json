@@ -1,0 +1,11 @@
+{
+  "id": "cartographer",
+  "name": "Cartographer",
+  "sprite": "cartographer",
+  "health": 780,
+  "speed": 0,
+  "damage": 12,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

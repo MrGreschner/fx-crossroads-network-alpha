@@ -1,0 +1,14 @@
+{
+  "id": "velvet_dancer",
+  "name": "Velvet Dancer",
+  "sprite": "velvet_dancer",
+  "health": 100,
+  "speed": 135,
+  "damage": 10,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_dancer",
+  "description": "A masked acrobat who orbits the player, then lunges across the dance floor.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

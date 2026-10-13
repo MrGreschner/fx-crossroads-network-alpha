@@ -1,0 +1,641 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/star_obelisk.png" id="obelisk"]
+
+[ext_resource type="Texture2D" path="res://assets/astrolabe.png" id="astro"]
+
+[node name="AstralRift" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+
+position = Vector2(450,1800)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+
+position = Vector2(300,1800)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+
+position = Vector2(1000,2000)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+
+position = Vector2(7100,1800)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Floor0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(180,1100,7820,1100,7820,2500,180,2500)
+
+metadata/tile = "astral_floor"
+
+[node name="Floor1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(600,500,1700,500,1700,1000,600,1000)
+
+metadata/tile = "astral_floor"
+
+[node name="Floor2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(3400,500,4600,500,4600,1000,3400,1000)
+
+metadata/tile = "astral_floor"
+
+[node name="Floor3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(6500,500,7700,500,7700,1000,6500,1000)
+
+metadata/tile = "astral_floor"
+
+[node name="Floor4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(1050,900,1250,900,1250,1400,1050,1400)
+
+metadata/tile = "astral_bridge"
+
+[node name="Floor5" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(3900,900,4100,900,4100,1400,3900,1400)
+
+metadata/tile = "astral_bridge"
+
+[node name="Floor6" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(7000,900,7200,900,7200,1400,7000,1400)
+
+metadata/tile = "astral_bridge"
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy0" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1200,1350)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy1" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1600,1350)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy2" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2000,1350)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy3" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2400,1350)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy4" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2800,1350)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy5" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3200,1350)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy6" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3600,1350)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy7" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4000,1350)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy8" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4400,1350)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy9" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4800,1350)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy10" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5200,1350)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy11" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5600,1350)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy12" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6000,1350)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy13" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6400,1350)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy14" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6800,1350)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy15" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1200,1770)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy16" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1600,1770)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy17" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2000,1770)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy18" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2400,1770)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy19" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2800,1770)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy20" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3200,1770)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy21" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3600,1770)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy22" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4000,1770)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy23" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4400,1770)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy24" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4800,1770)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy25" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5200,1770)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy26" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5600,1770)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy27" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6000,1770)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy28" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6400,1770)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy29" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6800,1770)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy30" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1200,2190)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy31" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1600,2190)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy32" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2000,2190)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy33" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2400,2190)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy34" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2800,2190)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy35" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3200,2190)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy36" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3600,2190)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy37" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4000,2190)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy38" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4400,2190)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy39" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4800,2190)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy40" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5200,2190)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy41" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5600,2190)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Enemy42" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6000,2190)
+
+metadata/enemy_id = "rift_weaver"
+
+[node name="Enemy43" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6400,2190)
+
+metadata/enemy_id = "prism_kite"
+
+[node name="Enemy44" type="Marker2D" parent="Enemies"]
+
+position = Vector2(6800,2190)
+
+metadata/enemy_id = "comet_urchin"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Obelisk0" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(500,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk1" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1110,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk2" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1720,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk3" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2330,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk4" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2940,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk5" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3550,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk6" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4160,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk7" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4770,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk8" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5380,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk9" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5990,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk10" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6600,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk11" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(7210,1050)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk12" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(500,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk13" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1110,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk14" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1720,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk15" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2330,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk16" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2940,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk17" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3550,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk18" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4160,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk19" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4770,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk20" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5380,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk21" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5990,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk22" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6600,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Obelisk23" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(7210,2580)
+
+texture = ExtResource("obelisk")
+
+metadata/kind = "star_obelisk"
+
+metadata/radius = 34.0
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="Astrolabe0" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(1100,700)
+
+texture = ExtResource("astro")
+
+scale = Vector2(2.2,2.2)
+
+[node name="Astrolabe1" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(4000,700)
+
+texture = ExtResource("astro")
+
+scale = Vector2(2.2,2.2)
+
+[node name="Astrolabe2" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(7100,700)
+
+texture = ExtResource("astro")
+
+scale = Vector2(2.2,2.2)
+
+[node name="V43Enemy0" type="Marker2D" parent="Enemies"]
+position = Vector2(2200, 1800)
+metadata/enemy_id = "gravity_husk"
+
+[node name="V43Enemy1" type="Marker2D" parent="Enemies"]
+position = Vector2(3850, 1950)
+metadata/enemy_id = "gravity_husk"
+
+[node name="V43Enemy2" type="Marker2D" parent="Enemies"]
+position = Vector2(5600, 1650)
+metadata/enemy_id = "gravity_husk"
+
+[node name="V43Enemy3" type="Marker2D" parent="Enemies"]
+position = Vector2(2800, 1350)
+metadata/enemy_id = "singularity_oracle"
+
+[node name="V43Enemy4" type="Marker2D" parent="Enemies"]
+position = Vector2(4600, 2150)
+metadata/enemy_id = "singularity_oracle"
+
+[node name="V43Enemy5" type="Marker2D" parent="Enemies"]
+position = Vector2(6500, 1800)
+metadata/enemy_id = "singularity_oracle"
+
+[node name="V143_rift_skitter_0" type="Node2D" parent="Enemies"]
+position = Vector2(1650, 1500)
+metadata/enemy_id = "rift_skitter"
+
+[node name="V143_rift_skitter_1" type="Node2D" parent="Enemies"]
+position = Vector2(3900, 1700)
+metadata/enemy_id = "rift_skitter"

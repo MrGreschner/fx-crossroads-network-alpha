@@ -1,0 +1,13 @@
+{
+  "id": "seed_blossom",
+  "name": "Seed Blossom",
+  "sprite": "seed_blossom",
+  "health": 48,
+  "speed": 32,
+  "damage": 6,
+  "behaviour": "ranged",
+  "aggro_range": 380,
+  "shot_speed": 200,
+  "shot_cooldown": 3.4,
+  "expansion_only": true
+}

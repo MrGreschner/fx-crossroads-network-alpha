@@ -1,0 +1,97 @@
+{
+  "id": "merrymask",
+  "name": "Merrymask",
+  "sprite": "merrymask",
+  "max_health": 125,
+  "speed": 215,
+  "run_cost": 0,
+  "lore": "A wooden theatre puppet who snaps crossed strings, calls understudies and closes the curtain on enemies.",
+  "primary": {
+    "name": "String Scissors",
+    "style": "v91_scissors",
+    "damage": 24,
+    "cooldown": 1,
+    "range": 85,
+    "description": "Cross two puppet strings at an aimed spot 85 away. After 0.18s the crossing snaps for 24 damage in a 42-radius area. Walls block it."
+  },
+  "secondary": {
+    "name": "Understudies",
+    "style": "v90_puppets",
+    "damage": 0,
+    "cooldown": 7,
+    "range": 80,
+    "description": "Summon two 30-HP melee puppets for 8s, at most four. Each hits for 5 damage per second."
+  },
+  "special": {
+    "name": "Curtain Call",
+    "style": "v90_curtain",
+    "damage": 30,
+    "cooldown": 18,
+    "range": 155,
+    "description": "A curtain sweeps closed after 0.6s. Deal 30 damage and stun for 1s; nearby puppets gain 20% protection for 3s."
+  },
+  "passive": "Shared Applause: a String Scissors hit restores 2 HP to each nearby puppet (not the hero).",
+  "passive_effect": "shared_applause",
+  "mastery": {
+    "title": "Master of the Tiny Stage",
+    "technique": {
+      "name": "Broad Stitches",
+      "ability": "primary",
+      "attack": {
+        "name": "Broad Stitches",
+        "style": "v91_scissors",
+        "damage": 18,
+        "cooldown": 1.25,
+        "range": 85,
+        "description": "Cross two puppet strings at an aimed spot 85 away. After 0.18s the crossing snaps for 24 damage in a 42-radius area. Walls block it.",
+        "blast_radius": 65
+      },
+      "description": "Cover a wider crossing, for lower damage and slower recovery."
+    },
+    "final_technique": {
+      "name": "Travelling Stage",
+      "ability": "special",
+      "attack": {
+        "name": "Travelling Stage",
+        "style": "v90_stage",
+        "damage": 0,
+        "cooldown": 20,
+        "range": 150,
+        "description": "Summon a 75-HP stage guardian for 8s. It hits for 12 per second; replaces the stun curtain."
+      },
+      "description": "Trade the immediate stun and burst for a temporary melee guardian."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

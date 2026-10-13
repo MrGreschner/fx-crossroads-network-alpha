@@ -1,0 +1,12 @@
+{
+  "id": "iron_barbell",
+  "name": "Iron Barbell",
+  "sprite": "iron_barbell",
+  "health": 1000,
+  "speed": 95,
+  "damage": 25,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_iron_barbell",
+  "expansion_only": true
+}

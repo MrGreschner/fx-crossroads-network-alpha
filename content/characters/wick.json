@@ -1,0 +1,108 @@
+{
+  "name": "Wick-o'-Wisp",
+  "max_health": 105,
+  "speed": 220,
+  "lore": "A jack-o'-lantern from Lanternmarsh's autumn festival. Its brave little candle turns scary evenings into generous celebrations.",
+  "primary": {
+    "name": "Cinder Candy",
+    "style": "wick_fire",
+    "damage": 18,
+    "cooldown": 1.0,
+    "range": 410,
+    "description": "A visible fireball stops at the first enemy or wall: 18 damage, then burn for 1.5 damage/sec for 3 seconds.",
+    "speed": 320,
+    "burn_duration": 3,
+    "burn_damage": 1.5,
+    "color": "#ffac50"
+  },
+  "secondary": {
+    "name": "Scary Face",
+    "style": "wick_face",
+    "damage": 0,
+    "cooldown": 9,
+    "range": 150,
+    "description": "Foes in the forward fan are stunned for 0.85 seconds, then slowed 35% for 3 seconds. Walls block the fright.",
+    "stun_duration": 0.85
+  },
+  "special": {
+    "name": "Trick or Treat",
+    "style": "wick_treats",
+    "damage": 4,
+    "cooldown": 26,
+    "range": 260,
+    "description": "Lob 16 treats over 2 seconds. Each lands for 4 damage, bounces for 4 more, then opens a three-second slow, poison, burn, shock or allied healing patch.",
+    "count": 16
+  },
+  "passive": "Candle Light: three rotating overlapping circles boost allies' existing critical bonus damage by 50% and healing received by 15%. Grants no critical chance; multiple lanterns do not stack.",
+  "passive_effect": "candle_light",
+  "mastery": {
+    "title": "Keeper of the Last Candle",
+    "technique": {
+      "name": "Lantern Lance",
+      "ability": "primary",
+      "attack": {
+        "name": "Lantern Lance",
+        "style": "wick_fire",
+        "damage": 28,
+        "cooldown": 1.15,
+        "range": 480,
+        "description": "A heavier, longer-reaching ember for 28 damage with shorter, weaker burn. Slower recovery.",
+        "speed": 380,
+        "burn_duration": 2,
+        "burn_damage": 1,
+        "color": "#ffd285"
+      },
+      "description": "Trade frequent burns for one heavier, longer-reaching shot."
+    },
+    "final_technique": {
+      "name": "Generous Goodies",
+      "ability": "special",
+      "attack": {
+        "name": "Generous Goodies",
+        "style": "wick_treats",
+        "damage": 3,
+        "cooldown": 20,
+        "range": 220,
+        "description": "Lob 16 bouncing treats. Only healing and slow patches; landing damage is halved.",
+        "count": 16,
+        "goodies": true
+      },
+      "description": "Trade poison, fire and shock for reliable allied healing and slows."
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  },
+  "id": "wick",
+  "sprite": "wick",
+  "run_cost": 0
+}

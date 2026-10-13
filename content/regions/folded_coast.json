@@ -1,0 +1,16 @@
+{
+  "id": "folded_coast",
+  "name": "The Folded Coast",
+  "size": [
+    6000,
+    3200
+  ],
+  "terrain": "space",
+  "scene": "res://scenes/realms/folded_coast.tscn",
+  "boss_sprite": "cartographer",
+  "boss_health": 780,
+  "xp_per_level": 3,
+  "boss_secondary": "paper",
+  "difficulty_label": "Medium: folding gates, ink pools and paper fans",
+  "difficulty_tier": "medium"
+}

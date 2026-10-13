@@ -1,0 +1,12 @@
+{
+  "id": "continuum_archive",
+  "name": "Continuum: Archive Shell",
+  "sprite": "continuum_archive",
+  "health": 1000,
+  "speed": 125,
+  "damage": 15,
+  "behaviour": "custom",
+  "custom_attack": "archive_logic",
+  "aggro_range": 850,
+  "expansion_only": true
+}

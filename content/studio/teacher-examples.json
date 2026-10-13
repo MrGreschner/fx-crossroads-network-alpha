@@ -1,0 +1,128 @@
+{
+  "notice": "Fictional demonstration work, answers and ratings. Two submitted modules and two unfinished modules. Scores are illustrative, not official CTS grade boundaries or actual student evidence.",
+  "levels": [
+    {
+      "level": 0,
+      "label": "Fail",
+      "student": "Sample \u2022 Needs revision",
+      "score": 35,
+      "answers": {
+        "DES1020": {
+          "brief": "I want a cool character. Everyone will like it. I have not chosen a player need or measurable criteria.",
+          "research": "I looked at a dragon. Red is good. I cannot explain elements or principles yet.",
+          "ideas": "My three ideas are a red hero, a red hero with a hat, and the same hero with more damage. I have not compared their play styles.",
+          "decision": "I picked the first because I liked it. I did not compare it with criteria or plan an audience.",
+          "tools": "I filled squares in the editor. I did not try the attack, and I cannot explain whether the silhouette fits the job.",
+          "evaluation": "It is finished because it looks nice to me. I have no recorded test cases or revision.",
+          "presentation": "The picture is attached. I did not present it to anyone or explain how to play it.",
+          "rights": "Anything found online is free if you change the colour. I have not checked permission. [This is a deliberately incorrect sample answer.]",
+          "routines": "I think my setup is fine. I have no backup or observation record.",
+          "competencies": "I did it alone. I cannot name a problem I solved or show a numerical decision.",
+          "pathway": "I like games. I have not researched an occupation or chosen a next learning goal."
+        },
+        "COM1145": {
+          "styles": "Cel animation, claymation and computer animation are all just moving a camera. [Incorrect: this does not explain how frames create motion.]",
+          "plan": "My plan is to make the hero move. There are no key poses, timings or storyboard.",
+          "frames": "I used the same drawing twice. I have attached it but there is no change of pose.",
+          "timing": "I have not compared timings. I did not ask a viewer whether the motion is clear.",
+          "permissions": "Music online can always be published in a game. [Incorrect sample: permissions were not checked.]",
+          "presentation": "I submitted the image without showing an animation or collecting feedback.",
+          "routines": "I did not save versions. Teacher observation has not happened.",
+          "competencies": "I cannot explain any timing calculations or changes based on feedback.",
+          "pathway": "Maybe animation. I have not identified a skill to learn."
+        },
+        "CSE1110": {
+          "plan": "Input: damage. I want it to output bigger damage, but I have not described processing or ordered pseudocode.",
+          "code": "I typed let total = damage + hits. I have not explained why that should solve repeated-hit damage."
+        },
+        "MAM1010": {
+          "roles": "Managers sell things. I have not compared ownership or explained planning, organizing and monitoring.",
+          "mix": "Lower prices always mean more profit. [Incorrect: I have not considered costs or customer needs.]",
+          "campaigns": "I changed everything at once. This report cannot isolate the cause of a difference."
+        }
+      }
+    },
+    {
+      "level": 1,
+      "label": "Pass",
+      "student": "Sample \u2022 Meets expectations",
+      "score": 70,
+      "answers": {
+        "DES1020": {
+          "brief": "My player is a beginner who loses track of allies. Design a lantern keeper whose support action is readable. Criteria: identify the hero at small size, distinguish healing from attacking, and survive a 30-second training test without leaving the screen.",
+          "research": "I compared Sunpetal and the Living Book in training. Sunpetal communicates support through warm light; the book has a distinctive silhouette. I will use line, shape and colour, with contrast for the lantern and repetition in the walk poses.",
+          "ideas": "1: lantern ram, easy silhouette but familiar. 2: frog medic, readable outline but complex legs. 3: walking lamp, simple art but less expressive. I chose the ram for a clear friendly outline; the alternatives are written here rather than finished heroes.",
+          "decision": "The lantern ram best meets small-size readability and readable support. I will present four pixel poses beside a short playable training test to a partner and the teacher.",
+          "tools": "I used the pixel editor at 48 pixels, a dark outline and a limited warm palette. Primary is a short sweep; secondary is a healing pulse. I kept the light inside the attack range. Attached: a playable snapshot with four poses.",
+          "evaluation": "In my first 30-second test my partner could identify the lantern but confused the two actions. I changed the primary accent to blue and kept healing yellow. The second test was clearer. I should repeat with more than one viewer.",
+          "presentation": "I showed the four poses and a training run to one partner. They described a support ram without being told. The portfolio contains the playable version; I explained the palette choice and remaining attack readability issue.",
+          "rights": "I drew the pixels myself. The game heroes were research references, not copied assets. No external art or music is included. Any future borrowed sound needs a named creator and licence or permission.",
+          "routines": "I put the screen near eye level, took a break between tests and exported a dated backup. These are my statements; a teacher still needs to observe routines.",
+          "competencies": "I compared primary cooldown 1.0 versus 1.2 seconds and kept 1.2 so the animation could finish. My partner gave readability feedback; I made and labelled the change myself.",
+          "pathway": "I enjoy drawing readable characters. Game artist interests me because it combines shape, palette and feedback. Next I will practise stronger silhouettes at 24 pixels."
+        },
+        "COM1145": {
+          "styles": "Cel animation shows successive drawings; claymation captures a model moved a little between photographs; computer animation uses frames or keyframes and calculated in-betweens. All depend on successive images being perceived as movement, but they create those images differently.",
+          "plan": "My action is a lantern lift for a beginner viewer. Storyboard: lower lantern, lift, flash, return. Anticipation is the lowered hand; the action is the bright lift; recovery returns to idle. I use digital pixel frames with a fixed camera.",
+          "frames": "I made four original frames in the pixel editor and attached the ability animation. I used two walk poses for the hero as well. I left sound off for this version so viewers judge motion first; audio could later reinforce the lift.",
+          "timing": "I compared 8 and 12 frames per second. At 12 the lift was harder to notice; one partner preferred 8. I kept the slower version and increased the flash contrast. The final action follows the four storyboard poses.",
+          "permissions": "The frames are original drawings. I used no outside audio. If adding music, I must record the creator and permission before sharing the game version.",
+          "presentation": "I replayed the animation for a partner, who recognized the lift and flash. I described contrast, frame creation, timing and a difficulty keeping the hand aligned. The selected frames are in this portfolio.",
+          "routines": "I used regular short breaks and kept editable files separate from PNG exports. Teacher observation of my setup is still needed.",
+          "competencies": "Four frames at 8 fps are half a second. I used that calculation to compare playback times, named versions, and accepted feedback without replacing the original plan.",
+          "pathway": "I like bringing a drawing to life. A junior animator needs timing and clear poses. Next I will practise smoother recovery using one more frame."
+        },
+        "CSE1110": {
+          "plan": "Problem: total damage from equal hits. Inputs damage and hits; processing multiply them; output total. Pseudocode: read damage, read hits, set total to damage times hits, display total. I will test normal and zero hits next.",
+          "code": "The attached program uses numeric input variables, multiplication and output in sequence. The workbench is an editor and bounded interpreter, not a native compiler. Tests and a debugging reflection are still unfinished."
+        },
+        "MAM1010": {
+          "roles": "For a small gem shop I plan stock, organize the display, communicate prices, and monitor profit. Buying gets stock; selling exchanges goods for payment; merchandising presents the offer. A sole owner decides alone; a partnership shares responsibility.",
+          "mix": "My product is a polished gem, price is 12, promotion targets collectors, place is the town shop. Consumers want gifts; competitors offer lower prices. Packaging may add value but also waste and cost.",
+          "campaigns": "I will compare two prices with the same stock, visitors and budget. I saved the A/B proposal and one run; I have not yet written the recommendation or compared other service and place strategies."
+        }
+      }
+    },
+    {
+      "level": 2,
+      "label": "High grade",
+      "student": "Sample \u2022 Strong evidence",
+      "score": 92,
+      "answers": {
+        "DES1020": {
+          "brief": "Need: new co-op players miss a support hero in crowded fights. Design a lantern ram for fast recognition at 24\u201348 pixels. Success criteria: at least 4 of 5 viewers identify support within 2 seconds; 4 of 5 distinguish healing from damage without reading; finish a 30-second training encounter with attack effects staying inside the hit range. Save this brief before the prototype.",
+          "research": "I compared Sunpetal and Harbor Bell with the same training cluster. Warm accents suggested healing but broad effects hid the body. My solution uses line for a crisp outline, shape for a wide lantern handle, and value to keep the face visible. Contrast gives emphasis to the lantern, proportion keeps the head readable, and repeated palette accents create unity. I compared these references, not copied their pixels.",
+          "ideas": "A lantern ram: strong silhouette, clear support cue, familiar species. A reed frog: novel silhouette but four-leg animation costs more time. A patchwork lamp: simplest frames but face hard to read at 24 pixels. I scored silhouette / support cue / feasible animation out of five: ram 5/4/5, frog 4/3/3, lamp 3/4/5. Weights 2/2/1 give totals 23,17,19; the ram best fits this brief, not every possible player.",
+          "decision": "Choose the lantern ram using the weighted comparison. Present an original four-pose sheet plus a playable training test, because viewers must judge form and function together. Audience: five classmates and the teacher. Keep a before/after snapshot and the criteria beside the final version so the revision can be assessed.",
+          "tools": "I used the raster pixel editor at 48\u00d748 with a six-colour palette and transparent background. Dark outline separates the body from grass; the lantern is the emphasis. I prototyped a short melee sweep and healing pulse within supported limits. The first snapshot is attached; the second has a brighter lantern and shorter primary range, so the intended range matches the visible sweep.",
+          "evaluation": "Test plan: same dummy cluster, 30 seconds, five viewers, no labels. First version: 3/5 identified support in 2 seconds and 2/5 distinguished healing. After separating blue damage and yellow healing: 5/5 support and 4/5 action identification. Repeated range checks showed no sweep beyond the hit zone. This small familiar group may bias results; next test with unfamiliar users and colour-vision alternatives.",
+          "presentation": "I presented the pose sheet, short demonstration and criteria table. Feedback: recovery was unclear; I added a resting-hand pose. The attached revision and earlier prototype are labelled, retaining the design history. I explained why the lantern emphasis, warm/cool contrast and limited palette suit the support role; one remaining limitation is visibility under many overlapping effects.",
+          "rights": "All attached pixel art and effect frames were drawn for this fictional example. Reference heroes informed comparisons only; no pixels or audio were copied. My planned external sound is not included until its creator, licence, permitted modification and attribution are documented. A website being public is not permission to reuse its work.",
+          "routines": "Planned practice: screen top near eye level, neutral wrists, short breaks after frame editing; save source v1/v2 separately, then dated portable backups. Teacher should confirm these behaviours through observation. The sample does not prove a real student followed them; the supplied rating is only a demonstration of review.",
+          "competencies": "I communicated the criteria before testing and kept raw counts rather than just saying it improved. Numerical reasoning: changing 3/5 to 5/5 is a two-viewer gain, not proof for all users. A partner conducted the unlabeled recognition test; I drew and revised the assets. I responded to criticism by adapting the recovery pose and documented responsibility for each change.",
+          "pathway": "My inventory: interest in visual storytelling, strength in palette choices, limited animation experience, access to a school computer and peer feedback. A technical game artist connects art with readable interactive effects. Next goal: produce two silhouette variants and test grayscale readability, then learn export pipelines. This follows from the problems I found, not merely liking games."
+        },
+        "COM1145": {
+          "styles": "Cel animation uses successive hand-drawn cels or equivalent digital drawings; claymation is stop-motion with repositioned physical models photographed frame by frame; computer animation can interpolate position and rotation between keyframes or display drawn sprite frames. Persistence of successive images supports perceived motion, but spacing and timing determine the action. Cel gives drawing control, clay needs stable capture/lighting, and computer workflows allow rapid timing revisions; none is simply a camera move.",
+          "plan": "Audience: beginners needing a readable lantern lift. Storyboard with fixed stage: anticipation hand-down 0.10 s, lift 0.14 s, flash 0.12 s, recovery 0.14 s. Total 0.50 s. Use digital sprite frames because the gameplay is pixel-based. Keep the hero origin constant and preserve negative space around the lantern; the light peak must coincide with the ability event.",
+          "frames": "I created original transparent raster frames in the pixel editor, aligned the feet to one origin and replayed them in the ability preview. Four frames are attached with two genuinely different walk poses. I chose silence during the first timing test to isolate readability; a later original short chime could coincide with the light peak without masking gameplay warnings. No unsupported audio claim is made by the attached silent animation.",
+          "timing": "Controlled comparison: same frames and camera at 8 fps (0.50 s cycle) and 12 fps (0.33 s). Five fictional viewers: 4 recognized the lift at 8 fps, 2 at 12. Recovery snapped in both, so I adjusted the last pose, kept 8 fps and retested: 5/5 recognized the lift. The sample is small and outcomes depend on the viewer; next compare a held anticipation frame. Final motion preserves the storyboard order.",
+          "permissions": "The example frames are original, generated specifically for this demonstration; they are not a real student submission. No external audio is embedded. If a student supplies BandLab sound they must record authorship and any samples/licences before publication. \u201cFree to listen\u201d does not mean free to reuse; keep the licence or permission with the portfolio.",
+          "presentation": "I presented a looping four-frame preview beside the storyboard and comparison table. I explained value contrast, stable origin, timing maths and the recovery difficulty. Feedback identified a one-pixel hand jump, corrected in the selected frame set. The portfolio retains the original hero and revised motion. Language and imagery are appropriate for the school audience. Sound remains a clearly documented next step, not claimed as completed work.",
+          "routines": "I planned neutral posture, short breaks between timing tests, files named lantern-lift-v1/v2 and separate exports. Teacher observation should establish safe routines; a self-report and fictional sample score cannot verify real conduct. The sample rating illustrates how observed evidence could be recorded.",
+          "competencies": "I sequenced frames, converted fps to duration and communicated a test method a partner could repeat. I retained failed tests and changed one factor before retesting, demonstrating adaptation rather than deleting mistakes. My responsibility was art and timing; the partner ran recognition trials. Next iteration will include unfamiliar viewers and improved record keeping.",
+          "pathway": "I enjoy designing the moment an action becomes readable, and I learned that timing matters as much as detailed art. Animation and technical art careers need key poses, feedback, and engine constraints. My next step is a six-frame action with one intentionally held pose and a documented audio experiment."
+        },
+        "CSE1110": {
+          "plan": "Problem: repeated-hit damage. Available data: damage per hit. Inputs: damage and hit count; process multiply; output total. Compare algorithm A (damage + hits) with B (damage \u00d7 hits): A counts unrelated quantities; B matches equal repeated hits. Pseudocode: read both numeric inputs, compute total, output only after computation. Planned boundary test zero hits and failure test missing hits.",
+          "code": "Attached a bounded IPO program with a comment, two inputs, multiplication and output. Numeric variables hold damage and hits; total receives their product. The editor changes source, the interpreter translates bounded instructions, the executor runs them, and test feedback helps debugging. An IDE bundles these; separate tools can do the same with extra file handling. Saved normal/zero predictions exist, but the final failure test and reflection are still pending."
+        },
+        "MAM1010": {
+          "roles": "A cooperative gift shop shares ownership: purchasing selects stock, merchandising arranges displays, sales staff communicate value, and management plans inventory, organizes shifts, leads staff and monitors cash. Compare a sole proprietor\u2019s direct control with shared cooperative decisions. Our plan borrows from real retail roles; the game\u2019s simulation is only a simplified model of Canadian retail operations.",
+          "mix": "Product: polished gems for gifts. Price: compare 12 vs 10 while retaining positive margin. Place: same shop, visitors and stock; promotion budget remains 20. Consumers value gifts and provenance; competition includes cheaper raw gems. Avoid unsupported ethical sourcing claims. Packaging choices must consider waste as well as conversion. The price trial cannot answer whether a different location or audience is better.",
+          "campaigns": "I prepared a controlled A/B run with identical visitors=100, stock=60, cost=5 and budget=20, varying only price. The proposal and reproducible report are attached. I still need to discuss other merchandising technologies/strategies and write a recommendation using profit as well as units; this module is intentionally not submitted."
+        }
+      }
+    }
+  ]
+}

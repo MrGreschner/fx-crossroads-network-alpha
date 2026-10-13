@@ -1,0 +1,12 @@
+{
+  "id": "pencil_scrapper",
+  "name": "Pencil Scrapper",
+  "sprite": "pencil_scrapper",
+  "health": 48,
+  "speed": 115,
+  "damage": 7,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_pencil_scrapper",
+  "expansion_only": true
+}

@@ -1,0 +1,96 @@
+{
+  "id": "harbor",
+  "name": "Harbor Bell",
+  "sprite": "harbor",
+  "max_health": 140,
+  "speed": 215,
+  "run_cost": 0,
+  "lore": "A penguin harbour guide who turns dangerous ground into safe crossings. Modest damage is balanced by carefully placed rescue buoys and moving projectile cover.",
+  "primary": {
+    "name": "Harbor Note",
+    "style": "harbor_note",
+    "damage": 16,
+    "cooldown": 0.85,
+    "range": 115,
+    "description": "A short sound ring deals 16 damage and slows enemies by 25% for 0.8s."
+  },
+  "secondary": {
+    "name": "Rescue Buoy",
+    "style": "rescue_buoy",
+    "damage": 0,
+    "cooldown": 9,
+    "range": 330,
+    "description": "Place a 110-radius buoy for 4s: allies heal 4 HP/s and receive 12% damage reduction."
+  },
+  "special": {
+    "name": "Safe Passage",
+    "style": "safe_passage",
+    "damage": 0,
+    "cooldown": 17,
+    "range": 330,
+    "description": "A protective front moves for 3s. Allies crossing it heal 12 once and gain 20% protection. Absorbs up to 12 enemy projectiles."
+  },
+  "passive": "Harbor Watch: Harbor Note grants nearby allies within 110 a 10% protective ward for 0.8s.",
+  "passive_effect": "harbor_watch",
+  "mastery": {
+    "title": "Keeper of Safe Harbors",
+    "technique": {
+      "name": "Restful Note",
+      "ability": "primary",
+      "attack": {
+        "name": "Restful Note",
+        "style": "harbor_mend",
+        "damage": 0,
+        "cooldown": 1.5,
+        "range": 90,
+        "description": "A close pulse heals friendly heroes, including you, for 4 HP after 1 second. No damage."
+      },
+      "description": "Trade the damaging/slow ring for close, delayed healing."
+    },
+    "final_technique": {
+      "name": "Hush Buoy",
+      "ability": "secondary",
+      "attack": {
+        "name": "Hush Buoy",
+        "style": "hush_buoy",
+        "damage": 0,
+        "cooldown": 11,
+        "range": 330,
+        "description": "A 125-radius buoy absorbs up to 12 enemy shots over 4s. No healing or ward."
+      },
+      "description": "Trade healing and protection for projectile interception."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

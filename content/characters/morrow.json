@@ -1,0 +1,93 @@
+{
+  "id": "morrow",
+  "name": "Morrow Shepherd",
+  "sprite": "morrow",
+  "max_health": 120,
+  "speed": 225,
+  "run_cost": 0,
+  "lore": "A gentle keeper of the forgotten. Fallen ordinary enemies leave grave markers for 25s. Raise their echoes as temporary allies. Bosses cannot be raised. Summons grant no extra kill XP.",
+  "primary": {
+    "name": "Gravespark",
+    "style": "gravespark",
+    "damage": 21,
+    "cooldown": 0.65,
+    "range": 430,
+    "description": "A pale spirit dart that stops at the first foe or wall."
+  },
+  "secondary": {
+    "name": "Raise Remains",
+    "style": "raise_remains",
+    "damage": 0,
+    "cooldown": 9,
+    "range": 420,
+    "description": "Aim at grave markers within a 140-radius area. Raise up to two melee echoes, 42 HP each, for 18s. Each deals 10 damage every 1.2s. Corpses are consumed.",
+    "radius": 140
+  },
+  "special": {
+    "name": "Life Lattice",
+    "style": "life_lattice",
+    "damage": 0,
+    "cooldown": 22,
+    "range": 450,
+    "description": "For 7s, share remaining health with your echoes. Red links steal up to 6 HP/s from crossing foes. At the end, reserve 60% of remaining health for you, 40% for echoes, capped by each maximum. Area attacks can hit several linked bodies."
+  },
+  "passive": "Grave Chorus: Raise a third, ranged echo and increase each echo to 60 HP. The ranged echo deals 8 damage every 1.2s.",
+  "passive_effect": "grave_chorus",
+  "mastery": {
+    "title": "Warden of the Remembered",
+    "technique": {
+      "name": "Wide Vigil",
+      "ability": "secondary",
+      "description": "Raise from a 210-radius area instead of 140, but cooldown becomes 12s instead of 9.",
+      "set": {
+        "radius": 210,
+        "cooldown": 12
+      }
+    },
+    "final_technique": {
+      "name": "Last Procession",
+      "ability": "special",
+      "description": "Replace shared health with a final march. Echoes rush the aimed spot, burst for 24 damage each and slow nearby foes, then fade.",
+      "attack": {
+        "name": "Last Procession",
+        "style": "last_procession",
+        "damage": 24,
+        "cooldown": 18,
+        "range": 430,
+        "description": "Send your echoes to an aimed point. Each bursts in an 80-radius area and slows for 1.5s, consuming the echo."
+      }
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

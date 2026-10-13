@@ -1,0 +1,12 @@
+{
+  "id": "repair_wisp",
+  "name": "Repair Wisp",
+  "sprite": "repair_wisp",
+  "health": 65,
+  "speed": 100,
+  "damage": 15,
+  "behaviour": "ranged",
+  "custom_attack": "repair_arc",
+  "aggro_range": 850,
+  "expansion_only": true
+}

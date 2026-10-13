@@ -1,0 +1,12 @@
+{
+  "id": "sap_nurse",
+  "name": "Sap Nurse",
+  "sprite": "sap_nurse",
+  "health": 85,
+  "speed": 65,
+  "damage": 6,
+  "behaviour": "custom",
+  "custom_attack": "sap_heal",
+  "aggro_range": 800,
+  "expansion_only": true
+}

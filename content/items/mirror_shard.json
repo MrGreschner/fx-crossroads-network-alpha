@@ -1,0 +1,10 @@
+{
+  "id": "mirror_shard",
+  "name": "Mirror Shard",
+  "cost": 58,
+  "effect": "reflect",
+  "amount": 1,
+  "description": "Reflect a projectile while blocking.",
+  "duration": 3,
+  "radius": 145
+}

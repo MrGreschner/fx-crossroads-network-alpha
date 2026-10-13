@@ -1,0 +1,19 @@
+{
+  "id": "honeyglass",
+  "name": "Honeyglass Gardens",
+  "size": [
+    8600,
+    5400
+  ],
+  "terrain": "garden_grass",
+  "scene": "res://scenes/realms/honeyglass.tscn",
+  "boss_sprite": "glass_queen",
+  "boss_health": 640,
+  "boss_secondary": "fireball",
+  "xp_per_level": 4,
+  "unlock_cost": 0,
+  "difficulty_label": "Easy+ \u2014 mixed garden patrols and amber hornets",
+  "description": "Explore the honeycomb maze and clear its garden defenders. Optional treasures reward exploration; exit unlocks after its guardian falls.",
+  "immersive": true,
+  "boss_enemy": "glass_queen"
+}

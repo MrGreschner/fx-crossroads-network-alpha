@@ -1,0 +1,20 @@
+{
+  "id": "sunfield",
+  "name": "Sunfield Expanse",
+  "size": [
+    9400,
+    5100
+  ],
+  "background": "#718548",
+  "accent": "#b9a26d",
+  "boss_health": 980,
+  "xp_per_level": 5,
+  "terrain": "grass",
+  "boss_secondary": "sunburst",
+  "scene": "res://scenes/realms/sunfield.tscn",
+  "boss_sprite": "sun_sentinel",
+  "difficulty_label": "Moderate",
+  "immersive": true,
+  "boss_enemy": "sun_sentinel",
+  "description": "A warm orchard trail opens into golden meadows and sunflower terraces. Canopy ambushes, hopping grasshoppers and warning sunbeams lead to the Solstice Clearing."
+}

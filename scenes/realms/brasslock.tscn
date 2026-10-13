@@ -1,0 +1,183 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/brass_sapper_idle.svg" id="101"]
+
+[ext_resource type="Texture2D" path="res://assets/brass_sapper_idle.svg" id="102"]
+
+[ext_resource type="Texture2D" path="res://assets/keywing_courier_idle.svg" id="103"]
+
+[ext_resource type="Texture2D" path="res://assets/keywing_courier_idle.svg" id="104"]
+
+[node name="Brasslock" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+position = Vector2(85, 1260)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+position = Vector2(85, 1390)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+position = Vector2(800, 2300)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+position = Vector2(3500, 2330)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy0" type="Marker2D" parent="Enemies"]
+position = Vector2(285, 390)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy1" type="Marker2D" parent="Enemies"]
+position = Vector2(590, 395)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy2" type="Marker2D" parent="Enemies"]
+position = Vector2(1005, 390)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy3" type="Marker2D" parent="Enemies"]
+position = Vector2(1310, 395)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy4" type="Marker2D" parent="Enemies"]
+position = Vector2(1725, 390)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy5" type="Marker2D" parent="Enemies"]
+position = Vector2(2030, 395)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy6" type="Marker2D" parent="Enemies"]
+position = Vector2(2445, 390)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy7" type="Marker2D" parent="Enemies"]
+position = Vector2(2750, 395)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy8" type="Marker2D" parent="Enemies"]
+position = Vector2(3165, 390)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy9" type="Marker2D" parent="Enemies"]
+position = Vector2(3470, 395)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy10" type="Marker2D" parent="Enemies"]
+position = Vector2(285, 1130)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy11" type="Marker2D" parent="Enemies"]
+position = Vector2(590, 1135)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy12" type="Marker2D" parent="Enemies"]
+position = Vector2(1005, 1130)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy13" type="Marker2D" parent="Enemies"]
+position = Vector2(1310, 1135)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy14" type="Marker2D" parent="Enemies"]
+position = Vector2(1725, 1130)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy15" type="Marker2D" parent="Enemies"]
+position = Vector2(2030, 1135)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy16" type="Marker2D" parent="Enemies"]
+position = Vector2(2445, 1130)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy17" type="Marker2D" parent="Enemies"]
+position = Vector2(2750, 1135)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy18" type="Marker2D" parent="Enemies"]
+position = Vector2(3165, 1130)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy19" type="Marker2D" parent="Enemies"]
+position = Vector2(3470, 1135)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy20" type="Marker2D" parent="Enemies"]
+position = Vector2(285, 1870)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy21" type="Marker2D" parent="Enemies"]
+position = Vector2(590, 1875)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy22" type="Marker2D" parent="Enemies"]
+position = Vector2(1005, 1870)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy23" type="Marker2D" parent="Enemies"]
+position = Vector2(1310, 1875)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy24" type="Marker2D" parent="Enemies"]
+position = Vector2(1725, 1870)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy25" type="Marker2D" parent="Enemies"]
+position = Vector2(2030, 1875)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy26" type="Marker2D" parent="Enemies"]
+position = Vector2(2445, 1870)
+metadata/enemy_id = "grate_witch"
+
+[node name="Enemy27" type="Marker2D" parent="Enemies"]
+position = Vector2(2750, 1875)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy28" type="Marker2D" parent="Enemies"]
+position = Vector2(3165, 1870)
+metadata/enemy_id = "copper_constable"
+
+[node name="Enemy29" type="Marker2D" parent="Enemies"]
+position = Vector2(3470, 1875)
+metadata/enemy_id = "grate_witch"
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="V143_brass_bailiff_0" type="Node2D" parent="Enemies"]
+position = Vector2(1700, 1260)
+metadata/enemy_id = "brass_bailiff"
+
+[node name="V143_brass_bailiff_1" type="Node2D" parent="Enemies"]
+position = Vector2(3000, 2050)
+metadata/enemy_id = "brass_bailiff"
+
+[node name="V152_brass_sapper_101" type="Sprite2D" parent="Enemies"]
+position = Vector2(1480, 700)
+texture = ExtResource("101")
+scale = Vector2(2, 2)
+metadata/enemy_id = "brass_sapper"
+
+[node name="V152_brass_sapper_102" type="Sprite2D" parent="Enemies"]
+position = Vector2(2200, 1450)
+texture = ExtResource("102")
+scale = Vector2(2, 2)
+metadata/enemy_id = "brass_sapper"
+
+[node name="V152_keywing_courier_103" type="Sprite2D" parent="Enemies"]
+position = Vector2(2890, 1430)
+texture = ExtResource("103")
+scale = Vector2(2, 2)
+metadata/enemy_id = "keywing_courier"
+
+[node name="V152_keywing_courier_104" type="Sprite2D" parent="Enemies"]
+position = Vector2(770, 2160)
+texture = ExtResource("104")
+scale = Vector2(2, 2)
+metadata/enemy_id = "keywing_courier"

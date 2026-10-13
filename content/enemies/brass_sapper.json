@@ -1,0 +1,15 @@
+{
+  "id": "brass_sapper",
+  "name": "Brass Sapper",
+  "sprite": "brass_sapper",
+  "health": 92,
+  "speed": 92,
+  "damage": 11,
+  "behaviour": "custom",
+  "aggro_range": 650,
+  "expansion_only": true,
+  "shot_cooldown": 2.8,
+  "shot_speed": 260,
+  "description": "A brass mole mechanic that marks delayed demolition blasts.",
+  "custom_attack": "sapper_blast"
+}

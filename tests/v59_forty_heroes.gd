@@ -1,0 +1,78 @@
+extends SceneTree
+var failures:=0
+func check(ok:bool,label:String)->void:
+ if not ok:failures+=1;print("FAIL: ",label)
+func _initialize()->void:call_deferred("run")
+func run()->void:
+ var game=load("res://scenes/main.tscn").instantiate();root.add_child(game);await process_frame;game.set_process(false)
+ game.selected_character="dustdevil";game.start_run(false,"practice");game.level=4;game.enemies.clear();game.position_in_world=Vector2(1100,600)
+ var combat=game.adventure.combat;var kit=combat.v59
+ game.adventure.spawn("training_dummy",Vector2(1170,600),500,false);var foe:Dictionary=game.enemies[-1]
+ kit.step(7);check(combat.effect_time(combat.npc_key(foe),"poison")==0,"Overload waits for passive unlock")
+ game.level=5;kit.step(5.9);check(combat.effect_time(combat.npc_key(foe),"poison")==0,"no pulse before six seconds")
+ kit.step(.11);check(combat.effect_time(combat.npc_key(foe),"poison")==4,"Overload applies four seconds of poison")
+ for n in 4:combat.tick_statuses(1)
+ check(foe.hp==488,"Overload deals 3 per second, 12 total")
+ kit.step(6);check(combat.effect_time(combat.npc_key(foe),"poison")==4,"Overload repeats")
+ game.selected_character="caelum";game.start_run(false,"practice");game.practice=false;game.level=6;game.enemies.clear();game.position_in_world=Vector2(1100,600);game.health=100
+ check(game.manifest.characters.size()==43 and game.manifest.characters.find("caelum")==game.manifest.characters.find("cairnheart")+1,"hero 39 ordered after Cairnheart and hero 40 registered")
+ combat.cast("solo",game.hero.special,Vector2.RIGHT,15);check(kit.copies.has("solo") and kit.copies.solo.hp==60,"copy has its own bounded HP")
+ var echo:Vector2=combat.vec(kit.copies.solo.pos)
+ check(kit.catch_copy(echo-Vector2(50,0),echo+Vector2(50,0),"enemy",10) and kit.copies.solo.hp==50 and game.health==100,"projectile can damage only the copy")
+ game.take_player_damage(200)
+ check(game.health==50 and game.position_in_world==echo and game.menu!="results","controlled body defeat transfers to living copy")
+ kit.step(.01);check(not kit.copies.has("solo") and game.health==50,"transferred body persists after copy cleanup")
+ game.health=100;combat.cast("solo",game.hero.special,Vector2.RIGHT,15);kit.hurt_copy("solo",200)
+ check(not kit.copies.has("solo") and game.health==100,"copy defeat does not kill the original")
+ combat.cast("solo",game.hero.special,Vector2.RIGHT,15);kit.step(6.1)
+ check(not kit.copies.has("solo") and game.health==100,"copy expires without killing player")
+ game.health=100;combat.cast("solo",game.hero.special,Vector2.RIGHT,15)
+ var midpoint:Vector2=game.position_in_world.lerp(combat.vec(kit.copies.solo.pos),.5)
+ game.adventure.launch_lob("enemy",midpoint,midpoint,{"blast_radius":160},200);game.adventure.step_lobs(1)
+ check(game.menu=="results" and game.health<=0,"one blast killing both bodies really defeats player")
+ game.start_run(false,"practice");game.practice=false;game.enemies.clear();game.position_in_world=Vector2(1100,600);game.level=6;game.health=100
+ game.enemies.clear();game.adventure.spawn("training_dummy",Vector2(1300,600),500,false);foe=game.enemies[-1];combat.cast("solo",game.hero.special,Vector2.RIGHT,15);combat.cast("solo",game.hero.primary,Vector2.RIGHT,25);kit.step(.3)
+ check(not combat.projectiles.is_empty(),"copy mirrors primary attack")
+ kit.reset();combat.projectiles.clear();game.position_in_world=Vector2(1100,600);game.level=10;game.adventure.spawn("training_dummy",Vector2(1450,600),500,false)
+ combat.cast("solo",game.hero.primary,Vector2.RIGHT,25)
+ for n in 40:combat.step_projectiles(.02)
+ check(foe.hp==475 and game.enemies[-1].hp==475,"Facet Spear pierces two enemies")
+ combat.cast("solo",game.hero.secondary,Vector2.RIGHT,34);kit.step(.5)
+ check(foe.hp==475,"Prism Fold warns before damage")
+ kit.step(.2);check(foe.hp==441 and combat.effect_time(combat.npc_key(foe),"slow")>0,"crossed beams hit once and passive slows")
+ game.selected_character="wanderlight";game.start_run(false,"practice");game.level=6;game.enemies.clear();game.position_in_world=Vector2(1100,600)
+ for n in 5:
+  game.position_in_world=Vector2(1000+n*40,600);combat.cast("solo",game.hero.primary,Vector2.RIGHT,26)
+ check(kit.chronicles.solo.size()==4 and kit.chronicles.solo[0].pos==[1040.0,600.0],"chronicle keeps latest four positions")
+ combat.cast("solo",game.hero.secondary,Vector2.UP,16)
+ check(kit.turns.size()==5 and combat.effect_time("p:solo","rune_stride")>0,"Compass Turn pauses own comets and passive gives stride")
+ kit.step(.3);check(combat.projectiles[0].base_aim==[0.0,-1.0] and combat.projectiles[0].speed==300,"comets redirect along fresh aim")
+ combat.projectiles.clear();combat.cast("solo",game.hero.special,Vector2.RIGHT,0);kit.step(.8)
+ check(combat.projectiles.size()==4 and kit.ghosts.size()>0 and is_equal_approx(combat.projectiles[0].damage,16.9),"chronicle replays four attacks at 65% damage")
+ kit.reset();combat.projectiles.clear();combat.cast("solo",game.hero.special,Vector2.RIGHT,0);kit.step(.8)
+ check(combat.projectiles.size()==4,"special works before recording a history")
+ var party=load("res://scenes/arcade.tscn").instantiate();root.add_child(party);await process_frame;party.set_process(false);party._set_mode("defense");party._solo();party.hero_ids[party.my_id]="caelum";party._start_match();party.opponents.clear();party.levels[party.my_id]=6;party.health[party.my_id]=100
+ var pc=party.adventure.combat;pc.cast(party.my_id,party.characters.caelum.special,Vector2.RIGHT,15)
+ var packet:Dictionary=party._snapshot();check(packet.adventure.combat.v59.copies.has(party.my_id),"copy position and HP synchronize")
+ var before_roster:int=party.positions.size();party._hurt(party.my_id,200,"enemy")
+ check(party.health[party.my_id]==60 and not party.downed.has(party.my_id) and party.positions.size()==before_roster,"co-op transfer avoids death and phantom roster entries")
+ pc.v59.step(.01);party.health[party.my_id]=100;pc.cast(party.my_id,party.characters.caelum.special,Vector2.RIGHT,15)
+ var point:Vector2=pc.vec(pc.v59.copies[party.my_id].pos)
+ party.adventure.launch_lob("enemy",point,point,{"blast_radius":60},200);party.adventure.step_lobs(1)
+ check(not pc.v59.copies.has(party.my_id) or bool(pc.v59.copies.get(party.my_id,{}).get("transferred",false)),"enemy ground blast hits mirror body")
+ party.mode="arena";party.pvp_rule="ffa";party.health[party.my_id]=100;party.hero_ids[party.my_id]="dustdevil";party.levels[party.my_id]=5
+ party.positions["rival"]=party.positions[party.my_id]+Vector2(70,0);party.health["rival"]=100;party.hero_ids["rival"]="caelum";party.teams["rival"]=1
+ pc.v59.reset();pc.statuses.clear();pc.v59.step(6)
+ check(pc.effect_time("p:rival","poison")==4 and pc.effect_time(pc.player_key(party.my_id),"poison")==0,"PvP poison pulse affects opponent, not caster")
+ pc.v59.reset();pc.statuses.clear();party.hero_ids["rival"]="caelum";party.levels["rival"]=6;party.health["rival"]=100
+ party.positions[party.my_id]=Vector2(1100,600);party.positions["rival"]=Vector2(1100,800)
+ pc.cast("rival",party.characters.caelum.special,Vector2.RIGHT,15)
+ point=pc.vec(pc.v59.copies["rival"].pos)
+ party.positions[party.my_id]=point-Vector2(45,0)
+ party.hero_ids[party.my_id]="ram";party.levels[party.my_id]=6;party.cooldown_at.clear()
+ var mirror_hp:float=pc.v59.copies["rival"].hp
+ party._attack(party.my_id,"primary",Vector2.RIGHT,point)
+ check(pc.v59.copies["rival"].hp<mirror_hp,"native PvP melee can hit mirror body")
+ for voice in game.journey.voices:voice.stop()
+ for voice in party.journey.voices:voice.stop()
+ game.queue_free();party.queue_free();await create_timer(.3).timeout;print("v59: ",failures," failures");quit(1 if failures else 0)

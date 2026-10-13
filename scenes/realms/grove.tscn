@@ -1,0 +1,1871 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ram_0.png" id="1"]
+
+[ext_resource type="Texture2D" path="res://assets/portal.png" id="2"]
+
+[ext_resource type="Texture2D" path="res://assets/merchant.png" id="3"]
+
+[ext_resource type="Texture2D" path="res://assets/bramble_boss.png" id="4"]
+
+[ext_resource type="Texture2D" path="res://assets/archer_idle.png" id="5"]
+
+[ext_resource type="Texture2D" path="res://assets/bramble_idle.png" id="6"]
+
+[ext_resource type="Texture2D" path="res://assets/spore_thrower_idle.png" id="7"]
+
+[ext_resource type="Texture2D" path="res://assets/tree.png" id="8"]
+
+[ext_resource type="Texture2D" path="res://assets/lantern_moth_idle.png" id="9"]
+
+[node name="Grove" type="Node2D"]
+
+[node name="Floor" type="Polygon2D" parent="."]
+
+polygon = PackedVector2Array(0, 0, 5600, 0, 5600, 1900, 0, 1900)
+
+color = Color(0.23, 0.35, 0.24, 1)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Trail_0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(230.0, 1105.0, 1180.0, 1105.0, 1180.0, 815.0, 230.0, 815.0)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "path"
+
+[node name="Trail_1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(1226.3, 1097.41, 2146.3, 787.41, 2053.7, 512.59, 1133.7, 822.59)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "path"
+
+[node name="Trail_2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(2044.15, 783.81, 3194.15, 1263.81, 3305.85, 996.19, 2155.85, 516.19)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "path"
+
+[node name="Trail_3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(3305.01, 1264.16, 4305.01, 854.16, 4194.99, 585.84, 3194.99, 995.84)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "path"
+
+[node name="Trail_4" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(4216.48, 861.07, 5226.48, 1101.07, 5293.52, 818.93, 4283.52, 578.93)
+
+color = Color(0.68, 0.61, 0.44, 1)
+
+metadata/tile = "path"
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Sprite2D" parent="Points"]
+
+position = Vector2(230, 960)
+
+texture = ExtResource("1")
+
+scale = Vector2(2, 2)
+
+[node name="ReturnGate" type="Sprite2D" parent="Points"]
+
+position = Vector2(80, 960)
+
+texture = ExtResource("2")
+
+scale = Vector2(2, 2)
+
+[node name="Merchant" type="Sprite2D" parent="Points"]
+
+position = Vector2(2100, 805)
+
+texture = ExtResource("3")
+
+scale = Vector2(2, 2)
+
+[node name="Boss" type="Sprite2D" parent="Points"]
+
+position = Vector2(5260, 960)
+
+texture = ExtResource("4")
+
+scale = Vector2(2, 2)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy_000" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(850, 960)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_001" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1150, 960)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_002" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(1450, 869)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_003" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2000, 684)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_004" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2300, 733)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_005" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2650, 880)
+
+texture = ExtResource("9")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "lantern_moth"
+
+[node name="Enemy_006" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(2900, 1049)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_007" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3025, 961)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_008" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3150, 1088)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_009" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3275, 1185)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_010" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3400, 994)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_011" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3525, 1017)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_012" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3650, 1031)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_013" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3775, 840)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_014" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(3900, 864)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_015" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4025, 877)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_016" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4150, 686)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_017" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4275, 726)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_018" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4400, 821)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_019" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4525, 710)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_020" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4650, 815)
+
+texture = ExtResource("7")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "spore_thrower"
+
+[node name="Enemy_021" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4775, 910)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Enemy_022" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(4900, 799)
+
+texture = ExtResource("5")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "archer"
+
+[node name="Enemy_023" type="Sprite2D" parent="Enemies"]
+
+position = Vector2(5025, 904)
+
+texture = ExtResource("6")
+
+scale = Vector2(2, 2)
+
+metadata/enemy_id = "bramble"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Obstacle_000" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(327, 153)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_001" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(285, 342)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_002" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(268, 1509)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_003" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(309, 1709)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_004" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(470, 142)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_005" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(441, 362)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_006" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(458, 1478)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_007" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(432, 1694)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_008" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(645, 177)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_009" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(643, 378)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_010" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(608, 1520)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_011" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(655, 1701)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_012" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(763, 207)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_013" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(774, 382)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_014" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(803, 1512)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_015" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(806, 1756)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_016" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(956, 159)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_017" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(936, 377)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_018" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(969, 1470)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_019" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(935, 1750)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_020" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1098, 190)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_021" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1093, 427)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_022" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1107, 1550)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_023" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1131, 1697)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_024" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1302, 193)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_025" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1271, 429)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_026" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1315, 1533)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_027" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1275, 1713)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_028" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1455, 207)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_029" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1457, 395)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_030" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1425, 1465)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_031" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1461, 1770)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_032" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1648, 200)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_033" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1593, 365)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_034" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1627, 1516)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_035" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1629, 1744)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_036" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1798, 186)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_037" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1766, 426)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_038" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1780, 1512)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_039" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1812, 1719)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_040" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1943, 195)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_041" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1972, 390)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_042" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1924, 1516)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_043" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1923, 1713)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_044" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2117, 151)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_045" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2145, 1542)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_046" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2081, 1714)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_047" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2304, 178)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_048" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2254, 359)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_049" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2286, 1536)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_050" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2288, 1760)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_051" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2451, 140)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_052" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2463, 402)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_053" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2425, 1546)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_054" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2476, 1708)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_055" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2611, 132)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_056" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2613, 345)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_057" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2606, 1495)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_058" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2627, 1699)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_059" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2770, 169)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_060" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2800, 415)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_061" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2779, 1530)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_062" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2779, 1747)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_063" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2958, 142)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_064" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2931, 422)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_065" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2905, 1471)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_066" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2945, 1759)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_067" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3117, 131)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_068" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3097, 411)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_069" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3073, 1532)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_070" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3084, 1770)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_071" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3244, 152)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_072" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3266, 417)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_073" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3272, 1527)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_074" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3255, 1722)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_075" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3457, 205)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_076" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3457, 397)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_077" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3440, 1503)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_078" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3405, 1719)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_079" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3604, 161)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_080" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3632, 427)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_081" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3595, 1513)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_082" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3573, 1718)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_083" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3747, 197)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_084" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3774, 346)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_085" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3797, 1491)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_086" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3733, 1732)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_087" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3957, 136)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_088" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3953, 364)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_089" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3896, 1501)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_090" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3951, 1713)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_091" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4073, 164)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_092" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4118, 389)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_093" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4115, 1539)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_094" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4127, 1723)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_095" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4245, 174)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_096" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4291, 428)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_097" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4280, 1479)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_098" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4287, 1738)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_099" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4433, 210)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_100" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4444, 410)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_101" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4419, 1475)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_102" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4406, 1751)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_103" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4594, 194)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_104" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4573, 411)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_105" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4560, 1519)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_106" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4573, 1709)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_107" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4725, 150)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_108" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4770, 392)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_109" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4737, 1479)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_110" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4790, 1758)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_111" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4896, 187)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_112" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4931, 392)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_113" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4896, 1549)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_114" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4915, 1747)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_115" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5056, 169)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_116" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5110, 412)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_117" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5081, 1529)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_118" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5106, 1747)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_119" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5280, 130)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_120" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5281, 428)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_121" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5282, 1476)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_122" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5258, 1716)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_123" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5412, 142)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_124" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5422, 341)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_125" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5426, 1531)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0
+
+[node name="Obstacle_126" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5413, 1703)
+
+texture = ExtResource("8")
+
+scale = Vector2(2, 2)
+
+metadata/kind = "tree"
+
+metadata/radius = 35.0

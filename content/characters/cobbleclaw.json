@@ -1,0 +1,97 @@
+{
+  "name": "Cobbleclaw",
+  "max_health": 145,
+  "speed": 195,
+  "lore": "A small masonry crab from Silverfall Reach, carrying a shell of polished river stones. It catches trouble in its claws and returns it with interest.",
+  "primary": {
+    "name": "Pincer Ledger",
+    "style": "crab_pincers",
+    "damage": 14,
+    "cooldown": 0.85,
+    "range": 88,
+    "description": "Two quick, visible claw snaps for 14 damage each. Both hit only their own short forward fans."
+  },
+  "secondary": {
+    "name": "Shell Receipt",
+    "style": "crab_shell",
+    "damage": 0,
+    "cooldown": 8,
+    "range": 45,
+    "description": "Brace for 3.5 seconds with 50% damage reduction. Catch up to four hostile projectiles touching the shell; bank them for 12 seconds.",
+    "duration": 3.5
+  },
+  "special": {
+    "name": "Crosswalk Crush",
+    "style": "crab_crush",
+    "damage": 36,
+    "cooldown": 14,
+    "range": 280,
+    "description": "Scuttle along the shown route, dealing 36 damage once per foe, pushing and slowing. At the end, spend banked shots on 12-damage stone shards. Walls stop the rush."
+  },
+  "passive": "Shell Ledger: each banked projectile grants 3% damage reduction, up to 12%. Spend the bank or let it expire to lose this protection.",
+  "passive_effect": "shell_ledger",
+  "mastery": {
+    "title": "Master of the Stone Ledger",
+    "technique": {
+      "name": "Heavy Accounts",
+      "ability": "primary",
+      "attack": {
+        "name": "Heavy Accounts",
+        "style": "crab_pincers",
+        "damage": 22,
+        "cooldown": 1.35,
+        "range": 112,
+        "description": "Two slower heavy snaps, 22 damage each, with longer reach."
+      },
+      "description": "Trade quick claw rhythm for heavier, slower snaps."
+    },
+    "final_technique": {
+      "name": "Pebble Nursery",
+      "ability": "secondary",
+      "attack": {
+        "name": "Pebble Nursery",
+        "style": "crab_nursery",
+        "damage": 0,
+        "cooldown": 12,
+        "range": 105,
+        "description": "Build a four-second stationary pebble refuge. Allies receive 20% damage reduction and 4 HP/sec, plus 1 HP/sec per banked shot consumed."
+      },
+      "description": "Trade projectile catching for a small allied refuge."
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  },
+  "id": "cobbleclaw",
+  "sprite": "cobbleclaw",
+  "run_cost": 0
+}

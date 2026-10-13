@@ -1,0 +1,20 @@
+{
+  "id": "warlock",
+  "name": "Hollow Warlock",
+  "sprite": "warlock",
+  "health": 100,
+  "speed": 72,
+  "damage": 8,
+  "aggro_range": 460,
+  "behaviour": "summoner",
+  "summon_type": "imp",
+  "summon_cooldown": 5.0,
+  "max_summons": 2,
+  "shot_name": "Cinder Fork",
+  "shot_style": "split_lance",
+  "shot_speed": 230,
+  "shot_cooldown": 3.6,
+  "shot_damage": 8,
+  "split_distance": 200,
+  "attack_color": "#efa375"
+}

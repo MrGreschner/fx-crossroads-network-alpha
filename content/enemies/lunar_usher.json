@@ -1,0 +1,11 @@
+{
+  "id": "lunar_usher",
+  "name": "Lunar Usher",
+  "sprite": "lunar_usher",
+  "health": 115,
+  "speed": 95,
+  "damage": 14,
+  "behaviour": "ranged",
+  "expansion_only": true,
+  "aggro_range": 850
+}

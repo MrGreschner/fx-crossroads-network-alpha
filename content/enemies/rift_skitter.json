@@ -1,0 +1,14 @@
+{
+  "id": "rift_skitter",
+  "name": "Rift Skitter",
+  "sprite": "rift_skitter",
+  "health": 90,
+  "speed": 175,
+  "damage": 11,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_skitter",
+  "description": "A quick six-legged void hunter. A violet line warns of its dash; sidestep before it strikes.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

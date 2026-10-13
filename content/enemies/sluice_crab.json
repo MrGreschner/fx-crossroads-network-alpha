@@ -1,0 +1,11 @@
+{
+  "id": "sluice_crab",
+  "name": "Sluice Crab",
+  "sprite": "sluice_crab",
+  "health": 100,
+  "speed": 95,
+  "damage": 13,
+  "behaviour": "chase",
+  "aggro_range": 750,
+  "expansion_only": true
+}

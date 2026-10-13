@@ -1,0 +1,11 @@
+{
+  "id": "glass_mender",
+  "name": "Glass Mender",
+  "sprite": "glass_mender",
+  "health": 90,
+  "speed": 85,
+  "damage": 8,
+  "behaviour": "chase",
+  "aggro_range": 750,
+  "expansion_only": true
+}

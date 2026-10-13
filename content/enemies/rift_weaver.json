@@ -1,0 +1,12 @@
+{
+  "id": "rift_weaver",
+  "name": "Rift Weaver",
+  "sprite": "rift_weaver",
+  "health": 90,
+  "speed": 65,
+  "damage": 9,
+  "behaviour": "chase",
+  "custom_attack": "portals",
+  "aggro_range": 500,
+  "expansion_only": true
+}

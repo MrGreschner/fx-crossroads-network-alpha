@@ -1,0 +1,610 @@
+{
+  "id": "wayfarer",
+  "name": "Wayfarer Wilds",
+  "version": 1,
+  "spawn": [
+    1400,
+    1800
+  ],
+  "npcs": [
+    {
+      "id": "edda",
+      "name": "Edda \u2022 Lanternwright",
+      "pos": [
+        1450,
+        1400
+      ],
+      "sprite": "quest_edda"
+    },
+    {
+      "id": "orrin",
+      "name": "Orrin \u2022 Miller",
+      "pos": [
+        1850,
+        2000
+      ],
+      "sprite": "quest_orrin"
+    },
+    {
+      "id": "sable",
+      "name": "Sable \u2022 Pathfinder",
+      "pos": [
+        1100,
+        2250
+      ],
+      "sprite": "quest_sable"
+    },
+    {
+      "id": "tamsin",
+      "name": "Tamsin \u2022 Summit Ranger",
+      "pos": [
+        1250,
+        1750
+      ],
+      "sprite": "quest_tamsin"
+    },
+    {
+      "id": "fenna",
+      "name": "Fenna \u2022 Skyworks Keeper",
+      "pos": [
+        2150,
+        1850
+      ],
+      "sprite": "quest_fenna"
+    }
+  ],
+  "routes": [
+    {
+      "name": "Glowroot Grotto",
+      "pos": [
+        6800,
+        1900
+      ],
+      "end": [
+        1000,
+        8000
+      ]
+    },
+    {
+      "name": "Drowned Archive",
+      "pos": [
+        7800,
+        4900
+      ],
+      "end": [
+        5600,
+        8050
+      ]
+    }
+  ],
+  "quests": [
+    {
+      "id": "waylights",
+      "title": "Light the Lost Road",
+      "npc": "edda",
+      "requires": [],
+      "offer": "Three waylights went dark. Recover their glimmers from the old camp, the fallen shrine, and Glowroot Grotto.",
+      "reward_gold": 24,
+      "stages": [
+        {
+          "type": "collect",
+          "text": "Recover the three waylight glimmers",
+          "targets": [
+            {
+              "id": "camp",
+              "pos": [
+                3400,
+                1750
+              ],
+              "name": "Camp glimmer"
+            },
+            {
+              "id": "shrine",
+              "pos": [
+                6000,
+                1250
+              ],
+              "name": "Shrine glimmer"
+            },
+            {
+              "id": "grotto",
+              "pos": [
+                2600,
+                8300
+              ],
+              "name": "Grotto glimmer"
+            }
+          ],
+          "encounters": [
+            {
+              "type": "briar_bandit",
+              "pos": [
+                3500,
+                1900
+              ]
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                3200,
+                1600
+              ]
+            },
+            {
+              "type": "briar_bandit",
+              "pos": [
+                5900,
+                1430
+              ]
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                6200,
+                1150
+              ]
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                2440,
+                8150
+              ]
+            },
+            {
+              "type": "briar_bandit",
+              "pos": [
+                2800,
+                8450
+              ]
+            }
+          ]
+        },
+        {
+          "type": "report",
+          "text": "Return the glimmers to Edda"
+        }
+      ]
+    },
+    {
+      "id": "mill",
+      "title": "The Mill Must Turn",
+      "npc": "orrin",
+      "requires": [],
+      "offer": "Bandits seized the waterwheel. Reach Mosswheel Mill, turn the wheel, then drive them out so the settlement can eat.",
+      "reward_gold": 30,
+      "stages": [
+        {
+          "type": "visit",
+          "text": "Turn the waterwheel at Mosswheel Mill",
+          "targets": [
+            {
+              "id": "wheel",
+              "pos": [
+                4600,
+                3650
+              ],
+              "name": "Waterwheel"
+            }
+          ]
+        },
+        {
+          "type": "clear",
+          "text": "Defeat the mill raiders and their foreman",
+          "encounters": [
+            {
+              "type": "briar_bandit",
+              "pos": [
+                4450,
+                3350
+              ]
+            },
+            {
+              "type": "briar_bandit",
+              "pos": [
+                4900,
+                3500
+              ]
+            },
+            {
+              "type": "briar_bandit",
+              "pos": [
+                4300,
+                3900
+              ]
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                5000,
+                3900
+              ]
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                4800,
+                3250
+              ]
+            },
+            {
+              "type": "rootbound_keeper",
+              "pos": [
+                4900,
+                4100
+              ],
+              "hp": 420
+            }
+          ]
+        },
+        {
+          "type": "report",
+          "text": "Tell Orrin the mill is safe"
+        }
+      ]
+    },
+    {
+      "id": "roots",
+      "title": "A Bell Beneath the Roots",
+      "npc": "sable",
+      "requires": [
+        "waylights",
+        "mill"
+      ],
+      "offer": "The road is lit and the village is fed. Enter the Drowned Archive, awaken its three seals, and defeat the Rootbound Keeper. Bring back the heartbell.",
+      "reward_gold": 40,
+      "stages": [
+        {
+          "type": "switches",
+          "text": "Awaken three seals in the Drowned Archive",
+          "targets": [
+            {
+              "id": "seal1",
+              "pos": [
+                6500,
+                7800
+              ],
+              "name": "Dawn seal"
+            },
+            {
+              "id": "seal2",
+              "pos": [
+                8500,
+                8100
+              ],
+              "name": "Rain seal"
+            },
+            {
+              "id": "seal3",
+              "pos": [
+                7400,
+                9500
+              ],
+              "name": "Root seal"
+            }
+          ],
+          "encounters": [
+            {
+              "type": "briar_bandit",
+              "pos": [
+                6650,
+                7950
+              ]
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                8300,
+                8000
+              ]
+            },
+            {
+              "type": "rootwarden",
+              "pos": [
+                7350,
+                9300
+              ]
+            }
+          ]
+        },
+        {
+          "type": "clear",
+          "text": "Defeat the Rootbound Keeper in the heart chamber",
+          "encounters": [
+            {
+              "type": "rootbound_keeper",
+              "pos": [
+                8550,
+                10000
+              ],
+              "hp": 850,
+              "boss": false
+            },
+            {
+              "type": "glowcap_slinger",
+              "pos": [
+                8150,
+                9900
+              ]
+            },
+            {
+              "type": "briar_bandit",
+              "pos": [
+                8800,
+                9850
+              ]
+            }
+          ]
+        },
+        {
+          "type": "collect",
+          "text": "Claim the heartbell",
+          "targets": [
+            {
+              "id": "heartbell",
+              "pos": [
+                8550,
+                10000
+              ],
+              "name": "Heartbell"
+            }
+          ]
+        },
+        {
+          "type": "report",
+          "text": "Return the heartbell to Sable"
+        }
+      ]
+    },
+    {
+      "id": "summit_bell",
+      "title": "The Last Summit Bell",
+      "npc": "tamsin",
+      "requires": [
+        "waylights"
+      ],
+      "offer": "Follow the eastern trail into Rimecrest. Light the trail beacons, defeat the ice golems, and bring back the bell before the pass freezes.",
+      "reward_gold": 42,
+      "stages": [
+        {
+          "type": "switches",
+          "text": "Light two beacons along the eastern Rimecrest switchbacks",
+          "targets": [
+            {
+              "id": "trail_beacon",
+              "name": "Trailhead Beacon",
+              "pos": [
+                10900,
+                2210
+              ]
+            },
+            {
+              "id": "ridge_beacon",
+              "name": "Ridge Beacon",
+              "pos": [
+                12400,
+                1400
+              ]
+            }
+          ],
+          "encounters": [
+            {
+              "type": "ice_archer",
+              "pos": [
+                12220,
+                1370
+              ],
+              "hp": 110
+            },
+            {
+              "type": "frostling",
+              "pos": [
+                11170,
+                1840
+              ],
+              "hp": 110
+            }
+          ]
+        },
+        {
+          "type": "clear",
+          "text": "Reach the snowy summit and defeat the Rimebound guardians",
+          "encounters": [
+            {
+              "type": "summit_golem",
+              "pos": [
+                13220,
+                2460
+              ],
+              "hp": 300
+            },
+            {
+              "type": "summit_golem",
+              "pos": [
+                14950,
+                2460
+              ],
+              "hp": 320
+            },
+            {
+              "type": "ice_archer",
+              "pos": [
+                15250,
+                1500
+              ],
+              "hp": 120
+            },
+            {
+              "type": "summit_golem",
+              "pos": [
+                14600,
+                760
+              ],
+              "hp": 720
+            }
+          ]
+        },
+        {
+          "type": "collect",
+          "text": "Recover the Summit Bell from the ruined belfry",
+          "targets": [
+            {
+              "id": "summit_bell",
+              "name": "Summit Bell",
+              "pos": [
+                14600,
+                620
+              ]
+            }
+          ]
+        },
+        {
+          "type": "report",
+          "text": "Return to Tamsin in Willowrest with the Summit Bell"
+        }
+      ]
+    },
+    {
+      "id": "skyworks",
+      "title": "Wake the Skyworks",
+      "npc": "fenna",
+      "requires": [
+        "mill"
+      ],
+      "offer": "The old water gardens have dried up. Recover two pump parts in the workshops, open the sluices and clear the reservoir guardians. Follow the eastern waterworks trail.",
+      "reward_gold": 38,
+      "stages": [
+        {
+          "type": "collect",
+          "text": "Recover two pump parts from the Skyworks workshops",
+          "targets": [
+            {
+              "id": "impeller",
+              "name": "Brass Impeller",
+              "pos": [
+                11600,
+                4120
+              ]
+            },
+            {
+              "id": "coil",
+              "name": "Pump Coil",
+              "pos": [
+                11500,
+                5520
+              ]
+            }
+          ],
+          "encounters": [
+            {
+              "type": "sluice_beetle",
+              "pos": [
+                11540,
+                4140
+              ],
+              "hp": 150
+            },
+            {
+              "type": "tidebinder",
+              "pos": [
+                11520,
+                5500
+              ],
+              "hp": 130
+            }
+          ]
+        },
+        {
+          "type": "switches",
+          "text": "Open the three sluice controls around the reservoir",
+          "targets": [
+            {
+              "id": "west",
+              "name": "West Sluice",
+              "pos": [
+                12700,
+                4740
+              ]
+            },
+            {
+              "id": "south",
+              "name": "South Sluice",
+              "pos": [
+                13900,
+                5430
+              ]
+            },
+            {
+              "id": "east",
+              "name": "East Sluice",
+              "pos": [
+                15120,
+                4770
+              ]
+            }
+          ],
+          "encounters": [
+            {
+              "type": "sluice_beetle",
+              "pos": [
+                12800,
+                4800
+              ],
+              "hp": 160
+            },
+            {
+              "type": "tidebinder",
+              "pos": [
+                13960,
+                5410
+              ],
+              "hp": 140
+            },
+            {
+              "type": "inkfin",
+              "pos": [
+                15060,
+                4750
+              ],
+              "hp": 130
+            }
+          ]
+        },
+        {
+          "type": "clear",
+          "text": "Clear the pump-house guardians and restart the Skywell",
+          "encounters": [
+            {
+              "type": "tidebinder",
+              "pos": [
+                14400,
+                4140
+              ],
+              "hp": 250
+            },
+            {
+              "type": "sluice_beetle",
+              "pos": [
+                14080,
+                4150
+              ],
+              "hp": 500
+            },
+            {
+              "type": "inkfin",
+              "pos": [
+                14700,
+                4110
+              ],
+              "hp": 150
+            }
+          ]
+        },
+        {
+          "type": "report",
+          "text": "Return to Fenna in Willowrest; the water gardens flow again"
+        }
+      ]
+    }
+  ]
+}

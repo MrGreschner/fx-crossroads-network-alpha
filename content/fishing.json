@@ -1,0 +1,782 @@
+{
+  "fish": {
+    "reed_roach": {
+      "name": "Reed Roach",
+      "rarity": "Common",
+      "chance": 34,
+      "min_kg": 0.18,
+      "max_kg": 1.2,
+      "max_length": 29,
+      "habitat": "Town Pond",
+      "color": "#b5c9d8",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "copper_bream": {
+      "name": "Copper Bream",
+      "rarity": "Common",
+      "chance": 28,
+      "min_kg": 0.3,
+      "max_kg": 2.6,
+      "max_length": 41,
+      "habitat": "Town Pond",
+      "color": "#e19558",
+      "note": "A bright flash under quiet water."
+    },
+    "pebble_perch": {
+      "name": "Pebble Perch",
+      "rarity": "Common",
+      "chance": 22,
+      "min_kg": 0.25,
+      "max_kg": 2.0,
+      "max_length": 36,
+      "habitat": "Town Pond",
+      "color": "#7eae7d",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "sunspot_koi": {
+      "name": "Sunspot Koi",
+      "rarity": "Uncommon",
+      "chance": 9,
+      "min_kg": 0.6,
+      "max_kg": 4.2,
+      "max_length": 56,
+      "habitat": "Town Pond",
+      "color": "#eba855",
+      "note": "Look closely at its patterned fins."
+    },
+    "bluebell_tench": {
+      "name": "Bluebell Tench",
+      "rarity": "Uncommon",
+      "chance": 7,
+      "min_kg": 0.4,
+      "max_kg": 3.2,
+      "max_length": 47,
+      "habitat": "Town Pond",
+      "color": "#688ec5",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "moonfin_carp": {
+      "name": "Moonfin Carp",
+      "rarity": "Rare",
+      "chance": 2,
+      "min_kg": 1,
+      "max_kg": 6,
+      "max_length": 72,
+      "habitat": "Town Pond",
+      "color": "#b88dd4",
+      "note": "A bright flash under quiet water."
+    },
+    "glass_goby": {
+      "name": "Glass Goby",
+      "rarity": "Rare",
+      "chance": 1,
+      "min_kg": 0.08,
+      "max_kg": 0.65,
+      "max_length": 24,
+      "habitat": "Town Pond",
+      "color": "#64cccd",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "crown_of_the_pond": {
+      "name": "Crown of the Pond",
+      "rarity": "Legendary",
+      "chance": 0.12,
+      "min_kg": 1.5,
+      "max_kg": 8,
+      "max_length": 90,
+      "habitat": "Town Pond",
+      "color": "#eba855",
+      "note": "Look closely at its patterned fins."
+    },
+    "swift_dace": {
+      "name": "Swift Dace",
+      "rarity": "Common",
+      "chance": 22,
+      "min_kg": 0.15,
+      "max_kg": 1.1,
+      "max_length": 28,
+      "habitat": "Crossroads River",
+      "color": "#b5c9d8",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "river_sprat": {
+      "name": "River Sprat",
+      "rarity": "Common",
+      "chance": 20,
+      "min_kg": 0.05,
+      "max_kg": 0.45,
+      "max_length": 22,
+      "habitat": "Crossroads River",
+      "color": "#688ec5",
+      "note": "A bright flash under quiet water."
+    },
+    "rustfin_chub": {
+      "name": "Rustfin Chub",
+      "rarity": "Common",
+      "chance": 18,
+      "min_kg": 0.3,
+      "max_kg": 3,
+      "max_length": 45,
+      "habitat": "Crossroads River",
+      "color": "#e19558",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "ribbon_loach": {
+      "name": "Ribbon Loach",
+      "rarity": "Common",
+      "chance": 16,
+      "min_kg": 0.08,
+      "max_kg": 0.8,
+      "max_length": 25,
+      "habitat": "Crossroads River",
+      "color": "#7eae7d",
+      "note": "Look closely at its patterned fins."
+    },
+    "brook_barbel": {
+      "name": "Brook Barbel",
+      "rarity": "Common",
+      "chance": 14,
+      "min_kg": 0.6,
+      "max_kg": 5,
+      "max_length": 63,
+      "habitat": "Crossroads River",
+      "color": "#b5c9d8",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "ember_trout": {
+      "name": "Ember Trout",
+      "rarity": "Uncommon",
+      "chance": 9,
+      "min_kg": 0.45,
+      "max_kg": 3.3,
+      "max_length": 48,
+      "habitat": "Crossroads River",
+      "color": "#e47662",
+      "note": "A bright flash under quiet water."
+    },
+    "mint_grayling": {
+      "name": "Mint Grayling",
+      "rarity": "Uncommon",
+      "chance": 8,
+      "min_kg": 0.3,
+      "max_kg": 2.7,
+      "max_length": 42,
+      "habitat": "Crossroads River",
+      "color": "#7eae7d",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "silver_skimmer": {
+      "name": "Silver Skimmer",
+      "rarity": "Uncommon",
+      "chance": 6,
+      "min_kg": 0.2,
+      "max_kg": 1.5,
+      "max_length": 32,
+      "habitat": "Crossroads River",
+      "color": "#64cccd",
+      "note": "Look closely at its patterned fins."
+    },
+    "storm_pike": {
+      "name": "Storm Pike",
+      "rarity": "Uncommon",
+      "chance": 5,
+      "min_kg": 1.2,
+      "max_kg": 8,
+      "max_length": 90,
+      "habitat": "Crossroads River",
+      "color": "#688ec5",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "lantern_catfish": {
+      "name": "Lantern Catfish",
+      "rarity": "Rare",
+      "chance": 2.4,
+      "min_kg": 0.8,
+      "max_kg": 7,
+      "max_length": 81,
+      "habitat": "Crossroads River",
+      "color": "#eba855",
+      "note": "A bright flash under quiet water."
+    },
+    "mirror_salmon": {
+      "name": "Mirror Salmon",
+      "rarity": "Rare",
+      "chance": 2,
+      "min_kg": 0.8,
+      "max_kg": 6.5,
+      "max_length": 76,
+      "habitat": "Crossroads River",
+      "color": "#b88dd4",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "thistle_sturgeon": {
+      "name": "Thistle Sturgeon",
+      "rarity": "Rare",
+      "chance": 1.6,
+      "min_kg": 2,
+      "max_kg": 14,
+      "max_length": 144,
+      "habitat": "Crossroads River",
+      "color": "#7eae7d",
+      "note": "Look closely at its patterned fins."
+    },
+    "cobalt_eel": {
+      "name": "Cobalt Eel",
+      "rarity": "Rare",
+      "chance": 1.2,
+      "min_kg": 0.4,
+      "max_kg": 4,
+      "max_length": 54,
+      "habitat": "Crossroads River",
+      "color": "#688ec5",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "royal_sailfin": {
+      "name": "Royal Sailfin",
+      "rarity": "Very rare",
+      "chance": 0.55,
+      "min_kg": 1,
+      "max_kg": 7,
+      "max_length": 81,
+      "habitat": "Crossroads River",
+      "color": "#b88dd4",
+      "note": "A bright flash under quiet water."
+    },
+    "gilded_brookray": {
+      "name": "Gilded Brookray",
+      "rarity": "Very rare",
+      "chance": 0.35,
+      "min_kg": 0.7,
+      "max_kg": 5,
+      "max_length": 63,
+      "habitat": "Crossroads River",
+      "color": "#eba855",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "ancient_river_dragon": {
+      "name": "Ancient River Dragon",
+      "rarity": "Legendary",
+      "chance": 0.06,
+      "min_kg": 3,
+      "max_kg": 20,
+      "max_length": 198,
+      "habitat": "Crossroads River",
+      "color": "#64cccd",
+      "note": "Look closely at its patterned fins."
+    },
+    "cascade_darter": {
+      "name": "Cascade Darter",
+      "rarity": "Common",
+      "chance": 25,
+      "min_kg": 0.15,
+      "max_kg": 1.3,
+      "max_length": 30,
+      "habitat": "Exploration waters",
+      "color": "#64cccd",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "mist_pearl": {
+      "name": "Mist Pearl",
+      "rarity": "Uncommon",
+      "chance": 7,
+      "min_kg": 0.2,
+      "max_kg": 2,
+      "max_length": 36,
+      "habitat": "Exploration waters",
+      "color": "#b5c9d8",
+      "note": "A bright flash under quiet water."
+    },
+    "cascade_crown": {
+      "name": "Cascade Crown",
+      "rarity": "Legendary",
+      "chance": 0.07,
+      "min_kg": 1,
+      "max_kg": 8,
+      "max_length": 90,
+      "habitat": "Exploration waters",
+      "color": "#688ec5",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "aurora_koifin": {
+      "name": "Aurora Koifin",
+      "rarity": "Legendary",
+      "chance": 0.08,
+      "min_kg": 0.8,
+      "max_kg": 6,
+      "max_length": 72,
+      "habitat": "Exploration waters",
+      "color": "#b88dd4",
+      "note": "Look closely at its patterned fins."
+    },
+    "torrent_wyrm": {
+      "name": "Torrent Wyrm",
+      "rarity": "Legendary",
+      "chance": 0.05,
+      "min_kg": 2,
+      "max_kg": 18,
+      "max_length": 180,
+      "habitat": "Exploration waters",
+      "color": "#eba855",
+      "note": "Follows the ripples beside the reeds."
+    },
+    "inkfold_flounder": {
+      "name": "Inkfold Flounder",
+      "rarity": "Uncommon",
+      "chance": 8,
+      "min_kg": 0.3,
+      "max_kg": 2.6,
+      "max_length": 41,
+      "habitat": "Exploration waters",
+      "color": "#b88dd4",
+      "note": "A bright flash under quiet water."
+    },
+    "paper_nautilus": {
+      "name": "Paper Nautilus",
+      "rarity": "Rare",
+      "chance": 1,
+      "min_kg": 0.1,
+      "max_kg": 1.3,
+      "max_length": 30,
+      "habitat": "Exploration waters",
+      "color": "#b5c9d8",
+      "note": "Patient anglers sometimes find unusually large specimens."
+    },
+    "wispfin_lurker": {
+      "name": "Wispfin Lurker",
+      "rarity": "Rare",
+      "chance": 1.2,
+      "min_kg": 0.4,
+      "max_kg": 4,
+      "max_length": 54,
+      "habitat": "Exploration waters",
+      "color": "#7eae7d",
+      "note": "Look closely at its patterned fins."
+    },
+    "chalkblind_loach": {
+      "name": "Chalkblind Loach",
+      "rarity": "Common",
+      "chance": 65,
+      "min_kg": 0.08,
+      "max_kg": 0.7,
+      "max_length": 24,
+      "habitat": "Buried Spring • Descent 38",
+      "color": "#b5c9d8",
+      "note": "Feels its way through the limestone with pale whiskers."
+    },
+    "garnet_char": {
+      "name": "Garnet Char",
+      "rarity": "Uncommon",
+      "chance": 32,
+      "min_kg": 0.25,
+      "max_kg": 2.2,
+      "max_length": 38,
+      "habitat": "Buried Spring • Descent 38",
+      "color": "#e47662",
+      "note": "Its ruby flecks reflect minerals carried by the spring."
+    },
+    "vaultjaw_wyrm": {
+      "name": "Vaultjaw Wyrm",
+      "rarity": "Rare",
+      "chance": 3,
+      "min_kg": 1.2,
+      "max_kg": 7.8,
+      "max_length": 88,
+      "habitat": "Buried Spring • Descent 38",
+      "color": "#b88dd4",
+      "note": "An old cavern hunter whose amber fins resemble lanterns."
+    },
+    "bastion_barbel": {
+      "name": "Bastion Barbel",
+      "rarity": "Common",
+      "chance": 62,
+      "min_kg": 0.4,
+      "max_kg": 3.8,
+      "max_length": 52,
+      "habitat": "North Gate River",
+      "color": "#7eae7d",
+      "note": "Holds steady beneath the river’s strong current."
+    },
+    "watchlight_trout": {
+      "name": "Watchlight Trout",
+      "rarity": "Uncommon",
+      "chance": 34,
+      "min_kg": 0.3,
+      "max_kg": 2.8,
+      "max_length": 43,
+      "habitat": "North Gate River",
+      "color": "#eba855",
+      "note": "Copper spots glow like the watch camp’s lanterns."
+    },
+    "pennant_pike": {
+      "name": "Pennant Pike",
+      "rarity": "Rare",
+      "chance": 4,
+      "min_kg": 1.5,
+      "max_kg": 9.2,
+      "max_length": 101,
+      "habitat": "North Gate River",
+      "color": "#688ec5",
+      "note": "A long silver hunter with pennant-shaped crimson fins."
+    },
+    "moonveil_minnow": {
+      "name": "Moonveil Minnow",
+      "rarity": "Common",
+      "chance": 34,
+      "min_kg": 0.04,
+      "max_kg": 0.4,
+      "max_length": 22,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#b5c9d8",
+      "note": "Small schools trace moonlight along the stone embankment."
+    },
+    "velvet_dace": {
+      "name": "Velvet Dace",
+      "rarity": "Common",
+      "chance": 28,
+      "min_kg": 0.15,
+      "max_kg": 1.4,
+      "max_length": 31,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#b88dd4",
+      "note": "Its plum back is patterned like a festival cloak."
+    },
+    "confetti_perch": {
+      "name": "Confetti Perch",
+      "rarity": "Common",
+      "chance": 22,
+      "min_kg": 0.2,
+      "max_kg": 2.1,
+      "max_length": 37,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#e47662",
+      "note": "Bright freckles resemble scattered festival confetti."
+    },
+    "masque_bream": {
+      "name": "Masque Bream",
+      "rarity": "Uncommon",
+      "chance": 8,
+      "min_kg": 0.5,
+      "max_kg": 3.4,
+      "max_length": 49,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#e19558",
+      "note": "A dark eye band gives this shy fish its masquerade mask."
+    },
+    "ribbon_sailfin": {
+      "name": "Ribbon Sailfin",
+      "rarity": "Uncommon",
+      "chance": 5,
+      "min_kg": 0.3,
+      "max_kg": 2.5,
+      "max_length": 40,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#64cccd",
+      "note": "Fine ribbon fins trail behind it through the canal."
+    },
+    "prism_glassray": {
+      "name": "Prism Glassray",
+      "rarity": "Rare",
+      "chance": 2,
+      "min_kg": 0.6,
+      "max_kg": 5.2,
+      "max_length": 65,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#688ec5",
+      "note": "Pale crystalline markings shimmer over a diamond body."
+    },
+    "midnight_lanternfin": {
+      "name": "Midnight Lanternfin",
+      "rarity": "Rare",
+      "chance": 0.8,
+      "min_kg": 0.4,
+      "max_kg": 4.1,
+      "max_length": 55,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#b88dd4",
+      "note": "Carries a cool moon-blue light above its head."
+    },
+    "crescent_regent": {
+      "name": "Crescent Regent",
+      "rarity": "Legendary",
+      "chance": 0.12,
+      "min_kg": 1.8,
+      "max_kg": 11,
+      "max_length": 117,
+      "habitat": "Moonveil Silver Canal",
+      "color": "#eba855",
+      "note": "A silver crescent crowns a fish few anglers believe exists."
+    }
+  },
+  "pools": {
+    "town_pond": {
+      "name": "Town Pond",
+      "region": "town",
+      "bank": [
+        230,
+        520
+      ],
+      "water": [
+        230,
+        452
+      ],
+      "fish": [
+        "reed_roach",
+        "copper_bream",
+        "pebble_perch",
+        "sunspot_koi",
+        "bluebell_tench",
+        "moonfin_carp",
+        "glass_goby",
+        "crown_of_the_pond"
+      ]
+    },
+    "town_river": {
+      "name": "East Bridge River",
+      "region": "town",
+      "bank": [
+        2495,
+        1340
+      ],
+      "water": [
+        2380,
+        1340
+      ],
+      "fish": [
+        "swift_dace",
+        "river_sprat",
+        "rustfin_chub",
+        "ribbon_loach",
+        "brook_barbel",
+        "ember_trout",
+        "mint_grayling",
+        "silver_skimmer",
+        "storm_pike",
+        "lantern_catfish",
+        "mirror_salmon",
+        "thistle_sturgeon",
+        "cobalt_eel",
+        "royal_sailfin",
+        "gilded_brookray",
+        "ancient_river_dragon"
+      ]
+    },
+    "quest_reed": {
+      "name": "Quiet Reed Stream",
+      "region": "wayfarer",
+      "bank": [
+        5040,
+        1320
+      ],
+      "water": [
+        5220,
+        1320
+      ],
+      "fish": [
+        "swift_dace",
+        "ribbon_loach",
+        "mint_grayling"
+      ]
+    },
+    "quest_brook": {
+      "name": "Wayfarer Brook",
+      "region": "wayfarer",
+      "bank": [
+        5040,
+        4120
+      ],
+      "water": [
+        5220,
+        4120
+      ],
+      "fish": [
+        "river_sprat",
+        "rustfin_chub",
+        "brook_barbel",
+        "silver_skimmer",
+        "mirror_salmon",
+        "gilded_brookray"
+      ]
+    },
+    "quest_deep": {
+      "name": "Deep River Bend",
+      "region": "wayfarer",
+      "bank": [
+        5570,
+        6080
+      ],
+      "water": [
+        5380,
+        6080
+      ],
+      "fish": [
+        "swift_dace",
+        "rustfin_chub",
+        "brook_barbel",
+        "ember_trout",
+        "storm_pike",
+        "lantern_catfish",
+        "thistle_sturgeon",
+        "cobalt_eel",
+        "ancient_river_dragon"
+      ]
+    },
+    "silverfall_spring": {
+      "name": "Ferryman’s Spring",
+      "region": "silverfall",
+      "bank": [
+        1650,
+        6240
+      ],
+      "water": [
+        1820,
+        6240
+      ],
+      "fish": [
+        "cascade_darter",
+        "swift_dace",
+        "mist_pearl",
+        "cascade_crown"
+      ]
+    },
+    "silverfall_cascade": {
+      "name": "Moonwater Cascade",
+      "region": "silverfall",
+      "bank": [
+        5720,
+        2200
+      ],
+      "water": [
+        5940,
+        2200
+      ],
+      "fish": [
+        "cascade_darter",
+        "river_sprat",
+        "mint_grayling",
+        "silver_skimmer",
+        "storm_pike",
+        "thistle_sturgeon",
+        "mist_pearl",
+        "aurora_koifin",
+        "torrent_wyrm"
+      ]
+    },
+    "coast_fold": {
+      "name": "Foldwater Inlet",
+      "region": "folded_coast",
+      "bank": [
+        1640,
+        2450
+      ],
+      "water": [
+        1870,
+        2450
+      ],
+      "fish": [
+        "river_sprat",
+        "ribbon_loach",
+        "lantern_catfish",
+        "cobalt_eel",
+        "gilded_brookray",
+        "inkfold_flounder",
+        "paper_nautilus",
+        "ancient_river_dragon"
+      ]
+    },
+    "marsh_wisp": {
+      "name": "Wispwater Pool",
+      "region": "lantern_marsh",
+      "bank": [
+        1350,
+        4700
+      ],
+      "water": [
+        1530,
+        4850
+      ],
+      "fish": [
+        "ribbon_loach",
+        "brook_barbel",
+        "lantern_catfish",
+        "inkfold_flounder",
+        "wispfin_lurker"
+      ]
+    },
+    "descent_seep": {
+      "name": "Floor 56 • Buried Spring",
+      "region": "descent56",
+      "bank": [
+        460,
+        460
+      ],
+      "water": [
+        580,
+        460
+      ],
+      "fish": [
+        "royal_sailfin",
+        "gilded_brookray",
+        "ancient_river_dragon",
+        "torrent_wyrm",
+        "wispfin_lurker"
+      ]
+    },
+    "descent38_spring": {
+      "name": "Floor 38 • Garnet Spring",
+      "region": "descent38",
+      "bank": [
+        460,
+        460
+      ],
+      "water": [
+        580,
+        460
+      ],
+      "fish": [
+        "chalkblind_loach",
+        "garnet_char",
+        "vaultjaw_wyrm"
+      ],
+      "spring": true
+    },
+    "gate_watchwater": {
+      "name": "North Gate • Watchwater Bank",
+      "region": "defense",
+      "bank": [
+        4300,
+        4530
+      ],
+      "water": [
+        4300,
+        4280
+      ],
+      "fish": [
+        "bastion_barbel",
+        "watchlight_trout",
+        "pennant_pike"
+      ]
+    },
+    "moonveil_canal": {
+      "name": "Moonveil • Silver Canal",
+      "region": "moonveil",
+      "bank": [
+        1700,
+        2630
+      ],
+      "water": [
+        1700,
+        2460
+      ],
+      "fish": [
+        "moonveil_minnow",
+        "velvet_dace",
+        "confetti_perch",
+        "masque_bream",
+        "ribbon_sailfin",
+        "prism_glassray",
+        "midnight_lanternfin",
+        "crescent_regent"
+      ]
+    }
+  }
+}

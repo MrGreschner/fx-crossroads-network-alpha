@@ -1,0 +1,1 @@
+{"id":"archer","name":"Thorn Archer","sprite":"archer","health":60,"speed":95,"damage":9,"aggro_range":490,"behaviour":"ranged","shot_speed":275,"shot_cooldown":2.3}

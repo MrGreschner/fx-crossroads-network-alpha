@@ -1,0 +1,12 @@
+{
+  "id": "continuum_reactor",
+  "name": "Continuum: Reactor Shell",
+  "sprite": "continuum_reactor",
+  "health": 1250,
+  "speed": 80,
+  "damage": 15,
+  "behaviour": "custom",
+  "custom_attack": "reactor_logic",
+  "aggro_range": 850,
+  "expansion_only": true
+}

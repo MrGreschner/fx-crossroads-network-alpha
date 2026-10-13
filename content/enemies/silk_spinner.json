@@ -1,0 +1,14 @@
+{
+  "id": "silk_spinner",
+  "name": "Silk Spinner",
+  "sprite": "silk_spinner",
+  "health": 88,
+  "speed": 76,
+  "damage": 8,
+  "behaviour": "ranged",
+  "aggro_range": 650,
+  "expansion_only": true,
+  "shot_cooldown": 2.8,
+  "shot_speed": 260,
+  "description": "Keeps its distance and throws slowing silk fans."
+}

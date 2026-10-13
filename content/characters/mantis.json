@@ -1,0 +1,93 @@
+{
+  "id": "mantis",
+  "name": "Glimmer Mantis",
+  "sprite": "mantis",
+  "max_health": 110,
+  "speed": 250,
+  "run_cost": 0,
+  "lore": "A patient insect duelist who earns power through precisely timed guards. Three glowing diamonds show stored Poise. Small damage-over-time ticks cannot charge the guard.",
+  "primary": {
+    "name": "Scissor Feint",
+    "style": "scissor_feint",
+    "damage": 22,
+    "cooldown": 0.55,
+    "range": 85,
+    "description": "Alternating close scissor cuts. Aim the broad forward arc."
+  },
+  "secondary": {
+    "name": "Mirror Guard",
+    "style": "mirror_guard",
+    "damage": 0,
+    "cooldown": 4.5,
+    "range": 0,
+    "description": "A 0.45s timing window blocks one hit of at least 5 damage. Gain one Poise, up to three. Holding the button does not extend the window."
+  },
+  "special": {
+    "name": "Glass Verdict",
+    "style": "glass_verdict",
+    "damage": 42,
+    "cooldown": 12,
+    "range": 360,
+    "description": "Three advancing diamond cuts along your aim. Each enemy is hit once: 42 damage plus 10 per stored Poise. Consumes all Poise."
+  },
+  "passive": "Second Wind: A successful Mirror Guard heals 8 HP, at most once every 6s.",
+  "passive_effect": "second_wind",
+  "mastery": {
+    "title": "Master of the Perfect Moment",
+    "technique": {
+      "name": "Long Scissors",
+      "ability": "primary",
+      "description": "Reach 105 and damage 24, but cooldown increases from 0.55s to 0.75s.",
+      "set": {
+        "range": 105,
+        "damage": 24,
+        "cooldown": 0.75
+      }
+    },
+    "final_technique": {
+      "name": "Patient Execution",
+      "ability": "special",
+      "description": "Trade advancing cuts for a close sweeping finisher after a visible 0.8s wind-up. 88 damage plus 12 per Poise; 18s cooldown.",
+      "attack": {
+        "name": "Patient Execution",
+        "style": "patient_execution",
+        "damage": 88,
+        "cooldown": 18,
+        "range": 150,
+        "description": "Wind up for 0.8s, then strike a wide close arc. Consumes Poise. Aim and origin lock when cast."
+      }
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

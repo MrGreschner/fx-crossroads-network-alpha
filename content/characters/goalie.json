@@ -1,0 +1,111 @@
+{
+  "id": "goalie",
+  "name": "Frostguard",
+  "sprite": "goalie",
+  "max_health": 155,
+  "speed": 205,
+  "primary": {
+    "name": "Stick Slash",
+    "style": "slash",
+    "damage": 29,
+    "cooldown": 0.42,
+    "range": 86,
+    "speed": 480,
+    "arc_degrees": 70,
+    "color": "#c1e8f5"
+  },
+  "secondary": {
+    "name": "Glove Reflect",
+    "style": "block",
+    "damage": 1,
+    "cooldown": 2.2,
+    "range": 95,
+    "speed": 350,
+    "duration": 1.1,
+    "reduction": 0.5,
+    "reflect": true,
+    "color": "#c1e8f5"
+  },
+  "special": {
+    "name": "Crease Wall",
+    "style": "ice_wall",
+    "damage": 35,
+    "cooldown": 12.0,
+    "radius": 170,
+    "duration": 4,
+    "color": "#c1e8f5",
+    "travel_speed": 400,
+    "range": 340,
+    "blast_radius": 110,
+    "slow_duration": 3,
+    "description": "Hold Space to aim the landing area; release to launch an ice puck. On impact it deals 35 damage, slows for 3s and raises the existing 4s crease wall. The targeting circle stays hidden until you hold Space."
+  },
+  "passive": "Cold Reprisal: enemies that strike you in melee are slowed for 3 seconds.",
+  "passive_effect": "slow_thorns",
+  "run_cost": 0,
+  "mastery": {
+    "title": "Unbreakable Crease",
+    "technique": {
+      "name": "Deep Freeze",
+      "ability": "special",
+      "description": "Cover 25% more radius with Crease Wall, for 20% less impact damage.",
+      "multiply": {
+        "blast_radius": 1.25,
+        "damage": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Banked Puck",
+      "ability": "primary",
+      "description": "A thin 350-reach puck lane replaces the close strike: 24 damage and a short mild slow. Lower damage frequency than the original.",
+      "attack": {
+        "name": "Banked Puck",
+        "style": "master_lance",
+        "damage": 24,
+        "cooldown": 0.95,
+        "color": "#b4e6ee",
+        "range": 350,
+        "width": 25,
+        "charge": 0.2,
+        "duration": 1.5,
+        "slow_duration": 0.8,
+        "slow": 0.8,
+        "description": "A thin 350-reach puck lane replaces the close strike: 24 damage and a short mild slow. Lower damage frequency than the original.",
+        "visual_texture": "res://assets/mastery_goalie_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

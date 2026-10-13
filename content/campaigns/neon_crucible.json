@@ -1,0 +1,1153 @@
+{
+  "name": "Neon Crucible",
+  "size": [
+    6400,
+    4800
+  ],
+  "rooms": [
+    {
+      "name": "ARRIVAL DOCK",
+      "rect": [
+        240,
+        3000,
+        1600,
+        1400
+      ],
+      "colour": "#9ed9c6"
+    },
+    {
+      "name": "FABRICATION FOUNDRY",
+      "rect": [
+        240,
+        900,
+        1600,
+        1800
+      ],
+      "colour": "#e4b675"
+    },
+    {
+      "name": "SIGNAL ARCHIVES",
+      "rect": [
+        2500,
+        350,
+        1800,
+        1400
+      ],
+      "colour": "#9dd9ef"
+    },
+    {
+      "name": "COOLANT REACTOR",
+      "rect": [
+        2500,
+        2550,
+        1800,
+        1850
+      ],
+      "colour": "#7cdad8"
+    },
+    {
+      "name": "CONTINUUM UPLINK",
+      "rect": [
+        4800,
+        1300,
+        1400,
+        2100
+      ],
+      "colour": "#c8b0ef"
+    },
+    {
+      "name": "SPARE PARTS BAY",
+      "rect": [
+        300,
+        300,
+        1000,
+        500
+      ],
+      "colour": "#c0cf9b"
+    },
+    {
+      "name": "REPAIR GARDEN",
+      "rect": [
+        4600,
+        3900,
+        1500,
+        600
+      ],
+      "colour": "#a1ddb0"
+    },
+    {
+      "name": "",
+      "rect": [
+        760,
+        2400,
+        460,
+        800
+      ],
+      "colour": "#547c8b"
+    },
+    {
+      "name": "",
+      "rect": [
+        1550,
+        1450,
+        1100,
+        340
+      ],
+      "colour": "#547c8b"
+    },
+    {
+      "name": "",
+      "rect": [
+        3150,
+        1450,
+        500,
+        1350
+      ],
+      "colour": "#547c8b"
+    },
+    {
+      "name": "",
+      "rect": [
+        4100,
+        1150,
+        1000,
+        360
+      ],
+      "colour": "#547c8b"
+    },
+    {
+      "name": "",
+      "rect": [
+        4100,
+        3150,
+        1000,
+        340
+      ],
+      "colour": "#547c8b"
+    },
+    {
+      "name": "",
+      "rect": [
+        700,
+        650,
+        350,
+        400
+      ],
+      "colour": "#547c8b"
+    },
+    {
+      "name": "",
+      "rect": [
+        4100,
+        4040,
+        650,
+        280
+      ],
+      "colour": "#547c8b"
+    }
+  ],
+  "props": [
+    {
+      "kind": "forge",
+      "pos": [
+        450,
+        1300
+      ],
+      "size": [
+        150,
+        130
+      ],
+      "solid": [
+        150,
+        130
+      ]
+    },
+    {
+      "kind": "forge",
+      "pos": [
+        450,
+        2100
+      ],
+      "size": [
+        150,
+        130
+      ],
+      "solid": [
+        150,
+        130
+      ]
+    },
+    {
+      "kind": "forge",
+      "pos": [
+        1570,
+        1300
+      ],
+      "size": [
+        150,
+        130
+      ],
+      "solid": [
+        150,
+        130
+      ]
+    },
+    {
+      "kind": "forge",
+      "pos": [
+        1570,
+        2100
+      ],
+      "size": [
+        150,
+        130
+      ],
+      "solid": [
+        150,
+        130
+      ]
+    },
+    {
+      "kind": "belt",
+      "pos": [
+        1050,
+        1350
+      ],
+      "size": [
+        450,
+        90
+      ]
+    },
+    {
+      "kind": "belt",
+      "pos": [
+        1050,
+        2250
+      ],
+      "size": [
+        450,
+        90
+      ]
+    },
+    {
+      "kind": "belt",
+      "pos": [
+        1050,
+        3500
+      ],
+      "size": [
+        450,
+        90
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        2700,
+        650
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        2700,
+        1100
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        2700,
+        1550
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        4080,
+        650
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        4080,
+        1100
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        4080,
+        1550
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "coolant",
+      "pos": [
+        2750,
+        2800
+      ],
+      "size": [
+        210,
+        190
+      ],
+      "solid": [
+        210,
+        190
+      ]
+    },
+    {
+      "kind": "coolant",
+      "pos": [
+        2750,
+        3900
+      ],
+      "size": [
+        210,
+        190
+      ],
+      "solid": [
+        210,
+        190
+      ]
+    },
+    {
+      "kind": "coolant",
+      "pos": [
+        4000,
+        2800
+      ],
+      "size": [
+        210,
+        190
+      ],
+      "solid": [
+        210,
+        190
+      ]
+    },
+    {
+      "kind": "coolant",
+      "pos": [
+        4000,
+        3900
+      ],
+      "size": [
+        210,
+        190
+      ],
+      "solid": [
+        210,
+        190
+      ]
+    },
+    {
+      "kind": "antenna",
+      "pos": [
+        5000,
+        1550
+      ],
+      "size": [
+        80,
+        100
+      ],
+      "solid": [
+        80,
+        100
+      ]
+    },
+    {
+      "kind": "antenna",
+      "pos": [
+        5000,
+        2950
+      ],
+      "size": [
+        80,
+        100
+      ],
+      "solid": [
+        80,
+        100
+      ]
+    },
+    {
+      "kind": "antenna",
+      "pos": [
+        5960,
+        1550
+      ],
+      "size": [
+        80,
+        100
+      ],
+      "solid": [
+        80,
+        100
+      ]
+    },
+    {
+      "kind": "antenna",
+      "pos": [
+        5960,
+        2950
+      ],
+      "size": [
+        80,
+        100
+      ],
+      "solid": [
+        80,
+        100
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        460,
+        3300
+      ],
+      "size": [
+        100,
+        75
+      ],
+      "solid": [
+        100,
+        75
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        1580,
+        4050
+      ],
+      "size": [
+        100,
+        75
+      ],
+      "solid": [
+        100,
+        75
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        530,
+        520
+      ],
+      "size": [
+        100,
+        75
+      ],
+      "solid": [
+        100,
+        75
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        1060,
+        520
+      ],
+      "size": [
+        100,
+        75
+      ],
+      "solid": [
+        100,
+        75
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        4810,
+        4220
+      ],
+      "size": [
+        100,
+        75
+      ],
+      "solid": [
+        100,
+        75
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        5820,
+        4220
+      ],
+      "size": [
+        100,
+        75
+      ],
+      "solid": [
+        100,
+        75
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        3200,
+        700
+      ],
+      "size": [
+        90,
+        65
+      ],
+      "solid": [
+        90,
+        65
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        3600,
+        700
+      ],
+      "size": [
+        90,
+        65
+      ],
+      "solid": [
+        90,
+        65
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        3150,
+        4050
+      ],
+      "size": [
+        90,
+        65
+      ],
+      "solid": [
+        90,
+        65
+      ]
+    },
+    {
+      "kind": "console",
+      "pos": [
+        3560,
+        4050
+      ],
+      "size": [
+        90,
+        65
+      ],
+      "solid": [
+        90,
+        65
+      ]
+    },
+    {
+      "kind": "forge",
+      "pos": [
+        650,
+        1800
+      ],
+      "size": [
+        100,
+        90
+      ],
+      "solid": [
+        100,
+        90
+      ]
+    },
+    {
+      "kind": "forge",
+      "pos": [
+        1450,
+        2000
+      ],
+      "size": [
+        100,
+        90
+      ],
+      "solid": [
+        100,
+        90
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        3000,
+        1100
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        3780,
+        1250
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "server",
+      "pos": [
+        3170,
+        1500
+      ],
+      "size": [
+        95,
+        130
+      ],
+      "solid": [
+        95,
+        130
+      ]
+    },
+    {
+      "kind": "coolant",
+      "pos": [
+        3060,
+        3400
+      ],
+      "size": [
+        160,
+        150
+      ],
+      "solid": [
+        160,
+        150
+      ]
+    },
+    {
+      "kind": "coolant",
+      "pos": [
+        3840,
+        3520
+      ],
+      "size": [
+        160,
+        150
+      ],
+      "solid": [
+        160,
+        150
+      ]
+    },
+    {
+      "kind": "antenna",
+      "pos": [
+        5210,
+        1980
+      ],
+      "size": [
+        80,
+        100
+      ],
+      "solid": [
+        80,
+        100
+      ]
+    },
+    {
+      "kind": "antenna",
+      "pos": [
+        5800,
+        2820
+      ],
+      "size": [
+        80,
+        100
+      ],
+      "solid": [
+        80,
+        100
+      ]
+    }
+  ],
+  "spawns": [
+    {
+      "type": "fork_runner",
+      "pos": [
+        780,
+        3480
+      ],
+      "sector": 0
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        1340,
+        3550
+      ],
+      "sector": 0
+    },
+    {
+      "type": "magnet_hauler",
+      "pos": [
+        1140,
+        3850
+      ],
+      "sector": 0
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        550,
+        3920
+      ],
+      "sector": 0
+    },
+    {
+      "type": "repair_wisp",
+      "pos": [
+        1410,
+        3770
+      ],
+      "sector": 0
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        1470,
+        3200
+      ],
+      "sector": 0
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        840,
+        2500
+      ],
+      "sector": 0
+    },
+    {
+      "type": "magnet_hauler",
+      "pos": [
+        680,
+        2300
+      ],
+      "sector": 0
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        1280,
+        2100
+      ],
+      "sector": 0
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        1250,
+        1300
+      ],
+      "sector": 0
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        600,
+        1550
+      ],
+      "sector": 0
+    },
+    {
+      "type": "repair_wisp",
+      "pos": [
+        650,
+        1940
+      ],
+      "sector": 0
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        1040,
+        1670
+      ],
+      "sector": 0
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        1420,
+        1790
+      ],
+      "sector": 0
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        1100,
+        2150
+      ],
+      "sector": 0
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        1340,
+        2380
+      ],
+      "sector": 0
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        2300,
+        1610
+      ],
+      "sector": 1
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        3200,
+        1000
+      ],
+      "sector": 1
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        3650,
+        1350
+      ],
+      "sector": 1
+    },
+    {
+      "type": "repair_wisp",
+      "pos": [
+        3700,
+        1020
+      ],
+      "sector": 1
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        2850,
+        1340
+      ],
+      "sector": 1
+    },
+    {
+      "type": "magnet_hauler",
+      "pos": [
+        3020,
+        700
+      ],
+      "sector": 1
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        3940,
+        820
+      ],
+      "sector": 1
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        4030,
+        1300
+      ],
+      "sector": 1
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        900,
+        490
+      ],
+      "sector": 1
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        3390,
+        2310
+      ],
+      "sector": 2
+    },
+    {
+      "type": "magnet_hauler",
+      "pos": [
+        3360,
+        3030
+      ],
+      "sector": 2
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        3800,
+        3100
+      ],
+      "sector": 2
+    },
+    {
+      "type": "repair_wisp",
+      "pos": [
+        3670,
+        3620
+      ],
+      "sector": 2
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        3100,
+        3700
+      ],
+      "sector": 2
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        3190,
+        3200
+      ],
+      "sector": 2
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        3990,
+        3440
+      ],
+      "sector": 2
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        3850,
+        4060
+      ],
+      "sector": 2
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        5170,
+        4240
+      ],
+      "sector": 2
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        4550,
+        1320
+      ],
+      "sector": 3
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        5450,
+        1590
+      ],
+      "sector": 3
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        5780,
+        1940
+      ],
+      "sector": 3
+    },
+    {
+      "type": "repair_wisp",
+      "pos": [
+        5750,
+        2470
+      ],
+      "sector": 3
+    },
+    {
+      "type": "magnet_hauler",
+      "pos": [
+        5260,
+        2650
+      ],
+      "sector": 3
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        5570,
+        2890
+      ],
+      "sector": 3
+    },
+    {
+      "type": "hatch_sentinel",
+      "pos": [
+        5990,
+        2380
+      ],
+      "sector": 3
+    },
+    {
+      "type": "sweep_drone",
+      "pos": [
+        5020,
+        2260
+      ],
+      "sector": 3
+    },
+    {
+      "type": "relay_weaver",
+      "pos": [
+        4800,
+        3300
+      ],
+      "sector": 3
+    },
+    {
+      "type": "fork_runner",
+      "pos": [
+        5650,
+        1760
+      ],
+      "sector": 3
+    }
+  ],
+  "bodies": [
+    {
+      "type": "continuum_forge",
+      "name": "Forge Shell",
+      "pos": [
+        1050,
+        1900
+      ],
+      "hp": 800
+    },
+    {
+      "type": "continuum_archive",
+      "name": "Archive Shell",
+      "pos": [
+        3400,
+        1050
+      ],
+      "hp": 1000
+    },
+    {
+      "type": "continuum_reactor",
+      "name": "Reactor Shell",
+      "pos": [
+        3450,
+        3450
+      ],
+      "hp": 1250
+    },
+    {
+      "type": "continuum_crown",
+      "name": "Crown Shell",
+      "pos": [
+        5500,
+        2300
+      ],
+      "hp": 1700
+    }
+  ],
+  "exit": [
+    5500,
+    3160
+  ],
+  "pods": [
+    {
+      "id": "spare",
+      "pos": [
+        620,
+        500
+      ],
+      "sector": 1
+    },
+    {
+      "id": "garden",
+      "pos": [
+        5510,
+        4240
+      ],
+      "sector": 2
+    }
+  ]
+}

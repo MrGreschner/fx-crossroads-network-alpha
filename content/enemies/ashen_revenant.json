@@ -1,0 +1,12 @@
+{
+  "id": "ashen_revenant",
+  "name": "Ashen Revenant",
+  "sprite": "ashen_revenant",
+  "health": 135,
+  "speed": 112,
+  "damage": 18,
+  "behaviour": "custom",
+  "custom_attack": "v43_ashen_revenant",
+  "aggro_range": 720,
+  "expansion_only": true
+}

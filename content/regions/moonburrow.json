@@ -1,0 +1,18 @@
+{
+  "id": "moonburrow",
+  "name": "Moonburrow Hollow",
+  "size": [
+    6400,
+    7000
+  ],
+  "terrain": "moonburrow_grass",
+  "scene": "res://scenes/realms/moonburrow.tscn",
+  "boss_sprite": "flintroot",
+  "boss_enemy": "flintroot",
+  "boss_health": 1250,
+  "xp_per_level": 4,
+  "unlock_cost": 0,
+  "difficulty_label": "Medium \u2014 surface groves, connected warrens and mine hazards",
+  "description": "Bracken\u2019s home: Foxtail Common, Rootwell Ridge and Moonstone Garden connect through four glowing underground warrens. Six enemy species use ambush burrows, crystal volleys, fuse mines, root waves, returning echoes and healing sap. Follow the moving soil trails, dodge warning-marked mines, and confront Flintroot in the ancestral moonstone chamber.",
+  "difficulty_tier": "medium"
+}

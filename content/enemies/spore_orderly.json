@@ -1,0 +1,14 @@
+{
+  "id": "spore_orderly",
+  "name": "Spore Orderly",
+  "sprite": "spore_orderly",
+  "health": 165,
+  "speed": 65,
+  "damage": 10,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_orderly",
+  "description": "A lumbering orderly who plants three delayed spore bursts, then recovers between attacks.",
+  "shot_cooldown": 3.2,
+  "expansion_only": true
+}

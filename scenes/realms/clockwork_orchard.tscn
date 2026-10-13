@@ -1,0 +1,777 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/clock_tree.png" id="tree"]
+
+[ext_resource type="Texture2D" path="res://assets/clock_arch.png" id="arch"]
+
+[node name="ClockworkOrchard" type="Node2D"]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="Points"]
+
+position = Vector2(450,2100)
+
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+
+position = Vector2(300,2100)
+
+[node name="Merchant" type="Marker2D" parent="Points"]
+
+position = Vector2(1100,2250)
+
+[node name="Boss" type="Marker2D" parent="Points"]
+
+position = Vector2(6200,2100)
+
+[node name="GroundPaint" type="Node2D" parent="."]
+
+[node name="Brass0" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(250,1840,6600,1840,6600,2360,250,2360)
+
+metadata/tile = "brass_path"
+
+[node name="Brass1" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(1900,700,2360,700,2360,3700,1900,3700)
+
+metadata/tile = "brass_path"
+
+[node name="Brass2" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(3900,700,4360,700,4360,3700,3900,3700)
+
+metadata/tile = "brass_path"
+
+[node name="Brass3" type="Polygon2D" parent="GroundPaint"]
+
+polygon = PackedVector2Array(5400,1500,6800,1500,6800,2800,5400,2800)
+
+metadata/tile = "brass_path"
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy0" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1100,900)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy1" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1560,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy2" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2020,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy3" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2480,900)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy4" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2940,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy5" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3400,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy6" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3860,900)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy7" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4320,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy8" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4780,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy9" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5240,900)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy10" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5700,900)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy11" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1100,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy12" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1560,1720)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy13" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2020,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy14" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2480,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy15" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2940,1720)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy16" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3400,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy17" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3860,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy18" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4320,1720)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy19" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4780,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy20" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5240,1720)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy21" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5700,1720)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy22" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1100,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy23" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1560,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy24" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2020,2540)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy25" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2480,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy26" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2940,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy27" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3400,2540)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy28" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3860,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy29" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4320,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy30" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4780,2540)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy31" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5240,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy32" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5700,2540)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy33" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1100,3360)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy34" type="Marker2D" parent="Enemies"]
+
+position = Vector2(1560,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy35" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2020,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy36" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2480,3360)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy37" type="Marker2D" parent="Enemies"]
+
+position = Vector2(2940,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy38" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3400,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy39" type="Marker2D" parent="Enemies"]
+
+position = Vector2(3860,3360)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy40" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4320,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy41" type="Marker2D" parent="Enemies"]
+
+position = Vector2(4780,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Enemy42" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5240,3360)
+
+metadata/enemy_id = "pendulum_moth"
+
+[node name="Enemy43" type="Marker2D" parent="Enemies"]
+
+position = Vector2(5700,3360)
+
+metadata/enemy_id = "tick_acorn"
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Tree0" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(500,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree1" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(820,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree2" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1140,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree3" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1460,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree4" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1780,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree5" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2100,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree6" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2420,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree7" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2740,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree8" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3060,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree9" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3380,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree10" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3700,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree11" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4020,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree12" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4340,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree13" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4660,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree14" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4980,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree15" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5300,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree16" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5620,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree17" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5940,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree18" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6260,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree19" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6580,500)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree20" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(500,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree21" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(820,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree22" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1140,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree23" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1460,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree24" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(1780,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree25" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2100,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree26" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2420,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree27" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(2740,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree28" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3060,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree29" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3380,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree30" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(3700,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree31" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4020,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree32" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4340,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree33" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4660,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree34" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(4980,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree35" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5300,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree36" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5620,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree37" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(5940,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree38" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6260,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Tree39" type="Sprite2D" parent="Obstacles"]
+
+position = Vector2(6580,3800)
+
+texture = ExtResource("tree")
+
+metadata/kind = "clock_tree"
+
+metadata/radius = 35.0
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="Arch0" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(900,1670)
+
+texture = ExtResource("arch")
+
+scale = Vector2(1.6,1.6)
+
+[node name="Arch1" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(1900,1670)
+
+texture = ExtResource("arch")
+
+scale = Vector2(1.6,1.6)
+
+[node name="Arch2" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(2900,1670)
+
+texture = ExtResource("arch")
+
+scale = Vector2(1.6,1.6)
+
+[node name="Arch3" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(3900,1670)
+
+texture = ExtResource("arch")
+
+scale = Vector2(1.6,1.6)
+
+[node name="Arch4" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(4900,1670)
+
+texture = ExtResource("arch")
+
+scale = Vector2(1.6,1.6)
+
+[node name="Arch5" type="Sprite2D" parent="Decorations"]
+
+position = Vector2(5900,1670)
+
+texture = ExtResource("arch")
+
+scale = Vector2(1.6,1.6)
+
+[node name="V143_gearhorn_runner_0" type="Node2D" parent="Enemies"]
+position = Vector2(1700, 1900)
+metadata/enemy_id = "gearhorn_runner"
+
+[node name="V143_gearhorn_runner_1" type="Node2D" parent="Enemies"]
+position = Vector2(4550, 2250)
+metadata/enemy_id = "gearhorn_runner"

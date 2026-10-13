@@ -1,0 +1,206 @@
+{
+  "petalbrook": [
+    "bloomtail_regent",
+    "petal_ducker",
+    "briar_tail",
+    "nectar_keeper"
+  ],
+  "confluence": [
+    "confluence_heart",
+    "sluice_crab",
+    "coil_singer",
+    "glass_mender"
+  ],
+  "honeyglass": [
+    "glass_queen",
+    "honey_beetle",
+    "seed_blossom",
+    "amber_hornet"
+  ],
+  "clockwork_orchard": [
+    "hourglass_hart",
+    "pendulum_moth",
+    "tick_acorn"
+  ],
+  "ice": [
+    "frostling",
+    "snow_oracle",
+    "glacier_hound",
+    "ice_archer",
+    "boss:cryowarden"
+  ],
+  "town": [],
+  "first_steps": [],
+  "space": [
+    "drone",
+    "star_mine",
+    "void_seeker",
+    "boss:signal_core"
+  ],
+  "zombie": [
+    "shambler",
+    "spore_thrower",
+    "hazmat_raider",
+    "boss:plague_director"
+  ],
+  "lantern_marsh": [
+    "bellroot",
+    "lantern_crab",
+    "reed_stalker",
+    "wick_wisp",
+    "bog_bellringer"
+  ],
+  "sunfield": [
+    "sun_sentinel",
+    "bramble",
+    "archer",
+    "sunbeam_cantor"
+  ],
+  "neon_crucible": [
+    "continuum_crown",
+    "fork_runner",
+    "sweep_drone",
+    "magnet_hauler",
+    "hatch_sentinel",
+    "repair_wisp",
+    "relay_weaver",
+    "continuum_forge",
+    "continuum_archive",
+    "continuum_reactor"
+  ],
+  "wayfarer": [
+    "briar_bandit",
+    "glowcap_slinger",
+    "rootbound_keeper",
+    "rootwarden",
+    "ice_archer",
+    "frostling",
+    "summit_golem",
+    "sluice_beetle",
+    "tidebinder",
+    "inkfin",
+    "boss:bramble_boss"
+  ],
+  "quarry": [
+    "bramble",
+    "rusher",
+    "archer",
+    "warlock",
+    "boss:bramble_boss"
+  ],
+  "practice": [],
+  "folded_coast": [
+    "cartographer",
+    "inkfin",
+    "foldwing",
+    "crease_sentry"
+  ],
+  "ebonwake": [
+    "last_creditor",
+    "ashen_revenant",
+    "gravity_husk",
+    "mercy_cantor",
+    "chrysalis_knight",
+    "singularity_oracle",
+    "brood_reliquary"
+  ],
+  "moonveil": [
+    "mirror_marquis",
+    "prism_acolyte",
+    "mask_duelist",
+    "lunar_usher"
+  ],
+  "moonburrow": [
+    "flintroot",
+    "burrowfang",
+    "shardspitter",
+    "fusehare",
+    "rootwarden",
+    "echo_bat",
+    "sap_nurse"
+  ],
+  "elementary": [
+    "yellow_bus",
+    "pencil_scrapper",
+    "backpack_biter",
+    "paper_sprite",
+    "recess_ringleader"
+  ],
+  "brasslock": [
+    "lockmaster_regent",
+    "copper_constable",
+    "grate_witch"
+  ],
+  "silverfall": [
+    "crowned_torrent",
+    "cascade_heron",
+    "sluice_beetle",
+    "ripple_eel",
+    "tidebinder"
+  ],
+  "middle_school": [
+    "bellwork_colossus",
+    "backpack_biter",
+    "paper_sprite",
+    "pencil_scrapper",
+    "hall_monitor",
+    "culture_blob",
+    "lunchline_leviathan"
+  ],
+  "shattered_oath": [
+    "thorn_sentinel",
+    "briar_matron",
+    "cinder_salamander",
+    "kiln_knight",
+    "mirror_moth",
+    "mirror_oracle",
+    "storm_rook",
+    "storm_archon",
+    "gilded_usurper",
+    "oath_shade",
+    "mirror_marquis",
+    "rift_weaver",
+    "prism_kite",
+    "comet_urchin",
+    "eclipse_engine",
+    "hourglass_hart",
+    "crowned_torrent",
+    "ripple_eel",
+    "bellroot",
+    "reed_stalker"
+  ],
+  "high_school": [
+    "exam_math",
+    "gravel_skater",
+    "pencil_scrapper",
+    "paper_sprite",
+    "backpack_biter",
+    "hall_monitor",
+    "culture_blob",
+    "spotlight_sovereign",
+    "layercake_golem",
+    "iron_barbell"
+  ],
+  "grove": [
+    "bramble",
+    "archer",
+    "rusher",
+    "lantern_moth",
+    "warlock",
+    "boss:bramble_boss"
+  ],
+  "chimevault": [
+    "silence_regent",
+    "tuning_wraith",
+    "resonance_beetle",
+    "gongbreaker"
+  ],
+  "astral_rift": [
+    "eclipse_engine",
+    "rift_weaver",
+    "prism_kite",
+    "comet_urchin",
+    "gravity_husk",
+    "singularity_oracle"
+  ]
+}

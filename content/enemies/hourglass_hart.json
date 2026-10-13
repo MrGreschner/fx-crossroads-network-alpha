@@ -1,0 +1,13 @@
+{
+  "id": "hourglass_hart",
+  "name": "Hourglass Hart",
+  "sprite": "hourglass_hart",
+  "health": 900,
+  "speed": 75,
+  "damage": 17,
+  "behaviour": "chase",
+  "aggro_range": 420,
+  "shot_speed": 250,
+  "shot_cooldown": 2.7,
+  "expansion_only": true
+}

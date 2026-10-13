@@ -1,0 +1,10 @@
+{
+  "id": "swift_laces",
+  "name": "Swift Laces",
+  "cost": 28,
+  "effect": "bonus_speed",
+  "amount": 24,
+  "description": "Move faster.",
+  "duration": 3,
+  "radius": 145
+}

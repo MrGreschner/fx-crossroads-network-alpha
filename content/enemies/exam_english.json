@@ -1,0 +1,12 @@
+{
+  "id": "exam_english",
+  "name": "Final Exam: English",
+  "sprite": "exam_english",
+  "health": 1900,
+  "speed": 165,
+  "damage": 23,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_exam_english",
+  "expansion_only": true
+}

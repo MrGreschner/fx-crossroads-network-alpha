@@ -1,0 +1,13 @@
+{
+  "id": "lantern_moth",
+  "name": "Lantern Moth",
+  "sprite": "lantern_moth",
+  "health": 72,
+  "speed": 115,
+  "damage": 11,
+  "aggro_range": 520,
+  "behaviour": "ranged",
+  "shot_speed": 315,
+  "shot_cooldown": 2.7,
+  "flying": true
+}

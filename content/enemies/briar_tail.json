@@ -1,0 +1,11 @@
+{
+  "id": "briar_tail",
+  "name": "Briar Tail",
+  "sprite": "briar_tail",
+  "health": 105,
+  "speed": 95,
+  "damage": 12,
+  "behaviour": "chase",
+  "aggro_range": 700,
+  "expansion_only": true
+}

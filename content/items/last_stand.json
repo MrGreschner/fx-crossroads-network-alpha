@@ -1,0 +1,10 @@
+{
+  "id": "last_stand",
+  "name": "Last Stand",
+  "cost": 100,
+  "effect": "revive",
+  "amount": 1,
+  "description": "Prevent one defeat and restore 45 health.",
+  "duration": 3,
+  "radius": 145
+}

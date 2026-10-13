@@ -1,0 +1,11 @@
+{
+  "id": "foldwing",
+  "name": "Foldwing",
+  "sprite": "foldwing",
+  "health": 65,
+  "speed": 110,
+  "damage": 9,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

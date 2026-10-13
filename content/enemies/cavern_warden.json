@@ -1,0 +1,11 @@
+{
+  "id": "cavern_warden",
+  "name": "Cavern Warden",
+  "sprite": "cavern_warden",
+  "health": 400,
+  "speed": 90,
+  "damage": 20,
+  "behaviour": "chase",
+  "expansion_only": true,
+  "aggro_range": 850
+}

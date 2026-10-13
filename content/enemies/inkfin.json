@@ -1,0 +1,11 @@
+{
+  "id": "inkfin",
+  "name": "Inkfin",
+  "sprite": "inkfin",
+  "health": 55,
+  "speed": 95,
+  "damage": 8,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

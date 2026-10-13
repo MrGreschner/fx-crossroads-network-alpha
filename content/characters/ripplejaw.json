@@ -1,0 +1,104 @@
+{
+  "id": "ripplejaw",
+  "name": "Ripplejaw",
+  "sprite": "ripplejaw",
+  "max_health": 105,
+  "speed": 245,
+  "run_cost": 0,
+  "lore": "A stubborn river fish in a tideglass harness, determined to explore beyond the riverbank.",
+  "primary": {
+    "name": "Water Gun",
+    "style": "water_jet",
+    "damage": 21,
+    "cooldown": 0.8,
+    "description": "A short, narrow stream lands three 7-damage pulses over 0.24s. The first enemy or wall stops the stream.",
+    "range": 300,
+    "color": "#9ceaff"
+  },
+  "secondary": {
+    "name": "Splish Splash",
+    "style": "fish_splash",
+    "damage": 26,
+    "cooldown": 6,
+    "description": "Splash nearby foes for 26 damage, leaving three small puddles for 4s. Enemies in puddles move 40% slower.",
+    "radius": 110,
+    "puddle_duration": 4,
+    "puddle_radius": 55,
+    "color": "#79d7f5"
+  },
+  "special": {
+    "name": "Below the Surface",
+    "style": "tidal_maw",
+    "damage": 72,
+    "cooldown": 15,
+    "description": "Aim at a foe within 480. A dark shadow follows it at 75 speed for 1.6s, locks in place for 0.4s, then bites in a 100-radius area: 72 damage, a 1.25s stun and an inward pull. Bosses resist the pull. Targets can escape!",
+    "range": 480,
+    "radius": 100,
+    "stun_duration": 1.25,
+    "pull": 65,
+    "color": "#79d7f5"
+  },
+  "passive": "Slippery Scales: Every third incoming moving projectile is deflected instead of hitting you. The returning shot deals 80% of its damage, capped at 30. Beams and explosions are not reflected.",
+  "passive_effect": "slippery_scales",
+  "mastery": {
+    "title": "Master of the Deep Tide",
+    "technique": {
+      "name": "Lingering Tide",
+      "ability": "secondary",
+      "description": "Puddles last 6s and grow to 65 radius, but the initial splash deals 20 damage instead of 26.",
+      "set": {
+        "damage": 20,
+        "puddle_duration": 6,
+        "puddle_radius": 65
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Shoal Whirlpool",
+      "ability": "special",
+      "description": "Replace the tracking bite with a fixed whirlpool at the aimed foe\u2019s position. After 0.8s it pulls and slows for 3s, dealing six 10-damage ticks. Larger area, but no stun or tracking.",
+      "attack": {
+        "name": "Shoal Whirlpool",
+        "style": "shoal_vortex",
+        "damage": 60,
+        "cooldown": 15,
+        "description": "A fixed 125-radius whirlpool wakes after 0.8s. Six 10-damage ticks pull and slow enemies. No bite stun.",
+        "range": 480,
+        "radius": 125,
+        "color": "#79d7f5",
+        "visual_texture": "res://assets/mastery_ripplejaw_v75.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

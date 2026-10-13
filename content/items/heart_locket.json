@@ -1,0 +1,10 @@
+{
+  "id": "heart_locket",
+  "name": "Heart Locket",
+  "cost": 85,
+  "effect": "bonus_health",
+  "amount": 45,
+  "description": "Gain 45 maximum health.",
+  "duration": 3,
+  "radius": 145
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mask_duelist",
+  "name": "Mask Duelist",
+  "sprite": "mask_duelist",
+  "health": 85,
+  "speed": 105,
+  "damage": 12,
+  "behaviour": "chase",
+  "custom_attack": "",
+  "aggro_range": 600,
+  "shot_cooldown": 3.2,
+  "shot_speed": 260,
+  "expansion_only": true
+}

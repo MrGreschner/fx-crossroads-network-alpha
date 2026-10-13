@@ -1,0 +1,10 @@
+{
+  "id": "thorn_coat",
+  "name": "Thorn Coat",
+  "cost": 76,
+  "effect": "thorns",
+  "amount": 9,
+  "description": "Damage nearby attackers.",
+  "duration": 3,
+  "radius": 145
+}

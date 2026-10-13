@@ -1,0 +1,102 @@
+{
+  "id": "kage",
+  "name": "Kage Moonstep",
+  "sprite": "kage",
+  "run_cost": 0,
+  "max_health": 100,
+  "speed": 260,
+  "lore": "A masked night runner from the rooftops of Moonveil. Kage stitches moonlight into steel and catches every star he sends into the dark.",
+  "primary": {
+    "name": "Twin Fang",
+    "style": "twin_fang",
+    "damage": 12,
+    "cooldown": 0.8,
+    "range": 95,
+    "description": "Two quick directional katana cuts, 0.14 seconds apart. Each deals 12 damage within 95 reach; aim both cuts when you start the attack."
+  },
+  "secondary": {
+    "name": "Windwheel",
+    "style": "windwheel",
+    "damage": 24,
+    "return_damage": 16,
+    "cooldown": 7,
+    "range": 420,
+    "description": "Throw a spinning shuriken that deals 24 damage on the outward leg, then curves back to you for 16 return damage. Each enemy can be hit once per leg. Walls stop it."
+  },
+  "special": {
+    "name": "Eightfold Eclipse",
+    "style": "eightfold_eclipse",
+    "damage": 12,
+    "cooldown": 18,
+    "range": 200,
+    "description": "Mark a moon-circle ahead. After a 0.3s warning, eight shuriken spiral inward over 1.2s. Each enemy can take up to three 12-damage star hits; the center then bursts for 18 damage in a 90 radius. Walls block the stars."
+  },
+  "passive": "Moon Thread: a returning Windwheel marks enemies for 3 seconds. Your next Twin Fang hit consumes the mark for 8 extra damage.",
+  "passive_effect": "moon_thread",
+  "mastery": {
+    "title": "Moonstep Shadow",
+    "technique": {
+      "name": "Heavy Windwheel",
+      "ability": "secondary",
+      "description": "Windwheel hits 25% harder outward, but loses 35% of its return damage.",
+      "multiply": {
+        "damage": 1.25,
+        "return_damage": 0.65
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Moonfall Seals",
+      "ability": "special",
+      "description": "Three delayed moon seals deal 24 and briefly stun. Replaces the eightfold teleport sequence; safer placement but no teleport.",
+      "attack": {
+        "name": "Moonfall Seals",
+        "style": "master_sigils",
+        "damage": 24,
+        "cooldown": 13,
+        "color": "#c6c9ea",
+        "range": 260,
+        "radius": 65,
+        "count": 3,
+        "spacing": 65,
+        "charge": 0.55,
+        "duration": 1.8,
+        "stun_duration": 0.5,
+        "description": "Three delayed moon seals deal 24 and briefly stun. Replaces the eightfold teleport sequence; safer placement but no teleport.",
+        "visual_texture": "res://assets/mastery_kage_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

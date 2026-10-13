@@ -1,0 +1,99 @@
+{
+  "id": "agent",
+  "name": "Agent Smith",
+  "sprite": "agent",
+  "run_cost": 0,
+  "max_health": 110,
+  "speed": 240,
+  "lore": "A Crossroads operative who trades loud explosions for precise red light. His corner lenses and projected squad make even a narrow alley a dangerous place to stand.",
+  "primary": {
+    "name": "Scatterlight",
+    "style": "scatterlight",
+    "damage": 42,
+    "cooldown": 1.0,
+    "range": 420,
+    "description": "Fire seven thin red lasers in a 36-degree cone, 6 damage each. Each ray stops at its first enemy or wall. Maximum 42 damage when every ray hits one target."
+  },
+  "secondary": {
+    "name": "Corner Lens",
+    "style": "corner_lens",
+    "damage": 0,
+    "cooldown": 6,
+    "range": 260,
+    "description": "Deploy a floating lens for 5 seconds. Shotgun rays touching it bend toward a nearby enemy within 360 reach at 80% damage. Place it to create new firing angles; walls still stop the rays."
+  },
+  "special": {
+    "name": "Ambush",
+    "style": "agent_ambush",
+    "damage": 96,
+    "cooldown": 24,
+    "range": 650,
+    "description": "Aim at an enemy. Three circles behind it flash twice across a 120-degree arc. An agent appears in each, charges for 1 second, then fires a 32-damage beam through enemies and walls. Three beams total; they aim at the target when firing."
+  },
+  "passive": "Crossfire Protocol: lens-bent shots mark enemies for 3 seconds. Ambush beams deal 5 extra damage to marked enemies.",
+  "passive_effect": "crossfire_protocol",
+  "mastery": {
+    "title": "Redlight Operative",
+    "technique": {
+      "name": "Longshot Scatter",
+      "ability": "primary",
+      "description": "Scatterlight reaches 35% farther, with 20% less total damage.",
+      "multiply": {
+        "range": 1.35,
+        "damage": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Tripwire Protocol",
+      "ability": "secondary",
+      "description": "Mark a visible three-target tripwire sequence: 20 per target and 1.5s slow. Replaces Corner Lens, with no reflected shot mechanic.",
+      "attack": {
+        "name": "Tripwire Protocol",
+        "style": "master_chain",
+        "damage": 20,
+        "cooldown": 5,
+        "color": "#ed9c9f",
+        "range": 250,
+        "count": 3,
+        "duration": 1.8,
+        "slow_duration": 1.5,
+        "slow": 0.7,
+        "description": "Mark a visible three-target tripwire sequence: 20 per target and 1.5s slow. Replaces Corner Lens, with no reflected shot mechanic.",
+        "visual_texture": "res://assets/mastery_agent_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

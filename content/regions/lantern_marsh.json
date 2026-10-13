@@ -1,0 +1,20 @@
+{
+  "id": "lantern_marsh",
+  "name": "The Lantern Marsh",
+  "size": [
+    8200,
+    6000
+  ],
+  "terrain": "marsh_floor",
+  "scene": "res://scenes/realms/lantern_marsh.tscn",
+  "boss_sprite": "bellroot",
+  "boss_health": 850,
+  "xp_per_level": 4,
+  "boss_secondary": "sporeburst",
+  "expansion": "marsh",
+  "difficulty_label": "Hard: explosive wisps and timed traps",
+  "immersive": true,
+  "boss_enemy": "bellroot",
+  "description": "Explore the raised banks; black water is impassable, mud slows you. Optional treasures reward exploration; exit unlocks after its guardian falls.",
+  "difficulty_tier": "hard"
+}

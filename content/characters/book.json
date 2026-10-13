@@ -1,0 +1,103 @@
+{
+  "id": "book",
+  "name": "Living Book",
+  "sprite": "book",
+  "max_health": 100,
+  "speed": 245,
+  "run_cost": 0,
+  "primary": {
+    "name": "Paper Cut",
+    "style": "identity_strike",
+    "damage": 25,
+    "cooldown": 0.35,
+    "range": 86,
+    "speed": 520,
+    "color": "#e8d5ab",
+    "visual": "paper_cut",
+    "description": "Slash a sharp paper edge in a close 105-degree arc: 25 damage, 86 reach."
+  },
+  "secondary": {
+    "name": "Flying Pages",
+    "style": "page_channel",
+    "damage": 11,
+    "cooldown": 0.35,
+    "range": 460,
+    "speed": 520,
+    "color": "#f6deaf",
+    "description": "Hold secondary to release seeking pages every 0.22s for 11 damage each. Half prioritise the nearest visible enemy; the rest cycle through other visible enemies in range. You cannot move or dodge and take 30% more damage while open. Release to stop."
+  },
+  "special": {
+    "name": "Spellbeam",
+    "style": "beam",
+    "damage": 70,
+    "cooldown": 8.0,
+    "radius": 540,
+    "color": "#b9b0ed"
+  },
+  "passive": "Quick Reading: primary cooldown reduced by 20%.",
+  "passive_effect": "quick_primary",
+  "mastery": {
+    "title": "Keeper of Living Pages",
+    "technique": {
+      "name": "Walking Library",
+      "ability": "secondary",
+      "description": "Move at 30% speed while channeling. Pages release every 0.30s instead of 0.22s and deal 15% less damage. Extra damage taken remains.",
+      "multiply": {
+        "damage": 0.85
+      },
+      "set": {
+        "channel_move": 0.3,
+        "page_interval": 0.3
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Dog-Eared Blades",
+      "ability": "primary",
+      "description": "Two folded page blades curl out and return. A target takes 12 damage at most once on each leg. Longer reach; slower than Paper Cut.",
+      "attack": {
+        "name": "Dog-Eared Blades",
+        "style": "master_pincer",
+        "damage": 12,
+        "cooldown": 0.85,
+        "color": "#eee6bf",
+        "range": 240,
+        "width": 55,
+        "duration": 1.65,
+        "description": "Two folded page blades curl out and return. A target takes 12 damage at most once on each leg. Longer reach; slower than Paper Cut.",
+        "visual_texture": "res://assets/mastery_book_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

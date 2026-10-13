@@ -1,0 +1,101 @@
+{
+  "id": "hazel_hex",
+  "sprite": "hazel_hex",
+  "name": "Hazel Hex",
+  "max_health": 100,
+  "speed": 225,
+  "run_cost": 0,
+  "lore": "Lantern Marsh\u2019s kindly witch ties glowing embers to spinning spell-chains. Her broom delivers remedies\u2014and a few surprises\u2014to friends along the swamp roads.",
+  "primary": {
+    "name": "Wickchain",
+    "style": "witch_chain",
+    "damage": 18,
+    "cooldown": 0.85,
+    "range": 480,
+    "description": "A spinning chain fireball hits one foe for 18 damage and 35% slow for 2s. If it misses or hits a wall, it leaves a poison pool for 4s: 2 poison damage per second, 30% slow.",
+    "ui_brief": "One projectile \u2022 18 damage + slow \u2022 poison on a miss"
+  },
+  "secondary": {
+    "name": "Broom Express",
+    "style": "witch_flight",
+    "damage": 10,
+    "cooldown": 16,
+    "range": 1100,
+    "description": "Fly toward the selected point, up to 1100 range along a clear route. Drop up to six warned bombs: 10 damage, 0.45s stun and 2 burn damage per second for 3s. Cannot attack or dodge during flight.",
+    "ui_brief": "Long flight \u2022 up to six stunning, burning bombs"
+  },
+  "special": {
+    "name": "Neighbourhood Brew",
+    "style": "witch_brew",
+    "damage": 8,
+    "cooldown": 25,
+    "range": 240,
+    "description": "Place a cauldron for 7s. It lobs 8-damage poison splatters toward nearby foes every 1.0s, leaving slowing poison pools. Within 150 reach, allies gain +5% damage and 8% life-on-hit, capped at 6 healing per second. Auras do not stack; damage-over-time does not trigger healing. Each volley fires at every visible enemy within 310 reach.",
+    "ui_brief": "Cauldron \u2022 attacks all foes in range \u2022 allied aura"
+  },
+  "passive": "Ember Infusion: Broom Express bomb burns last one extra second.",
+  "passive_effect": "ember_infusion",
+  "mastery": {
+    "title": "Mistress of the Lantern Coven",
+    "technique": {
+      "name": "Cold Wick",
+      "ability": "primary",
+      "description": "Trade ground poison for a stronger direct hit and a greater slow.",
+      "attack": {
+        "name": "Cold Wick",
+        "style": "witch_chain",
+        "damage": 23,
+        "cooldown": 0.85,
+        "range": 480,
+        "description": "23 direct damage and 50% slow for 2s. Missed shots leave slowing frost pools without poison.",
+        "frost": true
+      }
+    },
+    "final_technique": {
+      "name": "Welcoming Brew",
+      "ability": "special",
+      "description": "Trade offensive splatters for steady healing. The support aura remains.",
+      "attack": {
+        "name": "Welcoming Brew",
+        "style": "witch_brew",
+        "damage": 0,
+        "cooldown": 25,
+        "range": 240,
+        "description": "A 7s cauldron heals allies within 150 reach for 3 health every 0.7s. Keeps its +5% damage and capped life-on-hit aura; fires no splatters.",
+        "gentle": true
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "elementary",
+  "name": "Firstbell Elementary",
+  "size": [
+    7200,
+    6000
+  ],
+  "terrain": "school_tile",
+  "scene": "res://scenes/realms/elementary.tscn",
+  "school_campaign": "res://content/schools/elementary.json",
+  "boss_sprite": "yellow_bus",
+  "boss_health": 650,
+  "xp_per_level": 2,
+  "difficulty_label": "Easy \u2014 classrooms, playground guardian and the Last Bus",
+  "description": "Enter the school, clear its classrooms, unlock the playground, defeat its guardian, then fight back through the halls. Your final obstacle is a giant yellow bus waiting on the street."
+}

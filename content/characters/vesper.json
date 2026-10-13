@@ -1,0 +1,111 @@
+{
+  "id": "vesper",
+  "name": "Vesper",
+  "sprite": "vesper",
+  "max_health": 100,
+  "speed": 245,
+  "run_cost": 0,
+  "lore": "A bat courier who carries lost stars between broken observatories.",
+  "primary": {
+    "name": "Orbitblade",
+    "style": "return_disc",
+    "damage": 16,
+    "cooldown": 1.1,
+    "range": 220,
+    "speed": 380,
+    "color": "#94eafa"
+  },
+  "secondary": {
+    "name": "Comet Seal",
+    "style": "target_aoe",
+    "damage": 32,
+    "cooldown": 5,
+    "range": 300,
+    "blast_radius": 85,
+    "color": "#bcb0ff",
+    "travel_speed": 420,
+    "hold_charge": {
+      "seconds": 1.5,
+      "damage": 1.75,
+      "blast": 1.4
+    },
+    "description": "Hold secondary to summon a comet overhead. Release to drop it at your landing marker: 32\u201356 damage, with an 85\u2013119 blast radius. The marker is visible only while held.",
+    "sky_comet": true
+  },
+  "special": {
+    "name": "Starlit Veil",
+    "style": "block",
+    "damage": 0,
+    "cooldown": 12,
+    "duration": 4,
+    "reduction": 0.6,
+    "color": "#9bdeee"
+  },
+  "passive": "Night Rhythm: secondary cooldown is 20% shorter.",
+  "passive_effect": "quick_secondary",
+  "mastery": {
+    "title": "Comet Adept",
+    "technique": {
+      "name": "Quick Comet",
+      "ability": "secondary",
+      "description": "The summoned comet falls 50% faster, but its blast radius is 20% smaller.",
+      "multiply": {
+        "travel_speed": 1.5,
+        "blast_radius": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Dusk Roost",
+      "ability": "special",
+      "description": "Replace the shield with a 3s dusk field: six 4-damage pulses slow enemies inside. Ground control instead of personal defence.",
+      "attack": {
+        "name": "Dusk Roost",
+        "style": "master_fountain",
+        "damage": 4,
+        "cooldown": 12,
+        "color": "#9db8d6",
+        "range": 180,
+        "radius": 130,
+        "heal": 0,
+        "duration": 3,
+        "slow_duration": 0.65,
+        "slow": 0.7,
+        "description": "Replace the shield with a 3s dusk field: six 4-damage pulses slow enemies inside. Ground control instead of personal defence.",
+        "visual_texture": "res://assets/mastery_vesper_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "npc_bastion",
+  "name": "Brass Bastion",
+  "sprite": "npc_bastion",
+  "npc_only": true,
+  "max_health": 175,
+  "speed": 210,
+  "primary": {
+    "name": "Hammer Sweep",
+    "style": "melee",
+    "damage": 25,
+    "cooldown": 0.85,
+    "range": 110,
+    "arc_degrees": 115,
+    "color": "#efc889"
+  },
+  "secondary": {
+    "name": "Brace",
+    "style": "block",
+    "damage": 0,
+    "cooldown": 7,
+    "range": 0,
+    "reduction": 0.55,
+    "duration": 1.5
+  },
+  "special": {
+    "name": "Bulwark Rush",
+    "style": "charge",
+    "damage": 30,
+    "cooldown": 9,
+    "range": 310,
+    "speed": 520
+  },
+  "passive_effect": ""
+}

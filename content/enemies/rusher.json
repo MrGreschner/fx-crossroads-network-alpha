@@ -1,0 +1,1 @@
+{"id":"rusher","name":"Bramble Rusher","sprite":"bramble","health":60,"speed":160,"damage":12,"aggro_range":450,"behaviour":"chase"}

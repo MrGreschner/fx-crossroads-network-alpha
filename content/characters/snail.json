@@ -1,0 +1,94 @@
+{
+  "id": "snail",
+  "name": "Molten Pilgrim",
+  "sprite": "snail",
+  "max_health": 165,
+  "speed": 75,
+  "run_cost": 0,
+  "lore": "A volcanic snail carrying a living furnace. Crawling is painfully slow and dodge travels only 28% as far. Learn to aim Shellbound from one lava patch to the next; the airborne arc is visible, but does not make you invulnerable.",
+  "primary": {
+    "name": "Furnace Breath",
+    "style": "magma_breath",
+    "damage": 32,
+    "cooldown": 1.15,
+    "description": "A short 130-range lava burst deals 32 damage and burns for 1 per second for 3s. Leaves non-stacking lava patches: 3 damage per second while standing in them.",
+    "range": 130,
+    "color": "#ff8232"
+  },
+  "secondary": {
+    "name": "Shellbound",
+    "style": "shell_lob",
+    "damage": 22,
+    "cooldown": 4,
+    "description": "Lob yourself up to 460 over 0.8s. Land for 22 splash damage, a mild 3s burn and lava patches dealing 3 damage per second. Walls stop travel; flight is not invulnerable.",
+    "range": 460,
+    "color": "#ff8232"
+  },
+  "special": {
+    "name": "Backdraft Volcano",
+    "style": "back_volcano",
+    "damage": 12,
+    "cooldown": 20,
+    "description": "For 6s, your shell erupts with two lava balls every 0.5s. Each lands for 12 damage and leaves lava. Overlapping lava patches do not stack their damage.",
+    "color": "#ff8232"
+  },
+  "passive": "Melting Presence: Enemies within 155 lose up to 40 percentage points of damage reduction (60% becomes 20%). Cannot reduce protection below zero or cancel invulnerability. Does not stack with another snail.",
+  "passive_effect": "melting_presence",
+  "mastery": {
+    "title": "Keeper of the Living Caldera",
+    "technique": {
+      "name": "Long Migration",
+      "ability": "secondary",
+      "description": "Shellbound reaches 600 instead of 460, but impact falls from 22 to 14 damage.",
+      "set": {
+        "range": 600,
+        "damage": 14
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Caldera Crown",
+      "ability": "special",
+      "description": "Replace the moving 6s volcano with a warned ring eruption around your current spot. Deals 60 once per foe and leaves eight lava patches for 6s; the centre is safe.",
+      "attack": {
+        "name": "Caldera Crown",
+        "style": "caldera_ring",
+        "damage": 60,
+        "cooldown": 20,
+        "description": "Warn for 0.75s, then erupt an eight-patch lava ring at 120 radius. A foe hit by overlapping patches takes the initial 60 only once. Lava lasts 6s.",
+        "color": "#ff8232"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

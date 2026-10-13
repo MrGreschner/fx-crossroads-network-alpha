@@ -1,0 +1,12 @@
+{
+  "id": "relay_weaver",
+  "name": "Relay Weaver",
+  "sprite": "relay_weaver",
+  "health": 100,
+  "speed": 90,
+  "damage": 15,
+  "behaviour": "ranged",
+  "custom_attack": "signal_fence",
+  "aggro_range": 850,
+  "expansion_only": true
+}

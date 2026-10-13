@@ -1,0 +1,12 @@
+{
+  "id": "prism_kite",
+  "name": "Prism Kite",
+  "sprite": "prism_kite",
+  "health": 72,
+  "speed": 90,
+  "damage": 9,
+  "behaviour": "chase",
+  "custom_attack": "beam",
+  "aggro_range": 500,
+  "expansion_only": true
+}

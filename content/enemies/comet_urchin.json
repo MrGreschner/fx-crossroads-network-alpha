@@ -1,0 +1,12 @@
+{
+  "id": "comet_urchin",
+  "name": "Comet Urchin",
+  "sprite": "comet_urchin",
+  "health": 96,
+  "speed": 80,
+  "damage": 12,
+  "behaviour": "chase",
+  "custom_attack": "charge",
+  "aggro_range": 500,
+  "expansion_only": true
+}

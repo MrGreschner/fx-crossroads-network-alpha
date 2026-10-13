@@ -1,0 +1,10 @@
+{
+  "id": "medkit",
+  "name": "Field Medkit",
+  "cost": 35,
+  "effect": "heal",
+  "amount": 65,
+  "description": "Restore 65 health.",
+  "duration": 3,
+  "radius": 145
+}

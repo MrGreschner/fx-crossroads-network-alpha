@@ -1,0 +1,10 @@
+{
+  "id": "sprint_kit",
+  "name": "Sprint Kit",
+  "cost": 22,
+  "effect": "haste",
+  "amount": 1.6,
+  "description": "Short burst of speed.",
+  "duration": 3,
+  "radius": 145
+}

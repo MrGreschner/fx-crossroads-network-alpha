@@ -1,0 +1,97 @@
+{
+  "id": "tidewright",
+  "name": "Tide Keeper",
+  "sprite": "tidewright",
+  "max_health": 135,
+  "speed": 235,
+  "run_cost": 0,
+  "lore": "One of Confluence Foundry\u2019s twin otter keepers, wearing the same copper-trimmed engineer uniform as Spark Keeper. An otter sluice engineer from Confluence Foundry. Water hits mark foes for 3s. Spark Keeper can consume a water mark for a 10-damage discharge in an 85-radius area; the reverse combination works too. Friendly water and lightning fields overlap for one extra 5-damage pulse per water tick. Both heroes work alone.",
+  "primary": {
+    "name": "Rivet of Rain",
+    "style": "tide_needle",
+    "damage": 23,
+    "cooldown": 0.65,
+    "range": 420,
+    "description": "A narrow water dart; stops at the first foe or wall. Applies 20% slow for 0.9s and a water mark.",
+    "color": "#8ddedc"
+  },
+  "secondary": {
+    "name": "Pocket Sluice",
+    "style": "sluice_pool",
+    "damage": 8,
+    "cooldown": 7,
+    "range": 380,
+    "description": "Aim a 95-radius water pool. Four seconds of pulses, water marks and brief slows. Only three fields per hero can exist.",
+    "color": "#8ddedc",
+    "radius": 95,
+    "duration": 4
+  },
+  "special": {
+    "name": "Grand Waterwheel",
+    "style": "tidal_wheel",
+    "damage": 16,
+    "cooldown": 18,
+    "range": 430,
+    "description": "Aim a 145-radius waterwheel that rolls forward at 65 speed for 4s, pulsing every 0.8s. Walls stop its travel. Its water marks combine with friendly lightning.",
+    "color": "#8ddedc"
+  },
+  "passive": "Sluice Shelter: Your water fields grant you and nearby allies 8% damage reduction while inside.",
+  "passive_effect": "sluice_shelter",
+  "mastery": {
+    "title": "Keeper of the Living Current",
+    "technique": {
+      "name": "Wide Waterworks",
+      "ability": "secondary",
+      "description": "Pool radius 125 instead of 95, but pulse damage falls from 8 to 5. Earned by clearing Confluence Foundry in co-op with Tide Keeper and Spark Keeper.",
+      "set": {
+        "radius": 125,
+        "damage": 5
+      }
+    },
+    "final_technique": {
+      "name": "Rain Harp",
+      "ability": "primary",
+      "description": "Three water darts in a fan, each 10 damage. Slower firing; more coverage. All can combine with friendly lightning marks.",
+      "attack": {
+        "name": "Rain Harp",
+        "style": "tide_fan",
+        "damage": 10,
+        "cooldown": 0.85,
+        "range": 390,
+        "description": "Three 10-damage water darts in a fan.",
+        "color": "#8ddedc"
+      }
+    },
+    "technique_requirements": {
+      "duet_realm": "confluence",
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "hatch_sentinel",
+  "name": "Hatch Sentinel",
+  "sprite": "hatch_sentinel",
+  "health": 85,
+  "speed": 0,
+  "damage": 15,
+  "behaviour": "ranged",
+  "custom_attack": "rise_volley",
+  "aggro_range": 850,
+  "expansion_only": true
+}

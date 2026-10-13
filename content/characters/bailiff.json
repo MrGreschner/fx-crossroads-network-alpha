@@ -1,0 +1,96 @@
+{
+  "id": "bailiff",
+  "name": "Velvet Bailiff",
+  "sprite": "bailiff",
+  "max_health": 145,
+  "speed": 180,
+  "run_cost": 0,
+  "lore": "A patient tortoise who rearranges a fight rather than racing through it. Thread slows, flowing traffic gates and a clearly warned quiet court reward careful placement.",
+  "primary": {
+    "name": "Velvet Thread",
+    "style": "bailiff_thread",
+    "damage": 15,
+    "cooldown": 0.8,
+    "range": 400,
+    "description": "A thread dart deals 15 and slows by 40% for 1.2s."
+  },
+  "secondary": {
+    "name": "Traffic Order",
+    "style": "traffic_order",
+    "damage": 0,
+    "cooldown": 8,
+    "range": 330,
+    "description": "An aimed 145-radius order lasts 3s. Slow enemies by 45% and gently move them sideways along the marked gates. No damage."
+  },
+  "special": {
+    "name": "Quiet Court",
+    "style": "quiet_court",
+    "damage": 28,
+    "cooldown": 18,
+    "range": 350,
+    "description": "After a visible 0.8s warning, a 150-radius court deals 28 and stuns foes for 1.8s. Walls block its effect."
+  },
+  "passive": "Due Process: Casting Traffic Order grants you 20% damage reduction for 2s.",
+  "passive_effect": "due_process",
+  "mastery": {
+    "title": "Arbiter of the Quiet Court",
+    "technique": {
+      "name": "Inward Order",
+      "ability": "secondary",
+      "attack": {
+        "name": "Inward Order",
+        "style": "inward_order",
+        "damage": 0,
+        "cooldown": 10,
+        "range": 330,
+        "description": "Pull affected foes gently toward the centre instead of sideways; retain the slow for 3s."
+      },
+      "description": "Trade sideways flow for a central pull and longer cooldown."
+    },
+    "final_technique": {
+      "name": "Twin Threads",
+      "ability": "primary",
+      "attack": {
+        "name": "Twin Threads",
+        "style": "twin_threads",
+        "damage": 9,
+        "cooldown": 1,
+        "range": 400,
+        "description": "Two narrow 9-damage threads. Each applies the normal slow; less focused damage and slower recovery."
+      },
+      "description": "Replace one thread with two weaker threads in a narrow fan."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

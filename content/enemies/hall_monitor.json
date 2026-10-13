@@ -1,0 +1,12 @@
+{
+  "id": "hall_monitor",
+  "name": "Hall-Pass Sentinel",
+  "sprite": "hall_monitor",
+  "health": 100,
+  "speed": 82,
+  "damage": 12,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_hall_monitor",
+  "expansion_only": true
+}

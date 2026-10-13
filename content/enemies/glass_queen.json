@@ -1,0 +1,13 @@
+{
+  "id": "glass_queen",
+  "name": "Queen Mellifera",
+  "sprite": "glass_queen",
+  "health": 640,
+  "speed": 55,
+  "damage": 10,
+  "behaviour": "chase",
+  "aggro_range": 380,
+  "shot_speed": 200,
+  "shot_cooldown": 3.4,
+  "expansion_only": true
+}

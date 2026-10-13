@@ -1,0 +1,133 @@
+{
+  "ability_api": "workshop-1",
+  "author": "Crossroads Studio example",
+  "code_lab": {
+    "api": "workshop-1",
+    "enabled": false
+  },
+  "concept": "A patient melee guardian trades reach and burst for recovery and control. Compare its melee primary with a weaker ranged mastery alternative.",
+  "format": "fx-crossroads-workshop",
+  "hero": {
+    "art": {
+      "attack": "iVBORw0KGgoAAAANSUhEUgAAABwAAAAgCAYAAAABtRhCAAAB3UlEQVR4nO1WPUtCURh+vBWWNAQugeBS0YcujUalRFNLm4O/IKhNG/qACMIW3Qpaos1BWhoUhEitqDECLaNaLghBCBFx7RJ4m+7pfpx77kcJDT5wh/Oe9zzP+z73nleBDjqwCZfVREmoS+SQx+cyirVFUGwKAAB3nwfKWK93xJSvWxtIJ2KSNra8tm2pqM/Go7S/u6WLx1MZUoiqonQiJoUjAVVyMBQFoO+Ghcp1VrUul6pElGOJKSE2BfLYRTgSIM5xtAS/32eb1CoPVbCdsCy4upHEwuKS7T3HgtUK72jPseBfQXcPjZA/OXC0Z0mQ5+vMQ427e9XaOzFOzaPxqCwtl6rs8hRihVwRhVyRWoAWSl7SYTyVcaUTMUkrGgyZ1sAUUPIDlOFtNkuNupFttTVLZTzVriQA8A96AQA97gGIwruhqCzGdbVIjH9pAACGx6ZUGpa+0i/xDcc1hYj2MtV+LIwG6B+QLUEAuK2/WsozE6RefNkG2Ra7MLITYPziR+fnpOTejiNBAFhf2UT29EzHz7Q0f3iEy5tnsqYRKAucnhxS5dPAnKVmh53k/9/hDQCjszO6oWAXuncik/a39M1/cC1dTAYr/+H8gugYdsgi/02+6R9XJzYqO9LiG+tBvNfwAYzIAAAAAElFTkSuQmCC",
+      "idle": "iVBORw0KGgoAAAANSUhEUgAAABwAAAAgCAYAAAABtRhCAAAB5ElEQVR4nGNgGAVUBozEKvz/7el/uCYuaUZcYjSx8Of3bwwMDAwM7JxcDMhiHMKqBM1jQRfoLYn6jy6WXdlIlKN+vL39f2p7PYZ4cc8yuENQXNRbEvXf3kEbRbGOZRgDAwOmb/CBK8dXofAPHrgKt5QJn2XI4Of3b3BMKrB30IaHHBM2BXJy0iQbSqw5WC2kJSDawtLqNgYv/wyS5ci28OqVR2TJkW0htQBGPsQFtm2cQZYcURY+evQUr6a3166j8IW1NLGqw2YOSpAePHAVv/OQLNu5dT/Dzq37sToAHSCbC/dhcc8yxt6SqP/olupYEnQDXguQzWdgwFJ4EypLcfkGFqwklaUwcOfGsf8MDAwMchLCcLF/fxGhjysOmZj/wcUevXjLwMDAwKCiYYViB9GpFNkwUV11NNl/DMQCovIhK7sA0QYSAkT58PfPDwyrruJPiTAQpo09i5BkIQMDA8PFp6+pYiHWIIVFNCziSQW4EgwDA542TZiL0/+2KS1kWcjAwMBQlVPDsGrPPgzz8QbptrnzGY6cvwvnYzMA2YE2hsoo6rEBvKmUkGZy1A/e6omBgYFB3c4Wo9gjFWDECcxQnn+Ynv/ChLtEwaf+5qHDcHtw+hCf4ZSoJ9g0JycYkX2EDgCi57yvgsodWgAAAABJRU5ErkJggg==",
+      "walk1": "iVBORw0KGgoAAAANSUhEUgAAABwAAAAgCAYAAAABtRhCAAACDElEQVR4nN1WOUgDURB9WRU1iAhREIU0KlGjhaXiEcTKxi5FCmuJIkhi4QFio4WmFAR7i3QWCoIYD9BShMQDtQlEBA2ISGIQ91vIrnv8/TsbTOODLXZm/nsz80/gv8NFDWS5DFMHuZtdVraSCBbyOQBAZbUbWluVp82Wr9xoiEVDzGibnFsmJfWRvWMbq0sme2R9W01El1EsGmJDAb8uuKs3CMBcjQjJ87ju//gopYpKIjEtCvmc+jnFUMCvdk7iBXi9zY5JqTxcwVKCLDi7sILRsQnHvqIFU8l0Ub6iBf8Kpn1ohb2dzaJ8JMF0OiMclL261v17Oju4cTweXUuPj1Li9DRi+7sJ7O8muAkYoeVVK4ysb7ti0RAzinb12uYgFNDyA5zD2+4stapGaaujs1TB/c0ZAwBvo0e1yV+/3beaQ6lMVm3ppywAoLW9T6dBXqVasoZun8ErgwrSPqyorCMT2oFU4WfhFfGUeCUqCPr5W8SRIABcZp5LJ1hXWw0AeMv93H21bjcvzBJWCwawWKUvjxe6rfH6lieLKckCQH1Tj4mf1NL5qUUAQPzg0PKRFBwZZv09LQjNhIVc5NtCJKb4p9e2nL/aACA8HqHm4RjkVeobHGC3J6fClgL2yZoEfYMD7OHjyxz5R1c1t8J3iX5UAT9JUmPJT307wRrZ3IJ3SYZxGshzaAdqV74BWiK/LRJH1VQAAAAASUVORK5CYII=",
+      "walk2": "iVBORw0KGgoAAAANSUhEUgAAABwAAAAgCAYAAAABtRhCAAACEUlEQVR4nO2WPUgjQRTH/1m/LkFCIBwIgRwHStT4USskBklx2FyXIoWtonaJhXpw2GhjypOrLSzSWSgIcn6BVx8k6nHaLAQECYhIYhB3LCTj7Ozs7OwSu/vBFvPmzfu/9zIfAf7TYnyqjqRWIXRRIOKzs72LYKNeAwB0+QNgbR/CfY7x2nlDIZ8lvG1+aVUpqcfqP/Jj/bvFntvYpomYMirks2QiFTc5D41lAFirkVH6XTSNj4/KVFSTibE06jX6uWUiFaed00QO0WjEdVDVOELB90RZcHFlDVNfZ13PeRYsl3RPc54FW4XlHNqxt/PT05ySoK5XpIuq5xemcXhwQOgnimNq6fFRWZ4eI7a/e4j93UNhAjxsXFphbmPbV8hnCS86NOaYg1SAjQ8ILm+nu9SummZbXd2lTa4uzwgARHvC1GY8v3Xf7jfU2gxq02+qAIDe/nGThvIuZYN9HI5xswZUUTqHHV0h5YBOKFX41LhDsSzfiU0ycfERcSUIAH8qt0p+Xz5/AgCEgn7c3dfVBENBPwDgvvb69gUDAZGbI/yGsRXk0W+qmBmxf5zdoCS4vPANAFA8+CX9k5RJT5LNrYJpzK9REnQSYpmbzknnbQNl0pOWG0cmHEsmyGhnh8XuqUJVrh+fhYn8PTmloq4e4FgyYama5UEzLB+PsEWxZIJ0G9ZcHjQDbLZesG2pKLtW8AJ0C8ckDM5WIQAAAABJRU5ErkJggg=="
+    },
+    "lore": "A young ram from the Crossroads gardens who weaves seeking leaves into protective magic.",
+    "max_health": 120.0,
+    "name": "Willow Apprentice",
+    "passive": "defence",
+    "primary": {
+      "charge": 1,
+      "color": "#7bd8de",
+      "cooldown": 1.2,
+      "count": 3,
+      "damage": 12,
+      "duration": 3.0,
+      "heal": 8.0,
+      "name": "Willow Weave",
+      "radius": 70.0,
+      "range": 320,
+      "speed": 350.0,
+      "status": "slow",
+      "status_damage": 1.0,
+      "status_duration": 1.0,
+      "style": "custom",
+      "program": "# Willow Weave: leaves then a close defensive ripple\nlet damage = 12\nlet heal = 8\nlet range = 320\nlet radius = 70\nlet speed = 350\nlet count = 3\nlet duration = 3\nlet cooldown = 1.2\nlet charge = 1\nrepeat count\n  emit homing angle index * 16 - 16\nend\nif charged\n  emit pulse\nend\n"
+    },
+    "role": "Control",
+    "secondary": {
+      "charge": 0.0,
+      "color": "#8ed3a0",
+      "cooldown": 6.0,
+      "count": 3,
+      "damage": 18.0,
+      "duration": 3.0,
+      "heal": 14.0,
+      "name": "Garden shelter",
+      "radius": 140.0,
+      "range": 180.0,
+      "speed": 350.0,
+      "status": "none",
+      "status_damage": 1.0,
+      "status_duration": 1.5,
+      "style": "heal_wave"
+    },
+    "special": {
+      "charge": 0.0,
+      "color": "#b8cb75",
+      "cooldown": 10.0,
+      "count": 3,
+      "damage": 40.0,
+      "duration": 5.0,
+      "heal": 8.0,
+      "name": "Briar seed",
+      "radius": 90.0,
+      "range": 350.0,
+      "speed": 350.0,
+      "status": "slow",
+      "status_damage": 1.0,
+      "status_duration": 1.5,
+      "style": "trap"
+    },
+    "species": "Ram",
+    "speed": 230.0,
+    "passive_aura": true,
+    "passive_radius": 100
+  },
+  "notes": {
+    "hypothesis": "Leaf dart should be easier to land on moving targets but have lower close-range damage than Willow sweep.",
+    "method": "Run 30 seconds in Moving targets with each primary. Keep position constant and aim at the same cluster; record hits and damage.",
+    "next_change": "",
+    "observations": ""
+  },
+  "project_id": "crossroads-example-willow-001",
+  "reports": [],
+  "revision": 1,
+  "schema_version": 2,
+  "techniques": [
+    {
+      "attack": {
+        "charge": 0.0,
+        "color": "#7bd8de",
+        "cooldown": 0.85,
+        "count": 3,
+        "damage": 12.0,
+        "duration": 3.0,
+        "heal": 8.0,
+        "name": "Leaf dart",
+        "radius": 70.0,
+        "range": 320.0,
+        "speed": 350.0,
+        "status": "none",
+        "status_damage": 1.0,
+        "status_duration": 1.5,
+        "style": "homing"
+      },
+      "name": "Leaf dart",
+      "slot": "primary"
+    },
+    {
+      "attack": {
+        "charge": 0.0,
+        "color": "#7bd8de",
+        "cooldown": 12.0,
+        "count": 3,
+        "damage": 18.0,
+        "duration": 3.0,
+        "heal": 5.0,
+        "name": "Patient garden",
+        "radius": 70.0,
+        "range": 180.0,
+        "speed": 350.0,
+        "status": "none",
+        "status_damage": 1.0,
+        "status_duration": 1.5,
+        "style": "heal_zone"
+      },
+      "name": "Patient garden",
+      "slot": "special"
+    }
+  ]
+}

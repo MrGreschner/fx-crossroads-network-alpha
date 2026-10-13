@@ -1,0 +1,107 @@
+{
+  "id": "welder",
+  "name": "Emberwright",
+  "sprite": "welder",
+  "max_health": 125,
+  "speed": 210,
+  "run_cost": 0,
+  "primary": {
+    "name": "Forging Hammer",
+    "style": "melee",
+    "damage": 28,
+    "cooldown": 0.8,
+    "range": 78,
+    "arc_degrees": 80,
+    "visual": "swing",
+    "color": "#ffc575"
+  },
+  "secondary": {
+    "name": "Torch Sweep",
+    "style": "flame",
+    "damage": 8,
+    "cooldown": 4.5,
+    "range": 150,
+    "arc_degrees": 55,
+    "duration": 0.9,
+    "tick": 0.18,
+    "color": "#ff9d45"
+  },
+  "special": {
+    "name": "Quench Shield",
+    "style": "block",
+    "damage": 0,
+    "cooldown": 12,
+    "duration": 2.2,
+    "reduction": 0.65,
+    "color": "#98d9e8"
+  },
+  "passive": "Tempered Plate: take 10% less damage.",
+  "passive_effect": "guard",
+  "mastery": {
+    "title": "Master of the Forge",
+    "technique": {
+      "name": "Long Torch",
+      "ability": "secondary",
+      "description": "Reach 40% farther with a 30% narrower torch arc. Burn is unchanged.",
+      "multiply": {
+        "range": 1.4,
+        "arc_degrees": 0.7
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Welded Firebreak",
+      "ability": "special",
+      "description": "Create three delayed hot welds: 18 damage each and 3s of 2 damage/s burn. Gives up the defensive block.",
+      "attack": {
+        "name": "Welded Firebreak",
+        "style": "master_sigils",
+        "damage": 18,
+        "cooldown": 12,
+        "color": "#eda569",
+        "range": 180,
+        "radius": 60,
+        "count": 3,
+        "spacing": 75,
+        "charge": 0.55,
+        "duration": 1.8,
+        "burn_duration": 3,
+        "burn_damage": 2,
+        "description": "Create three delayed hot welds: 18 damage each and 3s of 2 damage/s burn. Gives up the defensive block.",
+        "visual_texture": "res://assets/mastery_welder_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

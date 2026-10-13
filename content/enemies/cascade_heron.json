@@ -1,0 +1,13 @@
+{
+  "id": "cascade_heron",
+  "name": "Cascade Heron",
+  "sprite": "cascade_heron",
+  "health": 70,
+  "speed": 100,
+  "damage": 9,
+  "behaviour": "ranged",
+  "aggro_range": 450,
+  "shot_speed": 270,
+  "shot_cooldown": 2.8,
+  "expansion_only": true
+}

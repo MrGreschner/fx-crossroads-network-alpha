@@ -1,0 +1,106 @@
+{
+  "id": "hearth_herald",
+  "sprite": "hearth_herald",
+  "name": "Hearth Herald",
+  "max_health": 130,
+  "speed": 220,
+  "run_cost": 0,
+  "lore": "An armadillo firekeeper from Ember Quarry carries the first coal of her village in a brass lantern. Her shell shelters travellers; her songs lend their weapons a little borrowed warmth.",
+  "primary": {
+    "name": "Lantern Light",
+    "style": "hearth_light",
+    "damage": 6,
+    "cooldown": 0.5,
+    "range": 190,
+    "description": "Hold primary to shine a forward lantern cone. Every 0.5s it deals 6 damage to enemies and heals other allies in the light for 1 HP. It never heals the caster. Walls block the light; release to stop.",
+    "ui_brief": "Held light \u2022 12 damage/s \u2022 2 allied healing/s \u2022 no self-heal",
+    "hold_charge": {
+      "seconds": 0
+    },
+    "held_channel": true,
+    "healing": 1
+  },
+  "secondary": {
+    "name": "Kindle Arms",
+    "style": "hearth_kindle",
+    "damage": 0,
+    "cooldown": 12,
+    "range": 220,
+    "description": "Enchant yourself and friendly heroes within 220 reach for 5 seconds: +8% attack damage. Direct hits apply burn for 2 damage per second for 3 seconds, at most once per target per second per attacker. Does not stack with another Kindle Arms.",
+    "ui_brief": "Ally buff \u2022 +8% damage \u2022 attacks apply burn"
+  },
+  "special": {
+    "name": "Homefire Beacon",
+    "style": "hearth_beacon",
+    "damage": 0,
+    "cooldown": 24,
+    "range": 280,
+    "description": "Plant a hearth banner at the aimed safe spot for 6 seconds. Allies within 180 reach heal 4 HP per second. The beacon catches up to 6 hostile projectiles entering its circle; friendly shots pass through. One beacon per caster.",
+    "ui_brief": "Placed sanctuary \u2022 healing \u2022 catches 6 enemy shots"
+  },
+  "passive": "Shared Hearth: you and friendly heroes within 170 reach gain 10% damage reduction while near the firekeeper. Multiple Shared Hearth auras do not stack; walls block the aura.",
+  "passive_effect": "shared_hearth",
+  "mastery": {
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "title": "Keeper of the First Flame",
+    "technique": {
+      "name": "Restorative Chorus",
+      "ability": "secondary",
+      "description": "Replace burning weapon enchantment with life-on-hit: retain +8% damage, but direct hits heal the attacker for 3 HP at most once per target per second. No added burn.",
+      "attack": {
+        "name": "Restorative Chorus",
+        "style": "hearth_march",
+        "damage": 0,
+        "cooldown": 12,
+        "range": 220,
+        "description": "Enchant nearby allies for 5s: +8% damage and 3 HP recovered on direct hits, once per target per second. Replaces added burning damage.",
+        "ui_brief": "Ally buff \u2022 +8% damage \u2022 life on hit"
+      }
+    },
+    "final_technique": {
+      "name": "Open Hearth",
+      "ability": "special",
+      "description": "Replace projectile catching with stronger healing: 7 HP per second for six seconds within the same banner circle. Enemy shots pass through.",
+      "attack": {
+        "name": "Open Hearth",
+        "style": "hearth_mend",
+        "damage": 0,
+        "cooldown": 24,
+        "range": 280,
+        "description": "Place a banner for 6 seconds. Nearby allies recover 7 HP per second; it cannot catch projectiles.",
+        "ui_brief": "Placed sanctuary \u2022 stronger healing \u2022 no shot shield"
+      }
+    }
+  }
+}

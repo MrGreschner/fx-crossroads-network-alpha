@@ -1,0 +1,73 @@
+{
+  "id": "ice",
+  "name": "Frostbound Rink",
+  "size": [
+    6200,
+    1900
+  ],
+  "background": "#baddea",
+  "accent": "#4d789e",
+  "boss_health": 780,
+  "xp_per_level": 4,
+  "terrain": "ice",
+  "boss_secondary": "frostburst",
+  "scene": "res://scenes/realms/ice.tscn",
+  "boss_sprite": "cryowarden",
+  "difficulty": "standard",
+  "difficulty_label": "Moderate",
+  "boss_split": false,
+  "description": "Begin on grippy practice snow. Beyond the halfway arch, fractured ice locks your momentum and coordinated rink patrols make positioning matter.",
+  "route_points": [
+    [
+      230,
+      960
+    ],
+    [
+      1200,
+      960
+    ],
+    [
+      2250,
+      720
+    ],
+    [
+      3400,
+      1100
+    ],
+    [
+      4570,
+      750
+    ],
+    [
+      5800,
+      960
+    ]
+  ],
+  "difficulty_tier": "moderate",
+  "slip_patches": [
+    [
+      1800,
+      580,
+      580,
+      430
+    ],
+    [
+      2950,
+      780,
+      750,
+      540
+    ],
+    [
+      4210,
+      580,
+      730,
+      500
+    ],
+    [
+      5170,
+      710,
+      720,
+      540
+    ]
+  ]
+}

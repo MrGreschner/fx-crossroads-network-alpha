@@ -1,0 +1,12 @@
+{
+  "id": "bog_bellringer",
+  "name": "Bog Bellringer",
+  "sprite": "bog_bellringer",
+  "health": 130,
+  "speed": 78,
+  "damage": 12,
+  "behaviour": "custom",
+  "aggro_range": 560,
+  "expansion_only": true,
+  "custom_attack": "bell_echo"
+}

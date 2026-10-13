@@ -1,0 +1,99 @@
+{
+  "id": "votary",
+  "name": "Crimson Votary",
+  "sprite": "votary",
+  "max_health": 155,
+  "speed": 235,
+  "run_cost": 0,
+  "lore": "A human oath-singer who spends health to power close attacks. The red debt bar records up to 40 HP paid; the special spends that debt for stronger returning blades. Paying never kills you or counts as enemy damage.",
+  "primary": {
+    "name": "Blood Crescent",
+    "style": "blood_crescent",
+    "damage": 26,
+    "cooldown": 0.65,
+    "range": 90,
+    "description": "A close crescent costs up to 4 HP, stopping at 1 HP. Each cast adds to your debt reserve; there is no free mastery damage from paying health.",
+    "health_cost": 4
+  },
+  "secondary": {
+    "name": "Red Covenant",
+    "style": "red_covenant",
+    "damage": 0,
+    "cooldown": 9,
+    "range": 0,
+    "description": "Pay up to 10 HP for 45% damage reduction for 2s. Your next three damaging crescent hits within 4s heal 3 HP each. Cannot heal more than once per reserved hit."
+  },
+  "special": {
+    "name": "Debt Reckoning",
+    "style": "debt_reckoning",
+    "damage": 9,
+    "cooldown": 16,
+    "range": 390,
+    "description": "Five blades spread out and return. Each hits a target once overall for 9 + up to 4 damage from spent debt. Each blade can heal 2 HP on at most two successful hits. Consumes your debt reserve."
+  },
+  "passive": "Blood Reserve: Paying health grants 10% damage reduction for 0.6s. Does not stack with stronger protection.",
+  "passive_effect": "blood_reserve",
+  "mastery": {
+    "title": "Master of the Scarlet Oath",
+    "technique": {
+      "name": "Sanguine Reach",
+      "ability": "primary",
+      "description": "Replace melee with a 380-range spear for 22 damage. Costs 5 HP and fires every 1s; no Covenant hit healing.",
+      "attack": {
+        "name": "Sanguine Reach",
+        "style": "sanguine_lance",
+        "damage": 22,
+        "cooldown": 1,
+        "range": 380,
+        "description": "A straight blood spear; 5 HP cost, 1s cooldown. Stops at the first target.",
+        "health_cost": 5
+      }
+    },
+    "final_technique": {
+      "name": "Scarlet Bloom",
+      "ability": "special",
+      "description": "Replace returning blades with an aimed 1.2s warning and a 120-radius blood blossom. 36 + up to 8 debt damage; heal 6 if it hits. No returning-hit healing.",
+      "attack": {
+        "name": "Scarlet Bloom",
+        "style": "blood_bloom",
+        "damage": 36,
+        "cooldown": 18,
+        "range": 360,
+        "description": "Aim a delayed blood blossom. Consumes debt for up to 8 extra damage; heal 6 HP if at least one enemy is hit.",
+        "radius": 120
+      }
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

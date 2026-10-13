@@ -1,0 +1,125 @@
+{
+  "name": "Deepwell Mine",
+  "max_shafts": 20,
+  "max_crew": 12,
+  "max_upgrade": 25,
+  "offline_hours": 24,
+  "services": {
+    "vent": {
+      "name": "Ventilation House",
+      "description": "Fresh air keeps every crew productive. Upgrade when air demand exceeds supply.",
+      "depth": 1,
+      "gold": 45,
+      "ore": 20,
+      "gems": 0,
+      "seconds": 20
+    },
+    "lift": {
+      "name": "Ore Lift",
+      "description": "Carry more material to the surface each second. Slow lifts limit the whole mine.",
+      "depth": 1,
+      "gold": 40,
+      "ore": 25,
+      "gems": 0,
+      "seconds": 20
+    },
+    "depot": {
+      "name": "Surface Depot",
+      "description": "Store more uncollected resources. Full depots pause production without losing supplies.",
+      "depth": 1,
+      "gold": 35,
+      "ore": 20,
+      "gems": 0,
+      "seconds": 15
+    },
+    "tools": {
+      "name": "Tool Workshop",
+      "description": "Sharper picks improve every digger's output. Check lift and air capacity before investing.",
+      "depth": 1,
+      "gold": 40,
+      "ore": 30,
+      "gems": 0,
+      "seconds": 25
+    },
+    "smelter": {
+      "name": "Ramforge Smelter",
+      "description": "Forge collected metal seams and coal into tradeable bars, or refine ordinary ore for Mine Gold. Higher levels speed up bar batches.",
+      "depth": 2,
+      "gold": 65,
+      "ore": 60,
+      "gems": 0,
+      "seconds": 40
+    },
+    "assay": {
+      "name": "Crystal Assay House",
+      "description": "Improve gem recovery and unlock the Gem Survey boost.",
+      "depth": 3,
+      "gold": 110,
+      "ore": 90,
+      "gems": 1,
+      "seconds": 60
+    },
+    "pump": {
+      "name": "Drainage Station",
+      "description": "Pump water from deep workings. Required from shaft four; improves deep extraction.",
+      "depth": 3,
+      "gold": 90,
+      "ore": 65,
+      "gems": 0,
+      "seconds": 45
+    },
+    "drill": {
+      "name": "Clockwork Drillworks",
+      "description": "Powered excavation boosts all crews, but increases air demand.",
+      "depth": 6,
+      "gold": 260,
+      "ore": 200,
+      "gems": 3,
+      "seconds": 90
+    }
+  },
+  "biomes": [
+    {
+      "depth": 1,
+      "name": "Mosslit Entrance",
+      "rock": "#564c3e",
+      "accent": "#b5c080",
+      "lore": "Roots thread through the first seams. Your first ram crew turns an old tunnel into a working mine."
+    },
+    {
+      "depth": 3,
+      "name": "Copper Galleries",
+      "rock": "#664a40",
+      "accent": "#da9b70",
+      "lore": "Copper veins glitter beside old support beams. A drainage station and assay house become useful here."
+    },
+    {
+      "depth": 6,
+      "name": "Amethyst Grotto",
+      "rock": "#45415e",
+      "accent": "#c6a0e8",
+      "lore": "Violet crystals light the rock. Mechanised drills need a larger supply of fresh air."
+    },
+    {
+      "depth": 10,
+      "name": "Flooded Sapphire",
+      "rock": "#354956",
+      "accent": "#7fbecf",
+      "lore": "Blue seams run beside underground streams. Pump upgrades keep the lower galleries working."
+    },
+    {
+      "depth": 14,
+      "name": "Emberstone Hollow",
+      "rock": "#563d3c",
+      "accent": "#edac74",
+      "lore": "Warm mineral seams colour the stone. Dense deposits reward a balanced lift and mining network."
+    },
+    {
+      "depth": 18,
+      "name": "Starlight Bedrock",
+      "rock": "#34384d",
+      "accent": "#d2c7ed",
+      "lore": "The deepest seams shine like a night sky. A complete twenty-shaft operation is a long-term account achievement."
+    }
+  ]
+}

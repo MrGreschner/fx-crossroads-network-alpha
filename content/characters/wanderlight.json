@@ -1,0 +1,101 @@
+{
+  "id": "wanderlight",
+  "name": "Wanderlight",
+  "sprite": "wanderlight",
+  "max_health": 115,
+  "speed": 240,
+  "run_cost": 0,
+  "lore": "The antlered lantern guardian of Wayfarer Wilds. Every trail leaves a story, and every story can be walked again. Hero 40.",
+  "primary": {
+    "name": "Lantern Comet",
+    "style": "lantern_comet",
+    "damage": 26,
+    "cooldown": 0.85,
+    "range": 1200,
+    "speed": 300,
+    "description": "A weaving lantern shot deals 26 damage and flies for about 4 seconds (1200 reach), giving you time to redirect it. Records the last four firing positions."
+  },
+  "secondary": {
+    "name": "Compass Turn",
+    "style": "compass_turn",
+    "damage": 16,
+    "cooldown": 3.5,
+    "description": "Redirect flying lanterns and infuse them with your current element. Earth: 12 splash damage, poison 2/s for 4s; roots grow after 2s and slow by 45% for 8s after growing. Fire: 20 splash damage and burn 3/s for 4s; lava lasts 8s and renews burn on contact. Both have 85 radius. Starts as Earth. With no flying bolts, launch an infused 16-damage light."
+  },
+  "special": {
+    "name": "Walking Chronicle",
+    "style": "walking_chronicle",
+    "damage": 0,
+    "cooldown": 18,
+    "description": "Replay your last four shots from their original positions, 0.25s apart at 65% damage. After the last replay, switch Earth to Fire or Fire to Earth for future redirections. Starts as Earth. Walls block shots."
+  },
+  "passive": "Trailkeeper: Compass Turn grants a 30% movement boost for 1 second.",
+  "passive_effect": "trailkeeper",
+  "mastery": {
+    "title": "Keeper of the Chronicle",
+    "technique": {
+      "name": "Swift Lantern",
+      "ability": "primary",
+      "description": "Lantern Comets travel 35% faster but have 20% less reach and less redirection time.",
+      "multiply": {
+        "speed": 1.35,
+        "range": 0.8
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Wayfarer Beacons",
+      "ability": "secondary",
+      "description": "Place two warning beacons for 20 damage each and short slows. Replaces bolt redirection; this alternative does not add elemental terrain.",
+      "attack": {
+        "name": "Wayfarer Beacons",
+        "style": "master_sigils",
+        "damage": 20,
+        "cooldown": 5,
+        "color": "#e8d5a6",
+        "range": 260,
+        "radius": 70,
+        "count": 2,
+        "spacing": 65,
+        "charge": 0.55,
+        "duration": 1.8,
+        "slow_duration": 1,
+        "slow": 0.75,
+        "description": "Place two warning beacons for 20 damage each and short slows. Replaces bolt redirection; this alternative does not add elemental terrain.",
+        "visual_texture": "res://assets/mastery_wanderlight_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

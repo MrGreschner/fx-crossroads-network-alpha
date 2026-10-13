@@ -1,0 +1,12 @@
+{
+  "id": "layercake_golem",
+  "name": "Layercake Golem",
+  "sprite": "layercake_golem",
+  "health": 950,
+  "speed": 75,
+  "damage": 22,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_layercake_golem",
+  "expansion_only": true
+}

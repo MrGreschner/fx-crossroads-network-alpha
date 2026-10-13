@@ -1,0 +1,105 @@
+{
+  "id": "caelum",
+  "name": "Caelum Mirrorwright",
+  "sprite": "caelum",
+  "max_health": 110,
+  "speed": 235,
+  "run_cost": 0,
+  "lore": "A copper-cloaked mirror craftswoman with a braided mane and a polished hand mirror.",
+  "primary": {
+    "name": "Facet Spear",
+    "style": "facet_spear",
+    "damage": 25,
+    "cooldown": 0.8,
+    "range": 460,
+    "speed": 480,
+    "description": "A crystal spear pierces up to two enemies for 25 damage each. Walls stop it."
+  },
+  "secondary": {
+    "name": "Silver Shatter",
+    "style": "mirror_fan",
+    "damage": 12,
+    "cooldown": 5,
+    "range": 370,
+    "description": "Tap to fire three silver mirror shards in a forgiving fan (12 damage each). Hold up to 1.2s for larger shards dealing 19.2 each. Each shard pierces two foes; Twin Self echoes the fan at 60% damage.",
+    "hold_charge": {
+      "seconds": 1.2,
+      "damage": 1.6,
+      "size": 1.6
+    },
+    "speed": 480,
+    "color": "#bdeff5"
+  },
+  "special": {
+    "name": "Twin Self",
+    "style": "twin_self",
+    "damage": 15,
+    "cooldown": 22,
+    "duration": 6,
+    "description": "For 6 seconds, your identical reflection copies your movement, aim, primary and secondary attacks (60% damage). It has 60% of current HP, capped at 66. If either body falls, continue with the survivor; losing both defeats you."
+  },
+  "passive": "Clear Sight: Silver Shatter also slows enemies it hits for 2 seconds.",
+  "passive_effect": "clear_sight",
+  "mastery": {
+    "title": "Master Mirrorwright",
+    "technique": {
+      "name": "Patient Reflection",
+      "ability": "special",
+      "description": "Twin Self lasts 35% longer, but recharges 40% slower.",
+      "multiply": {
+        "duration": 1.35,
+        "cooldown": 1.4
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Silver Scissors",
+      "ability": "primary",
+      "description": "Two silver cuts cross and return: 13 damage per leg. Replaces the straight facet spear with timing and curved coverage.",
+      "attack": {
+        "name": "Silver Scissors",
+        "style": "master_pincer",
+        "damage": 13,
+        "cooldown": 0.95,
+        "color": "#a7dcdf",
+        "range": 280,
+        "width": 80,
+        "duration": 1.65,
+        "description": "Two silver cuts cross and return: 13 damage per leg. Replaces the straight facet spear with timing and curved coverage.",
+        "visual_texture": "res://assets/mastery_caelum_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

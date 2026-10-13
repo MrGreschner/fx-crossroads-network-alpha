@@ -1,0 +1,19 @@
+{
+  "id": "zombie",
+  "name": "Hollow Quarantine",
+  "size": [
+    8500,
+    1450
+  ],
+  "background": "#2f3930",
+  "accent": "#788e4d",
+  "boss_health": 1220,
+  "xp_per_level": 6,
+  "terrain": "quarantine",
+  "boss_secondary": "sporeburst",
+  "scene": "res://scenes/realms/zombie.tscn",
+  "boss_sprite": "plague_director",
+  "difficulty": "hard",
+  "difficulty_label": "Challenging",
+  "difficulty_tier": "challenging"
+}

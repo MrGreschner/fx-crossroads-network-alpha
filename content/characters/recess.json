@@ -1,0 +1,101 @@
+{
+  "id": "recess",
+  "name": "Recess Warden",
+  "sprite": "recess",
+  "max_health": 140,
+  "speed": 220,
+  "run_cost": 0,
+  "lore": "An owl playground guardian from Firstbell Elementary, bringing lunch mats and safe crossings to the Crossroads. A support hero with modest damage who can protect a party or sustain itself alone.",
+  "primary": {
+    "name": "Safety Whistle",
+    "style": "whistle_wave",
+    "damage": 18,
+    "cooldown": 0.8,
+    "range": 400,
+    "description": "Send a 110-wide echo wave up to 400 reach. It pierces enemies for 18 damage each, once per cast. Walls block the wave. Nearby allies retain the 8% protective ward.",
+    "ui_brief": "Piercing echo \u2022 18 damage \u2022 400 reach"
+  },
+  "secondary": {
+    "name": "Snack Break",
+    "style": "snack_break",
+    "damage": 0,
+    "cooldown": 10,
+    "range": 330,
+    "description": "Place a lunch mat for 4s: heal friendly heroes 4 HP per second in a 120-radius area. Remove burn and poison once per guest. Does not heal enemies.",
+    "radius": 120,
+    "healing": 4
+  },
+  "special": {
+    "name": "Crossing Patrol",
+    "style": "crossing_patrol",
+    "damage": 24,
+    "cooldown": 16,
+    "range": 360,
+    "description": "A 210-wide line of cones advances for 3s. Push and slow each crossed foe once, intercept up to 16 enemy projectiles, and grant nearby allies 20% protection."
+  },
+  "passive": "Shared Recess: Friendly heroes inside Snack Break gain 10% damage reduction.",
+  "passive_effect": "shared_recess",
+  "mastery": {
+    "title": "Guardian of Every Recess",
+    "technique": {
+      "name": "Owl Eyes",
+      "ability": "secondary",
+      "description": "Replace Snack Break with two opposite, rotating 270-range energy beams for 2s. Aim to rotate the owl\u2019s gaze; each beam ticks 5 damage every 0.25s. 11s cooldown. Gives up healing and cleansing.",
+      "attack": {
+        "name": "Owl Eyes",
+        "style": "owl_eyes",
+        "damage": 5,
+        "cooldown": 11,
+        "range": 270,
+        "duration": 2,
+        "description": "For 2s, energy beams shine in front and behind you. Move your aim to rotate the gaze. Each foe takes at most one 5-damage tick every 0.25s; walls block beams."
+      }
+    },
+    "final_technique": {
+      "name": "Playground Shelter",
+      "ability": "special",
+      "description": "Replace the moving patrol with a stationary 145-radius shelter for 4s. Grants 20% protection and heals 2 HP/s; catches six projectiles. No damage or knockback.",
+      "attack": {
+        "name": "Playground Shelter",
+        "style": "recess_shelter",
+        "damage": 0,
+        "cooldown": 18,
+        "range": 330,
+        "description": "Place a stationary shelter for 4s. Protect and heal friendly heroes; absorb up to six hostile projectiles.",
+        "radius": 145
+      }
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

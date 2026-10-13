@@ -1,0 +1,10 @@
+{
+  "id": "guard_buckler",
+  "name": "Guard Buckler",
+  "cost": 52,
+  "effect": "block_boost",
+  "amount": 15,
+  "description": "Extend blocks and damage reduction.",
+  "duration": 3,
+  "radius": 145
+}

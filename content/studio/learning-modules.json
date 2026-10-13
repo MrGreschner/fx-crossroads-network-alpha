@@ -1,0 +1,1628 @@
+{
+  "version": 1,
+  "modules": {
+    "DES1020": {
+      "code": "DES1020",
+      "name": "The Design Process",
+      "brief": "Design ONE original playable hero for an identified player need. Show three rough ideas, choose one, build it and revise it after tests. Quality and process matter more than making three finished heroes.",
+      "kind": "hero",
+      "prerequisite": "None",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify the steps in the design process",
+          "stages": [
+            "brief",
+            "research",
+            "ideas",
+            "decision",
+            "evaluation"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "apply the steps in the design process through production of a designed solution",
+          "stages": [],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "present a portfolio-ready drawing, rendering or model that the student produced",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "4",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "rights"
+          ],
+          "assets": []
+        },
+        {
+          "id": "5",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "brief",
+          "title": "Before you build: design brief",
+          "prompt": "Who is your player? What need or problem will your hero solve? Set three measurable success criteria. Save this before attaching your first prototype.",
+          "outcomes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "research",
+          "title": "Research & visual language",
+          "prompt": "Compare two existing heroes or references. Explain what you learned. Identify three elements and two principles of design relevant to your proposed hero.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "ideas",
+          "title": "Generate alternatives",
+          "prompt": "Describe or attach three rough concepts; compare strengths, weaknesses, readability and play style.",
+          "outcomes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "decision",
+          "title": "Choose & plan presentation",
+          "prompt": "Which idea best meets your criteria? Justify your decision and choose a presentation method and audience.",
+          "outcomes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "tools",
+          "title": "Tools & prototype",
+          "prompt": "Explain tools/materials selected, their purpose and limitations. Attach a playable hero snapshot and describe how form and function work together.",
+          "outcomes": [
+            "2"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "evaluation",
+          "title": "Test, revise, evaluate",
+          "prompt": "Attach tests or a revised hero. Compare results with your success criteria; identify one improvement and explain the evidence.",
+          "outcomes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "presentation",
+          "title": "Portfolio presentation",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "3"
+          ]
+        },
+        {
+          "id": "rights",
+          "title": "Authorship & permissions",
+          "prompt": "List original work and any borrowed sources. Give creator, licence/permission and changes. A short credit list is enough.",
+          "outcomes": [
+            "4"
+          ]
+        },
+        {
+          "id": "routines",
+          "title": "Safe work & backups",
+          "prompt": "Describe posture, breaks, workstation setup and file/version backups. Teacher should observe safe routines; this statement alone is not proof.",
+          "outcomes": [
+            "5"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "6"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "7"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "DES1030": {
+      "code": "DES1030",
+      "name": "2-D Design 1",
+      "brief": "Design a readable playable hero with four consistent poses. Record a short visual brief first; attach the hero artwork and optionally a title card. The artwork demonstrates tool use, scale, elements and principles; add only brief feedback and credits.",
+      "kind": "graphic",
+      "prerequisite": "DES1020",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and practise 2-D design techniques within the parameters of a design brief to appropriate scale",
+          "stages": [
+            "brief"
+          ],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "2",
+          "title": "identify and use tools and materials common to 2-D design",
+          "stages": [],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "identify, select and use elements and principles of design in project activities",
+          "stages": [],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "4",
+          "title": "use 2-D design techniques to solve simple design problems",
+          "stages": [
+            "brief"
+          ],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "5",
+          "title": "produce and present a portfolio-ready drawing, image or rendering",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "visual"
+          ],
+          "practical": true
+        },
+        {
+          "id": "6",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "rights"
+          ],
+          "assets": []
+        },
+        {
+          "id": "7",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "9",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "brief",
+          "title": "Scale & layout brief",
+          "prompt": "Specify grid, pixel dimensions, scale, audience and what the sheet must communicate.",
+          "outcomes": [
+            "1",
+            "4"
+          ]
+        },
+        {
+          "id": "tools",
+          "title": "Tools & techniques",
+          "prompt": "Explain which drawing/layout tools you used and show an original asset or sheet.",
+          "outcomes": [
+            "2"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "visual",
+          "title": "Elements & principles",
+          "prompt": "Explain positive/negative space, emphasis, contrast and proportion in your asset sheet.",
+          "outcomes": [
+            "3"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "iteration",
+          "title": "Solve the design problem",
+          "prompt": "Show rough layouts and final version; explain typography, grid and a revision after feedback.",
+          "outcomes": [
+            "1",
+            "4"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "presentation",
+          "title": "Present the sheet",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "5"
+          ]
+        },
+        {
+          "id": "rights",
+          "title": "Authorship & permissions",
+          "prompt": "List original work and any borrowed sources. Give creator, licence/permission and changes. A short credit list is enough.",
+          "outcomes": [
+            "6"
+          ]
+        },
+        {
+          "id": "routines",
+          "title": "Safe work & backups",
+          "prompt": "Describe posture, breaks, workstation setup and file/version backups. Teacher should observe safe routines; this statement alone is not proof.",
+          "outcomes": [
+            "7"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "8"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "9"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "COM1005": {
+      "code": "COM1005",
+      "name": "Visual Composition",
+      "brief": "Produce THREE different visual messages: a gameplay photo, a title/promo card, and a short animation frame sequence. Explain the intended audience and message; critique a peer composition.",
+      "kind": "photo",
+      "prerequisite": "None",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and discuss the elements and principles of design",
+          "stages": [
+            "visual"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "discuss typography as it relates to the use of text in visual messages",
+          "stages": [
+            "type"
+          ],
+          "assets": []
+        },
+        {
+          "id": "3",
+          "title": "produce visual compositions using a variety of media where elements and principles have an identifiable impact on the message",
+          "stages": [],
+          "assets": [
+            "photo",
+            "graphic",
+            "animation"
+          ],
+          "practical": true
+        },
+        {
+          "id": "4",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "rights"
+          ],
+          "assets": []
+        },
+        {
+          "id": "5",
+          "title": "present a selection of work completed in this course to an audience",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "photo",
+            "graphic",
+            "animation"
+          ],
+          "practical": true
+        },
+        {
+          "id": "6",
+          "title": "participate in a critique or an assessment of compositions created by others",
+          "stages": [
+            "critique"
+          ],
+          "assets": []
+        },
+        {
+          "id": "7",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "9",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "visual",
+          "title": "Analyse a message",
+          "prompt": "Identify elements/principles in two compositions; describe their impact, not just their names.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "type",
+          "title": "Typography & whitespace",
+          "prompt": "Explain readable versus attention-getting text, contrast and whitespace in your title card. Use correct typography terms.",
+          "outcomes": [
+            "2"
+          ]
+        },
+        {
+          "id": "production",
+          "title": "Three-media portfolio",
+          "prompt": "Attach a photo, graphic/title card and animation-bearing hero or ability. Explain the message and audience for each.",
+          "outcomes": [
+            "3"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "presentation",
+          "title": "Present your selection",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "5"
+          ]
+        },
+        {
+          "id": "critique",
+          "title": "Peer critique",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "6"
+          ]
+        },
+        {
+          "id": "rights",
+          "title": "Authorship & permissions",
+          "prompt": "List original work and any borrowed sources. Give creator, licence/permission and changes. A short credit list is enough.",
+          "outcomes": [
+            "4"
+          ]
+        },
+        {
+          "id": "routines",
+          "title": "Safe work & backups",
+          "prompt": "Describe posture, breaks, workstation setup and file/version backups. Teacher should observe safe routines; this statement alone is not proof.",
+          "outcomes": [
+            "7"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "8"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "9"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "COM1035": {
+      "code": "COM1035",
+      "name": "Graphics Tools",
+      "brief": "Create a simple raster hero and a vector emblem with a PNG export. Compare two tools briefly; attach the actual work and file settings instead of writing how you clicked each tool.",
+      "kind": "graphic",
+      "prerequisite": "COM1005",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "investigate graphic programs",
+          "stages": [
+            "research"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "select and use appropriate applications to create basic vector and raster graphic images",
+          "stages": [],
+          "assets": [
+            "visual",
+            "graphic"
+          ],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "organize and manage image files using correct file conventions",
+          "stages": [],
+          "assets": [
+            "graphic"
+          ],
+          "practical": true
+        },
+        {
+          "id": "4",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "rights"
+          ],
+          "assets": []
+        },
+        {
+          "id": "5",
+          "title": "present a selection of work completed in this course to an audience",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "visual",
+            "graphic"
+          ],
+          "practical": true
+        },
+        {
+          "id": "6",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "research",
+          "title": "Compare graphic programs",
+          "prompt": "Compare purpose, resources, cost, ease of use and industry context of two programs. Explain raster versus vector advantages.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "tools",
+          "title": "Create raster & vector",
+          "prompt": "Attach a hero/PNG raster and an original vector card. Explain interface/tool terminology, dimensions, resolution, pixel ratio, RGB and file size. Discuss when bleed or print colour modes apply.",
+          "outcomes": [
+            "2"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "files",
+          "title": "File conventions",
+          "prompt": "Provide filenames, folders, versions and formats. Explain editable source versus export, image permissions, backups and how a partner would find your assets.",
+          "outcomes": [
+            "3"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "presentation",
+          "title": "Present asset pack",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "5"
+          ]
+        },
+        {
+          "id": "rights",
+          "title": "Authorship & permissions",
+          "prompt": "List original work and any borrowed sources. Give creator, licence/permission and changes. A short credit list is enough.",
+          "outcomes": [
+            "4"
+          ]
+        },
+        {
+          "id": "routines",
+          "title": "Safe work & backups",
+          "prompt": "Describe posture, breaks, workstation setup and file/version backups. Teacher should observe safe routines; this statement alone is not proof.",
+          "outcomes": [
+            "6"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "7"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "8"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "ENT1010": {
+      "code": "ENT1010",
+      "name": "Challenge & Opportunity",
+      "brief": "Use the Opportunity Board to compare THREE different customer needs and venture ideas with a weighted decision matrix. Research your ratings, test feasibility and recommend proceed, change or stop. This is opportunity selection, not a full venture plan or campaign comparison. Use the Opportunity Board to compare alternatives and attach its decision matrix; no second feasibility essay is required.",
+      "kind": "market",
+      "prerequisite": "None",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "recognize and assess venture opportunities in their environment",
+          "stages": [
+            "needs"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "generate ideas for possible venture opportunities in their environment",
+          "stages": [
+            "ideas"
+          ],
+          "assets": []
+        },
+        {
+          "id": "3",
+          "title": "plan a venture",
+          "stages": [
+            "plan"
+          ],
+          "assets": []
+        },
+        {
+          "id": "4",
+          "title": "assess a venture",
+          "stages": [],
+          "assets": [
+            "market"
+          ],
+          "practical": true
+        },
+        {
+          "id": "5",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "6",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "needs",
+          "title": "Opportunity scan",
+          "prompt": "Identify three needs/wants/problems. Use a decision model to compare them and respect different customer perspectives.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "ideas",
+          "title": "Generate venture ideas",
+          "prompt": "Offer three alternatives, conditions/resources needed and how failure can create learning.",
+          "outcomes": [
+            "2"
+          ]
+        },
+        {
+          "id": "plan",
+          "title": "Outline a venture",
+          "prompt": "Select an idea. Explain ownership/entry option, rationale, goals, research, resources, market, risk, finances and ethical responsibilities.",
+          "outcomes": [
+            "3"
+          ]
+        },
+        {
+          "id": "feasibility",
+          "title": "Feasibility test",
+          "prompt": "Use the Opportunity Board; attach its decision matrix. Explain where each 0\u20135 rating and weight came from. Define criteria, resources and timeline; recommend proceed, change or stop. A score based only on assumptions is not real market research.",
+          "outcomes": [
+            "4"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "5"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "6"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "ENT1020": {
+      "code": "ENT1020",
+      "name": "Elements of a Venture Plan",
+      "brief": "Use the Venture Pilot to plan ONE mining-to-market business. Write a mission, risk and resource plan; compare normal, supplier-delay and demand-drop scenarios, then revise cash, stock and contingency decisions. This is an operations and finance plan, not an opportunity shortlist or advertising experiment. Attach Venture Pilot normal and adverse-scenario reports. The simulation decisions and reports show the planning; add a short critique.",
+      "kind": "market",
+      "prerequisite": "None",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "demonstrate goal-setting and problem-solving strategies that facilitate change",
+          "stages": [
+            "goals"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "describe potential risks and propose strategies for assessing risks related to a venture",
+          "stages": [
+            "risks"
+          ],
+          "assets": []
+        },
+        {
+          "id": "3",
+          "title": "describe strategies for securing resources and support required to implement a venture",
+          "stages": [
+            "resources"
+          ],
+          "assets": []
+        },
+        {
+          "id": "4",
+          "title": "select, plan and assess a venture",
+          "stages": [
+            "critique"
+          ],
+          "assets": [
+            "market"
+          ],
+          "practical": true
+        },
+        {
+          "id": "5",
+          "title": "demonstrate qualities that initiate change",
+          "stages": [
+            "critique"
+          ],
+          "assets": []
+        },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "goals",
+          "title": "Mission & goals",
+          "prompt": "Set short/long-term goals, mission, ethical policies, legal research and staffing/support network. Distinguish simulation rules from real legal obligations.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "risks",
+          "title": "Risk assessment",
+          "prompt": "Assess financial, physical and people risks; propose prevention and contingency strategies.",
+          "outcomes": [
+            "2"
+          ]
+        },
+        {
+          "id": "resources",
+          "title": "Market & resources",
+          "prompt": "Compare markets/competition and trends. Explain product, target customer, price, place and support/resources required.",
+          "outcomes": [
+            "3"
+          ]
+        },
+        {
+          "id": "plan",
+          "title": "Venture plan & pilot",
+          "prompt": "Use the Venture Pilot; attach normal and adverse-scenario reports. Forecast revenue, costs, profit, inventory and cash separately. Outline marketing, production, finance and staffing; choose a reserve and explain how your plan handles risk.",
+          "outcomes": [
+            "4"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "critique",
+          "title": "Present & revise",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "4",
+            "5"
+          ]
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "6"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "7"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "MAM1010": {
+      "code": "MAM1010",
+      "name": "Marketing & Management",
+      "brief": "Use the Merchandising A/B Lab to compare ONE change for the SAME product and audience. Hold stock and budget constant, interpret units/revenue/profit, then discuss additional pricing, service, place and promotion strategies. This is a controlled retail experiment, not a venture selection or full business plan. Attach a Merchandising A/B Lab comparison. Change one factor and use its results as practical evidence; add a short recommendation.",
+      "kind": "market",
+      "prerequisite": "None",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and describe roles and features within an organization",
+          "stages": [
+            "roles"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "describe the characteristics of marketing and decisions made within the marketing mix",
+          "stages": [
+            "mix",
+            "recommendation"
+          ],
+          "assets": []
+        },
+        {
+          "id": "3",
+          "title": "identify and analyze retail merchandising strategies used in the marketplace today",
+          "stages": [],
+          "assets": [
+            "market"
+          ],
+          "practical": true
+        },
+        {
+          "id": "4",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "5",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "roles",
+          "title": "Organization & roles",
+          "prompt": "Explain planning, organizing, leading, monitoring and communicating. Compare ownership forms and buying/selling/merchandising roles; connect to Canadian retail examples.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "mix",
+          "title": "Marketing mix",
+          "prompt": "Explain product, price, promotion, place, consumers and competition. Research choices and effects on customers, profit and society.",
+          "outcomes": [
+            "2"
+          ]
+        },
+        {
+          "id": "campaigns",
+          "title": "Campaign comparison",
+          "prompt": "Use the Merchandising A/B Lab and attach a trial. Change ONE factor while holding audience, budget, stock and product constant. Compare pricing, packaging, service/place and promotion strategies beyond the trial; identify model limitations and research real retail examples.",
+          "outcomes": [
+            "3"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "recommendation",
+          "title": "Recommendation",
+          "prompt": "Use numbers to distinguish sales, costs and profit. Explain limitations and an ethical next step after feedback.",
+          "outcomes": [
+            "2",
+            "3"
+          ]
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & collaboration",
+          "prompt": "Explain a problem you solved using numbers or information. Record partner roles and contributions, or explain your independent responsibilities and how feedback changed your work.",
+          "outcomes": [
+            "4"
+          ],
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Connect your interests, strengths and next learning goal to a real occupation. Explain one skill that occupation needs.",
+          "outcomes": [
+            "5"
+          ],
+          "hidden": true
+        }
+      ]
+    },
+    "DRAFT-CS1": {
+      "code": "DRAFT-CS1",
+      "name": "Structured Programming 1 \u2022 draft",
+      "brief": "Build an original ability or enemy behaviour program with variables, branching and a loop. Predict, test boundary cases and revise. Exact CTS course/outcomes must be supplied before credit assessment.",
+      "kind": "ability",
+      "prerequisite": "None",
+      "draft": true,
+      "source": "Draft learning brief; exact CTS outcomes not supplied",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Explain structured program logic (draft target)",
+          "stages": [
+            "plan",
+            "code"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "Implement a readable program (draft target)",
+          "stages": [
+            "code"
+          ],
+          "assets": [
+            "code"
+          ]
+        },
+        {
+          "id": "3",
+          "title": "Test and debug with evidence (draft target)",
+          "stages": [
+            "tests"
+          ],
+          "assets": [
+            "code"
+          ]
+        },
+        {
+          "id": "4",
+          "title": "Document ethical, safe and collaborative practice (draft target)",
+          "stages": [
+            "practice"
+          ],
+          "assets": []
+        },
+        {
+          "id": "5",
+          "title": "Reflect on pathways (draft target)",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "plan",
+          "title": "Problem & pseudocode",
+          "prompt": "Define inputs/outputs and a flowchart or pseudocode before coding.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "code",
+          "title": "Program & explanation",
+          "prompt": "Attach ability/behaviour code; explain variables, if/elif/else, a loop and how execution is bounded.",
+          "outcomes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "tests",
+          "title": "Boundary tests",
+          "prompt": "Predict and record normal, boundary and invalid-input cases. Attach tests and explain a bug and revision.",
+          "outcomes": [
+            "3"
+          ]
+        },
+        {
+          "id": "practice",
+          "title": "Work practice",
+          "prompt": "Explain source attribution, backups, collaboration and safe testing.",
+          "outcomes": [
+            "4"
+          ]
+        },
+        {
+          "id": "pathway",
+          "title": "Reflection",
+          "prompt": "Identify strengths, next coding goal and an occupation connection.",
+          "outcomes": [
+            "5"
+          ],
+          "hidden": true
+        }
+      ],
+      "archived": true
+    },
+    "DRAFT-ANIM1": {
+      "code": "DRAFT-ANIM1",
+      "name": "Animation 1 \u2022 draft",
+      "brief": "Animate a readable action with anticipation, movement and recovery. Compare two timings, test at game size and present a frame sequence. Exact CTS course/outcomes must be supplied before credit assessment.",
+      "kind": "hero",
+      "prerequisite": "None",
+      "draft": true,
+      "source": "Draft learning brief; exact CTS outcomes not supplied",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Explain animation planning (draft target)",
+          "stages": [
+            "plan"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "Create an original animation (draft target)",
+          "stages": [
+            "frames"
+          ],
+          "assets": [
+            "animation"
+          ]
+        },
+        {
+          "id": "3",
+          "title": "Evaluate timing and communication (draft target)",
+          "stages": [
+            "timing"
+          ],
+          "assets": [
+            "animation"
+          ]
+        },
+        {
+          "id": "4",
+          "title": "Present and credit work (draft target)",
+          "stages": [
+            "presentation"
+          ],
+          "assets": []
+        },
+        {
+          "id": "5",
+          "title": "Reflect on work practice and pathways (draft target)",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "plan",
+          "title": "Storyboard",
+          "prompt": "Explain purpose/audience, key poses, anticipation/action/recovery and frame timing.",
+          "outcomes": [
+            "1"
+          ]
+        },
+        {
+          "id": "frames",
+          "title": "Build the motion",
+          "prompt": "Attach the finished work and editable source. No tool-use essay is needed: your images, frames and saved settings demonstrate what you used.",
+          "outcomes": [
+            "2"
+          ]
+        },
+        {
+          "id": "timing",
+          "title": "Timing comparison",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "3"
+          ]
+        },
+        {
+          "id": "presentation",
+          "title": "Present & credit",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence.",
+          "outcomes": [
+            "4"
+          ]
+        },
+        {
+          "id": "pathway",
+          "title": "Practice & pathway",
+          "prompt": "Describe backups, safe workstation habits, teamwork and a career connection.",
+          "outcomes": [
+            "5"
+          ],
+          "hidden": true
+        }
+      ],
+      "archived": true
+    },
+    "COM1145": {
+      "code": "COM1145",
+      "name": "Animation 1",
+      "brief": "Animate one readable game action: plan key poses, create a short sequence, add or justify audio, compare timing, present and revise after feedback. Also compare at least THREE industry animation styles.",
+      "kind": "ability",
+      "prerequisite": "COM1005: Visual Composition",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and describe the fundamental concepts of the illusion of movement through a minimum of three animation styles used in the animation industry",
+          "stages": [
+            "styles"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "produce short animation assignment(s)",
+          "stages": [
+            "plan"
+          ],
+          "assets": [
+            "animation"
+          ],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "permissions"
+          ],
+          "assets": []
+        },
+        {
+          "id": "4",
+          "title": "present a selection of work completed in this course to an audience",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "animation"
+          ],
+          "practical": true
+        },
+        {
+          "id": "5",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "styles",
+          "title": "Three industry styles",
+          "prompt": "Explain illusion of movement using at least three styles: e.g., cel animation, claymation and computer animation. Compare how frames are created and presented. Use the concept check as practice, not a replacement for your explanation."
+        },
+        {
+          "id": "plan",
+          "title": "Storyboard & key poses",
+          "prompt": "Define the action and audience. Describe anticipation, action and recovery; outline key poses, timing, stage/camera and the chosen animation technique before making it."
+        },
+        {
+          "id": "frames",
+          "title": "Create & capture motion",
+          "prompt": "Attach a hero with different walking poses or a custom ability with multiple original animation frames. Explain capture/editing equipment, timing and music or sound effects (or your audio decision).",
+          "hidden": true
+        },
+        {
+          "id": "timing",
+          "title": "Test & revise",
+          "prompt": "Record two timing tests, feedback and a revision. Compare final motion with the storyboard and explain whether it communicates the intended action.",
+          "hidden": true
+        },
+        {
+          "id": "permissions",
+          "title": "Copyright & permission",
+          "prompt": "List original work and any borrowed sources. Give creator, licence/permission and changes. A short credit list is enough."
+        },
+        {
+          "id": "presentation",
+          "title": "Present your animation",
+          "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence."
+        },
+        {
+          "id": "routines",
+          "title": "Workstation routines",
+          "prompt": "Record posture, equipment layout, safe work/break habits, file security and backups. Teacher observation may be required.",
+          "hidden": true
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & teamwork",
+          "prompt": "Explain communication, information management, numerical timing choices, problem-solving, responsibility, adaptation, safe practice and your contribution to any teamwork.",
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Describe interests, strengths and resources. Connect your experience to an animation/design/media occupation and identify a next step.",
+          "hidden": true
+        }
+      ]
+    },
+    "CSE1110": {
+      "code": "CSE1110",
+      "name": "Structured Programming 1",
+      "brief": "Write a SEQUENTIAL input \u2192 processing \u2192 output program in the IPO Workbench. Predict results, translate your algorithm, test success/failure data, debug and revise. Branching and loops are optional extensions, not required for this course.",
+      "kind": "ability",
+      "prerequisite": "None",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "demonstrate introductory structured programming skills by writing sequential algorithms to solve problems involving input, processing and output",
+          "stages": [
+            "plan",
+            "tests"
+          ],
+          "assets": []
+        },
+        {
+          "id": "2",
+          "title": "translate algorithms into source code, convert the source code into machine executable form, execute and debug, as required",
+          "stages": [],
+          "assets": [
+            "program"
+          ],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "analyze and compare the results of the program with the intent of the algorithm and modify as required",
+          "stages": [],
+          "assets": [
+            "tested_program"
+          ],
+          "practical": true
+        },
+        {
+          "id": "4",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "5",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "plan",
+          "title": "Algorithm & IPO",
+          "prompt": "Describe an algorithm and analyze two simple examples. Define your problem, available data, user inputs, processing and outputs. Write pseudocode in the correct sequence before coding."
+        },
+        {
+          "id": "code",
+          "title": "Translate & execute",
+          "prompt": "Attach an IPO program. Explain editor, translator/interpreter, executor and debugger. Compare an IDE with separate tools; describe variables/constants, data types, literals, assignment/arithmetic and text output. Crossroads interprets bounded instructions; it does not produce a standalone native executable.",
+          "hidden": true
+        },
+        {
+          "id": "tests",
+          "title": "Predict, test & debug",
+          "prompt": "Run normal, boundary and failure cases. Record predicted versus actual output, diagnose a syntax/runtime or logic error, revise and retest. Include the saved automated test cases and explain them."
+        },
+        {
+          "id": "competencies",
+          "title": "Skills & teamwork",
+          "prompt": "Explain communication, information management, numerical reasoning, responsibility, adaptation, ongoing learning, safe practice and your role in any team.",
+          "hidden": true
+        },
+        {
+          "id": "pathway",
+          "title": "Personal pathway",
+          "prompt": "Update your interests, skills and resources. Connect this programming experience to an occupation and choose a next learning goal.",
+          "hidden": true
+        }
+      ]
+    },
+    "DES2035": {
+      "code": "DES2035",
+      "name": "2-D Design 2",
+      "kind": "realm",
+      "prerequisite": "DES1030",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes \u2022 teacher confirms quality and any external technical requirements",
+      "level": "Intermediate",
+      "brief": "Build a NEW playable realm. First record its purpose, mood and route vision; then draw at least three coordinated props in Object Lab and place them with terrain and enemies in Realm Builder. Test the route, revise it and present the realm with a short critique.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "plan and produce solutions to 2-D design briefs",
+          "stages": [
+            "vision"
+          ],
+          "assets": [
+            "realm",
+            "object_pack"
+          ],
+          "practical": true,
+          "before_production": [
+            "vision"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "incorporate the elements and principles of design to achieve the design solution",
+          "stages": [],
+          "assets": [
+            "realm",
+            "object_pack"
+          ],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "produce and present a portfolio-ready drawing, image or rendering",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "tested_realm"
+          ],
+          "practical": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "vision",
+          "title": "Record realm vision BEFORE production",
+          "prompt": "Before building: describe mood, audience and route goal in 2\u20134 sentences. Include one scale/layout constraint. Save this first; then build your objects and realm."
+        },
+        {
+          "id": "presentation",
+          "title": "Present the playable realm",
+          "prompt": "Attach three props and the tested realm. Add one design decision and one critique/revision in a short caption. The map and artwork demonstrate the techniques."
+        }
+      ]
+    },
+    "COM2035": {
+      "code": "COM2035",
+      "name": "Raster Graphics 1",
+      "kind": "object",
+      "prerequisite": "COM1035",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes \u2022 teacher confirms quality and any external technical requirements",
+      "level": "Intermediate",
+      "brief": "Create THREE related props for a realm (e.g. tree, lamp and bench). Use editable layers, a selection, a gradient/pattern and a mask. Keep readable filenames and screen output settings. Show the source and flattened exports; add credits and a short peer-feedback caption.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "create raster images using graphic applications",
+          "stages": [],
+          "assets": [
+            "raster_pack"
+          ],
+          "practical": true
+        },
+        {
+          "id": "2",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "rights"
+          ],
+          "assets": [],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "present a selection of work completed in this course to an audience",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "raster_pack"
+          ],
+          "practical": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "rights",
+          "title": "Credits & permission",
+          "prompt": "List your original artwork and any borrowed source with creator and permission/licence."
+        },
+        {
+          "id": "presentation",
+          "title": "Present source + exports",
+          "prompt": "Attach your three raster objects. Show one before/after or revision, and add a short feedback caption. Source layers, document settings and tool history replace the tool-use essay."
+        }
+      ]
+    },
+    "COM3035": {
+      "code": "COM3035",
+      "name": "Raster Graphics 2",
+      "kind": "object",
+      "prerequisite": "COM2035",
+      "draft": false,
+      "source": "Teacher-supplied main outcomes \u2022 teacher confirms quality and any external technical requirements",
+      "level": "Advanced",
+      "brief": "Build an ADVANCED coordinated realm art pack of FOUR props: create and stamp a custom brush, correct tone/colour, use layered selections/masks and produce a web/mobile proof. Attach editable sources plus before/after snapshots. This in-game project covers screen raster work; your teacher can request external evidence for channels, CMYK, HDR and print workflows.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "create raster images using graphic applications",
+          "stages": [],
+          "assets": [
+            "advanced_raster_pack"
+          ],
+          "practical": true
+        },
+        {
+          "id": "2",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "stages": [
+            "rights"
+          ],
+          "assets": [],
+          "practical": true
+        },
+        {
+          "id": "3",
+          "title": "present a selection of work completed in this course to an audience",
+          "stages": [
+            "presentation"
+          ],
+          "assets": [
+            "advanced_raster_pack"
+          ],
+          "practical": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "rights",
+          "title": "Credits & permission",
+          "prompt": "List original and borrowed assets, authors, licences/permissions and changes."
+        },
+        {
+          "id": "presentation",
+          "title": "Before / after proof & critique",
+          "prompt": "Attach your four coordinated props and at least two versions of one image. Show a web/mobile proof in your realm. Add one sentence on an improvement and one on feedback. External colour/HDR/print work may be attached separately for teacher review."
+        }
+      ]
+    }
+  }
+}

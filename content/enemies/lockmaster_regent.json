@@ -1,0 +1,12 @@
+{
+  "id": "lockmaster_regent",
+  "name": "Lockmaster Regent",
+  "sprite": "lockmaster_regent",
+  "health": 1450,
+  "speed": 115,
+  "damage": 24,
+  "behaviour": "custom",
+  "custom_attack": "borough_boss",
+  "aggro_range": 650,
+  "expansion_only": true
+}

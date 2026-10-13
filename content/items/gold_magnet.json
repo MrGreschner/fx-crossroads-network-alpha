@@ -1,0 +1,10 @@
+{
+  "id": "gold_magnet",
+  "name": "Coin Magnet",
+  "cost": 44,
+  "effect": "bounty",
+  "amount": 2,
+  "description": "Gain 2 extra Crossroads Coins (CC) per enemy kill.",
+  "duration": 3,
+  "radius": 145
+}

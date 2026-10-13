@@ -1,0 +1,17 @@
+{
+  "id": "clockwork_orchard",
+  "name": "The Clockwork Orchard",
+  "size": [
+    7200,
+    4200
+  ],
+  "terrain": "clock_floor",
+  "scene": "res://scenes/realms/clockwork_orchard.tscn",
+  "boss_sprite": "hourglass_hart",
+  "boss_health": 900,
+  "xp_per_level": 4,
+  "boss_secondary": "clockwork",
+  "expansion": "clockwork",
+  "difficulty_label": "Very hard: timed machinery and explosive moths",
+  "difficulty_tier": "hard"
+}

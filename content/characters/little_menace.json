@@ -1,0 +1,105 @@
+{
+  "id": "little_menace",
+  "sprite": "little_menace",
+  "name": "Little Menace",
+  "max_health": 120,
+  "speed": 240,
+  "run_cost": 0,
+  "lore": "This mouse brawler carries a pocketful of shrinking charms and an oversized sense of courage. Small does not mean safe: his boldest strike spends his own heartbeats.",
+  "primary": {
+    "name": "Three Knocks",
+    "style": "mini_jabs",
+    "damage": 8,
+    "cooldown": 0.7,
+    "range": 72,
+    "description": "Three fast forward punches deal 8 damage each. Landing all three on the same foe slows it 35% for 2s.",
+    "ui_brief": "Melee \u2022 three 8-damage jabs \u2022 all three hits slow"
+  },
+  "secondary": {
+    "name": "Pocket Size",
+    "style": "mini_shift",
+    "damage": 0,
+    "cooldown": 11,
+    "range": 0,
+    "description": "Shrink to half size for 4s: +50% movement speed and a smaller projectile hitbox. You can still attack and take damage; area attacks remain dangerous.",
+    "duration": 4,
+    "move_factor": 1.5,
+    "ui_brief": "Shrink \u2022 4 seconds \u2022 faster, smaller, still vulnerable"
+  },
+  "special": {
+    "name": "Heart on the Line",
+    "style": "heart_forfeit",
+    "damage": 0,
+    "cooldown": 26,
+    "range": 165,
+    "description": "Charge visibly for 1 second at reduced movement speed, then Pay 50% of your maximum health. Each enemy within 165 reach takes that same raw damage before its defences. The cost bypasses your armour and may defeat you if your health is too low.",
+    "health_cost": 0.5,
+    "ui_brief": "1-second charge \u2022 sacrifice health \u2022 area damage"
+  },
+  "passive": "Small Courage: landing all three punches grants 10% damage reduction for 1.5s.",
+  "passive_effect": "small_courage",
+  "mastery": {
+    "title": "The Unflinching Little Legend",
+    "technique": {
+      "name": "All In",
+      "ability": "special",
+      "description": "Spend 75% maximum health for greater damage, but a smaller circle.",
+      "attack": {
+        "name": "All In",
+        "style": "heart_forfeit",
+        "damage": 0,
+        "cooldown": 26,
+        "range": 110,
+        "description": "Charge for 1 second, then Pay 75% of maximum health to damage every foe within 110 reach for that amount. Can defeat you; the circle is smaller.",
+        "health_cost": 0.75
+      }
+    },
+    "final_technique": {
+      "name": "Long Mischief",
+      "ability": "secondary",
+      "description": "Stay small longer, with a smaller speed increase.",
+      "attack": {
+        "name": "Long Mischief",
+        "style": "mini_shift",
+        "damage": 0,
+        "cooldown": 11,
+        "range": 0,
+        "description": "Shrink for 6s instead of 4, but gain only +30% movement speed. Still able to attack; no invulnerability.",
+        "duration": 6,
+        "move_factor": 1.3
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ]
+  }
+}

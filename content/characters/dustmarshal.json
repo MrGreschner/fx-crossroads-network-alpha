@@ -1,0 +1,98 @@
+{
+  "id": "dustmarshal",
+  "name": "Dust Marshal",
+  "sprite": "dustmarshal",
+  "max_health": 145,
+  "speed": 220,
+  "run_cost": 0,
+  "lore": "A bison frontier marshal: an aimed pistol round, a warned hogtie, and a close stampede.",
+  "primary": {
+    "name": "Six-Shooter",
+    "style": "v91_pistol",
+    "damage": 22,
+    "cooldown": 0.85,
+    "range": 430,
+    "description": "Fire one fast pistol round for 22 damage. The visible round stops at the first enemy or wall.",
+    "speed": 620
+  },
+  "secondary": {
+    "name": "Hogtie",
+    "style": "v90_lasso",
+    "damage": 18,
+    "cooldown": 7,
+    "range": 230,
+    "description": "After a 0.3-second rope throw, pull the aimed enemy toward a spot 48 away from you over 0.4 seconds. Deal 18 damage and stun for 2 seconds. Walls stop the pull."
+  },
+  "special": {
+    "name": "High Noon Stampede",
+    "style": "v90_stampede",
+    "damage": 38,
+    "cooldown": 16,
+    "range": 290,
+    "description": "Dash forward with a dust trail, hitting each enemy once for 38 and pushing them aside."
+  },
+  "passive": "True Grit: shooting a tied enemy with Six-Shooter heals 3 HP (once per tie).",
+  "passive_effect": "true_grit",
+  "mastery": {
+    "title": "Marshal of the Crossroads",
+    "technique": {
+      "name": "Long Barrel",
+      "ability": "primary",
+      "attack": {
+        "name": "Long Barrel",
+        "style": "v91_pistol",
+        "damage": 28,
+        "cooldown": 1.2,
+        "range": 560,
+        "description": "Fire one fast pistol round for 22 damage. The visible round stops at the first enemy or wall.",
+        "speed": 620
+      },
+      "description": "Shoot farther and harder, with slower recovery."
+    },
+    "final_technique": {
+      "name": "Posse Ride",
+      "ability": "special",
+      "attack": {
+        "name": "Posse Ride",
+        "style": "v90_posse",
+        "damage": 0,
+        "cooldown": 20,
+        "range": 100,
+        "description": "Summon two 45-HP melee deputies for 8s, each 8 damage/sec. No stampede dash."
+      },
+      "description": "Exchange your own mobility burst for a temporary close-fighting posse."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

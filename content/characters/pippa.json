@@ -1,0 +1,107 @@
+{
+  "id": "pippa",
+  "name": "Pippa Fernwhisker",
+  "sprite": "pippa",
+  "max_health": 108,
+  "speed": 245,
+  "run_cost": 0,
+  "lore": "A red panda ribbon-weaver from Petalbrook Canopy. Pippa leaves warm tea for lost travelers and weaves living fern ribbons to protect her woodland home.",
+  "primary": {
+    "name": "Ribbon Stitch",
+    "style": "ribbon_stitch",
+    "damage": 15,
+    "cooldown": 0.8,
+    "range": 380,
+    "description": "Send two intertwining living ribbons forward. Each deals 15 damage once; walls stop the weaving threads."
+  },
+  "secondary": {
+    "name": "Fern Double",
+    "style": "fern_double",
+    "damage": 24,
+    "cooldown": 8,
+    "range": 160,
+    "description": "Grow a leaf double for 3 seconds to lure nearby enemies. It explodes for 24 damage within 150 units and slows drawn-in enemies for 3 seconds. It then pulses yellow, healing you and allies within 150 units for 8 HP each second for 3 seconds (24 total). Never heals enemies.",
+    "radius": 150,
+    "slow_duration": 3,
+    "slow_factor": 0.55,
+    "heal": 8,
+    "heal_duration": 3
+  },
+  "special": {
+    "name": "Maypole Waltz",
+    "style": "maypole_waltz",
+    "damage": 36,
+    "cooldown": 18,
+    "range": 180,
+    "description": "Plant a maypole ahead. Three ribbon tips spiral outward over 2.4s to a 230-unit radius. Each tip hits each foe once for 36 and slows for 2s. Walls block the ribbons."
+  },
+  "passive": "Afterglow: allies healed by Fern Double also gain 20% movement speed for 2 seconds.",
+  "passive_effect": "fern_afterglow",
+  "mastery": {
+    "title": "Guardian of the Ferns",
+    "technique": {
+      "name": "Village Shelter",
+      "ability": "secondary",
+      "description": "Fern Double helps across a 30% wider radius, but explodes for 30% less damage.",
+      "multiply": {
+        "radius": 1.3,
+        "damage": 0.7
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Fernfall Picnic",
+      "ability": "special",
+      "description": "Three fern stars bloom for 22 damage each and slow. Replaces the moving ribbon dance; no orbit or bonus travel.",
+      "attack": {
+        "name": "Fernfall Picnic",
+        "style": "master_sigils",
+        "damage": 22,
+        "cooldown": 12,
+        "color": "#c3dfb1",
+        "range": 230,
+        "radius": 70,
+        "count": 3,
+        "spacing": 65,
+        "charge": 0.55,
+        "duration": 1.8,
+        "slow_duration": 1.3,
+        "slow": 0.65,
+        "description": "Three fern stars bloom for 22 damage each and slow. Replaces the moving ribbon dance; no orbit or bonus travel.",
+        "visual_texture": "res://assets/mastery_pippa_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

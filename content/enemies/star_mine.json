@@ -1,0 +1,10 @@
+{
+  "id": "star_mine",
+  "name": "Orbit Mine",
+  "sprite": "star_mine",
+  "health": 120,
+  "speed": 56,
+  "damage": 19,
+  "aggro_range": 630,
+  "behaviour": "chase"
+}

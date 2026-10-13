@@ -1,0 +1,14 @@
+{
+  "id": "prism_acolyte",
+  "name": "Prism Acolyte",
+  "sprite": "prism_acolyte",
+  "health": 80,
+  "speed": 72,
+  "damage": 11,
+  "behaviour": "ranged",
+  "custom_attack": "prism_fan",
+  "aggro_range": 600,
+  "shot_cooldown": 3.2,
+  "shot_speed": 260,
+  "expansion_only": true
+}

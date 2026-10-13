@@ -1,0 +1,96 @@
+{
+  "id": "dunecook",
+  "name": "Crumb Cook",
+  "sprite": "dunecook",
+  "max_health": 150,
+  "speed": 190,
+  "run_cost": 0,
+  "lore": "A walking layer cake in a chef hat. Crumb Cook brings sweet comfort, careful preparation and a peppery surprise to the crossroads.",
+  "primary": {
+    "name": "Spatula Chop",
+    "style": "v90_chop",
+    "damage": 28,
+    "cooldown": 1,
+    "range": 90,
+    "description": "A weighty downward chop at close range; no projectile."
+  },
+  "secondary": {
+    "name": "Custard Pot",
+    "style": "v90_pot",
+    "damage": 4,
+    "cooldown": 9,
+    "range": 100,
+    "description": "Place a bubbling pot at your feet for 5s. Allies heal 3 HP/sec; enemies take 4 damage/sec and are mildly slowed."
+  },
+  "special": {
+    "name": "Dessert Banquet",
+    "style": "v90_feast",
+    "damage": 24,
+    "cooldown": 20,
+    "range": 165,
+    "description": "After a one-second stir, a hot serving splash hits foes for 24. Allies in range heal 18 and clear poison/burn."
+  },
+  "passive": "Well Fed: cleaver hits during Simmer Pot grant 15% protection for 1s.",
+  "passive_effect": "well_fed",
+  "mastery": {
+    "title": "Master P\u00e2tissier",
+    "technique": {
+      "name": "Quick Prep",
+      "ability": "primary",
+      "attack": {
+        "name": "Quick Prep",
+        "style": "v90_chop",
+        "damage": 20,
+        "cooldown": 0.7,
+        "range": 90,
+        "description": "Faster chop, lower damage per hit."
+      },
+      "description": "A lighter spatula for faster close rhythm."
+    },
+    "final_technique": {
+      "name": "Pepper Feast",
+      "ability": "special",
+      "attack": {
+        "name": "Pepper Feast",
+        "style": "v90_pepper",
+        "damage": 32,
+        "cooldown": 20,
+        "range": 165,
+        "description": "A spicy splash for 32 damage, 3s burn and only 8 ally healing; still cleanses poison/burn."
+      },
+      "description": "Trade some team healing for a fiery serving."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

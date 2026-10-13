@@ -1,0 +1,103 @@
+{
+  "id": "veyra",
+  "name": "Veyra Spellthief",
+  "sprite": "veyra",
+  "run_cost": 0,
+  "max_health": 105,
+  "speed": 245,
+  "lore": "An exile of Ebonwake who stole the Citadel\u2019s forbidden ledger and learned to turn cruel magic against its masters.",
+  "primary": {
+    "name": "Echo Brand",
+    "style": "echo_brand",
+    "damage": 18,
+    "cooldown": 0.8,
+    "range": 480,
+    "speed": 410,
+    "description": "Fire a brand: 40% of its damage on contact, the rest after 1.2 seconds. Enemy movement before the echo adds up to 14 damage. Repeated hits strengthen an existing brand without restarting its timer."
+  },
+  "secondary": {
+    "name": "Spell Snare",
+    "style": "spell_snare",
+    "damage": 14,
+    "cooldown": 9,
+    "range": 240,
+    "radius": 100,
+    "duration": 2.5,
+    "description": "Place a snare at your aim. For 2.5 seconds it catches up to six moving enemy shots, then returns them as 14-damage friendly bolts toward nearby foes. It cannot stop floor attacks or lobbed explosions."
+  },
+  "special": {
+    "name": "Soul Ledger",
+    "style": "soul_ledger",
+    "damage": 10,
+    "cooldown": 20,
+    "range": 420,
+    "duration": 5,
+    "description": "Bind up to four nearby enemies for 5 seconds, dealing 10 damage each. Damage dealt to one spreads 25% to the other linked enemies, capped at 12 per shared hit. Shared damage never triggers another share."
+  },
+  "passive": "Quick Study: returned Spell Snare bolts slow their target for one second.",
+  "passive_effect": "stolen_slow",
+  "mastery": {
+    "title": "Master Spellthief",
+    "technique": {
+      "name": "Patient Snare",
+      "ability": "secondary",
+      "description": "Spell Snare stays open 50% longer, but recharges 40% slower.",
+      "multiply": {
+        "duration": 1.5,
+        "cooldown": 1.4
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Borrowed Constellation",
+      "ability": "special",
+      "description": "Strike up to four enemies in a delayed linked constellation for 25 each and a brief slow. Trades the stored-spell ledger for reliable multi-target control.",
+      "attack": {
+        "name": "Borrowed Constellation",
+        "style": "master_chain",
+        "damage": 25,
+        "cooldown": 12,
+        "color": "#c3badf",
+        "range": 270,
+        "count": 4,
+        "duration": 1.8,
+        "slow_duration": 0.8,
+        "slow": 0.75,
+        "description": "Strike up to four enemies in a delayed linked constellation for 25 each and a brief slow. Trades the stored-spell ledger for reliable multi-target control.",
+        "visual_texture": "res://assets/mastery_veyra_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

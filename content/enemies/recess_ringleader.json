@@ -1,0 +1,12 @@
+{
+  "id": "recess_ringleader",
+  "name": "Recess Ringleader",
+  "sprite": "recess_ringleader",
+  "health": 420,
+  "speed": 65,
+  "damage": 11,
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "custom_attack": "school_recess_ringleader",
+  "expansion_only": true
+}

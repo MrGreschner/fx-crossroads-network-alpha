@@ -1,0 +1,96 @@
+{
+  "id": "quill",
+  "name": "Quill Prowler",
+  "sprite": "quill",
+  "max_health": 140,
+  "speed": 220,
+  "run_cost": 0,
+  "lore": "A brave porcupine who crouches into short springing bounds, then fights at claw distance. Mastery can exchange direct attacks for a pack of living quill companions.",
+  "primary": {
+    "name": "Briar Claw",
+    "style": "quill_claw",
+    "damage": 24,
+    "cooldown": 0.7,
+    "range": 85,
+    "description": "Close directional claw sweep: 24 damage, 85 reach."
+  },
+  "secondary": {
+    "name": "Springthorn",
+    "style": "quill_lunge",
+    "damage": 22,
+    "cooldown": 5,
+    "range": 180,
+    "description": "A short collision-safe lunge; strike nearby foes for 22, push them back and briefly stun for 0.4s."
+  },
+  "special": {
+    "name": "Bramble Stampede",
+    "style": "quill_stampede",
+    "damage": 42,
+    "cooldown": 15,
+    "range": 340,
+    "description": "Rush forward in three visible stages, hitting each enemy once for 42 damage and pushing them outward."
+  },
+  "passive": "Prickle Guard: a successful claw or lunge gives 10% damage reduction for 1s.",
+  "passive_effect": "prickle_guard",
+  "mastery": {
+    "title": "Master of the Quillpack",
+    "technique": {
+      "name": "Living Quills",
+      "ability": "primary",
+      "attack": {
+        "name": "Living Quills",
+        "style": "quill_summon",
+        "damage": 0,
+        "cooldown": 2.2,
+        "range": 85,
+        "description": "Raise one 40-HP melee quill companion for 12s; cap three. Each deals 8 damage per 1.1s. Gives up the claw."
+      },
+      "description": "Become a summoner instead of a direct primary fighter; three bounded companions."
+    },
+    "final_technique": {
+      "name": "Quillpack Rally",
+      "ability": "special",
+      "attack": {
+        "name": "Quillpack Rally",
+        "style": "quill_pack",
+        "damage": 0,
+        "cooldown": 18,
+        "range": 300,
+        "description": "Fill your pack up to three companions and rally them to the aimed spot for 4s. Existing companions gain 30% protection for 4s, without free healing or lifetime refresh."
+      },
+      "description": "Replace the stampede with summoning and pack positioning. Combine with Living Quills for a full summoner style."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "shambler",
+  "name": "Shambler",
+  "sprite": "shambler",
+  "health": 145,
+  "speed": 67,
+  "damage": 15,
+  "aggro_range": 630,
+  "behaviour": "chase"
+}

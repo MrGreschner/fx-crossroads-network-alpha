@@ -1,0 +1,87 @@
+{
+  "ice": [
+    "boss:cryowarden"
+  ],
+  "ebonwake": [
+    "last_creditor"
+  ],
+  "confluence": [
+    "confluence_heart"
+  ],
+  "silverfall": [
+    "crowned_torrent"
+  ],
+  "honeyglass": [
+    "glass_queen"
+  ],
+  "petalbrook": [
+    "bloomtail_regent"
+  ],
+  "astral_rift": [
+    "eclipse_engine"
+  ],
+  "elementary": [
+    "yellow_bus",
+    "recess_ringleader"
+  ],
+  "middle_school": [
+    "bellwork_colossus",
+    "lunchline_leviathan"
+  ],
+  "clockwork_orchard": [
+    "hourglass_hart"
+  ],
+  "space": [
+    "boss:signal_core"
+  ],
+  "town": [],
+  "sunfield": [
+    "sun_sentinel"
+  ],
+  "grove": [],
+  "neon_crucible": [
+    "continuum_crown"
+  ],
+  "quarry": [],
+  "wayfarer": [],
+  "practice": [],
+  "zombie": [
+    "boss:plague_director"
+  ],
+  "first_steps": [],
+  "high_school": [
+    "exam_math",
+    "spotlight_sovereign",
+    "layercake_golem",
+    "iron_barbell",
+    "exam_english",
+    "exam_history",
+    "exam_science"
+  ],
+  "moonveil": [
+    "mirror_marquis"
+  ],
+  "moonburrow": [
+    "flintroot"
+  ],
+  "shattered_oath": [
+    "briar_matron",
+    "kiln_knight",
+    "mirror_oracle",
+    "storm_archon",
+    "gilded_usurper"
+  ],
+  "brasslock": [
+    "lockmaster_regent"
+  ],
+  "chimevault": [
+    "silence_regent",
+    "gongbreaker"
+  ],
+  "lantern_marsh": [
+    "bellroot"
+  ],
+  "folded_coast": [
+    "cartographer"
+  ]
+}

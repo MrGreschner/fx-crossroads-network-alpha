@@ -1,0 +1,114 @@
+{
+  "id": "aurel",
+  "name": "Aurel",
+  "sprite": "aurel",
+  "run_cost": 0,
+  "max_health": 120,
+  "speed": 225,
+  "lore": "A copper-scaled star dragon, small enough to fit through a town gate and old enough to remember when the sky was closer.",
+  "primary": {
+    "name": "Starfire Breath",
+    "style": "fire_breath",
+    "damage": 4,
+    "cooldown": 0.65,
+    "duration": 0.4,
+    "range": 170,
+    "arc_degrees": 24,
+    "burn_damage": 1,
+    "burn_duration": 3,
+    "color": "#ffc887",
+    "description": "Breathe a narrow 24-degree stream of fire up to 170 units. Four ticks deal 4 damage each; hits refresh a burn for 1 damage per second over 3 seconds."
+  },
+  "secondary": {
+    "name": "Wingbeat",
+    "style": "waterfall_wave",
+    "damage": 18,
+    "cooldown": 4.5,
+    "radius": 145,
+    "wave_speed": 420,
+    "knockback": 65,
+    "slow_duration": 1,
+    "color": "#eab782",
+    "description": "Beat your wings to send an expanding gust around you: 18 damage, knockback and a one-second slow."
+  },
+  "special": {
+    "name": "Skyfall Constellation",
+    "style": "meteor_shower",
+    "damage": 24,
+    "cooldown": 18,
+    "range": 230,
+    "radius": 125,
+    "blast_radius": 65,
+    "count": 7,
+    "interval": 0.16,
+    "color": "#ffd29a",
+    "description": "Trace a glowing constellation ahead of you. Seven telegraphed meteors fall in sequence, each exploding for 24 damage within 65 units."
+  },
+  "passive": "Afterglow: meteor explosions gain 12 units of radius.",
+  "passive_effect": "wide_meteors",
+  "mastery": {
+    "title": "Starfire Sovereign",
+    "technique": {
+      "name": "Needleflame",
+      "ability": "primary",
+      "description": "Fire breath reaches 30% farther through a 35% narrower cone.",
+      "multiply": {
+        "range": 1.3,
+        "arc_degrees": 0.65
+      },
+      "set": {}
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_technique": {
+      "name": "Ember Talon",
+      "ability": "secondary",
+      "description": "Charge a piercing ember talon for 42 damage plus a small burn. Gives up Waterfall Wave\u2019s circular push and slow.",
+      "attack": {
+        "name": "Ember Talon",
+        "style": "master_lance",
+        "damage": 42,
+        "cooldown": 4,
+        "color": "#f0aa71",
+        "range": 320,
+        "width": 50,
+        "charge": 0.55,
+        "duration": 1.5,
+        "burn_duration": 3,
+        "burn_damage": 2,
+        "description": "Charge a piercing ember talon for 42 damage plus a small burn. Gives up Waterfall Wave\u2019s circular push and slow.",
+        "visual_texture": "res://assets/mastery_aurel_v68.svg"
+      }
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  }
+}

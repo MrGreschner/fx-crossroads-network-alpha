@@ -1,0 +1,12 @@
+{
+  "id": "grate_witch",
+  "name": "Grate Witch",
+  "sprite": "grate_witch",
+  "health": 95,
+  "speed": 62,
+  "damage": 13,
+  "behaviour": "custom",
+  "custom_attack": "grate_march",
+  "aggro_range": 650,
+  "expansion_only": true
+}

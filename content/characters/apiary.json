@@ -1,0 +1,102 @@
+{
+  "id": "apiary",
+  "name": "Clockwork Apiarist",
+  "sprite": "apiary",
+  "max_health": 120,
+  "speed": 230,
+  "run_cost": 0,
+  "lore": "A human beekeeper-engineer whose mechanical bees keep their distance and fire amber needles. Deploy a hive, then reposition the swarm for a carefully aimed relay volley.",
+  "primary": {
+    "name": "Amber Needle",
+    "style": "apiary_needle",
+    "damage": 18,
+    "cooldown": 0.45,
+    "range": 410,
+    "description": "Tap for an 18-damage amber needle (0.45s cooldown), or hold 0.9s for 36 damage and a 1.25s stun. A growing amber charge shows readiness.",
+    "hold_charge": {
+      "seconds": 0.9,
+      "damage": 2,
+      "size": 1.6
+    },
+    "ui_brief": "Charged needle \u2022 18\u201336 damage \u2022 full charge stuns"
+  },
+  "secondary": {
+    "name": "Hive Lantern",
+    "style": "hive_lantern",
+    "damage": 6,
+    "cooldown": 8,
+    "range": 340,
+    "description": "Place up to two 38-HP bee drones lasting 16s. At most three drones are active (four with passive). Drones fire 6-damage needles every 1.3s and keep range."
+  },
+  "special": {
+    "name": "Swarm Relay",
+    "style": "swarm_relay",
+    "damage": 5,
+    "cooldown": 16,
+    "range": 340,
+    "description": "Move existing drones into a safe formation at your aim. Each releases three 5-damage needles forward. Requires drones; does not create or heal them."
+  },
+  "passive": "Royal Hive: Increase drone capacity from three to four.",
+  "passive_effect": "royal_hive",
+  "mastery": {
+    "title": "Master of the Amber Swarm",
+    "technique": {
+      "name": "Keeper\u2019s Crook",
+      "ability": "primary",
+      "attack": {
+        "name": "Keeper\u2019s Crook",
+        "style": "apiary_crook",
+        "damage": 20,
+        "cooldown": 0.9,
+        "range": 110,
+        "description": "A close crook sweep deals 20 and slows for 1.5s."
+      },
+      "description": "Replace the ranged needle with close protection and a slow."
+    },
+    "final_technique": {
+      "name": "Honey Court",
+      "ability": "special",
+      "attack": {
+        "name": "Honey Court",
+        "style": "honey_court",
+        "damage": 5,
+        "cooldown": 18,
+        "range": 340,
+        "description": "Place a 140-radius honey court for 4s. Each second deals 5 damage and applies 55% slow for 1.2s. Does not reposition drones or fire volleys."
+      },
+      "description": "Trade the drone volley for area denial."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "crease_sentry",
+  "name": "Crease Sentry",
+  "sprite": "crease_sentry",
+  "health": 100,
+  "speed": 95,
+  "damage": 10,
+  "behaviour": "ranged",
+  "expansion_only": true,
+  "aggro_range": 850
+}

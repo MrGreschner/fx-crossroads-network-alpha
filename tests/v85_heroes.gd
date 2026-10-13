@@ -1,0 +1,66 @@
+extends SceneTree
+var failures:=0
+func check(ok:bool,label:String)->void:
+ if not ok:failures+=1;print("FAIL: ",label)
+func _initialize()->void:call_deferred("run")
+func run()->void:
+ root.set_meta("fx_intro_seen",true)
+ var g=load("res://scenes/main.tscn").instantiate();g.set_script(load("res://tests/v82_input_game.gd"));root.add_child(g);await process_frame;g.set_process(false);g.legacy.set_process(false)
+ g.enter_region("practice");g.obstacles.clear();g.scenery_tiles.clear();g.level=10;g.menu="";g.position_in_world=Vector2(1000,1000);g.enemies.clear();g.inventory.clear();g.invulnerable_time=0;g.legacy.data=g.legacy.defaults()
+ var c=g.adventure.combat
+ for id in ["morrow","mantis"]:
+  check(g.characters.has(id),"registered "+id)
+  for pose in ["idle","walk1","walk2","attack"]:check(ResourceLoader.exists("res://assets/"+id+"_"+pose+".png"),"sprite "+id+pose)
+  check(g.characters[id].mastery.technique.ability!=g.characters[id].mastery.final_technique.ability,"alternatives affect different slots")
+ g.character_id="morrow";g.selected_character="morrow";g.hero=g.characters.morrow;g.health=g.max_health();g.test_target=Vector2(1100,1000)
+ g.cooldowns.secondary=0;g.fire("secondary")
+ check(c.morrow.units.size()==3,"level5 passive raises three practice echoes")
+ check(c.morrow.owned("solo").filter(func(id):return bool(c.morrow.units[id].ranged)).size()==1,"third echo ranged")
+ check(not c.morrow.prepare("solo",g.hero.secondary,Vector2.RIGHT),"full slots reject cast without consuming cooldown")
+ var ids:Array=c.morrow.owned("solo");var start:float=g.health
+ g.cooldowns.special=0;g.pulse();check(c.morrow.links.has("solo"),"actual special dispatch links")
+ var initial:float=c.morrow.links.solo.hp
+ g.take_player_damage(30)
+ check(absf(float(c.morrow.links.solo.hp)-(initial-30))<.01,"hero hit subtracts exactly once from pool")
+ check(g.health>start-30,"shared hit protects hero")
+ var pool:float=c.morrow.links.solo.hp
+ g.invulnerable_time=100;c.morrow.hurt(ids[0],20,"enemy");g.invulnerable_time=0
+ check(absf(float(c.morrow.links.solo.hp)-(pool-20))<.01,"minion damage is shared even while owner invulnerable")
+ pool=c.morrow.links.solo.hp;g.health+=5;c.morrow.step(.01)
+ check(absf(float(c.morrow.links.solo.hp)-(pool+5))<.1,"external heal joins pool once")
+ pool=c.morrow.links.solo.hp;c.morrow.step(.01)
+ check(absf(float(c.morrow.links.solo.hp)-pool)<.1,"health redistribution does not create healing")
+ c.morrow.links.solo.hp=100;c.morrow.sync_link("solo");c.morrow.finish_link("solo")
+ check(absf(g.health-60)<.01,"60 percent hero at expiry")
+ var sum:float=g.health
+ for id in ids:sum+=float(c.morrow.units[id].hp)
+ check(absf(sum-100)<.01,"60/40 split conserves pool")
+ c.morrow.reset();g.enemies.clear();g.practice=false;g.adventure.spawn("bramble",Vector2(1100,1000),50,false);g.damage_enemy(0,100)
+ check(c.morrow.corpses.size()==1,"real enemy death creates grave marker")
+ c.morrow.fallen({"pos":Vector2(1000,1000),"type":"bramble","boss":true});check(c.morrow.corpses.size()==1,"boss cannot be raised")
+ g.cooldowns.secondary=0;g.fire("secondary");check(c.morrow.units.size()==1 and c.morrow.corpses.is_empty(),"raise consumes real corpse once")
+ g.adventure.spawn("bramble",Vector2(1130,1000),300,false)
+ for n in 20:c.morrow.step(.1)
+ check(float(g.enemies[0].hp)<300,"echo attacks enemy")
+ var final:Dictionary=g.hero.mastery.final_technique.attack;c.v79.prepare("solo",final,Vector2.RIGHT,Vector2(1130,1000));c.morrow.cast("solo",final,Vector2.RIGHT,float(final.damage))
+ for n in 25:c.morrow.step(.1)
+ check(c.morrow.units.is_empty(),"procession consumes echoes")
+ g.character_id="mantis";g.selected_character="mantis";g.hero=g.characters.mantis;g.health=70;c.mantis.reset();g.cooldowns.secondary=0;g.fire("secondary")
+ g.take_player_damage(2);check(c.mantis.poise.is_empty(),"small DoT cannot farm guard")
+ var hp:float=g.health;g.take_player_damage(20);check(g.health==hp+8 and int(c.mantis.poise.solo)==1,"timed guard blocks one hit and passive heals")
+ hp=g.health;g.take_player_damage(20);check(g.health==hp-20,"second hit is not blocked")
+ g.cooldowns.secondary=0;g.fire("secondary");c.mantis.step(.5);hp=g.health;g.take_player_damage(20);check(g.health==hp-20,"guard expires after 0.45s")
+ g.enemies.clear();g.adventure.spawn("bramble",Vector2(1160,1000),500,false);c.mantis.poise.solo=3;g.test_target=Vector2(1250,1000);g.cooldowns.special=0;g.pulse()
+ for n in 30:c.mantis.step(.025)
+ check(absf(float(g.enemies[0].hp)-428)<.01,"three-poise verdict hits target only once for72")
+ check(int(c.mantis.poise.solo)==0,"finisher consumes charges")
+ var motion=g.motion_v85
+ check(motion.offset("magnet").y<0,"Polarity hovers above ground")
+ motion.advance(.3);var hover:Vector2=motion.offset("magnet");motion.advance(.3);check(motion.offset("magnet")!=hover,"idle hover animated")
+ motion.sample("s","snowman",Vector2.ZERO,true);var a:Vector2=motion.displacement("s","snowman",Vector2.RIGHT,180,.1);check(a.length()<18,"snowman accelerates gradually")
+ var b:Vector2=motion.displacement("s","snowman",Vector2.ZERO,180,.1);check(b.length()>0,"snowman coasts on release")
+ motion.sample("a","aurel",Vector2.ZERO,true);motion.sample("a","aurel",Vector2(30,0),true)
+ check(float(g.characters.snail.primary.damage)==32 and float(g.characters.snail.secondary.damage)==22,"snail direct hits nerfed")
+ check(g.characters.agent.name=="Agent Smith","agent renamed")
+ check(g.characters.size()>=56,"56 heroes including prior update")
+ print("v85 solo failures: ",failures);g.queue_free();await process_frame;quit(failures)

@@ -1,0 +1,98 @@
+{
+  "id": "lumen",
+  "name": "Lumen Courier",
+  "sprite": "lumen",
+  "max_health": 115,
+  "speed": 240,
+  "run_cost": 0,
+  "lore": "A lantern-bearing courier who delivers light to both sides of a battle: comfort for friends, a sharp warning for foes. Aim carefully; a friendly body can catch a healing dart before it reaches an enemy.",
+  "primary": {
+    "name": "Kindred Dart",
+    "style": "kindred_dart",
+    "damage": 16,
+    "cooldown": 0.75,
+    "range": 440,
+    "description": "A non-piercing dart deals 16 damage to the first enemy or heals the first ally for 7 HP. Cannot hit its own caster.",
+    "healing": 7
+  },
+  "secondary": {
+    "name": "Kindred Fan",
+    "style": "kindred_fan",
+    "damage": 10,
+    "cooldown": 6,
+    "range": 390,
+    "description": "Five darts fan out in an arc. Each deals 10 damage to an enemy or heals an ally for 4 HP. No piercing."
+  },
+  "special": {
+    "name": "Lantern Relay",
+    "style": "lumen_relay",
+    "damage": 0,
+    "cooldown": 16,
+    "range": 350,
+    "description": "Place a 140-radius light for 3s. Friendly heroes gain 12% protection and heal 6 HP each second; includes the caster."
+  },
+  "passive": "Gentle Arrival: Allies struck by a healing dart gain 8% damage reduction for 0.8s.",
+  "passive_effect": "gentle_arrival",
+  "mastery": {
+    "title": "Beacon of the Crossroads",
+    "technique": {
+      "name": "Patient Delivery",
+      "ability": "primary",
+      "attack": {
+        "name": "Patient Delivery",
+        "style": "heavy_kindred",
+        "damage": 20,
+        "cooldown": 1.1,
+        "range": 440,
+        "description": "One slower dart: 20 enemy damage or 10 ally healing.",
+        "healing": 10
+      },
+      "description": "Stronger dart, but cooldown rises from 0.75s to 1.1s."
+    },
+    "final_technique": {
+      "name": "Clean Sanctuary",
+      "ability": "special",
+      "attack": {
+        "name": "Clean Sanctuary",
+        "style": "lumen_sanctuary",
+        "damage": 0,
+        "cooldown": 18,
+        "range": 350,
+        "description": "A 4s sanctuary grants 20% protection and removes poison/burn each second. No healing."
+      },
+      "description": "Replace Relay healing with stronger protection and cleansing."
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6000000000000001
+      }
+    ],
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    }
+  }
+}
