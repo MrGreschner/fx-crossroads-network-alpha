@@ -28,6 +28,9 @@ var capacity:OptionButton
 var reconnect_until=0
 var reconnect_at=0
 var next_ping_at=0
+var local_strikes:Array=[]
+var predicted_actions:Dictionary={}
+var pending_bursts:Array=[]
 var connect_started_at=0
 const DEFAULT_SERVER="wss://fx-crossroads-network-alpha.onrender.com"
 var server_inputs:Dictionary={}
@@ -163,7 +166,7 @@ func receive_net(data:Dictionary)->void:
    positions.clear()
    for id in hero_ids:positions[id]=Vector2.ZERO
    sequence=0;history.clear();frames.clear();last_snapshot_tick=-1;applied_seq=0;pending_correction=Vector2.ZERO
-   _start_match();start_countdown=0;control.hide();net_panel.hide();shots_view.tracks.clear();shots_view.predicted.clear()
+   _start_match();start_countdown=0;control.hide();net_panel.hide();shots_view.tracks.clear();shots_view.predicted.clear();local_strikes.clear();predicted_actions.clear();pending_bursts.clear()
   "state":
    var tick=int(data.get("server_tick",0))
    if tick<=last_snapshot_tick:metrics.stale+=1;return
@@ -175,9 +178,18 @@ func receive_net(data:Dictionary)->void:
    var dash:Array=own.get("dash",[0,0,0])
    net_dash[my_id]={"time":float(dash[0]),"direction":Vector2(float(dash[1]),float(dash[2]))}
    data.effects=[];super._packet("server",data)
-   shots_view.receive(data.get("shots",[]),Time.get_ticks_msec()/1000.0)
+   shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0
+   var shots:Array=data.get("shots",[]).duplicate()
+   for shot in adventure.combat.projectiles:
+    if not shot.has("net_id"):continue
+    var aim:Vector2=adventure.combat.vec(shot.aim)*float(shot.speed)
+    shots.append({"net_id":shot.net_id,"pos":shot.pos,"velocity":[aim.x,aim.y],"owner":shot.owner,"color":shot.color,"action_seq":shot.get("action_seq",-1),"shot_index":shot.get("shot_index",0),"custom":true})
+   shots_view.receive(shots,Time.get_ticks_msec()/1000.0)
   "action_ack":
-   if not bool(data.accepted):shots_view.reject(int(data.seq))
+   if not bool(data.accepted):
+    var rejected=int(data.seq);shots_view.reject(rejected)
+    local_strikes=local_strikes.filter(func(x):return int(x.action_seq)!=rejected)
+    pending_bursts=pending_bursts.filter(func(x):return int(x.seq)!=rejected)
    if data.has("style"):request_ready[str(data.style)]=Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(metrics.rtt_ms))
   "pong":metrics.rtt_ms=Time.get_ticks_msec()-int(data.sent)
 func _process(delta:float)->void:
@@ -187,11 +199,12 @@ func _process(delta:float)->void:
  if is_instance_valid(net_panel):net_panel.size=Vector2(minf(850,VIEW.x-24),minf(590,VIEW.y-24));net_panel.position=(VIEW-net_panel.size)*.5
  if not started:queue_redraw();return
  visual_time+=delta;motion_v85.advance(delta);skating_motion.advance(delta)
+ _advance_local_previews(delta)
  for actor in positions:
-  var ground=local_pos if actor==my_id else positions[actor]
+  if actor!=my_id:remote_draw_pos[actor]=smoothing.sample("p:"+str(actor),positions[actor],Time.get_ticks_msec()/1000.0,.075)
+  var ground=local_pos if actor==my_id else remote_draw_pos.get(actor,positions[actor])
   motion_v85.sample(str(actor),str(hero_ids.get(actor,"ram")),ground,true)
   skating_motion.sample(str(actor),ground,delta,true);wing_motion.step(str(actor),ground,delta,true);basketball_motion.step(str(actor),ground,delta,true);fish_motion.step(str(actor),ground,delta,true)
-  if actor!=my_id:remote_draw_pos[actor]=smoothing.sample("p:"+str(actor),ground,Time.get_ticks_msec()/1000.0,.075)
  missiles.assign(shots_view.samples(Time.get_ticks_msec()/1000.0))
  adventure.combat.held_cast.local_input(delta,net_ready and presentation.page.is_empty())
  if net_ready and presentation.page.is_empty():
@@ -251,12 +264,14 @@ func _reconcile_position(ack:int,point:Vector2)->void:
  if ack<0:return
  history=history.filter(func(f):return int(f.seq)>ack)
  var repaired=point
+ var dash_before=net_dash.get(my_id,{}).duplicate(true)
  for frame in history:repaired=Move.advance(self,my_id,repaired,Vector2(float(frame.d[0]),float(frame.d[1])))
+ net_dash[my_id]=dash_before
  var error=repaired-local_pos
  metrics.max_correction=maxf(float(metrics.max_correction),error.length())
  if error.length()>1:metrics.corrections+=1
  if error.length()>80:local_pos=repaired;pending_correction=Vector2.ZERO
- else:pending_correction=error
+ else:pending_correction=error if error.length()>.75 else Vector2.ZERO
  positions[my_id]=local_pos
 func _send_channel(_id:String,data:Dictionary)->void:
  if dedicated:
@@ -264,11 +279,13 @@ func _send_channel(_id:String,data:Dictionary)->void:
   return
  action_serial+=1;var packet=data.duplicate(true);packet.seq=action_serial;packet.input_seq=sequence;packet.match_id=match_id
  send_net(packet)
- if str(data.get("type",""))=="attack" and str(data.get("style",""))=="primary":
-  predicted_pose_until=Time.get_ticks_msec()+180
-  var stats:Dictionary=characters.get(selected_hero,{}).get("primary",{})
-  if str(stats.get("style","")) in ["projectile","ranged"]:
-   shots_view.preview(my_id,action_serial,local_pos,Vector2.from_angle(float(data.angle))*float(stats.get("speed",420)),str(stats.get("color","#ffd985")),Time.get_ticks_msec()/1000.0)
+ if str(data.get("type",""))=="attack":_preview_attack(str(data.get("style","primary")),data,action_serial)
+ elif str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
+  var held=adventure.combat.held_cast
+  if held.charges.has(my_id):
+   var kind=str(data.get("kind","primary"));held.context[my_id]=held.charges[my_id].duplicate(true)
+   var stats:Dictionary=held.stats_for(my_id,kind);held.context.erase(my_id)
+   _preview_attack(kind,data,action_serial,stats)
 func _broadcast(data:Dictionary)->void:
  if dedicated and gateway!=null:
   if str(data.get("type",""))=="state":gateway.snapshot(self)
@@ -284,8 +301,10 @@ func _draw()->void:
  if dedicated or not started:return
  draw_set_transform(media.offset(),0,Vector2.ONE*media.factor())
  for shot in shots_view.predicted:
-  var p=shot.p+shot.v*(Time.get_ticks_msec()/1000.0-float(shot.t))-camera
-  if _clear_path(shot.p,p+camera):draw_circle(p,7,Color(str(shot.color),.5))
+  var now=Time.get_ticks_msec()/1000.0
+  if now<float(shot.t):continue
+  var p=shots_view.preview_position(shot,now)-camera
+  if _clear_path(shot.p,p+camera):draw_circle(p,float(shot.radius),Color(str(shot.color)))
  draw_set_transform(Vector2.ZERO)
  draw_string(preload("res://assets/fonts/CrossroadsUI.ttf"),Vector2(24,VIEW.y-40),"NETWORK ALPHA • RTT %d ms • server %.2f ms/tick • queue %d" % [metrics.rtt_ms,metrics.tick_ms,history.size()],HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#a8ddf0"))
 
@@ -302,3 +321,38 @@ func melee_visual_position(owner:String,fallback:Vector2)->Vector2:
  if not positions.has(owner):return fallback
  if dedicated:return positions[owner]
  return local_pos if owner==my_id else remote_draw_pos.get(owner,positions[owner])
+
+func _preview_attack(kind:String,data:Dictionary,seq:int,override_stats:Dictionary={})->void:
+ var stats:Dictionary=override_stats if not override_stats.is_empty() else adventure.combat.effective_stats(my_id,kind,characters.get(selected_hero,{}).get(kind,{}))
+ var style=str(stats.get("style",""));var aim=Vector2.from_angle(float(data.get("angle",0)))
+ var now=Time.get_ticks_msec()/1000.0
+ predicted_pose_until=Time.get_ticks_msec()+240
+ if style=="identity_strike":
+  local_strikes.append({"owner":my_id,"pos":[local_pos.x,local_pos.y],"aim":[aim.x,aim.y],"visual":stats.get("visual","horns"),"range":stats.get("range",82),"time":.26,"action_seq":seq})
+  predicted_actions[seq]=now+1.0
+ elif style in ["projectile","ranged"]:
+  var count=clampi(int(stats.get("count",1)),1,8)
+  for n in count:
+   var direction=aim.rotated((n-(count-1)*.5)*float(stats.get("spread",0)))
+   shots_view.preview(my_id,seq,local_pos+direction*24,direction*float(stats.get("speed",420)),str(stats.get("color","#ffd985")),now,n,float(stats.get("range",480)),float(stats.get("projectile_radius",7)))
+ elif style=="burst_projectile":
+  for n in clampi(int(stats.get("count",4)),1,5):pending_bursts.append({"seq":seq,"index":n,"at":now+n*float(stats.get("burst_interval",.1)),"aim":aim,"stats":stats})
+  _advance_local_previews(0)
+func _advance_local_previews(delta:float)->void:
+ var now=Time.get_ticks_msec()/1000.0
+ for seq in predicted_actions.keys():
+  if now>float(predicted_actions[seq]):predicted_actions.erase(seq)
+ for n in range(local_strikes.size()-1,-1,-1):
+  local_strikes[n].time-=delta
+  if float(local_strikes[n].time)<=0:local_strikes.remove_at(n)
+ for n in range(pending_bursts.size()-1,-1,-1):
+  var burst=pending_bursts[n]
+  if now<float(burst.at):continue
+  var stats:Dictionary=burst.stats;var direction:Vector2=burst.aim
+  shots_view.preview(my_id,int(burst.seq),local_pos+direction*26,direction*float(stats.get("speed",480)),str(stats.get("color","#b5dc79")),now,int(burst.index),float(stats.get("range",360)),float(stats.get("projectile_radius",12)))
+  pending_bursts.remove_at(n)
+func predicted_identity_strikes()->Array:return local_strikes
+func suppress_confirmed_strike(entry:Dictionary)->bool:return str(entry.owner)==my_id and predicted_actions.has(int(entry.get("action_seq",-1)))
+func object_projectile_display(shot:Dictionary,fallback:Vector2)->Vector2:
+ var key=str(shot.get("net_id",0))
+ return shots_view.point(shots_view.tracks[key],Time.get_ticks_msec()/1000.0) if shots_view.tracks.has(key) else fallback

@@ -430,9 +430,10 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 				var direction:=aim.rotated((n-(count-1)*.5)*float(stats.get("spread",0)))
 				launch_projectile(owner,origin+direction*26,direction,stats,amount,style)
 		"burst_projectile":
+			stats=stats.duplicate(true);stats["_net_action_seq"]=int(adventure.game.get_meta("fx_action_seq",-1))
 			var count:=clampi(int(stats.get("count",4)),1,5)
 			var seed_damage:=float(stats.get("damage",5))+(amount-float(stats.get("damage",5)))/count if bool(stats.get("bonus_split",false)) else amount
-			for n in count:casts.append({"owner":owner,"style":"seed_burst","time":n*float(stats.get("burst_interval",.1)),"stats":stats,"aim":point_array(aim),"damage":seed_damage})
+			for n in count:casts.append({"owner":owner,"style":"seed_burst","time":n*float(stats.get("burst_interval",.1)),"shot_index":n,"stats":stats,"aim":point_array(aim),"damage":seed_damage})
 		"orbit_shards":orbits.append({"owner":owner,"time":float(stats.get("duration",2.4))+(1 if passive(owner,"long_orbit") else 0),"angle":0.0,"radius":float(stats.get("radius",95)),"damage":amount,"hits":[[],[],[]]})
 		"vortex_field":
 			var center:=origin+aim*130
@@ -475,6 +476,11 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,amount:float,style:String="pellet")->void:
 	if projectiles.size()>=96:return
 	projectiles.append({"credit":stats.get("credit",preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Projectile")))),"owner":owner,"pos":point_array(origin),"aim":point_array(aim.normalized()),"distance":0.0,"range":float(stats.get("range",480)),"speed":float(stats.get("speed",260)),"style":style,"damage":amount,"radius":float(stats.get("projectile_radius",12.0)),"color":str(stats.get("color","#edf7ff")),"stats":stats,"bounces":1 if style=="ricochet_projectile" and passive(owner,"stone_bounce") else 0,"wall_bounces":int(stats.get("wall_bounces",0)),"origin":point_array(origin),"base_aim":point_array(aim.normalized()),"hits":[],"curve":float(stats.get("curve",1.1))*(-1 if int(shot_turn.get(owner,0))%2 else 1)})
+	if adventure.game.get("dedicated")==true:
+		adventure.game.projectile_serial+=1
+		projectiles[-1].net_id=adventure.game.projectile_serial
+		projectiles[-1].action_seq=int(stats.get("_net_action_seq",adventure.game.get_meta("fx_action_seq",-1)))
+		projectiles[-1].shot_index=int(stats.get("_net_shot_index",0))
 	shot_turn[owner]=int(shot_turn.get(owner,0))+1
 func add_ring(owner:String,origin:Vector2,stats:Dictionary,amount:float)->void:
 	if rings.size()>=32:return
@@ -629,7 +635,9 @@ func step(delta:float)->void:
 		entry["time"]=float(entry["time"])-delta
 		if float(entry["time"])>.00001:continue
 		casts.remove_at(i)
-		if str(entry["style"])=="seed_burst":launch_projectile(owner,owner_pos(owner)+vec(entry["aim"])*26,vec(entry["aim"]),entry["stats"],float(entry["damage"]))
+		if str(entry["style"])=="seed_burst":
+			var seed_stats:Dictionary=entry["stats"].duplicate();seed_stats["_net_shot_index"]=int(entry.get("shot_index",0))
+			launch_projectile(owner,owner_pos(owner)+vec(entry["aim"])*26,vec(entry["aim"]),seed_stats,float(entry["damage"]))
 		elif str(entry["style"])=="meteor_shower":adventure.launch_lob(owner,vec(entry["pos"])+Vector2(-60,-420),vec(entry["pos"]),entry["stats"],float(entry["damage"]))
 		elif str(entry["style"])=="ground_sequence":add_ring(owner,vec(entry["pos"]),entry["stats"],float(entry["damage"]))
 		elif str(entry["style"])=="pulse_burst":add_ring(owner,owner_pos(owner),entry["stats"],float(entry["damage"]))
@@ -937,6 +945,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
 	for shot in projectiles:
 		var point:=vec(shot["pos"])-camera;var radius:=float(shot["radius"])
 		if not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
+		if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
 		if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):continue
 		if bool(shot["stats"].get("mirror_shard",false)):
 			var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal();var size:float=radius/6 if bool(shot["stats"].get("released_hold",false)) else 1.0

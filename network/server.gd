@@ -195,10 +195,10 @@ func broadcast_game(g:Node,data:Dictionary)->void:
 func execute_action(g:Node,id:String,data:Dictionary)->void:
  var before=g.missiles.size();var style=str(data.get("style","primary"));var previous=int(g.cooldown_at.get(id,{}).get(style,0))
  var dodge_before=int(g.dodge_at.get(id,0))
- g._packet(id,data)
+ g.set_meta("fx_action_seq",int(data.seq));g._packet(id,data);g.remove_meta("fx_action_seq")
  if str(data.type)=="dodge" and int(g.dodge_at.get(id,0))>dodge_before:
   var d=data.get("direction",[1,0]);g.net_dash[id]={"time":.26,"direction":Vector2(float(d[0]),float(d[1])).normalized()}
- for n in range(before,g.missiles.size()):g.missiles[n].action_seq=int(data.seq)
+ for n in range(before,g.missiles.size()):g.missiles[n].action_seq=int(data.seq);g.missiles[n].shot_index=n-before
  var after=int(g.cooldown_at.get(id,{}).get(style,0))
  send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":style,"accepted":after>previous or str(data.type)!="attack","remaining":maxi(0,after-Time.get_ticks_msec())})
 func snapshot(g:Node)->void:
@@ -213,8 +213,9 @@ func snapshot(g:Node)->void:
  state.shots=[]
  for shot in g.missiles:
   var v:Vector2=shot.get("dir",shot.get("direction",Vector2.ZERO))*float(shot.get("speed",0))
-  state.shots.append({"net_id":int(shot.get("net_id",0)),"pos":[snappedf(shot.pos.x,.1),snappedf(shot.pos.y,.1)],"velocity":[snappedf(v.x,.1),snappedf(v.y,.1)],"owner":str(shot.owner),"color":str(shot.get("color","#ffd985")),"action_seq":int(shot.get("action_seq",-1))})
+  state.shots.append({"net_id":int(shot.get("net_id",0)),"pos":[snappedf(shot.pos.x,.1),snappedf(shot.pos.y,.1)],"velocity":[snappedf(v.x,.1),snappedf(v.y,.1)],"owner":str(shot.owner),"color":str(shot.get("color","#ffd985")),"action_seq":int(shot.get("action_seq",-1)),"shot_index":int(shot.get("shot_index",0))})
  for id in state.players:
+  var precise:Vector2=g.positions[id];state.players[id].pos=[snappedf(precise.x,.001),snappedf(precise.y,.001)]
   state.players[id].position_ack=int(g.input_ack.get(id,0))
   var dash:Dictionary=g.net_dash.get(id,{})
   var d:Vector2=dash.get("direction",Vector2.ZERO)

@@ -52,7 +52,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
  if aim.is_zero_approx():aim=Vector2.RIGHT
  match style:
   "identity_strike":
-   if strikes.size()<32:strikes.append({"owner":owner,"pos":combat.point_array(origin),"aim":combat.point_array(aim),"visual":str(stats.get("visual","horns")),"range":float(stats.get("range",86)),"time":.26})
+   if strikes.size()<32:strikes.append({"owner":owner,"pos":combat.point_array(origin),"aim":combat.point_array(aim),"action_seq":int(combat.adventure.game.get_meta("fx_action_seq",-1)),"visual":str(stats.get("visual","horns")),"range":float(stats.get("range",86)),"time":.26})
    for key in combat.hostile(owner):
     var target:Dictionary=combat.actor(key)
     if target.is_empty():continue
@@ -182,7 +182,12 @@ func strike_origin(entry:Dictionary)->Vector2:
   return game.melee_visual_position(owner,combat.vec(entry.pos))
  return combat.owner_pos(owner)
 func draw_on(canvas:Node2D,camera:Vector2)->void:
- for entry in strikes:
+ var drawing=strikes.duplicate()
+ var game=combat.adventure.game
+ if combat.adventure.arcade and game.has_method("predicted_identity_strikes"):
+  drawing=drawing.filter(func(x):return not game.suppress_confirmed_strike(x))
+  drawing.append_array(game.predicted_identity_strikes())
+ for entry in drawing:
   if not combat.visible_owner(str(entry.owner)):continue
   var origin:Vector2=strike_origin(entry)-camera;var aim:Vector2=combat.vec(entry.aim);var end:=origin+aim*float(entry.range);var normal:=aim.rotated(PI*.5);var tint:=Color(1,1,1,(1.0 if float(entry.time)>.18 else minf(.32,float(entry.time)*1.7)))
   match str(entry.visual):
