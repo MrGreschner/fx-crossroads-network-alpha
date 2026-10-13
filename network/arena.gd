@@ -28,6 +28,8 @@ var capacity:OptionButton
 var reconnect_until=0
 var reconnect_at=0
 var next_ping_at=0
+var connect_started_at=0
+const DEFAULT_SERVER="wss://fx-crossroads-network-alpha.onrender.com"
 var server_inputs:Dictionary={}
 var server_actions:Dictionary={}
 var input_ack:Dictionary={}
@@ -68,24 +70,30 @@ func build_lobby()->void:
  var box=VBoxContainer.new();net_panel.add_child(box)
  var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA";box.add_child(title)
  var help=Label.new();help.text="Development test • no saved progress • server runs combat\nHost creates a room; everyone, including the host, is a client.";box.add_child(help)
- url_field=LineEdit.new();url_field.text="ws://127.0.0.1:9080";url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
+ url_field=LineEdit.new();url_field.text=DEFAULT_SERVER;url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
  net_name=LineEdit.new();net_name.text="Tester";net_name.placeholder_text="Display name";box.add_child(net_name)
  room_field=LineEdit.new();room_field.placeholder_text="Room code";room_field.max_length=6;box.add_child(room_field)
  capacity=OptionButton.new()
  for number in [2,4,8]:capacity.add_item(str(number)+" players",number)
  box.add_child(capacity)
+ capacity.select(1)
+ capacity.item_selected.connect(_capacity_changed)
  var heroes=Button.new();hero_button=heroes;heroes.text="Choose hero • Grid view";box.add_child(heroes);heroes.pressed.connect(func():
   if is_instance_valid(hero_grid):return
   hero_grid=preload("res://scripts/hero_grid.gd").new();hero_grid.open(self,selected_hero,net_select,net_permission))
  for entry in [["Host test room","host"],["Join test room","join"]]:
   var b=Button.new();b.text=entry[0];b.custom_minimum_size.y=44;box.add_child(b);b.pressed.connect(connect_net.bind(entry[1]))
- net_start=Button.new();net_start.text="Start match";net_start.custom_minimum_size.y=44;box.add_child(net_start);net_start.pressed.connect(func():send_net({"type":"start"}))
+ net_start=Button.new();net_start.text="Start match";net_start.custom_minimum_size.y=44;net_start.disabled=true;box.add_child(net_start);net_start.pressed.connect(func():send_net({"type":"start"}))
  var leave=Button.new();leave.text="Leave test • return to town";box.add_child(leave);leave.pressed.connect(func():
   if net_peer!=null:send_net({"type":"leave"});net_peer.close()
   get_tree().root.remove_meta("fx_dev_match");get_tree().change_scene_to_file("res://scenes/main.tscn"))
- net_status=Label.new();net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;net_status.text="Start the separate server before connecting.";box.add_child(net_status)
+ net_status=Label.new();net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;net_status.text="Online test server selected • choose Host or enter a room code and Join.";box.add_child(net_status)
  for field in [url_field,net_name,room_field]:
   var typing=preload("res://scripts/mobile_text_entry.gd").new();field.add_child(typing);typing.setup(field)
+func _capacity_changed(_index:int)->void:
+ if not net_ready or not net_host or started:return
+ send_net({"type":"capacity","seats":capacity.get_selected_id()})
+ net_status.text="Updating room capacity…"
 func net_select(id:String)->bool:
  if id.begins_with("custom_"):return false
  selected_hero=id;preferred_hero=id;hero_button.text="Hero • "+str(characters[id].name)
@@ -96,8 +104,9 @@ func connect_net(kind:String)->void:
  if net_ready and kind in ["host","join"]:
   net_status.text="Already connected to room "+net_room+". Host: press Start match.";return
  if net_peer!=null:net_peer.close()
- frames.clear();net_ready=false
+ frames.clear();net_ready=false;connect_started_at=Time.get_ticks_msec()
  net_peer=WebSocketPeer.new();net_peer.inbound_buffer_size=1048576;net_peer.outbound_buffer_size=65536;net_peer.max_queued_packets=64
+ if url_field.text.strip_edges().is_empty():url_field.text=DEFAULT_SERVER
  var error=net_peer.connect_to_url(url_field.text.strip_edges())
  if error!=OK:net_status.text="Cannot connect: "+error_string(error);return
  if kind=="resume":started=false
@@ -110,6 +119,8 @@ func send_net(data:Dictionary)->void:
 func poll_net()->void:
  if net_peer==null:return
  net_peer.poll()
+ if not net_ready and has_meta("joining") and Time.get_ticks_msec()-connect_started_at>60000:
+  remove_meta("joining");net_peer.close();net_status.text="Connection timed out. Check the server /health page and try again.";return
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
@@ -127,6 +138,8 @@ func poll_net()->void:
   if not latest.is_empty():receive_net(latest)
  elif net_peer.get_ready_state()==WebSocketPeer.STATE_CLOSED:
   net_ready=false
+  if has_meta("joining"):
+   remove_meta("joining");net_status.text="Connection closed before room confirmation. Check the server address and browser Console."
   if not resume_token.is_empty():
    if reconnect_until==0:reconnect_until=Time.get_ticks_msec()+15000
    if Time.get_ticks_msec()>reconnect_until:
@@ -136,10 +149,12 @@ func poll_net()->void:
 func receive_net(data:Dictionary)->void:
  match str(data.get("type","")):
   "welcome":
-   my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0
+   my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
    room_field.text=net_room;net_status.text="Room "+net_room+" • server connected";net_start.disabled=not net_host
   "lobby":
    roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
+   capacity.disabled=not net_host
+   capacity.select(capacity.get_item_index(int(data.seats)))
    net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+str(data.get("message",""))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show()
   "start":

@@ -85,6 +85,14 @@ func receive(key:int,data:Dictionary)->void:
   if not room.members.is_empty():lobby(str(identity.room))
   return
  if kind=="ping":send(key,{"type":"pong","sent":int(data.get("sent",0))});return
+ if kind=="capacity":
+  if room.host!=id:fail(key,"Only the host can change room capacity.");return
+  if g.started:fail(key,"Capacity can be changed before the match starts.");return
+  var seats=int(data.get("seats",0))
+  if seats not in [2,4,8]:fail(key,"Choose 2, 4 or 8 seats.");return
+  if seats<room.members.size():
+   fail(key,"Cannot reduce capacity below the players already in this room.");lobby(str(identity.room));return
+  room.seats=seats;g.arena_seats=seats;lobby(str(identity.room));return
  if kind=="start":
   if room.host!=id or g.started:return
   if room.members.size()<2:fail(key,"At least two connected players are needed.");return
