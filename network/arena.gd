@@ -3,6 +3,9 @@ extends "res://scripts/arcade.gd"
 const PROTOCOL=1
 const Move=preload("res://network/movement.gd")
 var net_dash:Dictionary={}
+var net_velocity:Dictionary={}
+var motion_view=preload("res://network/motion_view.gd").new()
+var presentation_ahead=0.0
 var dedicated=false
 var gateway:Node
 var net_peer:WebSocketPeer
@@ -71,7 +74,7 @@ func build_lobby()->void:
  var layer_node=CanvasLayer.new();layer_node.layer=100;add_child(layer_node)
  net_panel=PanelContainer.new();layer_node.add_child(net_panel);preload("res://scripts/studio_ui.gd").apply(net_panel)
  var box=VBoxContainer.new();net_panel.add_child(box)
- var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA";box.add_child(title)
+ var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T2";box.add_child(title)
  var help=Label.new();help.text="Development test • no saved progress • server runs combat\nHost creates a room; everyone, including the host, is a client.";box.add_child(help)
  url_field=LineEdit.new();url_field.text=DEFAULT_SERVER;url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
  net_name=LineEdit.new();net_name.text="Tester";net_name.placeholder_text="Display name";box.add_child(net_name)
@@ -166,7 +169,7 @@ func receive_net(data:Dictionary)->void:
    positions.clear()
    for id in hero_ids:positions[id]=Vector2.ZERO
    sequence=0;history.clear();frames.clear();last_snapshot_tick=-1;applied_seq=0;pending_correction=Vector2.ZERO
-   _start_match();start_countdown=0;control.hide();net_panel.hide();shots_view.tracks.clear();shots_view.predicted.clear();local_strikes.clear();predicted_actions.clear();pending_bursts.clear()
+   _start_match();start_countdown=0;control.hide();net_panel.hide();shots_view.tracks.clear();shots_view.predicted.clear();local_strikes.clear();predicted_actions.clear();pending_bursts.clear();motion_view.tracks.clear();presentation_ahead=0.0
   "state":
    var tick=int(data.get("server_tick",0))
    if tick<=last_snapshot_tick:metrics.stale+=1;return
@@ -178,7 +181,15 @@ func receive_net(data:Dictionary)->void:
    var dash:Array=own.get("dash",[0,0,0])
    net_dash[my_id]={"time":float(dash[0]),"direction":Vector2(float(dash[1]),float(dash[2]))}
    data.effects=[];super._packet("server",data)
-   shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0
+   # Unacknowledged input measures the lead of local prediction over this snapshot.
+   # Use the SAME bounded lead for remote actors and all confirmed projectiles.
+   presentation_ahead=clampf(history.size()*Move.DT,0,.20)
+   var stamp=Time.get_ticks_msec()/1000.0
+   for actor in data.get("players",{}):
+    if actor==my_id:continue
+    var info:Dictionary=data.players[actor];var velocity:Array=info.get("velocity",[0,0])
+    motion_view.receive(str(actor),Vector2(float(info.pos[0]),float(info.pos[1])),Vector2(float(velocity[0]),float(velocity[1])),stamp,presentation_ahead)
+   shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0;shots_view.presentation_ahead=presentation_ahead
    var shots:Array=data.get("shots",[]).duplicate()
    for shot in adventure.combat.projectiles:
     if not shot.has("net_id"):continue
@@ -201,7 +212,7 @@ func _process(delta:float)->void:
  visual_time+=delta;motion_v85.advance(delta);skating_motion.advance(delta)
  _advance_local_previews(delta)
  for actor in positions:
-  if actor!=my_id:remote_draw_pos[actor]=smoothing.sample("p:"+str(actor),positions[actor],Time.get_ticks_msec()/1000.0,.075)
+  if actor!=my_id:remote_draw_pos[actor]=_remote_position(str(actor),Time.get_ticks_msec()/1000.0)
   var ground=local_pos if actor==my_id else remote_draw_pos.get(actor,positions[actor])
   motion_v85.sample(str(actor),str(hero_ids.get(actor,"ram")),ground,true)
   skating_motion.sample(str(actor),ground,delta,true);wing_motion.step(str(actor),ground,delta,true);basketball_motion.step(str(actor),ground,delta,true);fish_motion.step(str(actor),ground,delta,true)
@@ -223,6 +234,7 @@ func _physics_process(_delta:float)->void:
  if dedicated:
   if not started:return
   var begin=Time.get_ticks_usec();authority_tick+=1
+  var before_positions=positions.duplicate()
   for id in positions:
    var queue:Array=server_inputs.get(id,[])
    if not queue.is_empty():
@@ -235,6 +247,7 @@ func _physics_process(_delta:float)->void:
    while not actions.is_empty() and int(actions[0].get("input_seq",0))<=int(input_ack.get(id,0)):
     gateway.execute_action(self,str(id),actions.pop_front())
   run_time+=Move.DT;visual_time+=Move.DT;arena_world.step(Move.DT);adventure.step(Move.DT);_update_flames(Move.DT);_simulate_charges(Move.DT);_simulate(Move.DT)
+  for actor in positions:net_velocity[actor]=(positions[actor]-before_positions.get(actor,positions[actor]))/Move.DT
   for bullet in missiles:
    if not bullet.has("net_id"):projectile_serial+=1;bullet.net_id=projectile_serial
   metrics.tick_ms=(Time.get_ticks_usec()-begin)/1000.0
@@ -306,7 +319,7 @@ func _draw()->void:
   var p=shots_view.preview_position(shot,now)-camera
   if _clear_path(shot.p,p+camera):draw_circle(p,float(shot.radius),Color(str(shot.color)))
  draw_set_transform(Vector2.ZERO)
- draw_string(preload("res://assets/fonts/CrossroadsUI.ttf"),Vector2(24,VIEW.y-40),"NETWORK ALPHA • RTT %d ms • server %.2f ms/tick • queue %d" % [metrics.rtt_ms,metrics.tick_ms,history.size()],HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#a8ddf0"))
+ draw_string(preload("res://assets/fonts/CrossroadsUI.ttf"),Vector2(24,VIEW.y-40),"NETWORK ALPHA T2 • RTT %d ms • server %.2f ms/tick • queue %d" % [metrics.rtt_ms,metrics.tick_ms,history.size()],HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#a8ddf0"))
 
 func _effect_at_actor(effect:Dictionary)->Dictionary:
  var owner=str(effect.get("owner",""))
@@ -334,7 +347,7 @@ func _preview_attack(kind:String,data:Dictionary,seq:int,override_stats:Dictiona
   var count=clampi(int(stats.get("count",1)),1,8)
   for n in count:
    var direction=aim.rotated((n-(count-1)*.5)*float(stats.get("spread",0)))
-   shots_view.preview(my_id,seq,local_pos+direction*24,direction*float(stats.get("speed",420)),str(stats.get("color","#ffd985")),now,n,float(stats.get("range",480)),float(stats.get("projectile_radius",7)))
+   shots_view.preview(my_id,seq,local_pos+direction*27,direction*float(stats.get("speed",420)),str(stats.get("color","#ffd985")),now,n,float(stats.get("range",480)),float(stats.get("projectile_radius",7)))
  elif style=="burst_projectile":
   for n in clampi(int(stats.get("count",4)),1,5):pending_bursts.append({"seq":seq,"index":n,"at":now+n*float(stats.get("burst_interval",.1)),"aim":aim,"stats":stats})
   _advance_local_previews(0)
@@ -356,3 +369,8 @@ func suppress_confirmed_strike(entry:Dictionary)->bool:return str(entry.owner)==
 func object_projectile_display(shot:Dictionary,fallback:Vector2)->Vector2:
  var key=str(shot.get("net_id",0))
  return shots_view.point(shots_view.tracks[key],Time.get_ticks_msec()/1000.0) if shots_view.tracks.has(key) else fallback
+
+func _remote_position(actor:String,now:float)->Vector2:
+ var origin:Vector2=positions.get(actor,Vector2.ZERO)
+ # The same obstacle resolver prevents visual prediction passing through walls.
+ return _move_actor(origin,motion_view.sample(actor,origin,now)-origin)

@@ -216,6 +216,8 @@ func snapshot(g:Node)->void:
   state.shots.append({"net_id":int(shot.get("net_id",0)),"pos":[snappedf(shot.pos.x,.1),snappedf(shot.pos.y,.1)],"velocity":[snappedf(v.x,.1),snappedf(v.y,.1)],"owner":str(shot.owner),"color":str(shot.get("color","#ffd985")),"action_seq":int(shot.get("action_seq",-1)),"shot_index":int(shot.get("shot_index",0))})
  for id in state.players:
   var precise:Vector2=g.positions[id];state.players[id].pos=[snappedf(precise.x,.001),snappedf(precise.y,.001)]
+  var velocity:Vector2=g.net_velocity.get(id,Vector2.ZERO)
+  state.players[id].velocity=[snappedf(velocity.x,.001),snappedf(velocity.y,.001)]
   state.players[id].position_ack=int(g.input_ack.get(id,0))
   var dash:Dictionary=g.net_dash.get(id,{})
   var d:Vector2=dash.get("direction",Vector2.ZERO)

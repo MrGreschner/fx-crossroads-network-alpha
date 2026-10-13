@@ -12,6 +12,8 @@ def run(command,env,name,timeout=60):
 with tempfile.TemporaryDirectory(prefix='fx-net-tests-') as data:
  env={**os.environ,'GODOT_BIN':args.godot,'FX_PROJECT_ROOT':str(root),'XDG_DATA_HOME':data,'PORT':'9080'}
  run([args.godot,'--headless','--path',str(root),'--script',str(root/'network_tests/combat.gd')],env,'combat')
+ for check in ['local_prediction','timeline']:
+  run([args.godot,'--headless','--path',str(root),'--script',str(root/'network_tests'/(check+'.gd'))],env,check)
  for name in ['connection.test','actual_client.test','latency.test','gateway.test','benchmark']:
   log=open(logs/(name+'-server.log'),'w')
   server=subprocess.Popen(['node',str(root/'network_service/gateway.mjs')],cwd=root/'network_service',env=env,stdout=log,stderr=log,start_new_session=True)
