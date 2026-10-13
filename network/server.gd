@@ -15,10 +15,11 @@ var metric_at=0
 func _ready()->void:
  get_tree().root.set_meta("fx_dedicated_server",true);get_tree().root.set_meta("fx_dev_match",true)
  Engine.physics_ticks_per_second=60
+ Engine.max_fps=60 # Bound headless socket polling; do not busy-spin on shared CPU.
  var port=int(OS.get_environment("FX_GAME_PORT")) if not OS.get_environment("FX_GAME_PORT").is_empty() else 9081
  var error=listener.listen(port,"127.0.0.1" if OS.get_environment("FX_PROXY")!="" else "*")
  if error!=OK:push_error("Server listen failed: "+error_string(error));get_tree().quit(1);return
- print("FX authority listening on ",port,"; protocol 1; simulation 60Hz; snapshots 20Hz")
+ print("FX authority listening on ",port,"; protocol 2; simulation 60Hz; snapshots 20Hz")
 func _process(_delta:float)->void:
  var now=Time.get_ticks_msec()
  if now>=metric_at:
@@ -75,7 +76,7 @@ func receive(key:int,data:Dictionary)->void:
  var kind=str(data.get("type",""));var connection:Dictionary=peers[key]
  if connection.actor.is_empty():
   if kind not in ["host","join","resume"]:return
-  if int(data.get("protocol",0))!=1:fail(key,"Network protocol mismatch. Use this alpha client.");return
+  if int(data.get("protocol",0))!=2:fail(key,"Server requires the T3 alpha. Refresh the updated itch.io build.");return
   join(key,data);return
  var id=str(connection.actor);var identity:Dictionary=identities[id];var room:Dictionary=rooms[identity.room];var g:Node=room.game
  if kind=="leave":
@@ -102,7 +103,7 @@ func receive(key:int,data:Dictionary)->void:
   for member in room.members:
    g._add_player(str(member),g.positions.size());g.lobby_heroes[member]=room.members[member].hero
   g.spectator_host=true;g.bot_count=0;g.no_items_picker.button_pressed=true
-  g._start_match();g.start_countdown=0;g.server_inputs.clear();g.server_actions.clear();g.input_ack.clear();g.net_dash.clear();g.authority_tick=0
+  g._start_match();g.start_countdown=0;g.server_inputs.clear();g.server_input_credit.clear();g.server_actions.clear();g.input_ack.clear();g.net_dash.clear();g.authority_tick=0
   room.events=[];room.event_seq=0
   for member in room.members:g.server_inputs[member]=[];g.server_actions[member]=[];g.input_ack[member]=0;identities[member].last_seq=0
   broadcast_game(g,start_packet(g));snapshot(g);return
@@ -176,7 +177,7 @@ func join(key:int,data:Dictionary)->void:
   room.members[id]={"id":id,"name":str(data.get("name","Tester")).left(24),"hero":hero}
   if room.host.is_empty():room.host=id
  peers[key].actor=id;identities[id].connection=key
- send(key,{"type":"welcome","protocol":1,"id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
+ send(key,{"type":"welcome","protocol":2,"id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
  if rooms[code].game.started:
   var g:Node=rooms[code].game;g.server_inputs[id]=[];g.server_actions[id]=[]
   send(key,start_packet(g));send_state(key,g,id)
@@ -205,7 +206,7 @@ func snapshot(g:Node)->void:
  var room=room_for(g)
  if room.is_empty():return
  for effect in g.sent_effects:
-  room.event_seq+=1;room.events.append({"id":room.event_seq,"data":effect})
+  room.event_seq+=1;room.events.append({"id":room.event_seq,"tick":g.authority_tick,"data":effect})
  g.sent_effects.clear()
  # Keep events until acknowledged, bounded against absent or malicious clients.
  while room.events.size()>256:room.events.pop_front()
@@ -213,7 +214,7 @@ func snapshot(g:Node)->void:
  state.shots=[]
  for shot in g.missiles:
   var v:Vector2=shot.get("dir",shot.get("direction",Vector2.ZERO))*float(shot.get("speed",0))
-  state.shots.append({"net_id":int(shot.get("net_id",0)),"pos":[snappedf(shot.pos.x,.1),snappedf(shot.pos.y,.1)],"velocity":[snappedf(v.x,.1),snappedf(v.y,.1)],"owner":str(shot.owner),"color":str(shot.get("color","#ffd985")),"action_seq":int(shot.get("action_seq",-1)),"shot_index":int(shot.get("shot_index",0))})
+  state.shots.append({"net_id":int(shot.get("net_id",0)),"pos":[snappedf(shot.pos.x,.1),snappedf(shot.pos.y,.1)],"velocity":[snappedf(v.x,.1),snappedf(v.y,.1)],"owner":str(shot.owner),"color":str(shot.get("color","#ffd985")),"action_seq":int(shot.get("action_seq",-1)),"shot_index":int(shot.get("shot_index",0)),"born":float(shot.get("born_tick",g.authority_tick))/60.0})
  for id in state.players:
   var precise:Vector2=g.positions[id];state.players[id].pos=[snappedf(precise.x,.001),snappedf(precise.y,.001)]
   var velocity:Vector2=g.net_velocity.get(id,Vector2.ZERO)

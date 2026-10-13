@@ -40,5 +40,16 @@ func run()->void:
  view.receive([{"net_id":1,"pos":[0,0],"velocity":[100,0],"owner":"a"}],0)
  check(absf(view.samples(.05)[0].pos.x-5)<.01,"Projectiles travel between snapshots")
  check(absf(view.samples(10)[0].pos.x-12)<.01,"Late projectile rendering is bounded")
+ # Server-tick credit drains delayed input while preventing input-flood speedup.
+ g.dedicated=true;g.my_id="server";g.positions={"a":Vector2(800,900)};g.health={"a":120};g.hero_ids={"a":"ram"};g.net_dash.clear();g.server_inputs={"a":[]};g.server_actions={"a":[]};g.server_input_credit.clear();g.input_ack={"a":0};g.gateway=rules
+ for n in 10:g._physics_process(1.0/60.0)
+ for n in 20:g.server_inputs.a.append({"seq":n+1,"d":[1,0],"a":0,"ph":false,"sh":false})
+ g._physics_process(1.0/60.0)
+ check(g.input_ack.a==2,"Delayed queue catches up by two frames per tick")
+ for n in 4:g._physics_process(1.0/60.0)
+ check(g.input_ack.a==10,"Catch-up remains bounded per tick")
+ # Once saved credit is exhausted, sending more frames cannot earn time.
+ g.server_input_credit.a=0;g._physics_process(1.0/60.0)
+ check(g.input_ack.a==11,"Zero saved credit permits only one new frame")
  rules.free();g.started=false;g.queue_free();for n in 4:await process_frame
  print("COMBAT_AND_PROTOCOL "+str(failures)+" failures");quit(failures)

@@ -184,6 +184,7 @@ func strike_origin(entry:Dictionary)->Vector2:
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  var drawing=strikes.duplicate()
  var game=combat.adventure.game
+ if combat.adventure.arcade and game.has_method("network_identity_strikes") and not game.dedicated:drawing=game.network_identity_strikes()
  if combat.adventure.arcade and game.has_method("predicted_identity_strikes"):
   drawing=drawing.filter(func(x):return not game.suppress_confirmed_strike(x))
   drawing.append_array(game.predicted_identity_strikes())

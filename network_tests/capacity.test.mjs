@@ -8,7 +8,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function client(kind,room='',hero='navigator',extra={}){
  const ws=new WebSocket('ws://127.0.0.1:9081');const messages=[];
  ws.on('message',(b,binary)=>messages.push(JSON.parse(binary?gunzipSync(b):b)));await new Promise((r,j)=>{ws.on('open',r);ws.on('error',j)});
- const send=d=>ws.send(JSON.stringify(d));send({type:kind,protocol:1,room,hero,name:'Tester',seats:8,...extra});
+ const send=d=>ws.send(JSON.stringify(d));send({type:kind,protocol:2,room,hero,name:'Tester',seats:8,...extra});
  const take=async type=>{for(let i=0;i<200;i++){const n=messages.findIndex(p=>p.type===type);if(n>=0)return messages.splice(n,1)[0];await wait(10);}throw new Error('Missing '+type+' '+JSON.stringify(messages.slice(-2)))};
  return {ws,messages,send,take};
 }

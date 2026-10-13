@@ -479,6 +479,7 @@ func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,
 	if adventure.game.get("dedicated")==true:
 		adventure.game.projectile_serial+=1
 		projectiles[-1].net_id=adventure.game.projectile_serial
+		projectiles[-1].born_tick=adventure.game.authority_tick-1
 		projectiles[-1].action_seq=int(stats.get("_net_action_seq",adventure.game.get_meta("fx_action_seq",-1)))
 		projectiles[-1].shot_index=int(stats.get("_net_shot_index",0))
 	shot_turn[owner]=int(shot_turn.get(owner,0))+1
@@ -942,71 +943,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
 			for n in 18:
 				var point:=center+Vector2.from_angle(TAU*n/18+clock*.4)*radius
 				canvas.draw_line(point+Vector2(0,-30),point,Color(.7,.95,1,.6),4,true)
-	for shot in projectiles:
-		var point:=vec(shot["pos"])-camera;var radius:=float(shot["radius"])
-		if not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
-		if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
-		if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):continue
-		if bool(shot["stats"].get("mirror_shard",false)):
-			var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal();var size:float=radius/6 if bool(shot["stats"].get("released_hold",false)) else 1.0
-			canvas.draw_colored_polygon(PackedVector2Array([point+heading*16*size,point+side*7*size,point-heading*13*size,point-side*7*size]),Color("#c8edf2"))
-			canvas.draw_line(point-heading*25,point,Color(.6,.85,1,.4),3,true);continue
-		if bool(shot["stats"].get("lantern_comet",false)):
-			var heading:Vector2=vec(shot["aim"])
-			var glow:=Color(str(shot.get("color","#e8d393")))
-			canvas.draw_line(point-heading*27,point,Color(glow,.4),6,true)
-			canvas.draw_rect(Rect2(point-Vector2(6,8),Vector2(12,16)),Color("#bb9756"))
-			canvas.draw_rect(Rect2(point-Vector2(3,5),Vector2(6,10)),Color(glow.lightened(.3)));canvas.draw_arc(point,13,clock*3,clock*3+PI,16,glow,2,true)
-			if str(shot["stats"].get("element",""))=="earth":
-				for n in 3:canvas.draw_circle(point+Vector2.from_angle(clock*3+TAU*n/3)*17,2,Color("#a9d479"))
-			elif str(shot["stats"].get("element",""))=="fire":canvas.draw_colored_polygon(PackedVector2Array([point-heading*10+heading.orthogonal()*6,point-heading*(28+sin(clock*15)*5),point-heading*10-heading.orthogonal()*6]),Color("#ff8741",.7))
-			continue
-		if str(shot["style"])=="silk_needle":
-			var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal()
-			canvas.draw_line(point-heading*30,point,Color(.84,.7,.95,.4),2,true)
-			canvas.draw_colored_polygon(PackedVector2Array([point+heading*14,point+side*4,point-heading*11,point-side*4]),Color("#ead9f7"))
-			canvas.draw_line(point-heading*8,point+heading*9,Color("#fff2cf"),1,true);continue
-		if bool(shot["stats"].get("thorn_arrow",false)):
-			var heading:=vec(shot["aim"]);var side:=heading.orthogonal()
-			canvas.draw_line(point-heading*15,point+heading*8,Color("#9eae72"),2,true)
-			canvas.draw_colored_polygon(PackedVector2Array([point+heading*12,point+heading*4+side*4,point+heading*4-side*4]),Color("#d6e8b0"))
-			for sign_value in [-1,1]:canvas.draw_line(point-heading*12,point-heading*17+side*sign_value*4,Color("#659b58"),2,true)
-			continue
-		if bool(shot["stats"].get("tea_drop",false)):
-			var heading:=vec(shot["aim"]);var side:=heading.rotated(PI*.5)
-			canvas.draw_circle(point,7,Color("#9cbd63"));canvas.draw_colored_polygon(PackedVector2Array([point-heading*17,point+side*6,point-side*6]),Color("#9cbd63"));canvas.draw_circle(point-heading*2-side*2,2,Color("#e5efa6"));continue
-		if bool(shot["stats"].get("rune_hammer",false)):
-			var heading:=Vector2.from_angle(clock*12);var side:=heading.rotated(PI*.5)
-			canvas.draw_line(point-heading*15,point+heading*10,Color("#9a7855"),5,true)
-			canvas.draw_line(point+heading*10-side*12,point+heading*10+side*12,Color("#c4d4d9"),12,true)
-			canvas.draw_arc(point,22,clock*5,clock*5+PI,16,Color(.94,.75,.4,.5),2,true);continue
-		if bool(shot["stats"].get("flying_page",false)):
-			var heading:=vec(shot["aim"]);var side:=heading.rotated(PI*.5)
-			canvas.draw_colored_polygon(PackedVector2Array([point-heading*10-side*7,point+heading*10-side*6,point+heading*8+side*8,point-heading*9+side*7]),Color("#f2e7c8"))
-			for n in 3:canvas.draw_line(point-heading*(5-n*5)-side*4,point-heading*(5-n*5)+side*4,Color("#8ca6ad"),1,true)
-			continue
-		if bool(shot["stats"].get("chalk_shard",false)):
-			var heading:=vec(shot["aim"]);canvas.draw_line(point-heading*8,point+heading*8,Color("#edf0c8"),5,true);continue
-		if bool(shot["stats"].get("flame_orb",false)):
-			canvas.draw_circle(point,11,Color(1,.45,.15,.25));canvas.draw_arc(point,9,clock*5,clock*5+PI*1.5,16,Color("#ffd389"),2,true)
-			var heading:=vec(shot["aim"])
-			for n in 4:canvas.draw_circle(point-heading*(8+n*6),4-n*.7,Color(1,.5,.2,.35-n*.06))
-		if str(shot["style"])=="weaving":
-			var base:=vec(shot["base_aim"]);var side:=Vector2(-base.y,base.x);var trail:=PackedVector2Array()
-			for n in 7:
-				var behind:=maxf(0,float(shot["distance"])-n*5)
-				trail.append(vec(shot["origin"])+base*behind+side*sin(behind*TAU/float(shot["stats"].get("wavelength",170)))*float(shot["stats"].get("amplitude",20))-camera)
-			canvas.draw_polyline(trail,Color(Color(str(shot["color"])),.4),3,true)
-		if bool(shot.get("stats",{}).get("pistol",false)):
-			canvas.draw_line(point-vec(shot.aim)*12,point,Color("#ffd9a0"),3,true)
-		if bool(shot.get("stats",{}).get("pistol",false)):
-			var dir:Vector2=vec(shot.aim);var side:=dir.orthogonal()
-			canvas.draw_colored_polygon(PackedVector2Array([point+dir*5,point-dir*6+side*2,point-dir*6-side*2]),Color("#ffe1ac"));continue
-		if bool(shot.get("stats",{}).get("ball_lightning",false)):
-			for n in 4:
-				var a:float=clock*3+n*PI/2
-				canvas.draw_polyline(PackedVector2Array([point+Vector2.from_angle(a)*radius,point+Vector2.from_angle(a+.15)*(radius+8),point+Vector2.from_angle(a-.1)*(radius+16)]),Color("#d8eaff"),2,true)
-		canvas.draw_circle(point,radius if str(shot["style"])=="rolling_snow" or bool(shot["stats"].get("released_hold",false)) else 5,Color(str(shot["color"])));canvas.draw_arc(point,maxf(3,radius*.7),clock*4,clock*4+PI,20,Color("#8cc5e4"),2,true)
+	for shot in projectiles:draw_projectile(canvas,shot,camera)
 	for aura in auras:
 		if adventure.points().has(str(aura["owner"])):canvas.draw_circle(owner_pos(str(aura["owner"]))-camera,float(aura["radius"]),Color(.5,.8,1,.13));canvas.draw_arc(owner_pos(str(aura["owner"]))-camera,float(aura["radius"]),clock,clock+TAU*.9,48,Color(.6,.85,1,.6),3,true)
 	for pin in anchors:
@@ -1133,3 +1070,70 @@ func war_multiplier(owner:String)->float:
 func clock_delta(owner:String,delta:float)->float:
 	var magic:Node=adventure.game.get("dev_magic")
 	return delta if magic==null else delta/maxf(.3,magic.world_scale())*magic.scale_for(owner)
+
+func draw_projectile(canvas:Node2D,shot:Dictionary,camera:Vector2)->void:
+	var clock:float=Time.get_ticks_msec()/1000.0
+	var point:=vec(shot["pos"])-camera;var radius:=float(shot["radius"])
+	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
+	if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
+	if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):return
+	if bool(shot["stats"].get("mirror_shard",false)):
+		var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal();var size:float=radius/6 if bool(shot["stats"].get("released_hold",false)) else 1.0
+		canvas.draw_colored_polygon(PackedVector2Array([point+heading*16*size,point+side*7*size,point-heading*13*size,point-side*7*size]),Color("#c8edf2"))
+		canvas.draw_line(point-heading*25,point,Color(.6,.85,1,.4),3,true);return
+	if bool(shot["stats"].get("lantern_comet",false)):
+		var heading:Vector2=vec(shot["aim"])
+		var glow:=Color(str(shot.get("color","#e8d393")))
+		canvas.draw_line(point-heading*27,point,Color(glow,.4),6,true)
+		canvas.draw_rect(Rect2(point-Vector2(6,8),Vector2(12,16)),Color("#bb9756"))
+		canvas.draw_rect(Rect2(point-Vector2(3,5),Vector2(6,10)),Color(glow.lightened(.3)));canvas.draw_arc(point,13,clock*3,clock*3+PI,16,glow,2,true)
+		if str(shot["stats"].get("element",""))=="earth":
+			for n in 3:canvas.draw_circle(point+Vector2.from_angle(clock*3+TAU*n/3)*17,2,Color("#a9d479"))
+		elif str(shot["stats"].get("element",""))=="fire":canvas.draw_colored_polygon(PackedVector2Array([point-heading*10+heading.orthogonal()*6,point-heading*(28+sin(clock*15)*5),point-heading*10-heading.orthogonal()*6]),Color("#ff8741",.7))
+		return
+	if str(shot["style"])=="silk_needle":
+		var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal()
+		canvas.draw_line(point-heading*30,point,Color(.84,.7,.95,.4),2,true)
+		canvas.draw_colored_polygon(PackedVector2Array([point+heading*14,point+side*4,point-heading*11,point-side*4]),Color("#ead9f7"))
+		canvas.draw_line(point-heading*8,point+heading*9,Color("#fff2cf"),1,true);return
+	if bool(shot["stats"].get("thorn_arrow",false)):
+		var heading:=vec(shot["aim"]);var side:=heading.orthogonal()
+		canvas.draw_line(point-heading*15,point+heading*8,Color("#9eae72"),2,true)
+		canvas.draw_colored_polygon(PackedVector2Array([point+heading*12,point+heading*4+side*4,point+heading*4-side*4]),Color("#d6e8b0"))
+		for sign_value in [-1,1]:canvas.draw_line(point-heading*12,point-heading*17+side*sign_value*4,Color("#659b58"),2,true)
+		return
+	if bool(shot["stats"].get("tea_drop",false)):
+		var heading:=vec(shot["aim"]);var side:=heading.rotated(PI*.5)
+		canvas.draw_circle(point,7,Color("#9cbd63"));canvas.draw_colored_polygon(PackedVector2Array([point-heading*17,point+side*6,point-side*6]),Color("#9cbd63"));canvas.draw_circle(point-heading*2-side*2,2,Color("#e5efa6"));return
+	if bool(shot["stats"].get("rune_hammer",false)):
+		var heading:=Vector2.from_angle(clock*12);var side:=heading.rotated(PI*.5)
+		canvas.draw_line(point-heading*15,point+heading*10,Color("#9a7855"),5,true)
+		canvas.draw_line(point+heading*10-side*12,point+heading*10+side*12,Color("#c4d4d9"),12,true)
+		canvas.draw_arc(point,22,clock*5,clock*5+PI,16,Color(.94,.75,.4,.5),2,true);return
+	if bool(shot["stats"].get("flying_page",false)):
+		var heading:=vec(shot["aim"]);var side:=heading.rotated(PI*.5)
+		canvas.draw_colored_polygon(PackedVector2Array([point-heading*10-side*7,point+heading*10-side*6,point+heading*8+side*8,point-heading*9+side*7]),Color("#f2e7c8"))
+		for n in 3:canvas.draw_line(point-heading*(5-n*5)-side*4,point-heading*(5-n*5)+side*4,Color("#8ca6ad"),1,true)
+		return
+	if bool(shot["stats"].get("chalk_shard",false)):
+		var heading:=vec(shot["aim"]);canvas.draw_line(point-heading*8,point+heading*8,Color("#edf0c8"),5,true);return
+	if bool(shot["stats"].get("flame_orb",false)):
+		canvas.draw_circle(point,11,Color(1,.45,.15,.25));canvas.draw_arc(point,9,clock*5,clock*5+PI*1.5,16,Color("#ffd389"),2,true)
+		var heading:=vec(shot["aim"])
+		for n in 4:canvas.draw_circle(point-heading*(8+n*6),4-n*.7,Color(1,.5,.2,.35-n*.06))
+	if str(shot["style"])=="weaving":
+		var base:=vec(shot["base_aim"]);var side:=Vector2(-base.y,base.x);var trail:=PackedVector2Array()
+		for n in 7:
+			var behind:=maxf(0,float(shot["distance"])-n*5)
+			trail.append(vec(shot["origin"])+base*behind+side*sin(behind*TAU/float(shot["stats"].get("wavelength",170)))*float(shot["stats"].get("amplitude",20))-camera)
+		canvas.draw_polyline(trail,Color(Color(str(shot["color"])),.4),3,true)
+	if bool(shot.get("stats",{}).get("pistol",false)):
+		canvas.draw_line(point-vec(shot.aim)*12,point,Color("#ffd9a0"),3,true)
+	if bool(shot.get("stats",{}).get("pistol",false)):
+		var dir:Vector2=vec(shot.aim);var side:=dir.orthogonal()
+		canvas.draw_colored_polygon(PackedVector2Array([point+dir*5,point-dir*6+side*2,point-dir*6-side*2]),Color("#ffe1ac"));return
+	if bool(shot.get("stats",{}).get("ball_lightning",false)):
+		for n in 4:
+			var a:float=clock*3+n*PI/2
+			canvas.draw_polyline(PackedVector2Array([point+Vector2.from_angle(a)*radius,point+Vector2.from_angle(a+.15)*(radius+8),point+Vector2.from_angle(a-.1)*(radius+16)]),Color("#d8eaff"),2,true)
+	canvas.draw_circle(point,radius if str(shot["style"])=="rolling_snow" or bool(shot["stats"].get("released_hold",false)) else 5,Color(str(shot["color"])));canvas.draw_arc(point,maxf(3,radius*.7),clock*4,clock*4+PI,20,Color("#8cc5e4"),2,true)

@@ -3,30 +3,30 @@
     "players": 2,
     "seconds": 4.3,
     "snapshots": 86,
-    "tick_p50_ms": 0.741,
-    "tick_p95_ms": 1.318,
-    "tick_max_ms": 2.321,
-    "total_download_bytes": 342132,
-    "download_kib_per_player_sec": 38.9
+    "tick_p50_ms": 0.413,
+    "tick_p95_ms": 1.195,
+    "tick_max_ms": 3.422,
+    "total_download_bytes": 340542,
+    "download_kib_per_player_sec": 38.7
   },
   {
     "players": 4,
     "seconds": 4.3,
     "snapshots": 86,
-    "tick_p50_ms": 0.945,
-    "tick_p95_ms": 1.23,
-    "tick_max_ms": 2.528,
-    "total_download_bytes": 726240,
+    "tick_p50_ms": 0.391,
+    "tick_p95_ms": 1.379,
+    "tick_max_ms": 3.261,
+    "total_download_bytes": 726030,
     "download_kib_per_player_sec": 41.2
   },
   {
     "players": 8,
     "seconds": 4.3,
     "snapshots": 86,
-    "tick_p50_ms": 1.114,
-    "tick_p95_ms": 1.821,
-    "tick_max_ms": 4.17,
-    "total_download_bytes": 1602792,
-    "download_kib_per_player_sec": 45.5
+    "tick_p50_ms": 0.691,
+    "tick_p95_ms": 2.078,
+    "tick_max_ms": 4.4,
+    "total_download_bytes": 1593806,
+    "download_kib_per_player_sec": 45.2
   }
 ]

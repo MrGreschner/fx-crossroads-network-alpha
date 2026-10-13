@@ -16,7 +16,7 @@ createInterface({input:game.stdout}).on('line',line=>{
 const server=http.createServer((req,res)=>{
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({ready,protocol:1,simulationHz:60,snapshotHz:20,...metrics}));
+ res.end(JSON.stringify({ready,protocol:2,simulationHz:60,snapshotHz:20,build:"T3",...metrics}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{

@@ -1,3 +1,5 @@
+**Current networking alpha: T3 / protocol 2. Read NETWORK_T3_README.md for changes, deployment and validation.**
+
 # Separate networking development build
 
 Start with NETWORK_ALPHA_START_HERE.md. This copy opens the dedicated Arena test lobby. It is not the student release; v165 remains separate and unchanged. NETWORK_ALPHA_RESULTS.md records measured tests and the remaining production gates.
