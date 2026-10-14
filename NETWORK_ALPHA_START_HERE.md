@@ -1,3 +1,7 @@
+# Current package: T4
+
+Start with START_HERE_T4.md and NETWORK_T4_README.md. The material below is archived alpha history.
+
 # FX Crossroads — dedicated networking alpha 1
 
 This is a separate development copy of v165. Deploy v165 to students on Monday as planned. Do not replace the public game or its existing Render room service with this alpha.

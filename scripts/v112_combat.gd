@@ -144,7 +144,9 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    var p:Vector2=combat.owner_pos(str(owner))-camera
    if visible.has_point(combat.owner_pos(str(owner))):
     for n in 3:c.draw_circle(p+Vector2.from_angle(clock*1.5+n*TAU/3)*23-Vector2(0,20),3,Color("#ffb061"))
- for e in effects:
+ var drawing:Array=effects
+ if combat.adventure.arcade and combat.adventure.game.has_method("network_v112_effects") and not combat.adventure.game.dedicated:drawing=combat.adventure.game.network_v112_effects()
+ for e in drawing:
   var world:Vector2=combat.vec(e.pos)
   if not visible.has_point(world):continue
   var p:Vector2=world-camera;var radius:float=float(e.radius)

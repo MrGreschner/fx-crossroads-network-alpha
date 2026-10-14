@@ -1,0 +1,269 @@
+{
+  "errors": [],
+  "reports": [
+    {
+      "states": 285,
+      "acks": 21,
+      "accepted": 17,
+      "closed": 0,
+      "damageSnapshots": 198,
+      "welcome": {
+        "id": "85f1b9f2c69c39f1",
+        "build": "T4",
+        "protocol": 3
+      },
+      "latest": {
+        "authority_hz": 60,
+        "buffer_holds": 8,
+        "buffer_ms": 200.657604734261,
+        "build": "T4",
+        "disconnect_reason": "",
+        "fps": 11,
+        "prediction_queue": 6,
+        "protocol": 3,
+        "rtt_ms": 105,
+        "simulation_ms": 0.234,
+        "snapshot_ms": 1.009,
+        "state_age_ms": 1,
+        "wire_bytes": 290097,
+        "jsHeapBytes": 199000000
+      },
+      "players": {
+        "85f1b9f2c69c39f1": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {},
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "ram",
+          "hp": 36,
+          "invincible": 0,
+          "items": [],
+          "kills": 1,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            1213.576,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 834,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 0,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        },
+        "dfa1f8501f1b2273": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {
+            "attack": "Ability hit",
+            "kind": "hero",
+            "name": "Young Ram",
+            "player": "Tester",
+            "sprite": "ram"
+          },
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "ram",
+          "hp": 120,
+          "invincible": 0,
+          "items": [],
+          "kills": 0,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            480,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 834,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 1,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        }
+      }
+    },
+    {
+      "states": 284,
+      "acks": 14,
+      "accepted": 10,
+      "closed": 0,
+      "damageSnapshots": 197,
+      "welcome": {
+        "id": "dfa1f8501f1b2273",
+        "build": "T4",
+        "protocol": 3
+      },
+      "latest": {
+        "authority_hz": 60,
+        "buffer_holds": 10,
+        "buffer_ms": 116.524658920268,
+        "build": "T4",
+        "disconnect_reason": "",
+        "fps": 12,
+        "prediction_queue": 12,
+        "protocol": 3,
+        "rtt_ms": 191,
+        "simulation_ms": 0.558,
+        "snapshot_ms": 0.771,
+        "state_age_ms": 2,
+        "wire_bytes": 289190,
+        "jsHeapBytes": 199000000
+      },
+      "players": {
+        "85f1b9f2c69c39f1": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {},
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "ram",
+          "hp": 36,
+          "invincible": 0,
+          "items": [],
+          "kills": 1,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            1213.576,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 830,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 0,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        },
+        "dfa1f8501f1b2273": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {
+            "attack": "Ability hit",
+            "kind": "hero",
+            "name": "Young Ram",
+            "player": "Tester",
+            "sprite": "ram"
+          },
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "ram",
+          "hp": 120,
+          "invincible": 0,
+          "items": [],
+          "kills": 0,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            480,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 832,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 1,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        }
+      }
+    }
+  ]
+}

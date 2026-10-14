@@ -1,0 +1,76 @@
+{
+  "build": "T3",
+  "protocol": 2,
+  "engine": "Godot 4.5.1 Linux",
+  "status": "passed",
+  "tests": [
+    "combat/time budget",
+    "local prediction",
+    "buffered server clock",
+    "connections/reconnect",
+    "real client",
+    "latency/jitter/stalls",
+    "gateway",
+    "two actual client views",
+    "2/4/8-player short load"
+  ],
+  "two_views": [
+    {
+      "art_errors": 0,
+      "kind": "host",
+      "max_remote_step": 8.69921875,
+      "previews": 6,
+      "queue": 8,
+      "remote_seeds": 0,
+      "rtt": 108,
+      "samples": 329,
+      "snapshots": 111,
+      "underruns": 35
+    },
+    {
+      "art_errors": 0,
+      "kind": "join",
+      "max_remote_step": 7.42578125,
+      "previews": 0,
+      "queue": 8,
+      "remote_seeds": 1088,
+      "rtt": 75,
+      "samples": 329,
+      "snapshots": 121,
+      "underruns": 0
+    }
+  ],
+  "load": [
+    {
+      "players": 2,
+      "seconds": 4.3,
+      "snapshots": 86,
+      "tick_p50_ms": 0.413,
+      "tick_p95_ms": 1.195,
+      "tick_max_ms": 3.422,
+      "total_download_bytes": 340542,
+      "download_kib_per_player_sec": 38.7
+    },
+    {
+      "players": 4,
+      "seconds": 4.3,
+      "snapshots": 86,
+      "tick_p50_ms": 0.391,
+      "tick_p95_ms": 1.379,
+      "tick_max_ms": 3.261,
+      "total_download_bytes": 726030,
+      "download_kib_per_player_sec": 41.2
+    },
+    {
+      "players": 8,
+      "seconds": 4.3,
+      "snapshots": 86,
+      "tick_p50_ms": 0.691,
+      "tick_p95_ms": 2.078,
+      "tick_max_ms": 4.4,
+      "total_download_bytes": 1593806,
+      "download_kib_per_player_sec": 45.2
+    }
+  ],
+  "scope": "Local automated tests; not a completed school/cellular field test or all-hero validation."
+}

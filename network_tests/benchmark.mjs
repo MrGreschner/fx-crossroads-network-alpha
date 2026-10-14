@@ -11,7 +11,7 @@ async function connect(type,room='',seats=2){
  ws.on('message',(b,binary)=>{bytes+=b.length;messages.push(JSON.parse(binary?gunzipSync(b):b));});
  await new Promise((r,j)=>{ws.on('open',r);ws.on('error',j)});
  const send=data=>ws.send(JSON.stringify(data));
- send({type,room,seats,protocol:1,hero:'navigator',name:'Load test'});
+ send({type,room,seats,protocol:3,hero:'navigator',name:'Load test'});
  const take=async type=>{for(let i=0;i<300;i++){let n=messages.findIndex(v=>v.type===type);if(n>=0)return messages.splice(n,1)[0];await wait(10);}throw Error('Missing '+type);};
  const welcome=await take('welcome');return {ws,send,take,messages,id:welcome.id,room:welcome.room,bytes:()=>bytes};
 }

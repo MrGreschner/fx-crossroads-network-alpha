@@ -1627,7 +1627,7 @@ func _simulate(delta: float) -> void:
 						hit=true;break
 			for id in positions:
 				if hit:break
-				if int(health.get(id,0))>0 and _segment_near(origin,next,positions[id],7+adventure.combat.v110.target_radius("p:"+str(id),20)):
+				if int(health.get(id,0))>0 and _projectile_near_player(origin,next,str(id),7+adventure.combat.v110.target_radius("p:"+str(id),20)):
 					if mode=="defense" and float(bullet.get("explode",0))>0:
 						north_gate.blast(next,float(bullet.explode),float(bullet.damage),str(bullet.get("npc_source","enemy")),0,bullet.get("credit",{}));hit=true;break
 					if Time.get_ticks_msec()<int(shield_until.get(id,0)) and (bool(characters.get(str(hero_ids.get(id,"ram")),{}).get("secondary",{}).get("reflect",false)) or (inventory.get(id,[]) as Array).has("mirror_shard")):
@@ -1640,7 +1640,7 @@ func _simulate(delta: float) -> void:
 				if next.distance_to(opponents[j]["pos"])<float(opponents[j].get("hit_radius",30)): _hit_enemy(j,float(bullet["damage"]),str(bullet["owner"]));hit=true;break
 			if mode in ["arena","battlegrounds"] and not hit:
 				for id in positions:
-					if id != bullet["owner"] and _segment_near(origin,next,positions[id],7+adventure.combat.v110.target_radius("p:"+str(id),21)) and (pvp_rule=="ffa" or int(teams[id]) != int(teams[bullet["owner"]])):
+					if id != bullet["owner"] and _projectile_near_player(origin,next,str(id),7+adventure.combat.v110.target_radius("p:"+str(id),21)) and (pvp_rule=="ffa" or int(teams[id]) != int(teams[bullet["owner"]])):
 						_hurt(str(id),float(bullet["damage"]),str(bullet["owner"]),"",bullet.get("credit",{}));hit=true;break
 		if mode=="battlegrounds" and not hit:
 			for key in battlegrounds.hostile(str(bullet.owner)):
@@ -3085,3 +3085,6 @@ func _grid_select(id:String)->bool:
 		if str(hero_picker.get_item_metadata(index))==id:
 			hero_picker.select(index);party_tools.change_hero(index);return selected_hero==id
 	return false
+
+func _projectile_near_player(start:Vector2,finish:Vector2,actor:String,radius:float)->bool:
+	return _segment_near(start,finish,positions[actor],radius)

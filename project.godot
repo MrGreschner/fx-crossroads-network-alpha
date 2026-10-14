@@ -1,7 +1,7 @@
 config_version=5
 
 [application]
-config/name="FX Crossroads • Network Alpha"
+config/name="FX Crossroads • Network Alpha T4"
 run/main_scene="res://network/client.tscn"
 
 [display]
