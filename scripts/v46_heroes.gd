@@ -56,7 +56,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
    for key in combat.hostile(owner):
     var target:Dictionary=combat.actor(key)
     if target.is_empty():continue
-    var offset:Vector2=target.pos-origin;var radius:=float(target.get("npc",{}).get("hit_radius",0))
+    var offset:Vector2=target.pos-origin;var radius:=float(target.get("hit_radius",target.get("npc",{}).get("hit_radius",0)))
     if offset.length()<=float(stats.get("range",86))+radius and aim.dot(offset.normalized())>=cos(deg_to_rad(float(stats.get("arc_degrees",105))*.5)) and combat.path_clear(origin,target.pos):
      combat.apply_hit_status(key,stats,owner);combat.damage(key,amount,owner)
   "page_channel":

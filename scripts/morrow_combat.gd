@@ -13,7 +13,7 @@ func reset()->void:
  corpses.clear();units.clear();links.clear();flashes.clear();serial=0;clock=0;direct_owner=""
 func actor(id:String)->Dictionary:
  if not units.has(id):return {}
- return {"pos":combat.vec(units[id].pos),"alive":float(units[id].hp)>0,"player":id}
+ return {"pos":combat.vec(units[id].pos),"alive":float(units[id].hp)>0,"player":id,"hit_radius":18.0*(1+.18*(int(units[id].get("weight",1))-1))}
 func owner_of(id:String)->String:return str(units.get(id,{}).get("owner",""))
 func enemy_to(id:String,source:String)->bool:
  var owner:=owner_of(id)
@@ -116,7 +116,10 @@ func hurt(id:String,amount:float,source:String="enemy")->void:
   if old>0 and not combat.adventure.alive(owner):clear_owner(owner)
  else:
   var taken:float=minf(float(units[id].hp),maxf(0,amount));units[id].hp=maxf(0,float(units[id].hp)-taken)
-  if combat.adventure.arcade:combat.adventure.game._stat(source,"damage",taken)
+  if combat.adventure.arcade:
+   combat.adventure.game._stat(source,"damage",taken)
+   if taken>0:combat.adventure.game._damage_feedback(combat.vec(units[id].pos),taken,id)
+  elif taken>0:combat.feedback.hit(combat.vec(units[id].pos),taken)
   if float(units[id].hp)<=0:units.erase(id);combat.statuses.erase("p:"+id)
 func clear_owner(owner:String)->void:
  links.erase(owner)
