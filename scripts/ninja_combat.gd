@@ -32,8 +32,8 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
     if point.distance_to(center)>35:stars.append({"angle":TAU*n/8,"radius":point.distance_to(center),"pos":combat.point_array(point),"active":true})
    eclipses.append({"owner":owner,"pos":combat.point_array(center),"age":0.0,"stars":stars,"hits":{},"damage":amount})
  return true
-func flash(point:Vector2,aim:Vector2,kind:String)->void:
- if flashes.size()<64:flashes.append({"pos":combat.point_array(point),"aim":combat.point_array(aim),"kind":kind,"time":.22})
+func flash(point:Vector2,aim:Vector2,kind:String,owner:String="")->void:
+ if flashes.size()<64:flashes.append({"owner":owner,"pos":combat.point_array(point),"aim":combat.point_array(aim),"kind":kind,"time":.22})
 func hit_cut(cut:Dictionary,index:int)->void:
  var owner:String=str(cut.owner);var origin:Vector2=combat.owner_pos(owner);var aim:Vector2=combat.vec(cut.aim)
  for key in combat.hostile(owner):
@@ -45,7 +45,7 @@ func hit_cut(cut:Dictionary,index:int)->void:
   if combat.passive(owner,"moon_thread") and marks.get(owner,{}).has(key):
    extra=8;marks[owner].erase(key);flash(target.pos,aim,"thread")
   combat.damage(key,float(cut.damage)+extra,owner)
- flash(origin,aim,"cut_left" if index==0 else "cut_right")
+ flash(origin,aim,"cut_left" if index==0 else "cut_right",owner)
 func step(delta:float)->void:
  if not combat.adventure.authoritative():return
  clock+=delta
@@ -154,8 +154,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   for key in marks[owner]:
    var target:Dictionary=combat.actor(str(key))
    if not target.is_empty():draw_star(c,target.pos-camera+Vector2(0,-73),clock*3,7,Color("#af9be5"))
- for entry in flashes:
-  var point:Vector2=combat.vec(entry.pos)-camera;var aim:Vector2=combat.vec(entry.aim);var fade:float=clampf(float(entry.time)/.22,0,1)
+ for entry in combat.draw_effect_records("ninja","flashes",flashes):
+  var point:Vector2=combat.draw_effect_position("ninja",entry,combat.vec(entry.pos))-camera;var aim:Vector2=combat.vec(entry.aim);var fade:float=clampf(float(entry.time)/.22,0,1)
   if str(entry.kind).begins_with("cut"):
    var side:float=1 if entry.kind=="cut_left" else -1
    var middle:float=aim.angle()+side*(1-fade)*.35

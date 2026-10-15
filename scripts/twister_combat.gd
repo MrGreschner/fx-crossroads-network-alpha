@@ -12,6 +12,10 @@ const STYLES=["twister_charge","twister_stride","twister_hail","twister_sleet"]
 func reset()->void:effects.clear();charges.clear();held.clear();links.clear();shock_ready.clear();link_clock=0;clock=0
 func playing()->bool:return combat.playing()
 func transformed(id:String)->bool:return playing() and effects.any(func(e):return e.owner==id and e.kind=="stride")
+func drawn_transformed(id:String)->bool:
+ var game=combat.adventure.game
+ if not game.has_method("network_twister_view"):return transformed(id)
+ return playing() and game.network_twister_view().effects.any(func(e):return str(e.owner)==id and str(e.kind)=="stride")
 func locked(id:String)->bool:return charges.has(id) or effects.any(func(e):return e.owner==id and e.kind=="chant")
 func chanting(id:String)->bool:return effects.any(func(e):return e.owner==id and e.kind=="chant")
 func speed(id:String)->float:
@@ -166,28 +170,32 @@ func funnel(c:Node2D,p:Vector2,r:float,age:float,tint:Color)->void:
   var a:float=age*1.8+n*TAU/3;c.draw_circle(p+Vector2(cos(a)*r,-25+sin(a)*r*.3),2,Color("#d6edf1"))
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not playing():return
+ var game=combat.adventure.game
+ var view:Dictionary=game.network_twister_view() if game.has_method("network_twister_view") else {"effects":effects,"charges":charges,"links":links,"clock":clock}
+ var draw_effects:Array=view.effects;var draw_charges:Dictionary=view.charges;var draw_links:Array=view.links;var draw_clock:float=view.clock
  var visible:=Rect2(camera-Vector2(260,260),c.get_viewport_rect().size+Vector2(520,520))
- for link in links:
+ for link in draw_links:
   var a:Vector2=combat.vec(link.start);var b:Vector2=combat.vec(link.end)
   if not visible.intersects(Rect2(a,b-a).abs().grow(20)):continue
   var points:=PackedVector2Array();var side:Vector2=(b-a).normalized().orthogonal()
-  for n in 9:points.append(a.lerp(b,n/8.0)-camera+side*(0 if n in [0,8] else sin(n*7+clock*31)*7))
+  for n in 9:points.append(a.lerp(b,n/8.0)-camera+side*(0 if n in [0,8] else sin(n*7+draw_clock*31)*7))
   c.draw_polyline(points,Color(.45,.74,1,.8),5,true);c.draw_polyline(points,Color(.9,.97,1,.95),2,true)
- for id in charges:
-  var pos:Vector2=combat.owner_pos(str(id));var q:Dictionary=charges[id];var power:float=clampf(float(q.age)/1.6,0,1)
-  funnel(c,pos+combat.vec(q.aim)*34-camera,20+power*28,clock,Color("#eed0ff"))
+ for id in draw_charges:
+  var pos:Vector2=game.melee_visual_position(str(id),combat.owner_pos(str(id))) if game.has_method("melee_visual_position") else combat.owner_pos(str(id));var q:Dictionary=draw_charges[id];var power:float=clampf(float(q.age)/1.6,0,1)
+  funnel(c,pos+combat.vec(q.aim)*34-camera,20+power*28,draw_clock,Color("#eed0ff"))
   c.draw_arc(pos-camera,34,-PI/2,-PI/2+TAU*maxf(.02,power),24,Color("#ffd488") if power>=.99 else Color("#b4ddfa"),3,true)
- for e in effects:
+ for e in draw_effects:
   var world:Vector2=combat.vec(e.pos)
+  if e.kind=="stride" and game.has_method("melee_visual_position"):world=game.melee_visual_position(str(e.owner),world)
   if not visible.has_point(world):continue
   var p:Vector2=world-camera
   match str(e.kind):
    "funnel","stride":
-    c.draw_circle(p,float(e.radius),Color(.55,.77,.94,.12));funnel(c,p,float(e.radius),clock,Color(.67,.86,.96,.9))
-    if e.kind=="funnel" and bool(e.pull):c.draw_arc(p,float(e.radius)+65,clock,clock+PI*1.5,24,Color(.8,.65,1,.5),1.5,true)
+    c.draw_circle(p,float(e.radius),Color(.55,.77,.94,.12));funnel(c,p,float(e.radius),draw_clock,Color(.67,.86,.96,.9))
+    if e.kind=="funnel" and bool(e.pull):c.draw_arc(p,float(e.radius)+65,draw_clock,draw_clock+PI*1.5,24,Color(.8,.65,1,.5),1.5,true)
    "chant":
-    c.draw_arc(p,52,clock,-clock+TAU,32,Color("#b6dcf6"),3,true)
-    for n in 6:c.draw_circle(p+Vector2.from_angle(clock+n*TAU/6)*48,3,Color("#f0dbff"))
+    c.draw_arc(p,52,draw_clock,-draw_clock+TAU,32,Color("#b6dcf6"),3,true)
+    for n in 6:c.draw_circle(p+Vector2.from_angle(draw_clock+n*TAU/6)*48,3,Color("#f0dbff"))
    "ice":
     c.draw_circle(p,float(e.radius),Color(.46,.7,.97,.16));c.draw_arc(p,float(e.radius),0,TAU,20,Color("#a7dffe"),2,true)
     var h:float=maxf(0,float(e.time))/.7*110

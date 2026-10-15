@@ -156,6 +156,7 @@ func sanitize_build(value:Variant)->Dictionary:
   for n in mini(3,raw.size()):tuning[n]=clampi(int(raw[n]),-mini(2,remaining),mini(2,remaining));remaining-=absi(int(tuning[n]))
  return {"technique":bool(value.get("technique",false)),"final_technique":bool(value.get("final_technique",false)),"crit_tier":clampi(int(value.get("crit_tier",0)),0,3),"tuning":tuning,"points":points}
 func build(owner:String)->Dictionary:
+ if arcade and game.has_method("network_build"):return game.network_build(owner)
  var id:=hero_for(owner)
  if arcade and owner!=game.my_id:return builds.get(owner,{"technique":false,"tuning":[0,0,0]})
  return payload(id)

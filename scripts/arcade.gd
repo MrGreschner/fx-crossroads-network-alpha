@@ -2145,11 +2145,14 @@ func _draw() -> void:
 		draw_set_transform(broadcast_offset,0,Vector2.ONE*broadcast_scale)
 	if not spectating():
 		draw_set_transform(media.offset(),0,Vector2.ONE*media.factor());VIEW=screen_view/media.factor()
+	var section_began:=Time.get_ticks_usec()
 	_draw_world()
 	descent.draw(self,camera)
 	if fishing!=null:fishing.draw_on(self,camera)
 	if mode=="battlegrounds":battlegrounds.draw_world(self)
 	arena_world.draw()
+	_profile_section("world_draw",section_began)
+	section_began=Time.get_ticks_usec()
 	for trail in trails: _sprite(str(hero_ids.get(my_id,selected_hero))+"_walk1",trail["pos"]-Vector2(28,42),Vector2(56,64),Color(0.7,0.9,1.0,float(trail["time"])*1.8))
 	for guard in guards:
 		var sprite := str(guard.get("sprite","mini_basketball")) if str(guard["type"]) == "summoned" else "guard_"+str(guard["type"])
@@ -2183,10 +2186,10 @@ func _draw() -> void:
 		var player: Dictionary = roster[slot];var id := str(player.get("id",""))
 		if spectator_supported() and spectator_host and id==host_id:continue
 		if not adventure.combat.visible_owner(id):continue
-		var pos: Vector2 = (local_pos if id == my_id else remote_draw_pos.get(id,positions.get(id,_spawn_player(slot)))) - camera
+		var pos: Vector2 = _player_draw_position(id,_spawn_player(slot)) - camera
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
 		var hero_id := str(hero_ids.get(id,"ram"))
-		var walking := id != my_id or Input.get_vector("move_left","move_right","move_up","move_down").length_squared() > 0 or dodge_time > 0 or charges.has(id)
+		var walking := _actor_walking(id)
 		if hero_id=="caelum" and adventure.combat.v59.copies.has(id):walking=bool(adventure.combat.v59.copies[id].get("walking",false))
 		var pose := "attack" if Time.get_ticks_msec() < maxi(int(attack_pose_until.get(id,0)),predicted_pose_until if id==my_id else 0) else ("walk1" if int(visual_time*7)%2 == 0 else "walk2") if walking else "idle"
 		if adventure.combat.classics.channeling(id):pose="open"
@@ -2212,7 +2215,7 @@ func _draw() -> void:
 			adventure.combat.v78.draw_burrow(self,str(id),pos)
 		elif texture != null and hero_id=="ripplejaw":
 			world_transform(pos,fish_motion.angle(str(id)));draw_texture_rect(texture,Rect2(hero_rect.position-pos,hero_rect.size),false,tint);world_transform()
-		elif texture != null and not adventure.combat.robot.transformed(str(id)) and not adventure.combat.twister.transformed(str(id)):draw_texture_rect(texture,hero_rect,false,tint)
+		elif texture != null and not adventure.combat.robot.transformed(str(id)) and not adventure.combat.twister.drawn_transformed(str(id)):draw_texture_rect(texture,hero_rect,false,tint)
 		var cosmetic:Dictionary=cosmetic_for(id)
 		if str(cosmetic.get("daily_date",""))==legacy.daily.today and int(health.get(id,0))>0:
 			preload("res://scripts/daily_challenge.gd").draw_on(self,pos,visual_time)
@@ -2236,9 +2239,13 @@ func _draw() -> void:
 	for label in ([] if media.clean_view or media.capturing else damage_labels):
 		if not adventure.combat.visible_owner(str(label.get("victim",""))):continue
 		draw_string(font,label["pos"]-camera,str(label["text"]),HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color(1,0.88,0.58,minf(1.0,float(label["time"])*2)))
+	_profile_section("actors_effects_draw",section_began)
+	section_began=Time.get_ticks_usec()
 	adventure.draw_on(self,camera)
 	custom_party.draw_on(self,camera)
 	if mode=="defense":north_gate.draw_attacks(self,camera)
+	_profile_section("adventure_draw",section_began)
+	section_began=Time.get_ticks_usec()
 	if media.clean_view or media.capturing:
 		VIEW=screen_view;draw_set_transform(Vector2.ZERO,0,Vector2.ONE);return
 	if spectating():
@@ -2285,6 +2292,8 @@ func _draw() -> void:
 	if mode=="descent" and floor_transition>0:
 		draw_rect(Rect2(Vector2.ZERO,VIEW),Color(.03,.04,.08,minf(.65,floor_transition*.6)))
 		draw_string(font,VIEW*.5+Vector2(-90,-15),"FLOOR "+str(floor_number),HORIZONTAL_ALIGNMENT_LEFT,-1,36,Color(1,.9,.7,minf(1,floor_transition*2)))
+
+	_profile_section("hud_draw",section_began)
 
 func draw_ellipse_shadow(pos: Vector2) -> void:
 	world_transform(pos+Vector2(0,18),0,Vector2(1,0.3))
@@ -3088,3 +3097,12 @@ func _grid_select(id:String)->bool:
 
 func _projectile_near_player(start:Vector2,finish:Vector2,actor:String,radius:float)->bool:
 	return _segment_near(start,finish,positions[actor],radius)
+
+func _actor_walking(id:String)->bool:
+	return id != my_id or Input.get_vector("move_left","move_right","move_up","move_down").length_squared() > 0 or dodge_time > 0 or charges.has(id)
+
+func _profile_section(kind:String,began:int)->void:
+	if has_method("profile_work"):call("profile_work",kind,Time.get_ticks_usec()-began)
+
+func _player_draw_position(id:String,fallback:Vector2)->Vector2:
+	return local_pos if id==my_id else remote_draw_pos.get(id,positions.get(id,fallback))

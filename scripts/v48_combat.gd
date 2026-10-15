@@ -30,7 +30,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
     if offset.length()>reach or offset.normalized().dot(aim)<(.7 if style=="beaver_bite" else .25) or not combat.path_clear(origin,target.pos):continue
     combat.damage(key,amount,owner)
     if style=="tail_slap":stun_target(owner,key,float(stats.get("stun_duration",1.2)));combat.knock(key,aim,float(stats.get("knockback",80)))
-   flashes.append({"pos":combat.point_array(origin),"aim":combat.point_array(aim),"style":style,"time":.35})
+   flashes.append({"owner":owner,"pos":combat.point_array(origin),"aim":combat.point_array(aim),"style":style,"time":.35})
   "timber_fall":
    if trees.size()<8:trees.append({"owner":owner,"pos":combat.point_array(origin),"end":combat.point_array(combat.chain.clip(origin,aim,380)),"elapsed":0.0,"hit":false,"damage":amount})
   "tea_shot":
@@ -138,8 +138,8 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   var point:Vector2=combat.owner_pos(owner)-camera;var hop:Dictionary=hops[owner];var height:=sin(fmod(float(hop.elapsed),.3)/.3*PI)*25
   canvas.draw_arc(point+Vector2(0,-height),34,-PI,0,20,Color("#b9d88e"),3,true)
   canvas.draw_circle(point+Vector2(0,22),13,Color(0,0,0,.25))
- for flash in flashes:
-  var point:Vector2=combat.vec(flash.pos)-camera;var aim:Vector2=combat.vec(flash.aim);var phase:=1-float(flash.time)/(.6 if flash.style=="bloom" else .35)
+ for flash in combat.draw_effect_records("v48","flashes",flashes):
+  var point:Vector2=combat.draw_effect_position("v48",flash,combat.vec(flash.pos))-camera;var aim:Vector2=combat.vec(flash.aim);var phase:=1-float(flash.time)/(.6 if flash.style=="bloom" else .35)
   if flash.style=="bloom":canvas.draw_arc(point,150*phase,0,TAU,48,Color(.65,.9,.3,1-phase),8,true)
   elif flash.style=="tail_slap":
    var angle:=aim.angle()-1.2+phase*2.4;var tip:=point+Vector2.from_angle(angle)*65

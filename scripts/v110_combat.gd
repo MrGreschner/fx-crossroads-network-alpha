@@ -123,9 +123,9 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    if not visible.has_point(world):continue
    var p:Vector2=world-camera;var dir:Vector2=combat.vec(rec.aim)
    c.draw_arc(p,18,clock*.8,clock*.8+PI*1.4,12,Color(.45,.8,.91,.25),1.5,true);c.draw_line(p,p+dir*26,Color(.6,.9,1,.25),2,true)
- for e in effects:
-  if not visible.has_point(combat.vec(e.pos)):continue
-  var p:Vector2=combat.vec(e.pos)-camera;var dir:Vector2=combat.vec(e.aim);var t:float=1-float(e.time)/float(e.duration)
+ for e in combat.draw_effect_records("v110","effects",effects):
+  if not visible.has_point(combat.draw_effect_position("v110",e,combat.vec(e.pos))):continue
+  var p:Vector2=combat.draw_effect_position("v110",e,combat.vec(e.pos))-camera;var dir:Vector2=combat.vec(e.aim);var t:float=1-float(e.time)/float(e.duration)
   match str(e.kind):
    "saber","echo":
     var tint:=Color(.63,.9,1,.7) if e.kind=="saber" or bool(e.done) else Color(.63,.9,1,.18)

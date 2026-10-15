@@ -248,8 +248,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   for v in pair:
    var p:Vector2=combat.vec(v)-camera;c.draw_arc(p,12,0,TAU,16,Color("#c89aff"),3,true)
   if pair.size()==2:c.draw_line(combat.vec(pair[0])-camera,combat.vec(pair[1])-camera,Color(.65,.35,1,.22),2,true)
- for e in effects:
-  var p:Vector2=combat.vec(e.pos)-camera;var age:float=float(e.age);var aim:Vector2=combat.vec(e.aim)
+ for e in combat.draw_effect_records("v78","effects",effects):
+  var p:Vector2=combat.draw_effect_position("v78",e,combat.vec(e.pos))-camera;var age:float=float(e.age);var aim:Vector2=combat.vec(e.aim)
   match str(e.style):
    "gopher_claw":
     var progress:=fposmod(age,.14)/.14;var angle:=aim.angle()+lerpf(-.8,.8,progress)*(1 if age<.14 else -1)

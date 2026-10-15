@@ -262,7 +262,7 @@ func join(key:int,data:Dictionary)->void:
   room.members[id]={"id":id,"name":str(data.get("name","Tester")).left(24),"hero":hero}
   if room.host.is_empty():room.host=id
  peers[key].actor=id;identities[id].connection=key;identities[id].event_sent=int(identities[id].get("event_ack",0));rooms[code].game.room_paused=false
- send(key,{"type":"welcome","protocol":PROTOCOL,"build":"T4","id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
+ send(key,{"type":"welcome","protocol":PROTOCOL,"build":"T4.8","id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
  if rooms[code].game.started:
   var g:Node=rooms[code].game;g.server_inputs[id]=[];g.server_actions[id]=[]
   send(key,start_packet(g));send_state(key,g,id)

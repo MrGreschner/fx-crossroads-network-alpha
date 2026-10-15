@@ -7,22 +7,54 @@ var snapshots:Array=[]
 var render_time=-1.0
 var latest_time=0.0
 var underruns=0
+var clock_resyncs=0
+var max_backlog=0.0
 var last_tick=-1
+var target_delay=DELAY
+var delay_goal=DELAY
+var arrival_age=0.0
+var last_arrival=-1.0
+var arrival_gaps:Array=[]
+var jitter_samples:Array=[]
+var playback_rate=1.0
 func clear()->void:
- snapshots.clear();render_time=-1.0;latest_time=0;last_tick=-1;underruns=0
-func receive(data:Dictionary)->void:
+ snapshots.clear();render_time=-1.0;latest_time=0;last_tick=-1;underruns=0;clock_resyncs=0;max_backlog=0
+ target_delay=DELAY;delay_goal=DELAY;arrival_age=0;last_arrival=-1;arrival_gaps.clear();jitter_samples.clear();playback_rate=1
+func receive(data:Dictionary,received_at:float=-1)->void:
  var tick=int(data.server_tick)
  if tick<=last_tick:return
+ var now=received_at if received_at>=0 else Time.get_ticks_usec()/1000000.0
+ if last_arrival>=0:
+  var gap=maxf(0,now-last_arrival)
+  arrival_gaps.append(gap)
+  jitter_samples.append(maxf(0,gap-(tick-last_tick)/60.0))
+  while arrival_gaps.size()>64:arrival_gaps.pop_front();jitter_samples.pop_front()
+  if jitter_samples.size()>=8:
+   var ordered=jitter_samples.duplicate();ordered.sort()
+   delay_goal=clampf(DELAY+float(ordered[mini(ordered.size()-1,int(ordered.size()*.95))]),DELAY,.18)
+ last_arrival=now;arrival_age=0
  last_tick=tick;latest_time=tick/60.0
  snapshots.append({"t":latest_time,"data":data})
  while snapshots.size()>LIMIT:snapshots.pop_front()
  if render_time<0:render_time=latest_time-DELAY
 func advance(delta:float)->void:
  if snapshots.is_empty():return
+ arrival_age+=maxf(0,delta)
+ target_delay=move_toward(target_delay,delay_goal,maxf(0,delta)*(.12 if delay_goal>target_delay else .02))
  var occupancy=latest_time-render_time
- # Smooth clock correction. Do not reset the clock to packet arrival time.
- var rate=clampf(1+(occupancy-DELAY)*2,.90,1.10)
- var target=render_time+minf(delta,.1)*rate
+ max_backlog=maxf(max_backlog,occupancy)
+ # A suspended/throttled browser can discard seconds of delta. Do not retain
+ # that delay for seconds afterwards. Skip obsolete visual history once;
+ # all remote actors, shots and effects still use this ONE monotonic clock.
+ if occupancy>maxf(.30,target_delay+.20):
+  render_time=maxf(render_time,latest_time-target_delay);clock_resyncs+=1
+  return
+ # Compensate for time between arrivals; packet cadence must not repeatedly
+ # accelerate/decelerate playback. Small drift correction has a dead band.
+ var desired=latest_time+minf(arrival_age,.1)-target_delay
+ var error=desired-render_time
+ playback_rate=clampf(1+error*.5,.95,1.05) if absf(error)>.015 else 1.0
+ var target=render_time+minf(delta,.1)*playback_rate
  if target>latest_time:underruns+=1
  render_time=minf(target,latest_time)
 func pair()->Array:
@@ -53,8 +85,8 @@ func shots()->Array:
  if values.is_empty():return []
  var a:Dictionary=values[0];var b:Dictionary=values[1]
  var left={};var right={};var result:Array=[]
- for shot in a.data.get("render_shots",[]):left[str(shot.net_id)]=shot
- for shot in b.data.get("render_shots",[]):right[str(shot.net_id)]=shot
+ for shot in a.data.get("render_shots",[]):left[shot_key(shot)]=shot
+ for shot in b.data.get("render_shots",[]):right[shot_key(shot)]=shot
  # Include births from the next snapshot, but only once their actual launch time
  # reaches the shared render clock. Backtrace to the transmitted spawn position.
  var keys=left.keys()
@@ -74,3 +106,7 @@ func shots()->Array:
   else:p+=v*maxf(0,render_time-float(a.t))
   var copy=shot.duplicate();copy.draw_pos=p;result.append(copy)
  return result
+
+static func shot_key(shot:Dictionary)->String:
+ # Built-in missiles and object-combat shots have independent ID counters.
+ return ("object:" if bool(shot.get("custom",false)) else "missile:")+str(shot.get("owner",""))+":"+str(shot.get("net_id",0))

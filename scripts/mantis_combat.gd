@@ -67,8 +67,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   for n in 3:
    var q:=p+Vector2((n-1)*13,-46);c.draw_colored_polygon(PackedVector2Array([q+Vector2(0,-5),q+Vector2(4,0),q+Vector2(0,5),q+Vector2(-4,0)]),Color("#ffe2a0") if n<int(poise.get(owner,0)) else Color("#4e665c"))
   if float(guards.get(owner,0))>clock:c.draw_arc(p,34,0,TAU,32,Color("#c9fff0"),4,true)
- for fx in effects:
-  var p:Vector2=combat.vec(fx.pos)-camera;var aim:Vector2=combat.vec(fx.aim);var ratio:=1-float(fx.time)/float(fx.duration);var r:=float(fx.range)
+ for fx in combat.draw_effect_records("mantis","effects",effects):
+  var p:Vector2=combat.draw_effect_position("mantis",fx,combat.vec(fx.pos))-camera;var aim:Vector2=combat.vec(fx.aim);var ratio:=1-float(fx.time)/float(fx.duration);var r:=float(fx.range)
   match str(fx.style):
    "parry":c.draw_arc(p,r*ratio,0,TAU,24,Color(1,.9,.6,1-ratio),4,true)
    "scissor_feint":

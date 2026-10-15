@@ -154,9 +154,9 @@ func receive(data:Dictionary)->void:
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not playing():return
  var visible:=Rect2(camera-Vector2(180,180),c.get_viewport_rect().size+Vector2(360,360))
- for e in effects:
-  var p:Vector2=combat.vec(e.pos)-camera
-  if not visible.has_point(combat.vec(e.pos)):continue
+ for e in combat.draw_effect_records("halloween","effects",effects):
+  var p:Vector2=combat.draw_effect_position("halloween",e,combat.vec(e.pos))-camera
+  if not visible.has_point(combat.draw_effect_position("halloween",e,combat.vec(e.pos))):continue
   match str(e.kind):
    "cleave":
     var aim:Vector2=combat.vec(e.aim);var angle:float=aim.angle()-1.0+float(e.age)/.34*2

@@ -320,6 +320,8 @@ func busy(id:String)->bool:
 		if str(cast["owner"])==id and str(cast["style"])=="charged_beam":return true
 	return false
 func owner_pos(owner:String)->Vector2:
+	if adventure.game.get_meta("fx_drawing_world",false) and adventure.game.has_method("melee_visual_position"):
+		return adventure.game.melee_visual_position(owner,adventure.points().get(owner,Vector2.ZERO))
 	if owner.begins_with("bgunit:") and adventure.arcade and adventure.game.mode=="battlegrounds":return adventure.game.battlegrounds.actor(owner).get("pos",Vector2.ZERO)
 	return adventure.points().get(owner,Vector2.ZERO)
 func passive(owner:String,effect:String)->bool:
@@ -881,6 +883,10 @@ func receive(data:Dictionary)->void:
 func playing()->bool:
 	return adventure.game.started if adventure.arcade else adventure.game.mode=="run"
 func draw_on(canvas:Node2D,camera:Vector2)->void:
+	var began=Time.get_ticks_usec()
+	_draw_on_measured(canvas,camera)
+	if adventure.game.has_method("profile_work"):adventure.game.profile_work("combat_draw",Time.get_ticks_usec()-began)
+func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 	if not playing():return
 	feedback.draw_on(canvas,camera)
 	v112.draw_on(canvas,camera)
@@ -1072,6 +1078,10 @@ func clock_delta(owner:String,delta:float)->float:
 	return delta if magic==null else delta/maxf(.3,magic.world_scale())*magic.scale_for(owner)
 
 func draw_projectile(canvas:Node2D,shot:Dictionary,camera:Vector2)->void:
+	var began=Time.get_ticks_usec()
+	_draw_projectile_measured(canvas,shot,camera)
+	if adventure.game.has_method("profile_work"):adventure.game.profile_work("projectile_art",Time.get_ticks_usec()-began)
+func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->void:
 	var clock:float=Time.get_ticks_msec()/1000.0
 	var point:=vec(shot["pos"])-camera;var radius:=float(shot["radius"])
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
@@ -1142,3 +1152,10 @@ func projectile_near(start:Vector2,finish:Vector2,key:String,point:Vector2,radiu
 	var g=adventure.get_parent()
 	if adventure.arcade and g.has_meta("fx_network_previous_positions"):return g.network_projectile_near(start,finish,key,point,radius)
 	return Geometry2D.get_closest_point_to_segment(point,start,finish).distance_to(point)<=radius
+
+func draw_effect_position(module:String,record:Dictionary,fallback:Vector2)->Vector2:
+	return preload("res://network/effect_anchors.gd").position(adventure.game,module,record,fallback)
+
+func draw_effect_records(module:String,collection:String,live:Array)->Array:
+	if adventure.game.has_method("network_effect_records"):return adventure.game.network_effect_records(module,collection,live)
+	return live

@@ -243,8 +243,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for d in darts:
   var p:Vector2=combat.vec(d.pos)-camera;var aim:Vector2=combat.vec(d.aim)
   c.draw_line(p-aim*30,p,Color(.5,.9,1,.5),5,true);c.draw_line(p-aim*12,p+aim*9,Color("#e7fbff"),3,true)
- for e in effects:
-  var p:Vector2=combat.vec(e.pos)-camera;var age:float=float(e.age)
+ for e in combat.draw_effect_records("v79","effects",effects):
+  var p:Vector2=combat.draw_effect_position("v79",e,combat.vec(e.pos))-camera;var age:float=float(e.age)
   match str(e.style):
    "magma_breath":
     var aim:Vector2=combat.vec(e.aim)

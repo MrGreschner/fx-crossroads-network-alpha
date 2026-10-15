@@ -169,8 +169,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for id in combat.adventure.points():
   if combat.passive(str(id),"steadfast_forge") and combat.effect_time(combat.player_key(str(id)),"guard")>0:
    c.draw_arc(combat.owner_pos(str(id))-camera,35,0,TAU,32,Color(.95,.72,.4,.4),2,true)
- for e in effects:
-  var p:Vector2=combat.vec(e.pos)-camera;var origin:Vector2=combat.vec(e.origin)-camera;var aim:Vector2=combat.vec(e.aim);var age:=float(e.age);var stats:Dictionary=e.stats
+ for e in combat.draw_effect_records("v75","effects",effects):
+  var p:Vector2=combat.draw_effect_position("v75",e,combat.vec(e.pos))-camera;var origin:Vector2=combat.vec(e.origin)-camera;var aim:Vector2=combat.vec(e.aim);var age:=float(e.age);var stats:Dictionary=e.stats
   if not Rect2(Vector2(-650,-650),Vector2(2580,2020)).has_point(p):continue
   match str(e.style):
    "water_jet":

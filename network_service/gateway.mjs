@@ -30,7 +30,7 @@ createInterface({input:game.stdout}).on('line',line=>{
 const server=http.createServer((req,res)=>{
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:'T4',...metrics,...cpu,gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
+ res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:'T4.8',...metrics,...cpu,gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{
@@ -39,7 +39,7 @@ server.on('upgrade',(req,socket,head)=>{
 });
 wss.on('connection',client=>{
  const upstream=new WebSocket('ws://127.0.0.1:'+gamePort,{maxPayload:2097152,perMessageDeflate:false});
- const waiting=[];let queued=0,pendingState=null,lastProgress=performance.now(),lastBuffer=0,alive=true;
+ const waiting=[];let queued=0,pendingState=null,lastProgress=performance.now(),lastBuffer=0,alive=true,lastProbe=-Infinity;
  const close=(reason='transport_error',code=1011)=>{
   reasons[reason]=(reasons[reason]||0)+1;console.log('FX_GATEWAY_CLOSE '+JSON.stringify({reason,buffer:client.bufferedAmount}));
   client.close(code,reason);upstream.close(code,reason);
@@ -54,6 +54,18 @@ wss.on('connection',client=>{
  client.on('pong',()=>{alive=true;});
  const heartbeat=setInterval(()=>{if(!alive){close('heartbeat_timeout',1001);return;}alive=false;if(client.readyState===WebSocket.OPEN)client.ping();},15000);heartbeat.unref();
  client.on('message',(bytes,binary)=>{
+  // Lightweight route probe bypasses authority queues, bounded to one/second.
+  if(!binary&&bytes.length<256){try{
+   const data=JSON.parse(bytes.toString());
+   if(data.type==='transport_ping'){
+    const now=performance.now();
+    if(now-lastProbe>=1000&&Number.isSafeInteger(data.sent)){
+     lastProbe=now;client.send(JSON.stringify({type:'transport_pong',sent:data.sent}));
+    }
+    return;
+   }
+  }catch{}}
+
   if(upstream.readyState===WebSocket.OPEN){
    if(upstream.bufferedAmount>262144){close('upstream_flood',1008);return;}
    upstream.send(bytes,{binary});

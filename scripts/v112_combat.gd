@@ -147,7 +147,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  var drawing:Array=effects
  if combat.adventure.arcade and combat.adventure.game.has_method("network_v112_effects") and not combat.adventure.game.dedicated:drawing=combat.adventure.game.network_v112_effects()
  for e in drawing:
-  var world:Vector2=combat.vec(e.pos)
+  var world:Vector2=combat.draw_effect_position("v112",e,combat.vec(e.pos))
   if not visible.has_point(world):continue
   var p:Vector2=world-camera;var radius:float=float(e.radius)
   match str(e.kind):

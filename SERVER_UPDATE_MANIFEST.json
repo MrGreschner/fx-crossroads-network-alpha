@@ -1,0 +1,124 @@
+{
+  "base": "Original deployed T4 source",
+  "target": "T4.8",
+  "protocol": 3,
+  "requires_server_deploy": true,
+  "files": [
+    {
+      "path": "export_presets.cfg",
+      "sha256": "6abd09a3bb52b071b887cd463e56ae6ee4899a54daf2de41afc8122171a7475e"
+    },
+    {
+      "path": "project.godot",
+      "sha256": "3d0cd72e0af3188ced23a273350d6b831bc64a94a69f56b51d27c679f02747ed"
+    },
+    {
+      "path": "scripts/object_combat.gd",
+      "sha256": "4d35ed51fc8d7994625693fc3c478634a00079ac0b4de4738407c83200bef3bd"
+    },
+    {
+      "path": "scripts/arcade.gd",
+      "sha256": "ff64e57e1a3c9d7e19534f41707ad05cd91da44bc0351d6cbe9c2fb324e75c2e"
+    },
+    {
+      "path": "scripts/v90_heroes.gd",
+      "sha256": "99dcb959cfc5ee582676de94d215c8a78254cc986e938bca908f54e4b5134b06"
+    },
+    {
+      "path": "scripts/v79_heroes.gd",
+      "sha256": "7b7e0f6a70eb24e13a605642b27d4d6e3eb89102f325b2a4809939d6f5872de5"
+    },
+    {
+      "path": "scripts/v46_heroes.gd",
+      "sha256": "04d3e9b9918514a99124d656d910fa363b345bbe6bc7be5d72a4e1b523cb954c"
+    },
+    {
+      "path": "scripts/robot_combat.gd",
+      "sha256": "87162569cb3cad12c3edfe64e7869a65e6a5e9bfb0df0896080afe3308fffc3d"
+    },
+    {
+      "path": "scripts/v75_heroes.gd",
+      "sha256": "efe59650bd4547ec91b82fd8571b5090741e0149a704a985d18139ece91a8e38"
+    },
+    {
+      "path": "scripts/v48_combat.gd",
+      "sha256": "d2a6ef7d48ec0b5b099d2541ba23d96d505cf4b579eb0c697632fcf380c27fa8"
+    },
+    {
+      "path": "scripts/mantis_combat.gd",
+      "sha256": "e58860b63c160d9eef742a2109884a8ee6c28e67c30966ff3d16aeaa8202612d"
+    },
+    {
+      "path": "scripts/legacy.gd",
+      "sha256": "221e3d4f2104fa68d7e7561a8dc2e9fcaccecb660eea5ee4aee57c6328164da9"
+    },
+    {
+      "path": "scripts/v110_combat.gd",
+      "sha256": "0c08915660ad11fc08324d0ada6e2828bb2ba9b0b190d86e3080faa1d90775a7"
+    },
+    {
+      "path": "scripts/ninja_combat.gd",
+      "sha256": "92b56100eea079ac95f79410925ed69dc2661d5ac7a40cd12c7647b3458da5d2"
+    },
+    {
+      "path": "scripts/twister_combat.gd",
+      "sha256": "fa4e4275412a604d95fa447a12ab8efdc3246dc7490263b7eff436a33bff1147"
+    },
+    {
+      "path": "scripts/halloween_combat.gd",
+      "sha256": "3d993a7f8c500a2307104f0e85c38876dad3e449b5007f2049221869f0f5da3c"
+    },
+    {
+      "path": "scripts/v78_heroes.gd",
+      "sha256": "aefc0c461a2d59b51ed82e037a57980b62bb66b3bc32c909a52fcf83fce62a1d"
+    },
+    {
+      "path": "scripts/v112_combat.gd",
+      "sha256": "37cb0429c5def26192b8c4d392f74c752b884e867ade770386816d3e55fb6b42"
+    },
+    {
+      "path": "network/twister_view.gd",
+      "sha256": "7840eaee24b4aac7555221f91a1e9a654e2bc1541c8bb5316a43e7854f84c4fd"
+    },
+    {
+      "path": "network/world_view.gd",
+      "sha256": "eb338beffebcf0184fccc7eb2e3a63a1854ec320ad363579b20f099b851d24db"
+    },
+    {
+      "path": "network/arena.gd",
+      "sha256": "a3728e7d291c8f386ed435a5f30e770b21dd3379a34f6d31e6fe8cd26228a794"
+    },
+    {
+      "path": "network/server.gd",
+      "sha256": "58f31e544d3881c2dd8a9d50ae1ca944343810ea14093a6a8f802c8df8a43ab7"
+    },
+    {
+      "path": "network/effect_anchors.gd",
+      "sha256": "7aba1c7fc39c9c169c9da4ad9e6c22246aeb8e13ff3bd1b88a50c967c36efbdb"
+    },
+    {
+      "path": "network/performance_view.gd",
+      "sha256": "17c4c3fe32219b4ef1e51762bfa9b26ec8208bcb1807a75e1aa568f52d811622"
+    },
+    {
+      "path": "network/actor_motion.gd",
+      "sha256": "2490cde567a315d5c3cf6606029274f82551b7e2941c16c7a562cbb967fcd070"
+    },
+    {
+      "path": "network/projectile_view.gd",
+      "sha256": "d9afc7bf25871289e20b3e2be2068c2d1030cb7d20727a4d24059487773e2187"
+    },
+    {
+      "path": "network/local_view.gd",
+      "sha256": "d2b0c1dac682a6349660ad048de09ef77f230171dc37a2e4acacec03fecd5f23"
+    },
+    {
+      "path": "network/ability_view.gd",
+      "sha256": "775e501cdde64fccd2455034a348fb2919a7a84a8b0529b0d0928ca4792d5c85"
+    },
+    {
+      "path": "network_service/gateway.mjs",
+      "sha256": "d2d363e84a398ce15089dc3425fb673606dc47f9aec1478e1f8e4cfd6fc4db46"
+    }
+  ]
+}

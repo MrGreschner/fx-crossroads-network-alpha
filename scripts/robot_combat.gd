@@ -32,7 +32,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
     if offset.length()>100 or offset.normalized().dot(aim)<.65 or not combat.path_clear(point,target.pos):continue
     hit=true;combat.damage(key,amount,owner)
    if hit and combat.passive(owner,"overclock_reserve"):charge[owner]=mini(3,int(charge.get(owner,0))+1)
-   flash(point,"jab",.25,aim)
+   flash(point,"jab",.25,aim,owner)
   "missile_volley":
    if volleys.size()>=12:return true
    var count:=5 if int(charge.get(owner,0))>=3 and combat.passive(owner,"overclock_reserve") else 4
@@ -56,8 +56,8 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
     combat.damage(key,amount,owner);combat.apply_status(key,"stun",.4,owner);combat.apply_status(key,"slow",2.9,owner,.5)
    flash(point,"stomp",.55,aim)
  return true
-func flash(point:Vector2,style:String,duration:float,aim:Vector2=Vector2.RIGHT)->void:
- if flashes.size()<64:flashes.append({"pos":combat.point_array(point),"style":style,"time":duration,"total":duration,"aim":combat.point_array(aim)})
+func flash(point:Vector2,style:String,duration:float,aim:Vector2=Vector2.RIGHT,owner:String="")->void:
+ if flashes.size()<64:flashes.append({"owner":owner,"pos":combat.point_array(point),"style":style,"time":duration,"total":duration,"aim":combat.point_array(aim)})
 func target_for(owner:String,point:Vector2,exclude:Array)->String:
  var key:="";var distance:=720.0
  for candidate in combat.hostile(owner):
@@ -148,8 +148,8 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_circle(point,23,Color("#33454e"));canvas.draw_circle(point,12,Color("#a4eef0"))
   canvas.draw_arc(point,radius+7,angle,angle+PI*1.2,36,Color(.65,.94,.98,.25),3,true)
   if str(owner)==("solo" if not combat.adventure.arcade else combat.adventure.game.my_id):canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-79,-radius-20),"SAW "+str(snappedf(float(form.time),.1))+"s • PRIMARY: STOMP",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#e4d08d"))
- for flash in flashes:
-  var point:Vector2=combat.vec(flash.pos)-camera;var t:=1-float(flash.time)/float(flash.total);var tint:=Color(.65,.92,1,1-t)
+ for flash in combat.draw_effect_records("robot","flashes",flashes):
+  var point:Vector2=combat.draw_effect_position("robot",flash,combat.vec(flash.pos))-camera;var t:=1-float(flash.time)/float(flash.total);var tint:=Color(.65,.92,1,1-t)
   match str(flash.style):
    "jab":
     var aim:Vector2=combat.vec(flash.aim);var side:=aim.rotated(PI*.5);var end:=point+aim*(35+sin(t*PI)*65)

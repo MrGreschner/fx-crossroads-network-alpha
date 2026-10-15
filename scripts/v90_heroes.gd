@@ -183,11 +183,11 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   c.draw_string(ThemeDB.fallback_font,p+Vector2(-40,-85),"REBIRTH "+str(ceili(float(rebirth[owner].left))),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#ffe4aa"))
  for owner in combat.adventure.points():
   if not combat.adventure.alive(str(owner)) or combat.v78.hero(str(owner))!="cindervane":continue
-  var p:Vector2=combat.owner_pos(str(owner))-camera
+  var p:Vector2=draw_position(str(owner))-camera
   for n in int(feathers.get(owner,0)):c.draw_line(p+Vector2(-12+n*10,-60),p+Vector2(-8+n*10,-70),Color("#ffd09a"),3,true)
  for owner in combat.adventure.points():
   if combat.adventure.alive(str(owner)) and combat.passive(str(owner),"waylight_life"):
-   var center:Vector2=combat.owner_pos(str(owner))-camera
+   var center:Vector2=draw_position(str(owner))-camera
    c.draw_arc(center,160,0,TAU,40,Color(.65,.87,.57,.18),1,true)
  for e in effects:
   var p:Vector2=combat.vec(e.pos)-camera;var owner:=str(e.owner);var aim:Vector2=combat.vec(e.aim);var t:=clampf(1-float(e.time)/float(e.duration),0,1);var r:=float(e.range);var side:=aim.orthogonal()
@@ -202,11 +202,11 @@ func draw_on(c:Node2D,camera:Vector2)->void:
     c.draw_line(p+aim*22,p+aim*42,Color("#ffe09a"),5,true)
     for n in [-1,1]:c.draw_line(p+aim*25,p+aim*38+side*n*9,Color("#eca956"),3,true)
    "wing","phoenix":
-    p=combat.owner_pos(owner)-camera
+    p=draw_position(owner)-camera
     for n in 5:
      var angle:=aim.angle()+(t*PI-.5)*(-1 if n%2 else 1);var end:=p+Vector2.from_angle(angle)*r;c.draw_line(p+Vector2.from_angle(angle)*30,end,Color(1,.64,.3,(1-t)*.8),4,true)
    "travel":
-    p=combat.owner_pos(owner)-camera
+    p=draw_position(owner)-camera
     if bool(e.ascent):
      var texture:Texture2D=combat.adventure.game.art.get("cindervane_open")
      if texture!=null:c.draw_texture_rect(texture,Rect2(p-Vector2(45,62),Vector2(90,80)),false)
@@ -225,7 +225,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
     var end:=p+aim*(r-14);c.draw_line(p+aim*20,end,Color("#f7dec2"),4,true)
     c.draw_colored_polygon(PackedVector2Array([end-side*10,end+side*10,end+aim*12]),Color("#b5c8ca"))
    "steps","haven","nest","pot":
-    if str(e.style)=="steps":p=combat.owner_pos(owner)-camera
+    if str(e.style)=="steps":p=draw_position(owner)-camera
     var tint:=Color("#d9b770") if str(e.style) in ["pot","nest"] else Color("#a9e0c7")
     var centres:Array=[p] if str(e.style)!="steps" else [p-aim*30,p-aim*70,p-aim*110]
     for centre in centres:
@@ -247,7 +247,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
      c.draw_circle(q,16+sin(clock*2+n)*4,Color(.65,.69,.72,.13))
    "lasso","tied":
     var f:Dictionary=combat.actor(str(e.get("target","")));var end:Vector2=f.pos-camera if not f.is_empty() else p+aim*r
-    c.draw_line(combat.owner_pos(owner)-camera,end,Color("#cdae78"),3,true);c.draw_arc(end,23,0,TAU,24,Color("#edcc8f"),3,true)
+    c.draw_line(draw_position(owner)-camera,end,Color("#cdae78"),3,true);c.draw_arc(end,23,0,TAU,24,Color("#edcc8f"),3,true)
 
 func cleanse(key:String,kinds:Array)->void:
  if not combat.statuses.has(key):return
@@ -308,3 +308,7 @@ func on_hit(owner:String,amount:float)->void:
  for id in combat.adventure.points():
   if combat.adventure.alive(str(id)) and combat.passive(str(id),"waylight_life") and combat.v75.friendly(str(id),owner) and p.distance_to(combat.owner_pos(str(id)))<=160 and combat.path_clear(p,combat.owner_pos(str(id))):
    life_ready[owner]=clock+.75;combat.release_heroes.heal(str(id),owner,2);return
+
+func draw_position(owner:String)->Vector2:
+ var p=combat.owner_pos(owner);var game=combat.adventure.game
+ return game.melee_visual_position(owner,p) if game.has_method("melee_visual_position") else p

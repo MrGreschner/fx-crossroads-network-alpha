@@ -181,13 +181,16 @@ func strike_origin(entry:Dictionary)->Vector2:
  if combat.adventure.arcade and game.has_method("melee_visual_position"):
   return game.melee_visual_position(owner,combat.vec(entry.pos))
  return combat.owner_pos(owner)
-func draw_on(canvas:Node2D,camera:Vector2)->void:
+func presentation_strikes()->Array:
  var drawing=strikes.duplicate()
  var game=combat.adventure.game
  if combat.adventure.arcade and game.has_method("network_identity_strikes") and not game.dedicated:drawing=game.network_identity_strikes()
  if combat.adventure.arcade and game.has_method("predicted_identity_strikes"):
   drawing=drawing.filter(func(x):return not game.suppress_confirmed_strike(x))
   drawing.append_array(game.predicted_identity_strikes())
+ return drawing
+func draw_on(canvas:Node2D,camera:Vector2)->void:
+ var drawing=presentation_strikes()
  for entry in drawing:
   if not combat.visible_owner(str(entry.owner)):continue
   var origin:Vector2=strike_origin(entry)-camera;var aim:Vector2=combat.vec(entry.aim);var end:=origin+aim*float(entry.range);var normal:=aim.rotated(PI*.5);var tint:=Color(1,1,1,(1.0 if float(entry.time)>.18 else minf(.32,float(entry.time)*1.7)))
@@ -230,7 +233,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   for n in 5:canvas.draw_line(point+Vector2(-150,-110+n*55),point+Vector2(150,-110+n*55),Color(.8,.9,.7,.3),1,true)
 
 func body_offset(id:String)->Vector2:
- for entry in strikes:
+ for entry in presentation_strikes():
   if not combat.visible_owner(str(entry.owner)):continue
   if str(entry.owner)==id and str(entry.visual)=="bounce":return combat.vec(entry.aim)*maxf(0,float(entry.range)-28)*pow(clampf(float(entry.time)/.26,0,1),2)
  return Vector2.ZERO
