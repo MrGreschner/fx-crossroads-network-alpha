@@ -1,0 +1,20 @@
+{
+  "server_build": "T4.12",
+  "base_server": "T4.9.1",
+  "compatible_clients": [
+    "T4.11",
+    "T4.12"
+  ],
+  "protocol": 3,
+  "requires_server_deploy": true,
+  "files": [
+    {
+      "path": "network/server.gd",
+      "sha256": "388c80c3d927f6974dd424fe31ae17107761fe80270fe95905837c7ac45c7351"
+    },
+    {
+      "path": "network_service/gateway.mjs",
+      "sha256": "b26607ec0e95cf82705acab5ae889c463612ae79895fbafc0cbdb0cc39f515ab"
+    }
+  ]
+}
