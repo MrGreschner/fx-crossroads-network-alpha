@@ -1,0 +1,26 @@
+{
+  "server_build": "T4.9.1",
+  "compatible_client": "T4.9",
+  "base_server": "T4.8",
+  "protocol": 3,
+  "requires_server_deploy": true,
+  "requires_itch_upload": false,
+  "files": [
+    {
+      "path": "scripts/morrow_combat.gd",
+      "sha256": "1e1462181163dbda0a9c8e1679209fefc3581ddfea4594dd82163d9c3cc6f885"
+    },
+    {
+      "path": "scripts/v46_heroes.gd",
+      "sha256": "0346d50a56d3e938e5d93eac130a295d8dff44e7c9d04a5a672fd15e160ee8cb"
+    },
+    {
+      "path": "network/server.gd",
+      "sha256": "8ca89dca05b0f1b8e4118e524761027fadb9a7cdc4e720dcfe5c20f97eb401eb"
+    },
+    {
+      "path": "network_service/gateway.mjs",
+      "sha256": "c837ee6188b66a8509bde1e0d0d375d5d808fd2e0df770312fe9c2866621284c"
+    }
+  ]
+}
