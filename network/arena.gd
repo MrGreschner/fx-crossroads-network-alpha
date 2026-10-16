@@ -1,7 +1,18 @@
 extends "res://scripts/arcade.gd"
 ## Arena vertical slice: original combat, dedicated authority, independent rendering.
+const BUILD=preload("res://network/release.gd").BUILD
 const PROTOCOL=3
 var balanced_graphics=true
+var render_budget=preload("res://network/render_budget.gd").new()
+var server_metrics:Dictionary={}
+var gateway_metrics:Dictionary={}
+var recovery_stalls=0
+var recovery_active=false
+var stale_peak_ms=0
+var received_bytes=0
+var wire_packet_count=0
+var recovery_snapshot_age=0
+var pre_poll_state_age=0
 var scenery_view:Node2D
 var network_hud:Node2D
 var dash_view=preload("res://network/dash_view.gd").new()
@@ -14,6 +25,7 @@ var authority_builds:Dictionary={}
 var ability_view=preload("res://network/ability_view.gd").new()
 var local_view=preload("res://network/local_view.gd").new()
 var actor_motion=preload("res://network/actor_motion.gd").new()
+var ground_art=preload("res://network/ground_art.gd").new()
 var cosmetic_cache:Dictionary={}
 var cosmetic_cache_until=0
 var client_perf=preload("res://network/performance_view.gd").new()
@@ -21,6 +33,9 @@ var perf_latest:Dictionary={}
 var report_downloads=0
 const Move=preload("res://network/movement.gd")
 var net_dash:Dictionary={}
+var dodge_journal:Array=[]
+var received_point_ready=false
+var last_received_point=Vector2.ZERO
 var net_velocity:Dictionary={}
 var world_view=preload("res://network/world_view.gd").new()
 var snapshot_inbox=preload("res://network/snapshot_inbox.gd").new()
@@ -108,7 +123,9 @@ func _ready()->void:
  _configure_rendering()
  role="guest";host_id="server";build_lobby()
 func _configure_rendering()->void:
- if dedicated or not OS.has_feature("web"):return
+ if dedicated:return
+ if has_meta("fx_render_shell"):get_meta("fx_render_shell").set_quality(render_budget.scale_for(balanced_graphics))
+ if not OS.has_feature("web"):return
  # Fix the arena's browser rendering policy independently of saved town options.
  # Viewport scaling reduces high-DPI render work while keeping logical layout.
  get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_VIEWPORT if balanced_graphics else Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
@@ -127,7 +144,7 @@ func build_lobby()->void:
  var layer_node=CanvasLayer.new();layer_node.layer=100;add_child(layer_node)
  net_panel=PanelContainer.new();layer_node.add_child(net_panel);preload("res://scripts/studio_ui.gd").apply(net_panel)
  var box=VBoxContainer.new();net_panel.add_child(box)
- var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T4.13";box.add_child(title)
+ var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T4.16";box.add_child(title)
  var help=Label.new();help.text="Development test • no saved progress • server runs combat\nHost creates a room; everyone, including the host, is a client.";box.add_child(help)
  url_field=LineEdit.new();url_field.text=DEFAULT_SERVER;url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
  net_name=LineEdit.new();net_name.text="Tester";net_name.placeholder_text="Display name";box.add_child(net_name)
@@ -152,7 +169,7 @@ func build_lobby()->void:
   get_tree().root.remove_meta("fx_dev_match");get_tree().change_scene_to_file("res://scenes/main.tscn"))
  net_status=Label.new();net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;net_status.text="Online test server selected • choose Host or enter a room code and Join.";box.add_child(net_status)
  for field in [url_field,net_name,room_field]:
-  var typing=preload("res://scripts/mobile_text_entry.gd").new();field.add_child(typing);typing.setup(field)
+  var typing=preload("res://scripts/mobile_text_entry.gd").new();field.add_child(typing);typing.setup(field,"done")
 func _test_arena_changed(_index:int)->void:
  if net_ready and net_host and not started:send_net({"type":"arena_choice","arena_map":"crossroads" if test_arena.selected==1 else "sand"})
 func _capacity_changed(_index:int)->void:
@@ -166,6 +183,7 @@ func net_select(id:String)->bool:
  return true
 func net_permission(id:String)->String:return "Official heroes only during networking validation." if id.begins_with("custom_") else ""
 func connect_net(kind:String)->void:
+ if kind=="resume":metrics.resume_attempts=int(metrics.get("resume_attempts",0))+1
  if net_ready and kind in ["host","join"]:
   net_status.text="Already connected to room "+net_room+". Host: press Start match.";return
  if net_peer!=null:net_peer.close()
@@ -198,10 +216,11 @@ func poll_net()->void:
   var budget=256;var poll_deadline=Time.get_ticks_usec()+2500
   while net_peer.get_available_packet_count()>0 and budget>0 and Time.get_ticks_usec()<poll_deadline:
    budget-=1;var bytes=net_peer.get_packet();metrics.wire_bytes+=bytes.size()
-   snapshot_inbox.push(bytes,not net_peer.was_string_packet())
-  metrics.coalesced_client_snapshots=int(metrics.get("coalesced_client_snapshots",0))+snapshot_inbox.dropped
+   snapshot_inbox.push(bytes,not net_peer.was_string_packet());wire_packet_count+=1;received_bytes+=bytes.size()
   metrics.pending_packets=net_peer.get_available_packet_count()
   if int(metrics.pending_packets)>0:metrics.poll_budget_yields=int(metrics.get("poll_budget_yields",0))+1
+  if snapshot_inbox.states.size()>=4 or pre_poll_state_age>=750:snapshot_inbox.retain_latest()
+  metrics.coalesced_client_snapshots=int(metrics.get("coalesced_client_snapshots",0))+snapshot_inbox.dropped
   var latest={}
   for packet in snapshot_inbox.packets():
    var decode_began=Time.get_ticks_usec()
@@ -219,6 +238,7 @@ func poll_net()->void:
   if not latest.is_empty():receive_net(latest)
  elif net_peer.get_ready_state()==WebSocketPeer.STATE_CLOSED:
   disconnect_reason="socket_closed_"+str(net_peer.get_close_code())+": "+net_peer.get_close_reason()
+  metrics.last_disconnect_reason=disconnect_reason
   net_ready=false
   if has_meta("joining"):
    remove_meta("joining");net_status.text="Connection closed before room confirmation. Check the server address and browser Console."
@@ -228,12 +248,25 @@ func poll_net()->void:
     started=false;net_panel.show();net_status.text="Connection lost. Room can no longer be resumed.";resume_token=""
    elif Time.get_ticks_msec()>=reconnect_at:
     reconnect_at=Time.get_ticks_msec()+1500;room_field.text=net_room;connect_net("resume")
+func _check_stale_link()->void:
+ if dedicated or not started or not net_ready or last_state_at<=0:return
+ var age=Time.get_ticks_msec()-last_state_at
+ var stale=age>=750
+ if stale and not recovery_active:
+  recovery_stalls+=1;recovery_active=true
+  frames.clear();history.clear();pending_bursts.clear();predicted_actions.clear();local_strikes.clear();dodge_journal.clear();shots_view.reset()
+  mobile.reset_controls()
+  _send_channel(host_id,{"type":"held_cast","kind":"primary","phase":"cancel","angle":0})
+  _send_channel(host_id,{"type":"held_cast","kind":"secondary","phase":"cancel","angle":0})
+ if recovery_active and age<250:recovery_active=false
+ if age>4000 and net_peer!=null and net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
+  disconnect_reason="state_timeout";net_peer.close(1000,"state_timeout")
 func receive_net(data:Dictionary)->void:
  match str(data.get("type","")):
   "welcome":
    server_build=str(data.get("build","unknown"))
    my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
-   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install T4.13 server fix" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
+   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the T4.16 server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
   "lobby":
    roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
@@ -242,28 +275,45 @@ func receive_net(data:Dictionary)->void:
    net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+str(data.get("message",""))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show()
   "start":
+   var same_match=not match_id.is_empty() and match_id==str(data.match_id)
    if OS.has_feature("web") and data.has("report_token"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.start("+JSON.stringify({"endpoint":url_field.text.replace("wss://","https://").replace("ws://","http://"),"token":data.report_token,"enabled":data.get("reporting",false),"match_id":data.match_id,"room":net_room})+");",true)
    mode="arena";match_id=str(data.match_id);floor_seed=int(data.seed);arena_map=str(data.arena_map);arena_seats=int(data.seats);spectator_host=false;bot_count=0;arena_no_items=true;pvp_rule="ffa"
    hero_ids=data.heroes;selected_hero=str(hero_ids.get(my_id,preferred_hero));preferred_hero=selected_hero
    positions.clear();authority_builds.clear()
    for id in hero_ids:positions[id]=Vector2.ZERO
+   recovery_active=false;last_state_at=Time.get_ticks_msec()
+   if not same_match:recovery_stalls=0;stale_peak_ms=0;render_budget.reset();metrics.resume_attempts=0;metrics.last_disconnect_reason=""
+   _configure_rendering()
    disconnect_reason="";sequence=0;action_serial=0;history.clear();frames.clear();last_snapshot_tick=-1;last_snapshot_seq=-1;applied_seq=0;pending_correction=Vector2.ZERO
    launch_trace.clear();launch_received_delays.clear();launch_drawn_delays.clear()
    authority_point_ready=false;dash_view.clear()
    for key in ["corrections","max_correction","authority_resets","correction_1_8","correction_8_32","correction_32_plus"]:metrics[key]=0
    metrics.last_authority_reset=""
    if scenery_view!=null:scenery_view.reset()
-   _start_match();ability_view.reset();local_view.reset(local_pos);start_countdown=0;control.hide();net_panel.hide();shots_view.reset();local_strikes.clear();predicted_actions.clear();pending_bursts.clear();world_view.clear();actor_motion.clear();render_shots.clear();render_events.clear();remote_strike_view.clear();confirmed_damage_events=0;recent_hit_events.clear()
+   _start_match();ability_view.reset();local_view.reset(local_pos);start_countdown=0;control.hide();net_panel.hide();shots_view.reset();dodge_journal.clear();received_point_ready=false;local_strikes.clear();predicted_actions.clear();pending_bursts.clear();world_view.clear();actor_motion.clear();render_shots.clear();render_events.clear();remote_strike_view.clear();confirmed_damage_events=0;recent_hit_events.clear()
   "state":
    if not _valid_state(data):return
    var tick=int(data.get("server_tick",0))
    var serial=int(data.get("snapshot_seq",tick))
    if serial<=last_snapshot_seq:metrics.stale+=1;return
+   recovery_snapshot_age=maxi(0,Time.get_ticks_msec()-last_state_at) if last_state_at>0 else 0
    last_state_at=Time.get_ticks_msec()
+   if recovery_snapshot_age>=750:
+    if not recovery_active:recovery_stalls+=1
+    shots_view.reset();ability_view.reset()
+    history.clear();frames.clear();world_view.reset_timeline();_buffer_state(data);local_view.reset(local_pos);pending_correction=Vector2.ZERO
+   recovery_active=false
+   server_metrics=data.get("server_metrics",server_metrics)
+   metrics.server_metrics_received_at=Time.get_ticks_msec()
    last_snapshot_seq=serial;server_hz=float(data.get("actual_hz",60));server_snapshot_ms=float(data.get("snapshot_ms",0))
    last_snapshot_tick=tick;metrics.snapshots+=1;metrics.tick_ms=float(data.get("tick_ms",0))
    receive_events(data)
    var own:Dictionary=data.get("players",{}).get(my_id,{})
+   if int(own.get("hp",0))<=0:dodge_journal.clear()
+   dodge_journal=dodge_journal.filter(func(event):return int(event.tick)<0 or tick<int(event.tick))
+   # Release the old charge marker before normal movement is replayed. The
+   # base receiver otherwise overwrites that replay with the landing packet.
+   if not bool(own.get("charging",false)):charges.erase(my_id)
    var dash:Array=own.get("dash",[0,0,0])
    net_dash[my_id]={"time":float(dash[0]),"direction":Vector2(float(dash[1]),float(dash[2]))}
    for actor in positions.keys():
@@ -280,9 +330,13 @@ func receive_net(data:Dictionary)->void:
    client_perf.work("snapshot_apply",Time.get_ticks_usec()-apply_began)
    if not own.is_empty():
     var point=Vector2(float(own.pos[0]),float(own.pos[1]))
-    if before_ability_draw.distance_to(point)>160 or before_ability_hp<=0 and int(own.get("hp",0))>0:
+    var travelling=bool(own.get("charging",false)) or bool(own.get("stance_moving",false))
+    if bool(own.get("charging",false)):
+     local_pos=point;positions[my_id]=point;pending_correction=Vector2.ZERO
+    if received_point_ready and last_received_point.distance_to(point)>160 or before_ability_hp<=0 and int(own.get("hp",0))>0:
      ability_view.reset();local_view.reset(local_pos)
-    else:ability_view.receive(bool(own.get("stance_moving",false)),before_ability_draw,point)
+    else:ability_view.receive(travelling,before_ability_draw,point,_charge_view_speed() if bool(own.get("charging",false)) else 0)
+    last_received_point=point;received_point_ready=true
    shots_view.path_clear=Callable(self,"_clear_path");shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0
   "input_resync":
    if str(data.get("match_id",""))!=match_id:return
@@ -293,20 +347,30 @@ func receive_net(data:Dictionary)->void:
    for index in range(0,retry.size(),8):send_net({"type":"input","match_id":match_id,"frames":retry.slice(index,index+8),"event_ack":applied_seq})
   "events":receive_events(data)
   "action_ack":
+   for event in dodge_journal:
+    if int(event.seq)==int(data.seq):event.tick=int(data.get("tick",last_snapshot_tick))
    if bool(data.get("accepted",false)):shots_view.acknowledge(int(data.seq),int(data.get("tick",-1)),data.get("born_indices",[]))
    action_wait_ms=int(data.get("wait_ms",0))
    if not bool(data.accepted):
+    dodge_journal=dodge_journal.filter(func(event):return int(event.seq)!=int(data.seq))
     var rejected=int(data.seq);shots_view.reject(rejected);launch_trace.erase(rejected)
     local_strikes=local_strikes.filter(func(x):return int(x.action_seq)!=rejected)
     pending_bursts=pending_bursts.filter(func(x):return int(x.seq)!=rejected)
    if data.has("style"):request_ready[str(data.style)]=Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(metrics.rtt_ms))
-  "transport_pong":metrics.gateway_rtt_ms=Time.get_ticks_msec()-int(data.sent)
+  "transport_pong":
+   metrics.gateway_rtt_ms=Time.get_ticks_msec()-int(data.sent);gateway_metrics=data.get("gateway_metrics",{})
+  "diagnostics":
+   gateway_metrics=data.get("gateway_metrics",{});server_metrics=data.get("server_metrics",{})
   "pong":metrics.rtt_ms=Time.get_ticks_msec()-int(data.sent)
 func _process(delta:float)->void:
  if dedicated:return
  var frame_began=Time.get_ticks_usec();client_perf.frame(frame_began)
+ if render_budget.observe(delta,started and balanced_graphics and not recovery_active and presentation.page.is_empty()):_configure_rendering()
  VIEW=get_viewport_rect().size
+ pre_poll_state_age=maxi(0,Time.get_ticks_msec()-last_state_at) if last_state_at>0 else 0
+ stale_peak_ms=maxi(stale_peak_ms,pre_poll_state_age)
  var poll_began=Time.get_ticks_usec();poll_net();client_perf.work("network_poll",Time.get_ticks_usec()-poll_began)
+ _check_stale_link()
  control.hide();mobile.visible=started
  _report_network()
  if not started and is_instance_valid(net_panel):net_panel.visible=not is_instance_valid(hero_grid)
@@ -315,7 +379,7 @@ func _process(delta:float)->void:
   if scenery_view!=null:scenery_view.visible=false
   if network_hud!=null:network_hud.visible=false
   queue_redraw();client_perf.work("client_process",Time.get_ticks_usec()-frame_began);return
- ability_view.advance(delta)
+ ability_view.advance(delta,local_view.point(local_pos,Engine.get_physics_interpolation_fraction()))
  visual_time+=delta;motion_v85.advance(delta);skating_motion.advance(delta);actor_motion.advance(delta);actor_motion.prune(positions.keys())
  _advance_local_previews(delta)
  world_view.advance(delta)
@@ -406,9 +470,9 @@ func _physics_process(_delta:float)->void:
   if authority_tick%3==0:gateway.snapshot(self)
   if gateway!=null:
    var complete=(Time.get_ticks_usec()-begin)/1000.0
-   gateway.work_window+=complete;gateway.step_work_max_ms=maxf(gateway.step_work_max_ms,complete)
+   gateway.step_work_ms=complete;gateway.work_window+=complete;gateway.step_work_max_ms=maxf(gateway.step_work_max_ms,complete)
   return
- if not started or not net_ready:return
+ if not started or not net_ready or recovery_active:return
  var physics_began=Time.get_ticks_usec()
  var direction:Vector2=mobile.movement if mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
  if not presentation.page.is_empty():direction=Vector2.ZERO
@@ -444,7 +508,15 @@ func _reconcile_position(ack:int,point:Vector2)->void:
  var replay_began=Time.get_ticks_usec()
  var movement=Move.prepare(self,my_id)
  var repaired=point
- for frame in history:repaired=Move.advance_prepared(self,my_id,repaired,Vector2(float(frame.d[0]),float(frame.d[1])),movement)
+ var applied={}
+ for frame in history:
+  for event in dodge_journal:
+   if int(frame.seq)>int(event.after) and not applied.has(event.seq):
+    net_dash[my_id]={"time":.26,"direction":event.direction};applied[event.seq]=true
+  repaired=Move.advance_prepared(self,my_id,repaired,Vector2(float(frame.d[0]),float(frame.d[1])),movement)
+ # A snapshot can arrive between the button press and the next physics tick.
+ for event in dodge_journal:
+  if not applied.has(event.seq) and int(event.after)<=sequence:net_dash[my_id]={"time":.26,"direction":event.direction}
  client_perf.work("prediction_replay",Time.get_ticks_usec()-replay_began)
  metrics.replayed_inputs=history.size()
  var error=repaired-local_pos
@@ -476,8 +548,14 @@ func _send_channel(_id:String,data:Dictionary)->void:
  if str(data.get("type","")) in ["attack","dodge","consume"] or str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
   _flush_action_inputs()
  action_serial+=1
- if str(data.get("type","")) in ["attack","held_cast"]:
+ if str(data.get("type",""))=="dodge":
+  var direction=data.get("direction",[1,0])
+  dodge_journal.append({"seq":action_serial,"after":sequence,"direction":Vector2(float(direction[0]),float(direction[1])).normalized(),"tick":-1})
+  while dodge_journal.size()>8:dodge_journal.pop_front()
+ if str(data.get("type","")) in ["attack","held_cast","dodge"]:
   metrics.last_action={"seq":action_serial,"type":data.type,"kind":data.get("style",data.get("kind","primary")),"phase":data.get("phase",""),"angle":data.get("angle",0),"client_ms":Time.get_ticks_msec()}
+  var kind=str(data.get("style",data.get("kind","primary")))
+  metrics.last_action.motion_type=1 if str(data.type)=="dodge" else 2 if str(characters.get(selected_hero,{}).get(kind,{}).get("style",""))=="charge" else 0
  var packet=data.duplicate(true);packet.seq=action_serial;packet.input_seq=sequence;packet.match_id=match_id;packet.view_tick=maxi(0,floori(world_view.render_time*60))
  send_net(packet)
  if str(data.get("type",""))=="attack":_preview_attack(str(data.get("style","primary")),data,action_serial)
@@ -511,6 +589,7 @@ func _unhandled_input(event:InputEvent)->void:
 func _draw()->void:
  if dedicated:return
  var draw_began=Time.get_ticks_usec()
+ ground_art.begin()
  set_meta("fx_drawing_world",true)
  if started:_observe_launches(shots_view.visuals(Time.get_ticks_msec()/1000.0),true)
  super._draw()
@@ -542,6 +621,16 @@ func _draw()->void:
     protected=float(info.get("invincible",0))>_render_sample_age()*1000
    if protected:draw_arc(ground-camera,23,0,TAU,32,Color("#70dfff"),3,true)
  draw_set_transform(Vector2.ZERO)
+
+func draw_ellipse_shadow(point:Vector2)->void:
+ if balanced_graphics:ground_art.shadow(self,point)
+ else:super.draw_ellipse_shadow(point)
+
+func draw_ground_patch(point:Vector2,radius:float,fade:float,clock:float,kind:String)->bool:
+ if dedicated:return false
+ if not balanced_graphics:return false
+ ground_art.draw_on(self,point,radius,fade,clock,kind,VIEW)
+ return true
 
 func _effect_at_actor(effect:Dictionary)->Dictionary:
  var owner=str(effect.get("owner",""))
@@ -727,7 +816,7 @@ func receive_events(data:Dictionary)->void:
 func _report_network()->void:
  if not OS.has_feature("web") or Time.get_ticks_msec()<report_at:return
  report_at=Time.get_ticks_msec()+1000
- var sample={"build":"T4.13","protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
+ var sample={"build":BUILD,"protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
  sample.client_profile=client_perf.summary()
  sample.long_frames_50ms=client_perf.long_frames
  sample.active_fps_cap=Engine.max_fps
@@ -761,8 +850,14 @@ func _report_network()->void:
  sample.correction_histogram=[metrics.get("correction_1_8",0),metrics.get("correction_8_32",0),metrics.get("correction_32_plus",0)]
  sample.terrain_chunks=terrain_cache.chunks.size() if terrain_cache!=null else 0
  sample.mobile_controls=mobile.enabled
- sample.graphics_mode="balanced" if balanced_graphics else "native"
- var render_size=get_tree().root.get_texture().get_size()
+ sample.graphics_mode="auto" if balanced_graphics else "full"
+ sample.quality_scale=render_budget.scale_for(balanced_graphics);sample.quality_changes=render_budget.changes
+ sample.server_metrics=server_metrics;sample.gateway_metrics=gateway_metrics
+ sample.server_metrics_age_ms=maxi(0,Time.get_ticks_msec()-int(metrics.get("server_metrics_received_at",Time.get_ticks_msec())))
+ sample.resume_attempts=metrics.get("resume_attempts",0);sample.last_disconnect_reason=metrics.get("last_disconnect_reason","")
+ sample.state_stalls=recovery_stalls;sample.state_stale_peak_ms=stale_peak_ms;sample.recovery_active=recovery_active
+ sample.received_packets=wire_packet_count;sample.received_bytes=received_bytes;sample.coalesced_client_snapshots=metrics.get("coalesced_client_snapshots",0);sample.poll_budget_yields=metrics.get("poll_budget_yields",0)
+ var render_size=get_viewport().get_texture().get_size()
  sample.render_size=[render_size.x,render_size.y]
  sample.server_build=server_build
  sample.gateway_rtt_ms=metrics.get("gateway_rtt_ms",-1)
@@ -786,9 +881,10 @@ func _report_network()->void:
  sample.ice_walls=ice_walls.size()
  sample.oldest_wall_remaining=0.0
  for wall in ice_walls:sample.oldest_wall_remaining=maxf(sample.oldest_wall_remaining,float(wall.time))
+ sample.client_profile.ground_effects=ground_art.counters()
  sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
- JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'T4.13',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
+ JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'T4.16',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
  JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
 
 func profile_work(kind:String,elapsed:int)->void:
@@ -796,7 +892,7 @@ func profile_work(kind:String,elapsed:int)->void:
 func download_performance()->void:
  if not OS.has_feature("web"):return
  report_downloads+=1
- JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'T4.13',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='FX_T413_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
+ JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'T4.16',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='FX_T416_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
 
 func _actor_walking(id:String)->bool:
  if id==my_id:return float(net_dash.get(id,{}).get("time",0))>0 or super._actor_walking(id)
@@ -900,3 +996,11 @@ func _delay_summary(samples:Array)->Dictionary:
 func visual_actor(key:String,point:Vector2)->Vector2:
  if not dedicated and key.begins_with("e:"):return world_view.enemy(int(key.substr(2)),point)
  return super.visual_actor(key,point)
+
+func _charge_view_speed()->float:
+ # Only ordinary charge families get a speed-bounded catch-up. Existing jump
+ # and other stance-driven views retain their authored visual timing.
+ for kind in ["primary","secondary","special"]:
+  var stats:Dictionary=characters.get(selected_hero,{}).get(kind,{})
+  if str(stats.get("style",""))=="charge":return maxf(1,float(stats.get("speed",680)))
+ return 0.0

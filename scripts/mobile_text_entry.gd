@@ -1,5 +1,5 @@
 extends Node
-## Native browser input for touch chat and hero search. Never saved or sent over the network.
+## One native browser input per touch field; Godot retains ownership of its value.
 var field:LineEdit
 var bridge:JavaScriptObject
 var input_callback:JavaScriptObject
@@ -9,9 +9,17 @@ func setup(edit:LineEdit,submit_hint:String="send")->void:
  field=edit
  if not OS.has_feature("web") or not bool(JavaScriptBridge.eval("navigator.maxTouchPoints>0 || matchMedia('(pointer:coarse)').matches",true)):
   set_process(false);return
+ var script_path="res://web/mobile_text_entry.js"
+ if not FileAccess.file_exists(script_path):
+  set_process(false);return # Keep Godot's virtual keyboard fallback enabled.
+ JavaScriptBridge.eval(FileAccess.get_file_as_string(script_path),true)
+ var factory=JavaScriptBridge.get_interface("window").fxMobileText
+ if factory==null:
+  set_process(false);return
+ bridge=factory.create()
+ if bridge==null:
+  set_process(false);return
  field.virtual_keyboard_enabled=false
- JavaScriptBridge.eval(FileAccess.get_file_as_string("res://web/elder_input.js"),true)
- bridge=JavaScriptBridge.get_interface("window").fxElderTyping
  input_callback=JavaScriptBridge.create_callback(receive_text)
  submit_callback=JavaScriptBridge.create_callback(submit_text)
  bridge.changed=input_callback;bridge.submitted=submit_callback

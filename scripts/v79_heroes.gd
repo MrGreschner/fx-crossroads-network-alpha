@@ -227,6 +227,8 @@ func receive(data:Dictionary)->void:
 func draw_on(c:Node2D,camera:Vector2)->void:
  for patch in pools:
   var p:Vector2=combat.vec(patch.pos)-camera;var r:float=float(patch.radius);var fade:=minf(1,float(patch.time))
+  if not bool(patch.wind) and c.has_method("draw_ground_patch") and c.draw_ground_patch(p,r,fade,clock,"magma"):continue
+  if c.has_method("draw_ground_patch") and not Rect2(Vector2.ZERO,c.VIEW).grow(r+32).has_point(p):continue
   if bool(patch.wind):
    c.draw_circle(p,r,Color(.3,.8,.85,.14*fade))
    for n in 3:c.draw_arc(p,15+n*14,clock*2+n,clock*2+n+PI,18,Color(.65,.96,1,.55*fade),2,true)
@@ -238,6 +240,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for owner in combat.adventure.points():
   if combat.passive(str(owner),"melting_presence") and combat.adventure.alive(str(owner)):
    var p:Vector2=combat.owner_pos(str(owner))-camera
+   if c.has_method("draw_ground_patch") and not Rect2(Vector2.ZERO,c.VIEW).grow(190).has_point(p):continue
    c.draw_arc(p,155,0,TAU,48,Color(1,.5,.16,.22),2,true)
    for n in 8:c.draw_arc(p+Vector2.from_angle(clock*.2+n*TAU/8)*148,6,0,PI,8,Color(1,.72,.25,.4),2,true)
  for d in darts:

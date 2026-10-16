@@ -15,6 +15,9 @@ func push(bytes:PackedByteArray,binary:bool)->void:
   if states.size()>KEEP:
    var obsolete:Dictionary=states.pop_front()
    obsolete.bytes=PackedByteArray();obsolete.skip=true;dropped+=1
+func retain_latest()->void:
+ while states.size()>1:
+  var obsolete:Dictionary=states.pop_front();obsolete.bytes=PackedByteArray();obsolete.skip=true;dropped+=1
 func packets()->Array:
  var result:Array=[]
  for entry in entries:

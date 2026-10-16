@@ -24,6 +24,10 @@ func clear()->void:
  snapshots.clear();render_time=-1.0;latest_time=0;last_tick=-1;underruns=0;clock_resyncs=0;max_backlog=0
  pair_time=-INF;pair_tick=-1;pair_cache=[]
  target_delay=DELAY;delay_goal=DELAY;arrival_age=0;last_arrival=-1;arrival_gaps.clear();jitter_samples.clear();playback_rate=1
+func reset_timeline()->void:
+ # Keep cumulative diagnostic counts across recovery, discard stale render history.
+ snapshots.clear();render_time=-1;latest_time=0;last_tick=-1;last_arrival=-1;arrival_age=0
+ pair_time=-INF;pair_tick=-1;pair_cache=[];arrival_gaps.clear();jitter_samples.clear();delay_goal=DELAY;target_delay=DELAY;clock_resyncs+=1
 func receive(data:Dictionary,received_at:float=-1)->void:
  var tick=int(data.server_tick)
  if tick<=last_tick:return

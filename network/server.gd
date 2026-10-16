@@ -2,6 +2,7 @@ extends Node
 ## One process owns several bounded private Arena matches. No client runs authority.
 const Arena=preload("res://network/arena.gd")
 const MAX_ROOMS=4
+const BUILD=preload("res://network/release.gd").BUILD
 const PROTOCOL=3
 const INPUT_BACKLOG=18
 const SOCKET_BACKLOG=32768
@@ -282,7 +283,7 @@ func join(key:int,data:Dictionary)->void:
   room.members[id]={"id":id,"name":str(data.get("name","Tester")).left(24),"hero":hero}
   if room.host.is_empty():room.host=id
  peers[key].actor=id;identities[id].connection=key;identities[id].event_sent=int(identities[id].get("event_ack",0));rooms[code].game.room_paused=false
- send(key,{"type":"welcome","protocol":PROTOCOL,"build":"T4.13","id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
+ send(key,{"type":"welcome","protocol":PROTOCOL,"build":BUILD,"id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
  if rooms[code].game.started:
   var g:Node=rooms[code].game;g.server_inputs[id]=[];g.server_actions[id]=[]
   send(key,start_packet(g));send_state(key,g,id)
@@ -345,6 +346,7 @@ func snapshot(g:Node)->void:
  # Arena-only envelope; hero combat state remains complete for all official heroes.
  for field in ["studio","dev_magic","descent","battlegrounds","north_gate","defense_cleared_wave","wave","floor","gate","upgrades"]:state.erase(field)
  state.adventure=prune_idle(state.adventure)
+ state.server_metrics={"measured_at_ms":Time.get_ticks_msec(),"authority_hz":actual_hz,"step_work_ms":step_work_ms,"step_work_max_ms":step_work_max_ms,"socket_poll_ms":process_ms,"encode_ms":encode_ms,"snapshot_bytes":snapshot_bytes,"input_backlog":backlog_max(),"dropped_inputs":dropped_inputs,"coalesced_snapshots":coalesced_snapshots,"rooms":rooms.size(),"connections":peers.size()}
  state.server_tick=g.authority_tick;state.tick_ms=g.metrics.tick_ms;state.effects=[]
  state.snapshot_seq=room.get("snapshot_seq",0)+1;room.snapshot_seq=state.snapshot_seq
  state.input_backlog=g.max_input_depth;state.actual_hz=actual_hz;state.snapshot_ms=float(g.metrics.get("snapshot_ms",0))

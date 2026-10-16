@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {BUILD} from './release.mjs';
 import {spawn} from 'node:child_process';
 import {resolve} from 'node:path';
 import {createInterface} from 'node:readline';
@@ -8,7 +9,7 @@ import {createReporting,ticket} from './reporting.mjs';
 import WebSocket,{WebSocketServer} from 'ws';
 const root=resolve(process.env.FX_PROJECT_ROOT||'..');
 const port=Number(process.env.PORT||9080),gamePort=Number(process.env.FX_GAME_PORT||9081);
-const queueLimit=16384;let ready=false,metrics={},coalesced=0;
+const queueLimit=4096;let ready=false,metrics={},coalesced=0,lastMetricsAt=performance.now();
 const reasons={};const delay=monitorEventLoopDelay({resolution:20});delay.enable();
 const game=spawn(process.env.GODOT_BIN||'godot',['--headless','--path',root,'res://network/server.tscn'],{env:{...process.env,FX_PROXY:'1',FX_GAME_PORT:String(gamePort)}});
 let lastCpu=0,lastCpuAt=performance.now(),lastNode=process.cpuUsage(),cpu={};
@@ -25,7 +26,7 @@ function updateCpu(){
 const cpuTimer=setInterval(updateCpu,5000);cpuTimer.unref();
 createInterface({input:game.stdout}).on('line',line=>{
  if(line.startsWith('FX authority listening'))ready=true;
- if(line.startsWith('FX_METRICS ')){try{metrics=JSON.parse(line.slice(11));}catch{}}
+ if(line.startsWith('FX_METRICS ')){try{metrics=JSON.parse(line.slice(11));lastMetricsAt=performance.now();}catch{}}
  console.log(line);
 });game.stderr.on('data',b=>process.stderr.write(b));
 const reporting=createReporting();
@@ -33,7 +34,7 @@ const server=http.createServer(async(req,res)=>{
  try{if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:'T4.13',...metrics,...cpu,reporting:reporting.status(),gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
+ res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{
@@ -64,7 +65,7 @@ wss.on('connection',client=>{
    if(data.type==='transport_ping'){
     const now=performance.now();
     if(now-lastProbe>=1000&&Number.isSafeInteger(data.sent)){
-     lastProbe=now;client.send(JSON.stringify({type:'transport_pong',sent:data.sent}));
+     lastProbe=now;client.send(JSON.stringify({type:'transport_pong',sent:data.sent,gateway_metrics:{...cpu,measured_at_ms:Date.now(),downstream_buffer_bytes:client.bufferedAmount,upstream_buffer_bytes:upstream.bufferedAmount,coalesced_snapshots:coalesced,authority_metrics_age_ms:Math.max(0,performance.now()-lastMetricsAt)}}));
     }
     return;
    }

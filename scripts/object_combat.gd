@@ -903,7 +903,9 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 	morrow.draw_on(canvas,camera)
 	mantis.draw_on(canvas,camera)
 	confluence.draw_on(canvas,camera)
+	var ground_began=Time.get_ticks_usec()
 	v79.draw_on(canvas,camera)
+	if adventure.game.has_method("profile_work"):adventure.game.profile_work("ground_family_draw",Time.get_ticks_usec()-ground_began)
 	v78.draw_on(canvas,camera)
 	v75.draw_on(canvas,camera)
 	chronicle.draw_on(canvas,camera)
@@ -961,7 +963,11 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 		if str(entry["style"])!="charged_beam" or not adventure.points().has(str(entry["owner"])):continue
 		var point:=owner_pos(str(entry["owner"]));var direction:=vec(entry["aim"]);var progress:=1-float(entry["time"])/float(entry["total"])
 		canvas.draw_line(point-camera,point+direction*float(entry["range"])-camera,Color(1,.9,.3,.08),float(entry["width"]),true);canvas.draw_arc(point-camera,35,-PI*.5,-PI*.5+TAU*progress,40,Color("#ffe37a"),5,true)
-	for pool in pools:canvas.draw_circle(vec(pool["pos"])-camera,float(pool["radius"]),Color(.55,.3,.7,.2));canvas.draw_arc(vec(pool["pos"])-camera,float(pool["radius"]),0,TAU,32,Color(.7,.5,.9,.55),2,true)
+	for pool in pools:
+		var p:=vec(pool["pos"])-camera;var r:=float(pool["radius"])
+		if canvas.has_method("draw_ground_patch") and canvas.draw_ground_patch(p,r,1,clock,"poison"):continue
+		if canvas.has_method("draw_ground_patch") and not Rect2(Vector2.ZERO,canvas.VIEW).grow(r+32).has_point(p):continue
+		canvas.draw_circle(p,r,Color(.55,.3,.7,.2));canvas.draw_arc(p,r,0,TAU,32,Color(.7,.5,.9,.55),2,true)
 	for effect in visuals:
 		if str(effect.get("style",""))=="ball_shock":
 			var a:Vector2=vec(effect.start)-camera;var b:Vector2=vec(effect.end)-camera;var side:Vector2=(b-a).normalized().orthogonal()*5
