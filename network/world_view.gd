@@ -17,8 +17,12 @@ var last_arrival=-1.0
 var arrival_gaps:Array=[]
 var jitter_samples:Array=[]
 var playback_rate=1.0
+var pair_time=-INF
+var pair_tick=-1
+var pair_cache:Array=[]
 func clear()->void:
  snapshots.clear();render_time=-1.0;latest_time=0;last_tick=-1;underruns=0;clock_resyncs=0;max_backlog=0
+ pair_time=-INF;pair_tick=-1;pair_cache=[]
  target_delay=DELAY;delay_goal=DELAY;arrival_age=0;last_arrival=-1;arrival_gaps.clear();jitter_samples.clear();playback_rate=1
 func receive(data:Dictionary,received_at:float=-1)->void:
  var tick=int(data.server_tick)
@@ -59,12 +63,14 @@ func advance(delta:float)->void:
  render_time=minf(target,latest_time)
 func pair()->Array:
  if snapshots.is_empty():return []
+ if pair_time==render_time and pair_tick==last_tick:return pair_cache
  var before:Dictionary=snapshots[0];var after:Dictionary=before
  for snapshot in snapshots:
   if float(snapshot.t)<=render_time:before=snapshot
   if float(snapshot.t)>render_time:after=snapshot;break
   after=snapshot
- return [before,after]
+ pair_time=render_time;pair_tick=last_tick;pair_cache=[before,after]
+ return pair_cache
 func alpha(a:Dictionary,b:Dictionary)->float:
  return clampf((render_time-float(a.t))/maxf(.0001,float(b.t)-float(a.t)),0,1)
 func player(id:String,fallback:Vector2)->Vector2:
@@ -110,3 +116,17 @@ func shots()->Array:
 static func shot_key(shot:Dictionary)->String:
  # Built-in missiles and object-combat shots have independent ID counters.
  return ("object:" if bool(shot.get("custom",false)) else "missile:")+str(shot.get("owner",""))+":"+str(shot.get("net_id",0))
+
+func enemy(uid:int,fallback:Vector2)->Vector2:
+ var values=pair()
+ if values.is_empty():return fallback
+ var left={};var right={}
+ for foe in values[0].data.get("enemies",[]):
+  if int(foe.get("uid",0))==uid:left=foe;break
+ for foe in values[1].data.get("enemies",[]):
+  if int(foe.get("uid",0))==uid:right=foe;break
+ if left.is_empty():return fallback
+ if right.is_empty():right=left
+ var p=Vector2(float(left.pos[0]),float(left.pos[1]));var q=Vector2(float(right.pos[0]),float(right.pos[1]))
+ if p.distance_to(q)>160:return p
+ return p.lerp(q,alpha(values[0],values[1]))

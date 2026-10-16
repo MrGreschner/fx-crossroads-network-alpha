@@ -483,7 +483,8 @@ func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,
 		projectiles[-1].net_id=adventure.game.projectile_serial
 		projectiles[-1].born_tick=adventure.game.authority_tick-1
 		projectiles[-1].action_seq=int(stats.get("_net_action_seq",adventure.game.get_meta("fx_action_seq",-1)))
-		projectiles[-1].shot_index=int(stats.get("_net_shot_index",0))
+		projectiles[-1].shot_index=int(stats.get("_net_shot_index",adventure.game.get_meta("fx_shot_index",0)))
+		adventure.game.set_meta("fx_shot_index",int(adventure.game.get_meta("fx_shot_index",0))+1)
 	shot_turn[owner]=int(shot_turn.get(owner,0))+1
 func add_ring(owner:String,origin:Vector2,stats:Dictionary,amount:float)->void:
 	if rings.size()>=32:return

@@ -1,0 +1,88 @@
+{
+  "build": "T4.13",
+  "protocol": 3,
+  "base": "Existing complete T4.12 repository (includes T4.9.1 mobile summon fix)",
+  "deployment": "Replace these paths in the existing repository; deploy latest commit. Configure DATABASE_URL, REPORT_ADMIN_PASSWORD and REPORT_SIGNING_SECRET.",
+  "files": [
+    {
+      "path": "network/arena.gd",
+      "sha256": "4c8d00e4ad5395d12df4befce0ac3f5b2b550ae6fcfa6921e612b43c571d3e21",
+      "bytes": 56013
+    },
+    {
+      "path": "network/server.gd",
+      "sha256": "180f42853688ee67c18773be0320be8ae4ece07df4d90d996cb367b98a477e33",
+      "bytes": 23628
+    },
+    {
+      "path": "network/projectile_view.gd",
+      "sha256": "ad8db082ff864dc0fcc3406b9e88df65e062c58b80aa66b1bd4cefc8e40c8aa1",
+      "bytes": 4964
+    },
+    {
+      "path": "network/projectile_recipe.gd",
+      "sha256": "6d6bdcd23ce0f22f27ffb6dd9ce9e50dbf62c5f89a6926157b03722209882818",
+      "bytes": 2378
+    },
+    {
+      "path": "network/world_view.gd",
+      "sha256": "90613acaf85a768fa15d403cfe905485af5dbaf6f78031c4325c1e9d3bd94fc5",
+      "bytes": 5958
+    },
+    {
+      "path": "network/diagnostic_hud.gd",
+      "sha256": "9c6b4979751f8c402d8ad35655b47417653840e87fbc31dbc46a82433d9f63c4",
+      "bytes": 1707
+    },
+    {
+      "path": "scripts/arena_world.gd",
+      "sha256": "8942e41d24c4e232f74ca210652630e893ec4fe2ec512821ed9ac7201916cfa1",
+      "bytes": 8644
+    },
+    {
+      "path": "scripts/object_combat.gd",
+      "sha256": "2a8673922dfaf29aeabd8c9ed19d7b87e77bf65c4272dcbb3e73ecf2d3ed3b22",
+      "bytes": 76497
+    },
+    {
+      "path": "network_service/gateway.mjs",
+      "sha256": "7a3fdb64c757d34bc6028e0449ac9dfe1d7b028ba9050c3cf2df25647ee90c5a",
+      "bytes": 6627
+    },
+    {
+      "path": "network_service/reporting.mjs",
+      "sha256": "a5d220c8d155d3e717a35aaa19d8633525556e11526e5d7c5fb4992d09f57998",
+      "bytes": 10142
+    },
+    {
+      "path": "network_service/reports.sql",
+      "sha256": "9bd35de90c96720c7d94ce634d80d082abbb4acefe72bfa1edfbbc6299f9fe1c",
+      "bytes": 535
+    },
+    {
+      "path": "network_service/reports.html",
+      "sha256": "245c1f1ac582bfc0d6875aa8c3b8c6e05a0b77613b1d326793349dd71ad0a7ca",
+      "bytes": 1515
+    },
+    {
+      "path": "network_service/dashboard.js",
+      "sha256": "5aca2041567a4834e83966143a1d1032fc58377a268a1a5930f8ce7c237cbdd9",
+      "bytes": 2999
+    },
+    {
+      "path": "network_service/package.json",
+      "sha256": "c10c912e569e5d51085a2000a6612fecde28f9c2fd4dd7fad3152db21f3b18c5",
+      "bytes": 261
+    },
+    {
+      "path": "network_service/package-lock.json",
+      "sha256": "d7ff08480a49752f7cafa413119bc91a7d48f47892b0fe2cfb7ebb7630b7a710",
+      "bytes": 6330
+    },
+    {
+      "path": "network/projectile_recipe.gd.uid",
+      "sha256": "86067ffecf76c1454daa2ac1ba02c2a11425ac58434bc871180138d260613be6",
+      "bytes": 20
+    }
+  ]
+}

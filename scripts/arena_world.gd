@@ -29,6 +29,17 @@ func setup(owner:Node,id:String)->void:
   for n in 1:
    var p=Vector2(1150,1000) if n==0 else Vector2(2150,1350)
    game.adventure.spawn("bramble" if n==0 else "archer",p,450,true);game.opponents[-1].expansion_boss=false
+func test_enemies(reset:bool=true)->void:
+ if game.role!="host" or map_id!="crossroads":return
+ if reset:game.opponents.clear()
+ game.wave_timer=999999
+ for n in range(game.opponents.size(),4):
+  var anchor:Vector2=game.positions[game.positions.keys()[n%game.positions.size()]]
+  var p=anchor+Vector2.from_angle(n*TAU/4)*220
+  for attempt in 12:
+   if game._clear_path(p,p):break
+   p=anchor+Vector2.from_angle((n+attempt*.31)*TAU/4)*240
+  game.adventure.spawn("archer" if n%2==0 else "bramble",p,95,false)
 func point(a:Array)->Vector2:return Vector2(float(a[0]),float(a[1]))
 func pits()->Array:return [Vector2(850,720),Vector2(1550,1080),Vector2(1230,1420)]
 func slow(p:Vector2)->float:
@@ -53,6 +64,9 @@ func harm(p:Vector2,radius:float,damage:float)->void:
 func step(delta:float)->void:
  if not is_instance_valid(game) or game.mode!="arena" or game.role!="host":return
  clock+=delta;tick+=delta;spawn_timer-=delta
+ if map_id=="crossroads" and game.get("dedicated")==true and spawn_timer<=0:
+  spawn_timer=15
+  if game.opponents.size()<2:test_enemies(false)
  if map_id=="storm":
   for drone in drones:
    var previous=float(drone.get("elapsed",float(drone.phase)));var elapsed=clock+float(drone.phase);drone.elapsed=elapsed

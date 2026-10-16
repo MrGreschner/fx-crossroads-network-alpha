@@ -4,6 +4,7 @@ import {resolve} from 'node:path';
 import {createInterface} from 'node:readline';
 import {readFileSync} from 'node:fs';
 import {monitorEventLoopDelay} from 'node:perf_hooks';
+import {createReporting,ticket} from './reporting.mjs';
 import WebSocket,{WebSocketServer} from 'ws';
 const root=resolve(process.env.FX_PROJECT_ROOT||'..');
 const port=Number(process.env.PORT||9080),gamePort=Number(process.env.FX_GAME_PORT||9081);
@@ -27,10 +28,12 @@ createInterface({input:game.stdout}).on('line',line=>{
  if(line.startsWith('FX_METRICS ')){try{metrics=JSON.parse(line.slice(11));}catch{}}
  console.log(line);
 });game.stderr.on('data',b=>process.stderr.write(b));
-const server=http.createServer((req,res)=>{
+const reporting=createReporting();
+const server=http.createServer(async(req,res)=>{
+ try{if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:'T4.12',...metrics,...cpu,gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
+ res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:'T4.13',...metrics,...cpu,reporting:reporting.status(),gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{
@@ -39,6 +42,7 @@ server.on('upgrade',(req,socket,head)=>{
 });
 wss.on('connection',client=>{
  const upstream=new WebSocket('ws://127.0.0.1:'+gamePort,{maxPayload:2097152,perMessageDeflate:false});
+ let reportIdentity=null;
  const waiting=[];let queued=0,pendingState=null,lastProgress=performance.now(),lastBuffer=0,alive=true,lastProbe=-Infinity;
  const close=(reason='transport_error',code=1011)=>{
   reasons[reason]=(reasons[reason]||0)+1;console.log('FX_GATEWAY_CLOSE '+JSON.stringify({reason,buffer:client.bufferedAmount}));
@@ -74,6 +78,7 @@ wss.on('connection',client=>{
  });
  upstream.on('open',()=>{for(const [bytes,binary] of waiting)upstream.send(bytes,{binary});waiting.length=0;});
  upstream.on('message',(bytes,binary)=>{
+  if(!binary){try{const p=JSON.parse(bytes.toString());if(p.type==='welcome')reportIdentity={actor:p.id,room:p.room};if(p.type==='start'&&reportIdentity){p.report_token=ticket({...reportIdentity,match:p.match_id});p.reporting=reporting.status().configured;bytes=Buffer.from(JSON.stringify(p));}}catch{}}
   if(client.readyState!==WebSocket.OPEN)return;
   if(binary){
    // Only the newest full state is useful after a congested connection recovers.
@@ -89,5 +94,5 @@ wss.on('connection',client=>{
  client.on('error',()=>close());upstream.on('error',()=>close('authority_connection_error'));
 });
 server.listen(port,'0.0.0.0',()=>console.log('FX T4 gateway port '+port));
-game.on('exit',code=>{ready=false;clearInterval(cpuTimer);console.error('Authority exited: '+code);for(const ws of wss.clients)ws.close(1012,'Server stopped');server.close(()=>process.exit(code||1));});
+game.on('exit',code=>{ready=false;clearInterval(cpuTimer);console.error('Authority exited: '+code);for(const ws of wss.clients)ws.close(1012,'Server stopped');server.close(async()=>{await reporting.close();process.exit(code||1);});});
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{game.kill('SIGTERM');server.close();});

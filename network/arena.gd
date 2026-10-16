@@ -1,6 +1,14 @@
 extends "res://scripts/arcade.gd"
 ## Arena vertical slice: original combat, dedicated authority, independent rendering.
 const PROTOCOL=3
+var balanced_graphics=true
+var scenery_view:Node2D
+var network_hud:Node2D
+var dash_view=preload("res://network/dash_view.gd").new()
+var reconcile_snapshot:Dictionary={}
+var last_authority_point=Vector2.ZERO
+var authority_point_ready=false
+var correction_reset_reason=""
 var server_build="unknown"
 var authority_builds:Dictionary={}
 var ability_view=preload("res://network/ability_view.gd").new()
@@ -15,6 +23,7 @@ const Move=preload("res://network/movement.gd")
 var net_dash:Dictionary={}
 var net_velocity:Dictionary={}
 var world_view=preload("res://network/world_view.gd").new()
+var snapshot_inbox=preload("res://network/snapshot_inbox.gd").new()
 var render_shots:Array=[]
 var render_events:Array=[]
 var remote_strike_view:Dictionary={}
@@ -44,6 +53,7 @@ var room_field:LineEdit
 var net_start:Button
 var net_name:LineEdit
 var capacity:OptionButton
+var test_arena:OptionButton
 var reconnect_until=0
 var reconnect_at=0
 var next_ping_at=0
@@ -68,6 +78,9 @@ var server_actions:Dictionary={}
 var input_ack:Dictionary={}
 var projectile_serial=0
 var action_serial=0
+var launch_trace:Dictionary={}
+var launch_received_delays:Array=[]
+var launch_drawn_delays:Array=[]
 var server_snapshot_tick=0
 var last_snapshot_tick=-1
 var metrics={"rtt_ms":0,"corrections":0,"max_correction":0.0,"snapshots":0,"wire_bytes":0,"stale":0,"tick_ms":0.0}
@@ -90,7 +103,17 @@ func _ready()->void:
   # Authority advances combat explicitly. Browser UI, media polling and audio helpers do not tick here.
   for child in get_children():child.process_mode=Node.PROCESS_MODE_DISABLED
   return
+ scenery_view=preload("res://network/scenery_view.gd").new();scenery_view.game=self;add_child(scenery_view)
+ network_hud=preload("res://network/diagnostic_hud.gd").new();network_hud.game=self;add_child(network_hud)
+ _configure_rendering()
  role="guest";host_id="server";build_lobby()
+func _configure_rendering()->void:
+ if dedicated or not OS.has_feature("web"):return
+ # Fix the arena's browser rendering policy independently of saved town options.
+ # Viewport scaling reduces high-DPI render work while keeping logical layout.
+ get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_VIEWPORT if balanced_graphics else Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+ Engine.max_fps=60 if balanced_graphics else 120
+ JavaScriptBridge.eval("if(window.fxCanvasBudget)window.fxCanvasBudget.set_mode("+("true" if balanced_graphics else "false")+");",true)
 func _bind_test_controls()->void:
  for binding in [["move_left",KEY_A],["move_right",KEY_D],["move_up",KEY_W],["move_down",KEY_S],["special",KEY_SPACE],["dodge",KEY_SHIFT],["interact",KEY_E]]:
   var event=InputEventKey.new();event.physical_keycode=binding[1]
@@ -104,7 +127,7 @@ func build_lobby()->void:
  var layer_node=CanvasLayer.new();layer_node.layer=100;add_child(layer_node)
  net_panel=PanelContainer.new();layer_node.add_child(net_panel);preload("res://scripts/studio_ui.gd").apply(net_panel)
  var box=VBoxContainer.new();net_panel.add_child(box)
- var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T4.8";box.add_child(title)
+ var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T4.13";box.add_child(title)
  var help=Label.new();help.text="Development test • no saved progress • server runs combat\nHost creates a room; everyone, including the host, is a client.";box.add_child(help)
  url_field=LineEdit.new();url_field.text=DEFAULT_SERVER;url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
  net_name=LineEdit.new();net_name.text="Tester";net_name.placeholder_text="Display name";box.add_child(net_name)
@@ -114,6 +137,9 @@ func build_lobby()->void:
  box.add_child(capacity)
  capacity.select(1)
  capacity.item_selected.connect(_capacity_changed)
+ test_arena=OptionButton.new()
+ test_arena.add_item("Test arena • players only",0);test_arena.add_item("Gladiator arena • players + enemies",1)
+ box.add_child(test_arena);test_arena.item_selected.connect(_test_arena_changed)
  var heroes=Button.new();hero_button=heroes;heroes.text="Choose hero • Grid view";box.add_child(heroes);heroes.pressed.connect(func():
   if is_instance_valid(hero_grid):return
   hero_grid=preload("res://scripts/hero_grid.gd").new();hero_grid.open(self,selected_hero,net_select,net_permission))
@@ -122,10 +148,13 @@ func build_lobby()->void:
  net_start=Button.new();net_start.text="Start match";net_start.custom_minimum_size.y=44;net_start.disabled=true;box.add_child(net_start);net_start.pressed.connect(func():send_net({"type":"start"}))
  var leave=Button.new();leave.text="Leave test • return to town";box.add_child(leave);leave.pressed.connect(func():
   if net_peer!=null:send_net({"type":"leave"});net_peer.close()
+  if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('leave');",true)
   get_tree().root.remove_meta("fx_dev_match");get_tree().change_scene_to_file("res://scenes/main.tscn"))
  net_status=Label.new();net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;net_status.text="Online test server selected • choose Host or enter a room code and Join.";box.add_child(net_status)
  for field in [url_field,net_name,room_field]:
   var typing=preload("res://scripts/mobile_text_entry.gd").new();field.add_child(typing);typing.setup(field)
+func _test_arena_changed(_index:int)->void:
+ if net_ready and net_host and not started:send_net({"type":"arena_choice","arena_map":"crossroads" if test_arena.selected==1 else "sand"})
 func _capacity_changed(_index:int)->void:
  if not net_ready or not net_host or started:return
  send_net({"type":"capacity","seats":capacity.get_selected_id()})
@@ -160,20 +189,33 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"seats":capacity.get_selected_id(),"token":resume_token})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"seats":capacity.get_selected_id(),"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
-  var latest={};var budget=96;var poll_deadline=Time.get_ticks_usec()+2500
+  # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
+  # inbox first, retaining a short interpolation window before gzip/JSON work.
+  snapshot_inbox.clear()
+  var budget=256;var poll_deadline=Time.get_ticks_usec()+2500
   while net_peer.get_available_packet_count()>0 and budget>0 and Time.get_ticks_usec()<poll_deadline:
    budget-=1;var bytes=net_peer.get_packet();metrics.wire_bytes+=bytes.size()
-   if not net_peer.was_string_packet():bytes=bytes.decompress_dynamic(2097152,FileAccess.COMPRESSION_GZIP)
-   var message=JSON.parse_string(bytes.get_string_from_utf8())
-   if not message is Dictionary:continue
-   if str(message.get("type",""))=="state":
-    _buffer_state(message);latest=message
-   else:receive_net(message)
+   snapshot_inbox.push(bytes,not net_peer.was_string_packet())
+  metrics.coalesced_client_snapshots=int(metrics.get("coalesced_client_snapshots",0))+snapshot_inbox.dropped
   metrics.pending_packets=net_peer.get_available_packet_count()
   if int(metrics.pending_packets)>0:metrics.poll_budget_yields=int(metrics.get("poll_budget_yields",0))+1
+  var latest={}
+  for packet in snapshot_inbox.packets():
+   var decode_began=Time.get_ticks_usec()
+   var bytes:PackedByteArray=packet.bytes
+   if packet.binary:bytes=bytes.decompress_dynamic(2097152,FileAccess.COMPRESSION_GZIP)
+   var message=JSON.parse_string(bytes.get_string_from_utf8())
+   client_perf.work("snapshot_decode" if packet.binary else "control_decode",Time.get_ticks_usec()-decode_began)
+   if not message is Dictionary:continue
+   if str(message.get("type",""))=="state":
+    if not _valid_state(message):continue
+    _buffer_state(message);latest=message
+   else:
+    if str(message.get("type",""))=="start":latest={}
+    receive_net(message)
   if not latest.is_empty():receive_net(latest)
  elif net_peer.get_ready_state()==WebSocketPeer.STATE_CLOSED:
   disconnect_reason="socket_closed_"+str(net_peer.get_close_code())+": "+net_peer.get_close_reason()
@@ -191,21 +233,29 @@ func receive_net(data:Dictionary)->void:
   "welcome":
    server_build=str(data.get("build","unknown"))
    my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
-   room_field.text=net_room;net_status.text="Room "+net_room+" • server connected";net_start.disabled=not net_host
+   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install T4.13 server fix" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
   "lobby":
    roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
    capacity.select(capacity.get_item_index(int(data.seats)))
+   test_arena.disabled=not net_host;test_arena.select(1 if str(data.get("arena_map","sand"))=="crossroads" else 0)
    net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+str(data.get("message",""))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show()
   "start":
+   if OS.has_feature("web") and data.has("report_token"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.start("+JSON.stringify({"endpoint":url_field.text.replace("wss://","https://").replace("ws://","http://"),"token":data.report_token,"enabled":data.get("reporting",false),"match_id":data.match_id,"room":net_room})+");",true)
    mode="arena";match_id=str(data.match_id);floor_seed=int(data.seed);arena_map=str(data.arena_map);arena_seats=int(data.seats);spectator_host=false;bot_count=0;arena_no_items=true;pvp_rule="ffa"
    hero_ids=data.heroes;selected_hero=str(hero_ids.get(my_id,preferred_hero));preferred_hero=selected_hero
    positions.clear();authority_builds.clear()
    for id in hero_ids:positions[id]=Vector2.ZERO
-   sequence=0;action_serial=0;history.clear();frames.clear();last_snapshot_tick=-1;last_snapshot_seq=-1;applied_seq=0;pending_correction=Vector2.ZERO
-   _start_match();ability_view.reset();local_view.reset(local_pos);start_countdown=0;control.hide();net_panel.hide();shots_view.tracks.clear();shots_view.predicted.clear();local_strikes.clear();predicted_actions.clear();pending_bursts.clear();world_view.clear();actor_motion.clear();render_shots.clear();render_events.clear();remote_strike_view.clear();confirmed_damage_events=0;recent_hit_events.clear()
+   disconnect_reason="";sequence=0;action_serial=0;history.clear();frames.clear();last_snapshot_tick=-1;last_snapshot_seq=-1;applied_seq=0;pending_correction=Vector2.ZERO
+   launch_trace.clear();launch_received_delays.clear();launch_drawn_delays.clear()
+   authority_point_ready=false;dash_view.clear()
+   for key in ["corrections","max_correction","authority_resets","correction_1_8","correction_8_32","correction_32_plus"]:metrics[key]=0
+   metrics.last_authority_reset=""
+   if scenery_view!=null:scenery_view.reset()
+   _start_match();ability_view.reset();local_view.reset(local_pos);start_countdown=0;control.hide();net_panel.hide();shots_view.reset();local_strikes.clear();predicted_actions.clear();pending_bursts.clear();world_view.clear();actor_motion.clear();render_shots.clear();render_events.clear();remote_strike_view.clear();confirmed_damage_events=0;recent_hit_events.clear()
   "state":
+   if not _valid_state(data):return
    var tick=int(data.get("server_tick",0))
    var serial=int(data.get("snapshot_seq",tick))
    if serial<=last_snapshot_seq:metrics.stale+=1;return
@@ -224,14 +274,16 @@ func receive_net(data:Dictionary)->void:
    var before_ability_draw=_local_draw_position()
    var before_ability_hp=int(health.get(my_id,0))
    var apply_began=Time.get_ticks_usec()
+   reconcile_snapshot=own
    data.effects=[];super._packet("server",data)
+   reconcile_snapshot={}
    client_perf.work("snapshot_apply",Time.get_ticks_usec()-apply_began)
    if not own.is_empty():
     var point=Vector2(float(own.pos[0]),float(own.pos[1]))
     if before_ability_draw.distance_to(point)>160 or before_ability_hp<=0 and int(own.get("hp",0))>0:
      ability_view.reset();local_view.reset(local_pos)
     else:ability_view.receive(bool(own.get("stance_moving",false)),before_ability_draw,point)
-   shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0
+   shots_view.path_clear=Callable(self,"_clear_path");shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0
   "input_resync":
    if str(data.get("match_id",""))!=match_id:return
    var expected=int(data.get("expected",1))
@@ -241,9 +293,10 @@ func receive_net(data:Dictionary)->void:
    for index in range(0,retry.size(),8):send_net({"type":"input","match_id":match_id,"frames":retry.slice(index,index+8),"event_ack":applied_seq})
   "events":receive_events(data)
   "action_ack":
+   if bool(data.get("accepted",false)):shots_view.acknowledge(int(data.seq),int(data.get("tick",-1)),data.get("born_indices",[]))
    action_wait_ms=int(data.get("wait_ms",0))
    if not bool(data.accepted):
-    var rejected=int(data.seq);shots_view.reject(rejected)
+    var rejected=int(data.seq);shots_view.reject(rejected);launch_trace.erase(rejected)
     local_strikes=local_strikes.filter(func(x):return int(x.action_seq)!=rejected)
     pending_bursts=pending_bursts.filter(func(x):return int(x.seq)!=rejected)
    if data.has("style"):request_ready[str(data.style)]=Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(metrics.rtt_ms))
@@ -258,18 +311,17 @@ func _process(delta:float)->void:
  _report_network()
  if not started and is_instance_valid(net_panel):net_panel.visible=not is_instance_valid(hero_grid)
  if is_instance_valid(net_panel):net_panel.size=Vector2(minf(850,VIEW.x-24),minf(590,VIEW.y-24));net_panel.position=(VIEW-net_panel.size)*.5
- if not started:queue_redraw();client_perf.work("client_process",Time.get_ticks_usec()-frame_began);return
+ if not started:
+  if scenery_view!=null:scenery_view.visible=false
+  if network_hud!=null:network_hud.visible=false
+  queue_redraw();client_perf.work("client_process",Time.get_ticks_usec()-frame_began);return
  ability_view.advance(delta)
  visual_time+=delta;motion_v85.advance(delta);skating_motion.advance(delta);actor_motion.advance(delta);actor_motion.prune(positions.keys())
  _advance_local_previews(delta)
  world_view.advance(delta)
  render_shots=world_view.shots()
- # Confirmed owned projectiles share the opponents' playback clock. Receiving
- # a latest packet must not remove them while an older world is still drawn.
- var own_shots:Array=[]
- for shot in render_shots:
-  if str(shot.owner)==my_id:own_shots.append(shot)
- shots_view.receive(own_shots,Time.get_ticks_msec()/1000.0)
+ # Owned shots use fresh authority plus a short cosmetic reconciliation.
+ shots_view.samples(Time.get_ticks_msec()/1000.0)
  _update_remote_strikes()
  for n in range(render_events.size()-1,-1,-1):
   if float(render_events[n].tick)/60.0<=world_view.render_time:
@@ -282,10 +334,10 @@ func _process(delta:float)->void:
  for shot in render_shots:
   if str(shot.owner)!=my_id and bool(shot.get("custom",false)):
    var copy:Dictionary=shot.art.duplicate(true);copy.pos=[shot.draw_pos.x,shot.draw_pos.y];copy.net_rendered=true;custom_shots.append(copy)
- for track in shots_view.tracks.values():
+ for track in shots_view.visuals(Time.get_ticks_msec()/1000.0):
   if bool(track.get("custom",false)):
    var copy:Dictionary=track.art.duplicate(true);var point=shots_view.point(track,Time.get_ticks_msec()/1000.0)
-   copy.pos=[point.x,point.y];copy.net_rendered=true;custom_shots.append(copy)
+   copy.owner=track.owner;copy.pos=[point.x,point.y];copy.net_rendered=true;custom_shots.append(copy)
  adventure.combat.projectiles=custom_shots
  var visual_pair=world_view.pair()
  for actor in positions:
@@ -308,7 +360,11 @@ func _process(delta:float)->void:
   if Input.is_action_pressed("secondary"):_attack_request("secondary")
   if Input.is_action_just_pressed("special"):_attack_request("special")
  _refresh_draw_camera()
- if terrain_cache!=null:terrain_cache.sync()
+ _sync_dash_view(delta)
+ if scenery_view!=null:scenery_view.sync()
+ if network_hud!=null:network_hud.sync(delta)
+ if terrain_cache!=null:
+  terrain_cache.z_index=-3;terrain_cache.sync()
  for n in range(effects.size()-1,-1,-1):
   effects[n].time-=delta
   if effects[n].time<=0:effects.remove_at(n)
@@ -385,13 +441,30 @@ func _physics_process(_delta:float)->void:
 func _reconcile_position(ack:int,point:Vector2)->void:
  if ack<0:return
  history=history.filter(func(f):return int(f.seq)>ack)
+ var replay_began=Time.get_ticks_usec()
+ var movement=Move.prepare(self,my_id)
  var repaired=point
- var dash_before=net_dash.get(my_id,{}).duplicate(true)
- for frame in history:repaired=Move.advance(self,my_id,repaired,Vector2(float(frame.d[0]),float(frame.d[1])))
- net_dash[my_id]=dash_before
+ for frame in history:repaired=Move.advance_prepared(self,my_id,repaired,Vector2(float(frame.d[0]),float(frame.d[1])),movement)
+ client_perf.work("prediction_replay",Time.get_ticks_usec()-replay_began)
+ metrics.replayed_inputs=history.size()
  var error=repaired-local_pos
- metrics.max_correction=maxf(float(metrics.max_correction),error.length())
- if error.length()>1:metrics.corrections+=1
+ correction_reset_reason=""
+ if not reconcile_snapshot.is_empty():
+  if not authority_point_ready:correction_reset_reason="initial_state"
+  elif int(health.get(my_id,0))<=0 and int(reconcile_snapshot.get("hp",0))>0:correction_reset_reason="respawn"
+  elif int(reconcile_snapshot.get("hp",0))<=0:correction_reset_reason="defeated" if int(health.get(my_id,0))>0 else "defeated_state"
+  elif point.distance_to(last_authority_point)>160:correction_reset_reason="authority_relocation"
+  last_authority_point=point;authority_point_ready=true
+ if correction_reset_reason.is_empty():
+  metrics.max_correction=maxf(float(metrics.max_correction),error.length())
+  if error.length()>1:metrics.corrections+=1
+ else:
+  if correction_reset_reason!="defeated_state":metrics.authority_resets=int(metrics.get("authority_resets",0))+1
+  metrics.last_authority_reset=correction_reset_reason
+  dash_view.remove(my_id)
+ if error.length()>1 and correction_reset_reason.is_empty():
+  var bucket="correction_1_8" if error.length()<8 else "correction_8_32" if error.length()<32 else "correction_32_plus"
+  metrics[bucket]=int(metrics.get(bucket,0))+1
  if error.length()>80:local_pos=repaired;local_view.reset(local_pos);pending_correction=Vector2.ZERO
  else:pending_correction=error if error.length()>.75 else Vector2.ZERO
  positions[my_id]=local_pos
@@ -399,7 +472,13 @@ func _send_channel(_id:String,data:Dictionary)->void:
  if dedicated:
   if gateway!=null:gateway.send_actor(_id,data)
   return
- action_serial+=1;var packet=data.duplicate(true);packet.seq=action_serial;packet.input_seq=sequence;packet.match_id=match_id;packet.view_tick=maxi(0,floori(world_view.render_time*60))
+ # Critical actions must not wait for the next 30 Hz movement batch.
+ if str(data.get("type","")) in ["attack","dodge","consume"] or str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
+  _flush_action_inputs()
+ action_serial+=1
+ if str(data.get("type","")) in ["attack","held_cast"]:
+  metrics.last_action={"seq":action_serial,"type":data.type,"kind":data.get("style",data.get("kind","primary")),"phase":data.get("phase",""),"angle":data.get("angle",0),"client_ms":Time.get_ticks_msec()}
+ var packet=data.duplicate(true);packet.seq=action_serial;packet.input_seq=sequence;packet.match_id=match_id;packet.view_tick=maxi(0,floori(world_view.render_time*60))
  send_net(packet)
  if str(data.get("type",""))=="attack":_preview_attack(str(data.get("style","primary")),data,action_serial)
  elif str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
@@ -408,6 +487,11 @@ func _send_channel(_id:String,data:Dictionary)->void:
    var kind=str(data.get("kind","primary"));held.context[my_id]=held.charges[my_id].duplicate(true)
    var stats:Dictionary=held.stats_for(my_id,kind);held.context.erase(my_id)
    _preview_attack(kind,data,action_serial,stats)
+func _flush_action_inputs()->void:
+ if not net_ready or frames.is_empty():return
+ send_net({"type":"input","match_id":match_id,"frames":frames,"event_ack":applied_seq})
+ frames=[]
+ metrics.action_input_flushes=int(metrics.get("action_input_flushes",0))+1
 func _broadcast(data:Dictionary)->void:
  if dedicated and gateway!=null:
   if str(data.get("type",""))=="state":gateway.snapshot(self)
@@ -415,6 +499,8 @@ func _broadcast(data:Dictionary)->void:
 func _has_open_link()->bool:return dedicated and gateway!=null or net_ready
 func _track_card_progress()->void:pass
 func _unhandled_input(event:InputEvent)->void:
+ if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_F6:
+  balanced_graphics=not balanced_graphics;_configure_rendering();get_viewport().set_input_as_handled();return
  if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_F8:
   download_performance();get_viewport().set_input_as_handled();return
  if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_F7:
@@ -426,20 +512,25 @@ func _draw()->void:
  if dedicated:return
  var draw_began=Time.get_ticks_usec()
  set_meta("fx_drawing_world",true)
+ if started:_observe_launches(shots_view.visuals(Time.get_ticks_msec()/1000.0),true)
  super._draw()
  set_meta("fx_drawing_world",false)
  client_perf.work("draw_commands",Time.get_ticks_usec()-draw_began)
  if not started:return
  draw_set_transform(media.offset(),0,Vector2.ONE*media.factor())
- # Local feedback is a muzzle flash, never an unconfirmed travelling bullet.
- for shot in shots_view.predicted:
+ # The short muzzle cue accompanies the travelling prediction.
+ for shot in shots_view.cues:
   var now=Time.get_ticks_msec()/1000.0
   var age=now-float(shot.t)
   if age<0 or age>shots_view.MUZZLE_SECONDS:continue
   var direction:Vector2=shot.v.normalized()
   var p=_local_draw_position()+direction*27-camera
   var tint=Color(str(shot.color));tint.a=.7*(1-age/shots_view.MUZZLE_SECONDS)
-  draw_arc(p,6,direction.angle()-.8,direction.angle()+.8,8,tint,2,true)
+  if selected_hero=="soccer":
+   draw_line(p-direction*15,p+direction*8,tint,4,true)
+   draw_circle(p+direction*5,8,tint)
+   draw_circle(p+direction*5,3,Color(.12,.22,.20,tint.a))
+  else:draw_arc(p,8+age*35,direction.angle()-.8,direction.angle()+.8,10,tint,3,true)
  if show_hit_geometry:
   for actor in positions:
    var ground:Vector2=local_pos if actor==my_id else remote_draw_pos.get(actor,positions[actor])
@@ -451,13 +542,6 @@ func _draw()->void:
     protected=float(info.get("invincible",0))>_render_sample_age()*1000
    if protected:draw_arc(ground-camera,23,0,TAU,32,Color("#70dfff"),3,true)
  draw_set_transform(Vector2.ZERO)
- var cpu=perf_latest.get("client_profile",{}).get("client_process",{}).get("p95_ms",0)
- var draw_ms=perf_latest.get("client_profile",{}).get("draw_commands",{}).get("p95_ms",0)
- draw_rect(Rect2(174,VIEW.y-82,minf(VIEW.x-180,1040),25),Color(0,.08,.12,.85))
- draw_string(preload("res://assets/fonts/CrossroadsUI.ttf"),Vector2(180,VIEW.y-63),"Update p95 %.1f ms • draw commands p95 %.1f ms • F8: download performance report" % [cpu,draw_ms],HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color.WHITE)
- draw_string(preload("res://assets/fonts/CrossroadsUI.ttf"),Vector2(180,VIEW.y-40),"T4.8 • RTT %d ms • sim %.2f ms • snapshot %.2f ms • input queue %d • authority %.0f Hz" % [metrics.rtt_ms,metrics.tick_ms,server_snapshot_ms,history.size(),server_hz],HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#a8ddf0"))
-
- draw_string(preload("res://assets/fonts/CrossroadsUI.ttf"),Vector2(180,VIEW.y-22),"T4.8 • remote buffer %d ms • buffer holds %d • FPS %d" % [maxf(0,world_view.latest_time-world_view.render_time)*1000,world_view.underruns,Engine.get_frames_per_second()],HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#a8ddf0"))
 
 func _effect_at_actor(effect:Dictionary)->Dictionary:
  var owner=str(effect.get("owner",""))
@@ -481,14 +565,23 @@ func _preview_attack(kind:String,data:Dictionary,seq:int,override_stats:Dictiona
  if style=="identity_strike":
   local_strikes.append({"owner":my_id,"pos":[local_pos.x,local_pos.y],"aim":[aim.x,aim.y],"visual":stats.get("visual","horns"),"range":stats.get("range",82),"time":.26,"action_seq":seq})
   predicted_actions[seq]=now+1.0
- elif style in ["projectile","ranged"]:
-  var count=clampi(int(stats.get("count",1)),1,8)
-  for n in count:
-   var direction=aim.rotated((n-(count-1)*.5)*float(stats.get("spread",0)))
-   shots_view.preview(my_id,seq,local_pos+direction*27,direction*float(stats.get("speed",420)),str(stats.get("color","#ffd985")),now,n,float(stats.get("range",480)),float(stats.get("projectile_radius",7)))
- elif style=="burst_projectile":
+
+ if style=="burst_projectile":
+  launch_trace[seq]={"seq":seq,"kind":kind,"sent_ms":Time.get_ticks_msec(),"received_ms":-1,"drawn_ms":-1}
   for n in clampi(int(stats.get("count",4)),1,5):pending_bursts.append({"seq":seq,"index":n,"at":now+n*float(stats.get("burst_interval",.1)),"aim":aim,"stats":stats})
   _advance_local_previews(0)
+ var launch_seeds=preload("res://network/projectile_recipe.gd").seeds(stats,aim,_local_draw_position(),adventure.combat,my_id)
+ if not launch_seeds.is_empty():
+  launch_trace[seq]={"seq":seq,"kind":kind,"sent_ms":Time.get_ticks_msec(),"received_ms":-1,"drawn_ms":-1}
+  while launch_trace.size()>64:launch_trace.erase(launch_trace.keys()[0])
+  metrics.release_cues=int(metrics.get("release_cues",0))+1
+  for seed in launch_seeds:
+   shots_view.preview(my_id,seq,seed.p,seed.v,seed.color,now,int(seed.index),float(seed.range),float(seed.radius),seed.art)
+   # The attack is requested after this frame's regular visual assembly. Add
+   # its first image now so even that frame does not wait for another process.
+   if seed.art.is_empty():missiles.append({"pos":seed.p,"owner":my_id,"color":seed.color})
+   else:
+    var art_seed:Dictionary=seed.art.duplicate(true);art_seed.owner=my_id;art_seed.pos=[seed.p.x,seed.p.y];art_seed.net_rendered=true;adventure.combat.projectiles.append(art_seed)
 func _advance_local_previews(delta:float)->void:
  var now=Time.get_ticks_msec()/1000.0
  for seq in predicted_actions.keys():
@@ -500,7 +593,8 @@ func _advance_local_previews(delta:float)->void:
   var burst=pending_bursts[n]
   if now<float(burst.at):continue
   var stats:Dictionary=burst.stats;var direction:Vector2=burst.aim
-  shots_view.preview(my_id,int(burst.seq),local_pos+direction*26,direction*float(stats.get("speed",480)),str(stats.get("color","#b5dc79")),now,int(burst.index),float(stats.get("range",360)),float(stats.get("projectile_radius",12)),_preview_art(stats,direction))
+  shots_view.preview(my_id,int(burst.seq),_local_draw_position()+direction*26,direction*float(stats.get("speed",480)),str(stats.get("color","#b5dc79")),now,int(burst.index),float(stats.get("range",360)),float(stats.get("projectile_radius",12)),_preview_art(stats,direction))
+  var first_image:Dictionary=_preview_art(stats,direction);first_image.owner=my_id;first_image.pos=[_local_draw_position().x+direction.x*26,_local_draw_position().y+direction.y*26];first_image.net_rendered=true;adventure.combat.projectiles.append(first_image)
   pending_bursts.remove_at(n)
 func predicted_identity_strikes()->Array:return local_strikes
 func suppress_confirmed_strike(entry:Dictionary)->bool:return str(entry.owner)==my_id and predicted_actions.has(int(entry.get("action_seq",-1)))
@@ -511,16 +605,24 @@ func object_projectile_display(shot:Dictionary,fallback:Vector2)->Vector2:
 
 func _remote_position(actor:String,_now:float)->Vector2:
  return world_view.player(actor,positions.get(actor,Vector2.ZERO))
+func _valid_state(data:Dictionary)->bool:
+ return str(data.get("match_id",match_id))==match_id
 func _buffer_state(data:Dictionary)->void:
- # Preserve EVERY snapshot for interpolation, even when only the newest state
- # is applied to gameplay/reconciliation during this frame.
- var all:Array=data.get("shots",[]).duplicate(true)
+ if not _valid_state(data):return
+ # Keep recent full snapshots for interpolation. Superseded compressed packets
+ # from a long stall are discarded by the inbox before expensive decoding.
+ var all:Array=data.get("shots",[]).duplicate()
  var custom:Array=data.get("adventure",{}).get("combat",{}).get("projectiles",[])
  for shot in custom:
   if not shot.has("net_id"):continue
   var aim=adventure.combat.vec(shot.aim)*float(shot.speed)
   all.append({"net_id":shot.net_id,"pos":shot.pos,"velocity":[aim.x,aim.y],"owner":shot.owner,"color":shot.color,"action_seq":shot.get("action_seq",-1),"shot_index":shot.get("shot_index",0),"born":float(shot.get("born_tick",0))/60.0,"custom":true,"art":shot})
  data.render_shots=all
+ var own:Array=[]
+ for shot in all:
+  if str(shot.owner)==my_id:own.append(shot)
+ _observe_launches(all,false)
+ shots_view.receive(own,Time.get_ticks_msec()/1000.0,int(data.server_tick))
  world_view.receive(data)
 func _preview_art(stats:Dictionary,aim:Vector2)->Dictionary:
  return {"pos":[0,0],"aim":[aim.x,aim.y],"base_aim":[aim.x,aim.y],"origin":[0,0],"radius":float(stats.get("projectile_radius",12)),"style":"pellet","stats":stats.duplicate(true),"color":str(stats.get("color","#edf7ff")),"distance":0.0,"speed":float(stats.get("speed",480))}
@@ -625,7 +727,7 @@ func receive_events(data:Dictionary)->void:
 func _report_network()->void:
  if not OS.has_feature("web") or Time.get_ticks_msec()<report_at:return
  report_at=Time.get_ticks_msec()+1000
- var sample={"build":"T4.8","protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
+ var sample={"build":"T4.13","protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
  sample.client_profile=client_perf.summary()
  sample.long_frames_50ms=client_perf.long_frames
  sample.active_fps_cap=Engine.max_fps
@@ -637,6 +739,31 @@ func _report_network()->void:
  sample.firing=mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
  sample.pending_packets=metrics.get("pending_packets",0)
  sample.poll_budget_yields=metrics.get("poll_budget_yields",0)
+ sample.coalesced_client_snapshots=metrics.get("coalesced_client_snapshots",0)
+ sample.replayed_inputs=metrics.get("replayed_inputs",0)
+ sample.render_scale_mode=get_tree().root.content_scale_mode
+ sample.mobile_aim=[mobile.aim.x,mobile.aim.y]
+ sample.mobile_attacking=mobile.attacking
+ sample.last_action=metrics.get("last_action",{})
+ sample.release_cues=metrics.get("release_cues",0)
+ sample.action_input_flushes=metrics.get("action_input_flushes",0)
+ sample.memory_bytes=int(Performance.get_monitor(Performance.MEMORY_STATIC))
+ sample.video_memory_bytes=int(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
+ sample.texture_memory_bytes=int(Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED))
+ sample.render_objects=int(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
+ sample.scenery_chunks=scenery_view.chunks.size() if scenery_view!=null else 0
+ sample.dash_afterimages=dash_view.records.size()
+ sample.dash_samples=dash_view.emitted
+ sample.dash_sample_owners=dash_view.owners.duplicate()
+ sample.hud_rebuilds=network_hud.rebuilds if network_hud!=null else 0
+ sample.authority_resets=metrics.get("authority_resets",0)
+ sample.last_authority_reset=metrics.get("last_authority_reset","")
+ sample.correction_histogram=[metrics.get("correction_1_8",0),metrics.get("correction_8_32",0),metrics.get("correction_32_plus",0)]
+ sample.terrain_chunks=terrain_cache.chunks.size() if terrain_cache!=null else 0
+ sample.mobile_controls=mobile.enabled
+ sample.graphics_mode="balanced" if balanced_graphics else "native"
+ var render_size=get_tree().root.get_texture().get_size()
+ sample.render_size=[render_size.x,render_size.y]
  sample.server_build=server_build
  sample.gateway_rtt_ms=metrics.get("gateway_rtt_ms",-1)
  sample.snapshot_interarrival_ms=world_view.arrival_age*1000
@@ -653,20 +780,26 @@ func _report_network()->void:
  sample.local_view_offset_px=local_pos.distance_to(_local_draw_position())
  sample.walking_actors={}
  for actor in positions:sample.walking_actors[str(actor)]=_actor_walking(str(actor))
- sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
+ sample.action_ack_wait_ms=action_wait_ms
+ sample.launch_received_ms=_delay_summary(launch_received_delays)
+ sample.launch_drawn_ms=_delay_summary(launch_drawn_delays)
+ sample.ice_walls=ice_walls.size()
+ sample.oldest_wall_remaining=0.0
+ for wall in ice_walls:sample.oldest_wall_remaining=maxf(sample.oldest_wall_remaining,float(wall.time))
+ sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
- JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'T4.8',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
- JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");",true)
+ JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'T4.13',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
+ JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
 
 func profile_work(kind:String,elapsed:int)->void:
  if not dedicated:client_perf.work(kind,elapsed)
 func download_performance()->void:
  if not OS.has_feature("web"):return
  report_downloads+=1
- JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'T4.8',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='FX_T48_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
+ JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'T4.13',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='FX_T413_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
 
 func _actor_walking(id:String)->bool:
- if id==my_id:return super._actor_walking(id)
+ if id==my_id:return float(net_dash.get(id,{}).get("time",0))>0 or super._actor_walking(id)
  return actor_motion.walking(id)
 func local_cosmetic()->Dictionary:
  # Calendar/reward selection is static during this isolated arena test. Avoid
@@ -721,3 +854,49 @@ func _aged_draw_record(record:Dictionary,elapsed:float)->Dictionary:
  for key in ["age","elapsed"]:
   if copy.has(key):copy[key]=float(copy[key])+elapsed
  return copy
+
+func _sync_dash_view(delta:float)->void:
+ dash_view.advance(delta)
+ var pair=world_view.pair()
+ for actor in positions:
+  var active=false
+  if actor==my_id:active=float(net_dash.get(actor,{}).get("time",0))>0
+  elif not pair.is_empty():
+   var sample:Dictionary=pair[0];var info:Dictionary=sample.data.get("players",{}).get(actor,{})
+   var dash:Array=info.get("dash",[0,0,0])
+   active=float(dash[0])>maxf(0,world_view.render_time-float(sample.t))
+  var ground=_local_draw_position() if actor==my_id else remote_draw_pos.get(actor,positions[actor])
+  dash_view.sample(str(actor),str(hero_ids.get(actor,"ram")),ground,active and presentation.page.is_empty() and int(health.get(actor,0))>0 and adventure.combat.visible_owner(str(actor)),adventure.combat.v110.resize(str(actor),Rect2(Vector2(-28,-42),Vector2(56,64))))
+ trails.clear()
+ for ghost in dash_view.records:
+  trails.append({"pos":ghost.point,"time":ghost.left,"hero":ghost.hero,"rect":ghost.rect})
+
+func _draw_world()->void:
+ if dedicated or mode!="arena" or spectating() or scenery_view==null:
+  super._draw_world();return
+ adventure.polish.draw_world(self,camera)
+ motion_v85.draw_trails(self,camera)
+
+func _observe_launches(shots:Array,drawn:bool)->void:
+ if dedicated:return
+ var now=Time.get_ticks_msec()
+ for shot in shots:
+  if str(shot.get("owner",""))!=my_id:continue
+  var seq=int(shot.get("action_seq",shot.get("seq",-1)))
+  if not launch_trace.has(seq):continue
+  var record:Dictionary=launch_trace[seq]
+  var key="drawn_ms" if drawn else "received_ms"
+  if int(record[key])>=0:continue
+  record[key]=now
+  var samples:Array=launch_drawn_delays if drawn else launch_received_delays
+  samples.append(maxi(0,now-int(record.sent_ms)))
+  if samples.size()>64:samples.pop_front()
+  metrics.last_launch=record.duplicate()
+func _delay_summary(samples:Array)->Dictionary:
+ if samples.is_empty():return {"samples":0}
+ var ordered=samples.duplicate();ordered.sort()
+ return {"samples":ordered.size(),"median":ordered[ordered.size()/2],"p95":ordered[mini(ordered.size()-1,int(ordered.size()*.95))],"max":ordered[-1]}
+
+func visual_actor(key:String,point:Vector2)->Vector2:
+ if not dedicated and key.begins_with("e:"):return world_view.enemy(int(key.substr(2)),point)
+ return super.visual_actor(key,point)

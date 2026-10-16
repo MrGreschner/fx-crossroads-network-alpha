@@ -163,6 +163,11 @@ func receive(key:int,data:Dictionary)->void:
   if not room.members.is_empty():lobby(str(identity.room))
   return
  if kind=="ping":send(key,{"type":"pong","sent":int(data.get("sent",0))});return
+ if kind=="arena_choice":
+  if room.host!=id or g.started:return
+  var chosen=str(data.get("arena_map",""))
+  if chosen not in ["sand","crossroads"]:return
+  g.arena_map=chosen;g._sync_arena_pickers();lobby(str(identity.room));return
  if kind=="capacity":
   if room.host!=id:fail(key,"Only the host can change room capacity.");return
   if g.started:fail(key,"Capacity can be changed before the match starts.");return
@@ -180,7 +185,9 @@ func receive(key:int,data:Dictionary)->void:
   for member in room.members:
    g._add_player(str(member),g.positions.size());g.lobby_heroes[member]=room.members[member].hero
   g.spectator_host=true;g.bot_count=0;g.no_items_picker.button_pressed=true
-  g._start_match();g.start_countdown=0;g.server_inputs.clear();g.server_input_credit.clear();g.server_actions.clear();g.input_ack.clear();g.net_dash.clear();g.authority_tick=0;g.position_samples.clear();g.max_input_depth=0
+  g._start_match();g.start_countdown=0;
+  if g.arena_map=="crossroads":g.arena_world.test_enemies()
+  g.server_inputs.clear();g.server_input_credit.clear();g.server_actions.clear();g.input_ack.clear();g.net_dash.clear();g.authority_tick=0;g.position_samples.clear();g.max_input_depth=0
   room.events=[];room.event_seq=0
   for member in room.members:g.server_inputs[member]=[];g.server_actions[member]=[];g.input_ack[member]=0;identities[member].last_seq=0;identities[member].action_seq=0;identities[member].event_ack=0;identities[member].event_sent=0
   broadcast_game(g,start_packet(g));snapshot(g);return
@@ -259,6 +266,7 @@ func join(key:int,data:Dictionary)->void:
    code=Crypto.new().generate_random_bytes(4).hex_encode().left(6).to_upper()
    var g=Arena.new();g.gateway=self;add_child(g)
    var seats=clampi(int(data.get("seats",2)),2,8);g.arena_seats=seats
+   g.arena_map="crossroads" if str(data.get("arena_map","sand"))=="crossroads" else "sand";g._sync_arena_pickers()
    rooms[code]={"game":g,"members":{},"host":"","seats":seats,"events":[],"event_seq":0}
   if not rooms.has(code):fail(key,"Room not found.");return
   var room:Dictionary=rooms[code]
@@ -271,14 +279,14 @@ func join(key:int,data:Dictionary)->void:
   room.members[id]={"id":id,"name":str(data.get("name","Tester")).left(24),"hero":hero}
   if room.host.is_empty():room.host=id
  peers[key].actor=id;identities[id].connection=key;identities[id].event_sent=int(identities[id].get("event_ack",0));rooms[code].game.room_paused=false
- send(key,{"type":"welcome","protocol":PROTOCOL,"build":"T4.12","id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
+ send(key,{"type":"welcome","protocol":PROTOCOL,"build":"T4.13","id":id,"room":code,"token":identities[id].token,"host":rooms[code].host==id})
  if rooms[code].game.started:
   var g:Node=rooms[code].game;g.server_inputs[id]=[];g.server_actions[id]=[]
   send(key,start_packet(g));send_state(key,g,id)
  else:lobby(code)
 func lobby(code:String)->void:
  var room:Dictionary=rooms[code]
- for id in room.members:send_actor(id,{"type":"lobby","host":room.host,"seats":room.seats,"members":room.members.values()})
+ for id in room.members:send_actor(id,{"type":"lobby","host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"members":room.members.values()})
 func room_for(g:Node)->Dictionary:
  for room in rooms.values():
   if room.game==g:return room
@@ -289,19 +297,27 @@ func broadcast_game(g:Node,data:Dictionary)->void:
  for id in room.get("members",{}):send_actor(str(id),data)
 func execute_action(g:Node,id:String,data:Dictionary)->void:
  var began=Time.get_ticks_msec()
+ var custom_before=g.adventure.combat.projectiles.size()
+ var born:Array=[]
  var before=g.missiles.size();var style=str(data.get("style","primary"));var previous=int(g.cooldown_at.get(id,{}).get(style,0))
  var dodge_before=int(g.dodge_at.get(id,0))
- g.set_meta("fx_action_seq",int(data.seq))
+ g.set_meta("fx_action_seq",int(data.seq));g.set_meta("fx_shot_index",0)
  # Rewind targets for ordinary instant melee only. Projectile simulation stays in the present.
  var restore=g.rewind_melee_targets(id,data)
  g._packet(id,data)
  g.restore_targets(restore);g.remove_meta("fx_action_seq")
  if str(data.type)=="dodge" and int(g.dodge_at.get(id,0))>dodge_before:
   var d=data.get("direction",[1,0]);g.net_dash[id]={"time":.26,"direction":Vector2(float(d[0]),float(d[1])).normalized()}
- for n in range(before,g.missiles.size()):g.missiles[n].action_seq=int(data.seq);g.missiles[n].shot_index=n-before
+ for n in range(before,g.missiles.size()):
+  var shot:Dictionary=g.missiles[n];shot.action_seq=int(data.seq);shot.shot_index=n-before
+  if not shot.has("net_id"):g.projectile_serial+=1;shot.net_id=g.projectile_serial;shot.born_tick=g.authority_tick-1
+  born.append(int(shot.shot_index))
+ for n in range(custom_before,g.adventure.combat.projectiles.size()):
+  var shot:Dictionary=g.adventure.combat.projectiles[n]
+  if str(shot.get("owner",""))==id:born.append(int(shot.get("shot_index",0)))
  var after=int(g.cooldown_at.get(id,{}).get(style,0))
  var accepted=after>previous or str(data.type)!="attack"
- send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":style,"accepted":accepted,"reason":"" if accepted else "cooldown_or_state","remaining":maxi(0,after-began),"wait_ms":maxi(0,began-int(data.get("received_ms",began)))})
+ send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":style,"accepted":accepted,"born_indices":born,"tick":g.authority_tick,"reason":"" if accepted else "cooldown_or_state","remaining":maxi(0,after-began),"wait_ms":maxi(0,began-int(data.get("received_ms",began)))})
 func prune_idle(value:Variant)->Variant:
  # Preserve all active hero mechanics, while omitting dormant component containers.
  if value is Array:return value
