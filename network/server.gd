@@ -36,6 +36,9 @@ var active_ms=0.0
 var previous_active=0
 var last_poll_ms=0
 func _ready()->void:
+ var arena_script:Script=load("res://network/arena.gd")
+ if arena_script==null or not arena_script.can_instantiate():
+  push_error("Arena cannot start. Check missing or outdated network dependencies in the server upload.");get_tree().quit(1);return
  get_tree().root.set_meta("fx_dedicated_server",true);get_tree().root.set_meta("fx_dev_match",true)
  Engine.physics_ticks_per_second=60
  Engine.max_fps=60 # Bound headless socket polling; do not busy-spin on shared CPU.

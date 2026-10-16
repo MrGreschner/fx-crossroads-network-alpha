@@ -1888,15 +1888,19 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 		"state":
 			if role != "guest" or remote_id != host_id: return
 			if not match_id.is_empty() and not str(data.get("match_id",match_id)).is_empty() and str(data.get("match_id",match_id))!=match_id:return
+			var receive_began:=Time.get_ticks_usec()
 			dev_magic.receive(data.get("dev_magic",{}))
 			descent.receive(data.get("descent",{}))
 			pvp_scores=data.get("pvp_scores",{});contributions=data.get("contributions",{});downed=data.get("downed",{});results_reason=str(data.get("results",""));status_label.text=str(data.get("notice",status_label.text))
 			arena_world.receive(data.get("arena_world",{}))
 			match_id=str(data.get("match_id",match_id));match_party_size=int(data.get("party_size",match_party_size));ai_difficulty=bots.difficulty(data.get("ai_difficulty",ai_difficulty));bot_count=clampi(int(data.get("bots",bot_count)),0,3);arena_random=bool(data.get("arena_random",arena_random));arena_no_items=bool(data.get("arena_no_items",arena_no_items));arena_records=data.get("arena_records",{});arena_outcomes=data.get("arena_outcomes",{});defense_cleared_wave=int(data.get("defense_cleared_wave",0))
+			_profile_section("snapshot_aux",receive_began);receive_began=Time.get_ticks_usec()
 			adventure.receive(data.get("adventure",{}))
+			_profile_section("snapshot_adventure",receive_began);receive_began=Time.get_ticks_usec()
 			custom_party.receive(data.get("studio",{}))
 			if mode=="battlegrounds":battlegrounds.receive(data.get("battlegrounds",{}))
 			if mode=="defense":north_gate.receive(data.get("north_gate",{}))
+			_profile_section("snapshot_custom",receive_began);receive_began=Time.get_ticks_usec()
 			var players: Dictionary = data.get("players",{})
 			for id in players:
 				var info: Dictionary = players[id]
@@ -1923,6 +1927,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				if str(id)!=my_id and info.has("build"):legacy.builds[str(id)]=legacy.sanitize_build(info.build)
 				health[id]=int(info.get("hp",100));xp[id]=int(info.get("xp",0));gold[id]=int(info.get("gold",0));levels[id]=int(info.get("level",1));kills[id]=int(info.get("kills",0));teams[id]=int(info.get("team",0));hero_ids[id]=str(info.get("hero","ram"));inventory[id]=info.get("items",[]);attack_branch[id]=str(info.get("branch",""));mastery_choice[id]=str(info.get("mastery",""));shield_until[id]=Time.get_ticks_msec()+int(info.get("shield",0));shield_reduction[id]=float(info.get("shield_reduction",.75));invincible_until[id]=Time.get_ticks_msec()+int(info.get("invincible",0));haste_until[id]=Time.get_ticks_msec()+int(info.get("haste",0));item_haste_scale[id]=float(info.get("haste_scale",1.35));cooldown_remaining[id]=info.get("cooldowns",{})
 			if hero_ids.has(my_id):selected_hero=str(hero_ids[my_id])
+			_profile_section("snapshot_players",receive_began);receive_began=Time.get_ticks_usec()
 			opponents.clear()
 			for foe in data.get("enemies",[]):
 				foes_from_packet(foe)
@@ -1943,6 +1948,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			if mode=="descent" and int(data.get("floor",1))!=floor_number:
 				floor_transition=1.1;descent.cleared(maxi(0,int(data.get("floor",1))-1))
 			wave=int(data.get("wave",0));floor_number=int(data.get("floor",1));run_time=float(data.get("timer",0));gate_hp=float(data.get("gate",550));upgrade_level=data.get("upgrades",upgrade_level)
+			_profile_section("snapshot_entities",receive_began);receive_began=Time.get_ticks_usec()
 			_track_card_progress()
 			if not results_reason.is_empty():legacy_results();presentation.results(adventure_won(results_reason) or mode=="arena" and str(arena_outcomes.get(my_id,"draw"))=="win")
 			var was_active := started
@@ -1950,6 +1956,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			if was_active and not started:
 				shop_open="";status_label.text=results_reason
 				if "cleared" in results_reason.to_lower() or "restored" in results_reason.to_lower(): journey.won(realm_id);provisions.complete_adventure()
+			_profile_section("snapshot_finalize",receive_began)
 		"choice":
 			if role=="host": _apply_choice(remote_id,str(data.get("value","")))
 		"team":
@@ -2153,7 +2160,9 @@ func _draw() -> void:
 	arena_world.draw()
 	_profile_section("world_draw",section_began)
 	section_began=Time.get_ticks_usec()
-	for trail in trails: _sprite(str(hero_ids.get(my_id,selected_hero))+"_walk1",trail["pos"]-Vector2(28,42),Vector2(56,64),Color(0.7,0.9,1.0,float(trail["time"])*1.8))
+	for trail in trails:
+		var trail_rect:Rect2=trail.get("rect",Rect2(Vector2(-28,-42),Vector2(56,64)))
+		_sprite(str(trail.get("hero",hero_ids.get(my_id,selected_hero)))+"_walk1",trail["pos"]+trail_rect.position,trail_rect.size,Color(0.7,0.9,1.0,float(trail["time"])*1.8))
 	for guard in guards:
 		var sprite := str(guard.get("sprite","mini_basketball")) if str(guard["type"]) == "summoned" else "guard_"+str(guard["type"])
 		_sprite(sprite,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-Vector2(24,44),Vector2(48,56))
@@ -2181,7 +2190,8 @@ func _draw() -> void:
 		var hp_y:float=-size.y*.7-8 if str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
 		if not (adventure.school.active and bool(foe.boss)):draw_rect(Rect2(pos+Vector2(-23,hp_y),Vector2(46,5)),Color("#382936"))
 		if not (adventure.school.active and bool(foe.boss)):draw_rect(Rect2(pos+Vector2(-23,hp_y),Vector2(46*clampf(float(foe["hp"])/float(foe["max_hp"]),0,1),5)),Color("#ee7c77"))
-	for missile in missiles: draw_circle(missile["pos"]-camera,7,Color(str(missile.get("color","#ffd985"))) if str(missile["owner"]) != "enemy" else Color("#ed7a92"))
+	for missile in missiles:
+		if Rect2(camera-Vector2(12,12),VIEW+Vector2(24,24)).has_point(missile.pos):draw_circle(missile["pos"]-camera,7,Color(str(missile.get("color","#ffd985"))) if str(missile["owner"]) != "enemy" else Color("#ed7a92"))
 	for slot in roster.size():
 		var player: Dictionary = roster[slot];var id := str(player.get("id",""))
 		if spectator_supported() and spectator_host and id==host_id:continue
