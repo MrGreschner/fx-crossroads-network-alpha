@@ -1,50 +1,52 @@
-# FX Crossroads — Alpha T4.16
+# FX Crossroads — Network Alpha T4.17
 
-Update BOTH the itch.io client and the existing Render game service. This is a separate networking alpha, not the v169 main-game release. Do not replace the main-game page or merge the two projects yet.
+T4.17 is ready for installation and the next school playtest. Update BOTH the networking alpha on itch.io and its existing Render service. This is separate from the v169 main game; keep that game and its public page unchanged.
 
-## What changed
+## Changes
 
-- Auto graphics keeps the same arena view, world coordinates and input layout while lowering raster resolution after sustained slow frames: 100% → 85% → 70%. At 70%, a 1280×720 view renders at 896×504, about 51% fewer game pixels. It does not reduce simulation frequency, projectile visibility, hitboxes, player counts or damage. It resets for a new match, retains its tier through a reconnect and does not oscillate up/down during a match. F6 switches between Auto and Full; Auto is the normal choice for the student lab with integrated graphics. Lower resolution can soften text and sprites.
-- A sustained state gap of 750 ms pauses further local prediction, clears obsolete predicted actions and cancels held casts. A clear connection-delay message appears. Fresh authoritative state restarts the presentation timeline. An open socket receiving no state for over four seconds is closed so the existing resume flow can reconnect; this does not guarantee recovery from a complete network outage.
-- Large bursts keep the latest full state before decompression. Reliable control packets/events are retained, and normal interpolation still uses a short history. The gateway also keeps less unsent snapshot backlog.
-- Reports now retain client rendering resolution, quality changes, state stalls, worst state gap, reconnect attempts, authority work/encoding times, gateway loop timing, queue size and CPU measurements when the platform provides them. The dashboard deduplicates overlapping sample batches before computing its medians.
-- Client, server welcome, `/health`, downloaded F8 reports and combined report exports identify **T4.16**. Combined database downloads are named `FX_T416_match_….json`. Existing historical reports remain in the database with their original per-sample versions.
-- Prior movement, melee, projectile, mobile input, summon damage and goalie-wall fixes remain included. Reporting is skipped when the server explicitly says no database is configured; F8 still works locally.
+- Post-match results now offer **Back to T4 menu • Host / Join**, replacing the town and legacy-party exits in this alpha. This leaves the finished room and clears its reconnect state, while retaining the server address and display name. Students can host or join again without refreshing the browser. Other alpha town-exit shortcuts also return to this menu.
 
-## 1. Update the server using GitHub online
+- Repeated floor tiles merge into larger repeating rectangles. Tile scale, artwork, flowers and collision remain consistent. The renderer no longer submits a separate floor quad for every tile. In an isolated 1280×720 plain-floor comparison, floor quads fell from 384 to 6; uniform forest with flowers fell from 401 to 23, with draw calls falling from 35 to 12. Mixed grass/forest paths fell from 399 to 159 quads. These are terrain measurements, not reductions for the entire frame or promises of a particular FPS.
+- Reconciliation applies the complete server position repair to prediction immediately. Small repairs retain a short, decaying visual offset for the character and camera, instead of modifying prediction in several partial steps. This avoids later snapshots correcting an unfinished repair. Large repairs, respawns and teleports reset the view. Decay follows render time rather than frame count. Hit detection remains server-owned.
+- The render shell only reapplies viewport dimensions when size or quality actually changes. Existing Auto resolution tiers and F6 Full override remain available.
+- Reports add browser animation-frame gaps, supported long-task measurements, visibility history, client frame gaps, visual correction size, floor geometry counts and viewport resize counts. The dashboard exposes these fields. A state stall coinciding with a large client frame gap is distinguished from a state-delivery gap during regular frame updates. These timing contexts do not prove whether a connection, browser, driver or school network caused a delay.
+- Client, server, dashboard, health response and newly downloaded combined match reports use T4.17 / FX_T417. Existing historical reports retain their original versions. No database reset or SQL migration is required.
 
-1. Download and extract `FX_Crossroads_Network_Alpha_T4_16_Server_Update.zip`.
-2. Open the extracted **UPLOAD_TO_GITHUB** folder. Its contents include `network`, `network_service`, `scripts`, `assets`, `web`, `project.godot` and `Dockerfile.network`.
-3. Open your existing server repository on GitHub at its **top level**. Choose **Add file → Upload files**.
-4. Drag the **contents inside UPLOAD_TO_GITHUB** into that upload page. Keep the folder structure. Do not upload the ZIP itself or create an extra `UPLOAD_TO_GITHUB` folder inside the repository. Do not delete the existing project folders; these files replace/add only the required paths.
-5. Commit the update to the branch used by Render. This is a cumulative update with 67 runtime files, including the previously missing network dependencies and the ground-effect atlas required by the newer client/server code.
-6. In the existing Render game service choose **Manual Deploy → Deploy latest commit**, unless its automatic deployment has already completed successfully.
-7. Open `https://YOUR-EXISTING-SERVICE/health`. Confirm **ready: true** and **build: T4.16**. Also check that reporting remains configured/ready. A filename or manifest in GitHub alone does not prove that Render deployed it.
+## Install the server update
 
-Keep the existing service, paid instance, database, `DATABASE_URL`, report admin password and signing secret. No new service, database reset or SQL migration is required. The Dockerfile path remains `Dockerfile.network`; the established application path and server address stay the same.
+1. Download and extract `FX_Crossroads_Network_Alpha_T4_17_Server_Update.zip`.
+2. Open `UPLOAD_TO_GITHUB`. Upload the CONTENTS of that folder into the ROOT of the existing GitHub server repository, preserving the `network`, `network_service`, `scripts`, `web` and `assets` paths. Do not upload the ZIP or create an `UPLOAD_TO_GITHUB` folder in the repository. Keep existing files outside the patch.
+3. Commit the uploaded changes. In the existing Render game service, choose **Manual Deploy → Deploy latest commit** if automatic deployment does not start.
+4. Keep the current service, paid instance, database and environment variables. The Dockerfile remains `Dockerfile.network`.
+5. After deployment succeeds, check [server health](https://fx-crossroads-network-alpha.onrender.com/health). It should report `ready: true` and `build: T4.17`.
 
-The server update was applied to a clean local T4.13 source project, imported successfully and exercised in eight-player combat. The deployment still needs to complete successfully on your actual Render service.
+The patch contains 75 runtime/configuration files plus a file-hash manifest and this guide. It includes the earlier T4.16 dependencies, and was applied locally to a clean T4.13 project for the final server test. The hosted Render deployment must still be performed on your account.
 
-## 2. Update the itch.io alpha
+## Install the itch.io alpha
 
-Upload `FX_Crossroads_Network_Alpha_T4_16_Web.zip` to the EXISTING networking alpha page, replacing its old Web ZIP. Keep it configured as an HTML/browser game with the existing fullscreen/mobile options. The ZIP contains `index.html` at its root.
+Upload `FX_Crossroads_Network_Alpha_T4_17_Web.zip` to the existing networking alpha page, replacing the previous Web build. Keep it configured as an HTML game. `index.html` is at the ZIP root. Include the complete ZIP: the new `frame_timing.js` file is required alongside `reports.js` and the engine files.
 
-Reload all test devices after both deployments. The lobby should say **Alpha T4.16**; the in-game diagnostics should say **T4.16 • server T4.16**. If the server still says T4.13, the Render update has not taken effect. Hold off on the test until both labels match.
+Reload the game on every device. The lobby should say **T4.17**, and in-game diagnostics should say **T4.17 • server T4.17**. Do not compare results until both labels match.
 
-The editable source ZIP contains the entire project if you want to inspect or export it in Godot 4.5.1. It is not the ZIP to upload to itch.io.
+The editable source ZIP is for Godot 4.5.1 development and future exports. It is not the itch.io upload. The Web package uses the same Godot 4.5.1 Web engine as T4.16 with the newly exported project pack and updated page/scripts.
 
 ## Next school test
 
-Use the lab without dedicated graphics again, leave F6 on Auto and try 2 players followed by 8. Let the match run for a few minutes so Auto has time to adjust. Note which computers still feel slow and whether the issue is low frame rate, delayed attacks or a visible connection-recovery message. If possible, keep the teacher's RTX computer in the same match as a comparison.
+Use the same integrated-graphics lab and keep the teacher's RTX computer as a comparison. Leave F6 on **Auto**. Run a two-player match, then an eight-player match for at least three minutes each. Keep the hero selection as close as possible to the T4.16 test: two Nullweavers, Robot, Magnet, Twister Mage, Garrick, Dawnblade and Goaltender for eight players.
 
-The automatic database reports remain the main evidence. Download the combined match JSON after the test; F8 is a backup if the database is unavailable. A school-wide routing or network congestion problem may still affect all players even if rendering improves.
+Keep tabs visible and devices awake. Include ordinary movement, dashes, melee and ranged attacks. Note whether a problem is low FPS, character/camera snapping, delayed attacks or a recovery message. Download the combined match report from the dashboard after each test. Database reports remain the primary evidence; F8 is a backup.
 
 ## Validation and limits
 
-- Existing local network suite passed: combat, all 80 heroes/240 ability calls, projectile families, movement/collision, mobile summon melee, local prediction, world buffering, latency/jitter, reconnect, 2/4/8-player load, Gladiator enemies, soccer movement and goalie wall expiry.
-- New budget/recovery checks passed. Browser checks verified fixed logical view and accurate mouse/touch input at 100%, 85% and 70% raster resolution; native mobile room-code entry and real join/start also passed.
-- A real exported Web client with seven network peers passed an eight-player match and recovered the same identity after a six-second simulated loss of state snapshots. This test used a local software renderer, not an Intel UHD 630 school PC.
-- The cumulative patch applied to a clean T4.13 project passed an eight-player, 60-second local combat run without unexpected disconnects. This is a short regression/load check, not a production-duration soak test.
-- SQL-backed ingestion/export and T4.16 report naming passed, including retention of the new correlated diagnostic fields. No changes to the school's real database were made here.
+- Forty local regression checks passed across the run logs: combat, 80-hero ability coverage, projectile roster, collision, prediction, prepared movement, dash replay, local/remote presentation, latency/jitter, real Godot clients, reconnect, gateway, 2/4/8-player load, goalie expiry, Gladiator enemies and soccer travel, plus the new reconciliation regression.
+- New reconciliation checks verify immediate prediction repair, continuity of the visual position, no repeated correction for identical later snapshots, frame-rate-independent smoothing, teleport handling and both stall timing contexts.
+- Exported-browser checks passed for terrain coverage and original/merged pixel comparisons in six scenarios. Terrain comparisons exclude the unrelated Student/Teacher overlay in the top 40 pixels. Mouse and touch mapping passed at 100%, 85% and 70% raster resolution.
+- Native mobile text-entry emulation passed independent fields, room-code limits, resizing, real server join and hiding inputs during play. Physical iOS/Android keyboard appearance still requires a real-device check.
+- One real exported browser with seven network peers passed eight-player combat and a six-second forced loss of state snapshots, recovering the same player identity and match. This used software rendering, not a physical school Intel GPU.
+- Browser timing captured an intentionally introduced 180 ms main-thread long task and its frame gap.
+- SQL-backed ingestion/export retained the new diagnostic fields, matching T4.17 release labels and the FX_T417 match filename.
+- The cumulative patch on a clean older server project passed eight-player combat for 60 seconds: 1,202 state updates per client, no reported errors, no unexpected disconnects, all clients dealt damage, local RTT p95 18.3 ms and snapshot-gap p95 54.3 ms. One normal completed-round restart occurred; this is not a server restart.
 
-These checks verify implementation and local recovery. They do not establish a particular FPS or latency on the school's devices or network. The next on-site test is required before calling the alpha finalized.
+- A focused post-match regression passed: the new result button closes results without a scene/browser reload, clears the old room and reconnect state, preserves address/name, and allows both Host and Join to create fresh connections.
+
+These checks establish local functionality and package compatibility. They do not establish 60 FPS, eliminate every correction, or reproduce the school's hardware and network. T4.17 still needs the next on-site test before the alpha is finalized or merged into v169.

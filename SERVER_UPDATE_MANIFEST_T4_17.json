@@ -1,0 +1,311 @@
+{
+  "build": "T4.17",
+  "protocol": 3,
+  "report_schema": 2,
+  "requires_client": "T4.17 for merged terrain, isolated visual correction smoothing and correlated browser timing",
+  "base": "Cumulative patch for existing T4.13\u2013T4.16 server repositories; keep existing assets and database configuration.",
+  "deployment": "Upload CONTENTS of UPLOAD_TO_GITHUB into existing repository root; commit; Render Deploy latest commit; verify /health ready true and build T4.17. No database reset.",
+  "files": [
+    {
+      "path": "network/ability_view.gd",
+      "sha256": "dd8d408652be96fe516342cb5f9fc892330bab98a0978c32bd1155706b342d0e"
+    },
+    {
+      "path": "network/ability_view.gd.uid",
+      "sha256": "32382f40cb0adb93bf8de0b92ffa9dca5ea9be76acacaed0104416970a4e321c"
+    },
+    {
+      "path": "network/actor_motion.gd",
+      "sha256": "2490cde567a315d5c3cf6606029274f82551b7e2941c16c7a562cbb967fcd070"
+    },
+    {
+      "path": "network/actor_motion.gd.uid",
+      "sha256": "ec93726458c5061467a05813383f7393300e7ab4f26418cf7ce1236a1f55b282"
+    },
+    {
+      "path": "network/arena.gd",
+      "sha256": "ddce7371443e056c041a94a4f96002105ae23856a2fab6e26bf266d9116f3532"
+    },
+    {
+      "path": "network/arena.gd.uid",
+      "sha256": "facc2b18624b27534e1ad803b0932013e3c4203f1e42bff7e66846635a1313b8"
+    },
+    {
+      "path": "network/client.tscn",
+      "sha256": "602ff734b9033f3874b08110a330b849be8447f7d159e67c9867f8f3970ec16e"
+    },
+    {
+      "path": "network/client_shell.gd",
+      "sha256": "44eeeaa8b5ad19221b1fd751e6856e45ad497afdb12da09ad6ec29692a5ea3a1"
+    },
+    {
+      "path": "network/client_shell.gd.uid",
+      "sha256": "041c53df36d8a9e96107c6b4aac8aa294b9c87faf022db676f1dbb494734d231"
+    },
+    {
+      "path": "network/dash_view.gd",
+      "sha256": "2d6e1be8cd24833d003c3e1fabf74607eb1b867e7d92d991cfd9ac95d5475605"
+    },
+    {
+      "path": "network/dash_view.gd.uid",
+      "sha256": "76573df1999cb38a26b71379bda4a4e3d124bae23c962fab415bc5d3f82a6e16"
+    },
+    {
+      "path": "network/diagnostic_hud.gd",
+      "sha256": "4a46ef5d767b4a09532782472a40e007621e1405dee2b893d0a5f11c800a97c5"
+    },
+    {
+      "path": "network/diagnostic_hud.gd.uid",
+      "sha256": "7a71c96b3c589e1ee7a5a3ef4d395f38f327c34fc28b39da6209d79028ac976c"
+    },
+    {
+      "path": "network/effect_anchors.gd",
+      "sha256": "7aba1c7fc39c9c169c9da4ad9e6c22246aeb8e13ff3bd1b88a50c967c36efbdb"
+    },
+    {
+      "path": "network/effect_anchors.gd.uid",
+      "sha256": "c61ae3eabbacc58261a9e8f48d10b28a6c648a980cf7564a1f31df0e52c55e4b"
+    },
+    {
+      "path": "network/ground_art.gd",
+      "sha256": "6ca4527aeeee2489a73db719a02165fbb0cef73324d4bbba0ac87ee173af7830"
+    },
+    {
+      "path": "network/ground_art.gd.uid",
+      "sha256": "46bfbf34fd5726143e7d02fc817ecd8ad9c5e41765b7685185c286549e4ecfbe"
+    },
+    {
+      "path": "network/local_view.gd",
+      "sha256": "a03eb14d2548295f9718e788786293727645d507af53756c286026cb973e450f"
+    },
+    {
+      "path": "network/local_view.gd.uid",
+      "sha256": "e0788b0c6f521b06fd2d7ef5ea6c8e5b4390ac1342cfba92f916df226f65f873"
+    },
+    {
+      "path": "network/motion_view.gd",
+      "sha256": "89f5ac61b26f9693c06f2c50010fa3fd50dfc9b9e86647944d37516ef2425bbe"
+    },
+    {
+      "path": "network/motion_view.gd.uid",
+      "sha256": "0f65c2127ef47cb43416462bde8d93838ee6b50ce2b443851f7f0c85b6a0f772"
+    },
+    {
+      "path": "network/movement.gd",
+      "sha256": "e397f97b4c429466a86204bc6d002ceefb6e06539c01fefdf6fbeb73944d46d4"
+    },
+    {
+      "path": "network/movement.gd.uid",
+      "sha256": "a2c8e3c8b37ca00fbd643c4b34ed0f94e75ac824818a8bb089bfd73d154bf3d6"
+    },
+    {
+      "path": "network/performance_view.gd",
+      "sha256": "17c4c3fe32219b4ef1e51762bfa9b26ec8208bcb1807a75e1aa568f52d811622"
+    },
+    {
+      "path": "network/performance_view.gd.uid",
+      "sha256": "32ca10160992d3d1a753cdca1d20e008e9ec89df09726a789dca7400babc5373"
+    },
+    {
+      "path": "network/projectile_recipe.gd",
+      "sha256": "6d6bdcd23ce0f22f27ffb6dd9ce9e50dbf62c5f89a6926157b03722209882818"
+    },
+    {
+      "path": "network/projectile_recipe.gd.uid",
+      "sha256": "86067ffecf76c1454daa2ac1ba02c2a11425ac58434bc871180138d260613be6"
+    },
+    {
+      "path": "network/projectile_view.gd",
+      "sha256": "ad8db082ff864dc0fcc3406b9e88df65e062c58b80aa66b1bd4cefc8e40c8aa1"
+    },
+    {
+      "path": "network/projectile_view.gd.uid",
+      "sha256": "ee2a44d65dd6028f0118b0eae9c806f1b4453874078c84809ea85f7aa5df2c94"
+    },
+    {
+      "path": "network/release.gd",
+      "sha256": "8ca4c3117875965f2bd221898fac0dd85b48db49725dc67f6e846d7f643c4509"
+    },
+    {
+      "path": "network/release.gd.uid",
+      "sha256": "add6c4cefe51b3b47066c3d497f2bd648e216ad1ca862fe1d6ee44a148311326"
+    },
+    {
+      "path": "network/render_budget.gd",
+      "sha256": "502ac6472c82474351cbc343ef9325491a1c09c46cf39b1da69c1b7109d2946b"
+    },
+    {
+      "path": "network/render_budget.gd.uid",
+      "sha256": "bceac4cd7835b65649c36dc5e82e5449349ce8d7cf9c43f3e650c4f659562deb"
+    },
+    {
+      "path": "network/scenery_view.gd",
+      "sha256": "088f2648123c93de7daea68cb6b27d5ddc58d2fa56b36e7410958b2ae7d04e2f"
+    },
+    {
+      "path": "network/scenery_view.gd.uid",
+      "sha256": "79b80a95b783bf8526b5d566227dd011fd2505a0c882b4a6422ab0f8d357b526"
+    },
+    {
+      "path": "network/server.gd",
+      "sha256": "7e4f126e0f91404e5c60c882776d5d840a6f36633aee4cd930a18f0e5a0d5913"
+    },
+    {
+      "path": "network/server.gd.uid",
+      "sha256": "5e12ff85ebc4768678349eb1545bf316a348b9254e42b7232a7e3c6cd25be4c6"
+    },
+    {
+      "path": "network/server.tscn",
+      "sha256": "f3638e968e5753da4d3b2c4c7e1756703b10efd1c0b795dae5855bb7edad1087"
+    },
+    {
+      "path": "network/snapshot_inbox.gd",
+      "sha256": "1d7c348791a585a4ce06043eceb47ba4fb5f14d2e84e405a3878e870df933f6b"
+    },
+    {
+      "path": "network/snapshot_inbox.gd.uid",
+      "sha256": "57e18d882e3fdca8eb57be744826aafe56406a0c5951e3ab43f1336582ef8cb1"
+    },
+    {
+      "path": "network/twister_view.gd",
+      "sha256": "7840eaee24b4aac7555221f91a1e9a654e2bc1541c8bb5316a43e7854f84c4fd"
+    },
+    {
+      "path": "network/twister_view.gd.uid",
+      "sha256": "efe8daa61b26523ec012842f4c1e3bd206814eedbbacf9afe9392a2bfc92fef7"
+    },
+    {
+      "path": "network/world_view.gd",
+      "sha256": "b7253dd791dd8d12301732ac7035c4978d053057cce36cefd3849f5c1484f711"
+    },
+    {
+      "path": "network/world_view.gd.uid",
+      "sha256": "eecf8ef381c7bd87c037d2219ae304457acb3f6662033a441597e5b033bd7518"
+    },
+    {
+      "path": "network_service/dashboard.js",
+      "sha256": "0278281c12708d5df4540d21475aa2cb46be92d16548b4e205e01360689cac46"
+    },
+    {
+      "path": "network_service/gateway.mjs",
+      "sha256": "44bb60239d25fe8b341dee3e174fdf22f10ffa2bd1a44c0b9e7c6ea39aa39594"
+    },
+    {
+      "path": "network_service/package-lock.json",
+      "sha256": "d7ff08480a49752f7cafa413119bc91a7d48f47892b0fe2cfb7ebb7630b7a710"
+    },
+    {
+      "path": "network_service/package.json",
+      "sha256": "c10c912e569e5d51085a2000a6612fecde28f9c2fd4dd7fad3152db21f3b18c5"
+    },
+    {
+      "path": "network_service/release.mjs",
+      "sha256": "d83cfe782bfd46ae5ae593b41282971daf9b56091b844a11c49bf2d790e8e90e"
+    },
+    {
+      "path": "network_service/reporting.mjs",
+      "sha256": "92425c62e6176d6e76b76fe370d324b1c73afcb78399125034540ceb00a3173c"
+    },
+    {
+      "path": "network_service/reports.html",
+      "sha256": "245c1f1ac582bfc0d6875aa8c3b8c6e05a0b77613b1d326793349dd71ad0a7ca"
+    },
+    {
+      "path": "network_service/reports.sql",
+      "sha256": "9bd35de90c96720c7d94ce634d80d082abbb4acefe72bfa1edfbbc6299f9fe1c"
+    },
+    {
+      "path": "scripts/arcade.gd",
+      "sha256": "2a832a6140b20666db7660fd277cb4bb7009f2a3798615cbecd20e897c8260c0"
+    },
+    {
+      "path": "scripts/arcade.gd.uid",
+      "sha256": "09633c626520487d598b9b6ff521d53610da69f834f1d3adcdf293b7c89213c7"
+    },
+    {
+      "path": "scripts/arena_world.gd",
+      "sha256": "8942e41d24c4e232f74ca210652630e893ec4fe2ec512821ed9ac7201916cfa1"
+    },
+    {
+      "path": "scripts/arena_world.gd.uid",
+      "sha256": "fae8337ef0fa402aac477ff21f0e0c29032c9a49fd23724e66de6cb9528bcdae"
+    },
+    {
+      "path": "scripts/object_combat.gd",
+      "sha256": "ce0397494792a12aecfbdb4da3445ee0be2233210aea94f7a2f4f30584f7b8d9"
+    },
+    {
+      "path": "scripts/object_combat.gd.uid",
+      "sha256": "d23eaf052fde787fda27d293a2ff39e22905189d3d25718cc00d91760b458a9d"
+    },
+    {
+      "path": "scripts/v79_heroes.gd",
+      "sha256": "30e689edee6f89db37be17dc7fca81ac27fc7d4c0226f63fbc3fd4acc5cf584d"
+    },
+    {
+      "path": "scripts/v79_heroes.gd.uid",
+      "sha256": "534fc099c79b891df1292e8a1a938e18f931b591b9e337a8849e4eee12947ae1"
+    },
+    {
+      "path": "scripts/mobile_text_entry.gd",
+      "sha256": "afe056c8496d95f445379b4f0d04cd0e4569f8b06d87eb650eb2ecf1bfc6ba80"
+    },
+    {
+      "path": "scripts/mobile_text_entry.gd.uid",
+      "sha256": "0635766a621cbbf3062de9beb71780070e20c47b640ec1c49cf58578add29926"
+    },
+    {
+      "path": "web/mobile_text_entry.js",
+      "sha256": "dd00e9537d977d496152eb10239a3894845f9238f8c4d7b1fc1d00ceb9a7cb8e"
+    },
+    {
+      "path": "project.godot",
+      "sha256": "e84a1932029f518b25813f534ea3d2cc77cb02d02bf4ac4500d594ff0ff40575"
+    },
+    {
+      "path": "Dockerfile.network",
+      "sha256": "368e7b2ec3dcfe74ddad031e88fbf0b498de32e8a22528582f9a6b51aae84890"
+    },
+    {
+      "path": "assets/fx_ground_atlas.svg.import",
+      "sha256": "4ac2c8759a7d02fa784ee9e0c63ed99fda40fcdc1050cf3288f80e3b634a24f2"
+    },
+    {
+      "path": "assets/fx_ground_atlas.svg",
+      "sha256": "dba6162f290b0540284d4bc06235520d10d58f0c3110c2efd922c85e78b3b902"
+    },
+    {
+      "path": "scripts/multiplayer_ground.gd",
+      "sha256": "b2daf6f2e4a8118ae362a95f6b4011866ec08a96de382958c3663c3d3da41881"
+    },
+    {
+      "path": "scripts/multiplayer_ground.gd.uid",
+      "sha256": "d59c32f7f2643583c22c5133c748cf5f5e8590fcb9961209f59c11612edcc99e"
+    },
+    {
+      "path": "export_presets.cfg",
+      "sha256": "7c5baeab775fe4b5782c31072d07080ec0c8ff71f3ab204ceb7088e437c418a0"
+    },
+    {
+      "path": "web/network_shell.html",
+      "sha256": "448ac122d76c8cede0164b92f94d57dfa3b21d3b96caa5e1919648b454ddfb37"
+    },
+    {
+      "path": "web/reports.js",
+      "sha256": "b2a5c10d9c987e9c1dc714391693f66fb5af44acf0bafeffdc1dbb1b863702c2"
+    },
+    {
+      "path": "web/frame_timing.js",
+      "sha256": "eb2363f668de0d6229f9cbccfc5db9539269d3e58e6660d2c68f88b58881c6ee"
+    },
+    {
+      "path": "scripts/presentation.gd",
+      "sha256": "1aeb1c79a2f4a11e76cbee8a8b707f77b58481cd7860a98055c1f06850752753"
+    },
+    {
+      "path": "scripts/presentation.gd.uid",
+      "sha256": "6fcc11216ea56b926758304c67970929cc3c5b615e5cbbbddb8290a3f6aecdf8"
+    }
+  ],
+  "post_match_navigation": "Back to T4 menu; no browser refresh required"
+}

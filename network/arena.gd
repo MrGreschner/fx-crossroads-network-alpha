@@ -13,6 +13,13 @@ var received_bytes=0
 var wire_packet_count=0
 var recovery_snapshot_age=0
 var pre_poll_state_age=0
+var previous_client_frame_us=0
+var client_frame_gap_ms=0.0
+var frame_gap_peak_ms=0.0
+var frame_stalls=0
+var delivery_stalls=0
+var last_stall_context="none"
+var browser_timing:Dictionary={}
 var scenery_view:Node2D
 var network_hud:Node2D
 var dash_view=preload("res://network/dash_view.gd").new()
@@ -144,7 +151,7 @@ func build_lobby()->void:
  var layer_node=CanvasLayer.new();layer_node.layer=100;add_child(layer_node)
  net_panel=PanelContainer.new();layer_node.add_child(net_panel);preload("res://scripts/studio_ui.gd").apply(net_panel)
  var box=VBoxContainer.new();net_panel.add_child(box)
- var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T4.16";box.add_child(title)
+ var title=Label.new();title.text="FX CONNECTIONS • DEDICATED ARENA ALPHA T4.17";box.add_child(title)
  var help=Label.new();help.text="Development test • no saved progress • server runs combat\nHost creates a room; everyone, including the host, is a client.";box.add_child(help)
  url_field=LineEdit.new();url_field.text=DEFAULT_SERVER;url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
  net_name=LineEdit.new();net_name.text="Tester";net_name.placeholder_text="Display name";box.add_child(net_name)
@@ -182,6 +189,26 @@ func net_select(id:String)->bool:
  if net_ready:send_net({"type":"hero","hero":id})
  return true
 func net_permission(id:String)->String:return "Official heroes only during networking validation." if id.begins_with("custom_") else ""
+func return_to_network_menu()->void:
+ if dedicated:return
+ if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('return-to-menu');",true)
+ send_net({"type":"leave"})
+ if net_peer!=null:net_peer.close(1000,"return_to_menu")
+ net_peer=null;net_ready=false;net_host=false;resume_token="";net_room="";match_id=""
+ reconnect_until=0;reconnect_at=0;started=false;results_reason="";shop_open=""
+ if has_meta("joining"):remove_meta("joining")
+ presentation.close()
+ if not session_menu.page.is_empty():session_menu.resume()
+ mobile.reset_controls();mobile.visible=false
+ recovery_active=false;last_state_at=0;frames.clear();history.clear();snapshot_inbox.clear()
+ pending_correction=Vector2.ZERO;shots_view.reset();dodge_journal.clear()
+ world_view.clear();render_events.clear();render_shots.clear();local_strikes.clear();predicted_actions.clear();pending_bursts.clear()
+ room_field.text="";capacity.disabled=false;test_arena.disabled=false;net_start.disabled=true
+ net_status.text="Ready for another match • Host a new room or enter a room code and Join."
+ shop_open="";control.hide();net_panel.show();queue_redraw()
+func _town()->void:
+ # Alpha exits always stay in the alpha; never send testers into the main game.
+ return_to_network_menu()
 func connect_net(kind:String)->void:
  if kind=="resume":metrics.resume_attempts=int(metrics.get("resume_attempts",0))+1
  if net_ready and kind in ["host","join"]:
@@ -254,6 +281,10 @@ func _check_stale_link()->void:
  var stale=age>=750
  if stale and not recovery_active:
   recovery_stalls+=1;recovery_active=true
+  if client_frame_gap_ms>=250:
+   frame_stalls+=1;last_stall_context="client_frame_gap"
+  else:
+   delivery_stalls+=1;last_stall_context="state_delivery_gap"
   frames.clear();history.clear();pending_bursts.clear();predicted_actions.clear();local_strikes.clear();dodge_journal.clear();shots_view.reset()
   mobile.reset_controls()
   _send_channel(host_id,{"type":"held_cast","kind":"primary","phase":"cancel","angle":0})
@@ -266,7 +297,7 @@ func receive_net(data:Dictionary)->void:
   "welcome":
    server_build=str(data.get("build","unknown"))
    my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
-   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the T4.16 server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
+   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the T4.17 server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
   "lobby":
    roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
@@ -282,7 +313,7 @@ func receive_net(data:Dictionary)->void:
    positions.clear();authority_builds.clear()
    for id in hero_ids:positions[id]=Vector2.ZERO
    recovery_active=false;last_state_at=Time.get_ticks_msec()
-   if not same_match:recovery_stalls=0;stale_peak_ms=0;render_budget.reset();metrics.resume_attempts=0;metrics.last_disconnect_reason=""
+   if not same_match:frame_stalls=0;delivery_stalls=0;frame_gap_peak_ms=0;last_stall_context="none";recovery_stalls=0;stale_peak_ms=0;render_budget.reset();metrics.resume_attempts=0;metrics.last_disconnect_reason=""
    _configure_rendering()
    disconnect_reason="";sequence=0;action_serial=0;history.clear();frames.clear();last_snapshot_tick=-1;last_snapshot_seq=-1;applied_seq=0;pending_correction=Vector2.ZERO
    launch_trace.clear();launch_received_delays.clear();launch_drawn_delays.clear()
@@ -365,6 +396,9 @@ func receive_net(data:Dictionary)->void:
 func _process(delta:float)->void:
  if dedicated:return
  var frame_began=Time.get_ticks_usec();client_perf.frame(frame_began)
+ client_frame_gap_ms=(frame_began-previous_client_frame_us)/1000.0 if previous_client_frame_us>0 else 0.0
+ previous_client_frame_us=frame_began;frame_gap_peak_ms=maxf(frame_gap_peak_ms,client_frame_gap_ms)
+ local_view.advance(delta)
  if render_budget.observe(delta,started and balanced_graphics and not recovery_active and presentation.page.is_empty()):_configure_rendering()
  VIEW=get_viewport_rect().size
  pre_poll_state_age=maxi(0,Time.get_ticks_msec()-last_state_at) if last_state_at>0 else 0
@@ -492,9 +526,6 @@ func _physics_process(_delta:float)->void:
  else:slow_status=""
  var before_prediction=local_pos
  local_pos=Move.advance(self,my_id,local_pos,direction)
- if pending_correction.length_squared()>0:
-  var repair=pending_correction*.25;local_pos+=repair;pending_correction-=repair
-  if pending_correction.length()<.1:pending_correction=Vector2.ZERO
  positions[my_id]=local_pos
  local_view.capture(before_prediction,local_pos)
  if sequence%2==0:
@@ -537,8 +568,8 @@ func _reconcile_position(ack:int,point:Vector2)->void:
  if error.length()>1 and correction_reset_reason.is_empty():
   var bucket="correction_1_8" if error.length()<8 else "correction_8_32" if error.length()<32 else "correction_32_plus"
   metrics[bucket]=int(metrics.get(bucket,0))+1
- if error.length()>80:local_pos=repaired;local_view.reset(local_pos);pending_correction=Vector2.ZERO
- else:pending_correction=error if error.length()>.75 else Vector2.ZERO
+ local_view.reconcile(local_pos,repaired,error.length()>80 or not correction_reset_reason.is_empty())
+ local_pos=repaired;pending_correction=Vector2.ZERO
  positions[my_id]=local_pos
 func _send_channel(_id:String,data:Dictionary)->void:
  if dedicated:
@@ -818,6 +849,15 @@ func _report_network()->void:
  report_at=Time.get_ticks_msec()+1000
  var sample={"build":BUILD,"protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
  sample.client_profile=client_perf.summary()
+ var browser_json=JavaScriptBridge.eval("JSON.stringify(window.fxFrameTiming?window.fxFrameTiming.sample():{})",true)
+ var parsed_browser=JSON.parse_string(str(browser_json))
+ browser_timing=parsed_browser if parsed_browser is Dictionary else {}
+ sample.browser_timing=browser_timing
+ sample.client_frame_gap_ms=client_frame_gap_ms;sample.frame_gap_peak_ms=frame_gap_peak_ms
+ sample.frame_gap_stalls=frame_stalls;sample.delivery_gap_stalls=delivery_stalls;sample.last_stall_context=last_stall_context
+ sample.visual_correction_px=local_view.correction.length()
+ sample.terrain_geometry=terrain_cache.counters() if terrain_cache!=null and terrain_cache.has_method("counters") else {}
+ sample.shell_resize_count=get_meta("fx_render_shell").resize_count if has_meta("fx_render_shell") else 0
  sample.long_frames_50ms=client_perf.long_frames
  sample.active_fps_cap=Engine.max_fps
  sample.engine_process_ms=Performance.get_monitor(Performance.TIME_PROCESS)*1000
@@ -884,7 +924,7 @@ func _report_network()->void:
  sample.client_profile.ground_effects=ground_art.counters()
  sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
- JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'T4.16',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
+ JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'T4.17',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
  JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
 
 func profile_work(kind:String,elapsed:int)->void:
@@ -892,7 +932,7 @@ func profile_work(kind:String,elapsed:int)->void:
 func download_performance()->void:
  if not OS.has_feature("web"):return
  report_downloads+=1
- JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'T4.16',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='FX_T416_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
+ JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'T4.17',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='FX_T417_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
 
 func _actor_walking(id:String)->bool:
  if id==my_id:return float(net_dash.get(id,{}).get("time",0))>0 or super._actor_walking(id)

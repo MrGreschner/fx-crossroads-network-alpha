@@ -3,6 +3,9 @@ var container:SubViewportContainer
 var viewport:SubViewport
 var game:Node
 var render_scale=1.0
+var fitted_logical=Vector2i.ZERO
+var fitted_raster=Vector2i.ZERO
+var resize_count=0
 func _ready()->void:
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);mouse_filter=Control.MOUSE_FILTER_IGNORE
  container=SubViewportContainer.new();container.stretch=true;container.mouse_filter=Control.MOUSE_FILTER_PASS;container.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(container)
@@ -14,6 +17,8 @@ func fit()->void:
  if viewport==null:return
  var logical=Vector2i(get_viewport_rect().size)
  var raster=Vector2i(maxi(2,roundi(logical.x*render_scale)),maxi(2,roundi(logical.y*render_scale)))
+ if logical==fitted_logical and raster==fitted_raster:return
+ fitted_logical=logical;fitted_raster=raster;resize_count+=1
  viewport.size_2d_override=logical
  container.size=Vector2(raster);container.scale=Vector2(logical)/Vector2(raster)
 func set_quality(value:float)->void:

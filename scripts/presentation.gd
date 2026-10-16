@@ -57,7 +57,10 @@ func window(title:String,kind:String)->void:
  content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_theme_constant_override("separation",14);scroll.add_child(content)
  if kind=="results":
   var footer:=HBoxContainer.new();footer.add_theme_constant_override("separation",12);col.add_child(footer)
-  if arcade:
+  var network_alpha=arcade and game.has_method("return_to_network_menu")
+  if network_alpha:
+   button(footer,"Back to T4 menu • Host / Join",game.return_to_network_menu)
+  elif arcade:
    if game.role=="host":button(footer,"Replay with party",func():return_to_party();game._start_button())
    else:label(content,"The host can replay this match with the party.",16)
    button(footer,"Return to party",return_to_party)
@@ -65,9 +68,10 @@ func window(title:String,kind:String)->void:
   if game.get("continuation")!=null and game.continuation.available():
    var resume_button=button(footer,"Continue • practice",game.continuation.resume);resume_button.tooltip_text="Full health, same XP and battle. This entire attempt stops awarding mastery and completion; enemy discoveries remain."
   if not arcade or not game.spectating():button(footer,"View hero mastery",inspect_mastery)
-  button(footer,"Back to town",func():
-   if arcade:game._town()
-   else:return_to_town())
+  if not network_alpha:
+   button(footer,"Back to town",func():
+    if arcade:game._town()
+    else:return_to_town())
  else:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
 func _unhandled_input(event:InputEvent)->void:
  if not event is InputEventKey or not event.pressed or event.echo:return
