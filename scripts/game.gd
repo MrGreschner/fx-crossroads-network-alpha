@@ -1,4 +1,5 @@
 extends Node2D
+var waylight:Node
 var music=preload("res://scripts/music_player.gd").new()
 var media=preload("res://scripts/media_mode.gd").new()
 var dev_magic:Node2D
@@ -22,7 +23,7 @@ var motion_v85=preload("res://scripts/hero_motion_v85.gd").new()
 var VIEW := Vector2(1280, 720)
 const SAVE_PATH := "user://crossroads_profile.json"
 const RULESET_VERSION := "v6"
-const ROOM_SERVICE_URL := "wss://fx-crossroads-rooms.onrender.com"
+var ROOM_SERVICE_URL := preload("res://scripts/brand.gd").room_url()
 const REGION_DIR := "res://content/regions/"
 const CHARACTER_DIR := "res://content/characters/"
 const ITEM_DIR := "res://content/items/"
@@ -203,11 +204,13 @@ func _ready() -> void:
 	mistglass_rift=preload("res://scripts/mistglass_rift.gd").new();add_child(mistglass_rift);mistglass_rift.setup(self)
 	fishing=preload("res://scripts/fishing.gd").new();add_child(fishing);fishing.setup(self)
 	lodges=preload("res://scripts/lodges.gd").new();add_child(lodges);lodges.setup(self)
+	waylight=preload("res://scripts/waylight.gd").new();add_child(waylight);waylight.setup(self)
 	enter_region("town")
 	tutorial.game=self
 	presentation=preload("res://scripts/presentation.gd").new();add_child(presentation);presentation.setup(self,false)
 	session_menu=preload("res://scripts/session_menu.gd").new();add_child(session_menu);session_menu.setup(self,false)
 	version_check=preload("res://scripts/build_update.gd").new();add_child(version_check);version_check.setup(self)
+	var quick_slots=preload("res://scripts/loadout_hud.gd").new();add_child(quick_slots);quick_slots.setup(self)
 	level_cards=preload("res://scripts/level_cards.gd").new();add_child(level_cards);level_cards.setup(self,false)
 	if not get_tree().root.has_meta("fx_intro_seen"):
 		get_tree().root.set_meta("fx_intro_seen",true)
@@ -259,7 +262,9 @@ func load_registry() -> void:
 func load_sprite_pair(prefix: String) -> void:
 	for pose in ["idle", "walk1", "walk2", "attack", "open", "spin", "shell", "0", "1"]:
 		var key: String = prefix + "_" + str(pose)
-		if not art.has(key) and ResourceLoader.exists("res://assets/" + key + ".png"):
+		var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(prefix,str(pose))
+		if refreshed!=null:art[key]=refreshed
+		elif not art.has(key) and ResourceLoader.exists("res://assets/" + key + ".png"):
 			art[key] = load("res://assets/" + key + ".png")
 		elif not art.has(key) and ResourceLoader.exists("res://assets/" + key + ".svg"):
 			art[key] = preload("res://scripts/source_art.gd").texture("res://assets/" + key + ".svg")
@@ -315,8 +320,9 @@ func build_scenery() -> void:
 		scenery_tiles[key].append(obstacle)
 
 func can_stand_at(point: Vector2) -> bool:
+	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if mistglass_rift!=null and mistglass_rift.active and not Rect2(55,220,VIEW.x-110,VIEW.y-275).has_point(point):return false
-	if mode=="town" and ((fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
+	if mode=="town" and (arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
 	if not adventure.can_stand(point): return false
 	for tx in range(maxi(0, int(point.x / 64) - 1), mini(int(region_size().x / 64) + 1, int(point.x / 64) + 2)):
 		for ty in range(maxi(0, int(point.y / 64) - 1), mini(int(region_size().y / 64) + 1, int(point.y / 64) + 2)):
@@ -327,6 +333,10 @@ func can_stand_at(point: Vector2) -> bool:
 	return true
 
 func clear_of_obstacles(point: Vector2, padding: float = 0.0) -> bool:
+	if waylight!=null and waylight.between() and mode=="run":
+		for offset in [Vector2.ZERO,Vector2(padding,0),Vector2(-padding,0),Vector2(0,padding),Vector2(0,-padding)]:
+			if not waylight.expedition.open(point+offset):return false
+		return true
 	if scenery_index_count!=obstacles.size() or (scenery_tiles.is_empty() and not obstacles.is_empty()):build_scenery()
 	if not adventure.can_stand(point): return false
 	# Spatial broad phase; exact radii still decide collisions.
@@ -493,6 +503,7 @@ func combat_frame_active(epoch: int) -> bool:
 	return epoch == combat_epoch and mode == "run" and menu.is_empty()
 
 func enter_region(id: String) -> void:
+	if waylight!=null:waylight.entering(id)
 	if id=="town" and continuation!=null:continuation.end()
 	var travel=get_node_or_null("TravelPolish")
 	if travel!=null:travel.play("town" if id=="town" else "portal")
@@ -516,7 +527,7 @@ func enter_region(id: String) -> void:
 	ground_patches.clear();ground_tile_cache.clear();ground_index.invalidate()
 	if terrain_cache!=null:terrain_cache.reset()
 	if mode == "run":
-		if not load_realm_layout():
+		if id!="between" and not load_realm_layout():
 			enter_region("town")
 			message = "Realm could not load. Check the scene file in Godot."
 			message_time = 6.0
@@ -527,11 +538,13 @@ func enter_region(id: String) -> void:
 		build_scenery()
 		town_places.append({"pos":Vector2(900,-250),"menu":"battlegrounds_entrance","hint":"Battlegrounds • 3v3 / 4v4 armies"})
 		town_places.append({"pos":Vector2(550,1550),"menu":"postoffice","hint":"Squirrel Post • profiles and food parcels"})
-		town_places.append({"pos":Vector2(1350,1240),"menu":"journey","hint":"Choose an adventure"})
+		town_places.append({"pos":Vector2(820,935),"menu":"journey","hint":"Choose an adventure"})
 		# The old creator sign is now Squirrel Post, drawn by town_services.
-		town_art.append({"pos":Vector2(1350,1190),"size":Vector2(64,96),"sprite":"creator_board","label":"ADVENTURE BOARD"})
+		town_art.append({"pos":Vector2(820,890),"size":Vector2(64,96),"sprite":"creator_board","label":"ADVENTURE BOARD"})
 	if id=="honeyglass":obstacles.clear();decorations.clear();build_scenery()
 	position_in_world = pair(region.get("spawn", [250, 500]))
+	if mode=="town":
+		stun_time=0;charge_time=0;charge_hits.clear();dodge_time=0;dodge_direction=Vector2.ZERO;block_time=0;stealth_time=0;haste_time=0;ice_walls.clear();mobile.reset_controls()
 	if mode=="town" and respawn_clinic:
 		position_in_world=safe_town_respawn();respawn_clinic=false
 		health=float(characters.get(selected_character,{}).get("max_health",120))
@@ -554,6 +567,7 @@ func enter_region(id: String) -> void:
 				var hp := float(definition.get("health", 65))
 				enemies.append({"pos": pair(entry["position"]), "hp": hp, "max_hp": hp, "attack_timer": 0.0, "boss": false, "type": enemy_type_id, "uid": enemy_uid})
 				enemy_uid += 1
+	if mode=="town":town_life.setup(self)
 	update_camera()
 	queue_redraw()
 
@@ -566,6 +580,17 @@ func start_training(at:Vector2=Vector2(650,430))->void:
 	message_time=6;queue_redraw()
 
 func start_run(is_trial: bool, realm_id: String = "grove") -> void:
+	if waylight!=null and not waylight.launching:
+		if waylight.special():
+			if waylight.settled:
+				var tab=1 if waylight.between() else 2
+				presentation.return_to_town();waylight.open(tab)
+			else:message="Finish this expedition, or return to town to forfeit it.";message_time=5
+			return
+		if realm_id=="between" or not waylight.ticket().is_empty():
+			if mode=="town":waylight.open(1)
+			else:message="Enter the Between through the central town portal.";message_time=5
+			return
 	if version_check!=null and version_check.blocked():version_check.notice();return
 	if not is_trial and not tutorial.active and not preload("res://scripts/realm_access.gd").unlocked(legacy,realm_id):message=preload("res://scripts/realm_access.gd").hint(legacy,realm_id);message_time=6;return
 	if continuation==null:continuation=preload("res://scripts/solo_continue.gd").new();add_child(continuation);continuation.setup(self)
@@ -621,6 +646,7 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	cooldowns = {"primary": 0.0, "secondary": 0.0, "special": 0.0}
 	menu = ""
 	enter_region(active_realm)
+	if waylight!=null:waylight.started()
 	if active_realm == "grove": journey.mark("grove")
 	if active_realm == "grove": mark_welcome("realm")
 	message = "Speak to the villagers. Q / Journal shows your quests. Progress saves here." if adventure.quests.active else "Follow the target pointer, earn XP and bounties, then face the boss."
@@ -629,11 +655,18 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 func finish_run(won: bool) -> void:
 	if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.finish(won);return
 	if tutorial.active:tutorial.finish(won);return
-	if mode != "run":
+	if mode != "run" or menu=="results":
 		return
+	if won and waylight!=null and waylight.active():
+		if waylight.kind=="overcharge" and not boss_defeated:return
+		if waylight.between() and position_in_world.distance_to(waylight.expedition.ORIGIN)>120:return
+	get_tree().root.get_node("FXActivity").event(self,"complete","cleared" if won else "defeated",run_time,{"damage":dealt_damage,"enemies":kills,"players":1,"banked_shards":waylight.expedition.carried if waylight!=null and waylight.between() else 0})
 	respawn_clinic=not won
-	if won and not practice and not preload("res://scripts/profile_store.gd").progression_blocked():
+	var waylight_run:bool=waylight!=null and waylight.special()
+	var waylight_result:String=waylight.finish(won) if waylight_run else ""
+	if won and not waylight_run and not practice and not preload("res://scripts/profile_store.gd").progression_blocked():
 		provisions.complete_adventure();legacy.clear_adventure(character_id,region_id)
+		if not trial and not (lodges!=null and lodges.active):legacy.glimmers.credit(4)
 	legacy.save()
 	var label := "Ram's Trial" if trial else str(region.get("name", "Realm"))
 	var seconds := int(run_time)
@@ -641,10 +674,11 @@ func finish_run(won: bool) -> void:
 	var new_best:=false
 	if not preload("res://scripts/profile_store.gd").progression_blocked():
 		profile["runs"] = int(profile.get("runs", 0)) + 1
-		var record_key := RULESET_VERSION + ":" + ("trial" if trial else region_id) + ":" + character_id
+		var relic_assisted:bool=waylight!=null and not waylight.combat.items().is_empty()
+		var record_key := RULESET_VERSION + (":relics" if relic_assisted else "") + ":" + ("trial" if trial else region_id) + ":" + character_id
 		var records: Dictionary = profile.get("records", {})
 		var best := int(records.get(record_key, 0))
-		new_best = won and (best == 0 or seconds < best)
+		new_best = won and not waylight_run and (best == 0 or seconds < best)
 		if new_best:
 			records[record_key] = seconds
 			profile["records"] = records
@@ -652,18 +686,21 @@ func finish_run(won: bool) -> void:
 			unlock_cosmetic("Pathfinder")
 			if region_id == "lantern_marsh": unlock_cosmetic("Lantern Keeper")
 			if region_id == "shattered_oath": unlock_cosmetic("Oath Restorer")
-		if won: journey.won(region_id)
+		if won and not waylight_run: journey.won(region_id)
 	save_profile()
 	result_text = ("CLEARED " if won else "DEFEATED IN ") + label + "\nCharacter: " + str(hero.get("name", "Hero")) + "    Time: " + time_text + "\nReached level " + str(level) + "    Bounties earned: " + str(bounty_earned) + " CC"
 	if new_best:
 		result_text += "\nNEW PERSONAL BEST!"
 	result_text += "\nDamage dealt: "+str(int(dealt_damage))+"   Damage taken: "+str(int(damage_taken))
+	if waylight_run:result_text+="\n"+waylight_result
 	result_text += "\n"+legacy.result_line(character_id)
 	result_text += "\nPress Enter to return to town."
 	menu = "results"
 	presentation.results(won)
 
 func _process(delta: float) -> void:
+	town_life.calendar.step()
+	town_life.events.step(self,delta)
 	if mode=="town" and not has_node("FXIntro") and get_tree().root.has_meta("fx_daily_launch"):
 		get_tree().root.remove_meta("fx_daily_launch");legacy.daily.quick_play();return
 	if menu=="workshop":return
@@ -750,15 +787,17 @@ func _process(delta: float) -> void:
 	if mode != "town":speed*=adventure.combat.speed_factor("p:solo")
 	var direction: Vector2 = mobile.movement if mobile.enabled else Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down")).normalized()
 	direction=adventure.combat.twister.sway("solo",direction)
-	if stun_time > 0 or adventure.combat.v78.locked("solo") or adventure.combat.v79.moving("solo"):
+	if mode=="run" and (stun_time > 0 or adventure.combat.v78.locked("solo") or adventure.combat.v79.moving("solo")):
 		direction = Vector2.ZERO
 	if studio_live.active():
 		speed*=studio_live.buff_speed()
 		if studio_live.hero.get("passive","")=="swift":speed*=1.08
-	if mode == "run" and dodge_cooldown <= 0 and Input.is_action_just_pressed("dodge") and stun_time <= 0 and not adventure.combat.stunned("p:solo") and not adventure.combat.classics.locked("solo") and not adventure.combat.v48.moving("solo") and not adventure.immersive.aboard("solo") and not adventure.combat.robot.transformed("solo") and not adventure.combat.v78.locked("solo") and not adventure.combat.v79.moving("solo") and not adventure.combat.v110.charging("solo") and not adventure.combat.halloween.moving("solo") and not adventure.combat.release_heroes.locked("solo"):
+	if mode in ["town","run"] and dodge_cooldown <= 0 and Input.is_action_just_pressed("dodge") and stun_time <= 0 and not adventure.combat.stunned("p:solo") and not adventure.combat.classics.locked("solo") and not adventure.combat.v48.moving("solo") and not adventure.immersive.aboard("solo") and not adventure.combat.robot.transformed("solo") and not adventure.combat.v78.locked("solo") and not adventure.combat.v79.moving("solo") and not adventure.combat.v110.charging("solo") and not adventure.combat.halloween.moving("solo") and not adventure.combat.release_heroes.locked("solo"):
 		dodge_direction = direction if direction.length_squared() > 0 else aim_direction()
 		dodge_time = 0.26
-		invulnerable_time = maxf(invulnerable_time, 0.22)
+		if mode=="run":
+			if waylight!=null:waylight.combat.dodge()
+			invulnerable_time = maxf(invulnerable_time, 0.22)
 		dodge_cooldown = 2.5
 	if mode == "run" and charge_time > 0:
 		var charge_step := minf(charge_time, delta)
@@ -788,6 +827,7 @@ func _process(delta: float) -> void:
 
 func handle_town_interactions() -> void:
 	if fishing!=null and fishing.interact():return
+	if town_life.events.interact(self):return
 	if commerce_town.interact(self):return
 	if idle_mine_town.interact(self):return
 	if academy_town.interact(self):return
@@ -805,6 +845,7 @@ func handle_town_interactions() -> void:
 			hint = "E  " + str(place["hint"])
 			if Input.is_action_just_pressed("interact"):
 				menu = str(place["menu"])
+				if menu=="portal" and waylight!=null:menu="";waylight.open();return
 				if menu=="journey":presentation.adventures();return
 				if menu == "characters":
 					mark_welcome("hero")
@@ -816,11 +857,15 @@ func handle_town_interactions() -> void:
 			if menu in ["arena_entrance", "defense_entrance", "descent_entrance", "battlegrounds_entrance"]:
 				get_tree().root.set_meta("fx_mode", "battlegrounds" if menu=="battlegrounds_entrance" else "arena" if menu == "arena_entrance" else "defense" if menu == "defense_entrance" else "descent")
 				get_tree().root.set_meta("fx_hero", selected_character)
-				get_tree().change_scene_to_file("res://scenes/arcade.tscn")
+				get_tree().change_scene_to_file("res://network/client.tscn")
 			return
 
+	town_life.interact(self)
+
 func handle_run(delta: float) -> void:
+	if tutorial.active and tutorial.interact():return
 	var epoch := combat_epoch
+	if waylight!=null:waylight.step(delta)
 	if not combat_frame_active(epoch): return
 	if adventure.active or adventure.vault.active or adventure.combat.coast.active or adventure.city.active or adventure.hollow.active or adventure.quests.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active:
 		if Input.is_action_just_pressed("interact") and adventure.interact("solo"): return
@@ -863,7 +908,7 @@ func handle_run(delta: float) -> void:
 		if Input.is_action_just_pressed("interact"):
 			menu = "merchant"
 			return
-	if position_in_world.distance_to(return_gate) < 85:
+	if not (waylight!=null and waylight.between()) and position_in_world.distance_to(return_gate) < 85:
 		hint = "E  Abandon run and return to town"
 		if Input.is_action_just_pressed("interact"):
 			finish_run(false)
@@ -896,6 +941,7 @@ func max_health() -> float:
 	for carried_id in inventory:
 		var carried: Dictionary = items.get(carried_id,{})
 		if str(carried.get("effect", "")) == "bonus_health": total += float(carried.get("amount",0))
+	if waylight!=null:total*=1+waylight.combat.bonus("vitality")
 	return total
 
 func aim_direction() -> Vector2:
@@ -1218,12 +1264,16 @@ func update_allies(delta: float) -> void:
 		allies[ally_index] = ally
 
 func maybe_spawn_boss() -> void:
+	if waylight!=null and waylight.between():return
 	if tutorial.active:return
 	if adventure.active or adventure.vault.active or adventure.quests.active or adventure.expansion.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active: return
 	if mode != "run" or boss_spawned or kills < region.get("enemies", []).size():
 		return
 	boss_spawned = true
-	enemies.clear() # Summoned enemies do not delay the boss encounter.
+	if waylight!=null and waylight.kind=="overcharge":
+		for i in range(enemies.size()-1,-1,-1):
+			if not enemies[i].has("waylight_event"):enemies.remove_at(i)
+	else:enemies.clear() # Summoned enemies do not delay the boss encounter.
 	enemy_shots.clear()
 	var boss_hp := float(region.get("boss_health", 350))
 	enemies.append({"pos": pair(region["boss"]), "hp": boss_hp, "max_hp": boss_hp, "attack_timer": 0.0, "secondary_timer": 3.0, "windup": 0.0, "boss": true, "type": str(region["boss_enemy"]) if region.has("boss_enemy") else "cartographer" if adventure.combat.coast.active else "eclipse_engine" if adventure.astral else "hourglass_hart" if adventure.clockwork else "crowned_torrent" if adventure.river else "bellroot" if adventure.marsh else "boss", "expansion_boss":region.has("boss_enemy") or adventure.combat.coast.active or adventure.marsh or adventure.river or adventure.clockwork or adventure.astral,"skill_timer":2.0,"skill_step":0,"uid": 1000000})
@@ -1231,6 +1281,8 @@ func maybe_spawn_boss() -> void:
 	message_time = 5.0
 
 func damage_enemy(index: int, amount: float) -> void:
+	if index<0 or index>=enemies.size():return
+	if waylight!=null:amount=waylight.combat.damage(amount)
 	if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.damage(index,amount);return
 	if tutorial.active:tutorial.damage(index,amount);return
 	if not adventure.expansion.sharing:
@@ -1255,6 +1307,7 @@ func damage_enemy(index: int, amount: float) -> void:
 	adventure.combat.v112.on_hit("solo",adventure.combat.npc_key(enemy),actual_damage)
 	adventure.combat.v90.on_hit("solo",actual_damage)
 	adventure.expansion.linked_hit(adventure.combat.npc_key(enemy),actual_damage)
+	if waylight!=null:waylight.combat.hit(enemy,actual_damage)
 	dealt_damage += actual_damage
 	legacy.add_damage(character_id,actual_damage)
 	var steal := 0.0
@@ -1287,6 +1340,7 @@ func damage_enemy(index: int, amount: float) -> void:
 		var was_boss: bool = enemy["boss"]
 		if was_boss and presentation!=null:presentation.burst(enemy.pos);journey.cue("victory")
 		enemies.remove_at(index)
+		if waylight!=null and waylight.defeated(enemy):return
 		if adventure.on_defeat(enemy):
 			grant_enemy_xp(50)
 			return
@@ -1340,9 +1394,10 @@ func update_enemies(delta: float) -> void:
 		if not combat_frame_active(epoch) or i >= enemies.size(): return
 		var enemy: Dictionary = enemies[i]
 		enemy["strike_flash"]=maxf(0,float(enemy.get("strike_flash",0))-delta)
-		if bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
+		if bool(enemy.get("roaming_actor",false)) or bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
 		if str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		if enemy.get("expansion_boss",false): continue
+		if tutorial.active and tutorial.update_melee(enemy,delta):continue
 		var definition: Dictionary = enemy_types.get(enemy.get("type", ""), {}).duplicate()
 		definition["speed"]=float(definition.get("speed",65))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))
 		var target_point:Vector2=position_in_world
@@ -1489,6 +1544,8 @@ func take_player_damage(amount: float, melee_attacker:String="", cause:Dictionar
 		if adventure.combat.classics.channeling("solo"):amount*=1.3
 		amount=adventure.combat.mantis.on_damage("solo",amount)
 		if amount<=0:return
+	if waylight!=null:amount=waylight.incoming(amount,block_time>0)
+	if amount<=0:return
 	amount=adventure.combat.morrow.share_hero("solo",amount)
 	adventure.combat.feedback.hit(position_in_world,minf(amount,maxf(0,health)),"solo")
 	damage_taken += amount
@@ -1529,13 +1586,17 @@ func _draw() -> void:
 	var screen=VIEW;var magnify=media.factor()
 	draw_set_transform(media.offset(),0,Vector2.ONE*magnify);VIEW=screen/magnify
 	draw_world()
+	tutorial.draw_world(self,camera)
 	adventure.draw_on(self,camera)
 	if studio_live!=null:studio_live.draw_on(self,camera)
 	draw_flames()
 	journey.draw_on(self,camera)
+	if waylight!=null:waylight.draw_fog(self,camera);waylight.draw_world(self,camera)
+	if mode=="town":town_life.calendar.draw_lighting(self,camera)
 	VIEW=screen;draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 	if (media.clean_view or media.capturing) and menu.is_empty():return
 	draw_hud()
+	if waylight!=null:waylight.draw_hud(self)
 	journey.draw_hud(self)
 	tutorial.draw_on(self)
 	if menu.is_empty():adventure.quests.draw_hud(self);adventure.school.draw_hud(self);adventure.tech.draw_hud(self);adventure.immersive.draw_hud(self)
@@ -1562,7 +1623,10 @@ func ground_tile_at(tx:int,ty:int,base:String)->String:
 	return tile
 
 func draw_world() -> void:
-	sync_terrain()
+	if waylight!=null and waylight.between() and mode=="run":
+		if terrain_cache!=null:terrain_cache.hide()
+		waylight.expedition.draw_ground(self,camera)
+	else:sync_terrain()
 	if practice:training_yard.draw_on(self,camera);town_chapter.draw_guide(self,camera)
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
@@ -1596,24 +1660,30 @@ func draw_world() -> void:
 	if mode == "town":
 		town_chapter.draw_ground(self,camera)
 		town_plan.draw_ground(self,camera)
+		preload("res://scripts/town_v173.gd").draw_tracks(self,camera)
 		idle_mine_town.draw_on(self,camera)
 		commerce_town.draw_on(self,camera)
 		town_chapter.draw_forest(self,camera)
 		town_scenery.draw_on(self,camera,font)
 		town_life.draw_world(self,camera,font)
-		town_life.draw_recognition(self,camera,font)
 		for landmark in town_art:
-			if landmark.sprite=="arena_stadium":continue
+			if landmark.sprite in ["arena_stadium","town_lamp"]:continue
 			var landmark_size: Vector2 = landmark["size"]
 			var landmark_pos: Vector2 = landmark["pos"]
 			if Rect2(camera - landmark_size, VIEW + landmark_size * 2).has_point(landmark_pos):
 				draw_sprite(str(landmark["sprite"]), landmark_pos - landmark_size * 0.5, landmark_size)
 				if not str(landmark["label"]).is_empty():
-					var title := str(landmark["label"])
-					var label_size := font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
-					var label_origin := landmark_pos - camera + Vector2(-label_size.x * 0.5, landmark_size.y * 0.5 + 24)
-					draw_rect(Rect2(label_origin - Vector2(7, 18), Vector2(label_size.x+14,24)), Color(0.08, 0.16, 0.19, 0.91))
-					draw_string(font, label_origin, title, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#fff1ca"))
+					if str(landmark.sprite)=="creator_board":
+						var p:Vector2=landmark_pos-camera+Vector2(-30,74)
+						draw_rect(Rect2(p-Vector2(63,16),Vector2(126,37)),Color("#203b45"));draw_rect(Rect2(p-Vector2(63,16),Vector2(126,37)),Color("#b7a278"),false,1)
+						draw_string(font,p+Vector2(-59,-1),"ADVENTURE",HORIZONTAL_ALIGNMENT_CENTER,118,14,Color("#fff1ca"))
+						draw_string(font,p+Vector2(-59,15),"BOARD",HORIZONTAL_ALIGNMENT_CENTER,118,13,Color("#e7d5aa"))
+					else:
+						var title := str(landmark["label"])
+						var label_size := font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
+						var label_origin := landmark_pos - camera + Vector2(-label_size.x * 0.5-(75 if str(landmark.sprite)=="creator_board" else 0),landmark_size.y * 0.5 + 24)
+						draw_rect(Rect2(label_origin - Vector2(7, 18), Vector2(label_size.x+14,24)), Color(0.08, 0.16, 0.19, 0.91))
+						draw_string(font, label_origin, title, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#fff1ca"))
 		studio_town.draw_on(self,camera)
 		academy_town.draw_on(self,camera)
 		cosmetic_town.draw_on(self,camera)
@@ -1625,8 +1695,15 @@ func draw_world() -> void:
 		if fishing!=null:fishing.draw_on(self,camera)
 		if legacy!=null:legacy.draw_town(self,camera)
 		journey.draw_town(self,camera)
+		town_life.neighborhood.draw_on(self,camera,town_life.clock)
+		preload("res://scripts/town_v173.gd").draw_trees(self,camera)
+		town_life.calendar.draw_props(self,camera)
+		town_life.draw_residents(self,camera)
+		town_scenery.draw_patrols(self,camera)
+		town_life.draw_recognition(self,camera,font)
 	else:
 		draw_sprite("portal", pair(region["gate"]["position"]) - Vector2(40, 76), Vector2(80, 120))
+		if mode=="town":preload("res://scripts/town_v176.gd").draw_portal(self,camera)
 		if region.has("merchant") and not practice and not tutorial.active:
 			draw_sprite("merchant", pair(region["merchant"]) - Vector2(48, 72), Vector2(96, 80))
 			draw_world_label(pair(region["merchant"]), "MERCHANT")
@@ -1635,6 +1712,7 @@ func draw_world() -> void:
 		if fishing!=null:fishing.draw_on(self,camera)
 		if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.draw_on(self,camera)
 		for enemy in enemies:
+			if waylight!=null and waylight.between() and enemy.pos.distance_to(position_in_world)>365:continue
 			if bool(enemy.get("buried",false)):continue
 			if not Rect2(camera,VIEW).grow(180).has_point(enemy["pos"]):continue
 			var ep: Vector2 = enemy["pos"] - camera
@@ -1662,7 +1740,7 @@ func draw_world() -> void:
 				draw_arc(ep,65 if is_boss else 38,angle-.8+progress*.8,angle+.3+progress*.8,16,Color(1,.68,.4,minf(1,float(enemy.strike_flash)*5)),6,true)
 			if float(enemy_flashes.get(int(enemy["uid"]), 0.0)) > 0:
 				draw_circle(ep, 49 if is_boss else 28, Color(1, 1, 0.8, 0.42))
-			if is_boss and float(enemy.get("windup", 0.0)) > 0:
+			if is_boss and not tutorial.active and float(enemy.get("windup", 0.0)) > 0:
 				if str(region.get("boss_secondary", "stomp")) in ["stomp", "sunburst", "frostburst", "seekerstorm", "sporeburst"]:
 					preload("res://scripts/combat_cues.gd").danger(self,ep,225 if str(region.get("boss_secondary", ""))=="sunburst" else 175,float(enemy.windup),.8)
 				else:
@@ -1768,14 +1846,13 @@ func draw_world_label(world_pos: Vector2, label: String) -> void:
 	draw_string(font, world_pos - camera + Vector2(-48, -83), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
 
 func draw_hud() -> void:
-	draw_rect(Rect2(0, 0, VIEW.x, 92), Color(0.06, 0.11, 0.14, 0.9))
+	draw_rect(Rect2(0, 0, VIEW.x, preload("res://scripts/town_hud.gd").height(self) if mode=="town" else 92), Color(0.06, 0.11, 0.14, 0.9))
 	if mode == "town":
-		draw_string(font, Vector2(24, 34), "FX CROSSROADS" if VIEW.x<1100 else "FX CROSSROADS  |  Town", HORIZONTAL_ALIGNMENT_LEFT, -1, 20 if VIEW.x<1100 else 25, Color.WHITE)
-		draw_string(font, Vector2(24, 69), ("Touch sticks move / aim  |  Interact button  |  Hero: " if mobile.enabled else "WASD move  |  E interact  |  Selected hero: ") + str(characters.get(selected_character,{}).get("name",selected_character)) + "  |  CC: " + str(gold), HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#e9dbb4"))
-		draw_string(font,Vector2(24,88),provisions.summary(provisions.packed),HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#cde1b5"))
-		draw_string(font, Vector2(VIEW.x-150, 69), "Runs: " + str(profile.get("runs", 0)), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
+		draw_string(font, Vector2(24, 34), "CROSSROADS" if VIEW.x<1100 else "CROSSROADS  |  REALMS BEYOND", HORIZONTAL_ALIGNMENT_LEFT, -1, 20 if VIEW.x<1100 else 25, Color.WHITE)
+		preload("res://scripts/town_hud.gd").draw_on(self)
+
 	else:
-		draw_string(font, Vector2(24, 34), ("RAM'S TRIAL" if trial else str(region.get("name", "Realm"))) + "  |  " + str(hero.get("name", "Hero")) + ("  |  PRACTICE CONTINUE" if continuation!=null and continuation.active else "") + "  |  Lv " + str(level) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Practice" if tutorial.active else "  |  "+str(enemies.size())+" echoes" if mistglass_rift!=null and mistglass_rift.active else "  |  " + str(kills) + "/" + str(region.get("enemies", []).size())), HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color.WHITE)
+		draw_string(font, Vector2(24, 34), ("RAM'S TRIAL" if trial else str(region.get("name", "Realm"))) + "  |  " + str(hero.get("name", "Hero")) + ("  |  PRACTICE CONTINUE" if continuation!=null and continuation.active else "") + "  |  Lv " + str(level) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Practice" if tutorial.active else "  |  "+str(enemies.size())+" echoes" if mistglass_rift!=null and mistglass_rift.active else "  |  Expedition" if waylight!=null and waylight.between() else "  |  " + str(kills) + "/" + str(region.get("enemies", []).size())), HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color.WHITE)
 		var controls:="Touch: move / aim-fire sticks • ability buttons • upgrades at Lv8" if mobile.enabled else "Shift dodge  |  LMB primary  |  RMB secondary Lv3  |  passive Lv5  |  Space special Lv6  |  attack upgrade Lv8"
 		if adventure.combat.robot.transformed("solo"):controls="SAW FORM • Move slowly • "+("Aim-fire stick" if mobile.enabled else "LMB")+": Shock Stomp • Dodge and other attacks disabled"
 		draw_string(font, Vector2(24,68),controls,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d5e2d8"))
@@ -1792,7 +1869,7 @@ func draw_hud() -> void:
 		if continuation!=null and continuation.active:
 			draw_rect(Rect2(24,146,240,25),Color("#18475d"));draw_rect(Rect2(24,146,240,25),Color("#7abfd4"),false,1)
 			draw_string(font,Vector2(34,164),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
-		if not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active:
+		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active:
 			var closest_enemy: Dictionary = enemies[0]
 			for candidate in enemies:
 				if position_in_world.distance_squared_to(candidate["pos"]) < position_in_world.distance_squared_to(closest_enemy["pos"]):
@@ -1805,12 +1882,6 @@ func draw_hud() -> void:
 			draw_string(font, arrow_center + Vector2(-4, -28), "N", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
 			draw_string(font, Vector2(VIEW.x-265, 165), "Next enemy: " + str(int(position_in_world.distance_to(closest_enemy["pos"]) / 64)) + " tiles", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 		draw_rect(Rect2(0, VIEW.y-70, VIEW.x, 70), Color(0.06, 0.11, 0.14, 0.83))
-		var item_text := "Items: "
-		for i in inventory.size():
-			var item: Dictionary = items.get(inventory[i], {})
-			item_text += "[" + str(i + 1) + "] " + str(item.get("name", inventory[i])) + "   "
-		draw_string(font, Vector2(24, 245 if mobile.enabled else VIEW.y-39), item_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
-		draw_string(font,Vector2(24,265 if mobile.enabled else VIEW.y-13),provisions.summary(provisions.packed),HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#cde1b5"))
 		if invulnerable_time > 0:
 			draw_string(font, Vector2(910, 681), "Shield: %.1fs" % invulnerable_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
 		elif haste_time > 0:
@@ -1822,7 +1893,7 @@ func draw_hud() -> void:
 	if hint != "" and menu == "":
 		draw_string(font, Vector2(370, 545 if mobile.enabled else 625), hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 23, Color("#fbeba9"))
 	if message_time > 0 and menu == "":
-		draw_string(font, Vector2(24, 272 if tutorial.active and mobile.enabled else 205 if mobile.enabled else 620 if mode == "run" else 692), message, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
+		draw_string(font, Vector2(24, 272 if tutorial.active and mobile.enabled else 205 if mobile.enabled else 580 if mode=="run" and waylight!=null and waylight.special() else 620 if mode == "run" else 692), message, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
 
 func draw_ability_cooldowns() -> void:
 	draw_set_transform(Vector2(VIEW.x-1280,0))
@@ -1914,7 +1985,7 @@ func launch_quest_party() -> void:
 	get_tree().root.set_meta("fx_mode","coop")
 	get_tree().root.set_meta("fx_realm","wayfarer")
 	get_tree().root.set_meta("fx_hero",selected_character)
-	get_tree().change_scene_to_file("res://scenes/arcade.tscn")
+	get_tree().change_scene_to_file("res://network/client.tscn")
 
 func elder_lines() -> Array[String]:
 	return ["THE ELDER RAM • YOUR GUIDE TO CROSSROADS",
@@ -1935,7 +2006,7 @@ func elder_lines() -> Array[String]:
 		"Enter / Continue or Escape: close. Visit the Journey board for local progress."]
 
 func draw_menu() -> void:
-	if menu in ["levelup","session","journey_cosmetics","dev_desk","workshop"]:return
+	if menu in ["levelup","session","journey_cosmetics","dev_desk","workshop","town_almanac"]:return
 	if menu in ["rift_builder","rift_countdown","arcane_tower","barracks","chimehouse","presentation","seedhouse","postoffice","training_guide","portal","wayfinder","supplies","merchant","food"]:return
 	if menu in ["portal","supplies","merchant","food","wayfinder"]:
 		draw_scroll_menu()
@@ -1950,13 +2021,13 @@ func draw_menu() -> void:
 	var lines: Array[String] = []
 	match menu:
 		"quest_entrance":
-			lines = ["WAYFARER WILDS • QUEST EXPEDITION", "A forest world beyond the training yard, with Willowrest village and two dungeons.", "Talk to Edda and Orrin. Restore the waylights and reclaim the mill.", "Then help Sable recover the ancient heartbell. Tamsin guides the snowy summit; Fenna restores the Skyworks.", "1 / Enter: Continue solo with your chosen hero", "2: Open a co-op room (2–4 heroes, shared host progress)", "3: Start a fresh solo expedition (resets this browser's quest progress)", "Quest progress saves on this browser. In co-op it saves on the host's browser.", "Escape: close. Q / Journal in the world shows your current tasks."]
+			lines = ["WAYFARER WILDS • QUEST EXPEDITION", "A forest world beyond the training yard, with Willowrest village and two dungeons.", "Talk to Edda and Orrin. Restore the waylights and reclaim the mill.", "Then help Sable recover the ancient heartbell. Tamsin guides the snowy summit; Fenna restores the Skyworks.", "1 / Enter: Continue solo with your chosen hero", "2: Open a co-op room (2 heroes, shared quest progress)", "3: Start a fresh solo expedition (resets this browser's quest progress)", "Quest progress saves on this browser. Co-op checkpoints save on both browsers; the host chooses the starting checkpoint.", "Escape: close. Q / Journal in the world shows your current tasks."]
 		"journey":
 			presentation.adventures();return
 		"journey_cosmetics":
 			lines=journey.menu_lines()
 		"creators":
-			lines = ["STUDENT CREATORS • BUILT AT ST. FX"]
+			lines = ["STUDENT CREATORS • CREATED BY THE CROSSROADS COMMUNITY"]
 			for entry in load_json("res://content/creators.json").get("entries",[]):
 				lines.append(str(entry.get("name","Creator"))+" — "+str(entry.get("contribution","")))
 			lines.append("Design the art. Code the adventures. Leave your mark.")
@@ -1988,6 +2059,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE and tutorial.active:tutorial.finish(false,true);return
 	if presentation!=null and not presentation.page.is_empty():return
+	if tutorial.active and menu.is_empty() and event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT:
+		tutorial.attacked=true;queue_redraw()
 	if menu=="legacy":
 		if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:legacy.close()
 		return
@@ -2085,7 +2158,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif code == KEY_0 and menu == "portal":
 			get_tree().root.set_meta("fx_mode","coop")
 			get_tree().root.set_meta("fx_hero",selected_character)
-			get_tree().change_scene_to_file("res://scenes/arcade.tscn")
+			get_tree().change_scene_to_file("res://network/client.tscn")
 		elif code >= KEY_1 and code <= KEY_7: select_list_entry(int(list_scroll.get(menu,0))+int(code)-int(KEY_1))
 		return
 	if menu == "characters":

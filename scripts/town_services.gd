@@ -44,6 +44,7 @@ func render()->void:
   text(body,"Profile files travel with you. This post office does not upload your data or share rankings online.",16)
  else:
   var pr=game.provisions
+  button(header,"Bait recipes",func():close();game.fishing.open_workshop())
   text(body,"CC: "+str(game.gold)+" • Packed: "+pr.name_of(pr.packed)+" • One crop at a time. Clear an adventure to ripen it.",17)
   var crop_text:="No crop planted" if pr.crop=="empty" else str(pr.garden[pr.garden_id].name)+" • "+("Ready to harvest!" if pr.crop=="ready" else "Growing • needs an adventure clear")
   var row:=HBoxContainer.new();body.add_child(row);text(row,crop_text,18).size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -87,7 +88,7 @@ func draw_post(c:Node2D,camera:Vector2,font:Font)->void:
   for col in 10:
    c.draw_rect(Rect2(origin+Vector2(-133+col*28+(10 if row%2 else 0),row*20),Vector2(25,17)),Color("#b5a786") if (row+col)%3 else Color("#a19578"))
  c.draw_texture_rect(post_art,Rect2(origin+Vector2(-180,-242),Vector2(360,285)),false)
- c.draw_string(font,origin+Vector2(-70,-132),"SQUIRREL POST",HORIZONTAL_ALIGNMENT_CENTER,140,14,Color("#f1d497"))
+ c.draw_string(font,origin+Vector2(-75,-119),"SQUIRREL POST",HORIZONTAL_ALIGNMENT_CENTER,150,13,Color("#f1d497"))
  # Two dispatch rails and a small parcel cart, clear of the entrance.
  for side in [-1,1]:
   var rail:=origin+Vector2(side*142,64)

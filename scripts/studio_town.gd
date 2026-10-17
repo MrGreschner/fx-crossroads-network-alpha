@@ -1,7 +1,7 @@
 extends RefCounted
 ## A six-lab campus, with a central entrance and clear reserved lot.
-const ENTRY=Vector2(-420,1420)
-const WALL=Rect2(-680,1110,520,285)
+const ENTRY=Vector2(-530,1375)
+const WALL=Rect2(-790,1045,520,285)
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 func blocked(point:Vector2)->bool:return WALL.grow(12).has_point(point)
 func interact(g:Node)->bool:

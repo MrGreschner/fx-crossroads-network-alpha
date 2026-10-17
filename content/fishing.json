@@ -9,7 +9,18 @@
       "max_length": 29,
       "habitat": "Town Pond",
       "color": "#b5c9d8",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod",
+        "net"
+      ],
+      "hours": [
+        [
+          6,
+          18
+        ]
+      ]
     },
     "copper_bream": {
       "name": "Copper Bream",
@@ -20,7 +31,11 @@
       "max_length": 41,
       "habitat": "Town Pond",
       "color": "#e19558",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "pebble_perch": {
       "name": "Pebble Perch",
@@ -31,7 +46,12 @@
       "max_length": 36,
       "habitat": "Town Pond",
       "color": "#7eae7d",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod",
+        "net"
+      ]
     },
     "sunspot_koi": {
       "name": "Sunspot Koi",
@@ -42,7 +62,17 @@
       "max_length": 56,
       "habitat": "Town Pond",
       "color": "#eba855",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          8,
+          18
+        ]
+      ]
     },
     "bluebell_tench": {
       "name": "Bluebell Tench",
@@ -53,7 +83,11 @@
       "max_length": 47,
       "habitat": "Town Pond",
       "color": "#688ec5",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "moonfin_carp": {
       "name": "Moonfin Carp",
@@ -64,7 +98,11 @@
       "max_length": 72,
       "habitat": "Town Pond",
       "color": "#b88dd4",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "glass_goby": {
       "name": "Glass Goby",
@@ -75,7 +113,11 @@
       "max_length": 24,
       "habitat": "Town Pond",
       "color": "#64cccd",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "crown_of_the_pond": {
       "name": "Crown of the Pond",
@@ -86,7 +128,11 @@
       "max_length": 90,
       "habitat": "Town Pond",
       "color": "#eba855",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "swift_dace": {
       "name": "Swift Dace",
@@ -97,7 +143,18 @@
       "max_length": 28,
       "habitat": "Crossroads River",
       "color": "#b5c9d8",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod",
+        "net"
+      ],
+      "hours": [
+        [
+          6,
+          18
+        ]
+      ]
     },
     "river_sprat": {
       "name": "River Sprat",
@@ -108,7 +165,12 @@
       "max_length": 22,
       "habitat": "Crossroads River",
       "color": "#688ec5",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod",
+        "net"
+      ]
     },
     "rustfin_chub": {
       "name": "Rustfin Chub",
@@ -119,7 +181,17 @@
       "max_length": 45,
       "habitat": "Crossroads River",
       "color": "#e19558",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          8,
+          18
+        ]
+      ]
     },
     "ribbon_loach": {
       "name": "Ribbon Loach",
@@ -130,7 +202,12 @@
       "max_length": 25,
       "habitat": "Crossroads River",
       "color": "#7eae7d",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod",
+        "net"
+      ]
     },
     "brook_barbel": {
       "name": "Brook Barbel",
@@ -141,7 +218,17 @@
       "max_length": 63,
       "habitat": "Crossroads River",
       "color": "#b5c9d8",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          7,
+          19
+        ]
+      ]
     },
     "ember_trout": {
       "name": "Ember Trout",
@@ -152,7 +239,17 @@
       "max_length": 48,
       "habitat": "Crossroads River",
       "color": "#e47662",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          6,
+          11
+        ]
+      ]
     },
     "mint_grayling": {
       "name": "Mint Grayling",
@@ -163,7 +260,16 @@
       "max_length": 42,
       "habitat": "Crossroads River",
       "color": "#7eae7d",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "weather": [
+        "Clear",
+        "Cloudy",
+        "Mist"
+      ]
     },
     "silver_skimmer": {
       "name": "Silver Skimmer",
@@ -174,7 +280,17 @@
       "max_length": 32,
       "habitat": "Crossroads River",
       "color": "#64cccd",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          12,
+          17
+        ]
+      ]
     },
     "storm_pike": {
       "name": "Storm Pike",
@@ -185,7 +301,14 @@
       "max_length": 90,
       "habitat": "Crossroads River",
       "color": "#688ec5",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "weather": [
+        "Rain"
+      ]
     },
     "lantern_catfish": {
       "name": "Lantern Catfish",
@@ -196,7 +319,11 @@
       "max_length": 81,
       "habitat": "Crossroads River",
       "color": "#eba855",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "mirror_salmon": {
       "name": "Mirror Salmon",
@@ -207,7 +334,11 @@
       "max_length": 76,
       "habitat": "Crossroads River",
       "color": "#b88dd4",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "thistle_sturgeon": {
       "name": "Thistle Sturgeon",
@@ -218,7 +349,11 @@
       "max_length": 144,
       "habitat": "Crossroads River",
       "color": "#7eae7d",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "cobalt_eel": {
       "name": "Cobalt Eel",
@@ -229,7 +364,11 @@
       "max_length": 54,
       "habitat": "Crossroads River",
       "color": "#688ec5",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "royal_sailfin": {
       "name": "Royal Sailfin",
@@ -240,7 +379,16 @@
       "max_length": 81,
       "habitat": "Crossroads River",
       "color": "#b88dd4",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "days": [
+        2,
+        5,
+        6
+      ]
     },
     "gilded_brookray": {
       "name": "Gilded Brookray",
@@ -251,7 +399,11 @@
       "max_length": 63,
       "habitat": "Crossroads River",
       "color": "#eba855",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "ancient_river_dragon": {
       "name": "Ancient River Dragon",
@@ -262,7 +414,11 @@
       "max_length": 198,
       "habitat": "Crossroads River",
       "color": "#64cccd",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "cascade_darter": {
       "name": "Cascade Darter",
@@ -273,7 +429,11 @@
       "max_length": 30,
       "habitat": "Exploration waters",
       "color": "#64cccd",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "mist_pearl": {
       "name": "Mist Pearl",
@@ -284,7 +444,11 @@
       "max_length": 36,
       "habitat": "Exploration waters",
       "color": "#b5c9d8",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "cascade_crown": {
       "name": "Cascade Crown",
@@ -295,7 +459,11 @@
       "max_length": 90,
       "habitat": "Exploration waters",
       "color": "#688ec5",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "aurora_koifin": {
       "name": "Aurora Koifin",
@@ -306,7 +474,11 @@
       "max_length": 72,
       "habitat": "Exploration waters",
       "color": "#b88dd4",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "torrent_wyrm": {
       "name": "Torrent Wyrm",
@@ -317,7 +489,11 @@
       "max_length": 180,
       "habitat": "Exploration waters",
       "color": "#eba855",
-      "note": "Follows the ripples beside the reeds."
+      "note": "Follows the ripples beside the reeds.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "inkfold_flounder": {
       "name": "Inkfold Flounder",
@@ -328,7 +504,11 @@
       "max_length": 41,
       "habitat": "Exploration waters",
       "color": "#b88dd4",
-      "note": "A bright flash under quiet water."
+      "note": "A bright flash under quiet water.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "paper_nautilus": {
       "name": "Paper Nautilus",
@@ -339,7 +519,11 @@
       "max_length": 30,
       "habitat": "Exploration waters",
       "color": "#b5c9d8",
-      "note": "Patient anglers sometimes find unusually large specimens."
+      "note": "Patient anglers sometimes find unusually large specimens.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "wispfin_lurker": {
       "name": "Wispfin Lurker",
@@ -350,7 +534,11 @@
       "max_length": 54,
       "habitat": "Exploration waters",
       "color": "#7eae7d",
-      "note": "Look closely at its patterned fins."
+      "note": "Look closely at its patterned fins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "chalkblind_loach": {
       "name": "Chalkblind Loach",
@@ -359,9 +547,13 @@
       "min_kg": 0.08,
       "max_kg": 0.7,
       "max_length": 24,
-      "habitat": "Buried Spring • Descent 38",
+      "habitat": "Buried Spring \u2022 Descent 38",
       "color": "#b5c9d8",
-      "note": "Feels its way through the limestone with pale whiskers."
+      "note": "Feels its way through the limestone with pale whiskers.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "garnet_char": {
       "name": "Garnet Char",
@@ -370,9 +562,13 @@
       "min_kg": 0.25,
       "max_kg": 2.2,
       "max_length": 38,
-      "habitat": "Buried Spring • Descent 38",
+      "habitat": "Buried Spring \u2022 Descent 38",
       "color": "#e47662",
-      "note": "Its ruby flecks reflect minerals carried by the spring."
+      "note": "Its ruby flecks reflect minerals carried by the spring.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "vaultjaw_wyrm": {
       "name": "Vaultjaw Wyrm",
@@ -381,9 +577,13 @@
       "min_kg": 1.2,
       "max_kg": 7.8,
       "max_length": 88,
-      "habitat": "Buried Spring • Descent 38",
+      "habitat": "Buried Spring \u2022 Descent 38",
       "color": "#b88dd4",
-      "note": "An old cavern hunter whose amber fins resemble lanterns."
+      "note": "An old cavern hunter whose amber fins resemble lanterns.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "bastion_barbel": {
       "name": "Bastion Barbel",
@@ -394,7 +594,11 @@
       "max_length": 52,
       "habitat": "North Gate River",
       "color": "#7eae7d",
-      "note": "Holds steady beneath the river’s strong current."
+      "note": "Holds steady beneath the river\u2019s strong current.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "watchlight_trout": {
       "name": "Watchlight Trout",
@@ -405,7 +609,11 @@
       "max_length": 43,
       "habitat": "North Gate River",
       "color": "#eba855",
-      "note": "Copper spots glow like the watch camp’s lanterns."
+      "note": "Copper spots glow like the watch camp\u2019s lanterns.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "pennant_pike": {
       "name": "Pennant Pike",
@@ -416,7 +624,11 @@
       "max_length": 101,
       "habitat": "North Gate River",
       "color": "#688ec5",
-      "note": "A long silver hunter with pennant-shaped crimson fins."
+      "note": "A long silver hunter with pennant-shaped crimson fins.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "moonveil_minnow": {
       "name": "Moonveil Minnow",
@@ -427,7 +639,11 @@
       "max_length": 22,
       "habitat": "Moonveil Silver Canal",
       "color": "#b5c9d8",
-      "note": "Small schools trace moonlight along the stone embankment."
+      "note": "Small schools trace moonlight along the stone embankment.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "velvet_dace": {
       "name": "Velvet Dace",
@@ -438,7 +654,11 @@
       "max_length": 31,
       "habitat": "Moonveil Silver Canal",
       "color": "#b88dd4",
-      "note": "Its plum back is patterned like a festival cloak."
+      "note": "Its plum back is patterned like a festival cloak.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "confetti_perch": {
       "name": "Confetti Perch",
@@ -449,7 +669,11 @@
       "max_length": 37,
       "habitat": "Moonveil Silver Canal",
       "color": "#e47662",
-      "note": "Bright freckles resemble scattered festival confetti."
+      "note": "Bright freckles resemble scattered festival confetti.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "masque_bream": {
       "name": "Masque Bream",
@@ -460,7 +684,11 @@
       "max_length": 49,
       "habitat": "Moonveil Silver Canal",
       "color": "#e19558",
-      "note": "A dark eye band gives this shy fish its masquerade mask."
+      "note": "A dark eye band gives this shy fish its masquerade mask.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
     },
     "ribbon_sailfin": {
       "name": "Ribbon Sailfin",
@@ -471,7 +699,11 @@
       "max_length": 40,
       "habitat": "Moonveil Silver Canal",
       "color": "#64cccd",
-      "note": "Fine ribbon fins trail behind it through the canal."
+      "note": "Fine ribbon fins trail behind it through the canal.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     },
     "prism_glassray": {
       "name": "Prism Glassray",
@@ -482,7 +714,11 @@
       "max_length": 65,
       "habitat": "Moonveil Silver Canal",
       "color": "#688ec5",
-      "note": "Pale crystalline markings shimmer over a diamond body."
+      "note": "Pale crystalline markings shimmer over a diamond body.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
     },
     "midnight_lanternfin": {
       "name": "Midnight Lanternfin",
@@ -493,7 +729,11 @@
       "max_length": 55,
       "habitat": "Moonveil Silver Canal",
       "color": "#b88dd4",
-      "note": "Carries a cool moon-blue light above its head."
+      "note": "Carries a cool moon-blue light above its head.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
     },
     "crescent_regent": {
       "name": "Crescent Regent",
@@ -504,7 +744,860 @@
       "max_length": 117,
       "habitat": "Moonveil Silver Canal",
       "color": "#eba855",
-      "note": "A silver crescent crowns a fish few anglers believe exists."
+      "note": "A silver crescent crowns a fish few anglers believe exists.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "dawn_whisker": {
+      "name": "Dawn Whisker",
+      "rarity": "Uncommon",
+      "chance": 9,
+      "min_kg": 0.25,
+      "max_kg": 2.8,
+      "max_length": 43,
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am Edmonton",
+      "color": "#82b5ac",
+      "note": "A pale whiskered fish that feeds only at the northern dawn shoal, 4\u20136 am Edmonton time.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "roseglass_grayling": {
+      "name": "Roseglass Grayling",
+      "rarity": "Rare",
+      "chance": 1.6,
+      "min_kg": 0.5,
+      "max_kg": 4.2,
+      "max_length": 64,
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am Edmonton",
+      "color": "#cf8db9",
+      "note": "Its tall translucent fin catches the first pink light. Exclusive to the 4\u20136 am shoal.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "firstlight_regent": {
+      "name": "Firstlight Regent",
+      "rarity": "Legendary",
+      "chance": 0.12,
+      "min_kg": 2.0,
+      "max_kg": 11,
+      "max_length": 128,
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am Edmonton",
+      "color": "#ebc673",
+      "note": "An ancient gold and midnight-blue river guardian. Only the dawn shoal reveals it, 4\u20136 am.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "duskscale_shiner": {
+      "name": "Duskscale Shiner",
+      "rarity": "Common",
+      "chance": 23,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "Crossroads River \u00b7 evening",
+      "color": "#8ccabb",
+      "note": "Duskscale Shiner belongs to these waters. Discover its habits by exploring.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          18,
+          23
+        ]
+      ]
+    },
+    "reedlight_minnow": {
+      "name": "Reedlight Minnow",
+      "rarity": "Common",
+      "chance": 25,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "River and Dawn Shoal \u00b7 early hours",
+      "color": "#8ccabb",
+      "note": "Reedlight Minnow belongs to these waters. Discover its habits by exploring.",
+      "group": "school",
+      "methods": [
+        "rod",
+        "net"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          1,
+          6
+        ]
+      ]
+    },
+    "violet_whisker": {
+      "name": "Violet Whisker",
+      "rarity": "Rare",
+      "chance": 1.8,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "Crossroads River \u00b7 night",
+      "color": "#c996e8",
+      "note": "Violet Whisker belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          21,
+          4
+        ]
+      ],
+      "days": [
+        0,
+        3,
+        5
+      ]
+    },
+    "midnight_crown": {
+      "name": "Midnight Crown",
+      "rarity": "Legendary",
+      "chance": 0.1,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "Crossroads River \u00b7 midnight hour",
+      "color": "#efc768",
+      "note": "Midnight Crown belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "veilfin_oracle": {
+      "name": "Veilfin Oracle",
+      "rarity": "Mystical",
+      "chance": 0.045,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "Crossroads River \u00b7 misty or rainy weekend nights",
+      "color": "#8cf6ee",
+      "note": "Veilfin Oracle belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          22,
+          2
+        ]
+      ],
+      "days": [
+        4,
+        5,
+        6
+      ],
+      "weather": [
+        "Mist",
+        "Rain"
+      ]
+    },
+    "lullaby_tench": {
+      "name": "Lullaby Tench",
+      "rarity": "Common",
+      "chance": 25,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "Town Pond \u00b7 after dusk",
+      "color": "#8ccabb",
+      "note": "Lullaby Tench belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          19,
+          2
+        ]
+      ]
+    },
+    "moonpetal_koi": {
+      "name": "Moonpetal Koi",
+      "rarity": "Rare",
+      "chance": 1.5,
+      "min_kg": 0.15,
+      "max_kg": 3.8,
+      "max_length": 64,
+      "habitat": "Town Pond \u00b7 Tuesday and Saturday nights",
+      "color": "#c996e8",
+      "note": "Moonpetal Koi belongs to these waters. Discover its habits by exploring.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "form": "fish",
+      "hours": [
+        [
+          23,
+          4
+        ]
+      ],
+      "days": [
+        1,
+        5
+      ]
+    },
+    "reed_shrimp": {
+      "name": "Reedglass Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Town Pond",
+      "color": "#8ccabb",
+      "note": "Reedglass Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "reed_claw": {
+      "name": "Copperclaw Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Town Pond",
+      "color": "#83b4de",
+      "note": "Copperclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "bridge_shrimp": {
+      "name": "Current Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "East Bridge River",
+      "color": "#8ccabb",
+      "note": "Current Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "bridge_claw": {
+      "name": "Slatebank Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "East Bridge River",
+      "color": "#83b4de",
+      "note": "Slatebank Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "quiet_shrimp": {
+      "name": "Reedseed Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Quiet Reed Stream",
+      "color": "#8ccabb",
+      "note": "Reedseed Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "quiet_claw": {
+      "name": "Mossback Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Quiet Reed Stream",
+      "color": "#83b4de",
+      "note": "Mossback Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "brook_shrimp": {
+      "name": "Amber Brook Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Wayfarer Brook",
+      "color": "#8ccabb",
+      "note": "Amber Brook Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "brook_claw": {
+      "name": "Willowclaw Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Wayfarer Brook",
+      "color": "#83b4de",
+      "note": "Willowclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "deep_shrimp": {
+      "name": "Duskribbon Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Deep River Bend",
+      "color": "#8ccabb",
+      "note": "Duskribbon Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "deep_claw": {
+      "name": "Ironclaw River Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Deep River Bend",
+      "color": "#c996e8",
+      "note": "Ironclaw River Crab belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crab"
+    },
+    "ferry_shrimp": {
+      "name": "Mistbell Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Ferryman\u2019s Spring",
+      "color": "#8ccabb",
+      "note": "Mistbell Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "ferry_claw": {
+      "name": "Silverclaw Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Ferryman\u2019s Spring",
+      "color": "#83b4de",
+      "note": "Silverclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "cascade_shrimp": {
+      "name": "Sprayglass Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Moonwater Cascade",
+      "color": "#8ccabb",
+      "note": "Sprayglass Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "cascade_claw": {
+      "name": "Cascade Blue Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Moonwater Cascade",
+      "color": "#c996e8",
+      "note": "Cascade Blue Crab belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crab"
+    },
+    "fold_shrimp": {
+      "name": "Paperfan Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Foldwater Inlet",
+      "color": "#8ccabb",
+      "note": "Paperfan Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "fold_claw": {
+      "name": "Inkfold Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Foldwater Inlet",
+      "color": "#c996e8",
+      "note": "Inkfold Crab belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crab"
+    },
+    "wisp_shrimp": {
+      "name": "Wispglow Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Wispwater Pool",
+      "color": "#8ccabb",
+      "note": "Wispglow Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "wisp_claw": {
+      "name": "Lantern Marsh Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Wispwater Pool",
+      "color": "#c996e8",
+      "note": "Lantern Marsh Crab belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crab"
+    },
+    "buried_shrimp": {
+      "name": "Deepglass Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Floor 56 \u2022 Buried Spring",
+      "color": "#8ccabb",
+      "note": "Deepglass Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "buried_claw": {
+      "name": "Vaultshell Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Floor 56 \u2022 Buried Spring",
+      "color": "#c996e8",
+      "note": "Vaultshell Crab belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crab"
+    },
+    "garnet_shrimp": {
+      "name": "Rubyseed Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Floor 38 \u2022 Garnet Spring",
+      "color": "#8ccabb",
+      "note": "Rubyseed Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "garnet_claw": {
+      "name": "Garnetclaw Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Floor 38 \u2022 Garnet Spring",
+      "color": "#83b4de",
+      "note": "Garnetclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "watch_shrimp": {
+      "name": "Pennant Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "North Gate \u2022 Watchwater Bank",
+      "color": "#8ccabb",
+      "note": "Pennant Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "watch_claw": {
+      "name": "Bastionclaw Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "North Gate \u2022 Watchwater Bank",
+      "color": "#83b4de",
+      "note": "Bastionclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "masque_shrimp": {
+      "name": "Confetti Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Moonveil \u2022 Silver Canal",
+      "color": "#8ccabb",
+      "note": "Confetti Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "masque_claw": {
+      "name": "Masque Moon Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Moonveil \u2022 Silver Canal",
+      "color": "#c996e8",
+      "note": "Masque Moon Crab belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crab"
+    },
+    "dawn_shrimp": {
+      "name": "Firstdew Shrimp",
+      "rarity": "Common",
+      "chance": 42,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
+      "color": "#8ccabb",
+      "note": "Firstdew Shrimp belongs to these waters. Discover its habits by exploring.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "shrimp"
+    },
+    "dawn_claw": {
+      "name": "Roseclaw Crayfish",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.04,
+      "max_kg": 0.6,
+      "max_length": 22,
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
+      "color": "#83b4de",
+      "note": "Roseclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "group": "predator",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish"
+    },
+    "wayward_dace": {
+      "name": "Wayward Dace",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.15,
+      "max_kg": 0.9,
+      "max_length": 25,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#8dcfbb",
+      "note": "A moss-striped traveller of the far crossings.",
+      "group": "school",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "cinder_goby": {
+      "name": "Cinder Goby",
+      "rarity": "Common",
+      "chance": 32,
+      "min_kg": 0.12,
+      "max_kg": 0.8,
+      "max_length": 22,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#e3a46c",
+      "note": "Its warm freckled fins glow above cooled stone.",
+      "group": "bottom",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "rift_shrimp": {
+      "name": "Riftglass Shrimp",
+      "rarity": "Uncommon",
+      "chance": 22,
+      "min_kg": 0.03,
+      "max_kg": 0.24,
+      "max_length": 14,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#d2c2ed",
+      "note": "A tiny translucent swimmer found only beyond the stable portal.",
+      "group": "surface",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "lantern_loach": {
+      "name": "Lantern Loach",
+      "rarity": "Uncommon",
+      "chance": 18,
+      "min_kg": 0.3,
+      "max_kg": 1.8,
+      "max_length": 36,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#c4da8a",
+      "note": "A ribbon of marsh light with soft lantern whiskers.",
+      "group": "bottom",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "frostveil_char": {
+      "name": "Frostveil Char",
+      "rarity": "Rare",
+      "chance": 7,
+      "min_kg": 0.9,
+      "max_kg": 4.8,
+      "max_length": 64,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#9ddff1",
+      "note": "Ice-blue sails leave luminous edges across the water.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "embercrest_koi": {
+      "name": "Embercrest Koi",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 1.2,
+      "max_kg": 6.4,
+      "max_length": 72,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#f0a970",
+      "note": "Copper armour and a crown of ember-red fins.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "moonrift_eel": {
+      "name": "Moonrift Eel",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.5,
+      "max_kg": 3.6,
+      "max_length": 95,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#b8a9e2",
+      "note": "An elegant crescent swimmer of marsh and astral pools.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          19,
+          6
+        ]
+      ]
+    },
+    "starcrown_ray": {
+      "name": "Starcrown Ray",
+      "rarity": "Legendary",
+      "chance": 1.5,
+      "min_kg": 2.5,
+      "max_kg": 13,
+      "max_length": 140,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#e6cf88",
+      "note": "Gold-edged wings carry a constellation over the darkest water.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "waylight_leviathan": {
+      "name": "Waylight Leviathan",
+      "rarity": "Mystical",
+      "chance": 0.5,
+      "min_kg": 4,
+      "max_kg": 20,
+      "max_length": 185,
+      "habitat": "The Between \u2022 remote crossings",
+      "color": "#a9e4d8",
+      "note": "A many-finned living compass at the edge of the known crossings.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          4,
+          8
+        ],
+        [
+          20,
+          24
+        ]
+      ]
     }
   },
   "pools": {
@@ -527,7 +1620,11 @@
         "bluebell_tench",
         "moonfin_carp",
         "glass_goby",
-        "crown_of_the_pond"
+        "crown_of_the_pond",
+        "lullaby_tench",
+        "moonpetal_koi",
+        "reed_shrimp",
+        "reed_claw"
       ]
     },
     "town_river": {
@@ -557,7 +1654,14 @@
         "cobalt_eel",
         "royal_sailfin",
         "gilded_brookray",
-        "ancient_river_dragon"
+        "ancient_river_dragon",
+        "duskscale_shiner",
+        "reedlight_minnow",
+        "violet_whisker",
+        "midnight_crown",
+        "veilfin_oracle",
+        "bridge_shrimp",
+        "bridge_claw"
       ]
     },
     "quest_reed": {
@@ -574,7 +1678,9 @@
       "fish": [
         "swift_dace",
         "ribbon_loach",
-        "mint_grayling"
+        "mint_grayling",
+        "quiet_shrimp",
+        "quiet_claw"
       ]
     },
     "quest_brook": {
@@ -594,7 +1700,9 @@
         "brook_barbel",
         "silver_skimmer",
         "mirror_salmon",
-        "gilded_brookray"
+        "gilded_brookray",
+        "brook_shrimp",
+        "brook_claw"
       ]
     },
     "quest_deep": {
@@ -617,11 +1725,13 @@
         "lantern_catfish",
         "thistle_sturgeon",
         "cobalt_eel",
-        "ancient_river_dragon"
+        "ancient_river_dragon",
+        "deep_shrimp",
+        "deep_claw"
       ]
     },
     "silverfall_spring": {
-      "name": "Ferryman’s Spring",
+      "name": "Ferryman\u2019s Spring",
       "region": "silverfall",
       "bank": [
         1650,
@@ -635,7 +1745,9 @@
         "cascade_darter",
         "swift_dace",
         "mist_pearl",
-        "cascade_crown"
+        "cascade_crown",
+        "ferry_shrimp",
+        "ferry_claw"
       ]
     },
     "silverfall_cascade": {
@@ -658,7 +1770,9 @@
         "thistle_sturgeon",
         "mist_pearl",
         "aurora_koifin",
-        "torrent_wyrm"
+        "torrent_wyrm",
+        "cascade_shrimp",
+        "cascade_claw"
       ]
     },
     "coast_fold": {
@@ -680,7 +1794,9 @@
         "gilded_brookray",
         "inkfold_flounder",
         "paper_nautilus",
-        "ancient_river_dragon"
+        "ancient_river_dragon",
+        "fold_shrimp",
+        "fold_claw"
       ]
     },
     "marsh_wisp": {
@@ -699,11 +1815,13 @@
         "brook_barbel",
         "lantern_catfish",
         "inkfold_flounder",
-        "wispfin_lurker"
+        "wispfin_lurker",
+        "wisp_shrimp",
+        "wisp_claw"
       ]
     },
     "descent_seep": {
-      "name": "Floor 56 • Buried Spring",
+      "name": "Floor 56 \u2022 Buried Spring",
       "region": "descent56",
       "bank": [
         460,
@@ -718,11 +1836,13 @@
         "gilded_brookray",
         "ancient_river_dragon",
         "torrent_wyrm",
-        "wispfin_lurker"
+        "wispfin_lurker",
+        "buried_shrimp",
+        "buried_claw"
       ]
     },
     "descent38_spring": {
-      "name": "Floor 38 • Garnet Spring",
+      "name": "Floor 38 \u2022 Garnet Spring",
       "region": "descent38",
       "bank": [
         460,
@@ -735,12 +1855,14 @@
       "fish": [
         "chalkblind_loach",
         "garnet_char",
-        "vaultjaw_wyrm"
+        "vaultjaw_wyrm",
+        "garnet_shrimp",
+        "garnet_claw"
       ],
       "spring": true
     },
     "gate_watchwater": {
-      "name": "North Gate • Watchwater Bank",
+      "name": "North Gate \u2022 Watchwater Bank",
       "region": "defense",
       "bank": [
         4300,
@@ -753,11 +1875,13 @@
       "fish": [
         "bastion_barbel",
         "watchlight_trout",
-        "pennant_pike"
+        "pennant_pike",
+        "watch_shrimp",
+        "watch_claw"
       ]
     },
     "moonveil_canal": {
-      "name": "Moonveil • Silver Canal",
+      "name": "Moonveil \u2022 Silver Canal",
       "region": "moonveil",
       "bank": [
         1700,
@@ -775,7 +1899,121 @@
         "ribbon_sailfin",
         "prism_glassray",
         "midnight_lanternfin",
-        "crescent_regent"
+        "crescent_regent",
+        "masque_shrimp",
+        "masque_claw"
+      ]
+    },
+    "town_dawn": {
+      "name": "Northern Dawn Shoal \u00b7 4\u20136 am",
+      "region": "town",
+      "bank": [
+        2475,
+        480
+      ],
+      "water": [
+        2380,
+        480
+      ],
+      "fish": [
+        "swift_dace",
+        "river_sprat",
+        "ribbon_loach",
+        "mint_grayling",
+        "dawn_whisker",
+        "roseglass_grayling",
+        "firstlight_regent",
+        "reedlight_minnow",
+        "dawn_shrimp",
+        "dawn_claw"
+      ],
+      "window": "04:00\u201306:00 Edmonton"
+    },
+    "between_root": {
+      "name": "Rootglass Pool",
+      "region": "between_remote",
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "fish": [
+        "wayward_dace",
+        "rift_shrimp"
+      ]
+    },
+    "between_ember": {
+      "name": "Cinderwell Pool",
+      "region": "between_remote",
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "fish": [
+        "cinder_goby",
+        "rift_shrimp",
+        "embercrest_koi"
+      ]
+    },
+    "between_frost": {
+      "name": "Frostveil Pool",
+      "region": "between_remote",
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "fish": [
+        "cinder_goby",
+        "rift_shrimp",
+        "frostveil_char"
+      ]
+    },
+    "between_mist": {
+      "name": "Lanternmere Pool",
+      "region": "between_remote",
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "fish": [
+        "wayward_dace",
+        "rift_shrimp",
+        "lantern_loach",
+        "moonrift_eel"
+      ]
+    },
+    "between_star": {
+      "name": "Starfall Pool",
+      "region": "between_remote",
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "fish": [
+        "wayward_dace",
+        "rift_shrimp",
+        "moonrift_eel",
+        "starcrown_ray",
+        "waylight_leviathan"
       ]
     }
   }

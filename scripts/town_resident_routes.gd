@@ -1,0 +1,135 @@
+extends RefCounted
+## Deterministic weekly schedules on the shared town calendar; no progression writes.
+const N=preload("res://scripts/town_neighborhood.gd")
+const ORIGIN=Vector2(-1400,-560)
+const CELL=32.0
+const JOBS=[
+ {"at":Vector2(-180,775),"task":"shop","inside":true,"label":"Market"},
+ {"at":Vector2(-1000,2080),"task":"read","inside":true,"label":"Academy"},
+ {"at":Vector2(1375,1520),"task":"guard","inside":true,"label":"Ramguard"},
+ {"at":Vector2(1006,1640),"task":"water","inside":false,"label":"Seedhouse"},
+ {"at":Vector2(2800,655),"task":"deliver","inside":true,"label":"Gatherers' Lodge"},
+ {"at":Vector2(2000,2020),"task":"fish","inside":true,"label":"Ripple & Reel"},
+ {"at":Vector2(-1080,800),"task":"repair","inside":true,"label":"Deepwell Mine"},
+ {"at":Vector2(-530,1375),"task":"read","inside":true,"label":"Studio"}]
+var navigation=AStarGrid2D.new()
+var plans:Array=[]
+var ready=false
+var setup_ms=0.0
+var owner:Node
+var unreachable:Array=[]
+func setup(g:Node,residents:Array[Dictionary])->void:
+ if ready:return
+ var started=Time.get_ticks_usec();owner=g
+ navigation.region=Rect2i(0,0,141,93);navigation.cell_size=Vector2.ONE*CELL;navigation.offset=ORIGIN+Vector2.ONE*CELL*.5
+ navigation.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+ navigation.default_compute_heuristic=AStarGrid2D.HEURISTIC_OCTILE;navigation.default_estimate_heuristic=AStarGrid2D.HEURISTIC_OCTILE;navigation.update()
+ var streets=preload("res://scripts/town_plan.gd").ROADS+N.ROADS
+ for y in navigation.region.size.y:
+  for x in navigation.region.size.x:
+   var id=Vector2i(x,y);var p=navigation.get_point_position(id)
+   var solid=p.y<225 or p.y>2270 or not g.can_stand_at(p)
+   if not solid:
+    for offset in [Vector2(9,0),Vector2(-9,0),Vector2(0,9),Vector2(0,-9)]:
+     if not g.can_stand_at(p+offset):solid=true;break
+   navigation.set_point_solid(id,solid)
+   if solid:continue
+   var cost=3.5
+   for route in streets:
+    for n in range(1,route.size()):
+     if Geometry2D.get_closest_point_to_segment(p,route[n-1],route[n]).distance_to(p)<35:cost=1.0;break
+    if cost==1.0:break
+   navigation.set_point_weight_scale(id,cost)
+ for index in residents.size():plans.append({})
+ ready=true;setup_ms=(Time.get_ticks_usec()-started)/1000.0
+func usable(p:Vector2)->Vector2i:
+ var at=Vector2i(floori((p.x-ORIGIN.x)/CELL),floori((p.y-ORIGIN.y)/CELL))
+ at.x=clampi(at.x,0,navigation.region.size.x-1);at.y=clampi(at.y,0,navigation.region.size.y-1)
+ var best=at;var distance=INF
+ for radius in range(0,5):
+  for y in range(at.y-radius,at.y+radius+1):
+   for x in range(at.x-radius,at.x+radius+1):
+    var id=Vector2i(x,y)
+    if not navigation.is_in_boundsv(id) or navigation.is_point_solid(id):continue
+    var d=navigation.get_point_position(id).distance_squared_to(p)
+    if d<distance:distance=d;best=id
+  if distance<INF:return best
+ return best
+func route_to(a:Vector2,b:Vector2)->PackedVector2Array:
+ var path=navigation.get_point_path(usable(a),usable(b))
+ if path.is_empty():return path
+ # Real doorsteps are already collision-checked; avoid a visible jump on arrival.
+ path.insert(0,a);path.append(b)
+ return path
+func daily_plan(index:int,day:int,npc:Dictionary)->Dictionary:
+ if plans[index].has(day):return plans[index][day]
+ var home=N.HOMES[index%N.HOMES.size()]
+ var doorstep:Vector2=home.door
+ if index%5==1 and int(index/5)%2==1:doorstep+=Vector2(90,0)
+ var bed={"at":doorstep,"task":"sleep","inside":true,"label":home.name}
+ var job=JOBS[index%JOBS.size()].duplicate()
+ var leisure={"at":Vector2(180+index%4*37,550),"task":"fish","inside":false,"label":"Pond garden"} if index%2==0 else {"at":Vector2(2780+index%3*24,1320),"task":"explore","inside":false,"label":"Forest walk"}
+ if day==6:job=leisure
+ var social={"at":Vector2(-1135,1045)+Vector2(index%3*24,0),"task":"rest","inside":false,"label":"Fountain courtyard"} if index%3==0 else {"at":N.HOMES[(index+1)%5].door+Vector2(35,25),"task":"chat","inside":false,"label":"Neighbour"}
+ var lunch={"at":Vector2(1080+index%4*24,1205+int(index/4)%2*24),"task":"lunch","inside":false,"label":"Moss’s Food Stand"}
+ var events=[{"hour":0.0,"stop":bed},{"hour":6.0+index%4*.12,"stop":job},{"hour":12.0+index%3*.08,"stop":lunch},{"hour":13.0+index%3*.08,"stop":job},{"hour":17.0+index%4*.12,"stop":social},{"hour":20.0+index%4*.12,"stop":bed}]
+ if day==2:
+  var square={"at":Vector2((740 if index<10 else 1010)+(index%2)*42,635+int((index%10)/2)*36),"task":"music","inside":false,"label":"Wednesday music"}
+  events=[{"hour":0.0,"stop":bed},{"hour":6.0+index%4*.12,"stop":job},{"hour":12.0+index%3*.08,"stop":lunch},{"hour":13.0+index%3*.08,"stop":job},{"hour":17.0,"stop":social},{"hour":18.0,"stop":square},{"hour":22.0,"stop":bed}]
+ # Small weekly activities reuse the collision-aware resident routes.
+ var extra={}
+ if day in [1,3] and index<4:extra={"start":12.0,"end":14.0,"at":Vector2(350+index%2*55,660+int(index/2)*55),"task":"picnic","label":"Family picnic"}
+ elif day in [0,3] and index in [4,5]:extra={"start":10.0,"end":15.0,"at":Vector2(1665+(index-4)*70,1165),"task":"market","label":"Faraway Flavours"}
+ elif day==5 and index>=6 and index<12:extra={"start":11.0,"end":16.0,"at":Vector2(800+(index-6)*54,1360),"task":"market","label":"Makers' Fair"}
+ elif day==4 and index>=12 and index<17:extra={"start":20.0,"end":22.0,"at":Vector2(1640+(index-12)*30,1180),"task":"lanterns","label":"Lantern Walk"}
+ elif day==5 and index in [2,7,10]:extra={"start":22.0,"end":23.9,"at":Vector2(2760+index%3*35,1350),"task":"stars","label":"Stories Under Stars"}
+ if not extra.is_empty():
+  events=events.filter(func(e):return float(e.hour)<float(extra.start) or float(e.hour)>float(extra.end))
+  events.append({"hour":extra.start,"stop":{"at":extra.at,"task":extra.task,"inside":false,"label":extra.label}})
+  events.append({"hour":extra.end,"stop":job if float(extra.end)<17 else bed})
+  events.sort_custom(func(a,b):return float(a.hour)<float(b.hour))
+ # The named camp traveller has a dawn fishing, day exploring, dusk fire routine.
+ if index==20:
+  bed={"at":Vector2(2950,1515),"task":"sleep","inside":true,"label":"Traveller's tent"}
+  var fish={"at":Vector2(2475,480),"task":"fish","inside":false,"label":"Riverbank"}
+  var walk={"at":Vector2(2785,1300),"task":"explore","inside":false,"label":"Forest trail"}
+  var fire={"at":Vector2(2807,1477),"task":"camp","inside":false,"label":"Campfire"}
+  events=[{"hour":0.0,"stop":bed},{"hour":4.0,"stop":fish},{"hour":6.0,"stop":walk},{"hour":18.0,"stop":fire},{"hour":23.0,"stop":bed}]
+ var segments=[]
+ for n in events.size():
+  var event:Dictionary=events[n]
+  var finish=24.0 if n==events.size()-1 else float(events[n+1].hour)
+  var duration=(finish-float(event.hour))*3600.0
+  var stop:Dictionary=event.stop.duplicate()
+  # Snap outdoor destinations to clear navigation cells, not to a wall or water.
+  stop.at=navigation.get_point_position(usable(stop.at))
+  var previous:Dictionary=events[(n-1+events.size())%events.size()].stop
+  var start:Vector2=navigation.get_point_position(usable(previous.at))
+  var path=route_to(start,stop.at)
+  var lengths=[];var distance=0.0
+  for point in range(1,path.size()):distance+=path[point-1].distance_to(path[point]);lengths.append(distance)
+  if path.is_empty():unreachable.append(str(npc.name)+" day "+str(day)+": "+str(stop.label))
+  var speed=maxf(62.0+float(index%5)*4,distance/maxf(1,duration-1))
+  segments.append({"start":float(event.hour)*3600.0,"duration":duration,"stop":stop,"path":path,"lengths":lengths,"distance":distance,"speed":speed})
+ var result={"timeline":segments}
+ plans[index][day]=result
+ return result
+func state(index:int,hour:float,npc:Dictionary,day:int=0)->Dictionary:
+ if not ready:return {"pos":N.HOMES[index%5].door,"working":true,"visible":false,"task":"sleep","kind":npc.kind,"colour":npc.colour,"name":npc.name}
+ var plan=daily_plan(index,day,npc)
+ var phase=hour*3600.0
+ for segment in plan.timeline:
+  if phase>=float(segment.start)+float(segment.duration):continue
+  var local=phase-float(segment.start)
+  var distance=minf(float(segment.distance),local*float(segment.speed))
+  var moving=distance<float(segment.distance)-.1
+  var pos:Vector2=segment.stop.at
+  if moving:
+   var from=0.0
+   for n in segment.lengths.size():
+    var finish=float(segment.lengths[n])
+    if distance<=finish:
+     pos=segment.path[n].lerp(segment.path[n+1],clampf((distance-from)/maxf(.01,finish-from),0,1));break
+    from=finish
+  return {"pos":pos,"working":not moving,"visible":moving or not bool(segment.stop.inside),"opacity":1.0,"task":str(segment.stop.task),"destination":str(segment.stop.label),"kind":npc.kind,"colour":npc.colour,"name":npc.name}
+ return {"pos":N.HOMES[index%5].door,"working":true,"visible":false,"task":"sleep","kind":npc.kind,"colour":npc.colour,"name":npc.name}

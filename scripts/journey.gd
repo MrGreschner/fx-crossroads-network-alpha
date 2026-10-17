@@ -94,18 +94,13 @@ func draw_town(canvas:Node2D,camera:Vector2)->void:
 	var font:Font=ThemeDB.fallback_font
 	var portrait:Texture2D=game.art.get(str(game.characters.get(game.selected_character,{}).get("sprite","ram"))+"_idle")
 	if portrait!=null:canvas.draw_texture_rect(portrait,Rect2(Vector2(582,460)-camera,Vector2(36,40)),false)
-	for n in mini(5,game.manifest.get("regions",[]).size()):
-		var point:=Vector2(730+n*68,1180)-camera
-		canvas.draw_line(point,point+Vector2(0,-55),Color("#aa9572"),3)
-		canvas.draw_rect(Rect2(point+Vector2(3,-52),Vector2(26,32)),COLOURS[n%COLOURS.size()])
-	canvas.draw_string(font,Vector2(700,1225)-camera,"REALMS BUILT AT THE CROSSROADS",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#e5d8ac"))
 
 func draw_hud(canvas:Node2D)->void:
 	if game.has_method("_attack_request") or game.mode!="town":return
 	var font:Font=ThemeDB.fallback_font
 	if not bool(data.get("skipped",false)) and not quest_done() and not (game.media.clean_view or game.media.capturing):
-		canvas.draw_rect(Rect2(25,110,650,78),Color(.04,.1,.14,.88))
+		canvas.draw_rect(Rect2(25,214,650,78),Color(.04,.1,.14,.88))
 		var text:="WELCOME  "
 		for entry in [["hero","Choose hero"],["practice","Try training"],["grove","Enter Grove"]]:text+=("[done] " if bool(data.get("quest",{}).get(entry[0],false)) else "[ ] ")+str(entry[1])+"   "
-		canvas.draw_string(font,Vector2(40,139),text,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ead9a7"))
-		canvas.draw_string(font,Vector2(40,169),"Visit the Journey board to skip or equip rewards. T also opens it.",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#c6d9d8"))
+		canvas.draw_string(font,Vector2(40,243),text,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ead9a7"))
+		canvas.draw_string(font,Vector2(40,273),"Visit the Journey board to skip or equip rewards. T also opens it.",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#c6d9d8"))

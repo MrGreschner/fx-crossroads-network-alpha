@@ -67,8 +67,7 @@ func draw_on(game:Node,camera:Vector2)->void:
 func draw_outpost(game:Node2D,camera:Vector2)->void:
  var base:=Vector2(160,215)-camera
  game.draw_texture_rect(outpost,Rect2(base,Vector2(420,230)),false)
- var guide:=Vector2(290,400)-camera
- game.draw_string(font,guide+Vector2(-84,-92),"TRAINING GUIDE",HORIZONTAL_ALIGNMENT_CENTER,168,15,Color("#f5ddb0"))
+ game.draw_string(font,base+Vector2(43,98),"CROSSROADS TRAINING",HORIZONTAL_ALIGNMENT_CENTER,193,13,Color("#f5ddb0"))
  var b:Vector2=HERO_BOOK-camera
  game.draw_circle(b,48,Color(.3,.65,.83,.09))
  game.draw_texture_rect(book,Rect2(b-Vector2(36,84),Vector2(72,100)),false)

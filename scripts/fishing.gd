@@ -4,6 +4,12 @@ const C=preload("res://scripts/fishing_catalog.gd")
 const UI=preload("res://scripts/studio_ui.gd")
 const SHOP=Vector2(2000,2020)
 const SHOP_SOLID=Rect2(1850,1760,300,215)
+const E=preload("res://scripts/fishing_ecology.gd")
+var workshop:CanvasLayer
+var method_picker:OptionButton
+var bait_picker:OptionButton
+var odds_button:Button
+var bite_window=2.4
 var game:Node
 var multi=false
 var rng=RandomNumberGenerator.new()
@@ -33,6 +39,8 @@ var room_layer:CanvasLayer
 var room:Control
 var journal_page=0
 var status=""
+var basket_index=-1
+var basket_note:Button
 var modal_previous=""
 var seen_menu=""
 func setup(owner:Node,is_multi:bool=false)->void:
@@ -41,8 +49,17 @@ func setup(owner:Node,is_multi:bool=false)->void:
  panel=PanelContainer.new();UI.apply(panel);panel.custom_minimum_size=Vector2(360,0);hud.add_child(panel)
  var col=VBoxContainer.new();col.add_theme_constant_override("separation",6);panel.add_child(col)
  title=label(col,"",18);detail=label(col,"",14)
+ var controls=HBoxContainer.new();col.add_child(controls);method_picker=OptionButton.new()
+ for method in ["Rod","Net","Basket"]:method_picker.add_item(method)
+ controls.add_child(method_picker);method_picker.item_selected.connect(func(i):records().state().method=["rod","net","pot"][i];status="";records().save())
+ bait_picker=OptionButton.new()
+ for id in E.BAITS:bait_picker.add_item(str(E.BAITS[id].name))
+ controls.add_child(bait_picker);bait_picker.item_selected.connect(func(i):records().state().selected_bait=E.BAITS.keys()[i];records().save())
+ button(col,"Gear • bait • fishing mastery",open_workshop)
+ odds_button=button(col,"Read this water • fish odds",open_odds);odds_button.visible=false
  meter=ProgressBar.new();meter.custom_minimum_size.y=10;meter.show_percentage=false;col.add_child(meter)
  cast_button=button(col,"F • Cast",activate);UI.accent(cast_button);panel.visible=false
+ basket_note=button(hud,"",func():open_workshop();workshop.selected_tab=2;workshop.build());basket_note.visible=false
 func records():return game.legacy.fishing_records
 func local_pos()->Vector2:return game.local_pos if multi else game.position_in_world
 func local_hp()->float:return float(game.health.get(game.my_id,0)) if multi else float(game.health)
@@ -77,40 +94,61 @@ func interact()->bool:
  game.hint="E • Enter Ripple & Reel"
  if Input.is_action_just_pressed("interact"):open_shop()
  return true
+func spot_available(spot:Dictionary)->bool:
+ if str(spot.get("id",""))!="town_dawn":return true
+ return not multi and game.mode=="town" and game.town_life.calendar.dawn_fishing_open()
 func nearest()->Dictionary:
  for spot in spots:
+  if not spot_available(spot):continue
   var bank=Vector2(float(spot.bank[0]),float(spot.bank[1]))
   if local_pos().distance_to(bank)<100:return spot
  return {}
 func _process(delta:float)->void:
  if game==null:return
  clock+=delta
+ var prog=records().progress
+ odds_button.visible=prog.has("fieldguide")
+ if not prog.method_unlocked(str(prog.state().method)):prog.state().method="rod"
+ for i in 3:method_picker.set_item_disabled(i,not prog.method_unlocked(["rod","net","pot"][i]))
+ for i in E.BAITS.size():bait_picker.set_item_disabled(i,not prog.bait_unlocked(str(E.BAITS.keys()[i])))
+ var baskets=prog.state().pots
+ basket_note.visible=not baskets.is_empty() and playable() and not busy() and nearest().is_empty()
+ basket_note.text=prog.basket_summary(E.context(game).utc);basket_note.position=Vector2((game.VIEW.x-360)*.5,164);basket_note.size=Vector2(340,44)
  var region=region_key()
  if region!=cached_region:
   cancel("");cached_region=region;spots=C.spots(region)
   if region in ["descent38","descent56"]:place_buried_spring()
+ if not multi and region=="between" and game.waylight.between():spots=game.waylight.expedition.fishing_spots()
+ if multi and game.get("expedition")!=null and game.expedition.between():spots=game.expedition.expedition.fishing_spots()
  if is_instance_valid(journal_panel):fit_panel(journal_panel,Vector2(1000,610))
+ if is_instance_valid(catch_frame):fit_catch_frame()
  if is_instance_valid(room):panel.visible=false;return
+ if busy() and not spot_available(cast_spot):cancel("The dawn shoal has vanished. Return between 4 and 6 am Edmonton time.")
  if busy() and (not playable() or local_pos().distance_to(cast_pos)>18 or local_hp()<cast_hp or region!=cast_region):cancel("Cast cancelled — moving, damage or a menu interrupted it.")
  var spot=nearest()
  panel.visible=playable() and (not spot.is_empty() or busy()) and not is_instance_valid(journal)
- panel.size=Vector2(360,0);var view=game.get_viewport_rect().size;var fit=minf(1,(view.x-24)/360);panel.scale=Vector2.ONE*fit;panel.position=Vector2((view.x-360*fit)*.5,view.y-155*fit)
+ var view=game.get_viewport_rect().size;var dims=panel.get_combined_minimum_size().max(Vector2(360,0));var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)));panel.size=dims;panel.scale=Vector2.ONE*fit;panel.position=Vector2((view.x-dims.x*fit)*.5,view.y-dims.y*fit-12)
  if not panel.visible:return
  var unlocked=bool(records().state().rod)
- title.text=str(cast_spot.get("name",spot.get("name","Fishing")))
+ method_picker.select(["rod","net","pot"].find(str(records().state().method)))
+ bait_picker.select(E.BAITS.keys().find(prog.bait()))
+ for i in E.BAITS.size():
+  var id=str(E.BAITS.keys()[i]);bait_picker.set_item_text(i,str(E.BAITS[id].name)+(" · "+str(prog.state().bait.get(id,0)) if id!="basic" else ""))
+ method_picker.disabled=busy();bait_picker.disabled=busy()
+ title.text=str(cast_spot.get("name",spot.get("name","Fishing")))+" • Lv %d • Bag %d/%d" % [prog.level(),records().state().kept.size(),records().capacity()]
  if phase=="waiting":
   timer-=delta;detail.text="Watch the float. Press F / Hook when it dips!";cast_button.text="Waiting… • click to cancel";meter.visible=true;meter.value=clampf(100*(1-timer/float(cast_spot.wait)),0,100)
   var age=float(cast_spot.wait)-timer
   if bite_at>=0 and age>=bite_at:start_bite()
   elif timer<=0:cancel(["Not even a nibble. Try another cast.","Quiet water… no bite this time.","The fish ignored that cast. Try again."][rng.randi_range(0,2)])
  elif phase=="bite":
-  timer-=delta;detail.text="BITE! Three flashes — hook now • F";cast_button.text="F • HOOK!";cast_button.modulate=Color("#ffde8f") if bite_flash() else Color("#b89b79");meter.visible=true;meter.value=timer/BITE_WINDOW*100
+  timer-=delta;detail.text="BITE! Three flashes — hook now • F";cast_button.text="F • HOOK!";cast_button.modulate=Color("#ffde8f") if bite_flash() else Color("#b89b79");meter.visible=true;meter.value=timer/bite_window*100
   if timer<=0:cancel("The fish slipped away. Cast again.")
  elif phase=="landed":
   panel.visible=false
  else:
-  detail.text=status if not status.is_empty() else "Stand by the water. A patient cast can uncover a trophy."
-  cast_button.text="F • Cast a line" if unlocked else "Visit Ripple & Reel to discover your fishing rod"
+  detail.text=prog.basket_summary(E.context(game).utc) if records().state().method=="pot" and has_basket(str(spot.get("id",""))) else status if not status.is_empty() else "Stand by the water. A patient cast can uncover a trophy."
+  cast_button.text=("F • Cast a line" if records().state().method=="rod" else "F • Scoop with net" if records().state().method=="net" else ("F • Check placed basket" if has_basket(str(spot.get("id",""))) else "F • Set baited basket")) if unlocked else "Visit Ripple & Reel to discover your fishing rod"
   cast_button.disabled=not unlocked;cast_button.modulate=Color.WHITE;meter.visible=false
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and not event.echo:
@@ -118,10 +156,24 @@ func _unhandled_input(event:InputEvent)->void:
   if event.keycode==KEY_ESCAPE and busy():cancel("Cast cancelled.");get_viewport().set_input_as_handled();return
   if event.keycode==KEY_F and playable() and not is_instance_valid(room):
    if busy() or not nearest().is_empty():activate();get_viewport().set_input_as_handled()
+func open_basket(index:int)->void:
+ if index<0 or index>=records().state().pots.size():return
+ var pot=records().state().pots[index]
+ if E.context(game).utc<float(pot.ready):return
+ if is_instance_valid(workshop):workshop.close()
+ # A shop/journal may have opened the workshop; leave those menus for collection.
+ close_journal()
+ if is_instance_valid(room):close_shop()
+ if not multi:game.legacy.close();game.menu=""
+ basket_index=index;pending=pot.catch;cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();phase="bite";land()
+func has_basket(pool:String)->bool:
+ for pot in records().progress.state().pots:
+  if str(pot.pool)==pool:return true
+ return false
 func start_bite()->void:
- phase="bite";timer=BITE_WINDOW
+ phase="bite";timer=bite_window
 func bite_flash()->bool:
- return phase=="bite" and fposmod(BITE_WINDOW-timer,.8)<.4
+ return phase=="bite" and fposmod(bite_window-timer,.8)<.4
 func activate()->void:
  if not playable():return
  if phase=="bite":land();return
@@ -129,19 +181,38 @@ func activate()->void:
  if not bool(records().state().rod):status="Talk to Marina inside Ripple & Reel first.";return
  var spot=nearest()
  if spot.is_empty():return
- cast_spot=spot.duplicate();cast_spot.wait=rng.randf_range(8.0,14.0);timer=float(cast_spot.wait);bite_at=rng.randf_range(.6,timer-.3) if rng.randf()<.70 else -1.0;cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();pending=C.roll(str(spot.id),rng);phase="waiting";status="";cast_button.disabled=false
+ var prog=records().progress;var method=str(records().state().method)
+ if not prog.method_unlocked(method):status="This equipment is not unlocked. Visit the workshop.";return
+ if method=="pot" and region_key()=="between":status="These waters are unstable. Use a rod or net; set baskets in permanent realm waters.";return
+ if method=="pot":
+  var now=E.context(game).utc
+  for i in prog.state().pots.size():
+   if str(prog.state().pots[i].pool)!=str(spot.id):continue
+   if now<float(prog.state().pots[i].ready):status=prog.basket_summary(now);return
+   basket_index=i;pending=prog.state().pots[i].catch;cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();phase="bite";land();return
+  status=prog.place(str(spot.id),now,rng);game.message=status;game.message_time=5;return
+ pending=C.roll(str(spot.id),rng,E.context(game),method,prog.bait(),prog.level(),prog.trophy_bonus(),prog.rarity_bonus(method))
+ if pending.is_empty():status="No suitable catches for this method and conditions. Try a different method, water or time.";return
+ cast_spot=spot.duplicate();cast_spot.wait=(rng.randf_range(.7,1.4) if method=="net" else rng.randf_range(8.0,14.0))*prog.wait_scale(method)
+ timer=float(cast_spot.wait);bite_at=rng.randf_range(.3 if method=="net" else .6,maxf(.61,timer-.2)) if rng.randf()<prog.bite_chance(method) else -1.0
+ bite_window=BITE_WINDOW+prog.hook_bonus(method);cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();phase="waiting";status="";cast_button.disabled=false
  if not multi:game.mobile.reset_controls()
 func cancel(message:String)->void:
- phase="";pending={};cast_spot={};status=message
+ phase="";pending={};cast_spot={};basket_index=-1;status=message
  if is_instance_valid(catch_frame):catch_frame.queue_free()
  catch_frame=null
 func land()->void:
+ if not spot_available(cast_spot):cancel("The dawn fishing window has closed.");return
  if phase!="bite" or pending.is_empty():return
+ if basket_index<0 and not E.open(C.fish()[pending.species],E.context(game),str(pending.get("method","rod"))):cancel("This species stopped feeding as the conditions changed.");return
  phase="landed";catch_frame=PanelContainer.new();UI.apply(catch_frame);hud.add_child(catch_frame)
  catch_frame.position=Vector2(game.get_viewport_rect().size.x-365,205);catch_frame.custom_minimum_size=Vector2(340,0)
  var col=VBoxContainer.new();catch_frame.add_child(col);var spec:Dictionary=C.fish()[pending.species]
+ if C.is_trophy(pending):
+  label(col,"★ TROPHY FISH! ★",25).modulate=Color("#ffdb7d")
+  label(col,"250%+ of species average • +50% catch XP",15).modulate=Color("#ffdb7d")
  label(col,str(spec.name),23).modulate=Color(str(spec.color));picture(col,str(pending.species),Vector2(210,110))
- label(col,"%s • %.2f kg • %.1f cm%s" % [spec.rarity,pending.kg,pending.cm," • TROPHY SIZE" if pending.trophy else ""],16)
+ label(col,"%s • %.2f kg • %.1f cm%s" % [spec.rarity,pending.kg,pending.cm," • TROPHY SIZE" if C.is_trophy(pending) else ""],16)
  label(col,C.size_summary(pending),16).modulate=Color("#ffe1a7")
  var previous:Dictionary=records().state().journal.get(str(pending.species),{})
  var record_text="First of this species — your first size record!" if previous.is_empty() else "Your largest before this catch: %.2f kg / %.1f cm" % [previous.kg,previous.cm]
@@ -150,15 +221,25 @@ func land()->void:
   label(col,"NEW WEIGHT RECORD! +%.2f kg" % (float(pending.kg)-float(previous.kg)) if float(pending.kg)>float(previous.kg) else "%.2f kg below your best" % (float(previous.kg)-float(pending.kg)),17).modulate=Color("#ffe19c")
  catch_text=label(col,"Keep it for your aquarium, or release it. Both record a discovery. Combat is still live!",15)
  var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"Keep catch",finish_catch.bind(true)));button(row,"Release",finish_catch.bind(false))
- var view=game.get_viewport_rect().size;var fit=minf(1,minf((view.x-24)/340,(view.y-24)/560));catch_frame.scale=Vector2.ONE*fit;catch_frame.position=Vector2(view.x-340*fit-12,maxf(12,(view.y-560*fit)*.5))
+ call_deferred("fit_catch_frame")
+func fit_catch_frame()->void:
+ if not is_instance_valid(catch_frame):return
+ var view=game.get_viewport_rect().size;var dims=catch_frame.get_combined_minimum_size().max(Vector2(340,0))
+ var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)))
+ catch_frame.size=dims;catch_frame.scale=Vector2.ONE*fit;catch_frame.position=Vector2(view.x-dims.x*fit-12,(view.y-dims.y*fit)*.5)
 func finish_catch(keep:bool)->void:
  if phase!="landed" or pending.is_empty():return
- if keep and records().state().kept.size()>=records().CAPACITY:catch_text.text="Your 100-catch collection is full. Release this fish, or make room at Ripple & Reel.";return
+ if keep and records().state().kept.size()>=records().capacity():catch_text.text="Fish bag full (%d / %d). Release this catch for XP, or sell/release kept fish to make room." % [records().state().kept.size(),records().capacity()];return
  var name=str(C.fish()[pending.species].name)
  var reward_before=game.legacy.weekly.earned("week_fish")
- var saved=records().complete(pending,keep)
+ var saved=false
+ if basket_index>=0:
+  var count=records().state().pots.size();records().progress.claim(basket_index,E.context(game).utc,keep);saved=records().state().pots.size()<count
+ else:
+  saved=records().complete(pending,keep)
+  if saved:records().progress.spend_bait(rng)
  var weekly_reward=" • Moonlit Minnow earned! Equip it in Cosmetics." if saved and not reward_before and game.legacy.weekly.earned("week_fish") else ""
- cancel(("Kept " if keep else "Released ")+name+(" • temporary Game Dev collection; saved profile unchanged." if bool(game.legacy.data.get("teacher",false)) else " • journal updated." if saved else " • practice/test catch; no profile progress.")+weekly_reward)
+ cancel(("Kept " if keep else "Released ")+name+(" • temporary Game Dev collection; saved profile unchanged." if bool(game.legacy.data.get("teacher",false)) else " • journal updated." if saved else " • practice/test catch; no profile progress.")+(" • +%d fishing XP" % records().progress.last_xp if saved else "")+weekly_reward)
 func label(parent:Node,text:String,font_size:int=17)->Label:
  var l=Label.new();l.text=text;l.add_theme_font_size_override("font_size",font_size);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
 func button(parent:Node,text:String,action:Callable)->Button:
@@ -167,6 +248,31 @@ func picture(parent:Node,id:String,dimensions:Vector2)->void:
  var image=TextureRect.new();image.texture=C.texture(id);image.custom_minimum_size=dimensions;image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
 func fit_panel(p:Control,dimensions:Vector2)->void:
  var v=game.get_viewport_rect().size;var scale_factor=minf(1,minf((v.x-24)/dimensions.x,(v.y-24)/dimensions.y));p.size=dimensions;p.scale=Vector2.ONE*scale_factor;p.position=(v-dimensions*scale_factor)*.5
+func open_odds()->void:
+ var prog=records().progress
+ if not prog.has("fieldguide"):
+  status="Learn Read the Water in the Watersense mastery branch to see fish odds."
+  game.message=status;game.message_time=5;return
+ var spot=nearest()
+ if spot.is_empty():game.message="Stand at a fishing hole to read its water.";game.message_time=5;return
+ var ctx=E.context(game);var method=str(prog.state().method);var bait=prog.bait()
+ var entries=[];var total=0.0
+ for id in C.pools()[spot.id].fish:
+  var w=E.weight(C.fish()[id],ctx,method,bait,prog.level(),prog.rarity_bonus(method))
+  if w>0:entries.append({"id":id,"weight":w});total+=w
+ var lines=[str(spot.name),"%s • %s • %s • %02d:%02d" % [method.capitalize(),str(E.BAITS[bait].name),str(ctx.weather),int(ctx.hour),int(fposmod(float(ctx.hour)*60,60))],"Species odds below are conditional on a successful catch."]
+ lines.append("Bite chance per attempt: %.0f%%" % (100*prog.bite_chance(method)) if method!="pot" else "Basket fills once in %d real minutes; odds use current conditions, actual catch uses conditions at ready time." % prog.basket_minutes())
+ for entry in entries:lines.append("%s • %.2f%%" % [C.fish()[entry.id].name,100*float(entry.weight)/total])
+ if entries.is_empty():lines.append("Nothing feeds here with this method and these conditions.")
+ lines.append("Weather, weekday, feeding hours, bait and mastery all affect this list. Reopen to refresh. Trophy size is a separate %.2f%% roll." % (2.5+100*prog.trophy_bonus()))
+ var dialog=AcceptDialog.new();dialog.name="FishOdds";dialog.title="Read the Water";hud.add_child(dialog)
+ var scroll=ScrollContainer.new();scroll.custom_minimum_size=Vector2(560,330);dialog.add_child(scroll)
+ label(scroll,"\n\n".join(lines),16)
+ preload("res://scripts/touch_list_scroll.gd").attach(scroll)
+ dialog.confirmed.connect(dialog.queue_free);dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(600,410))
+func open_workshop()->void:
+ if is_instance_valid(workshop):return
+ cancel("");workshop=preload("res://scripts/fishing_workshop.gd").new();game.add_child(workshop);workshop.setup(self)
 func open_shop()->void:
  if multi or game.mode!="town" or is_instance_valid(room):return
  cancel("");game.menu="fishing_shop";game.mobile.reset_controls()
@@ -185,7 +291,9 @@ func open_journal()->void:
  journal_panel=PanelContainer.new();UI.apply(journal_panel);journal.add_child(journal_panel)
  var col=VBoxContainer.new();journal_panel.add_child(col)
  var header=HBoxContainer.new();col.add_child(header);label(header,"RIPPLE & REEL • YOUR CATCHES",25);button(header,"Close",close_journal)
- label(col,"%d / %d species discovered • %d catches • %d / 100 kept. Display five in the shop, and one favourite on your player card." % [records().state().journal.size(),C.fish().size(),records().state().total,records().state().kept.size()],16)
+ label(col,"%d / %d species discovered • %d catches • %d / %d kept. Display five in the shop, and one favourite on your player card." % [records().state().journal.size(),C.fish().size(),records().state().total,records().state().kept.size(),records().capacity()],16)
+ button(col,"Fishing level %d • gear, bait & mastery tree" % records().progress.level(),open_workshop)
+ label(col,records().progress.title(),16)
  button(col,"Weekly fishing challenge & rewards",game.legacy.weekly.open_board)
  var task=game.legacy.weekly.fishing_task();label(col,"This week: "+str(C.fish()[task.species].name)+" • at least %.2f kg • %s" % [task.kg,C.pools()[task.pool].name],16)
  var tabs=TabContainer.new();tabs.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(tabs)
@@ -213,7 +321,7 @@ func kept_ui(body:Node)->void:
   label(navigation,"Page %d / %d" % [journal_page+1,ceili(all_catches.size()/10.0)],16)
   var next=button(navigation,"Next 10",func():journal_page+=1;refresh_journal());next.disabled=(journal_page+1)*10>=all_catches.size()
  for catch in all_catches.slice(journal_page*10,journal_page*10+10):
-  var id=str(catch.id);var spec:Dictionary=C.fish()[catch.species];var box=UI.card(body,str(spec.name)+(" • Favourite" if records().state().favorite==id else ""),"%s • %.2f kg • %.1f cm • %s" % [spec.rarity,catch.kg,catch.cm,C.pools()[catch.pool].name]);var row=HBoxContainer.new();box.add_child(row);picture(row,str(catch.species),Vector2(160,88))
+  var id=str(catch.id);var spec:Dictionary=C.fish()[catch.species];var box=UI.card(body,str(spec.name)+(" • ★ TROPHY" if C.is_trophy(catch) else "")+(" • Favourite" if records().state().favorite==id else ""),"%s • %.2f kg • %.1f cm • %s" % [spec.rarity,catch.kg,catch.cm,C.pools()[catch.pool].name]);var row=HBoxContainer.new();box.add_child(row);picture(row,str(catch.species),Vector2(160,88))
   var actions=VBoxContainer.new();actions.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(actions)
   button(actions,"Feature on player card",func():records().set_favorite(id);refresh_journal())
   var tank=HBoxContainer.new();actions.add_child(tank)
@@ -225,20 +333,26 @@ func kept_ui(body:Node)->void:
 func species_ui(body:Node)->void:
  for id in C.fish():
   var seen=records().state().journal.has(id);var spec:Dictionary=C.fish()[id]
-  var box=UI.card(body,str(spec.name) if seen else "? • Undiscovered fish",str(spec.habitat))
+  var box=UI.card(body,str(spec.name) if seen else "? • Undiscovered fish",str(spec.habitat) if seen else "Unknown waters")
   var row=HBoxContainer.new();box.add_child(row)
   if seen:
    picture(row,id,Vector2(145,80));var rec:Dictionary=records().state().journal[id]
-   label(row,"%s • %d caught • Best %.2f kg / %.1f cm\n%s" % [spec.rarity,rec.count,rec.kg,rec.cm,spec.note],17)
+   label(row,"%s • %d caught • Best %.2f kg / %.1f cm\n%s" % [spec.rarity,rec.count,rec.kg,rec.cm,str(spec.note)+"\n"+E.window_text(spec)+" • "+"/".join(spec.get("methods",["rod"]))],17)
   else:label(row,"Explore fishing waters to discover this species. Size varies even within the same species.",16)
 func draw_on(canvas:Node2D,camera:Vector2)->void:
+ draw_baskets(canvas,camera)
  var region=region_key();var active_spots=spots if region==cached_region else C.spots(region)
  var bounds=Rect2(camera,game.VIEW).grow(160)
  if region=="town" and bounds.intersects(SHOP_SOLID.grow(80)):
   canvas.draw_texture_rect(C.texture("shop"),Rect2(SHOP-Vector2(180,288)-camera,Vector2(360,288)),false)
-  var p=SHOP-camera;canvas.draw_string(UI.FONT,p+Vector2(-106,-95),"RIPPLE & REEL",HORIZONTAL_ALIGNMENT_CENTER,212,17,Color("#fae2a8"))
+  var p=SHOP-camera
+  # Dedicated fascia sits below the roof, above the door and both windows.
+  var sign=Rect2(p+Vector2(-111,-169),Vector2(222,22))
+  canvas.draw_rect(sign,Color("#264753"));canvas.draw_rect(sign,Color("#c6af7d"),false,1)
+  canvas.draw_string(UI.FONT,p+Vector2(-108,-153),"RIPPLE & REEL",HORIZONTAL_ALIGNMENT_CENTER,216,16,Color("#fae2a8"))
   canvas.draw_rect(Rect2(p-Vector2(55,2),Vector2(110,38)),Color(.6,.9,.87,.17 if local_pos().distance_to(SHOP)<100 else .07))
  for spot in active_spots:
+  if not spot_available(spot):continue
   var water=Vector2(float(spot.water[0]),float(spot.water[1]));var bank=Vector2(float(spot.bank[0]),float(spot.bank[1]))
   if not bounds.has_point(water):continue
   var p=water-camera
@@ -260,7 +374,46 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_line(shore+Vector2(-12,6),shore+Vector2(-12,-24),Color("#baa177"),3);canvas.draw_circle(shore+Vector2(-12,-27),6,Color("#96cbd4"));canvas.draw_arc(shore,23,0,PI,18,Color(.7,.88,.85,.35),2)
  if busy() and not cast_spot.is_empty() and region==cast_region:
   var water=Vector2(float(cast_spot.water[0]),float(cast_spot.water[1]))-camera;var hero=local_pos()-camera
-  canvas.draw_line(hero+Vector2(15,-36),hero+Vector2(38,-60),Color("#c5a579"),3);canvas.draw_line(hero+Vector2(38,-60),water,Color(.8,.88,.86,.8),1)
-  var bob=water+Vector2(0,sin(clock*5)*2+(8 if phase=="bite" else 0));canvas.draw_circle(bob,4,Color("#edc49a"));canvas.draw_line(bob-Vector2(0,7),bob,Color("#e26560"),3)
+  var bob=water+Vector2(0,sin(clock*5)*2+(8 if phase=="bite" else 0))
+  if str(records().state().method)=="net":
+   var scoop=bob+Vector2(0,-5-absf(sin(clock*4))*10)
+   canvas.draw_line(hero+Vector2(15,-28),scoop+Vector2(-19,0),records().progress.tint(),4,true)
+   canvas.draw_set_transform(scoop,0,Vector2(1,.55))
+   canvas.draw_circle(Vector2.ZERO,22,Color(.6,.86,.88,.18))
+   for n in range(-2,3):
+    var edge=sqrt(22*22-n*n*49)
+    canvas.draw_line(Vector2(n*7,-edge),Vector2(n*7,edge),Color(.73,.9,.87,.6),1,true)
+    canvas.draw_line(Vector2(-edge,n*7),Vector2(edge,n*7),Color(.73,.9,.87,.6),1,true)
+   canvas.draw_arc(Vector2.ZERO,22,0,TAU,32,records().progress.tint(),3,true);canvas.draw_set_transform(Vector2.ZERO)
+  else:
+   canvas.draw_line(hero+Vector2(15,-36),hero+Vector2(38,-60),records().progress.tint(),3);canvas.draw_line(hero+Vector2(38,-60),water,Color(.8,.88,.86,.8),1)
+   canvas.draw_circle(bob,4,records().progress.tint());canvas.draw_line(bob-Vector2(0,7),bob,Color("#e26560"),3)
+  if str(records().state().cosmetic) in ["moon","star","aurora","crown"] and records().progress.level()>=15:
+   for n in 3:
+    var glint=bob+Vector2(sin(clock*.8+n*2)*24,cos(clock+n)*10)
+    var length=2+sin(clock*3+n)*1.5
+    canvas.draw_line(glint-Vector2(length,0),glint+Vector2(length,0),records().progress.tint(),1,true)
+    canvas.draw_line(glint-Vector2(0,length),glint+Vector2(0,length),records().progress.tint(),1,true)
   if bite_flash():
    canvas.draw_arc(bob,15,0,TAU,24,Color("#ffe291"),3,true);canvas.draw_line(bob+Vector2(0,-30),bob+Vector2(0,-19),Color("#ffe291"),4,true);canvas.draw_circle(bob+Vector2(0,-14),2,Color("#ffe291"))
+
+func draw_baskets(canvas:Node2D,camera:Vector2)->void:
+ for pot in records().state().pots:
+  if str(C.pools()[pot.pool].region)!=region_key():continue
+  var water=C.pools()[pot.pool].water;var p=Vector2(water[0],water[1])-camera+Vector2(26,14)
+  if not Rect2(Vector2.ZERO,game.VIEW).grow(40).has_point(p):continue
+  canvas.draw_rect(Rect2(p-Vector2(14,9),Vector2(28,18)),Color("#b59160"));canvas.draw_arc(p-Vector2(0,8),10,PI,TAU,16,Color("#ead2a1"),2,true)
+  for n in 5:canvas.draw_line(p+Vector2(-12+n*6,-8),p+Vector2(-12+n*6,8),Color("#705d47"),1)
+  var ready=E.context(game).utc>=float(pot.ready)
+  canvas.draw_circle(p+Vector2(0,-17),5 if ready else 3,Color("#a8e0b8") if ready else Color("#ddbd7c"))
+  if ready:
+   canvas.draw_arc(p+Vector2(0,-17),10+sin(clock*3)*2,0,TAU,24,Color(.65,.95,.75,.6),2,true)
+   canvas.draw_string(UI.FONT,p+Vector2(-27,-35),"READY!",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#c5f7c9"))
+
+func xp_popup(amount:int)->void:
+ if amount<=0:return
+ var layer=CanvasLayer.new();layer.layer=65;layer.name="FishingXP";add_child(layer)
+ var label=Label.new();label.text="+%d Fishing XP" % amount;label.add_theme_font_size_override("font_size",19);label.add_theme_color_override("font_color",Color("#90e9df"));label.add_theme_color_override("font_shadow_color",Color("#153a3e"));label.add_theme_constant_override("shadow_offset_x",1);label.add_theme_constant_override("shadow_offset_y",2);label.mouse_filter=Control.MOUSE_FILTER_IGNORE;layer.add_child(label)
+ var at:Vector2=game._local_draw_position() if game.has_method("_local_draw_position") else game.local_pos
+ label.position=at-game.camera-Vector2(40,70)
+ var tween=create_tween();tween.set_parallel(true);tween.tween_property(label,"position:y",label.position.y-36,.95);tween.tween_property(label,"modulate:a",0.0,.95);tween.chain().tween_callback(layer.queue_free)

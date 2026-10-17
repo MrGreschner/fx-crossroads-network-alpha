@@ -31,6 +31,7 @@ func setup(owner:RefCounted)->void:
  var header=HBoxContainer.new();body.add_child(header)
  var title=label(header,"CROSSROADS MARKET",26);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;title.add_theme_color_override("font_color",Color("#ebcc87"))
  button(header,"Idle Mining",func():close();market.legacy.mine.open())
+ if not market.legacy.arcade:button(header,"Fishing bait",func():close();market.legacy.game.fishing.open_workshop())
  button(header,"Back to town",close)
  var pacing=HBoxContainer.new();body.add_child(pacing)
  var pacing_title=label(pacing,"One business day (minutes):",16);pacing_title.custom_minimum_size=Vector2(260,40);pacing_title.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
@@ -94,6 +95,7 @@ func render()->void:
  elif tabs.current_tab==3:grow()
  else:classroom()
 func floor_view()->void:
+ button(page,"Glimmer exchange • sell fish & gathered goods",func():close();market.legacy.game.fishing.open_workshop();var w=market.legacy.game.fishing.workshop;w.selected_tab=4;w.build())
  var a=market.state()
  var reward=market.supply_reward()
  var dividend=UI.card(page,"SUPPLY DIVIDEND • "+str(int(reward.pending))+" CC ready","A profitable trading day with at least one sale earns 20 CC, once per real day. Bank up to 60 CC. Collect in town to help buy supplies; combat stats and multiplayer starting money stay the same.")

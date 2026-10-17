@@ -1,7 +1,7 @@
 extends CanvasLayer
 var frame:Control
 var elapsed:=0.0
-const DURATION=3.8
+const DURATION=5.6
 var display_font:Font=preload("res://assets/fonts/CrossroadsDisplay.ttf")
 var ui_font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 var art:Dictionary={}
@@ -20,22 +20,44 @@ func _process(delta:float)->void:
 func paint()->void:
  var size:Vector2=get_viewport().get_visible_rect().size
  var center:Vector2=size*.5
- var alpha:float=1.0-smoothstep(3.15,DURATION,elapsed)
- frame.draw_rect(Rect2(Vector2.ZERO,size),Color(.025,.07,.09,alpha))
+ var alpha:float=1.0-smoothstep(4.9,DURATION,elapsed)
+
+ var journey=clampf(elapsed/DURATION,0,1)
+ var is_night=get_parent().town_life.calendar.night_amount()>.5
+ var orbit=Vector2(center.x+cos(PI-journey*PI)*minf(size.x*.35,390),center.y-100-sin(journey*PI)*minf(size.y*.3,180))
+ var altitude=sin(journey*PI)
+ var sky=Color("#081b26").lerp(Color("#285777") if is_night else Color("#b57b42"),altitude*(.2 if is_night else .85))
+ sky=sky.lerp(Color("#579ca4"),pow(altitude,4)*(.08 if is_night else .7))
+ frame.draw_rect(Rect2(Vector2.ZERO,size),Color(sky,alpha))
+ # Broad screen illumination follows height, with warm horizons and a cool night.
+ for n in range(14,0,-1):
+  var radius=minf(size.x,size.y)*(.15+n*.075)
+  frame.draw_circle(orbit,radius,Color(.62,.78,1,alpha*altitude*.004) if is_night else Color(1,.81,.43,alpha*altitude*.013))
+ var celestial=Color(.72,.85,1,alpha) if is_night else Color(1,.79,.40,alpha)
+ for n in range(10,0,-1):frame.draw_circle(orbit,19+n*9,Color(celestial,(.012+.02*altitude)*alpha))
+ frame.draw_circle(orbit,19,celestial)
+ if is_night:frame.draw_circle(orbit+Vector2(8,-5),17,Color(.025,.07,.09,alpha))
+ else:
+  for n in 10:
+   var dir=Vector2.from_angle(n*TAU/10+elapsed*.08);frame.draw_line(orbit+dir*24,orbit+dir*31,Color(celestial,alpha*.5),2,true)
  var gold:=Color(.84,.72,.44,alpha)
  var blue:=Color(.35,.75,.78,alpha)
  var reveal:float=smoothstep(0,.45,elapsed)
  var title_size:int=clampi(int(size.x/17),28,72)
  var font:Font=display_font
- var text:="FX CROSSROADS"
+ var text:="CROSSROADS"
  var width:float=font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,title_size).x
+ frame.draw_string(font,center+Vector2(-width/2,12+(1-reveal)*12)+Vector2((center.x-orbit.x)*.025,7),text,HORIZONTAL_ALIGNMENT_LEFT,-1,title_size,Color(0,0,0,alpha*.5))
  frame.draw_string(font,center+Vector2(-width/2,12+(1-reveal)*12),text,HORIZONTAL_ALIGNMENT_LEFT,-1,title_size,Color(.96,.89,.72,alpha*reveal))
  for side in [-1,1]:
-  frame.draw_line(center+Vector2(side*20,55),center+Vector2(side*width*.45,55),gold,2,true)
+  frame.draw_line(center+Vector2(side*20,65),center+Vector2(side*width*.45,65),gold,2,true)
  frame.draw_arc(center+Vector2(0,-85),28,-PI*.75,PI*.75,32,blue,2,true)
  for side in [-1,1]:frame.draw_line(center+Vector2(side*32,-85),center+Vector2(side*54,-85),gold,2,true)
  frame.draw_colored_polygon(PackedVector2Array([center+Vector2(0,-110),center+Vector2(12,-85),center+Vector2(0,-60),center+Vector2(-12,-85)]),gold)
- var sub:="EVERY PATH BEGINS HERE"
+ var subtitle:="REALMS BEYOND"
+ var subtitle_width:float=ui_font.get_string_size(subtitle,HORIZONTAL_ALIGNMENT_LEFT,-1,23).x
+ frame.draw_string(ui_font,center+Vector2(-subtitle_width/2,48),subtitle,HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color(.9,.77,.5,alpha*reveal))
+ var sub:="FIND YOUR PATH. CREATE WHAT’S NEXT."
  var sw:float=ui_font.get_string_size(sub,HORIZONTAL_ALIGNMENT_LEFT,-1,16).x
  frame.draw_string(ui_font,center+Vector2(-sw/2,91),sub,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color(.63,.78,.77,alpha*reveal))
 
@@ -59,3 +81,13 @@ func paint()->void:
    var angle:float=n*TAU/5+elapsed
    var spark:Vector2=foe_pos+Vector2(-14,-24)+Vector2.from_angle(angle)*12
    frame.draw_line(spark,spark+Vector2.from_angle(angle)*7,Color(1,.8,.36,alpha*(1-smoothstep(1.8,2.25,elapsed))),2,true)
+
+ var water_y=size.y-28
+ frame.draw_line(Vector2(center.x-130,water_y),Vector2(center.x+130,water_y),Color(.37,.74,.78,alpha*.5),2,true)
+ var swim=fposmod(elapsed*.34,1);var fish_pos=Vector2(center.x-100+swim*200,water_y-8-sin(swim*PI)*35)
+ var fish=preload("res://scripts/fishing_catalog.gd").texture("reedlight_minnow" if is_night else "sunspot_koi")
+ if fish!=null:frame.draw_texture_rect(fish,Rect2(fish_pos-Vector2(31,18),Vector2(62,36)),false,Color(1,1,1,alpha))
+ for n in 3:frame.draw_arc(Vector2(center.x-70+n*65,water_y),8+fposmod(elapsed*8+n*4,16),0,PI,16,Color(.55,.85,.88,alpha*.25),1,true)
+ var caption="A LIVING TOWN • WATERS TO DISCOVER"
+ var caption_width=ui_font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,10).x
+ frame.draw_string(ui_font,Vector2(center.x-caption_width*.5,water_y-53),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,10,Color(.7,.85,.83,alpha))

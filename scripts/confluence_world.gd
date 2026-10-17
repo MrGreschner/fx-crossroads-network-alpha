@@ -15,7 +15,7 @@ const ROOMS=[Rect2(180,920,700,560),Rect2(1080,280,900,620),Rect2(1080,1500,900,
 const WALKS=[Rect2(850,1120,430,160),Rect2(1150,850,150,700),Rect2(1930,520,410,145),Rect2(1930,1750,410,145),Rect2(2230,610,150,1160),Rect2(2800,1120,400,160),Rect2(2400,570,150,380)]
 const EXIT=Vector2(3850,1200)
 func setup(id:String)->void:
- active=id=="confluence";initialized=false;done=false;cleared.clear();started.clear();warnings.clear();bolts.clear();clock=0;spring_used=false
+ active=id=="confluence";initialized=false;done=false;cleared=[];started=[];warnings.clear();bolts.clear();clock=0;spring_used=false
 func floor_at(p:Vector2)->bool:
  for r in ROOMS+WALKS:
   if r.grow(-15).has_point(p):return true
@@ -139,7 +139,10 @@ func step(delta:float)->void:
   if hit or float(b.time)<=0:bolts.remove_at(i)
 func snapshot()->Dictionary:return {"active":active,"initialized":initialized,"done":done,"cleared":cleared,"started":started,"warnings":warnings,"bolts":bolts,"clock":clock,"spring_used":spring_used}
 func receive(d:Dictionary)->void:
- active=bool(d.get("active",false));initialized=bool(d.get("initialized",false));done=bool(d.get("done",false));cleared=d.get("cleared",[]);started=d.get("started",[]);warnings=d.get("warnings",[]);bolts=d.get("bolts",[]);clock=float(d.get("clock",0));spring_used=bool(d.get("spring_used",false))
+ active=bool(d.get("active",false));initialized=bool(d.get("initialized",false));done=bool(d.get("done",false));cleared=[];started=[]
+ for value in d.get("cleared",[]):cleared.append(int(value))
+ for value in d.get("started",[]):started.append(int(value))
+ warnings=d.get("warnings",[]);bolts=d.get("bolts",[]);clock=float(d.get("clock",0));spring_used=bool(d.get("spring_used",false))
 func draw_world(c:Node2D,camera:Vector2)->void:
  if not active:return
  var view:=Rect2(camera-Vector2(150,150),Vector2(2300,1600))

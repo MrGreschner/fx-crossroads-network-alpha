@@ -5,13 +5,13 @@ var favorite_art:Texture2D
 var icon_id:=""
 const METALS=["#687e87","#bb8052","#c3d3dc","#edc363","#b6eeed","#cbb2f1"]
 func _ready()->void:
- custom_minimum_size=Vector2(0,610)
+ custom_minimum_size=Vector2(0,545)
  var favourite:Dictionary=legacy.fishing_records.favorite()
  if not favourite.is_empty():favorite_art=preload("res://scripts/fishing_catalog.gd").texture(str(favourite.species))
  size_flags_horizontal=Control.SIZE_EXPAND_FILL;mouse_filter=Control.MOUSE_FILTER_IGNORE;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
  icon_id=str(legacy.card.state().portrait)
  if not legacy.card.portrait_unlocked(icon_id):icon_id=""
- if not icon_id.is_empty():portrait=load("res://assets/"+str(legacy.game.characters[icon_id].get("sprite",icon_id))+"_idle.png")
+ if not icon_id.is_empty():portrait=legacy.game.art.get(str(legacy.game.characters[icon_id].get("sprite",icon_id))+"_idle")
  resized.connect(queue_redraw)
 func label(p:Vector2,value:String,size:int=17,tint:Color=Color("#e2e9df"))->void:draw_string(ThemeDB.fallback_font,p,value,HORIZONTAL_ALIGNMENT_LEFT,-1,size,tint)
 func star(p:Vector2,radius:float,colour:Color)->void:
@@ -52,6 +52,10 @@ func _draw()->void:
  label(Vector2(157,103),"LIFETIME DAMAGE",13,Color("#afc2be"));label(Vector2(157,130),str(int(legacy.data.tasks.get("damage",0))),24)
  label(Vector2(390,103),"REALM CLEARS • V70+",13,Color("#afc2be"));label(Vector2(390,130),str(int(legacy.data.tasks.get("realm_clears",0))),24)
  label(Vector2(600,103),"HEROES FULLY MASTERED",13,Color("#afc2be"));label(Vector2(600,130),str(legacy.card.mastered())+" / "+str(legacy.game.characters.size()),24)
+ var progress=legacy.fishing_records.progress;var level=progress.level();var xp=int(progress.state().xp)
+ label(Vector2(157,164),"FISHING LV %d • %d XP • %d/%d FISH" % [level,xp,legacy.fishing_records.state().kept.size(),legacy.fishing_records.capacity()],16,Color("#9edbd3"))
+ var ratio=1.0 if level==40 else float(xp-progress.threshold(level))/maxi(1,progress.threshold(level+1)-progress.threshold(level))
+ draw_rect(Rect2(w-200,151,170,10),Color("#29434b"));draw_rect(Rect2(w-200,151,170*clampf(ratio,0,1),10),Color("#8bcbb7"))
  draw_line(Vector2(18,181),Vector2(w-18,181),Color("#476267"),1)
  for index in 2:
   var random_mode:=index==1;var rec:Dictionary=legacy.card.state().arena["random" if random_mode else "standard"];var x:=24+index*(w-48)*.5
@@ -73,7 +77,7 @@ func _draw()->void:
  if not favourite.is_empty():
   var spec:Dictionary=preload("res://scripts/fishing_catalog.gd").fish()[favourite.species]
   if favorite_art!=null:draw_texture_rect(favorite_art,Rect2(22,543,136,76),false)
-  label(Vector2(180,566),"FAVOURITE CATCH • "+str(spec.name),18,Color(str(spec.color)))
+  label(Vector2(180,566),("TROPHY CATCH • " if preload("res://scripts/fishing_catalog.gd").is_trophy(favourite) else "FAVOURITE CATCH • ")+str(spec.name),18,Color(str(spec.color)))
   label(Vector2(180,594),"%.2f kg • %.1f cm • %s" % [favourite.kg,favourite.cm,spec.rarity],17)
  else:label(Vector2(24,580),"FAVOURITE CATCH • Choose a kept fish at Ripple & Reel.",17,Color("#9dcec3"))
 func depth_badge(p:Vector2)->void:

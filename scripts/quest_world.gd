@@ -2,6 +2,8 @@ extends Node
 ## Data-driven expedition; host owns progress, enemy encounters and interaction.
 var remote_golem_warnings:Array=[]
 var highlands=preload("res://scripts/quest_highlands.gd").new()
+var revision=0
+var received_revision=-1
 var adventure:Node
 var active:=false
 var data:Dictionary={}
@@ -28,7 +30,7 @@ var cave_texture:Texture2D=preload("res://assets/moonburrow_cave.png")
 func v(a:Array)->Vector2:return Vector2(float(a[0]),float(a[1]))
 func save_path()->String:return "user://fx_quests_"+str(data.get("id","wayfarer"))+("_party" if adventure.arcade else "_solo")+".json"
 func setup(id:String)->void:
- active=false;remote_golem_warnings.clear();states.clear();props.clear();buckets.clear();spawned.clear();debounce.clear();nav_cache.clear();grid=null;initialized=false;clock=0;notice_time=0;journal=false
+ active=false;revision=0;received_revision=-1;remote_golem_warnings.clear();states.clear();props.clear();buckets.clear();spawned.clear();debounce.clear();nav_cache.clear();grid=null;initialized=false;clock=0;notice_time=0;journal=false
  var region:Dictionary=adventure.game.regions.get(id,{}) if adventure.arcade else adventure.game.region
  var path:=str(region.get("quest_campaign",""))
  if path.is_empty():return
@@ -37,7 +39,9 @@ func setup(id:String)->void:
  for npc in data.get("npcs",[]):
   var sprite_path:="res://assets/"+str(npc.get("sprite","quest_edda"))+".png"
   npc_art[str(npc.id)]=load(sprite_path) if ResourceLoader.exists(sprite_path) else NPC_TEXTURES.quest_edda
- if adventure.authoritative():
+ if adventure.authoritative() and adventure.game.get("dedicated")==true:
+  states=clean_session(adventure.game.get_meta("fx_quest_seed",{}))
+ elif adventure.authoritative():
   var stored:Variant=preload("res://scripts/profile_store.gd").read(save_path())
   if stored is Dictionary and int(stored.get("version",0))==int(data.get("version",1)):states=stored.get("states",{})
  for quest in data.get("quests",[]):
@@ -71,8 +75,7 @@ func setup(id:String)->void:
     if not buckets.has(key):buckets[key]=[]
     buckets[key].append(prop)
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,320,220);grid.cell_size=Vector2(50,50);grid.offset=Vector2(25,25);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
- for x in 320:
-  for y in 220:grid.set_point_solid(Vector2i(x,y),not can_stand(Vector2(x*50+25,y*50+25)))
+ preload("res://scripts/navigation_cache.gd").populate(grid,"quests_"+id,JSON.stringify(data)+JSON.stringify(preload("res://scripts/fishing_catalog.gd").spots(id)),func(point):return not can_stand(point))
 func terrain(point:Vector2)->bool:
  if point.x>=9900:return highlands.terrain(point)
  if point.y<6500:
@@ -108,7 +111,33 @@ func direction(enemy:Dictionary,target:Vector2,ranged:bool)->Vector2:
  for point in path:
   if origin.distance_to(point)>40:return (point-origin).normalized()
  return Vector2.ZERO
+func clean_session(value:Variant)->Dictionary:
+ var result={}
+ if not value is Dictionary:return result
+ for quest in data.get("quests",[]):
+  var key=str(quest.id);var s=value.get(key,{})
+  if not s is Dictionary:continue
+  var stage_value=s.get("stage",0)
+  if not (stage_value is int or stage_value is float) or not is_finite(float(stage_value)):continue
+  var index=clampi(int(stage_value),0,quest.stages.size()-1);var targets=[]
+  var raw=s.get("targets",[])
+  for target in quest.stages[index].get("targets",[]):
+   if raw is Array and str(target.id) in raw:targets.append(str(target.id))
+  result[key]={"accepted":s.get("accepted",false)==true,"done":s.get("done",false)==true,"stage":index,"targets":targets}
+ return result
+func merge_checkpoint(previous:Variant,incoming:Variant)->Dictionary:
+ var old=clean_session(previous);var next=clean_session(incoming)
+ for id in old:
+  if not next.has(id):next[id]=old[id];continue
+  if bool(old[id].done) or int(old[id].stage)>int(next[id].stage):next[id]=old[id];continue
+  next[id].accepted=bool(next[id].accepted) or bool(old[id].accepted)
+  if int(old[id].stage)==int(next[id].stage):
+   for target in old[id].targets:
+    if target not in next[id].targets:next[id].targets.append(target)
+ return next
 func save()->void:
+ if active and adventure.authoritative():revision+=1
+ if adventure.game.get("dedicated")==true:return
  if not active or not adventure.authoritative() or preload("res://scripts/profile_store.gd").progression_blocked():return
  preload("res://scripts/profile_store.gd").write(save_path(),{"version":data.get("version",1),"states":states})
 func stage_of(quest:Dictionary)->Dictionary:return quest.stages[int(states[str(quest.id)].stage)]
@@ -193,7 +222,7 @@ func interact(id:String)->bool:
  debounce[id]=clock+.4
  if point.distance_to(v(data.spawn))<100:
   save()
-  if adventure.arcade:adventure.game.end_match("Wayfarer expedition • "+str(completed_count())+"/"+str(data.quests.size())+" quests complete. Host progress saved.")
+  if adventure.arcade:adventure.game.end_match("Wayfarer expedition • "+str(completed_count())+"/"+str(data.quests.size())+" quests complete. Party checkpoints saved.")
   elif completed_count()==data.quests.size():adventure.game.finish_run(true)
   else:adventure.game.menu="";adventure.game.enter_region("town")
   return true
@@ -229,12 +258,19 @@ func interact(id:String)->bool:
    if state.targets.size()==stage.targets.size():advance(quest)
    return true
  return false
-func snapshot()->Dictionary:return {"golem_warnings":golem_warnings(),"states":states,"notice":notice,"notice_time":notice_time,"clock":clock}
+func snapshot()->Dictionary:return {"revision":revision,"golem_warnings":golem_warnings(),"states":states,"notice":notice,"notice_time":notice_time,"clock":clock}
 func receive(packet:Dictionary)->void:
+ if not active:return
  remote_golem_warnings=packet.get("golem_warnings",[]);states=packet.get("states",states);notice=str(packet.get("notice",""));notice_time=float(packet.get("notice_time",0));clock=float(packet.get("clock",clock))
  if adventure.game.get("legacy")!=null:
   for id in states:
    if bool(states[id].get("done",false)):adventure.game.legacy.quest_done(str(id))
+ if adventure.game.has_method("network_build") and int(packet.get("revision",0))!=received_revision:
+  received_revision=int(packet.get("revision",0))
+  if not preload("res://scripts/profile_store.gd").progression_blocked() and not bool(adventure.game.legacy.data.get("teacher",false)):
+   var previous=preload("res://scripts/profile_store.gd").read(save_path())
+   var checkpoint=merge_checkpoint(previous.get("states",{}) if previous is Dictionary else {},states)
+   preload("res://scripts/profile_store.gd").write(save_path(),{"version":data.get("version",1),"states":checkpoint})
 func texture(canvas:Node2D,name:String,point:Vector2,size:Vector2)->void:
  var art:Dictionary=adventure.game.art
  if art.has(name):canvas.draw_texture_rect(art[name],Rect2(point-size*.5,size),false)
@@ -381,7 +417,8 @@ func target_for(quest:Dictionary)->Vector2:
 func draw_hud(canvas:Node2D)->void:
  if not active:return
  var view:Vector2=adventure.game.VIEW;var id:=str(adventure.game.my_id) if adventure.arcade else "solo";var origin:Vector2=adventure.points().get(id,Vector2.ZERO)
- var map:=Rect2(Vector2(view.x-245,185),Vector2(220,130));canvas.draw_rect(map,Color(.05,.12,.13,.9));canvas.draw_rect(map,Color("#b0c4a0"),false,2)
+ var top=preload("res://scripts/hud_layout.gd").objective_top(canvas,adventure.arcade)
+ var map:=Rect2(Vector2(view.x-245,top+25),Vector2(220,130));canvas.draw_rect(map,Color(.05,.12,.13,.9));canvas.draw_rect(map,Color("#b0c4a0"),false,2)
  var underground:=origin.y>6500;var offset:=Vector2(0,7300) if underground else Vector2.ZERO;var span:=Vector2(10000 if underground else 16000,3500 if underground else 6500)
  for npc in data.npcs:
   if not underground:canvas.draw_circle(map.position+(v(npc.pos)-offset)/span*map.size,4,Color("#f5dd97"))
@@ -413,7 +450,7 @@ func draw_hud(canvas:Node2D)->void:
   if not unlocked(quest):text=str(quest.title)+": Requires "+", ".join(quest.get("requires",[]))
   if journal:y=wrapped(canvas,text,Vector2(320,y),550,19)+15
   elif bool(state.get("accepted",false)) and not bool(state.get("done",false)):
-   canvas.draw_rect(Rect2(Vector2(24,175),Vector2(590,88)),Color(.04,.12,.12,.85));wrapped(canvas,text,Vector2(38,202),550,17)
+   canvas.draw_rect(Rect2(Vector2(24,top+30),Vector2(590,88)),Color(.04,.12,.12,.85));wrapped(canvas,text,Vector2(38,top+57),550,17)
    var target:=target_for(quest)
    if (target.y>6500)!=(origin.y>6500):
     var best:=INF;var destination:=target

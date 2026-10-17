@@ -80,7 +80,9 @@ func finish_jobs(at:float)->void:
  FOUNDRY.finish(self,at)
  var s=state()
  if not s.job.is_empty() and float(s.job.end)<=at:
-  if s.job.kind=="shaft":s.shafts.append({"depth":depth()+1,"crew":1})
+  if s.job.kind=="shaft":
+   s.shafts.append({"depth":depth()+1,"crew":1})
+   legacy.game.get_tree().root.get_node("FXActivity").event(legacy.game,"mine_depth","completed",0,{"mine_depth":depth(),"mine_level":level()},"mine-depth-"+str(depth()))
   else:s.levels[s.job.service]=int(s.levels[s.job.service])+1
   s.job={};FOUNDRY.completed_build(self)
  if not s.refine.is_empty() and float(s.refine.end)<=at:

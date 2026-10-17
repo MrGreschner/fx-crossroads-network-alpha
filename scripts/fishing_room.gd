@@ -30,7 +30,7 @@ func talk()->void:
  dialogue=PanelContainer.new();UI.apply(dialogue);add_child(dialogue)
  var col=VBoxContainer.new();dialogue.add_child(col);fishing.label(col,"MARINA • KEEPER OF RIPPLE & REEL",23)
  var has_rod=bool(fishing.records().state().rod)
- fishing.label(col,"Every little ripple has a story. Here's a fishing rod for yours!" if not has_rod else "Welcome back, angler! Your best catches deserve a place in these tanks.",20)
+ fishing.label(col,"Every little ripple has a story. Here's a fishing rod for yours!" if not has_rod else "Welcome, angler! Your rod and bare hook are ready. Sell catches for Glimmers; unlock a net at level 5 and baskets at level 10.",20)
  fishing.label(col,"Find bubbling water. Stand near the shore marker and press F or the Cast button. A bite can happen early or late, or not at all. When the float dips and flashes three times, press F / Hook within 2.4 seconds. A full wait bar is not a guaranteed fish. Moving or taking damage cancels a cast — combat keeps going in realms. Keep a fish for a tank, or release it; both reveal it in your journal. Choose a favourite catch for your player card.",17)
  fishing.label(col,"The pond has eight species, and the river has sixteen. Explore Wayfarer, Silverfall Reach, Folded Coast, Lantern Marsh and Moonveil Masquerade for other waters. North Gate has a riverbank fishing spot; buried springs appear on Descent floors 38 and 56. Combat continues while you fish. Rarity and weight are separate: even a familiar fish can grow into a trophy.",16)
  if not has_rod:
@@ -85,7 +85,7 @@ func _draw()->void:
   var catch=fishing.records().specimen(str(fishing.records().state().display[n]))
   if not catch.is_empty():
    var dimensions:Vector2=C.display_size(catch);var pos=p+Vector2(75+sin(clock*.6+n)*6,77+sin(clock+n)*4)-dimensions*.5;draw_texture_rect(C.texture(str(catch.species)),Rect2(pos,dimensions),false)
-   var name=str(C.fish()[catch.species].name);text(p+Vector2(-2,174),name,13,Color("#fae4b4"));text(p+Vector2(20,195),"%.2f kg" % catch.kg,14)
+   var name=("★ " if C.is_trophy(catch) else "")+str(C.fish()[catch.species].name);text(p+Vector2(-2,174),name,13,Color("#fae4b4"));text(p+Vector2(20,195),"%.2f kg" % catch.kg,14)
   else:text(p+Vector2(28,80),"Empty tank",14);text(p+Vector2(35,174),"DISPLAY "+str(n+1),14,Color("#fae4b4"))
   draw_rect(Rect2(p+Vector2(8,6),Vector2(8,112)),Color(1,1,1,.09))
  # Nautical counter, tackle drawers and the keeper.

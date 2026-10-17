@@ -13,6 +13,10 @@ func blocked(point:Vector2)->bool:
   if point.distance_to(statue)<23:return true
  return false
 func interact(game:Node)->bool:
+ if bool(game.legacy.data.town.get("bakery",false)) and game.position_in_world.distance_to(preload("res://scripts/town_v176.gd").BREAD)<92:
+  game.hint="E • Hearth & Crumb • claim adventure bread"
+  if Input.is_action_just_pressed("interact"):game.legacy.open_page("town")
+  return true
  for key in POINTS:
   if game.position_in_world.distance_to(POINTS[key])<90:
    game.hint="E • "+{"food":"Talk to Moss at the Food Stand","healer":"Talk to Tessa, town healer","wayfinder":"Plan a route with Scout Alden","seedhouse":"Talk to Rowan, the gardener"}[key]
@@ -94,14 +98,10 @@ func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
   var p:Vector2=place-camera
   for n in 3:c.draw_rect(Rect2(p+Vector2(-28,-19+n*7),Vector2(56,5)),Color("#b49268"))
   for side in [-1,1]:c.draw_rect(Rect2(p+Vector2(side*21-2,0),Vector2(4,13)),Color("#4f5148"))
- for statue in [Vector2(950,1080),Vector2(1550,350)]:
-  if not Rect2(camera,c.get_viewport_rect().size).grow(100).has_point(statue):continue
-  var p:Vector2=statue-camera
-  c.draw_circle(p+Vector2(0,10),35,Color(0,0,0,.2));c.draw_rect(Rect2(p+Vector2(-27,-5),Vector2(54,25)),Color("#83958e"));c.draw_rect(Rect2(p+Vector2(-23,-12),Vector2(46,10)),Color("#bec8b0"))
-  c.draw_rect(Rect2(p+Vector2(-13,-44),Vector2(26,32)),Color("#9fafa4"));c.draw_circle(p+Vector2(0,-55),15,Color("#bbc7b7"))
-  for side in [-1,1]:c.draw_arc(p+Vector2(side*15,-55),8,0,TAU,16,Color("#7b8e86"),4)
-  c.draw_line(p+Vector2(13,-30),p+Vector2(27,-68),Color("#9fae9a"),4)
-  c.draw_rect(Rect2(p+Vector2(-11,0),Vector2(22,9)),Color("#d2c080"))
+ for tree in [Vector2(950,1080),Vector2(1550,350)]:
+  if not Rect2(camera,c.get_viewport_rect().size).grow(200).has_point(tree):continue
+  var p=tree-camera
+  c.draw_texture_rect(preload("res://assets/town_ancient_tree.svg"),Rect2(p-Vector2(95,181),Vector2(190,218)),false)
  var carpenter:Vector2=Vector2(1510,1710)-camera
  npc(c,carpenter,Color("#a1825d"),"human")
  var hammer:Vector2=carpenter+Vector2(17,-26-sin(clock*4)*8)

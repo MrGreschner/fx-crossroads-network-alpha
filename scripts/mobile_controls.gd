@@ -88,7 +88,7 @@ func reset_controls() -> void:
 
 func blocked()->bool:
 	if game.get("session_menu")!=null and not game.session_menu.page.is_empty():return true
-	if not arcade and game.menu in ["fishing_shop","fishing_journal","legacy","workshop"]:return true
+	if not arcade and game.menu in ["fishing_shop","fishing_journal","fishing_workshop","town_almanac","waylight","legacy","workshop"]:return true
 	if not arcade and game.get("level_cards")!=null and game.menu=="levelup":return true
 	if not arcade and game.get("hero_hall")!=null and game.menu=="characters":return true
 	if not arcade and game.menu in ["seedhouse","postoffice","training_guide","portal","wayfinder","supplies","merchant","food","arcane_tower","barracks"]:return true

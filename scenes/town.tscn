@@ -18,7 +18,7 @@
 
 [ext_resource type="Texture2D" path="res://assets/town_fence.svg" id="14"]
 
-[ext_resource type="Texture2D" path="res://assets/arena_hall.png" id="15"]
+[ext_resource type="Texture2D" path="res://assets/arena_hall.svg" id="15"]
 
 [ext_resource type="Texture2D" path="res://assets/pond_food_stand.svg" id="16"]
 
@@ -137,12 +137,12 @@ texture = ExtResource("9")
 scale = Vector2(1.5, 1.5)
 
 [node name="Banner4" type="Sprite2D" parent="Landmarks"]
-position = Vector2(1250, 835)
+position = Vector2(1400, 710)
 texture = ExtResource("9")
 scale = Vector2(1.5, 1.5)
 
 [node name="ArenaEntrance" type="Sprite2D" parent="Points"]
-position = Vector2(260, 1165)
+position = Vector2(130, 1280)
 texture = ExtResource("10")
 visible = false
 metadata/menu = "arena_entrance"
@@ -163,7 +163,7 @@ metadata/menu = "descent_entrance"
 metadata/hint = "Enter Ram Descent"
 
 [node name="ArenaGate" type="Sprite2D" parent="Landmarks"]
-position = Vector2(260, 1100)
+position = Vector2(130, 1100)
 texture = ExtResource("10")
 scale = Vector2(1.25, 1.25)
 metadata/label = "GLADIATOR ARENA"

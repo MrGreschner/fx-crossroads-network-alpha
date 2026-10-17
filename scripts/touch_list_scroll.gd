@@ -1,6 +1,8 @@
 extends Node
 ## Capture touch before row buttons: drag scrolls, release without a drag selects.
 var form_controls:=false
+var horizontal_drag:=false
+var horizontal_offset:=0.0
 var scroller:ScrollContainer
 var finger:=-1
 var start:=Vector2.ZERO
@@ -43,8 +45,9 @@ func handle(event:InputEvent)->bool:
   if event.pressed:
    if finger>=0 or not contains(scroller,event.position):return false
    # Preserve native thumb dragging for anyone who prefers the scrollbar.
-   if contains(scroller.get_v_scroll_bar(),event.position):return false
+   if contains(scroller.get_v_scroll_bar(),event.position) or contains(scroller.get_h_scroll_bar(),event.position):return false
    if form_controls and form_at(scroller,event.position):return false
+   horizontal_offset=float(scroller.scroll_horizontal)
    finger=event.index;start=event.position;last=start;last_msec=Time.get_ticks_msec();moved=false;velocity=0;offset=float(scroller.scroll_vertical);tapped=button_at(scroller,start);set_process(true);suppress_mouse_until=Time.get_ticks_msec()+400
    return true
   if event.index!=finger:return false
@@ -64,12 +67,17 @@ func handle(event:InputEvent)->bool:
   if moved:
    var scale_y:float=maxf(.01,scroller.get_global_transform_with_canvas().y.length())
    var dy:float=(last.y-event.position.y)/scale_y
+   if horizontal_drag:
+    var bar=scroller.get_h_scroll_bar();var sx=maxf(.01,scroller.get_global_transform_with_canvas().x.length())
+    horizontal_offset=clampf(horizontal_offset+(last.x-event.position.x)/sx,0,maxf(0,bar.max_value-bar.page));scroller.scroll_horizontal=roundi(horizontal_offset)
    apply_scroll(offset+dy);velocity=lerpf(velocity,clampf(dy/elapsed,-2400,2400),.5)
   last=event.position;last_msec=now;suppress_mouse_until=now+400
   return true
  return false
 func _input(event:InputEvent)->void:
- if handle(event):get_viewport().set_input_as_handled()
+ # A tapped button may remove its modal (and this scroller) immediately.
+ var input_view=get_viewport()
+ if handle(event) and is_instance_valid(input_view) and input_view.is_inside_tree():input_view.set_input_as_handled()
 func _process(delta:float)->void:
  if not scroller.is_visible_in_tree():cancel();return
  if finger>=0:return

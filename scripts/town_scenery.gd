@@ -117,6 +117,14 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 			c.draw_line(fish-direction*5,fish+direction*5,Color("#e8ba7a"),4,true)
 			c.draw_colored_polygon(PackedVector2Array([fish-direction*4,fish-direction*10+side*4,fish-direction*10-side*4]),Color("#c99566"))
 			c.draw_circle(fish+direction*4,1,Color("#293f4b"))
+		var night:float=c.town_life.calendar.night_amount()
+		var phase:float=fposmod(c.town_life.calendar.now,90.0)
+		if night>.1 and phase<34:
+			var angle:float=clock*.21+1.1;var fish:Vector2=pond+Vector2(cos(angle)*120,sin(angle)*69)
+			var direction=Vector2(-sin(angle)*120,cos(angle)*69).normalized();var side=direction.orthogonal();var alpha=night*smoothstep(0,4,phase)*(1-smoothstep(28,34,phase))
+			for radius in [19,11]:c.draw_circle(fish,radius,Color(.25,.95,.9,alpha*.09))
+			c.draw_line(fish-direction*6,fish+direction*7,Color(.5,1,.91,alpha*.9),4,true)
+			c.draw_colored_polygon(PackedVector2Array([fish-direction*5,fish-direction*13+side*5,fish-direction*13-side*5]),Color(.38,.78,1,alpha*.9))
 		for n in 3:
 			c.draw_arc(pond+Vector2(-60+n*50,20+n*7),16+sin(clock*2+n)*3,.15,2.5,16,Color(.7,.91,.94,.38),1,true)
 			var lily:Vector2=pond+Vector2(-75+n*65,-30+n*8)
@@ -137,7 +145,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 		c.draw_circle(tower+Vector2(0,-132),16,Color(1,.8,.3,.1+.03*sin(clock*3)))
 		c.draw_string(font,tower+Vector2(-48,44),"LOOKOUT",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#e9d9b3"))
 	# Two small guard stations at the arena entrance.
-	for station in [Vector2(25,1200),Vector2(495,1200)]:
+	for station in [Vector2(-70,1335),Vector2(330,1335)]:
 		if not visible.has_point(station):continue
 		var post:Vector2=station-camera
 		c.draw_rect(Rect2(post+Vector2(-21,-17),Vector2(42,23)),Color("#75634f"))
@@ -145,12 +153,6 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 		c.draw_rect(Rect2(post+Vector2(18,-62),Vector2(5,58)),Color("#917352"))
 		c.draw_colored_polygon(PackedVector2Array([post+Vector2(-32,-61),post+Vector2(0,-81),post+Vector2(32,-61)]),Color("#587992"))
 		guard(c,post,false)
-	for index in routes.size():
-		var point:Vector2=guard_position(index)
-		if visible.has_point(point):guard(c,point-camera,point.distance_to(_guard_at_time(index,clock-.05))>0.1)
-		if index>=3:
-			var partner:Vector2=_guard_at_time(index,clock-.85)+Vector2(0,18)
-			if visible.has_point(partner):guard(c,partner-camera,true)
 	# Flower beds, benches and glowing mushrooms near the forest.
 	for bed in [Vector2(330,620),Vector2(1470,600),Vector2(1750,1010),Vector2(840,1250),Vector2(1850,1010)]:
 		if not visible.has_point(bed):continue
@@ -168,34 +170,29 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 		for side in [-1,1]:c.draw_line(b+Vector2(side*19,3),b+Vector2(side*19,13),Color("#4d514d"),4)
 	if visible.has_point(CAMP):
 		var fire:Vector2=CAMP-camera
-		c.draw_circle(fire,65,Color(1,.54,.18,.06+.02*sin(clock*5)))
+		var strength:float=c.town_life.calendar.fire_strength()
+		c.draw_circle(fire,65,Color(1,.54,.18,(.06+.02*sin(clock*5))*strength))
 		for n in 9:
 			var stone:Vector2=fire+Vector2(cos(n*TAU/9)*27,sin(n*TAU/9)*15)
 			c.draw_circle(stone,6,Color("#92958a"))
 		c.draw_line(fire+Vector2(-21,5),fire+Vector2(17,-3),Color("#79523e"),7)
 		c.draw_line(fire+Vector2(21,5),fire+Vector2(-17,-3),Color("#79523e"),7)
-		for n in 5:
+		if strength>0 and strength<.25:c.draw_circle(fire,9,Color(1,.37,.12,strength*2))
+		for n in (5 if strength>.08 else 0):
 			var base:Vector2=fire+Vector2(-16+n*8,0)
-			var tip:Vector2=base+Vector2(sin(clock*7+n)*5,-20-12*sin(clock*5+n))
+			var tip:Vector2=base+Vector2(sin(clock*7+n)*5,(-20-12*sin(clock*5+n))*strength)
 			c.draw_colored_polygon(PackedVector2Array([base+Vector2(-6,4),tip,base+Vector2(7,4)]),Color("#ed833b"))
 			c.draw_colored_polygon(PackedVector2Array([base+Vector2(-3,2),base.lerp(tip,.6),base+Vector2(4,2)]),Color("#f7d27a"))
-		for n in 4:
+		for n in (4 if strength>.25 else 0):
 			var age:float=fposmod(clock*.6+n*.25,1)
 			c.draw_circle(fire+Vector2(sin(clock*2+n)*12,-10-age*55),1.7,Color(1,.73,.3,1-age))
-		# A ram traveler rests on a cut log beside the forest fire.
+		# Ash uses the log at dusk; his daily route is drawn by town_life.
 		var seat:Vector2=fire+Vector2(-83,27)
 		c.draw_line(seat+Vector2(-29,6),seat+Vector2(29,6),Color("#76533c"),18)
 		c.draw_circle(seat+Vector2(29,6),9,Color("#bb956b"))
 		c.draw_arc(seat+Vector2(29,6),5,0,TAU,12,Color("#846044"),1)
 		c.draw_line(seat+Vector2(-20,3),seat+Vector2(18,3),Color("#ad8256"),2)
-		c.draw_rect(Rect2(seat+Vector2(-10,-19),Vector2(20,22)),Color("#8c789c"))
-		c.draw_rect(Rect2(seat+Vector2(-10,-39),Vector2(20,20)),Color("#ede3cf"))
-		for side in [-1,1]:
-			c.draw_circle(seat+Vector2(side*12,-30),6,Color("#8d6c4a"))
-			c.draw_circle(seat+Vector2(side*12,-30),3,Color("#c9aa7c"))
-			c.draw_rect(Rect2(seat+Vector2(side*4-1,-31),Vector2(2,3)),Color("#354047"))
-			c.draw_line(seat+Vector2(side*6,2),seat+Vector2(side*10,13),Color("#39424c"),6)
-		c.draw_circle(seat+Vector2(12,-8),4,Color("#e9d5a8"))
+
 	for n in 4:
 		var m:Vector2=Vector2(1970+n*35,1240)-camera
 		c.draw_circle(m+Vector2(0,-7),5,Color("#a8cdaf"))
@@ -216,3 +213,12 @@ func _guard_at_time(index:int,time:float)->Vector2:
 	var result:Vector2=guard_position(index)
 	clock=saved
 	return result
+
+func draw_patrols(c:Node2D,camera:Vector2)->void:
+	var visible=Rect2(camera,c.VIEW).grow(80)
+	for index in routes.size():
+		var point:Vector2=guard_position(index)
+		if visible.has_point(point):guard(c,point-camera,point.distance_to(_guard_at_time(index,clock-.05))>0.1)
+		if index>=3:
+			var partner:Vector2=_guard_at_time(index,clock-.85)+Vector2(0,18)
+			if visible.has_point(partner):guard(c,partner-camera,true)

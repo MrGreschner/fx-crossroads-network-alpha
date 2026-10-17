@@ -4,6 +4,7 @@ extends RefCounted
 const DELAY=.10
 const LIMIT=24
 var snapshots:Array=[]
+var army_tracks:Dictionary={}
 var render_time=-1.0
 var latest_time=0.0
 var underruns=0
@@ -21,12 +22,12 @@ var pair_time=-INF
 var pair_tick=-1
 var pair_cache:Array=[]
 func clear()->void:
- snapshots.clear();render_time=-1.0;latest_time=0;last_tick=-1;underruns=0;clock_resyncs=0;max_backlog=0
+ snapshots.clear();army_tracks.clear();render_time=-1.0;latest_time=0;last_tick=-1;underruns=0;clock_resyncs=0;max_backlog=0
  pair_time=-INF;pair_tick=-1;pair_cache=[]
  target_delay=DELAY;delay_goal=DELAY;arrival_age=0;last_arrival=-1;arrival_gaps.clear();jitter_samples.clear();playback_rate=1
 func reset_timeline()->void:
  # Keep cumulative diagnostic counts across recovery, discard stale render history.
- snapshots.clear();render_time=-1;latest_time=0;last_tick=-1;last_arrival=-1;arrival_age=0
+ snapshots.clear();army_tracks.clear();render_time=-1;latest_time=0;last_tick=-1;last_arrival=-1;arrival_age=0
  pair_time=-INF;pair_tick=-1;pair_cache=[];arrival_gaps.clear();jitter_samples.clear();delay_goal=DELAY;target_delay=DELAY;clock_resyncs+=1
 func receive(data:Dictionary,received_at:float=-1)->void:
  var tick=int(data.server_tick)
@@ -42,6 +43,7 @@ func receive(data:Dictionary,received_at:float=-1)->void:
    delay_goal=clampf(DELAY+float(ordered[mini(ordered.size()-1,int(ordered.size()*.95))]),DELAY,.18)
  last_arrival=now;arrival_age=0
  last_tick=tick;latest_time=tick/60.0
+ _receive_armies(data)
  snapshots.append({"t":latest_time,"data":data})
  while snapshots.size()>LIMIT:snapshots.pop_front()
  if render_time<0:render_time=latest_time-DELAY
@@ -85,7 +87,7 @@ func player(id:String,fallback:Vector2)->Vector2:
  var right:Dictionary=b.data.get("players",{}).get(id,left)
  if left.is_empty():return fallback
  var p=Vector2(float(left.pos[0]),float(left.pos[1]));var q=Vector2(float(right.pos[0]),float(right.pos[1]))
- if p.distance_to(q)>160:return q if render_time>=float(b.t) else p
+ if int(left.get("position_epoch",0))!=int(right.get("position_epoch",0)) or p.distance_to(q)>160:return q if render_time>=float(b.t) else p
  return p.lerp(q,alpha(a,b))
 func data()->Dictionary:
  var values=pair()
@@ -132,5 +134,61 @@ func enemy(uid:int,fallback:Vector2)->Vector2:
  if left.is_empty():return fallback
  if right.is_empty():right=left
  var p=Vector2(float(left.pos[0]),float(left.pos[1]));var q=Vector2(float(right.pos[0]),float(right.pos[1]))
- if p.distance_to(q)>160:return p
+ if int(left.get("position_epoch",0))!=int(right.get("position_epoch",0)) or p.distance_to(q)>160:return p
  return p.lerp(q,alpha(values[0],values[1]))
+
+func battlegrounds()->Dictionary:
+ # Each soldier has its own 10 Hz sample time. Ordinance uses the shared
+ # snapshot clock; neither repeats 20 Hz envelopes as stepped visual movement.
+ var left:Dictionary={};var right:Dictionary={}
+ for sample in snapshots:
+  var state:Dictionary=sample.data.get("battlegrounds",{})
+  if state.is_empty():continue
+  var stamp=float(state.get("army_time",sample.t))
+  if left.is_empty():left=state
+  if stamp<=render_time:left=state
+  elif stamp>float(left.get("army_time",0)):right=state;break
+ if left.is_empty():return {}
+ if right.is_empty():right=left
+ var t=float(left.get("army_time",0));var next=float(right.get("army_time",t))
+ var blend=clampf((render_time-t)/maxf(.0001,next-t),0,1)
+ var result={"units":{},"shots":[],"bombs":[],"clock":render_time}
+ for key in army_tracks:
+  var track:Array=army_tracks[key];var before:Dictionary={};var after:Dictionary={}
+  for frame in track:
+   if float(frame.t)<=render_time:before=frame
+   elif not before.is_empty():after=frame;break
+  if before.is_empty() or before.get("unit")==null:continue
+  var unit:Dictionary=before.unit;var copy=unit.duplicate();var pos=Vector2(float(unit.pos[0]),float(unit.pos[1]))
+  if not after.is_empty() and after.get("unit")!=null:
+   var other=after.unit.pos;var end=Vector2(float(other[0]),float(other[1]))
+   var fraction=clampf((render_time-float(before.t))/maxf(.0001,float(after.t)-float(before.t)),0,1)
+   if pos.distance_to(end)<160:pos=pos.lerp(end,fraction)
+  copy.pos=pos;result.units[key]=copy
+ for field in ["shots","bombs"]:
+  var indexed={}
+  for value in right.get(field,[]):indexed[int(value.get("uid",-1))]=value
+  for value in left.get(field,[]):
+   var copy:Dictionary=value.duplicate();var point=Vector2(float(value.pos[0]),float(value.pos[1]));var id=int(value.get("uid",-1))
+   if indexed.has(id):
+    var other=indexed[id].pos;point=point.lerp(Vector2(float(other[0]),float(other[1])),blend)
+   copy.pos=point
+   if copy.has("time"):copy.time=maxf(0,float(copy.time)-maxf(0,render_time-t))
+   result[field].append(copy)
+ return result
+
+func _receive_armies(data:Dictionary)->void:
+ var state:Dictionary=data.get("battlegrounds",{})
+ if state.is_empty():return
+ var live:Dictionary=state.get("units",{})
+ for key in live:
+  var unit:Dictionary=live[key];var stamp=float(unit.get("sample_time",state.get("army_time",latest_time)))
+  if not army_tracks.has(key):army_tracks[key]=[]
+  var track:Array=army_tracks[key]
+  if track.is_empty() or stamp>float(track[-1].t):track.append({"t":stamp,"unit":unit})
+  while track.size()>6:track.pop_front()
+ for key in army_tracks.keys():
+  if live.has(key):continue
+  var track:Array=army_tracks[key]
+  if track[-1].get("unit")!=null:track.append({"t":latest_time,"unit":null})
+  elif latest_time-float(track[-1].t)>1:army_tracks.erase(key)

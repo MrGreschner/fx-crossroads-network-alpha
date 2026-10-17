@@ -1,11 +1,11 @@
 {
   "id": "twisterspell",
   "sprite": "twisterspell",
-  "name": "Twisterspell",
+  "name": "Lyra Galeweaver",
   "max_health": 110,
   "speed": 220,
   "run_cost": 0,
-  "lore": "A cheerful weather apprentice who collects river mist in her hat. She tends Crossroads\u2019 new Mistglass Spire, turning unruly breezes into carefully bottled spells.",
+  "lore": "A bright-eyed weather mage who bottles river mist and wears a storm in her hat. Lyra keeps the Mistglass Spire breezy, insists every forecast needs a little charm, and has never admitted that her best spell began as a sneeze.",
   "primary": {
     "name": "Pocket Twister",
     "style": "twister_charge",

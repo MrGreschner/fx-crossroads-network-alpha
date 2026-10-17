@@ -16,20 +16,24 @@ var map_id:="woodland"
 var lanes:=4
 var clock:=0.0
 var accumulator:=0.0
+var army_time:=0.0
+var unit_phase:=0
 var uid:=0
 var income:=0.0
 var air_timer:=8.0
 var units:Dictionary={}
 var unit_grid:Dictionary={}
+var unit_grid_dirty:=true
 var bases:Dictionary={}
 var owners:Dictionary={}
 var bombs:Array=[]
 var shots:Array=[]
 var heart_hp:Array=[2600.0,2600.0]
 var winner:=-1
+var work:Dictionary={"units_ms":0.0,"max_units_ms":0.0,"step_ms":0.0}
 func setup(g:Node)->void:
  game=g;map_id=game.bg_map;lanes=game.bg_team_size
- clock=0;accumulator=0;uid=0;income=0;air_timer=8;units.clear();bases.clear();owners.clear();bombs.clear();shots.clear();heart_hp=[2600.0,2600.0];winner=-1
+ clock=0;accumulator=0;army_time=0;unit_phase=0;uid=0;income=0;air_timer=8;units.clear();unit_grid.clear();unit_grid_dirty=true;bases.clear();owners.clear();bombs.clear();shots.clear();heart_hp=[2600.0,2600.0];winner=-1;work={"units_ms":0.0,"max_units_ms":0.0,"step_ms":0.0}
  var slots:Dictionary={0:0,1:0}
  for member in game.fighters():
   var id:=str(member.id);var team:=int(game.teams.get(id,0));var lane:=int(slots[team]);slots[team]+=1
@@ -60,9 +64,9 @@ func actor(key:String)->Dictionary:
   var side:=int(key.trim_prefix("bgheart:"));return {"pos":heart_pos(side),"alive":heart_hp[side]>0,"bg":key,"structure":true}
  return {}
 func side_of(owner:String)->int:
- if owner.begins_with("bgarmy:"):return int(game.teams.get(owner.trim_prefix("bgarmy:"),-1))
+ if owner.begins_with("bgarmy:"):return side_of(owner.trim_prefix("bgarmy:"))
  if units.has(owner):return int(units[owner].team)
- return int(game.teams.get(owner,-1))
+ return int(game.teams.get(owner,bases.get(owners.get(owner,""),{}).get("team",-1)))
 func hostile(owner:String)->Array[String]:
  var result:Array[String]=[];var side:=side_of(owner)
  if side<0:return result
@@ -116,38 +120,61 @@ func reward(owner:String,money:int,experience:int)->void:
  game.xp[owner]=int(game.xp.get(owner,0))+experience
  level_up(owner)
 func knock(key:String,direction:Vector2,distance:float)->void:
- if units.has(key):units[key].pos=game._move_actor(units[key].pos,direction*minf(distance,150))
+ if units.has(key):units[key].pos=game._move_actor(units[key].pos,direction*minf(distance,150));unit_grid_dirty=true
 func step(delta:float)->void:
- clock+=delta;accumulator+=delta
- if accumulator<.1:return
- var dt:=minf(accumulator,.2);accumulator=0
- income+=dt
- if income>=3:
-  income-=3
-  for id in game.gold:game.gold[id]=int(game.gold[id])+6
- for key in bases:
-  var b:Dictionary=bases[key]
-  if float(b.hp)<=0:continue
-  b.timer=float(b.timer)-dt
-  if float(b.timer)<=0:
-   b.timer=18.0-int(b.upgrades.production)*1.5
-   for kind in TYPES.size():
-    for n in int(b.counts[kind]):spawn_unit(b,kind,n)
- tick_units(dt);tick_shots(dt);tick_bombs(dt)
+ clock+=delta;army_time=clock;accumulator+=delta
+ var strategic=accumulator>=.1
+ var dt:=minf(accumulator,.2) if strategic else 0.0
+ if strategic:
+  accumulator=0;income+=dt
+  if income>=3:
+   income-=3
+   for id in game.gold:game.gold[id]=int(game.gold[id])+6
+  for key in bases:
+   var b:Dictionary=bases[key]
+   if float(b.hp)<=0:continue
+   b.timer=float(b.timer)-dt
+   if float(b.timer)<=0:
+    b.timer=18.0-int(b.upgrades.production)*1.5
+    for kind in TYPES.size():
+     for n in int(b.counts[kind]):spawn_unit(b,kind,n)
+ # Spread 10 Hz soldier decisions over six authority frames. A full 192-unit
+ # army schedules at most 32 ordinary decisions per 60 Hz frame, not one burst.
+ var work_begin=Time.get_ticks_usec()
+ if delta>=.08:tick_units(delta) # Coarse deterministic fixtures / legacy stalls.
+ else:
+  unit_phase=(unit_phase+1)%6;tick_units(.1,unit_phase)
+ work.units_ms=(Time.get_ticks_usec()-work_begin)/1000.0;work.max_units_ms=maxf(float(work.max_units_ms),float(work.units_ms))
+ tick_shots(delta);tick_bombs(delta);work.step_ms=(Time.get_ticks_usec()-work_begin)/1000.0
  for id in game.positions:
   if int(game.health.get(id,0))<=0 and Time.get_ticks_msec()>=int(game.respawn_at.get(id,9223372036854775807)):
    game.health[id]=game._max_hp(str(id));game.positions[id]=spawn(str(id));game.invincible_until[id]=Time.get_ticks_msec()+1600
+   if game.has_method("network_relocate"):game.network_relocate(str(id),game.positions[id])
    if id==game.my_id:game.local_pos=game.positions[id]
-   else:game._send_channel(str(id),{"type":"teleport","point":[game.positions[id].x,game.positions[id].y]})
+   elif not game.has_method("network_relocate"):game._send_channel(str(id),{"type":"teleport","point":[game.positions[id].x,game.positions[id].y]})
 func spawn_unit(b:Dictionary,kind:int,n:int)->void:
  # 24 soldiers per owner; replacements resume when existing troops fall.
- var owned:=0
+ var owned:=0;var phases=[0,0,0,0,0,0]
  for u in units.values():
+  phases[int(u.get("phase",0))]+=1
   if str(u.owner)==str(b.owner):owned+=1
- if owned>=24:return
- uid+=1
+ if owned>=24 or units.size()>=lanes*2*24:return
+ uid+=1;unit_grid_dirty=true
  var key:="bgunit:"+str(uid);var hp:float=HP[kind]*(1+.12*int(b.upgrades.vitality))
- units[key]={"owner":str(b.owner),"team":int(b.team),"lane":int(b.lane),"kind":kind,"pos":b.pos+Vector2((95+n*12)*(1 if int(b.team)==0 else -1),float((uid%5)-2)*26),"hp":hp,"max_hp":hp,"cooldown":float(uid%5)*.12}
+ units[key]={"owner":str(b.owner),"team":int(b.team),"lane":int(b.lane),"kind":kind,"pos":b.pos+Vector2((95+n*12)*(1 if int(b.team)==0 else -1),float((uid%5)-2)*26),"hp":hp,"max_hp":hp,"cooldown":float(uid%5)*.12,"sample_time":clock,"last_step":clock,"phase":phases.find(phases.min())}
+func hostile_near(owner:String,point:Vector2,radius:float)->Array[String]:
+ var result:Array[String]=[];var side:=side_of(owner)
+ if side<0:return result
+ if unit_grid_dirty:rebuild_unit_grid()
+ var candidates=nearby_units(point,radius)
+ candidates.sort_custom(func(a,b):return int(str(a).trim_prefix("bgunit:"))<int(str(b).trim_prefix("bgunit:")))
+ for key in candidates:
+  if units.has(key) and int(units[key].team)!=side and float(units[key].hp)>0:result.append(str(key))
+ for key in bases:
+  if int(bases[key].team)!=side and float(bases[key].hp)>0 and point.distance_to(bases[key].pos)<=radius:result.append("bgbase:"+str(key))
+ var other:=1-side
+ if not shielded(other) and point.distance_to(heart_pos(other))<=radius:result.append("bgheart:"+str(other))
+ return result
 func nearest(u:Dictionary)->String:
  var best:="";var distance:=720.0;var side:=int(u.team)
  for id in game.positions:
@@ -173,13 +200,13 @@ func nearest(u:Dictionary)->String:
     if int(bases[other].team)!=side and float(bases[other].hp)>0:best="bgbase:"+str(other);break
    if best.is_empty():best="bgheart:"+str(1-side)
  return best
-func tick_units(dt:float)->void:
+func tick_units(dt:float,phase:int=-1)->void:
  rebuild_unit_grid()
  for key in units.keys():
-  if not units.has(key):continue
-  var u:Dictionary=units[key];var kind:=int(u.kind);u.cooldown=float(u.cooldown)-dt
+  if not units.has(key) or phase>=0 and int(units[key].get("phase",0))!=phase:continue
+  var u:Dictionary=units[key];var kind:=int(u.kind);var unit_dt=dt if phase<0 else clampf(clock-float(u.get("last_step",clock-.1)),0,.2);u.last_step=clock;u.sample_time=clock;u.cooldown=float(u.cooldown)-unit_dt
   if bool(u.get("converted",false)):
-   u.expires=float(u.get("expires",0))-dt
+   u.expires=float(u.get("expires",0))-unit_dt
    if float(u.expires)<=0:units.erase(key);game.adventure.combat.statuses.erase(key);continue
   if game.adventure.combat.stunned(str(key)):continue
   var target:=nearest(u);var a:Dictionary=game.adventure.combat.actor(target)
@@ -199,14 +226,16 @@ func tick_units(dt:float)->void:
    var v:Vector2=u.pos-units[other_key].pos
    if v.length_squared()<900 and v.length_squared()>1:separation+=v.normalized()*.35
   var speed:float=SPEED[kind]*game.adventure.combat.speed_factor(str(key))
-  u.pos=game._move_actor(u.pos,(desired+separation).limit_length(1)*speed*dt)
+  u.pos=game._move_actor(u.pos,(desired+separation).limit_length(1)*speed*unit_dt)
   if kind!=2 and distance<=reach+15 and float(u.cooldown)<=0 and game._clear_path(u.pos,a.pos):
    var b:Dictionary=bases.get(owners.get(str(u.owner),""),{});var upgrades:Dictionary=b.get("upgrades",{})
    var amount:float=DAMAGE[kind]*(1+.12*int(upgrades.get("melee" if kind in [0,5,6] else "ranged",0)))
    u.cooldown=1.0 if kind==5 else 2.7 if kind==3 else 1.6
    if kind in [0,5,6]:hit(target,amount,str(key));game._emit_effect({"pos":a.pos,"radius":24.0,"time":.15,"color":"#fbd290"})
-   elif kind==3:shots.append({"pos":u.pos,"target":target,"end":a.pos,"owner":"bgarmy:"+str(u.owner),"team":int(u.team),"damage":amount,"speed":340.0 if kind==3 else 500.0,"radius":100.0 if kind==3 else 65.0 if kind==4 else 0.0,"life":3.0})
+   elif kind==3:
+    uid+=1;shots.append({"uid":uid,"pos":u.pos,"target":target,"end":a.pos,"owner":"bgarmy:"+str(u.owner),"team":int(u.team),"damage":amount,"speed":340.0 if kind==3 else 500.0,"radius":100.0 if kind==3 else 65.0 if kind==4 else 0.0,"life":3.0})
    else:game.adventure.combat.launch_projectile("bgarmy:"+str(u.owner),u.pos,delta_pos.normalized(),{"range":reach+90,"speed":450,"splash_radius":65 if kind==4 else 0,"splash_damage":amount*.45,"color":"#a4e6ed" if int(u.team)==0 else "#f8a181"},amount)
+ unit_grid_dirty=true
 func heal_near(u:Dictionary)->void:
  var upgrades:Dictionary=bases.get(owners.get(str(u.owner),""),{}).get("upgrades",{})
  var amount:float=8*(1+.15*int(upgrades.get("healing",0)))
@@ -248,7 +277,8 @@ func tick_bombs(dt:float)->void:
  if air_timer<=0:
   air_timer=7.0
   var lane:=randi_range(0,lanes-1);var x:=randf_range(1300,5500)
-  for n in 3:bombs.append({"pos":Vector2(x+(n-1)*200,lane_y(lane)+randf_range(-100,100)),"time":2.5+n*.25,"radius":130.0})
+  for n in 3:
+   uid+=1;bombs.append({"uid":uid,"pos":Vector2(x+(n-1)*200,lane_y(lane)+randf_range(-100,100)),"time":2.5+n*.25,"radius":130.0})
  for index in range(bombs.size()-1,-1,-1):
   var b:Dictionary=bombs[index];b.time=float(b.time)-dt
   if float(b.time)<=0:blast(b.pos,float(b.radius),45,"enemy",-1,preload("res://scripts/defeat_credit.gd").hazard("Iron Rain airstrike"));bombs.remove_at(index)
@@ -276,29 +306,30 @@ func interact(id:String)->bool:
  var b:Dictionary=bases.get(owners.get(id,""),{})
  if not b.is_empty() and float(b.hp)>0 and (game.positions.get(id,Vector2.ZERO) as Vector2).distance_to(b.pos)<240:open_shop();return true
  return false
-func open_shop()->void:
+func open_shop(notice:String="")->void:
  var b:Dictionary=bases.get(owners.get(game.my_id,""),{})
  if b.is_empty():return
  game.presentation.window("MY BARRACKS • "+FACTIONS[int(b.team)],"battlegrounds")
  game.presentation.label(game.presentation.content,"CC: "+str(game.gold.get(game.my_id,0))+" • New recruits join the next march. 24 active soldiers maximum.",18)
+ if not notice.is_empty():game.presentation.label(game.presentation.content,notice,19)
  var grid:=GridContainer.new();grid.columns=2;game.presentation.content.add_child(grid)
  for k in TYPES.size():
-  var key:String="unit:"+str(TYPES[k]);var label:String=LABELS[k]+" ×"+str(b.counts[k])+" • +1 / "+str(price(b,key))+"g"
+  var key:String="unit:"+str(TYPES[k]);var label:String=LABELS[k]+" ×"+str(int(b.counts[k]))+" • +1 / "+str(price(b,key))+" CC"
   var button=game.presentation.button(grid,label,request_buy.bind(key));button.custom_minimum_size=Vector2(370,44)
   button.tooltip_text="Heals nearby allies" if k==2 else "Splash siege damage" if k==3 else "Long reach, fragile" if k==7 else "Recruits march automatically and fight the opposing army."
  game.presentation.label(game.presentation.content,"ARMY UPGRADES • apply to future troops",19)
  for key in UPGRADES:
-  var text:=str(key).capitalize()+" "+str(b.upgrades[key])+"/4 • "+str(price(b,str(key)))+"g"
+  var text:=str(key).capitalize()+" "+str(int(b.upgrades[key]))+"/4 • "+str(price(b,str(key)))+" CC"
   if key=="production":text+=" • Faster reinforcements"
   game.presentation.button(game.presentation.content,text,request_buy.bind(str(key)))
 func request_buy(key:String)->void:
  if game.role=="host":
-  var success:=buy(game.my_id,key);game.presentation.close();open_shop()
-  game.presentation.label(game.presentation.content,"Upgraded!" if success else "Need more CC, upgrade capped, or move closer to your barracks.",17)
+  var success:=buy(game.my_id,key);game.presentation.close();open_shop("Upgraded!" if success else "Need more CC, upgrade capped, or move closer to your barracks.")
+ elif game.has_method("request_battleground_order"):game.request_battleground_order(key)
  else:game._send_channel(game.host_id,{"type":"bg_upgrade","key":key});game.presentation.close();game.status_label.text="Barracks order sent. Press E to view your updated army."
 func snapshot()->Dictionary:
- var payload:Dictionary={"map":map_id,"lanes":lanes,"clock":clock,"owners":owners,"hearts":heart_hp,"winner":winner,"units":{},"bases":{},"shots":[],"bombs":[]}
- for key in units:payload.units[key]=units[key].duplicate();payload.units[key].pos=[roundi(units[key].pos.x),roundi(units[key].pos.y)]
+ var payload:Dictionary={"map":map_id,"lanes":lanes,"clock":clock,"army_time":army_time,"work":work,"owners":owners,"hearts":heart_hp,"winner":winner,"units":{},"bases":{},"shots":[],"bombs":[]}
+ for key in units:payload.units[key]=units[key].duplicate();payload.units[key].pos=[snappedf(units[key].pos.x,.01),snappedf(units[key].pos.y,.01)];payload.units[key].erase("last_step");payload.units[key].erase("phase")
  for key in bases:payload.bases[key]=bases[key].duplicate(true);payload.bases[key].pos=[bases[key].pos.x,bases[key].pos.y]
  for key in ["shots","bombs"]:
   for value in shots if key=="shots" else bombs:
@@ -308,6 +339,7 @@ func snapshot()->Dictionary:
  return payload
 func receive(data:Dictionary)->void:
  if data.is_empty():return
+ data=data.duplicate(true);work=data.get("work",work)
  map_id=str(data.get("map","woodland"));lanes=clampi(int(data.get("lanes",4)),3,4);clock=float(data.get("clock",clock));owners=data.get("owners",{});heart_hp=data.get("hearts",[2600,2600]);winner=int(data.get("winner",-1));units=data.get("units",{});bases=data.get("bases",{});shots=data.get("shots",[]);bombs=data.get("bombs",[])
  for collection in [units,bases]:
   for key in collection:collection[key].pos=Vector2(float(collection[key].pos[0]),float(collection[key].pos[1]))
@@ -316,6 +348,8 @@ func receive(data:Dictionary)->void:
    value.pos=Vector2(float(value.pos[0]),float(value.pos[1]))
    if value.has("end"):value.end=Vector2(float(value.end[0]),float(value.end[1]))
 func draw_world(canvas:Node2D)->void:
+ var view:Dictionary=game._battleground_view() if game.has_method("_battleground_view") else {}
+ var draw_units:Dictionary=view.get("units",units);var draw_shots:Array=view.get("shots",shots);var draw_bombs:Array=view.get("bombs",bombs);var draw_clock:float=float(view.get("clock",clock))
  var cam:Vector2=game.camera;var visible:=Rect2(cam-Vector2(120,120),game.VIEW+Vector2(240,240));var font:=ThemeDB.fallback_font
  for lane in lanes:
   var y:=lane_y(lane)
@@ -352,8 +386,8 @@ func draw_world(canvas:Node2D)->void:
     canvas.draw_rect(Rect2(p-Vector2(70,30),Vector2(140,60)),Color("#3b3c37"));canvas.draw_rect(Rect2(p-Vector2(80,40),Vector2(160,16)),Color("#8b8572"))
     canvas.draw_rect(Rect2(p+Vector2(-12,-10),Vector2(24,20)),Color("#19242a"));canvas.draw_line(p+Vector2(-80,45),p+Vector2(80,45),Color("#bac0b6"),2)
     for n in 6:canvas.draw_line(p+Vector2(-70+n*25,36),p+Vector2(-60+n*25,54),Color("#bac0b6"),2)
- if map_id=="warzone" and not bombs.is_empty():
-  var plane:=Vector2(fposmod(clock*650,SIZE.x),350)-cam
+ if map_id=="warzone" and not draw_bombs.is_empty():
+  var plane:=Vector2(fposmod(draw_clock*650,SIZE.x),350)-cam
   canvas.draw_colored_polygon(PackedVector2Array([plane+Vector2(0,-28),plane+Vector2(16,0),plane+Vector2(80,24),plane+Vector2(12,16),plane+Vector2(6,54),plane+Vector2(-6,54),plane+Vector2(-12,16),plane+Vector2(-80,24),plane+Vector2(-16,0)]),Color("#bbc1af"))
  for side in 2:
   canvas.draw_line(Vector2(550 if side==0 else 6250,400)-cam,Vector2(550 if side==0 else 6250,4000)-cam,Color("#a59675"),200)
@@ -386,12 +420,12 @@ func draw_world(canvas:Node2D)->void:
  for n in 5:canvas.draw_circle(middle+Vector2(-60+n*30,-10),7,Color("#8ed0d2") if n%2 else Color("#e0b888"))
  canvas.draw_circle(middle+Vector2(0,-46),11,Color("#c5b494"));canvas.draw_rect(Rect2(middle+Vector2(-10,-37),Vector2(20,21)),Color("#648384"))
  canvas.draw_string(font,middle+Vector2(-150,-105),"CENTRAL MARKET • E",HORIZONTAL_ALIGNMENT_CENTER,300,21,Color("#ffe6a2"))
- for u in units.values():
-  if visible.has_point(u.pos):draw_unit(canvas,u,u.pos-cam)
- for s in shots:
+ for u in draw_units.values():
+  if visible.has_point(u.pos):draw_unit(canvas,u,u.pos-cam,draw_clock)
+ for s in draw_shots:
   if visible.has_point(s.pos):canvas.draw_circle(s.pos-cam,8 if float(s.radius)>0 else 4,Color("#ffca73") if int(s.team)==0 else Color("#eb8eab"))
- for b in bombs:
-  var p:Vector2=b.pos-cam;var colour:=Color(1,.25,.14,.25+.2*absf(sin(clock*8)))
+ for b in draw_bombs:
+  var p:Vector2=b.pos-cam;var colour:=Color(1,.25,.14,.25+.2*absf(sin(draw_clock*8)))
   canvas.draw_circle(p,float(b.radius),colour);canvas.draw_arc(p,float(b.radius),0,TAU,40,Color("#ff9d65"),3)
   canvas.draw_line(p-Vector2(20,0),p+Vector2(20,0),Color.WHITE,2);canvas.draw_line(p-Vector2(0,20),p+Vector2(0,20),Color.WHITE,2)
   canvas.draw_circle(p-Vector2(0,maxf(0,float(b.time))*150),10,Color("#282a2c"))
@@ -399,7 +433,8 @@ func player_name(id:String)->String:
  for member in game.roster:
   if str(member.id)==id:return str(member.name)
  return "Barracks"
-func draw_unit(c:Node2D,u:Dictionary,p:Vector2)->void:
+func draw_unit(c:Node2D,u:Dictionary,p:Vector2,draw_clock:float=-1)->void:
+ if draw_clock<0:draw_clock=clock
  var kind:=int(u.kind);var side:=int(u.team);var cloth:=Color("#608dab") if side==0 else Color("#ac5c50");var fur:=Color("#e6d8b4") if side==0 else Color("#8c7864")
  c.draw_circle(p+Vector2(0,12),17,Color(0,0,0,.28))
  if kind==3:
@@ -407,7 +442,7 @@ func draw_unit(c:Node2D,u:Dictionary,p:Vector2)->void:
   for x in [-18,18]:c.draw_circle(p+Vector2(x,14),9,Color("#323638"))
  else:
   var scale:=1.35 if kind==6 else 1.1 if kind==5 else 1.0
-  var stride:float=sin(clock*9+float(u.lane)*1.7)*3
+  var stride:float=sin(draw_clock*9+float(u.lane)*1.7)*3
   c.draw_rect(Rect2(p+Vector2(-10,22+stride),Vector2(7,10)),Color("#3c4246"));c.draw_rect(Rect2(p+Vector2(3,22-stride),Vector2(7,10)),Color("#3c4246"))
   c.draw_rect(Rect2(p+Vector2(-12,0)*scale,Vector2(24,26)*scale),cloth);c.draw_circle(p+Vector2(0,-9),12*scale,fur)
   if side==0 and kind==2:
@@ -457,7 +492,7 @@ func help()->void:
  game.presentation.label(game.presentation.content,"Army limit: 24 active troops per player. All eight unit types can be recruited together. Upgrades last for this match; hero mastery is retained.",17)
 
 func rebuild_unit_grid()->void:
- unit_grid.clear()
+ unit_grid_dirty=false;unit_grid.clear()
  for key in units:
   var p:Vector2=units[key].pos;var cell:=Vector2i(floori(p.x/256),floori(p.y/256))
   if not unit_grid.has(cell):unit_grid[cell]=[]

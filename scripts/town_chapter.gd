@@ -1,6 +1,7 @@
 extends RefCounted
-const RIVER=Rect2(2280,-560,160,2810)
+const RIVER=Rect2(2280,-560,160,3160)
 const BRIDGE=Rect2(2250,1090,220,130)
+const HOME_BRIDGE=Rect2(2250,2025,220,110)
 const POST=Vector2(550,1490)
 const GUIDE=Vector2(290,400)
 const FOREST=Rect2(2490,940,650,780)
@@ -15,9 +16,12 @@ func _init()->void:
    if Rect2(2500,900,150,220).has_point(point):continue
    if CAMP_CLEARING.grow(50).has_point(point):continue
    forest_trees.append(point)
- forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115)
+ forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115 and not preload("res://scripts/town_neighborhood.gd").reserved(p))
 func blocked(p:Vector2)->bool:
- if RIVER.has_point(p) and not BRIDGE.has_point(p):return true
+ for row in 3:
+  for col in 2:
+   if Rect2(Vector2(805 if col==0 else 962,1840+row*85),Vector2(50 if col==0 else 90,42)).grow(5).has_point(p):return true
+ if RIVER.has_point(p) and not BRIDGE.has_point(p) and not HOME_BRIDGE.has_point(p):return true
  if Rect2(-1370,560,120,740).has_point(p):return true
  if FOREST.grow(30).has_point(p):
   for tree in forest_trees:
@@ -39,17 +43,19 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
  # A single physical river exists before the watermill project is earned.
  if visible.intersects(RIVER.grow(20)):
   c.draw_rect(Rect2(RIVER.position-camera,RIVER.size),Color("#347889"))
-  for x in [2268,2440]:c.draw_rect(Rect2(Vector2(x,-560)-camera,Vector2(12,2810)),Color("#8b9a7c"))
+  for x in [2268,2440]:c.draw_rect(Rect2(Vector2(x,-560)-camera,Vector2(12,RIVER.size.y)),Color("#8b9a7c"))
   for n in 64:
-   var world:=Vector2(2295+posmod(n*37,125),fposmod(n*37+t*45,2810)-560)
+   var world:=Vector2(2295+posmod(n*37,125),fposmod(n*37+t*45,RIVER.size.y)-560)
    if visible.has_point(world):
     var p:=world-camera;c.draw_line(p,p+Vector2(30,0),Color(.65,.9,.92,.4),2,true)
  if visible.intersects(Rect2(2200,250,950,1950)):
-  c.draw_rect(Rect2(BRIDGE.position-camera,BRIDGE.size),Color("#b79b6f"))
-  for x in range(2250,2470,22):c.draw_line(Vector2(x,1090)-camera,Vector2(x,1220)-camera,Color("#77634d"),2)
-  for y in [1090,1220]:
-   c.draw_line(Vector2(2250,y)-camera,Vector2(2470,y)-camera,Color("#e2c995"),6)
-   for x in range(2250,2471,44):c.draw_line(Vector2(x,y)-camera,Vector2(x,y-24)-camera,Color("#745d46"),5)
+  for bridge in [BRIDGE,HOME_BRIDGE]:
+   if not visible.intersects(bridge.grow(45)):continue
+   c.draw_rect(Rect2(bridge.position-camera,bridge.size),Color("#b79b6f"))
+   for x in range(int(bridge.position.x),int(bridge.end.x),22):c.draw_line(Vector2(x,bridge.position.y)-camera,Vector2(x,bridge.end.y)-camera,Color("#77634d"),2)
+   for y in [bridge.position.y,bridge.end.y]:
+    c.draw_line(Vector2(bridge.position.x,y)-camera,Vector2(bridge.end.x,y)-camera,Color("#e2c995"),6)
+    for x in range(int(bridge.position.x),int(bridge.end.x)+1,44):c.draw_line(Vector2(x,y)-camera,Vector2(x,y-24)-camera,Color("#745d46"),5)
   var chime_path:=PackedVector2Array([Vector2(2590,1150)-camera,Vector2(2590,825)-camera,Vector2(2800,825)-camera,Vector2(2800,655)-camera])
   preload("res://scripts/commerce_town.gd").path(c,chime_path)
   draw_east_details(c,camera)
@@ -67,19 +73,22 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
   var p:=origin-camera
   c.draw_colored_polygon(PackedVector2Array([p,p+Vector2(95,-100),p+Vector2(225,10),p+Vector2(170,180),p+Vector2(-30,180)]),Color("#5b6461") if n%2 else Color("#6a746a"))
   c.draw_line(p+Vector2(95,-100),p+Vector2(130,65),Color("#929789"),5)
- # Southern communal garden. Beds are aesthetic, with a broad walkable central aisle.
- if visible.intersects(Rect2(650,1760,840,420)):
+ # A compact communal garden fits between the southern homes, leaving the central street clear.
+ if visible.intersects(Rect2(800,1780,285,350)):
   for row in 3:
-   for col in 4:
-    var p:=Vector2(700+col*150,1840+row*85)-camera;c.draw_rect(Rect2(p,Vector2(100,48)),Color("#70543d"));c.draw_rect(Rect2(p,Vector2(100,48)),Color("#bba378"),false,3)
-    for n in 5:
-     var plant:=p+Vector2(12+n*18,28);c.draw_line(plant,plant-Vector2(0,16),Color("#83b574"),3);c.draw_circle(plant-Vector2(0,18),5,Color("#deb171") if row==1 else Color("#9ac084"))
-  var farmer:=Vector2(1370+sin(t*.25)*35,1940)-camera
+   for col in 2:
+    var world=Vector2(805 if col==0 else 962,1840+row*85)
+    var size=Vector2(50 if col==0 else 90,42);var p=world-camera
+    c.draw_rect(Rect2(p,size),Color("#70543d"));c.draw_rect(Rect2(p,size),Color("#bba378"),false,3)
+    for n in (2 if col==0 else 4):
+     var plant=p+Vector2(13+n*19,27);c.draw_line(plant,plant-Vector2(0,16),Color("#83b574"),3);c.draw_circle(plant-Vector2(0,18),5,Color("#deb171") if row==1 else Color("#9ac084"))
+  var phase=fposmod(t*.006,1);var travel=phase*2 if phase<.5 else 2-phase*2
+  var farmer=Vector2(1030,1890+travel*200)-camera
   c.draw_circle(farmer+Vector2(0,1),19,Color(0,0,0,.18))
   c.draw_texture_rect(farmer_art,Rect2(farmer-Vector2(38,94+sin(t*3)*1.5),Vector2(76,95)),false)
-  for y in [1790,2130]:
-   c.draw_line(Vector2(660,y)-camera,Vector2(1470,y)-camera,Color("#a99068"),4)
-   for x in range(660,1470,60):c.draw_line(Vector2(x,y-13)-camera,Vector2(x,y+15)-camera,Color("#7f684c"),5)
+  for x in [800,1080]:
+   c.draw_line(Vector2(x,1790)-camera,Vector2(x,2110)-camera,Color("#a99068"),4)
+   for y in range(1790,2111,64):c.draw_line(Vector2(x-10,y)-camera,Vector2(x+10,y)-camera,Color("#7f684c"),5)
 func draw_pads(c:Node2D,camera:Vector2)->void:
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
  if visible.intersects(Rect2(600,-500,600,720)):

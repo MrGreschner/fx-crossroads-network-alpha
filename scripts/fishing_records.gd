@@ -2,11 +2,28 @@ extends RefCounted
 const C=preload("res://scripts/fishing_catalog.gd")
 const CAPACITY=100
 var legacy:Node
-func defaults()->Dictionary:return {"rod":false,"journal":{},"kept":[],"display":["","","","",""],"favorite":"","total":0}
+var dev_ready=false
+var progress=preload("res://scripts/fishing_progress.gd").new()
+func defaults()->Dictionary:return {"rod":true,"journal":{},"kept":[],"display":["","","","",""],"favorite":"","total":0}
 func state()->Dictionary:
  if not legacy.data.has("fishing"):legacy.data.fishing=defaults()
- if bool(legacy.data.get("teacher",false)):legacy.data.fishing.rod=true
+ legacy.data.fishing.rod=true
+ progress.records=self
+ progress.migrate(legacy.data.fishing)
+ for key in progress.extras():
+  if not legacy.data.fishing.has(key):legacy.data.fishing[key]=progress.extras()[key]
+ var dev=preload("res://scripts/profile_store.gd").dev_session()
+ if bool(legacy.data.get("teacher",false)) and dev!=null and dev.active and not dev_ready:
+  dev_ready=true
+  var s=legacy.data.fishing;s.rod=true;s.xp=maxi(int(s.xp),progress.threshold(progress.MAX_LEVEL));s.gear={"net":true,"pot":true}
+  for id in s.bait:s.bait[id]=1000
+  for id in C.fish():
+   if not s.journal.has(id):s.journal[id]={"count":0,"kg":0.0,"cm":0.0}
  return legacy.data.fishing
+func dev_preview()->bool:
+ var dev=preload("res://scripts/profile_store.gd").dev_session()
+ return bool(legacy.data.get("teacher",false)) and dev!=null and dev.active
+func capacity()->int:return 10+10*mini(4,progress.level()/5)
 func save()->void:legacy.save()
 func unlock()->void:state().rod=true;save()
 func specimen(id:String)->Dictionary:
@@ -17,11 +34,19 @@ func favorite()->Dictionary:return specimen(str(state().favorite))
 func complete(catch:Dictionary,keep:bool)->bool:
  if not valid_catch(catch):return false
  if preload("res://scripts/profile_store.gd").progression_blocked() and not bool(legacy.data.get("teacher",false)):return false
- if keep and state().kept.size()>=CAPACITY:return false
+ if keep and state().kept.size()>=capacity():return false
  if not specimen(str(catch.id)).is_empty():return false
- var s=state();var id=str(catch.species);var rec:Dictionary=s.journal.get(id,{"count":0,"kg":0.0,"cm":0.0})
+ if str(catch.id) in state().recent:return false
+ var s=state();var id=str(catch.species);var first=not s.journal.has(id);var better=first or float(catch.kg)>float(s.journal.get(id,{}).get("kg",0));var rec:Dictionary=s.journal.get(id,{"count":0,"kg":0.0,"cm":0.0})
  rec.count=int(rec.count)+1;rec.kg=maxf(float(rec.kg),float(catch.kg));rec.cm=maxf(float(rec.cm),float(catch.cm));s.journal[id]=rec;s.total=int(s.total)+1
  if keep:s.kept.append(catch.duplicate(true))
+ s.recent.append(str(catch.id))
+ if s.recent.size()>100:s.recent.pop_front()
+ progress.award(catch,first,better)
+ if legacy.game.has_method("add_float_text"):
+  var point:Vector2=legacy.game.local_pos if legacy.arcade else legacy.game.position_in_world
+  legacy.game.add_float_text(point-Vector2(36,62),"+%d Fishing XP" % progress.last_xp,Color("#90e9df"))
+ elif legacy.game.get("fishing")!=null:legacy.game.fishing.xp_popup(progress.last_xp)
  legacy.weekly.catch_fish(catch)
  save();return true
 func release(id:String)->void:
@@ -46,9 +71,16 @@ static func valid_catch(v:Variant)->bool:
  if not v.get("species",null) is String or not C.fish().has(v.species):return false
  if not v.get("pool",null) is String or not C.pools().has(v.pool) or v.species not in C.pools()[v.pool].fish:return false
  if not v.get("date",null) is String or v.date.length()>32 or not v.get("trophy",null) is bool:return false
+ if v.has("size_version"):
+  if not number(v.size_version,2) or int(v.size_version)!=2 or float(v.size_version)!=2:return false
+  if not number(v.get("trophy_rate",null),1):return false
+  if bool(v.trophy)!=C.is_trophy(v):return false
  return number(v.get("kg",null),float(C.fish()[v.species].max_kg)*4+.01) and number(v.get("cm",null),900)
 static func valid(v:Variant)->bool:
  if not v is Dictionary or not v.get("rod",null) is bool:return false
+ if not preload("res://scripts/fishing_progress.gd").valid_extra(v):return false
+ for pot in v.get("pots",[]):
+  if not valid_catch(pot.catch):return false
  if not v.get("journal",null) is Dictionary or v.journal.size()>C.fish().size():return false
  if not v.get("kept",null) is Array or v.kept.size()>CAPACITY:return false
  if not v.get("display",null) is Array or v.display.size()!=5:return false

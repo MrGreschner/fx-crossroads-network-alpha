@@ -59,7 +59,7 @@ func save_draft()->void:
  if f!=null:f.store_string(JSON.stringify(notes));f.flush();f.close()
  elif is_instance_valid(notice):notice.text="Could not save a local draft. Copy or download your report before closing."
 func report()->String:
- var lines:Array[String]=["FX CROSSROADS — STUDENT PLAYTEST REPORT","Context at export (record the actual test context in your notes):\n"+preload("res://scripts/release_support.gd").context(game),"Notes exported: "+Time.get_datetime_string_from_system(true)]
+ var lines:Array[String]=["CROSSROADS: REALMS BEYOND — STUDENT PLAYTEST REPORT","Context at export (record the actual test context in your notes):\n"+preload("res://scripts/release_support.gd").context(game),"Notes exported: "+Time.get_datetime_string_from_system(true)]
  for section in SECTIONS:
   lines.append("\n"+str(section).to_upper())
   for key in SECTIONS[section]:lines.append(str(SECTIONS[section][key])+"\n"+str(notes.get(key,"[Not completed]")))

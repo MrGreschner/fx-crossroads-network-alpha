@@ -83,11 +83,11 @@ func capture()->void:
  samples.append(sample)
  if samples.size()>120:samples.pop_front()
  var f:=FileAccess.open(LAST,FileAccess.WRITE)
- if f!=null:f.store_string(JSON.stringify({"version":"v165","ended":false,"sample":sample}))
+ if f!=null:f.store_string(JSON.stringify({"version":"v169","ended":false,"sample":sample}))
  if OS.has_feature("web"):JavaScriptBridge.eval("window.fxDiagnostics && window.fxDiagnostics.sample("+JSON.stringify(sample)+");",true)
 func report()->String:
  var engine_log:=FileAccess.get_file_as_string("user://logs/godot.log") if FileAccess.file_exists("user://logs/godot.log") else ""
- return JSON.stringify({"engine_log_tail":engine_log.right(16000),"version":"v165","platform":OS.get_name(),"previous_session_interrupted":interrupted,"previous_session":previous,"samples":samples},"  ")
+ return JSON.stringify({"engine_log_tail":engine_log.right(16000),"version":"v169","platform":OS.get_name(),"previous_session_interrupted":interrupted,"previous_session":previous,"samples":samples},"  ")
 func download()->void:
  capture()
  if OS.has_feature("web"):JavaScriptBridge.eval("window.fxDiagnostics.download();",true);return
@@ -100,4 +100,4 @@ func download()->void:
  );native_dialog.popup_centered(Vector2i(900,520))
 func _exit_tree()->void:
  var f:=FileAccess.open(LAST,FileAccess.WRITE)
- if f!=null:f.store_string(JSON.stringify({"version":"v165","ended":true,"sample":samples.back() if not samples.is_empty() else {}}))
+ if f!=null:f.store_string(JSON.stringify({"version":"v169","ended":true,"sample":samples.back() if not samples.is_empty() else {}}))

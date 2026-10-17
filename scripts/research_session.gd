@@ -34,7 +34,7 @@ func observation()->Dictionary:
  return {"hero":str(g.selected_character),"damage":float(g.dealt_damage),"kills":int(g.kills),"mode":str(g.mode)}
 func report()->String:
  var g=game();var info=observation()
- return "FX Crossroads • Playtest Mode\n"+Time.get_datetime_string_from_system()+"\nScene: "+str(g.scene_file_path)+"\nMode: "+info.mode+" • Hero: "+info.hero+"\nFPS: "+str(Engine.get_frames_per_second())+"\nDamage: "+str(int(info.damage))+" • Kills: "+str(info.kills)+"\nCheckpoints:\n"+"\n".join(checkpoints)+"\nExplain expected vs observed behaviour, reproduction steps and suggested improvements in the notebook."
+ return "Crossroads: Realms Beyond • Playtest Mode\n"+Time.get_datetime_string_from_system()+"\nScene: "+str(g.scene_file_path)+"\nMode: "+info.mode+" • Hero: "+info.hero+"\nFPS: "+str(Engine.get_frames_per_second())+"\nDamage: "+str(int(info.damage))+" • Kills: "+str(info.kills)+"\nCheckpoints:\n"+"\n".join(checkpoints)+"\nExplain expected vs observed behaviour, reproduction steps and suggested improvements in the notebook."
 func checkpoint()->void:
  if checkpoints.size()>=30:checkpoints.pop_front()
  var info=observation();checkpoints.append(Time.get_time_string_from_system()+" • "+info.mode+" • FPS "+str(Engine.get_frames_per_second())+" • Damage "+str(int(info.damage))+" • Kills "+str(info.kills))

@@ -77,9 +77,17 @@ func draw_market(g:Node2D,camera:Vector2)->void:
  for n in 8:g.draw_line(p+Vector2(8+n*45,-3),p+Vector2(64+n*29,-65),Color("#618795"),2)
  g.draw_rect(Rect2(p+Vector2(45,17),Vector2(250,32)),Color("#203e49"));g.draw_string(font,p+Vector2(52,40),"CROSSROADS MARKET",HORIZONTAL_ALIGNMENT_CENTER,236,18,Color("#ecd39b"))
  for x in [22,268]:
-  g.draw_rect(Rect2(p+Vector2(x,64),Vector2(48,66)),Color("#466d76"));g.draw_rect(Rect2(p+Vector2(x+4,68),Vector2(40,58)),Color("#9cc8c1"));g.draw_line(p+Vector2(x+24,68),p+Vector2(x+24,126),Color("#ddcc9c"),3)
+  g.draw_rect(Rect2(p+Vector2(x,64),Vector2(48,66)),Color("#466d76"));g.draw_rect(Rect2(p+Vector2(x+4,68),Vector2(40,58)),Color("#f4d998") if g.town_life.calendar.night_amount()>.1 else Color("#9cc8c1"));g.draw_line(p+Vector2(x+24,68),p+Vector2(x+24,126),Color("#ddcc9c"),3)
+ for x in [-9,350]:
+  var q=p+Vector2(x,132);g.draw_rect(Rect2(q-Vector2(5,9),Vector2(10,18)),Color("#43565b"));g.draw_rect(Rect2(q-Vector2(3,6),Vector2(6,12)),Color("#ffe4a2") if g.town_life.calendar.night_amount()>.1 else Color("#a6aa8a"))
  g.draw_rect(Rect2(p+Vector2(133,80),Vector2(74,115)),Color("#3e5056"))
  for n in 3:g.draw_line(p+Vector2(137+n*24,84),p+Vector2(137+n*24,191),Color("#9a8963"),4)
+ # Loading opening aligns with the mine railway, below the west window.
+ var bay=p+Vector2(-10,149)
+ g.draw_rect(Rect2(bay,Vector2(46,46)),Color("#22343b"))
+ g.draw_line(bay,bay+Vector2(46,0),Color("#b6a274"),5,true)
+ for x in [0,46]:g.draw_line(bay+Vector2(x,0),bay+Vector2(x,46),Color("#8d7958"),3,true)
+ for y in [11,31]:g.draw_line(bay+Vector2(0,y),bay+Vector2(23,y),Color("#b7c2ad"),2,true)
  # Supply piles to the west; mineral stall and gem counter to the east.
  for n in 5:crate(g,Vector2(-505+(n%3)*35,620-(n/3)*28)-camera,Vector2(32,30))
  for n in 8:

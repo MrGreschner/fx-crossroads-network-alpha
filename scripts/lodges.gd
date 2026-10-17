@@ -26,6 +26,7 @@ var clock_label:Label
 var progress:ProgressBar
 var notice=""
 var page=""
+var challenge_page=0
 var refresh_clock=0.0
 var ui_clock:Label
 var job_widgets:Array=[]
@@ -76,8 +77,8 @@ func result(text:String)->void:notice=text;open(page)
 func open(which:String)->void:
  page=which;job_widgets.clear();ui_clock=null
  game.presentation.window({"challenge":"CHALLENGE LODGE","gather":"GATHERERS’ LODGE","apothecary":"WILLOWGLASS APOTHECARY"}[page],"lodge_"+page)
- var body=game.presentation.content;var header=HBoxContainer.new();body.add_child(header);image(header,page,Vector2(120,110))
- label(header,{"challenge":"Small adventures. Big moments. Level 10, all skills ready. No items or food; no realm/mastery progress. Earn medals and appearance-only rewards.","gather":"Send a crew, let it forage while you play, then claim its findings. Trips continue while this device is closed. Rare seeds are a chance, never guaranteed.","apothecary":"Turn gathered ingredients into single-use potions. Bottles use your existing three item slots, alongside equipment. No extra auto-use slot."}[page],19)
+ var body=game.presentation.content;var header=HBoxContainer.new();body.add_child(header);image(header,page,Vector2(70,65) if page=="challenge" else Vector2(120,110))
+ label(header,{"challenge":"Five challenge styles • 2–5 minutes • level 10, all skills ready. Choose a style above; earn medals and cosmetic rewards. No items, food or realm/mastery progress.","gather":"Send a crew, let it forage while you play, then claim its findings. Trips continue while this device is closed. Rare seeds are a chance, never guaranteed.","apothecary":"Turn gathered ingredients into single-use potions. Bottles use your existing three item slots, alongside equipment. No extra auto-use slot."}[page],19)
  if not notice.is_empty():label(body,notice,18).modulate=Color("#eed18e")
  var nav=HBoxContainer.new();body.add_child(nav)
  if page!="challenge":
@@ -86,19 +87,35 @@ func open(which:String)->void:
  elif page=="gather":gather_menu(body)
  else:brew_menu(body)
 func challenge_menu(body:Node)->void:
- var record=state();label(body,"Medal points: "+str(game.legacy.lodge_economy.medal_total())+" • Bronze 1 / Silver 2 / Gold 3",19)
- button(body,"Weekly activity rewards • view progress",game.legacy.weekly.open_board)
- button(body,"Choose earned cosmetics",game.legacy.cosmetics.open_picker)
- label(body,"THIS WEEK • three featured trials",23)
- var complete=record.weekly.get(C.week(),[]).size();label(body,str(complete)+" / 3 completed • clear all three for the Weekly Lantern cosmetic until Sunday",17)
- var bar=ProgressBar.new();bar.max_value=3;bar.value=complete;bar.custom_minimum_size.y=15;body.add_child(bar)
- for task in C.weekly():trial_card(body,int(task.type),int(task.variant),str(task.key))
- label(body,"ALL CHALLENGES • choose a style and intensity",23)
- for index in C.TYPES.size():
-  var spec:Dictionary=C.TYPES[index];var box=card(body,str(spec.name),str(spec.text));label(box,"Recommended: "+str(spec.recommend)+" • 2–5 minutes",15)
+ # Navigation is outside the details scroll, so every style is visible immediately.
+ var scroll=body.get_parent();var frame=scroll.get_parent()
+ var nav=GridContainer.new();nav.name="ChallengeCategories";nav.columns=3;nav.add_theme_constant_override("h_separation",8);nav.add_theme_constant_override("v_separation",6);frame.add_child(nav);frame.move_child(nav,1)
+ var titles=["This week's trials"]
+ for spec in C.TYPES:titles.append(str(spec.name))
+ for n in titles.size():
+  var choose=button(nav,titles[n],func():challenge_page=n;call_deferred("open","challenge"));choose.toggle_mode=true;choose.button_pressed=challenge_page==n;choose.custom_minimum_size.y=35;choose.size_flags_horizontal=Control.SIZE_EXPAND_FILL;choose.add_theme_font_size_override("font_size",15)
+  if n==challenge_page:UI.accent(choose)
+ var record=state()
+ label(body,"Medal points: %d    •    Bronze 1 / Silver 2 / Gold 3" % game.legacy.lodge_economy.medal_total(),16)
+ if challenge_page==0:
+  var done=record.weekly.get(C.week(),[]).size()
+  label(body,"THIS WEEK • %d / 3 completed" % done,22)
+  label(body,"Complete these three trials for the Weekly Lantern cosmetic until Sunday. Choose any of the five styles above for more adventures.",16)
+  for task in C.weekly():
+   var row=HBoxContainer.new();body.add_child(row);var spec=C.TYPES[int(task.type)]
+   label(row,str(spec.name)+" • "+["Gentle","Adventurous","Daring"][int(task.variant)],17)
+   button(row,"Play again" if str(task.key) in record.weekly.get(C.week(),[]) else "Play trial",start.bind(int(task.type),int(task.variant),str(task.key)))
+ else:
+  var index=challenge_page-1;var spec:Dictionary=C.TYPES[index]
+  var box=card(body,str(spec.name),str(spec.text));label(box,"Recommended: "+str(spec.recommend)+" • 2–5 minutes",16)
+  label(box,"CHOOSE YOUR INTENSITY",15)
   var row=HBoxContainer.new();box.add_child(row)
   for v in 3:
-   var key=str(spec.id)+":"+str(v);var medals=int(record.medals.get(key,0));button(row,["Gentle","Adventurous","Daring"][v]+(" • "+["","Bronze","Silver","Gold"][medals] if medals>0 else ""),start.bind(index,v,""))
+   var medals=int(record.medals.get(str(spec.id)+":"+str(v),0));var action=button(row,["Gentle","Adventurous","Daring"][v]+(" • "+["","Bronze","Silver","Gold"][medals] if medals else ""),start.bind(index,v,""));action.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  var art=TextureRect.new();art.texture=preload("res://scripts/source_art.gd").texture("res://assets/lodges/map_"+str(index)+".svg");art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(0,100);box.add_child(art)
+ var rewards=HBoxContainer.new();body.add_child(rewards)
+ button(rewards,"Weekly reward progress",game.legacy.weekly.open_board)
+ button(rewards,"Your earned cosmetics",game.legacy.cosmetics.open_picker)
 func trial_card(body:Node,index:int,v:int,key:String)->void:
  var box=card(body,str(C.TYPES[index].name)+" • "+["Gentle","Adventurous","Daring"][v],str(C.TYPES[index].text))
  var done=key in state().weekly.get(C.week(),[])
@@ -108,6 +125,7 @@ func pantry(parent:Node)->void:
  for id in C.INGREDIENTS:
   var box=HBoxContainer.new();box.custom_minimum_size.x=300;box.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(box);image(box,id);label(box,str(C.INGREDIENTS[id].name)+"\n"+str(int(state().ingredients.get(id,0))),16)
 func gather_menu(body:Node)->void:
+ button(body,"Fishing bait • use your gathered ingredients",func():game.presentation.close();game.menu="";game.fishing.open_workshop())
  pantry(body);label(body,"YOUR CREWS • "+str(state().jobs.size())+" / "+str(state().get("crew",2))+" busy",22)
  ui_clock=label(body,"",16)
  for index in state().jobs.size():

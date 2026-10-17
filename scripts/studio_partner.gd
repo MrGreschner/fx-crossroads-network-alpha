@@ -7,7 +7,7 @@ var last_local:Dictionary={}
 var edit_parts:Array=[]
 var packet_tick=0.0
 var refresh_pending=false
-var service_url="wss://fx-crossroads-rooms.onrender.com"
+var service_url=preload("res://scripts/brand.gd").room_url()
 var workshop:Node
 var socket:WebSocketPeer
 var panel:PanelContainer

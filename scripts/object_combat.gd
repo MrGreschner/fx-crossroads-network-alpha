@@ -195,9 +195,9 @@ func actor(key:String)->Dictionary:
 		var id:=key.substr(2)
 		return {"pos":adventure.points()[id],"alive":adventure.alive(id),"player":id}
 	return {}
-func hostile(owner:String)->Array[String]:
+func hostile(owner:String,near:Vector2=Vector2.ZERO,radius:float=-1)->Array[String]:
 	var result:Array[String]=[]
-	if adventure.arcade and adventure.game.mode=="battlegrounds":result.append_array(adventure.game.battlegrounds.hostile(owner))
+	if adventure.arcade and adventure.game.mode=="battlegrounds":result.append_array(adventure.game.battlegrounds.hostile_near(owner,near,radius) if radius>=0 else adventure.game.battlegrounds.hostile(owner))
 	if owner!="enemy":
 		for foe in adventure.foes():result.append(npc_key(foe))
 	for id in adventure.points():
@@ -751,7 +751,7 @@ func step_projectiles(delta:float)->void:
 		if str(shot["style"])=="rolling_snow":
 			for offset in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
 				if not path_clear(start+offset*float(shot["radius"]),end+offset*float(shot["radius"])):blocked=true
-		for key in hostile(str(shot["owner"])):
+		for key in hostile(str(shot["owner"]),(start+end)*.5,start.distance_to(end)*.5+float(shot["radius"])+180):
 			var target:=actor(key)
 			if not target.is_empty() and not (shot.get("hits",[]) as Array).has(key) and projectile_near(start,end,key,target["pos"],float(shot["radius"])+v110.target_radius(key,float(target.get("npc",{}).get("hit_radius",18)))):impact=key;break
 		shot["pos"]=point_array(start if blocked else end)

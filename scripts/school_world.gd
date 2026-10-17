@@ -48,8 +48,7 @@ func setup(id:String)->void:
   for key in ["school_tile","school_wood","school_street","school_yard","school_carpet","school_sand"]:textures[key]=load("res://assets/"+key+".png")
   for key in ["desk","board","locker","bookshelf","counter","oven","curtain","weightbench","hoop","clocktower","playframe","slide","bench"]:textures["school_"+key]=load("res://assets/school_"+key+".png")
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,ceili(float(region.size[0])/50),ceili(float(region.size[1])/50));grid.cell_size=Vector2(50,50);grid.offset=Vector2(25,25);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
- for x in grid.region.size.x:
-  for y in grid.region.size.y:grid.set_point_solid(Vector2i(x,y),not can_stand(Vector2(x*50+25,y*50+25)))
+ preload("res://scripts/navigation_cache.gd").populate(grid,"school_"+id,JSON.stringify(data),func(point):return not can_stand(point))
 func prop_rect(prop:Dictionary)->Rect2:
  var size:=v(prop.solid);return Rect2(v(prop.pos)-size*.5,size)
 func room_at(point:Vector2)->Dictionary:
@@ -119,7 +118,8 @@ func spawn_foe(kind:String,point:Vector2,group:String,boss:bool=false,hp:float=-
 func spawn_group(key:String)->void:
  if spawned.has(key):return
  spawned[key]=true
- for entry in data.groups.get(key,[]):spawn_foe(str(entry.type),v(entry.pos),key,false,float(entry.hp))
+ for entry in data.groups.get(key,[]):
+  var foe=spawn_foe(str(entry.type),v(entry.pos),key,false,float(entry.hp));foe["volley_patrol"]=bool(entry.get("volley_patrol",false))
 func remaining(group:String)->int:
  var count:=0
  for enemy in adventure.foes():
@@ -291,7 +291,9 @@ func step_enemies(delta:float)->void:
    "pencil_scrapper","backpack_biter","chalkling":
     enemy.school_timer=.2
     if distance<90:enemy.school_timer=1.3;telegraph(enemy,enemy.pos,30,float(definition(kind).damage),.45,{"melee":true},advance(enemy.pos,aim,90),.15,"line")
-   "paper_sprite":enemy.school_timer=2.1;shoot(enemy,target,2,7,.16,230,{"amplitude":20,"wavelength":160,"color":"#ece8ca"},"weaving")
+   "paper_sprite":
+    if enemy.get("volley_patrol",false):enemy.school_timer=3.7;radial(enemy,8,8,200,{"color":"#eed09a"})
+    else:enemy.school_timer=2.1;shoot(enemy,target,2,7,.16,230,{"amplitude":20,"wavelength":160,"color":"#ece8ca"},"weaving")
    "hall_monitor":
     enemy.school_timer=3.4
     if turn%2==0:shoot(enemy,target,3,12,.19,265)
@@ -588,6 +590,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
 func draw_hud(canvas:Node2D)->void:
  if not active:return
  var view:Vector2=adventure.game.VIEW;var width:=minf(880,view.x-210);var point:Vector2=adventure.points().get(adventure.game.my_id,adventure.game.local_pos) if adventure.arcade else adventure.game.position_in_world
- canvas.draw_rect(Rect2(18,145,width+20,65),Color(.07,.14,.18,.9));canvas.draw_multiline_string(ThemeDB.fallback_font,Vector2(28,170),objective(),HORIZONTAL_ALIGNMENT_LEFT,width,18,2,Color("#f2dfb4"))
- var center:=Vector2(view.x-90,165);var aim:Vector2=(guidance(point)-point).normalized();canvas.draw_arc(center,24,0,TAU,32,Color("#c9e2d7"),2);canvas.draw_line(center,center+aim*20,Color("#c9e2d7"),5)
+ var top=preload("res://scripts/hud_layout.gd").objective_top(canvas,adventure.arcade)
+ canvas.draw_rect(Rect2(18,top,width+20,65),Color(.07,.14,.18,.9));canvas.draw_multiline_string(ThemeDB.fallback_font,Vector2(28,top+25),objective(),HORIZONTAL_ALIGNMENT_LEFT,width,18,2,Color("#f2dfb4"))
+ var center:=Vector2(view.x-90,top+20);var aim:Vector2=(guidance(point)-point).normalized();canvas.draw_arc(center,24,0,TAU,32,Color("#c9e2d7"),2);canvas.draw_line(center,center+aim*20,Color("#c9e2d7"),5)
  canvas.draw_string(ThemeDB.fallback_font,center+Vector2(-33,45),"OBJECTIVE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e5e8d4"))

@@ -1,8 +1,8 @@
 extends Node
 ## One bounded release check; unavailable networks do not prevent offline play.
-const BUILD=165
-const ENDPOINT="https://fx-crossroads-rooms.onrender.com/release"
-const DOWNLOAD="https://fxcts.itch.io/fx-crossroads#download"
+const BUILD=171
+var ENDPOINT=preload("res://scripts/brand.gd").service_http()+"/release"
+var DOWNLOAD=preload("res://scripts/brand.gd").download_url()
 var game:Node
 var request:HTTPRequest
 var latest=0
@@ -43,5 +43,7 @@ func notice()->void:
   var l=Label.new();l.text=line;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.custom_minimum_size.x=550;l.add_theme_font_size_override("font_size",21);col.add_child(l)
  for spec in [["Back to menu • save profile first",false],["Open latest downloads",true]]:
   var b=Button.new();b.text=spec[0];b.custom_minimum_size.y=48;col.add_child(b)
-  if spec[1]:b.pressed.connect(func():OS.shell_open(DOWNLOAD))
+  if spec[1]:
+   b.disabled=DOWNLOAD.is_empty();b.text="Get the latest build from the game’s itch.io page" if DOWNLOAD.is_empty() else b.text
+   b.pressed.connect(func():OS.shell_open(DOWNLOAD))
   else:b.pressed.connect(func():ui.queue_free();ui=null;game.session_menu.open("main"))

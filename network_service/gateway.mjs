@@ -1,3 +1,4 @@
+import {createActivity} from './activity.mjs';
 import http from 'node:http';
 import {BUILD} from './release.mjs';
 import {spawn} from 'node:child_process';
@@ -30,11 +31,12 @@ createInterface({input:game.stdout}).on('line',line=>{
  console.log(line);
 });game.stderr.on('data',b=>process.stderr.write(b));
 const reporting=createReporting();
+const activity=createActivity({pool:reporting.pool,admin:reporting.admin});
 const server=http.createServer(async(req,res)=>{
- try{if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
+ try{if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({ready,protocol:3,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
+ res.end(JSON.stringify({game_name:"Crossroads: Realms Beyond",ready,protocol:10,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),activity:activity.status(),supported_realms:JSON.parse(readFileSync(resolve(root,"content/manifest.json"),"utf8")).regions.concat(["wayfarer","between","overcharge"]),supported_modes:["arena","defense","descent","coop","battlegrounds"],gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{
@@ -94,6 +96,6 @@ wss.on('connection',client=>{
  upstream.on('close',(code,reason)=>{cleanup();if(client.readyState===WebSocket.OPEN)client.close(closeCode(code),reason.subarray(0,100));});
  client.on('error',()=>close());upstream.on('error',()=>close('authority_connection_error'));
 });
-server.listen(port,'0.0.0.0',()=>console.log('FX T4 gateway port '+port));
-game.on('exit',code=>{ready=false;clearInterval(cpuTimer);console.error('Authority exited: '+code);for(const ws of wss.clients)ws.close(1012,'Server stopped');server.close(async()=>{await reporting.close();process.exit(code||1);});});
+server.listen(port,'0.0.0.0',()=>console.log('Crossroads '+BUILD+' gateway port '+port));
+game.on('exit',code=>{ready=false;clearInterval(cpuTimer);console.error('Authority exited: '+code);for(const ws of wss.clients)ws.close(1012,'Server stopped');server.close(async()=>{activity.close();await reporting.close();process.exit(code||1);});});
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{game.kill('SIGTERM');server.close();});

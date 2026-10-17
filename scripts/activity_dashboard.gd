@@ -17,10 +17,10 @@ func setup(source:Node)->void:
  var row=HBoxContainer.new();column.add_child(row)
  secret=LineEdit.new();secret.secret=true;secret.placeholder_text="Private server dashboard key";secret.max_length=128;secret.size_flags_horizontal=Control.SIZE_EXPAND_FILL;secret.custom_minimum_size.y=46;row.add_child(secret)
  period=OptionButton.new()
- for days in [7,30,90]:period.add_item(str(days)+" days",days)
+ for days in [1,7,30]:period.add_item(str(days)+" days",days)
  period.select(1);row.add_child(period)
  var refresh=Button.new();refresh.text="Refresh trends";refresh.pressed.connect(load_data);row.add_child(refresh)
- status=Label.new();status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status.text="Enter ANALYTICS_ADMIN_KEY from your Render environment. It is separate from the Game Dev password and is never saved.";column.add_child(status)
+ status=Label.new();status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status.text="Enter REPORT_ADMIN_PASSWORD from the V176 server. Username: teacher. This password is never saved.";column.add_child(status)
  var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;column.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
  body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",10);scroll.add_child(body)
  var close=Button.new();close.text="Close dashboard";close.custom_minimum_size.y=46;close.pressed.connect(queue_free);column.add_child(close)
@@ -30,34 +30,27 @@ func load_data()->void:
  if not owner_node.game_dev() or is_instance_valid(request):return
  if secret.text.length()<24:status.text="Enter your private server key (at least 24 characters).";return
  status.text="Loading aggregate trends…";request=HTTPRequest.new();request.timeout=12;request.body_size_limit=262144;add_child(request);request.request_completed.connect(completed)
- if request.request(owner_node.endpoint+"/analytics/dashboard?days="+str(period.get_selected_id()),["Authorization: Bearer "+secret.text,"Accept: application/json"])!=OK:request.queue_free();request=null;status.text="Could not connect. Gameplay remains available."
+ if request.request(owner_node.endpoint+"/activity/api/summary?days="+str(period.get_selected_id()),["Authorization: Basic "+Marshalls.utf8_to_base64("teacher:"+secret.text),"Accept: application/json"])!=OK:request.queue_free();request=null;status.text="Could not connect. Gameplay remains available."
 func line(text:String,color:Color=Color.WHITE)->void:
  var label=Label.new();label.text=text;label.modulate=color;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;body.add_child(label)
 func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteArray)->void:
  request.queue_free();request=null
  if not owner_node.game_dev():queue_free();return
- if code==401:status.text="Private key rejected. Check ANALYTICS_ADMIN_KEY on Render.";return
- if code==503:status.text="Activity storage is not configured. Follow DEPLOY_V161.md: persistent disk, database path and both private keys.";return
+ if code==401:status.text="Private key rejected. Check REPORT_ADMIN_PASSWORD on Render.";return
+ if code==503:status.text="Activity storage is not configured. Configure DATABASE_URL and a stable REPORT_SIGNING_SECRET on the V176 server.";return
  var data=JSON.parse_string(bytes.get_string_from_utf8()) if result==HTTPRequest.RESULT_SUCCESS and code==200 else null
  if not data is Dictionary:status.text="Unable to load trends. Try again when the server is available.";return
  for child in body.get_children():child.queue_free()
- status.text="Updated • "+str(data.timezone)+" • 90-day retention • missing/offline reports are not counted"
- var total=0;var sessions=0;var losses=0;var recoveries=0;var max_profiles=1
- for day in data.daily:
-  total+=int(day.active_seconds);sessions+=int(day.sessions);losses+=int(day.graphics_losses);recoveries+=int(day.disconnects);max_profiles=maxi(max_profiles,int(day.profiles))
- line("Recently reporting devices: %d     Peak devices in a 3-minute window: %d" % [data.online_devices,data.peak_reporting_devices],Color("#efcd83"))
- line("Estimated active hours: %.1f     Daily session counts: %d     Recovery incidents: %d     Graphics losses: %d" % [total/3600.0,sessions,recoveries,losses])
- line("DAILY ACTIVITY • engaged profiles / devices / sessions",Color("#81d4df"))
- if data.daily.is_empty():line("No reports yet. Counts begin after v161 clients and the configured server are live.")
- for day in data.daily:
-  var row=HBoxContainer.new();body.add_child(row)
-  var label=Label.new();label.text="%s   %d / %d / %d   • %.0f active min" % [day.day,day.profiles,day.devices,day.sessions,int(day.active_seconds)/60.0];label.custom_minimum_size.x=430;row.add_child(label)
-  var bar=ProgressBar.new();bar.max_value=max_profiles;bar.value=day.profiles;bar.show_percentage=false;bar.size_flags_horizontal=Control.SIZE_EXPAND_FILL;bar.custom_minimum_size.y=22;row.add_child(bar)
-  var fill=StyleBoxFlat.new();fill.bg_color=Color("#55b7c7");fill.set_corner_radius_all(5);bar.add_theme_stylebox_override("fill",fill)
- for spec in [["ACTIVITIES","activities","category"],["POPULAR HEROES • combat time","heroes","hero"],["POPULAR REALMS","realms","realm"]]:
-  line(spec[0],Color("#81d4df"))
-  for item in data[spec[1]]:line("%s   • %.1f active minutes" % [friendly(str(item[spec[2]])),int(item.seconds)/60.0])
- line("Sessions can span multiple dates; daily session counts are not unique people. Active time estimates stop after 2 minutes without input. Recovery counts are best effort, not a full crash census.",Color("#adb9c4"))
+ status.text="Updated • "+str(data.get("timezone","America/Edmonton"))+" • 30-day retention • offline reports are not counted"
+ var totals:Dictionary=data.get("totals",{})
+ line("Estimated active hours: %.1f • profiles: %d • devices: %d • sessions: %d" % [float(totals.get("active_seconds",0))/3600.0,int(totals.get("profiles",0)),int(totals.get("devices",0)),int(totals.get("sessions",0))],Color("#efcd83"))
+ line("ACTIVITY • mode / realm / route • active minutes",Color("#81d4df"))
+ for item in data.get("activities",[]):
+  line("%s • %s / %s / %s • %.1f min • %.0f FPS" % [friendly(item.category),friendly(item.mode),friendly(item.realm),item.route,float(item.active_seconds)/60.0,float(item.fps_mean) if item.fps_mean!=null else 0])
+ line("COMPLETIONS • median gameplay time",Color("#81d4df"))
+ for item in data.get("completions",[]):
+  line("%s • %s / %s • %s • %d results • %.1f min" % [friendly(item.kind),friendly(item.mode),friendly(item.realm),item.result,int(item.attempts),float(item.median_seconds)/60.0 if item.median_seconds!=null else 0])
+ for note in data.get("notes",[]):line(str(note),Color("#adb9c4"))
 func friendly(key:String)->String:
  var game=get_tree().current_scene
  if game!=null:

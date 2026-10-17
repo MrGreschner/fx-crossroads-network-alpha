@@ -53,7 +53,10 @@ func plant(id:String)->bool:
 func harvest()->bool:
  if arcade or crop!="ready":garden_notice("Clear an adventure to ripen your crop first.");return false
  if not packed.is_empty():garden_notice("Empty your food slot before harvesting. Your crop will wait.");return false
- packed=str(garden[garden_id].food);paid=0;crop="empty";var family:=str(garden[garden_id].family);harvests[family]=int(harvests.get(family,0))+1;save();garden_notice("Harvested "+name_of(packed)+"! "+family.capitalize()+" harvests: "+str(harvests[family]));return true
+ packed=str(garden[garden_id].food);paid=0;crop="empty";
+ var byproduct="mint" if str(garden[garden_id].family)=="river" else "petal" if str(garden[garden_id].family)=="flowers" else "sunleaf"
+ var stores=game.legacy.lodge_economy.state();stores.ingredients[byproduct]=mini(100000,int(stores.ingredients.get(byproduct,0))+2);game.legacy.save()
+ var family:=str(garden[garden_id].family);harvests[family]=int(harvests.get(family,0))+1;save();garden_notice("Harvested "+name_of(packed)+"! "+family.capitalize()+" harvests: "+str(harvests[family]));return true
 func garden_action()->void:
  if crop=="empty":plant("flowers0")
  elif crop=="ready":harvest()
@@ -84,8 +87,12 @@ func check_auto(id:String="solo",status_event:bool=false)->bool:
   if id==game.my_id:packed="";save()
  else:packed="";save()
  if str(food.effect)=="heal":
-  if arcade:game._heal(id,id,int(food.amount),false)
-  else:game.health=minf(maximum,game.health+float(food.amount)*combat.v98.heal_factor(id))
+  if arcade:
+   game._heal(id,id,int(food.amount),false)
+   if game.get("expedition")!=null and game.expedition.special():game.expedition.relics.food(id)
+  else:
+   game.health=minf(maximum,game.health+float(food.amount)*combat.v98.heal_factor(id))
+   if game.get("waylight")!=null:game.waylight.combat.food()
  else:
   for kind in food.statuses:
    if combat.statuses.has(key):combat.statuses[key].erase(str(kind))

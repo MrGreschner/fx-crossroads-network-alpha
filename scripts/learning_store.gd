@@ -78,8 +78,9 @@ static func valid(data:Variant)->bool:
  return true
 static func load_data()->Dictionary:
  var store=preload("res://scripts/profile_store.gd");var data=store.read(PATH,valid)
- if data.is_empty():return fresh()
+ if data.is_empty():data=fresh()
  if not data.has("learner_id"):data.learner_id=Crypto.new().generate_random_bytes(16).hex_encode();save(data)
+ data.enabled=load("res://scripts/education_access.gd").student()
  return data
 static func save(data:Dictionary)->String:
  if preload("res://scripts/profile_store.gd").testing():return "Exit Game Dev / Playtest before recording assessed work."
@@ -88,7 +89,7 @@ static func save(data:Dictionary)->String:
 static func activity(action:String,title:String)->void:
  if preload("res://scripts/profile_store.gd").testing():return
  var data=load_data()
- if not data.enabled or not load("res://scripts/education_access.gd").student():return
+ if not load("res://scripts/education_access.gd").student():return
  var w=work(data,data.active)
  if not w.has("activity"):w.activity=[]
  w.activity.append({"action":action.left(60),"title":title.left(100),"time":stamp(),"order":int(data.next)});data.next+=1
@@ -96,7 +97,7 @@ static func activity(action:String,title:String)->void:
  save(data)
 static func capture_current(kind:String,value:Dictionary,title:String)->String:
  var data=load_data()
- if not data.enabled or not load("res://scripts/education_access.gd").student():return "Turn Student Mode ON and choose a module in your portfolio first."
+ if not load("res://scripts/education_access.gd").student():return "Student access and a chosen portfolio module are required."
  var issue=attach(data,data.active,kind,value,title,"Captured directly from Lab")
  return "Evidence snapshot saved to "+data.active+". Your artifact demonstrates the practical work." if issue.is_empty() else issue
 static func valid_activity(events:Variant)->bool:
@@ -108,7 +109,7 @@ static func work(data:Dictionary,code:String)->Dictionary:
  if not data.work.has(code):data.work[code]={"entries":[],"refs":[]}
  return data.work[code]
 static func note(data:Dictionary,code:String,stage:String,text:String)->String:
- if not data.enabled or not load("res://scripts/education_access.gd").student():return "Turn Student Mode ON first."
+ if not load("res://scripts/education_access.gd").student():return "Unlock Student access first."
  if text.strip_edges().is_empty():return "Write your evidence before saving."
  if work(data,code).entries.size()>=60:return "This module has 60 entries. Export the portfolio."
  var old=data.duplicate(true);work(data,code).entries.append({"stage":stage,"text":text.left(3000),"time":stamp(),"order":int(data.next)});data.next+=1
@@ -116,7 +117,7 @@ static func note(data:Dictionary,code:String,stage:String,text:String)->String:
  if not issue.is_empty():data.clear();data.merge(old)
  return issue
 static func attach(data:Dictionary,code:String,kind:String,value:Dictionary,title:String,origin:String)->String:
- if not data.enabled or not load("res://scripts/education_access.gd").student():return "Turn Student Mode ON first."
+ if not load("res://scripts/education_access.gd").student():return "Unlock Student access first."
  var hash=fingerprint(value);var id=hash
  var a={"kind":kind,"value":value.duplicate(true),"title":title.left(100),"time":stamp(),"origin":origin.left(120),"hash":hash}
  if not valid_artifact(a):return "Choose a valid saved project or image."
@@ -132,7 +133,7 @@ static func attach(data:Dictionary,code:String,kind:String,value:Dictionary,titl
 static func fingerprint(value:Variant)->String:return JSON.stringify(JSON.parse_string(JSON.stringify(value))).sha256_text()
 static func digest(s:Dictionary)->String:return fingerprint({"module":s.module,"time":s.time,"entries":s.entries,"refs":s.refs,"activity":s.get("activity",[])})
 static func submit(data:Dictionary,code:String)->String:
- if not data.enabled or not load("res://scripts/education_access.gd").student():return "Turn Student Mode ON first."
+ if not load("res://scripts/education_access.gd").student():return "Unlock Student access first."
  var w=work(data,code)
  if w.entries.is_empty() and w.refs.is_empty():return "Add some evidence before submitting."
  if data.submissions.size()>=96:return "Submission limit reached; download a portfolio backup."

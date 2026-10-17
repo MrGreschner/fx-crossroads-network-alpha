@@ -1,8 +1,15 @@
 config_version=5
 
 [application]
-config/name="FX Crossroads • Network Alpha T4.17"
-run/main_scene="res://network/client.tscn"
+config/name="Crossroads: Realms Beyond"
+config/version="176"
+config/icon="res://assets/crossroads_emblem.svg"
+; Keep the established desktop save location for existing players.
+config/use_custom_user_dir=true
+config/custom_user_dir_name="godot/app_userdata/FX Crossroads"
+config/custom_user_dir_name.windows="Godot/app_userdata/FX Crossroads"
+config/custom_user_dir_name.macos="Godot/app_userdata/FX Crossroads"
+run/main_scene="res://scenes/main.tscn"
 
 [display]
 window/size/viewport_width=1280

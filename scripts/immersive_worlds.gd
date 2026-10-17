@@ -22,6 +22,13 @@ var boat:Dictionary={}
 var textures:Dictionary={}
 var arrow_route:=PackedVector2Array()
 var arrow_until:=0.0
+var guide_uid:=-1
+var guide_target:=Vector2.ZERO
+var guide_step:=Vector2.ZERO
+var guide_label:=""
+var guide_distance:=0.0
+var guide_angle:=0.0
+var guide_ready:=false
 const IDS=["honeyglass","sunfield","lantern_marsh","silverfall","petalbrook"]
 const NEW_TYPES=["sunbeam_cantor","petal_ducker","briar_tail","nectar_keeper","bloomtail_regent","saffron_hopper","silk_spinner","dewcap_guard"]
 func v(p:Array)->Vector2:return Vector2(float(p[0]),float(p[1]))
@@ -34,12 +41,13 @@ func polygon(p:Array)->PackedVector2Array:
 func setup(id:String)->void:
  for layer in floor_layers:layer.queue_free()
  floor_layers.clear();floor_geometry.clear();solid_bins.clear()
- arrow_route.clear();arrow_until=0
+ arrow_route.clear();arrow_until=0;guide_uid=-1;guide_ready=false
  active=id in IDS;data={};initialized=false;stage=0;boss_live=false;done=false;clock=0;routes.clear();beams.clear();attacks.clear();used.clear();boat.clear();grid=null
  if not active:return
  data=JSON.parse_string(FileAccess.get_file_as_string("res://content/campaigns/"+id+"_paths.json"))
  for kind in ["grand_tree","moss_tree","giant_flower","treehouse"]:textures[kind]=load("res://assets/v50_"+kind+".png")
  textures.honey_lamp=load("res://assets/honey_lamp.png")
+ for kind in ["garden_fountain","glass_pavilion","flower_bed"]:textures[kind]=load("res://assets/"+kind+".png")
  textures.floor=load("res://assets/garden_grass.png")
  textures.path=load("res://assets/path.png")
  for floor in data.floors:
@@ -56,9 +64,8 @@ func setup(id:String)->void:
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,ceili(float(data.size[0])/60),ceili(float(data.size[1])/60));grid.cell_size=Vector2(60,60);grid.offset=Vector2(30,30);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
  rebuild_grid()
 func rebuild_grid()->void:
- for x in grid.region.size.x:
-  for y in grid.region.size.y:grid.set_point_solid(Vector2i(x,y),not can_stand(Vector2(x*60+30,y*60+30)))
- routes.clear()
+ preload("res://scripts/navigation_cache.gd").populate(grid,"immersive_"+str(data.id)+"_"+str(stage),JSON.stringify(data),func(point):return not can_stand(point))
+ routes.clear();arrow_until=0;guide_uid=-1
 func floor_at(point:Vector2)->bool:
  for floor in floor_geometry:
   if not floor.bounds.has_point(point):continue
@@ -119,6 +126,7 @@ func route(start:Vector2,end:Vector2)->PackedVector2Array:
  if not grid.is_in_boundsv(first) or not grid.is_in_boundsv(last):return PackedVector2Array()
  if grid.is_point_solid(first):first=nearest_cell(first)
  if grid.is_point_solid(last):last=nearest_cell(last)
+ if grid.is_point_solid(first) or grid.is_point_solid(last):return PackedVector2Array()
  return grid.get_point_path(first,last)
 func nearest_cell(c:Vector2i)->Vector2i:
  for radius in range(1,5):
@@ -134,8 +142,13 @@ func direction(enemy:Dictionary,target:Vector2,ranged:bool)->Vector2:
   return adventure.combat.ranged_direction(enemy,target) if ranged else (target-enemy.pos).normalized()
  var key:=str(enemy.uid);var entry:Dictionary=routes.get(key,{})
  if clock>float(entry.get("until",0)):entry={"path":route(enemy.pos,target),"until":clock+1};routes[key]=entry
- for p in entry.get("path",[]):
-  if enemy.pos.distance_to(p)>40:return (p-enemy.pos).normalized()
+ var path:PackedVector2Array=entry.get("path",PackedVector2Array())
+ var nearest_index=0;var nearest_distance=INF
+ for n in path.size():
+  var d=enemy.pos.distance_squared_to(path[n])
+  if d<nearest_distance:nearest_distance=d;nearest_index=n
+ for n in range(nearest_index,path.size()):
+  if enemy.pos.distance_to(path[n])>40:return (path[n]-enemy.pos).normalized()
  return Vector2.ZERO
 func advance(start:Vector2,move:Vector2)->Vector2:
  var result:=start
@@ -401,6 +414,7 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
    else:
     for x in range(int(clipped.position.x),int(clipped.end.x),36):canvas.draw_line(Vector2(x,clipped.position.y)-camera,Vector2(x,clipped.end.y)-camera,Color("#685c4d"),2)
     for y in [bounds.position.y+8,bounds.end.y-8]:canvas.draw_line(Vector2(clipped.position.x,y)-camera,Vector2(clipped.end.x,y)-camera,Color("#d7b388"),6)
+ if data.id=="honeyglass":draw_conservatory(canvas,camera)
  # Draw trunks here, canopies later above actors.
  for prop in data.props:
   var p:=v(prop.pos)-camera;var scale:float=float(prop.scale)
@@ -430,6 +444,27 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   var point:=v(boat.pos)-camera;canvas.draw_rect(Rect2(point-Vector2(60,42),Vector2(120,84)),Color("#bda276"));canvas.draw_rect(Rect2(point-Vector2(60,42),Vector2(120,84)),Color("#625b49"),false,5)
   for x in range(-45,60,18):canvas.draw_line(point+Vector2(x,-36),point+Vector2(x,36),Color("#655f4d"),3)
   canvas.draw_line(point+Vector2(36,-35),point+Vector2(36,-110),Color("#755e45"),5);canvas.draw_colored_polygon(PackedVector2Array([point+Vector2(37,-110),point+Vector2(-10,-90),point+Vector2(37,-65)]),Color("#e9e3bf"))
+func draw_conservatory(canvas:Node2D,camera:Vector2)->void:
+ var showcase:Dictionary=data.get("showcase",{})
+ for entry in showcase.get("nectar_pools",[]):
+  var world=Vector2(entry[0],entry[1]);var radius=float(entry[2]);var p=world-camera
+  if not visible(Rect2(world-Vector2.ONE*radius,Vector2.ONE*radius*2),camera):continue
+  canvas.draw_circle(p,radius+9,Color("#a9b77f"));canvas.draw_circle(p,radius,Color("#658f87"))
+  for n in 3:canvas.draw_arc(p,radius*(.3+n*.22)+sin(clock+n)*3,clock*.2+n,clock*.2+n+TAU*.8,32,Color(.77,.96,.78,.40),2,true)
+ for entry in showcase.get("glow_gardens",[]):
+  var p=v(entry)-camera
+  if not visible(Rect2(v(entry)-Vector2(130,130),Vector2(260,260)),camera):continue
+  for n in 11:
+   var at=p+Vector2.from_angle(n*2.399)*sqrt(n)*25
+   canvas.draw_circle(at,7,Color("#d8abcc"));canvas.draw_circle(at+Vector2(5,-4),6,Color("#e6c799"));canvas.draw_circle(at,2,Color("#fff4bd"))
+   var glow=at+Vector2(sin(clock*.5+n)*13,-12-fposmod(clock*9+n*17,65))
+   canvas.draw_circle(glow,2,Color(.89,.97,.64,.45+.2*sin(clock*2+n)))
+ for entry in showcase.get("wayposts",[]):
+  var p=v(entry)-camera
+  if not visible(Rect2(v(entry)-Vector2(50,50),Vector2(100,100)),camera):continue
+  canvas.draw_arc(p,32,0,TAU,6,Color("#b3d6bc"),3,true)
+  canvas.draw_line(p+Vector2(-8,0),p+Vector2(8,0),Color("#f5df9a"),3,true)
+
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  if not active:return
  # Texture batches preserve concealment with a readable gap near players.
@@ -474,38 +509,107 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
 func draw_hud(canvas:Node2D)->void:
  if not active:return
  var font:Font=ThemeDB.fallback_font
- canvas.draw_rect(Rect2(20,147,850,53),Color(.06,.16,.18,.9))
+ var top=preload("res://scripts/hud_layout.gd").objective_top(canvas,adventure.arcade)
+ canvas.draw_rect(Rect2(20,top,minf(850,canvas.VIEW.x-210),53),Color(.06,.16,.18,.9))
  var count:=0
  for enemy in adventure.foes():
   if bool(enemy.get("immersive",false)) and not bool(enemy.boss):count+=1
  var text:= "Guardian defeated • interact at the exit" if done else str(data.stages[mini(stage,data.stages.size()-1)])+ (" • "+str(count)+" defenders left" if stage==0 else "")
- canvas.draw_string(font,Vector2(33,169),text,HORIZONTAL_ALIGNMENT_LEFT,820,16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the glass corridors; the Crown Chamber opens after its defenders fall.","sunfield":"Orchard canopies conceal patrols. Golden meadows are open; move out of warning sunbeams!","lantern_marsh":"Black water blocks travel. Mud slows you; glowing spore pools pulse. E / Interact: discoveries.","silverfall":"E / Interact: treehouse doors, discoveries, board or call the raft. Both shore routes connect.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
- canvas.draw_string(font,Vector2(33,190),str(tips.get(data.id,"Explore")),HORIZONTAL_ALIGNMENT_LEFT,820,14,Color("#b9dccc"))
- # Route arrow follows navigable waypoints rather than pointing through maze walls.
+ canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Orchard canopies conceal patrols. Golden meadows are open; move out of warning sunbeams!","lantern_marsh":"Black water blocks travel. Mud slows you; glowing spore pools pulse. E / Interact: discoveries.","silverfall":"E / Interact: treehouse doors, discoveries, board or call the raft. Both shore routes connect.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
+ canvas.draw_string(font,Vector2(33,top+43),str(tips.get(data.id,"Explore")),HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),14,Color("#b9dccc"))
+ # Stable objective selection, route distance and a doorway prompt for separated interiors.
  var origin:Vector2=adventure.points().get(adventure.game.my_id if adventure.arcade else "solo",Vector2.ZERO)
- var destination:=v(data.exit);var distance:=INF
- if stage==0:
-  for enemy in adventure.foes():
-   if bool(enemy.get("immersive",false)) and enemy.pos.distance_to(origin)<distance:distance=enemy.pos.distance_to(origin);destination=enemy.pos
  if clock>=arrow_until:
-  arrow_route=route(origin,destination);arrow_until=clock+.5
- var path:=arrow_route;var aim:=destination-origin
- for p in path:
-  if origin.distance_to(p)>70:aim=p-origin;break
- var point:=Vector2(1160,238);var tip:=point+aim.normalized()*26
- canvas.draw_circle(point,37,Color(.08,.2,.23,.9));canvas.draw_line(point,tip,Color("#efdf9c"),5);canvas.draw_line(tip,tip-aim.normalized().rotated(.6)*12,Color("#efdf9c"),4);canvas.draw_line(tip,tip-aim.normalized().rotated(-.6)*12,Color("#efdf9c"),4)
+  update_guide(origin);arrow_until=clock+.65
+ advance_guide(origin)
+ var point:=Vector2(canvas.VIEW.x-92,top+100)
+ canvas.draw_circle(point,39,Color(.08,.2,.23,.94))
+ if guide_ready:
+  var aim=guide_step-origin
+  if aim.length_squared()>16:guide_angle=lerp_angle(guide_angle,aim.angle(),.24)
+  var direction=Vector2.from_angle(guide_angle);var tip=point+direction*26
+  canvas.draw_line(point-direction*14,tip,Color("#efdf9c"),5,true)
+  canvas.draw_line(tip,tip-direction.rotated(.6)*12,Color("#efdf9c"),4,true);canvas.draw_line(tip,tip-direction.rotated(-.6)*12,Color("#efdf9c"),4,true)
+ canvas.draw_string(font,point+Vector2(-77,59),guide_label,HORIZONTAL_ALIGNMENT_LEFT,160,13,Color("#f4e6b6"))
+ canvas.draw_string(font,point+Vector2(-60,77),"%dm by path" % int(guide_distance/32) if guide_ready else "Explore a crossing",HORIZONTAL_ALIGNMENT_LEFT,150,12,Color("#b9dccc"))
+ # A short ground trail explains the arrow's next turn without spoiling the map.
+ var camera:Vector2=adventure.game.camera
+ if guide_ready:
+  var previous=origin
+  for next in arrow_route:
+   if origin.distance_to(next)>250:break
+   if next.distance_to(previous)>22:
+    canvas.draw_circle(next-camera,3,Color(.97,.88,.58,.55));previous=next
+
+func path_length(path:PackedVector2Array)->float:
+ var total=0.0
+ for n in range(1,path.size()):total+=path[n-1].distance_to(path[n])
+ return total
+func guided_path(origin:Vector2,destination:Vector2)->Dictionary:
+ var direct=route(origin,destination)
+ var result={"path":direct,"distance":path_length(direct) if not direct.is_empty() else INF,"label":"Next defender"}
+ # Interior rooms are detached on the authored map. Aim at the usable doorway, not its world-space direction.
+ for house in data.get("houses",[]):
+  for side in ["outside","inside"]:
+   var door=v(house[side]);var arrival=v(house.inside if side=="outside" else house.outside)+Vector2(0,70)
+   var first=route(origin,door);var last=route(arrival,destination)
+   if first.is_empty() or last.is_empty():continue
+   var cost=path_length(first)+path_length(last)+100
+   if cost<float(result.distance):result={"path":first,"distance":cost,"label":"E • doorway" if origin.distance_to(door)<130 else "Via doorway"}
+ return result
+func update_guide(origin:Vector2)->void:
+ var destination=v(data.exit);var chosen={};var target={}
+ if not done:
+  # Retain a live target to prevent flicker as two patrols pass one another.
+  for enemy in adventure.foes():
+   if bool(enemy.get("immersive",false)) and int(enemy.uid)==guide_uid and float(enemy.hp)>0:
+    chosen=guided_path(origin,enemy.pos);target=enemy;break
+  if chosen.is_empty() or not is_finite(float(chosen.distance)):
+   var best=INF
+   for enemy in adventure.foes():
+    if not bool(enemy.get("immersive",false)) or float(enemy.hp)<=0:continue
+    var candidate=guided_path(origin,enemy.pos)
+    if float(candidate.distance)<best:best=float(candidate.distance);chosen=candidate;target=enemy
+  if not target.is_empty():destination=target.pos;guide_uid=int(target.uid)
+ if target.is_empty():chosen=guided_path(origin,destination);guide_uid=-1
+ arrow_route=chosen.get("path",PackedVector2Array());guide_ready=not arrow_route.is_empty()
+ guide_label=str(chosen.get("label","Route unavailable"));guide_distance=float(chosen.get("distance",0))
+ if not guide_ready:guide_label="Route unavailable";return
+ if guide_label=="Next defender":guide_label="Exit" if done else "Guardian" if stage>0 else "Next defender"
+ advance_guide(origin)
+func advance_guide(origin:Vector2)->void:
+ if arrow_route.is_empty():return
+ var nearest_index=0;var closest=INF
+ for n in arrow_route.size():
+  var distance=origin.distance_squared_to(arrow_route[n])
+  if distance<closest:closest=distance;nearest_index=n
+ arrow_route=arrow_route.slice(nearest_index)
+ guide_step=arrow_route[0]
+ # Look one turn ahead, only across geometry the player can really traverse.
+ for p in arrow_route:
+  if origin.distance_to(p)<65:continue
+  if not adventure.combat.path_clear(origin,p):break
+  guide_step=p
+  if origin.distance_to(p)>=150:break
 
 func draw_floor(canvas:Node2D,floor:Dictionary)->void:
  var camera:=Vector2.ZERO
  var font:=ThemeDB.fallback_font
  var bounds:Rect2=floor_bounds(floor)
  var kind:=str(floor.kind);var tint:=Color("#baab77") if kind=="glass" else Color("#598568") if kind in ["river","petal"] else Color("#658359") if kind=="meadow" else Color("#82795f") if kind=="marsh" else Color("#ab946e")
+ if data.id=="honeyglass" and kind=="glass" and floor.has("poly"):
+  tint=Color({"Prism Nursery":"#a4b8a2","Secret Nectar Cell":"#c4ab86","Glass Orchard":"#aab87d","Honeydew Junction":"#c0b775"}.get(str(floor.name),"#baab77"))
  if data.id=="sunfield" and kind=="meadow":tint=Color("#a2a45c")
  if data.id=="petalbrook" and kind=="petal":tint=Color("#72937b")
  if floor.has("poly"):
   var points:=polygon(floor.poly)
   for i in points.size():points[i]-=camera
   canvas.draw_colored_polygon(points,tint);var closed:=points.duplicate();closed.append(points[0])
+  if data.id=="honeyglass" and kind=="glass":
+   var center=bounds.get_center()
+   for n in points.size():
+    if n%2==0:canvas.draw_colored_polygon(PackedVector2Array([center,points[n],points[(n+1)%points.size()]]),Color(tint.lightened(.10),.34))
+   canvas.draw_arc(center,95,0,TAU,6,Color("#e3d6a5"),2,true)
   if kind=="glass":
    canvas.draw_polyline(closed,Color("#e8ca83"),16,true);canvas.draw_polyline(closed,Color("#b1e1d8"),5,true)
    for i in points.size():canvas.draw_line(points[i]+Vector2(5,3),points[(i+1)%points.size()]+Vector2(5,3),Color("#f8efd0"),2,true)
@@ -513,7 +617,9 @@ func draw_floor(canvas:Node2D,floor:Dictionary)->void:
  else:
   if data.id in ["sunfield","petalbrook"] and kind in ["meadow","petal","trail"]:
    var skin=StyleBoxFlat.new();skin.bg_color=tint;skin.border_color=Color("#b8b194");skin.set_border_width_all(3);skin.set_corner_radius_all(26 if kind=="trail" else 60);canvas.draw_style_box(skin,Rect2(bounds.position-camera,bounds.size))
-  else:canvas.draw_rect(Rect2(bounds.position-camera,bounds.size),tint);canvas.draw_rect(Rect2(bounds.position-camera,bounds.size),Color("#b8b194"),false,4)
+  else:
+   canvas.draw_rect(Rect2(bounds.position-camera,bounds.size),tint)
+   if data.id!="honeyglass" or kind!="glass":canvas.draw_rect(Rect2(bounds.position-camera,bounds.size),Color("#b8b194"),false,4)
   if kind in ["bridge","boardwalk","log","house"]:
    if bounds.size.y>bounds.size.x:
     for y in range(int(bounds.position.y),int(bounds.end.y),36):canvas.draw_line(Vector2(bounds.position.x,y)-camera,Vector2(bounds.end.x,y)-camera,Color("#685c4d"),2)

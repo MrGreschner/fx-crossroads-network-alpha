@@ -77,17 +77,16 @@ func event(kind:String,count:int,party_size:int,realm:String="",hero:String="")-
 func notify_network()->void:
  # Existing reliable hero/cosmetic metadata carries the reward, not every movement packet.
  if legacy.arcade and legacy.game.role=="guest":legacy.game.session_hero_sent=false
-func ui(parent:Node)->void:
+func ui(parent:Node,compact:bool=false)->void:
  refresh()
  var goal:=task()
+ if compact:
+  compact_ui(parent,goal);return
  var box:=PanelContainer.new();parent.add_child(box)
  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#203e45");skin.border_color=Color("#d7bf78");skin.set_border_width_all(1);skin.set_corner_radius_all(10);skin.set_content_margin_all(16);box.add_theme_stylebox_override("panel",skin)
  var col:=VBoxContainer.new();col.add_theme_constant_override("separation",8);box.add_child(col)
  for row in [["DAILY MISSION • "+today,15],[str(goal.get("title","Today’s adventure")),24],[str(goal.get("description","")),19]]:
-  if int(row[1])==24:
-   var title=Button.new();title.text=str(row[0])+" →";title.custom_minimum_size.y=48;title.add_theme_font_size_override("font_size",20);preload("res://scripts/top_button_style.gd").apply(title);col.add_child(title);title.pressed.connect(quick_play)
-  else:
-   var l:=Label.new();l.text=row[0];l.add_theme_font_size_override("font_size",row[1]);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_child(l)
+  var l:=Label.new();l.text=row[0];l.add_theme_font_size_override("font_size",row[1]);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_child(l)
  var state:=Label.new();state.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;state.add_theme_font_size_override("font_size",18);col.add_child(state)
  state.text="GAME DEV • mission rewards are disabled during testing." if blocked() else "COMPLETED • "+reward_name()+" active until midnight!" if earned() else "Reward: "+reward_name()+" until local midnight • cosmetic only."
  if not blocked() and not earned() and str(goal.get("kind","")) in ["descent","defense"]:
@@ -95,6 +94,12 @@ func ui(parent:Node)->void:
  state.modulate=Color("#f8d785")
  var play=Button.new();play.text="PLAY TODAY’S MISSION →";play.custom_minimum_size.y=48;preload("res://scripts/top_button_style.gd").apply(play);col.add_child(play);play.pressed.connect(quick_play)
  var foot:=Label.new();foot.text="50 rotating missions • separate from Challenge Lodge trials • changes at local midnight • progress travels with your downloaded profile";foot.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;foot.add_theme_font_size_override("font_size",14);col.add_child(foot)
+func compact_ui(parent:Node,goal:Dictionary)->void:
+ var box=preload("res://scripts/studio_ui.gd").card(parent,"DAILY MISSION • "+today,str(goal.get("title","Today’s adventure"))+"\n"+str(goal.get("description","")))
+ var row=HBoxContainer.new();row.add_theme_constant_override("separation",16);box.add_child(row)
+ var reward=Label.new();reward.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;reward.size_flags_horizontal=Control.SIZE_EXPAND_FILL;reward.add_theme_font_size_override("font_size",16);reward.modulate=Color("#f8d785");row.add_child(reward)
+ reward.text="GAME DEV • rewards disabled" if blocked() else ("Completed • " if earned() else "Reward • ")+reward_name()+" until midnight • cosmetic"
+ var play=Button.new();play.text="Play today’s mission";play.custom_minimum_size=Vector2(250,46);preload("res://scripts/top_button_style.gd").apply(play);row.add_child(play);play.pressed.connect(quick_play)
 static func reward_index(day:String)->int:
  return posmod(int(Time.get_unix_time_from_datetime_string(day+"T00:00:00"))/86400,8)
 func reward_name()->String:return REWARDS[reward_index(today)]

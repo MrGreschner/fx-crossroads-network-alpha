@@ -1,7 +1,11 @@
 .godot
-.git
 **/node_modules
+**/__pycache__
+.env
+.env.*
+qa
+tests
+network_tests
+validation
 exports
-build
 *.zip
-*.log

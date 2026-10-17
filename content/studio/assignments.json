@@ -1,7 +1,7 @@
 [
   {
     "title": "Playtesting",
-    "summary": "Find three improvements that would make FX Crossroads clearer, fairer or more enjoyable.",
+    "summary": "Find three improvements that would make Crossroads: Realms Beyond clearer, fairer or more enjoyable.",
     "body": "Choose areas to test: controls, menus, mobile interaction, combat, progression, multiplayer or performance. Record your device, hero, mode and the exact steps. Separate bugs from design suggestions. Repeat a problem to see whether it is consistent.",
     "task": "For each of three findings, explain the problem, who it affects, your proposed change and how you would verify the fix.",
     "deliver": "A test report listing what you tested and how, three evidence-backed improvements, and a reflection on your process. Include screenshots or short clips where useful. Studio test reports can support your evidence.",
@@ -45,6 +45,6 @@
     "body": "Choose a mood and purpose. Music should loop cleanly; sound effects should tell players about attacks, danger, healing or success. Leave space for important cues. Use original or appropriately licensed material and record credits.",
     "task": "Create a short looping background track or a small set of related effects. Compare it at normal and quiet volume during play.",
     "deliver": "Audio files, a cue sheet explaining where each sound belongs, licence or authorship details, and listening-test feedback.",
-    "criteria": "Clean loop points, balanced volume, clear cues, no clipping and a style that fits FX Crossroads."
+    "criteria": "Clean loop points, balanced volume, clear cues, no clipping and a style that fits Crossroads: Realms Beyond."
   }
 ]

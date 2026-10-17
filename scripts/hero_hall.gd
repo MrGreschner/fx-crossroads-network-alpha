@@ -35,8 +35,12 @@ func setup(owner:Node)->void:
   var outline=preload("res://scripts/studio_ui.gd").box("#31525d" if state=="normal" else "#446974","#efd395",8,9);outline.set_border_width_all(2);grid_view_button.add_theme_stylebox_override(state,outline)
  grid_view_button.add_theme_color_override("font_color",Color("#fff0c6"))
  grid_view_button.tooltip_text="Choose a hero from portrait tiles"
- button(top,"Crossroads Studio",func():close(false);game.hero_workshop.open())
- button(top,"Continue",close);button(top,"Close",close)
+ var actions=VBoxContainer.new();actions.custom_minimum_size.x=300;top.add_child(actions)
+ var utilities=HBoxContainer.new();actions.add_child(utilities)
+ button(utilities,"Crossroads Studio",func():close(false);game.hero_workshop.open()).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ button(utilities,"Close",close)
+ var next=button(actions,"Continue with selected hero",close);next.name="HallContinue";next.custom_minimum_size.y=50
+ preload("res://scripts/studio_ui.gd").accent(next)
  var filters:=HBoxContainer.new();col.add_child(filters)
  for tag in ["All","Melee","Ranged","Support","Control","Summoner"]:
   var b:=button(filters,tag,filter_role.bind(tag));b.toggle_mode=true;role_buttons[tag]=b
@@ -49,7 +53,7 @@ func setup(owner:Node)->void:
  skill.item_selected.connect(func(index:int):difficulty=skill.get_item_text(index);refresh())
  count_label=label(search_row,"",16)
  var split:=HBoxContainer.new();split.add_theme_constant_override("separation",20);split.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(split)
- scroller=ScrollContainer.new();scroller.custom_minimum_size=Vector2(395,350);scroller.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;split.add_child(scroller)
+ scroller=ScrollContainer.new();scroller.custom_minimum_size=Vector2(395,260);scroller.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;split.add_child(scroller)
  rows=VBoxContainer.new();rows.size_flags_horizontal=Control.SIZE_EXPAND_FILL;rows.add_theme_constant_override("separation",6);scroller.add_child(rows)
  var right:=ScrollContainer.new();right_scroller=right;right.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;right.size_flags_vertical=Control.SIZE_EXPAND_FILL;split.add_child(right)
  details=VBoxContainer.new();details.custom_minimum_size.x=600;details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",8);right.add_child(details)
@@ -130,7 +134,10 @@ func render_details()->void:
   var ability_name:String=str(h.passive).split(":")[0] if kind=="passive" else str(h[kind].name)
   var brief:String=str(info.get("passive_brief","A passive bonus unlocked at level five.")) if kind=="passive" else library.ability_brief(h[kind],kind)
   var expanded:=Label.new();expanded.text=str(h.passive) if kind=="passive" else game.ability_info(h[kind],kind);expanded.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;expanded.add_theme_font_size_override("font_size",15);expanded.visible=false;expanded.mouse_filter=Control.MOUSE_FILTER_IGNORE
-  var action:=button(card,title+"  |  "+ability_name+"\n"+brief,func():expanded.visible=not expanded.visible)
+  var action:=button(card,"",func():expanded.visible=not expanded.visible)
+  var line=HBoxContainer.new();line.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);line.offset_left=9;line.offset_right=-9;line.offset_top=5;line.offset_bottom=-5;line.mouse_filter=Control.MOUSE_FILTER_IGNORE;action.add_child(line)
+  var copy=Label.new();copy.text=title+"  |  "+ability_name+"\n"+brief;copy.add_theme_font_size_override("font_size",15);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL;copy.clip_text=true;copy.mouse_filter=Control.MOUSE_FILTER_IGNORE;line.add_child(copy)
+  var more=Label.new();more.text="Tap for details  ›" if game.mobile.enabled else "Click for details  ›";more.add_theme_font_size_override("font_size",12);more.modulate=Color("#efd6a0");more.mouse_filter=Control.MOUSE_FILTER_IGNORE;line.add_child(more)
   action.custom_minimum_size.y=62;action.alignment=HORIZONTAL_ALIGNMENT_LEFT;action.add_theme_font_size_override("font_size",15);action.tooltip_text="Click / tap for full details";action.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
   for state in ["normal","hover","pressed"]:
    var skin:=StyleBoxFlat.new();skin.bg_color=Color("#1b3943").lightened(.08 if state=="hover" else 0);skin.border_color=tint;skin.set_border_width_all(2);skin.set_corner_radius_all(7);skin.set_content_margin_all(8);action.add_theme_stylebox_override(state,skin)

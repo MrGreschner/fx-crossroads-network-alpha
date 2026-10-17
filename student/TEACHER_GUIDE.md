@@ -1,4 +1,4 @@
-# Teacher guide: FX Crossroads playtesting
+# Teacher guide: Crossroads: Realms Beyond playtesting
 
 This pack is adaptable to your course/grade. It includes a testing-and-improvement assignment and a separate reflection. The game is a shared design artefact, not a test of gaming skill.
 

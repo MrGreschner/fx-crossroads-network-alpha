@@ -43,7 +43,7 @@ func button(parent:Node,value:String,action:Callable)->Button:
  var b:=Button.new();b.text=value;b.custom_minimum_size.y=46;b.add_theme_font_size_override("font_size",18);b.pressed.connect(action);style_button(b);b.focus_mode=Control.FOCUS_ALL;parent.add_child(b);return b
 func close()->void:
  pending_skill="";unlock_buttons.clear()
- if is_instance_valid(modal):panel.remove_child(modal);modal.queue_free();modal=null
+ if is_instance_valid(modal):modal.hide();modal.queue_free();modal=null
  if not arcade and game.menu=="presentation":game.menu=""
  page="";game.mobile.reset_controls()
 func window(title:String,kind:String)->void:
@@ -56,23 +56,24 @@ func window(title:String,kind:String)->void:
  var scroll:=ScrollContainer.new();preload("res://scripts/touch_list_scroll.gd").attach(scroll);scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
  content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_theme_constant_override("separation",14);scroll.add_child(content)
  if kind=="results":
+  if game.get("expedition")!=null and not game.expedition.settlement.is_empty():label(content,game.expedition.settlement,20)
   var footer:=HBoxContainer.new();footer.add_theme_constant_override("separation",12);col.add_child(footer)
-  var network_alpha=arcade and game.has_method("return_to_network_menu")
-  if network_alpha:
-   button(footer,"Back to T4 menu • Host / Join",game.return_to_network_menu)
+  if arcade and game.has_method("return_to_network_menu"):
+   button(footer,"Back to multiplayer • Host / Join",game.return_to_network_menu)
   elif arcade:
    if game.role=="host":button(footer,"Replay with party",func():return_to_party();game._start_button())
    else:label(content,"The host can replay this match with the party.",16)
    button(footer,"Return to party",return_to_party)
+  elif game.get("waylight")!=null and game.waylight.special():button(footer,"Choose next expedition",replay_realm)
   else:button(footer,"Play again",replay_realm)
   if game.get("continuation")!=null and game.continuation.available():
    var resume_button=button(footer,"Continue • practice",game.continuation.resume);resume_button.tooltip_text="Full health, same XP and battle. This entire attempt stops awarding mastery and completion; enemy discoveries remain."
   if not arcade or not game.spectating():button(footer,"View hero mastery",inspect_mastery)
-  if not network_alpha:
-   button(footer,"Back to town",func():
-    if arcade:game._town()
-    else:return_to_town())
- else:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
+  if not arcade or not game.has_method("return_to_network_menu"):button(footer,"Back to town",func():
+   if arcade:game._town()
+   else:return_to_town())
+ elif kind=="skill_unlock":button(col,"Got it — continue training",close)
+ elif kind!="unlock_celebration":button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
 func _unhandled_input(event:InputEvent)->void:
  if not event is InputEventKey or not event.pressed or event.echo:return
  if page=="starter" and event.keycode>=KEY_1 and event.keycode<=KEY_9:
@@ -81,7 +82,9 @@ func _unhandled_input(event:InputEvent)->void:
  if event.keycode==KEY_ESCAPE and not page.is_empty():
   if page=="starter":skip_intro()
   elif page=="results" and not arcade:return_to_town()
-  elif page=="results" and arcade:return_to_party()
+  elif page=="results" and arcade:
+   if game.has_method("return_to_network_menu"):game.return_to_network_menu()
+   else:return_to_party()
   else:close()
   get_viewport().set_input_as_handled()
 func _process(delta:float)->void:
@@ -152,7 +155,6 @@ func show_skill_unlock(kind:String)->void:
  label(content,instruction,24).modulate=Color("#ffda82")
  label(content,str(spec.get("description",game.ability_info(spec,kind))) if kind!="passive" else str(game.hero.get("passive_description","")),20)
  label(content,"Aim with the right stick, then tap your ability. Hold the movement stick with your other thumb." if touch and kind!="passive" else "Aim toward an enemy, watch the attack effect and try it in the next wave." if kind!="passive" else "Watch for its effect while you fight.",18)
- button(content,"Got it — continue training",close)
  read_until=clock+.65;disable_modal_buttons()
 func tutorial_end(won:bool,skipped:bool)->void:
  close()
@@ -164,44 +166,86 @@ func tutorial_end(won:bool,skipped:bool)->void:
   var retry=button(content,"Retry tutorial • "+str(game.characters[game.selected_character].name),func():close();game.tutorial.start(game.selected_character))
   preload("res://scripts/studio_ui.gd").accent(retry)
  else:label(content,"You mastered First Steps! Town is your home between adventures.",23)
- button(content,"Weekly activities • eight cosmetic rewards",game.legacy.weekly.open_board)
- label(content,"Realms are short adventures. Descent and Defence are survival challenges. Quests are an expedition. Return here whenever you want to practise.",18)
+ button(content,"Choose a different starter hero",starter)
+ label(content,"Try a realm when you are ready, or explore your new home.",18)
  var first=button(content,"Start first adventure • Whispering Grove",func():close();game.start_run(false,"grove"))
  preload("res://scripts/studio_ui.gd").accent(first)
- button(content,"Explore town",close);button(content,"Choose an adventure",adventures);button(content,"Choose a different starter hero",starter)
+ button(content,"Explore town",close)
 
 func launch(mode:String,realm:String="grove")->void:
- close();game.save_profile();game.get_tree().root.set_meta("fx_hero",game.selected_character);game.get_tree().root.set_meta("fx_mode",mode);game.get_tree().root.set_meta("fx_realm",realm);game.get_tree().change_scene_to_file("res://scenes/arcade.tscn")
+ close();game.save_profile();game.get_tree().root.set_meta("fx_hero",game.selected_character);game.get_tree().root.set_meta("fx_mode",mode);game.get_tree().root.set_meta("fx_realm",realm);game.get_tree().change_scene_to_file("res://network/client.tscn")
 func daily_challenge()->void:
  window("DAILY MISSION","daily")
  game.legacy.daily.ui(content)
  button(content,"Choose an adventure",adventures)
  button(content,"Back to game",close)
 var adventures_tab:=0
+func showcase_allowed()->bool:
+ return preload("res://scripts/education_access.gd").student() or preload("res://scripts/education_access.gd").review_allowed()
 func adventures()->void:
  window("CHOOSE YOUR ADVENTURE","adventures")
- if not arcade and game.lodges!=null:
-  var lodge_row=HBoxContainer.new();content.add_child(lodge_row)
-  for pair in [["challenge","Challenge Lodge"],["gather","Gatherers’ Lodge"],["apothecary","Apothecary"]]:button(lodge_row,pair[1],game.lodges.open.bind(pair[0]))
- button(content,"DAILY MISSION • "+str(game.legacy.daily.task().title),game.legacy.daily.quick_play)
- label(content,"Choose a quick adventure, grow your account or create something new.",18)
- var sections=TabBar.new();sections.add_tab("Combat & exploration");sections.add_tab("Build, trade & create");sections.current_tab=adventures_tab;sections.custom_minimum_size.y=44;content.add_child(sections)
+ game.legacy.daily.ui(content,true)
+ label(content,"BROWSE DESTINATIONS",15).modulate=Color("#b8d5d8")
+ var sections=TabBar.new();sections.name="AdventureCategories";sections.add_tab("Combat & exploration");sections.add_tab("Build, trade & create");sections.current_tab=adventures_tab;sections.tab_alignment=TabBar.ALIGNMENT_CENTER;sections.custom_minimum_size.y=52;content.add_child(sections)
+ var selected=StyleBoxFlat.new();selected.bg_color=Color("#294d59");selected.border_color=Color("#eccb86");selected.border_width_bottom=4;selected.set_content_margin_all(15);sections.add_theme_stylebox_override("tab_selected",selected)
+ var idle=StyleBoxFlat.new();idle.bg_color=Color("#132a33");idle.set_content_margin_all(15);sections.add_theme_stylebox_override("tab_unselected",idle);sections.add_theme_font_size_override("font_size",19)
  sections.tab_changed.connect(func(index:int):adventures_tab=index;adventures())
- var grid:=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",14);grid.add_theme_constant_override("v_separation",14);content.add_child(grid);grid.visible=adventures_tab==0
- for entry in [["REALMS","Short adventures • solo or co-op","realms"],["QUESTS","Explore a larger story world • solo or co-op","quests"],["RAM DESCENT","Survive deeper dungeon floors • solo or co-op","descent"],["NORTH GATE DEFENCE","Protect three roads • solo or a party of three","defense"],["GLADIATOR ARENA","Battle friends or AI • solo practice / multiplayer","arena"],["BATTLEGROUNDS","Build armies • 3v3 / 4v4","battlegrounds"]]:
-  adventure_tile(grid,entry)
- var peaceful:=GridContainer.new();peaceful.columns=2;peaceful.add_theme_constant_override("h_separation",14);peaceful.add_theme_constant_override("v_separation",14);content.add_child(peaceful);peaceful.visible=adventures_tab==1
- for entry in [["FISHING & AQUARIUM","Discover your rod, collect catches and display favourites","fishing"],["IDLE MINING","Dig deeper, discover metals and forge bars","mine"],["CROSSROADS MARKET","Sell mine goods and experiment with marketing","market"],["CROSSROADS STUDIO","Create heroes, abilities, enemies and behaviours","studio"],["COMMUNITY SHOWCASE","Play teacher-selected creations and leave useful feedback","showcase"],["TRAINING YARD","Practise your current hero • no mastery rewards","training"],["FIRST STEPS","Replay the short starter tutorial","starter"]]:adventure_tile(peaceful,entry)
- if game.academy_town.allowed():adventure_tile(peaceful,["CROSSROADS ACADEMY","Classroom, assignment board and education guide","academy"])
-
- button(content,"Combat visual guide",combat_guide)
- button(content,"Profile and mastery",func():close();game.legacy.open_hero(game.selected_character))
- button(content,"Journey cosmetics",func():close();game.menu="journey_cosmetics")
+ label(content,"BATTLE • EXPLORE • PRACTISE" if adventures_tab==0 else "GATHER • GROW • CREATE",14).modulate=Color("#eccb86")
+ var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",14);grid.add_theme_constant_override("v_separation",12);content.add_child(grid)
+ var destinations:Array=[
+  ["CHALLENGE LODGE","Fresh trials and weekly rewards","challenge"],
+  ["REALMS","Themed adventures and bosses • solo or co-op","realms"],
+  ["QUESTS","Meet residents and explore a larger story world","quests"],
+  ["RAM DESCENT","Fight your way through deeper dungeon floors","descent"],
+  ["NORTH GATE DEFENCE","Protect three roads • solo or with friends","defense"],
+  ["GLADIATOR ARENA","Battle friends or practise against AI opponents","arena"],
+  ["BATTLEGROUNDS","Build armies and fight for control • team battles","battlegrounds"],
+  ["TRAINING YARD","Try your current hero in a safe practice area","training"],
+  ["MISTGLASS SPIRE","Discover enemies and build your own rift battle","spire"],
+  ["FIRST STEPS","Replay the short starter tutorial","starter"]
+ ] if adventures_tab==0 else [
+  ["GATHERERS’ LODGE","Send crews for herbs, mushrooms and garden seeds","gather"],
+  ["WILLOWGLASS APOTHECARY","Brew gathered ingredients into useful potions","apothecary"],
+  ["FISHING & AQUARIUM","Catch fish, compare records and display favourites","fishing"],
+  ["IDLE MINING","Dig deeper, discover metals and forge bars","mine"],
+  ["CROSSROADS MARKET","Sell your goods and grow a trading venture","market"],
+  ["CROSSROADS STUDIO","Build heroes, abilities, enemies, objects and realms","studio"]
+ ]
+ if adventures_tab==1:
+  if showcase_allowed():destinations.append(["COMMUNITY SHOWCASE","Play selected creations and share useful feedback","showcase"])
+  if preload("res://scripts/education_access.gd").student() or preload("res://scripts/education_access.gd").review_allowed():destinations.append(["CROSSROADS ACADEMY","Assignments, project ideas and your progress","academy"])
+ for entry in destinations:adventure_tile(grid,entry)
+ var extras=HBoxContainer.new();extras.add_theme_constant_override("separation",12);content.add_child(extras)
+ button(extras,"Combat visual guide",combat_guide).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ button(extras,"Profile & mastery",func():close();game.legacy.open_hero(game.selected_character)).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ button(extras,"Cosmetics",func():close();game.menu="journey_cosmetics").size_flags_horizontal=Control.SIZE_EXPAND_FILL
 func adventure_tile(parent:Node,entry:Array)->void:
- var b:=button(parent,str(entry[0])+"\n"+str(entry[1]),choose_adventure.bind(str(entry[2])))
- b.custom_minimum_size=Vector2(485,84);b.add_theme_font_size_override("font_size",16)
+ var destination=str(entry[2])
+ var b=button(parent,"",choose_adventure.bind(destination));b.custom_minimum_size=Vector2(490,112);b.tooltip_text="Open "+str(entry[0])
+ var inset=MarginContainer.new();inset.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+ for side in ["left","right","top","bottom"]:inset.add_theme_constant_override("margin_"+side,12)
+ b.add_child(inset)
+ var row=HBoxContainer.new();row.add_theme_constant_override("separation",14);inset.add_child(row)
+ var icon=TextureRect.new();icon.custom_minimum_size=Vector2(72,76);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;icon.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;row.add_child(icon)
+ var paths={"realms":"portal.png","quests":"ram_idle.png","descent":"bramble_idle.png","defense":"guard_melee.svg","arena":"arena_stadium.svg","battlegrounds":"guard_area.svg","training":"training_dummy.svg","spire":"mistglass_v109.svg","starter":"ram_idle.png","gather":"lodges/gather.svg","apothecary":"lodges/apothecary.svg","challenge":"lodges/challenge.svg","daily":"portal.png","fishing":"fishing/shop.svg","mine":"star_mine_idle.png","market":"studio_cart_v148.svg","studio":"studio_archway_v148.svg","showcase":"training_hero_book.svg","academy":"studio_bookshelf_v148.svg"}
+ var path="res://assets/"+str(paths.get(destination,"portal.png"))
+ if ResourceLoader.exists(path):icon.texture=load(path)
+ var copy=VBoxContainer.new();copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL;copy.add_theme_constant_override("separation",7);row.add_child(copy)
+ label(copy,str(entry[0]),18).modulate=Color("#f0dbac")
+ label(copy,str(entry[1]),15).modulate=Color("#c1d9de")
+ var arrow=label(row,"›",28);arrow.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;arrow.modulate=Color("#ebca82")
+ ignore_adventure_mouse(inset)
+func ignore_adventure_mouse(control:Control)->void:
+ control.mouse_filter=Control.MOUSE_FILTER_IGNORE
+ for child in control.get_children():
+  if child is Control:ignore_adventure_mouse(child)
 func choose_adventure(value:String)->void:
- if value=="realms":realms()
+ if value=="daily":game.legacy.daily.quick_play()
+ elif value=="challenge":close();game.lodges.open("challenge")
+ elif value in ["gather","apothecary"]:close();game.lodges.open(value)
+ elif value=="spire":
+  close();game.enter_region("town");game.position_in_world=game.town_v109.TOWER+Vector2(0,70);game.update_camera();game.menu="arcane_tower"
+ elif value=="realms":close();game.waylight.open(0)
  elif value=="quests":quests()
  elif value=="starter":starter()
  elif value=="fishing":
@@ -210,9 +254,10 @@ func choose_adventure(value:String)->void:
  elif value=="market":close();game.legacy.commerce.open()
  elif value=="studio":close();game.hero_workshop.open()
  elif value=="showcase":
+  if not showcase_allowed():return
   close();game.hero_workshop.open();var view=load("res://scripts/studio_showcase.gd").new();game.hero_workshop.add_child(view);view.setup(game.hero_workshop);view.page=2;view.render()
  elif value=="academy":close();game.hero_workshop.open(true)
- elif value=="training":close();game.start_run(true,"practice")
+ elif value=="training":close();game.start_training()
  else:launch(value)
 func quests()->void:
  window("WAYFARER EXPEDITION","adventures");label(content,"Speak to villagers, explore dungeons and mountain trails, and follow your quest journal. Bring food for a longer journey.",21)
@@ -249,7 +294,8 @@ func unlocks(id:String)->Array[String]:
 func results(won:bool)->void:
  var token:String=game.match_id if arcade else game.region_id+":"+str(game.run_time)
  if last_result==token:return
- last_result=token;window("VICTORY" if won else "ADVENTURE OVER • YOU WERE DEFEATED","results")
+ var returned=arcade and game.get("realm_result")=="returned"
+ last_result=token;window("EXPEDITION CHECKPOINT SAVED" if returned else "VICTORY" if won else "ADVENTURE OVER • YOU WERE DEFEATED","results")
  var id:String=str(game.hero_ids.get(game.my_id,game.selected_hero)) if arcade else game.character_id
  var title:String=game.results_reason if arcade else str(game.region.get("name","Realm"))
  label(content,title,23)
@@ -260,7 +306,13 @@ func results(won:bool)->void:
  if arcade:summary+=" • Ability healing %s • Revives %s" % [str(int(stats.get("healing",0))),str(int(stats.get("revives",0)))]
  else:summary+=" • Damage taken %s • Enemies defeated %d" % [str(int(game.damage_taken)),int(game.kills)]
  label(hero_row,summary,20).size_flags_horizontal=Control.SIZE_EXPAND_FILL
- if not won:preload("res://scripts/defeat_credit.gd").card(content,game,game.defeat_causes.get(game.my_id,{}) if arcade else game.last_defeat)
+ if not arcade and game.get("waylight")!=null and game.waylight.special():
+  preload("res://scripts/studio_ui.gd").card(content,"WAYLIGHT EXPEDITION",game.waylight.last_result)
+  if game.waylight.between():
+   label(content,"Waylight banked here powers overcharged realms. Relics are found in overcharged realms after Portal Attunement.",16)
+   button(content,"Return to town",return_to_town)
+  else:button(content,"Return to town & open Inventory",func():return_to_town();game.legacy.open_page("inventory"))
+ if not won and not returned:preload("res://scripts/defeat_credit.gd").card(content,game,game.defeat_causes.get(game.my_id,{}) if arcade else game.last_defeat)
  if not arcade and "NEW PERSONAL BEST!" in game.result_text:preload("res://scripts/ui_reward_icons.gd").row(content,"NEW PERSONAL BEST","trophy",23)
  if arcade and game.practice_match():label(content,"PRACTICE • Damage counts toward hero mastery. PvP records and trophies are unchanged.",17)
  if arcade:team_results()
@@ -307,6 +359,9 @@ func mastery_progress(id:String)->void:
   var bar:=ProgressBar.new();bar.max_value=maxi(1,int(item[2]));bar.value=int(item[1]);bar.show_percentage=false;bar.custom_minimum_size.y=9;box.add_child(bar)
 func replay_realm()->void:
  if arcade or page!="results":return
+ if game.get("waylight")!=null and game.waylight.special():
+  var tab=1 if game.waylight.between() else 2
+  return_to_town();game.waylight.open(tab);return
  var realm:String=game.active_realm
  var was_trial:bool=game.trial
  close();game.respawn_clinic=false;game.gold=100;game.loadout.clear()

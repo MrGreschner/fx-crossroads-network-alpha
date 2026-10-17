@@ -21,9 +21,9 @@ var level_cards:CanvasLayer
 var motion_v85=preload("res://scripts/hero_motion_v85.gd").new()
 
 # Host-authoritative room modes. Signaling and WebRTC link setup are adapted
-# from FX Connection Lab; the Render service only exchanges room invitations.
+# from Connections Lab; the Render service only exchanges room invitations.
 const STUN_URL := "stun:stun.cloudflare.com:3478"
-const ROOM_SERVICE_URL := "wss://fx-crossroads-rooms.onrender.com"
+var ROOM_SERVICE_URL := preload("res://scripts/brand.gd").room_url()
 var VIEW := Vector2(1280, 720)
 var FIELD := Rect2(0, 0, 6200, 4200)
 const GATE := Vector2(5300, 7800)
@@ -256,7 +256,9 @@ func _ready() -> void:
 		characters[str(entry)] = data
 		for pose in ["idle", "walk1", "walk2", "attack", "open", "spin", "shell"]:
 			var path: String = "res://assets/" + str(data.get("sprite", entry)) + "_" + str(pose) + ".png"
-			if ResourceLoader.exists(path): art[str(entry) + "_" + pose] = load(path)
+			var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(str(data.get("sprite",entry)),str(pose))
+			if refreshed!=null:art[str(entry)+"_"+pose]=refreshed
+			elif ResourceLoader.exists(path): art[str(entry) + "_" + pose] = load(path)
 			elif ResourceLoader.exists(path.replace(".png",".svg")):art[str(entry)+"_"+pose]=preload("res://scripts/source_art.gd").texture(path.replace(".png",".svg"))
 	for entry in manifest.get("characters", []):
 		var minion:=str(characters[str(entry)].get("special",{}).get("minion_sprite",""))
@@ -266,15 +268,18 @@ func _ready() -> void:
 		enemy_defs[str(entry)] = data
 		for pose in ["idle", "walk1", "walk2", "attack", "open", "spin"]:
 			var path: String = "res://assets/" + str(data.get("sprite", entry)) + "_" + str(pose) + ".png"
-			if ResourceLoader.exists(path): art[str(entry) + "_" + pose] = load(path)
+			var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(str(data.get("sprite",entry)),str(pose))
+			if refreshed!=null:art[str(entry)+"_"+pose]=refreshed
+			elif ResourceLoader.exists(path): art[str(entry) + "_" + pose] = load(path)
 			elif ResourceLoader.exists(path.replace(".png",".svg")):art[str(entry)+"_"+pose]=preload("res://scripts/source_art.gd").texture(path.replace(".png",".svg"))
 	for entry in manifest.get("regions", [])+manifest.get("quest_regions",[]): regions[str(entry)] = _json("res://content/regions/" + str(entry) + ".json")
 	for entry in manifest.get("items", []):
 		items[str(entry)] = _json("res://content/items/" + str(entry) + ".json")
 		if bool(items[str(entry)].get("shop",true)):item_list.append(str(entry))
 	if FileAccess.file_exists(best_path): best_floor = int(_json(best_path).get("best", 0))
-	for sprite in ["grass","forest","path","ash","ice","space","quarantine","tree","rock","crystal","ice_pillar","satellite","barricade","flower","house","character_hall","supply_shop","arena_hall","town_gate","town_banner","town_lamp","mini_basketball"]:
+	for sprite in ["grass","forest","path","ash","ice","space","quarantine","tree","rock","crystal","ice_pillar","satellite","barricade","flower","house","character_hall","supply_shop","town_gate","town_banner","town_lamp","mini_basketball"]:
 		if ResourceLoader.exists("res://assets/" + sprite + ".png"): art[sprite] = load("res://assets/" + sprite + ".png")
+	art["arena_hall"] = preload("res://scripts/source_art.gd").texture("res://assets/arena_hall.svg")
 	for guard_type in ["melee","ranged","area"]: art["guard_"+guard_type] = preload("res://scripts/source_art.gd").texture("res://assets/guard_"+guard_type+".svg")
 	preload("res://scripts/studio_library.gd").install(self)
 	selected_hero = str(get_tree().root.get_meta("fx_hero", "ram"))
@@ -602,7 +607,7 @@ func match_config()->Dictionary:
 
 func _start_match() -> void:
 	if version_check!=null and version_check.blocked():version_check.notice();return
-	if mode=="coop" and role=="host":
+	if mode=="coop" and role=="host" and get("dedicated")!=true:
 		var chosen=str(realm_picker.get_item_metadata(realm_picker.selected))
 		if not preload("res://scripts/realm_access.gd").unlocked(legacy,chosen):status_label.text=preload("res://scripts/realm_access.gd").hint(legacy,chosen);return
 	if continuation==null:continuation=preload("res://scripts/solo_continue.gd").new();add_child(continuation);continuation.setup(self,true)
@@ -659,7 +664,7 @@ func _start_match() -> void:
 	enemy_pool.clear()
 	if mode == "coop":
 		var data: Dictionary = regions.get(realm_id, {})
-		var scene: PackedScene = load(str(data.get("scene", ""))) as PackedScene
+		var scene: PackedScene = load(str(data.scene)) as PackedScene if not str(data.get("scene", "")).is_empty() else null
 		if scene != null:
 			var layout := scene.instantiate()
 			for marker in layout.get_node("Enemies").get_children():
@@ -748,7 +753,9 @@ func _make_floor() -> void:
 		else: _spawn_wave(12 * maxi(1,roster.size()) + wave * 5)
 
 func _spawn_player(slot: int) -> Vector2:
-	if mode=="battlegrounds":return battlegrounds.spawn(str(fighters()[clampi(slot,0,fighters().size()-1)].id))
+	if mode=="battlegrounds":
+		var members=fighters()
+		return battlegrounds.spawn(str(members[clampi(slot,0,members.size()-1)].id)) if not members.is_empty() else Vector2(640,790)
 	if mode == "coop" and adventure.city.active: return Vector2(85,1260-slot*65)
 	if mode == "defense": return GATE + Vector2(-100 + slot * 65, 180)
 	if mode == "coop" and not world_spawns.is_empty() and str(world_spawns[0]["type"]) == "spawn": return world_spawns[0]["pos"] + Vector2(slot * 65,0)
@@ -1357,6 +1364,7 @@ func _hurt(id: String, amount: float, source: String = "", melee_attacker:String
 		var attack_multiplier:float=(1.0 if adventure.expansion.sharing else adventure.combat.war_multiplier(source))*(1.3 if adventure.combat.classics.channeling(id) else 1.0)
 		adjusted=adventure.combat.v79.erode("p:"+id,before_reduction*attack_multiplier,adjusted)
 		adjusted=adventure.combat.mantis.on_damage(id,adjusted)
+		if get("expedition")!=null and get("expedition").special():adjusted=get("expedition").relics.incoming(id,adjusted)
 		if adjusted<=0:return
 	if int(health.get(id,0))<=0:return
 	adjusted=adventure.combat.morrow.share_hero(id,adjusted)
@@ -1496,7 +1504,7 @@ func _simulate(delta: float) -> void:
 		if wave==1:
 			wave=3;adventure.spawn("lockmaster_regent",Vector2(3500,2330),1450,true)
 		else:end_match("Brasslock Borough freed!")
-	elif (descent.combat_count()==0 if mode=="descent" else opponents.is_empty()) and not adventure.active and not adventure.vault.active and not adventure.quests.active and not adventure.expansion.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active:
+	elif (descent.combat_count()==0 if mode=="descent" else opponents.is_empty()) and not (get("expedition")!=null and get("expedition").between()) and not adventure.active and not adventure.vault.active and not adventure.quests.active and not adventure.expansion.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active:
 		if mode == "coop" and wave >= 3:
 			end_match("Realm cleared • "+str(int(run_time))+" seconds")
 			var key := "user://fx_coop_"+realm_id+".json"
@@ -1528,7 +1536,7 @@ func _simulate(delta: float) -> void:
 		var enemy: Dictionary = opponents[i]
 		if bool(enemy.get("health_gem",false)) or bool(enemy.get("depth_boss",false)):continue
 		if mode=="defense" and str(enemy.get("type","")) in north_gate.TYPES:continue
-		if bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
+		if bool(enemy.get("roaming_actor",false)) or bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
 		if str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("expansion_boss",false)) or bool(enemy.get("vault_actor",false)): continue
 		if adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		var definition: Dictionary = enemy_defs.get(str(enemy["type"]),{}).duplicate()
@@ -1643,7 +1651,7 @@ func _simulate(delta: float) -> void:
 					if id != bullet["owner"] and _projectile_near_player(origin,next,str(id),7+adventure.combat.v110.target_radius("p:"+str(id),21)) and (pvp_rule=="ffa" or int(teams[id]) != int(teams[bullet["owner"]])):
 						_hurt(str(id),float(bullet["damage"]),str(bullet["owner"]),"",bullet.get("credit",{}));hit=true;break
 		if mode=="battlegrounds" and not hit:
-			for key in battlegrounds.hostile(str(bullet.owner)):
+			for key in battlegrounds.hostile_near(str(bullet.owner),(origin+next)*.5,origin.distance_to(next)*.5+27):
 				var actor:Dictionary=battlegrounds.actor(key)
 				if _segment_near(origin,next,actor.pos,27):battlegrounds.damage(key,float(bullet.damage),str(bullet.owner));hit=true;break
 		if hit: missiles.remove_at(i)
@@ -1757,7 +1765,7 @@ func _snapshot() -> Dictionary:
 			remaining[ability] = maxf(0.0,float(int(timers.get(ability,0))-Time.get_ticks_msec())/1000.0)
 		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
 	var foes: Array = []
-	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"warning":float(enemy.get("warning",-1)),"v143_pose":float(enemy.get("v143_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false))})
+	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"warning":float(enemy.get("warning",-1)),"v143_pose":float(enemy.get("v143_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false))})
 	var shots: Array = []
 	for bullet in missiles: shots.append({"pos":[roundi(bullet["pos"].x),roundi(bullet["pos"].y)],"owner":bullet["owner"],"color":str(bullet.get("color","#ffd985"))})
 	var sent_guards: Array = []
@@ -1955,7 +1963,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			started=bool(data.get("active",true))
 			if was_active and not started:
 				shop_open="";status_label.text=results_reason
-				if "cleared" in results_reason.to_lower() or "restored" in results_reason.to_lower(): journey.won(realm_id);provisions.complete_adventure()
+				if mode=="coop" and adventure_won(results_reason): journey.won(realm_id);provisions.complete_adventure()
 			_profile_section("snapshot_finalize",receive_began)
 		"choice":
 			if role=="host": _apply_choice(remote_id,str(data.get("value","")))
@@ -2103,6 +2111,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if spectating() or start_countdown>0:return
 	if key.keycode == KEY_E:
+		if get("expedition")!=null and get("expedition").between():_send_channel(host_id,{"type":"rift"});return
 		if mode=="battlegrounds" and battlegrounds.interact(my_id):return
 		if _near_downed(my_id): return
 		if adventure.active or adventure.vault.active or adventure.combat.coast.active or adventure.city.active or adventure.hollow.active or adventure.quests.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active:
@@ -2172,7 +2181,7 @@ func _draw() -> void:
 			draw_rect(Rect2(bar,Vector2(40*clampf(float(guard.hp)/maxf(1,float(guard.get("max_hp",70))),0,1),4)),Color("#a8d47c"))
 	for foe in opponents:
 		if bool(foe.get("buried",false)):continue
-		var id := str(foe["type"])
+		var id := str(foe.get("sprite",foe["type"]))
 		var pos: Vector2 = visual_actor("e:"+str(foe.get("uid",0)),foe["pos"])-camera
 		if bool(foe.get("health_gem",false)):pos.y-=8+sin(descent.clock*2+int(foe.uid)%7)*5
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
@@ -2253,6 +2262,7 @@ func _draw() -> void:
 	section_began=Time.get_ticks_usec()
 	adventure.draw_on(self,camera)
 	custom_party.draw_on(self,camera)
+	if get("expedition")!=null and get("expedition").special():get("expedition").draw_world()
 	if mode=="defense":north_gate.draw_attacks(self,camera)
 	_profile_section("adventure_draw",section_began)
 	section_began=Time.get_ticks_usec()
@@ -2268,19 +2278,21 @@ func _draw() -> void:
 	adventure.school.draw_hud(self)
 	adventure.tech.draw_hud(self);adventure.immersive.draw_hud(self)
 	_draw_hero_cooldowns(font)
-	if mode!="arena" or not str(food_slots.get(my_id,"")).is_empty():draw_string(font,Vector2(30,VIEW.y-70 if mode=="arena" else 200),provisions.summary(str(food_slots.get(my_id,""))),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#cde1b5"))
+	if mode!="arena" or not str(food_slots.get(my_id,"")).is_empty():draw_string(font,Vector2(30,VIEW.y-70 if mode=="arena" else 144),provisions.summary(str(food_slots.get(my_id,""))),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#cde1b5"))
 	if mode=="battlegrounds":battlegrounds.draw_hud(self)
+	if get("expedition")!=null and get("expedition").special():get("expedition").draw_hud()
 	var title := ("PRACTICE CONTINUE • " if continuation!=null and continuation.active else "") + ("Battlegrounds • "+str(battlegrounds.MAPS.get(bg_map,"Front")) if mode=="battlegrounds" else "Wave " + str(wave) + "  |  Town gate " + str(int(gate_hp)) + "/" + str(int(gate_max)) if mode == "defense" else "Floor " + str(floor_number) + "  |  Best " + str(best_floor) if mode == "descent" else "PvP " + pvp_rule.to_upper() + "  |  Score " + str(pvp_scores.get(my_id,0)) + "  |  " + str(maxi(0,300-int(run_time))) + "s left" if mode == "arena" else str(regions.get(realm_id,{}).get("name",realm_id)) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Stage " + str(wave) + "/3"))
+	if get("expedition")!=null and get("expedition").special():title=("Portal attunement" if get("expedition").kind=="attunement" else "The Between" if get("expedition").between() else "Overcharged "+str(regions.get(realm_id,{}).get("name",realm_id)))+" • 2-player expedition"
 	draw_rect(Rect2(20,15,780,65),Color(0.04,0.09,0.12,0.8))
 	draw_string(font,Vector2(36,40),title,HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#f5e8ba"))
-	draw_string(font,Vector2(36,65),"CC " + str(gold.get(my_id,0)) + "  |  XP " + str(xp.get(my_id,0)) + ("  |  SAW: "+("aim-fire" if mobile.enabled else "LMB")+" Stomp • no dodge" if adventure.combat.robot.transformed(my_id) else "  |  Touch Interact to visit buildings" if mobile.enabled else "  |  Shift dodge • E buildings • Esc travel"),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d3e3de"))
+	draw_string(font,Vector2(36,65),"CC " + str(gold.get(my_id,0)) + "  |  XP " + str(xp.get(my_id,0)) + ("  |  SAW: "+("aim-fire" if mobile.enabled else "LMB")+" Stomp • no dodge" if adventure.combat.robot.transformed(my_id) else "  |  Interact at entrance to extract" if get("expedition")!=null and get("expedition").between() else "  |  Touch Interact to visit buildings" if mobile.enabled else "  |  Shift dodge • E buildings • Esc travel"),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d3e3de"))
 	var needed_xp:=5+int(levels.get(my_id,1))*3
 	draw_rect(Rect2(20,86,260,12),Color("#253343"))
 	draw_rect(Rect2(20,86,260*(1.0 if mode=="arena" and not arena_opening else clampf(float(xp.get(my_id,0))/needed_xp,0,1)),12),Color("#8dd8e5"))
 	draw_string(font,Vector2(290,98),("LEVEL 10 • ALL ABILITIES READY" if mode=="arena" and not arena_opening else "XP "+str(xp.get(my_id,0))+" / "+str(needed_xp)),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color.WHITE)
 	if continuation!=null and continuation.active:
 		draw_rect(Rect2(20,105,245,24),Color("#18475d"));draw_string(font,Vector2(29,122),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
-	if mode!="arena":draw_string(font,Vector2(35,147),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d9d1ae"))
+	if mode!="arena":draw_string(font,Vector2(35,124),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d9d1ae"))
 	elif arena_notice_left>0:
 		var opacity:=minf(1,arena_notice_left)
 		draw_rect(Rect2(20,110,600,53),Color(.03,.08,.11,.65*opacity))
@@ -2455,7 +2467,7 @@ func _draw_shop(font: Font) -> void:
 	draw_string(font,Vector2(380,470),"E / Escape: close  |  Combat continues while shopping",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#c5d6cf"))
 
 func _draw_hero_cooldowns(font: Font) -> void:
-	draw_set_transform(Vector2(0,-365) if mobile.enabled else Vector2(0,VIEW.y-720))
+	draw_set_transform(Vector2(0,-333) if mobile.enabled else Vector2(0,VIEW.y-720))
 	var hero: Dictionary = characters.get(str(hero_ids.get(my_id,"ram")),{})
 	var keys: Array[String] = ["primary","secondary","special"]
 	var labels: Array[String] = ["LMB","RMB","SPC"]
@@ -2863,10 +2875,12 @@ func legacy_results()->void:
 	if practice_match():bots.practice_progress();legacy.save();return
 	if legacy_result_recorded or results_reason.is_empty():return
 	legacy_result_recorded=true
+	if bool(legacy.card.cursor(match_id).get("done",false)):return
+	get_tree().root.get_node("FXActivity").event(self,"complete",str(arena_outcomes.get(my_id,"draw")) if mode=="arena" else "cleared" if adventure_won(results_reason) else "returned" if get("realm_result")=="returned" else "defeated",run_time,{"damage":float(contributions.get(my_id,{}).get("damage",0)),"players":match_party_size,"floor":floor_number,"wave":defense_cleared_wave},match_id)
 	var hero_id:String=str(hero_ids.get(my_id,selected_hero))
 	_track_card_progress()
 	if mode=="arena":legacy.card.arena_result(match_id,arena_random,str(arena_outcomes.get(my_id,"draw")))
-	if mode=="coop" and ("cleared" in results_reason.to_lower() or "restored" in results_reason.to_lower() or "freed" in results_reason.to_lower() or adventure.quests.active and adventure.quests.completed_count()==adventure.quests.data.get("quests",[]).size()):
+	if mode=="coop" and adventure_won(results_reason) and not (get("expedition")!=null and get("expedition").special()):
 		legacy.clear_adventure(hero_id,realm_id)
 		if realm_id=="confluence" and match_party_size>=2 and hero_id in ["tidewright","cantor"] and hero_ids.values().has("tidewright") and hero_ids.values().has("cantor"):
 			legacy.record(hero_id)["duet_clear"]=true
@@ -3029,7 +3043,7 @@ func _draw_broadcast(font:Font)->void:
 	draw_rect(Rect2(0,0,VIEW.x,75),Color("#12232e"))
 	draw_string(font,Vector2(VIEW.x-310,58),"Esc: leave broadcast",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#bdd5df"))
 	if shop_open=="Travel":draw_string(font,Vector2(22,80),"Enter: return to town / Esc: keep watching",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ffcc88"))
-	draw_string(font,Vector2(22,30),"FX CROSSROADS  •  LIVE "+("BATTLEGROUNDS" if mode=="battlegrounds" else "DESCENT" if mode=="descent" else "ARENA"),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color("#ffe0a1"))
+	draw_string(font,Vector2(22,30),"CROSSROADS: REALMS BEYOND  •  LIVE "+("BATTLEGROUNDS" if mode=="battlegrounds" else "DESCENT" if mode=="descent" else "ARENA"),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color("#ffe0a1"))
 	var subtitle:String="Floor "+str(floor_number)+" • CO-OP SURVIVAL" if mode=="descent" else str(battlegrounds.MAPS.get(bg_map,bg_map))+" • TEAM BATTLE" if mode=="battlegrounds" else str(arena_world.MAPS.get(arena_map,"Arena"))+" • "+("TEAM BATTLE" if pvp_rule=="teams" else "FREE FOR ALL")+" • %d:%02d remaining" % [int(maxf(0,300-run_time))/60,int(maxf(0,300-run_time))%60]
 	draw_string(font,Vector2(22,58),subtitle,HORIZONTAL_ALIGNMENT_LEFT,VIEW.x-350,17,Color("#bdd5df"))
 	if mode=="arena" and pvp_rule=="teams":

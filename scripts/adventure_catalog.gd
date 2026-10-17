@@ -35,7 +35,7 @@ func setup(owner:Node)->void:
  var foot:=HBoxContainer.new();col.add_child(foot)
  refund_button=button(foot,"Refund food / items",refund)
  enter=button(foot,"ENTER",confirm);enter.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- button(foot,"Co-op realms",func():game.menu="";game.get_tree().root.set_meta("fx_mode","coop");game.get_tree().root.set_meta("fx_hero",game.selected_character);game.get_tree().change_scene_to_file("res://scenes/arcade.tscn")).name="Coop"
+ button(foot,"Co-op realms",func():game.menu="";game.get_tree().root.set_meta("fx_mode","coop");game.get_tree().root.set_meta("fx_hero",game.selected_character);game.get_tree().change_scene_to_file("res://network/client.tscn")).name="Coop"
 func label(parent:Node,t:String,size:int=18)->Label:
  var l:=Label.new();l.text=t;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.add_theme_font_size_override("font_size",size);parent.add_child(l);return l
 func button(parent:Node,t:String,action:Callable)->Button:

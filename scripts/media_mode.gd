@@ -20,7 +20,7 @@ var zoom=1.0
 var framing=Vector2.ZERO
 var panel:PanelContainer
 var border:Control
-var control_visible=true
+var control_visible=false
 var restore_button:Button
 var normal_zoom=1.0
 var tick=0.0
@@ -48,7 +48,7 @@ func setup(owner:Node)->void:
  var reset=Button.new();reset.text="Reset framing";box.add_child(reset);reset.pressed.connect(func():zoom=1;framing=Vector2.ZERO;refresh_camera())
  var capture=Button.new();capture.text="Photo & film tools";box.add_child(capture);capture.pressed.connect(open_tools)
  var hide_button=Button.new();hide_button.text="Minimize camera controls";box.add_child(hide_button);box.move_child(hide_button,1);hide_button.pressed.connect(func():control_visible=false;update_visible())
- restore_button=Button.new();restore_button.text="Camera • show controls";restore_button.position=Vector2(16,106);restore_button.custom_minimum_size=Vector2(210,40);add_child(restore_button);preload("res://scripts/top_button_style.gd").apply(restore_button);restore_button.pressed.connect(func():control_visible=true;update_visible())
+ restore_button=Button.new();restore_button.text="Camera • show controls";restore_button.position=Vector2(16,164);restore_button.custom_minimum_size=Vector2(210,40);add_child(restore_button);preload("res://scripts/top_button_style.gd").apply(restore_button);restore_button.pressed.connect(func():control_visible=true;update_visible())
  var stop=Button.new();stop.text="Exit Media mode";box.add_child(stop);stop.pressed.connect(func():clean_view=false;apply_clean(false);active=false;control_visible=false;get_tree().root.remove_meta("fx_media_mode");zoom=1;framing=Vector2.ZERO;refresh_camera();border.queue_redraw())
  guides=preload("res://scripts/media_guides.gd").new();guides.media=self;add_child(guides);move_child(guides,0)
  shutter_label=Label.new();shutter_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;shutter_label.add_theme_font_size_override("font_size",42);shutter_label.modulate=Color("#ffe6a2");add_child(shutter_label);shutter_label.hide()
@@ -89,10 +89,13 @@ func _process(delta:float)->void:
  tick+=delta
  if tick<.1:return
  tick=0;update_visible()
+ var hud_bottom=164.0 if str(game.get("mode"))=="town" else 106.0
+ panel.position=Vector2(16,hud_bottom)
+ var available_height=maxf(1,game.VIEW.y-hud_bottom-16)
  if portfolio_panel!=null:
-  var factor=minf(1,minf((game.VIEW.x-48)/(panel.size.x+640+16),(game.VIEW.y-122)/560))
+  var factor=minf(1,minf((game.VIEW.x-48)/(panel.size.x+640+16),available_height/560))
   panel.scale=Vector2.ONE*factor;portfolio_panel.scale=Vector2.ONE*factor;portfolio_panel.position=panel.position+Vector2(panel.size.x*factor+16,0)
- else:panel.scale=Vector2.ONE*minf(1,minf((game.VIEW.x-32)/maxf(1,panel.size.x),(game.VIEW.y-122)/maxf(1,panel.size.y)))
+ else:panel.scale=Vector2.ONE*minf(1,minf((game.VIEW.x-32)/maxf(1,panel.size.x),available_height/maxf(1,panel.size.y)))
  var menu_clear=game.session_menu.page.is_empty() and (game.get("menu")==null or game.menu.is_empty())
  apply_clean(clean_view and enabled() and menu_clear)
  if guides!=null:guides.visible=enabled() and menu_clear

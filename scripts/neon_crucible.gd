@@ -45,8 +45,7 @@ func setup(id:String)->void:
     blockers[cell].append(bounds)
  var world_size:=v(data.get("size",[6400,4800]))
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,ceili(world_size.x/50),ceili(world_size.y/50));grid.cell_size=Vector2(50,50);grid.offset=Vector2(25,25);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
- for x in grid.region.size.x:
-  for y in grid.region.size.y:grid.set_point_solid(Vector2i(x,y),not can_stand(Vector2(x*50+25,y*50+25)))
+ preload("res://scripts/navigation_cache.gd").populate(grid,"tech_"+id,JSON.stringify(data),func(point):return not can_stand(point))
 func floor_at(point:Vector2)->bool:
  for room in data.get("rooms",[]):
   if rect(room.rect).grow(-18).has_point(point):return true
@@ -384,14 +383,15 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   for n in 8:canvas.draw_circle(source.lerp(destination,fmod(clock*.5+n/8.0,1)),5,Color("#9edced"))
 func draw_hud(canvas:Node2D)->void:
  if not active:return
- canvas.draw_rect(Rect2(24,148,mini(920,canvas.VIEW.x-48),58),Color(.07,.13,.18,.93))
- canvas.draw_string(ThemeDB.fallback_font,Vector2(36,173),objective(),HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e2d392"))
- canvas.draw_string(ThemeDB.fallback_font,Vector2(36,194),"Rising turrets • guided rockets • signal fences • repairing drones",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#a7c9d5"))
+ var top=preload("res://scripts/hud_layout.gd").objective_top(canvas,adventure.arcade)
+ canvas.draw_rect(Rect2(24,top,mini(920,canvas.VIEW.x-48),58),Color(.07,.13,.18,.93))
+ canvas.draw_string(ThemeDB.fallback_font,Vector2(36,top+25),objective(),HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e2d392"))
+ canvas.draw_string(ThemeDB.fallback_font,Vector2(36,top+46),"Rising turrets • guided rockets • signal fences • repairing drones",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#a7c9d5"))
  var target:=v(data.exit) if done else v(data.bodies[mini(stage,data.bodies.size()-1)].pos)
  var own:Vector2=adventure.game.local_pos if adventure.arcade else adventure.game.position_in_world
  if stage==0 and not boss_live and upload<=0 and not done:
   var best:=INF
   for enemy in adventure.foes():
    if int(enemy.get("tech_sector",-1))==0 and (enemy.pos as Vector2).distance_to(own)<best:best=(enemy.pos as Vector2).distance_to(own);target=enemy.pos
- var heading:Vector2=(target-own).normalized();var p:=Vector2(canvas.VIEW.x-85,230)
+ var heading:Vector2=(target-own).normalized();var p:=Vector2(canvas.VIEW.x-85,top+82)
  canvas.draw_circle(p,28,Color(.08,.17,.24,.8));canvas.draw_line(p-heading*14,p+heading*18,Color("#b3edef"),4,true);canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-38,45),"UPLINK" if done else "CONTINUUM",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#b3edef"))

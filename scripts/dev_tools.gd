@@ -23,12 +23,13 @@ func setup(owner:Node)->void:
  action(row,"Restore health",func():experiment("health"))
  action(row,"Reset cooldowns",func():experiment("cooldowns"))
  action(body,"Training • all attacks ready",func():experiment("training"))
+ action(body,"Town • time, weather & almanac",town_time_preview)
  build_powers()
  action(body,"Activity dashboard • private trends",func():close_desk();get_tree().root.get_node("FXActivity").open_dashboard())
- action(body,"Host • Classroom Broadcast (31 seats)",func():close_desk();get_tree().root.get_node("FXClassroom").host())
+ action(body,"Host • Demo Broadcast (31 viewers)",func():close_desk();get_tree().root.get_node("FXClassroom").host())
  caption=LineEdit.new();caption.placeholder_text="Presentation caption • e.g. Testing projectile counters";caption.max_length=80;body.add_child(caption)
  action(body,"Show / hide presentation caption",present)
- action(body,"Open student playtest notebook",notebook)
+ action(body,"Open playtest notebook",notebook)
  status=text("An animated arcane insignia identifies Game Dev. Powers make the entire match a test: no player progress.",15)
  var bottom:=HBoxContainer.new();body.add_child(bottom)
  action(bottom,"Back to game",toggle)
@@ -76,7 +77,7 @@ func _process(_delta:float)->void:
  visible=session!=null and session.active
  if not visible:return
  var view:=get_viewport().get_visible_rect().size
- desk.position=Vector2(view.x-160,72)
+ desk.position=Vector2(view.x-200,164)
  panel.size=Vector2(620,maxf(460,body.get_combined_minimum_size().y+44))
  var fit:=minf(1,minf((view.x-24)/panel.size.x,(view.y-100)/panel.size.y));panel.scale=Vector2.ONE*fit;panel.position=(view-panel.size*fit)*.5
  banner.size=Vector2(view.x-40,30);banner.position=Vector2(20,view.y-38)
@@ -109,3 +110,7 @@ func summon_menu()->void:
  var number=SpinBox.new();number.min_value=1;number.max_value=9;number.value=1;number.prefix="Copies: ";box.add_child(number)
  dialog.confirmed.connect(func():g.dev_magic.summon_kind=str(keys[enemy.selected]);g.dev_magic.summon_count=int(number.value);close_desk();g.dev_magic.aiming="summon";dialog.queue_free())
  dialog.canceled.connect(func():dialog.queue_free());dialog.popup_centered()
+
+func town_time_preview()->void:
+ if not allowed() or game().mode!="town":status.text="Return to the main town to preview time.";return
+ close_desk();game().town_life.calendar.almanac.open()

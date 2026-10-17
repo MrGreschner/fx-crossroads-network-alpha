@@ -40,7 +40,7 @@ func setup(owner:Node,review:bool=false,received:Dictionary={})->void:
  if teacher:
   var name_row=HBoxContainer.new();body.add_child(name_row);label(name_row,"Reviewer",16);var name=LineEdit.new();name.placeholder_text="Teacher display name (not verified)";name.text=teacher_name;name.max_length=80;name.size_flags_horizontal=Control.SIZE_EXPAND_FILL;name_row.add_child(name);name.text_changed.connect(func(t:String):teacher_name=t)
  else:
-  var row=HBoxContainer.new();body.add_child(row);var enabled=CheckButton.new();enabled.text="Student Mode";enabled.button_pressed=data.enabled;row.add_child(enabled);enabled.toggled.connect(func(on:bool):data.enabled=on;preload("res://scripts/education_access.gd").toggle("student",on);finish())
+  var row=HBoxContainer.new();body.add_child(row);label(row,"Student profile",16)
   var name=LineEdit.new();name.placeholder_text="Student display name / class alias";name.text=data.student;name.max_length=80;name.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(name);name.text_changed.connect(func(t:String):data.student=t);name.focus_exited.connect(func():S.save(data))
  var row=HBoxContainer.new();body.add_child(row);module_picker=OptionButton.new();module_picker.fit_to_longest_item=false;module_picker.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(module_picker)
  for code in S.catalog():
@@ -92,7 +92,7 @@ func render()->void:
    3:share_page()
    4:practice()
  else:
-  if not data.enabled:label(content,"Turn Student Mode ON to record assignment evidence. Ordinary gameplay stays unchanged.",17)
+  if not data.enabled:label(content,"Student access is required to record assignment evidence.",17)
   match tabs.current_tab:
    0:brief()
    1:journal()
@@ -123,7 +123,7 @@ func journal()->void:
  for stage in S.stages(module):stage_picker.add_item(stage.title)
  prompt=label(content,"",17);writing=TextEdit.new();writing.custom_minimum_size.y=170;writing.placeholder_text="Explain your intention, decisions and evidence…";content.add_child(writing);stage_picker.item_selected.connect(func(_i:int):update_prompt());update_prompt()
  UI.accent(button(content,"Save evidence entry",func():
-  if not data.enabled:message.text="Turn Student Mode ON first.";return
+  if not data.enabled:message.text="Student access is required.";return
   var issue=S.note(data,module,S.stages(module)[stage_picker.selected].id,writing.text);message.text="Entry saved. Earlier entries remain available." if issue.is_empty() else issue
   if issue.is_empty():render()))
  var entries:Array=S.work(data,module).entries
@@ -150,7 +150,7 @@ func attach_draft()->void:
  if p.is_empty():message.text="Open and save a hero first.";return
  attach("hero",p,str(p.hero.name),"Current draft • may be imported or collaborative")
 func attach(kind:String,value:Dictionary,title:String,origin:String)->void:
- if not data.enabled:message.text="Turn Student Mode ON first.";return
+ if not data.enabled:message.text="Student access is required.";return
  var issue=S.attach(data,module,kind,value,title,origin);message.text="Snapshot attached." if issue.is_empty() else issue;render()
 func picture(parent:Node,encoded:String)->void:
  var bytes=Marshalls.base64_to_raw(encoded)
@@ -200,7 +200,7 @@ func submit_page()->void:
  for o in S.assessed_outcomes(module):if readiness[o.id].ready:count+=1
  label(content,str(count)+" / "+str(S.assessed_outcomes(module).size())+" project outcomes have the requested evidence. A teacher decides achievement; partial evidence can still be submitted.",18)
  UI.accent(button(content,"Mark this module for teacher review",func():
-  if not data.enabled:message.text="Turn Student Mode ON first.";return
+  if not data.enabled:message.text="Student access is required.";return
   var issue=S.submit(data,module);message.text="Frozen submission saved. Raise your hand or share a review code." if issue.is_empty() else issue;render()))
  button(content,"Share submitted work by review code",func():link.open(false))
  var s=latest()

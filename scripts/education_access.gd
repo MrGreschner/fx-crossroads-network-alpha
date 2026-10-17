@@ -10,9 +10,9 @@ static func state()->Dictionary:
  var v=preload("res://scripts/profile_store.gd").read(PATH,valid)
  return v if not v.is_empty() else fresh()
 static func student()->bool:
- var s=state();return s.student and s.student_on
+ var s=state();return s.student
 static func teacher()->bool:
- var s=state();return s.teacher and s.teacher_on
+ var s=state();return s.teacher
 static func unlock(kind:String)->bool:
  if not kind in ["student","teacher"]:return false
  if preload("res://scripts/profile_store.gd").testing():return false
@@ -40,3 +40,6 @@ static func revoke(kind:String)->bool:
  if kind=="student":
   var data=preload("res://scripts/learning_store.gd").load_data();data.enabled=false;preload("res://scripts/learning_store.gd").save(data)
  return true
+
+static func role_label()->String:
+ var s=state();return "Teacher" if s.teacher else "Student" if s.student else "Traveller"

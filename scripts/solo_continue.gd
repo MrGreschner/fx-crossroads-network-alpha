@@ -28,6 +28,7 @@ func begin()->void:
 func available()->bool:
  if baseline.is_empty():return false
  if arcade:return game.role=="host" and not game.spectating() and game.match_party_size==1 and game.links.is_empty() and game.mode in ["descent","defense","coop"] and int(game.health.get(game.my_id,0))<=0
+ if game.get("waylight")!=null and game.waylight.special():return false
  return game.mode=="run" and game.health<=0 and not game.practice and not game.tutorial.active and not (game.mistglass_rift!=null and game.mistglass_rift.active)
 func restore_progress()->void:
  for key in KEYS:

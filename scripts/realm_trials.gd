@@ -115,6 +115,8 @@ func alive(id: String) -> bool:
 func authoritative() -> bool:
 	return not arcade or game.role == "host"
 func can_stand(point: Vector2) -> bool:
+	if arcade and game.get("expedition")!=null and game.expedition.between():return game.expedition.expedition.open(point)
+	if not arcade and game.get("waylight")!=null and game.waylight.between() and game.mode=="run":return game.waylight.expedition.open(point)
 	if immersive.active:return immersive.can_stand(point)
 	if foundry.active:return foundry.can_stand(point)
 	if tech.active:return tech.can_stand(point)
@@ -145,6 +147,8 @@ func can_stand(point: Vector2) -> bool:
 	return Rect2(9562,1582,3276,2436).has_point(point) or Rect2(9562,4802,3276,2716).has_point(point)
 
 func teleport(id: String, point: Vector2) -> void:
+	if arcade and game.has_method("network_relocate"):
+		game.network_relocate(id,point);return
 	if arcade:
 		game.positions[id] = point
 		game.charges.erase(id)
@@ -208,6 +212,7 @@ func spawn_trial(n: int) -> void:
 	spawn(str(trial["boss"]),origin+Vector2(2324,1400),850+n*130,true,n)
 
 func on_defeat(enemy: Dictionary) -> bool:
+	if arcade and game.get("expedition")!=null and game.expedition.special():game.expedition.defeated(enemy)
 	if newcomers.on_defeat(enemy):return true
 	if immersive.active and immersive.on_defeat(enemy):return true
 	if foundry.active and foundry.on_defeat(enemy):return true

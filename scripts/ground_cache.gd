@@ -35,7 +35,7 @@ func sync()->void:
       var local:=Vector2(tx*64,ty*64)-chunk.position
       if game.art.get(tile)!=null:chunk.tiles.append([game.art[tile],Rect2(local,Vector2(64,64))])
       var seed:int=(tx*37+ty*71+tx*ty*11)%19
-      if tile!="path" and seed==3 and base not in ["ash","moonburrow_grass"] and game.art.get("flower")!=null:
+      if tile!="path" and seed==3 and base not in ["ash","moonburrow_grass"] and game.art.get("flower")!=null and (game.mode!="town" or not preload("res://scripts/town_plan.gd").reserved(Vector2(tx*64+32,ty*64+26))):
        chunk.tiles.append([game.art.flower,Rect2(local+Vector2(12,6),Vector2(40,40))])
     chunks[key]=chunk;add_child(chunk);chunk.queue_redraw()
    chunks[key].visible=true;chunks[key].used=age

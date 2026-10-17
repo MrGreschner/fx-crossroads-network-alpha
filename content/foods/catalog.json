@@ -222,5 +222,15 @@
     "threshold": 0.6,
     "colour": "#d5df8c",
     "description": "A gift from the Gatherers\u2019 apple tree. Automatically restores 20 HP once when alive at 60% health or less. Cannot revive."
+  },
+  "sunstar_fruit": {
+    "name": "Sunstar Fruit",
+    "cost": 12,
+    "effect": "heal",
+    "amount": 25,
+    "threshold": 0.6,
+    "colour": "#e7c36f",
+    "description": "A visiting merchant's star-shaped fruit. Automatically restores 25 HP at 60% health.",
+    "shop": true
   }
 }

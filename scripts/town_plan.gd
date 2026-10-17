@@ -13,17 +13,20 @@ const ROADS=[
  [Vector2(1960,740),Vector2(1960,850)],
  [Vector2(1580,790),Vector2(1580,850)],
  [Vector2(760,850),Vector2(760,1180)],
- [Vector2(-1080,1200),Vector2(-850,1200),Vector2(-850,900),Vector2(760,900)],
+ [Vector2(-1080,1200),Vector2(-1000,1200),Vector2(-1000,900),Vector2(760,900)],
  [Vector2(-180,775),Vector2(-180,900)],
- [Vector2(260,900),Vector2(260,1165)],
+ [Vector2(130,900),Vector2(-125,900),Vector2(-125,1280),Vector2(130,1280)],
  [Vector2(1150,1150),Vector2(1150,1180)],
  [Vector2(420,530),Vector2(420,850)],
  [Vector2(760,1180),Vector2(2220,1180),Vector2(2220,1150),Vector2(2510,1150)],
  [Vector2(1550,1020),Vector2(1550,1180)],
- [Vector2(2090,1165),Vector2(2090,1180)],
+ [Vector2(2090,1135),Vector2(2090,1180)],
  [Vector2(600,1155),Vector2(600,1180),Vector2(760,1180)],
  [Vector2(550,1560),Vector2(550,1740)],
- [Vector2(-420,1420),Vector2(-420,1740),Vector2(1600,1740)],
+ [Vector2(-530,1375),Vector2(-530,1380),Vector2(-420,1380),Vector2(-420,1740),Vector2(1600,1740)],
+ [Vector2(-1000,1200),Vector2(-850,1200),Vector2(-850,1375),Vector2(-530,1375)],
+ [Vector2(-210,900),Vector2(-210,1350),Vector2(-530,1350),Vector2(-530,1375)],
+ [Vector2(-210,1350),Vector2(130,1350),Vector2(130,1280)],
  [Vector2(-1080,800),Vector2(-850,800),Vector2(-850,900)],
  [Vector2(-1000,2080),Vector2(-560,2080),Vector2(-560,1740),Vector2(-420,1740)],
  [Vector2(325,2030),Vector2(325,2120),Vector2(100,2120),Vector2(100,1740)],
@@ -31,10 +34,13 @@ const ROADS=[
  [Vector2(1375,1520),Vector2(1375,1740)],
  [Vector2(1800,1550),Vector2(1800,1645),Vector2(1600,1645),Vector2(1600,1740)],
  [Vector2(1600,1180),Vector2(1600,1645)],
- [Vector2(2175,1580),Vector2(2175,1680),Vector2(2000,1680),Vector2(2000,1180)]
+ [Vector2(2175,1580),Vector2(2175,1645),Vector2(1800,1645)]
 ]
-const LOTS=[Rect2(1820,1720,360,310),Rect2(-1050,205,540,365),Rect2(2530,300,450,410),Rect2(-255,1390,310,320),Rect2(-550,430,770,380),Rect2(490,885,230,250),Rect2(-740,1000,640,460),Rect2(-1240,1650,480,490),Rect2(-340,1740,320,310),Rect2(160,1740,330,320)]
+const LOTS=[Rect2(1820,1720,360,310),Rect2(-1050,205,540,365),Rect2(2530,300,450,410),Rect2(-255,1390,310,320),Rect2(-550,430,770,380),Rect2(490,885,230,250),Rect2(-850,935,630,480),Rect2(-1240,1650,480,490),Rect2(-340,1740,320,310),Rect2(160,1740,330,320)]
 static func reserved(p:Vector2)->bool:
+ if Rect2(-500,1390,170,390).has_point(p):return true
+ if Rect2(-125,905,510,420).has_point(p):return true
+ if preload("res://scripts/town_neighborhood.gd").reserved(p):return true
  if Rect2(630,445,570,410).has_point(p):return true
  for lot in LOTS:
   if lot.has_point(p):return true
@@ -45,7 +51,7 @@ static func reserved(p:Vector2)->bool:
 func apply(g:Node)->void:
  g.ground_patches.clear();g.ground_tile_cache.clear();g.ground_index.invalidate()
  # Soft corners come from octagonal junctions using the same path tile.
- for route in ROADS:
+ for route in ROADS+preload("res://scripts/town_neighborhood.gd").ROADS:
   for n in range(1,route.size()):
    var a:Vector2=route[n-1];var b:Vector2=route[n];var side:Vector2=(b-a).normalized().orthogonal()*38
    g.ground_patches.append({"polygon":PackedVector2Array([a-side,b-side,b+side,a+side]),"tile":"path"})
@@ -56,7 +62,7 @@ func apply(g:Node)->void:
  # Compact central gathering square leaves room for the well and hall entrance.
  var civic=PackedVector2Array([Vector2(680,565),Vector2(1100,565),Vector2(1100,625),Vector2(1200,625),Vector2(1200,810),Vector2(1165,845),Vector2(680,845),Vector2(640,810),Vector2(640,625),Vector2(680,625)])
  g.ground_patches.append({"polygon":civic,"tile":"path"})
- for court in [Rect2(-590,1362,340,80),Rect2(-1170,2015,340,82),Rect2(200,1985,250,62)]:
+ for court in [preload("res://scripts/town_neighborhood.gd").COURT,Rect2(-745,1350,430,70),Rect2(-1170,2015,340,82),Rect2(200,1985,250,62)]:
   g.ground_patches.append({"polygon":PackedVector2Array([court.position,Vector2(court.end.x,court.position.y),court.end,Vector2(court.position.x,court.end.y)]),"tile":"path"})
  if g.terrain_cache!=null:g.terrain_cache.reset()
 func draw_ground(g:Node2D,camera:Vector2)->void:
@@ -68,7 +74,7 @@ func draw_ground(g:Node2D,camera:Vector2)->void:
   for point in border:screen.append(point-camera)
   g.draw_polyline(screen,Color("#ccba8b"),2,true)
  # Deliberate garden islands and seats, set away from doors and the continuous walks.
- for spot in [Vector2(-730,1330),Vector2(-730,1880),Vector2(220,1640),Vector2(1780,1250)]:
+ for spot in [Vector2(-730,1880),Vector2(220,1640),Vector2(1780,1250)]:
   if not view.has_point(spot):continue
   var p:Vector2=spot-camera
   g.draw_rect(Rect2(p-Vector2(42,18),Vector2(84,40)),Color("#6a684e"));g.draw_rect(Rect2(p-Vector2(42,18),Vector2(84,40)),Color("#b7a379"),false,2)
@@ -79,7 +85,7 @@ func draw_ground(g:Node2D,camera:Vector2)->void:
   g.draw_rect(Rect2(bench-Vector2(32,10),Vector2(64,12)),Color("#aa825b"));g.draw_line(bench-Vector2(32,18),bench+Vector2(32,-18),Color("#cfaa7a"),5)
   for x in [-25,25]:g.draw_line(bench+Vector2(x,2),bench+Vector2(x,13),Color("#5b6153"),4)
  # Campus lanterns form two gentle rows rather than random objects across paths.
- for spot in [Vector2(-610,1470),Vector2(-260,1470),Vector2(-810,2120),Vector2(-1100,2120),Vector2(-495,1710),Vector2(165,2160)]:
+ for spot in [Vector2(-720,1415),Vector2(-340,1415),Vector2(-810,2120),Vector2(-1100,2120),Vector2(-495,1710),Vector2(165,2160)]:
   if not view.has_point(spot):continue
   var p:Vector2=spot-camera
   g.draw_line(p,p-Vector2(0,44),Color("#5f6b62"),4);g.draw_rect(Rect2(p-Vector2(7,59),Vector2(14,18)),Color("#4b6265"));g.draw_rect(Rect2(p-Vector2(4,56),Vector2(8,12)),Color("#efcf90"))

@@ -1,0 +1,1 @@
+{"id":"between","name":"The Between","size":[32768,32768],"spawn":[16512,16512],"gate":{"position":[16512,16512]},"boss":[16512,16512],"enemies":[],"background":"#15252e","accent":"#75cabb","terrain":"forest","xp_per_level":3,"description":"Explore unstable fragments of official realms. Collect Waylight, then return to the stable crossing to bank it."}

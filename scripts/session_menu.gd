@@ -13,7 +13,7 @@ var previous_shop:=""
 var last_escape:=-1000
 var options_return:="main"
 var gallery:Control
-const GAME_DOWNLOAD_URL="https://fxcts.itch.io/fx-crossroads#download"
+var GAME_DOWNLOAD_URL=preload("res://scripts/brand.gd").download_url()
 var display_font:Font=preload("res://assets/fonts/CrossroadsDisplay.ttf")
 var ui_font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 func setup(owner:Node,multi:bool)->void:
@@ -41,22 +41,22 @@ func open(kind:String)->void:
  game.mobile.reset_controls();page=kind;backdrop.visible=true
  gallery.visible=kind in ["main","clear","options","download"];backdrop.color=Color("#081b27") if gallery.visible else Color(.015,.04,.06,.88)
  for child in body.get_children():body.remove_child(child);child.queue_free()
- var heading:=text("DOWNLOAD GAME" if kind=="download" else "OPTIONS" if kind=="options" else "FX CROSSROADS" if kind=="main" else "NEW ADVENTURE" if kind=="clear" else "YOUR ADVENTURE",30);heading.modulate=Color("#f2d699");heading.add_theme_font_override("font",display_font)
+ var heading:=text("DOWNLOAD GAME" if kind=="download" else "OPTIONS" if kind=="options" else "CROSSROADS" if kind=="main" else "NEW ADVENTURE" if kind=="clear" else "YOUR ADVENTURE",30);heading.modulate=Color("#f2d699");heading.add_theme_font_override("font",display_font)
  if kind=="main":
   heading.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-  var sub:=text("MAIN MENU",15);sub.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;sub.modulate=Color("#b1d5d3")
+  var sub:=text("REALMS BEYOND",15);sub.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;sub.modulate=Color("#b1d5d3")
   var rule:=HSeparator.new();body.add_child(rule)
-  text("Choose a path. Make it yours.",17).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+  text("Find your path. Create what’s next.",17).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  elif kind not in ["options","download","clear"]:
   text("Live multiplayer continues while this menu is open." if arcade else "Take a moment. Your current adventure is paused.",18)
   button("Sound: OFF" if AudioServer.is_bus_mute(0) else "Sound: ON",func():game.presentation.toggle_sound();open(page))
  if kind=="download":
   text("PLAY THE WINDOWS EDITION",25).modulate=Color("#f2d699")
-  text("Run FX Crossroads outside Chrome. This avoids the browser WebGL layer; graphics drivers and network access are still required.",18)
-  text("1. Open the itch.io downloads below and choose the Windows ZIP.\n2. Extract the whole ZIP.\n3. Open FX_Crossroads.exe inside the extracted folder.",18)
+  text("Run Crossroads: Realms Beyond outside Chrome. This avoids the browser WebGL layer; graphics drivers and network access are still required.",18)
+  text("1. Open the itch.io downloads below and choose the Windows ZIP.\n2. Extract the whole ZIP.\n3. Open Crossroads_Realms_Beyond.exe inside the extracted folder.",18)
   text("Keep the PCK and DLL folders with the EXE. Windows only — this is not an iPhone or Android download.",16)
   text("Keep your progress: Download profile in town, then Upload profile in the Windows game. Browser and Windows profiles are separate. Use the same game version for multiplayer.",16)
-  button("Open itch.io downloads",open_game_download,"#3e7968")
+  var download_button=button("Open itch.io downloads" if not GAME_DOWNLOAD_URL.is_empty() else "Downloads • use the game’s itch.io page",open_game_download,"#3e7968");download_button.disabled=GAME_DOWNLOAD_URL.is_empty()
   button("Back to main menu",func():open("main"))
  elif kind=="options":
   build_options()
@@ -81,7 +81,7 @@ func open(kind:String)->void:
   var settings_row:=HBoxContainer.new();settings_row.add_theme_constant_override("separation",12);body.add_child(settings_row)
   var sound:=Button.new();sound.text="Sound: OFF" if AudioServer.is_bus_mute(0) else "Sound: ON";sound.size_flags_horizontal=Control.SIZE_EXPAND_FILL;style(sound,"#345866");sound.pressed.connect(func():game.presentation.toggle_sound();open(page));settings_row.add_child(sound)
   var settings:=Button.new();settings.text="Options";settings.size_flags_horizontal=Control.SIZE_EXPAND_FILL;style(settings,"#567269");settings.pressed.connect(show_options);settings_row.add_child(settings)
-  var classroom:=Button.new();classroom.text="Watch class";classroom.size_flags_horizontal=Control.SIZE_EXPAND_FILL;style(classroom,"#665e81");classroom.pressed.connect(func():get_tree().root.get_node("FXClassroom").open_join());settings_row.add_child(classroom)
+  var classroom:=Button.new();classroom.text="Demo Broadcast";classroom.size_flags_horizontal=Control.SIZE_EXPAND_FILL;style(classroom,"#665e81");classroom.pressed.connect(func():get_tree().root.get_node("FXClassroom").open_join());settings_row.add_child(classroom)
 
  else:
   button("Resume adventure",resume,"#3e7968")
@@ -89,8 +89,6 @@ func open(kind:String)->void:
   button("Options",show_options)
   if preload("res://scripts/education_access.gd").student() or preload("res://scripts/education_access.gd").review_allowed():button("Education Guide",func():resume();load("res://scripts/education_guide.gd").open(game.legacy))
   if preload("res://scripts/education_access.gd").review_allowed():button("Teacher • class view",func():resume();load("res://scripts/teacher_dashboard.gd").open(game.legacy))
-  if preload("res://scripts/education_access.gd").state().teacher:
-   button("Teacher Mode: ON" if preload("res://scripts/education_access.gd").teacher() else "Teacher Mode: OFF",func():preload("res://scripts/education_access.gd").toggle("teacher",not preload("res://scripts/education_access.gd").teacher());open("pause"))
   button("Main menu",func():open("main"))
   text("Exiting to town ends this attempt. If you host a live room, leaving disconnects your party.",16)
  if kind=="options":make_options_scroll()
@@ -103,8 +101,9 @@ func make_options_scroll()->void:
  for index in range(1,children.size()-1):body.remove_child(children[index]);col.add_child(children[index])
  body.add_child(scroll);body.move_child(scroll,1)
 func open_game_download()->void:
+ if GAME_DOWNLOAD_URL.is_empty():message.text="Open the game’s itch.io page and choose Download.";return
  var result:=OS.shell_open(GAME_DOWNLOAD_URL)
- message.text="Choose the Windows ZIP in itch.io’s Download section. If no Windows file is listed, it has not been published yet." if result==OK else "Could not open the download page. Visit fxcts.itch.io/fx-crossroads in your browser and scroll to Download."
+ message.text="Choose the Windows ZIP in itch.io’s Download section. If no Windows file is listed, it has not been published yet." if result==OK else "Could not open downloads. Open the game’s itch.io page in your browser and choose Download."
 func show_options()->void:
  options_return=page if page in ["main","pause"] else "main";open("options")
 func build_options()->void:
@@ -126,7 +125,7 @@ func build_options()->void:
  var recording:=CheckButton.new();recording.text="Record local crash diagnostics";recording.custom_minimum_size.y=44;recording.button_pressed=stability.diagnostics_enabled;recording.toggled.connect(func(value:bool):stability.set_diagnostics(value));body.add_child(recording)
  var activity=get_tree().root.get_node("FXActivity")
  var consent=CheckButton.new();consent.text="Share anonymous activity counts";consent.custom_minimum_size.y=44;consent.button_pressed=activity.enabled;consent.toggled.connect(activity.set_enabled);body.add_child(consent)
- text("Activity counts estimate sessions and playtime; no names, creations or schoolwork are sent. Local diagnostics stay on this device.",15)
+ text("Anonymous reports summarize playtime, completions and performance. No names, creations or schoolwork are uploaded. Optional crash downloads remain on this device.",15)
  button("Run diagnostics / speed test",func():
   var test=preload("res://scripts/device_test.gd").new();add_child(test);test.setup(game)
  )

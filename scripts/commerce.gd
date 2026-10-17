@@ -155,9 +155,11 @@ func settle_day()->bool:
  a.day+=1;a.revenue+=revenue;a.profit+=profit;a.units+=sold;a.marketing+=budget
  var row={"day":a.day,"event":events[event_index],"product":product.name,"target":SEGMENTS[target],"price":price,"stock":sold+int(item.units),"sold":sold,"unmet":demand-sold,"reach":reach,"visits":visits,"conversion":conversion,"revenue":revenue,"cogs":cogs,"advertising":budget,"overhead":overhead,"profit":profit,"satisfaction":satisfaction,"roas":revenue/budget if budget>0 else 0.0,"forecast":a.forecast,"reflection":a.reflection,"brand":a.brand,"copy":a.copy,"channel":CHANNELS[int(a.channel)],"message":MESSAGES[int(a.message)]}
  a.history.append(row)
+ legacy.game.get_tree().root.get_node("FXActivity").event(legacy.game,"market_day","completed",float(a.day_seconds),{"day":int(a.day),"sold":sold,"profit":profit,"duration_configured":float(a.day_seconds)},"market-"+str(a.day))
  preload("res://scripts/learning_store.gd").activity("Market day completed",str(product.name)+" • day "+str(a.day))
  if a.history.size()>100:a.history.pop_front()
  note="DAY %d • %s\nSold %d • missed demand %d • revenue %.1f • profit %.1f\nYour market day is complete. Restock or adjust your stall for the next day." % [a.day,row.event,sold,demand-sold,revenue,profit]
+ if profit>0 and sold>0 and legacy.glimmers.market_reward():note+="\nTown trade reward: +10 Glimmers (once per real day)."
  if earn_supply(profit,sold):note+="\nSupply dividend earned: +20 CC. Collect it in the Market floor tab."
  save();return true
 func ore_level()->int:return mini(50,1+int(sqrt(float(legacy.mine.state().lifetime.ore)/200)))

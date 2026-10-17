@@ -48,10 +48,10 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  building(c,camera,"tower","MISTGLASS SPIRE");building(c,camera,"barracks","RAMGUARD")
  var visible:=Rect2(camera,c.get_viewport_rect().size).grow(100);var t:=Time.get_ticks_msec()/1000.0
  if visible.has_point(TOWER):
-  var p:=Vector2(2170,1115)-camera
-  c.draw_line(p,Vector2(2268,1115)-camera,Color("#7e9fa2"),8,true)
-  for n in 5:
-   var x:float=fposmod(t*12+n*20,95);c.draw_circle(p+Vector2(x,-3),2,Color(.66,.9,1,.5))
+  var start=Vector2(2228,1045)-camera;var end=Vector2(2284,1045)-camera
+  c.draw_line(start,end,Color("#6d7975"),18,true);c.draw_line(start,end,Color("#a7b5a4"),13,true);c.draw_line(start,end,Color("#4b8996"),8,true)
+  for n in 3:
+   var x=fposmod(t*15+n*19,56);c.draw_line(start+Vector2(x,-1),start+Vector2(x+7,-1),Color("#bddde0"),1.5,true)
  if visible.has_point(BARRACKS):
   for n in 3:
    var world:=Vector2(1245+n*112+sin(t*.2+n)*25,1500+cos(t*.2+n)*10)
