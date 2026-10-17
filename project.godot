@@ -1,8 +1,10 @@
 config_version=5
 
 [application]
+boot_splash/show_image=false
+boot_splash/bg_color=Color(0.03137,0.10588,0.14902,1)
 config/name="Crossroads: Realms Beyond"
-config/version="176"
+config/version="177"
 config/icon="res://assets/crossroads_emblem.svg"
 ; Keep the established desktop save location for existing players.
 config/use_custom_user_dir=true

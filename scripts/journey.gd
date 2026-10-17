@@ -5,6 +5,8 @@ var data: Dictionary = {"quest":{},"skipped":false,"unlocked":["Traveler"],"titl
 var sounds: Dictionary = {}
 var voices: Array[AudioStreamPlayer] = []
 var last_sound := 0
+var welcome_remaining:float=8.0
+var welcome_tick_ms:int=0
 var cosmetics_ui:CanvasLayer
 const TITLES := ["Traveler","First Footsteps","Grovekeeper","Lantern Bearer","Oath Restorer","Team Anchor"]
 const COLOURS := [Color("#e6cf91"),Color("#dfac56"),Color("#83be85"),Color("#8bd5cd"),Color("#b6a1ec"),Color("#8fc1ed")]
@@ -95,12 +97,19 @@ func draw_town(canvas:Node2D,camera:Vector2)->void:
 	var portrait:Texture2D=game.art.get(str(game.characters.get(game.selected_character,{}).get("sprite","ram"))+"_idle")
 	if portrait!=null:canvas.draw_texture_rect(portrait,Rect2(Vector2(582,460)-camera,Vector2(36,40)),false)
 
+func welcome_visible()->bool:
+	return not game.has_method("_attack_request") and game.mode=="town" and game.menu.is_empty() and game.presentation.page.is_empty() and game.session_menu.page.is_empty() and not game.has_node("FXIntro") and not bool(data.get("skipped",false)) and not quest_done() and not (game.media.clean_view or game.media.capturing)
+func _process(_delta:float)->void:
+	var now:int=Time.get_ticks_msec()
+	var elapsed:float=maxf(0,float(now-welcome_tick_ms)/1000.0) if welcome_tick_ms>0 else 0.0
+	welcome_tick_ms=now
+	if game!=null and welcome_remaining>0 and welcome_visible():welcome_remaining=maxf(0,welcome_remaining-elapsed)
 func draw_hud(canvas:Node2D)->void:
-	if game.has_method("_attack_request") or game.mode!="town":return
+	if welcome_remaining<=0 or not welcome_visible():return
 	var font:Font=ThemeDB.fallback_font
-	if not bool(data.get("skipped",false)) and not quest_done() and not (game.media.clean_view or game.media.capturing):
-		canvas.draw_rect(Rect2(25,214,650,78),Color(.04,.1,.14,.88))
-		var text:="WELCOME  "
-		for entry in [["hero","Choose hero"],["practice","Try training"],["grove","Enter Grove"]]:text+=("[done] " if bool(data.get("quest",{}).get(entry[0],false)) else "[ ] ")+str(entry[1])+"   "
-		canvas.draw_string(font,Vector2(40,243),text,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ead9a7"))
-		canvas.draw_string(font,Vector2(40,273),"Visit the Journey board to skip or equip rewards. T also opens it.",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#c6d9d8"))
+	var top:float=preload("res://scripts/town_hud.gd").height(game)+9
+	var width:float=minf(680,game.VIEW.x-48)
+	canvas.draw_rect(Rect2(24,top,width,48),Color(.04,.1,.14,.9))
+	canvas.draw_line(Vector2(24,top),Vector2(24+width*welcome_remaining/8,top),Color("#86bdb7"),2)
+	canvas.draw_string(font,Vector2(36,top+19),"WELCOME • Choose a hero, try training or enter a realm.",HORIZONTAL_ALIGNMENT_LEFT,width-24,15,Color("#ead9a7"))
+	canvas.draw_string(font,Vector2(36,top+38),"Your checklist stays available at the Adventure board.",HORIZONTAL_ALIGNMENT_LEFT,width-24,13,Color("#c6d9d8"))

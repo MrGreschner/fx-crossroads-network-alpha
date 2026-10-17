@@ -1,6 +1,6 @@
 extends Node
 ## One bounded release check; unavailable networks do not prevent offline play.
-const BUILD=171
+const BUILD=preload("res://scripts/brand.gd").BUILD
 var ENDPOINT=preload("res://scripts/brand.gd").service_http()+"/release"
 var DOWNLOAD=preload("res://scripts/brand.gd").download_url()
 var game:Node

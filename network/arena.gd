@@ -128,7 +128,7 @@ var last_snapshot_tick=-1
 var metrics={"rtt_ms":0,"corrections":0,"max_correction":0.0,"snapshots":0,"wire_bytes":0,"stale":0,"tick_ms":0.0}
 func _ready()->void:
  dedicated=get_tree().root.has_meta("fx_dedicated_server")
- if not dedicated:Engine.max_fps=120 # Also bound uncapped native/headless client polling.
+ if not dedicated:RenderingServer.set_default_clear_color(Color("#081b27"));Engine.max_fps=120 # Also bound uncapped native/headless client polling.
  if dedicated:get_tree().root.set_meta("fx_dev_match",true)
  if not InputMap.has_action("primary"):
   InputMap.add_action("primary");var left=InputEventMouseButton.new();left.button_index=MOUSE_BUTTON_LEFT;InputMap.action_add_event("primary",left)
@@ -173,80 +173,51 @@ func _bind_test_controls()->void:
   var event=InputEventMouseButton.new();event.button_index=binding[1]
   if not InputMap.has_action(binding[0]):InputMap.add_action(binding[0])
   if not InputMap.action_has_event(binding[0],event):InputMap.action_add_event(binding[0],event)
+var public_toggle:CheckButton
+var room_listing:VBoxContainer
+var browser_peer:WebSocketPeer
+var browser_sent:bool=false
+var browser_started:int=0
 func build_lobby()->void:
- var layer_node=CanvasLayer.new();layer_node.layer=100;add_child(layer_node)
- net_panel=PanelContainer.new();layer_node.add_child(net_panel);preload("res://scripts/studio_ui.gd").apply(net_panel)
- var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;net_panel.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
- var box=VBoxContainer.new();box.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(box)
- var title=Label.new();title.text="CROSSROADS • MULTIPLAYER • "+BUILD;box.add_child(title)
- var help=Label.new();help.text="Private integration preview • the server runs combat\nChoose a mode, host a room and invite your party.";box.add_child(help)
- url_field=LineEdit.new();url_field.text=get_tree().root.get_node("FXActivity").endpoint.replace("https://","wss://").replace("http://","ws://")
- if url_field.text.is_empty():url_field.text=DEFAULT_SERVER
- url_field.placeholder_text="wss://your-test-server";box.add_child(url_field)
- net_name=LineEdit.new();net_name.text=str(legacy.data.get("name","Traveller"));net_name.placeholder_text="Display name";box.add_child(net_name)
- room_field=LineEdit.new();room_field.placeholder_text="Room code";room_field.max_length=6;box.add_child(room_field)
- var identity_row=HBoxContainer.new();box.add_child(identity_row);box.move_child(identity_row,3)
- for field in [net_name,room_field]:field.reparent(identity_row);field.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- capacity=OptionButton.new()
- for number in [2,4,6,8]:capacity.add_item(str(number)+" players",number)
- box.add_child(capacity)
- capacity.select(1)
- capacity.item_selected.connect(_capacity_changed)
- test_arena=OptionButton.new()
- test_arena.add_item("Test arena • players only",0);test_arena.add_item("Gladiator arena • players + enemies",1)
- box.add_child(test_arena);test_arena.item_selected.connect(_test_arena_changed)
- var heroes=Button.new();hero_button=heroes;heroes.text="Choose hero • Grid view";box.add_child(heroes);heroes.pressed.connect(func():
-  if is_instance_valid(hero_grid):return
-  hero_grid=preload("res://scripts/hero_grid.gd").new();hero_grid.open(self,selected_hero,net_select,net_permission))
- var options_row=HBoxContainer.new();box.add_child(options_row);box.move_child(options_row,capacity.get_index())
- for node in [capacity,heroes]:node.reparent(options_row);node.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- var connection_row=HBoxContainer.new();box.add_child(connection_row)
- for entry in [["Host room","host"],["Join room","join"]]:
-  var b=Button.new();b.text=entry[0];b.custom_minimum_size.y=44;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;connection_row.add_child(b);b.pressed.connect(connect_net.bind(entry[1]))
- net_start=Button.new();net_start.text="Start match";net_start.custom_minimum_size.y=44;net_start.disabled=true;box.add_child(net_start);net_start.pressed.connect(func():send_net({"type":"start"}))
- var leave=Button.new();leave.text="Leave room • return to town";box.add_child(leave);leave.pressed.connect(func():
-  _leave_room_connection()
-  if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('leave');",true)
-  get_tree().root.set_meta("fx_hero",selected_hero)
-  if get_tree().root.has_meta("fx_dev_match"):get_tree().root.remove_meta("fx_dev_match")
-  get_tree().change_scene_to_file("res://scenes/main.tscn"))
- var actions_row=HBoxContainer.new();box.add_child(actions_row)
- for node in [net_start,leave]:node.reparent(actions_row);node.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- net_status=Label.new();net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;net_status.text="Connect to a V176-preview server (protocol 10).";box.add_child(net_status)
- var modes=OptionButton.new();modes.name="NetworkModes"
- for entry in [["Gladiator arena", "arena"],["Gate Defence", "defense"],["Ram’s Descent", "descent"],["Realm co-op", "coop"],["Battlegrounds", "battlegrounds"]]:modes.add_item(entry[0]);modes.set_item_metadata(modes.item_count-1,entry[1])
- modes.select(maxi(0,["arena","defense","descent","coop","battlegrounds"].find(mode)));box.add_child(modes);box.move_child(modes,2)
- modes.item_selected.connect(func(i:int):
-  if net_ready:return
-  mode=str(modes.get_item_metadata(i));_set_mode(mode);capacity.select(capacity.get_item_index(bg_team_size*2 if mode=="battlegrounds" else 2 if mode=="coop" else 4));_sync_network_mode_controls()
-  test_arena.visible=mode=="arena"
-  var realm_control=net_panel.find_child("NetworkRealms",true,false)
-  if realm_control!=null:realm_control.visible=mode=="coop")
- var realms=OptionButton.new();realms.name="NetworkRealms";box.add_child(realms)
- for id in RealmCatalogue.lobby_ids():
-  realms.add_item({"between":"The Between • shared expedition","overcharge":"Today’s overcharged realm • per-player entry","attunement":"Portal attunement • shared guardian"}.get(id,str(regions.get(id,{}).get("name",id))));realms.set_item_metadata(realms.item_count-1,id)
-  var reason=ExpeditionProfile.progress(self).entry_issue(str(id)) if id in ["between","overcharge","attunement"] else preload("res://scripts/realm_access.gd").reason(legacy,str(id))
-  realms.set_item_disabled(realms.item_count-1,not reason.is_empty());realms.get_popup().set_item_tooltip(realms.item_count-1,reason)
- realms.tooltip_text="Two-player co-op • host chooses a realm unlocked on their profile."
- realms.item_selected.connect(func(i:int):realm_id=str(realms.get_item_metadata(i));_sync_network_mode_controls())
- realm_id=str(get_meta("requested_network_realm","grove"))
- if realm_id not in RealmCatalogue.available(legacy):realm_id="grove"
- realms.select(RealmCatalogue.lobby_ids().find(realm_id));realms.visible=mode=="coop";box.move_child(realms,3);test_arena.visible=mode=="arena";capacity.select(0 if mode=="coop" else 1)
- expedition_tier=OptionButton.new();expedition_tier.name="ExpeditionTier";box.add_child(expedition_tier);box.move_child(expedition_tier,4)
- for n in 3:expedition_tier.add_item("Overcharge tier %d • %d shards EACH" % [n+1,preload("res://scripts/waylight_catalog.gd").COSTS[n]],n+1)
- expedition_tier.select(clampi(int(get_tree().root.get_meta("fx_expedition_tier",1))-1,0,2))
- bg_network_map=OptionButton.new();bg_network_map.name="BattlegroundMap";box.add_child(bg_network_map);box.move_child(bg_network_map,3)
- for id in ["woodland","warzone"]:bg_network_map.add_item(str(battlegrounds.MAPS[id]));bg_network_map.set_item_metadata(bg_network_map.item_count-1,id)
- bg_network_map.item_selected.connect(func(i:int):
-  bg_map=str(bg_network_map.get_item_metadata(i))
-  if net_ready and net_host:send_net({"type":"bg_choice","bg_map":bg_map}))
- bg_team_controls=HBoxContainer.new();box.add_child(bg_team_controls)
- for side in 2:
-  var button=Button.new();button.text="Join "+str(battlegrounds.FACTIONS[side]);button.size_flags_horizontal=Control.SIZE_EXPAND_FILL;button.custom_minimum_size.y=40;bg_team_controls.add_child(button);button.pressed.connect(func():send_net({"type":"team","team":side}))
- bg_team_roster=Label.new();bg_team_roster.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;box.add_child(bg_team_roster)
- capacity.select(capacity.get_item_index(bg_team_size*2 if mode=="battlegrounds" else 2 if mode=="coop" else 4));_sync_network_mode_controls()
- for field in [url_field,net_name,room_field]:
-  var typing=preload("res://scripts/mobile_text_entry.gd").new();field.add_child(typing);typing.setup(field,"done")
+ preload("res://network/party_lobby.gd").build(self)
+func select_network_mode(value:String)->void:
+ if net_ready:return
+ mode=value;_set_mode(value)
+ capacity.select(capacity.get_item_index(bg_team_size*2 if mode=="battlegrounds" else 2 if mode=="coop" else 4))
+ var picker=net_panel.find_child("NetworkModes",true,false)
+ if picker!=null:picker.select(maxi(0,["defense","arena","coop","descent","battlegrounds"].find(mode)))
+ net_panel.find_child("NetworkRealms",true,false).visible=mode=="coop"
+ test_arena.visible=mode=="arena";_sync_network_mode_controls()
+ for id in ["defense","arena","coop","descent","battlegrounds"]:
+  var button=net_panel.find_child("Mode_"+id,true,false)
+  if button!=null:button.modulate=Color("#f2d49c") if id==mode else Color.WHITE
+func browse_rooms()->void:
+ if dedicated:return
+ if browser_peer!=null:browser_peer.close()
+ for child in room_listing.get_children():child.queue_free()
+ preload("res://network/party_lobby.gd").label(room_listing,"Looking for public parties…",14)
+ browser_peer=WebSocketPeer.new();browser_sent=false;browser_started=Time.get_ticks_msec()
+ if browser_peer.connect_to_url(DEFAULT_SERVER)!=OK:_show_public_rooms([],"Room browser unavailable. You can still join by room code.")
+func _show_public_rooms(list:Array,message:String="")->void:
+ for child in room_listing.get_children():child.queue_free()
+ if list.is_empty():preload("res://network/party_lobby.gd").label(room_listing,message if not message.is_empty() else "No open public parties. Host a room to invite other players.",14)
+ for entry in list.slice(0,8):
+  var row=HBoxContainer.new();room_listing.add_child(row)
+  var title=preload("res://network/party_lobby.gd").label(row,"%s • %s • %d/%d" % [str(entry.get("host","Party")),str(entry.get("title","Adventure")),int(entry.get("players",0)),int(entry.get("seats",0))],14);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  preload("res://network/party_lobby.gd").button(row,"Join",func():
+   if net_ready:net_status.text="Leave your current room before joining another party.";return
+   room_field.text=str(entry.get("room",""));connect_net("join"))
+func _poll_browser()->void:
+ if browser_peer==null:return
+ browser_peer.poll()
+ if browser_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
+  if not browser_sent:browser_peer.send_text(JSON.stringify({"type":"browse","protocol":PROTOCOL}));browser_sent=true
+  while browser_peer.get_available_packet_count()>0:
+   var value=JSON.parse_string(browser_peer.get_packet().get_string_from_utf8())
+   if value is Dictionary and str(value.get("type",""))=="rooms":
+    _show_public_rooms(value.get("rooms",[]));browser_peer.close();browser_peer=null;return
+ if browser_peer.get_ready_state()==WebSocketPeer.STATE_CLOSED or Time.get_ticks_msec()-browser_started>7000:
+  browser_peer.close();browser_peer=null;_show_public_rooms([],"Public-room browser unavailable. Host or join by room code; check the matching server update.")
 func _sync_network_mode_controls()->void:
  var bg=mode=="battlegrounds"
  if expedition_tier!=null:expedition_tier.visible=mode=="coop" and realm_id=="overcharge";expedition_tier.disabled=net_ready
@@ -289,7 +260,7 @@ func return_to_network_menu()->void:
  _track_card_progress();legacy.save()
  if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('return-to-menu');",true)
  _leave_room_connection()
- net_peer=null;net_ready=false;net_host=false;resume_token="";net_room="";match_id=""
+ net_peer=null;net_ready=false;net_host=false;resume_token="";net_room="";match_id="";roster.clear()
  reconnect_until=0;reconnect_at=0;started=false;results_reason="";shop_open=""
  if has_meta("joining"):remove_meta("joining")
  presentation.close()
@@ -300,13 +271,14 @@ func return_to_network_menu()->void:
  world_view.clear();render_events.clear();render_shots.clear();local_strikes.clear();predicted_actions.clear();pending_bursts.clear()
  for node in [net_panel.find_child("NetworkModes",true,false),net_panel.find_child("NetworkRealms",true,false)]:
   if node!=null:node.disabled=false
- room_field.text="";capacity.disabled=false;test_arena.disabled=false;net_start.disabled=true
+ room_field.text="";capacity.disabled=false;test_arena.disabled=false;public_toggle.disabled=false;net_start.disabled=true
  net_status.text="Ready for another match • Host a new room or enter a room code and Join."
  shop_open="";economy_pending=false;battleground_render.clear();_sync_network_mode_controls();control.hide();net_panel.show();queue_redraw()
 func _town()->void:
  # Post-match return keeps Host / Join available.
  return_to_network_menu()
 func connect_net(kind:String)->void:
+ if kind=="join" and room_field.text.strip_edges().length()!=6:net_status.text="Enter the six-character room code, or choose a public party.";return
  if kind=="resume":metrics.resume_attempts=int(metrics.get("resume_attempts",0))+1
  if kind=="host" and mode=="coop" and realm_id not in ["between","overcharge","attunement"] and realm_id not in RealmCatalogue.available(legacy):net_status.text=preload("res://scripts/realm_access.gd").reason(legacy,realm_id);return
  if net_ready and kind in ["host","join"]:
@@ -315,7 +287,7 @@ func connect_net(kind:String)->void:
  frames.clear();net_ready=false;connect_started_at=Time.get_ticks_msec()
  net_peer=WebSocketPeer.new();net_peer.inbound_buffer_size=1048576;net_peer.outbound_buffer_size=65536;net_peer.max_queued_packets=256;net_peer.heartbeat_interval=5.0
  if url_field.text.strip_edges().is_empty():url_field.text=DEFAULT_SERVER
- if url_field.text.strip_edges().is_empty():net_status.text="Enter the private V176 server address first.";return
+ if url_field.text.strip_edges().is_empty():net_status.text="Multiplayer service is not configured in this build.";return
  get_tree().root.get_node("FXActivity").configure_endpoint(url_field.text)
  var error=net_peer.connect_to_url(url_field.text.strip_edges())
  if error!=OK:net_status.text="Cannot connect: "+error_string(error);return
@@ -334,7 +306,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
@@ -407,7 +379,7 @@ func receive_net(data:Dictionary)->void:
   "welcome":
    server_build=str(data.get("build","unknown"))
    my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
-   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the V176-preview server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
+   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the V177-preview server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
   "lobby":
    mode=str(data.get("mode",mode));realm_id=str(data.get("realm",realm_id));roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
@@ -417,9 +389,10 @@ func receive_net(data:Dictionary)->void:
    if mode=="battlegrounds":net_start.disabled=not net_host or roster.size()!=bg_team_size*2
    for control_node in [net_panel.find_child("NetworkModes",true,false),net_panel.find_child("NetworkRealms",true,false)]:
     if control_node!=null:control_node.disabled=net_ready
+   public_toggle.set_pressed_no_signal(bool(data.get("public",false)));public_toggle.disabled=not net_host
    var mode_control=net_panel.find_child("NetworkModes",true,false)
    var realm_control=net_panel.find_child("NetworkRealms",true,false)
-   if mode_control!=null:mode_control.select(maxi(0,["arena","defense","descent","coop","battlegrounds"].find(mode)))
+   if mode_control!=null:mode_control.select(maxi(0,["defense","arena","coop","descent","battlegrounds"].find(mode)))
    if realm_control!=null:realm_control.select(maxi(0,RealmCatalogue.lobby_ids().find(realm_id)));realm_control.visible=mode=="coop"
    test_arena.visible=mode=="arena"
    capacity.select(capacity.get_item_index(int(data.seats)))
@@ -553,8 +526,9 @@ func _process(delta:float)->void:
   if node is Control:node.visible=shop_open=="Supplies" and (node==item_picker or node is Button and node.text=="BUY ITEM")
  mobile.visible=started
  _report_network()
+ _poll_browser()
  if not started and is_instance_valid(net_panel):net_panel.visible=presentation.page.is_empty() and not is_instance_valid(hero_grid)
- if is_instance_valid(net_panel):net_panel.size=Vector2(minf(850,VIEW.x-24),minf(590,VIEW.y-24));net_panel.position=(VIEW-net_panel.size)*.5
+ if is_instance_valid(net_panel):net_panel.size=Vector2(minf(1240,VIEW.x-24),minf(690,VIEW.y-24));net_panel.position=(VIEW-net_panel.size)*.5
  if not started:
   if scenery_view!=null:scenery_view.visible=false
   if network_hud!=null:network_hud.visible=false
@@ -1122,7 +1096,7 @@ func _report_network()->void:
  sample.mode=mode;sample.realm=realm_id
  sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
- JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'V176-preview',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
+ JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'V177-preview',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
  JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
 
 func profile_work(kind:String,elapsed:int)->void:
@@ -1130,7 +1104,7 @@ func profile_work(kind:String,elapsed:int)->void:
 func download_performance()->void:
  if not OS.has_feature("web"):return
  report_downloads+=1
- JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'V176-preview',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='Crossroads_V176_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
+ JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'V177-preview',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='Crossroads_V177_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
 
 func _actor_walking(id:String)->bool:
  if id==my_id:return float(net_dash.get(id,{}).get("time",0))>0 or super._actor_walking(id)

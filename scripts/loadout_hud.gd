@@ -15,7 +15,7 @@ func _process(delta:float)->void:
 func update()->void:
  if game==null or not is_instance_valid(game.presentation):return
  row.visible=game.menu.is_empty() and game.presentation.page.is_empty() and game.session_menu.page.is_empty() and game.mode in ["town","run"] and not game.media.clean_view and not game.has_node("FXIntro")
- row.position=Vector2(20,48 if game.mode=="town" else 213 if game.mobile.enabled else game.VIEW.y-58)
+ row.position=Vector2(20,48 if game.mode=="town" else 145)
  row.size=Vector2(game.VIEW.x-40,28)
  var pack=game.loadout if game.mode=="town" else game.inventory
  slots[0].text="Food: "+game.provisions.name_of(game.provisions.packed)

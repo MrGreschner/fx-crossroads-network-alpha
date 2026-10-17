@@ -99,8 +99,8 @@ var player_flash_time := 0.0
 var enemy_flashes: Dictionary = {}
 var floating_text: Array[Dictionary] = []
 var hint := ""
-var message := "Welcome to Crossroads. Speak to the Elder Ram with E."
-var message_time := 12.0
+var message := ""
+var message_time := 0.0
 var result_text := ""
 var camera := Vector2.ZERO
 var font: Font
@@ -1672,6 +1672,7 @@ func draw_world() -> void:
 			var landmark_pos: Vector2 = landmark["pos"]
 			if Rect2(camera - landmark_size, VIEW + landmark_size * 2).has_point(landmark_pos):
 				draw_sprite(str(landmark["sprite"]), landmark_pos - landmark_size * 0.5, landmark_size)
+				if str(landmark.sprite)=="portal":preload("res://scripts/town_v176.gd").draw_portal(self,camera)
 				if not str(landmark["label"]).is_empty():
 					if str(landmark.sprite)=="creator_board":
 						var p:Vector2=landmark_pos-camera+Vector2(-30,74)
@@ -1703,7 +1704,6 @@ func draw_world() -> void:
 		town_life.draw_recognition(self,camera,font)
 	else:
 		draw_sprite("portal", pair(region["gate"]["position"]) - Vector2(40, 76), Vector2(80, 120))
-		if mode=="town":preload("res://scripts/town_v176.gd").draw_portal(self,camera)
 		if region.has("merchant") and not practice and not tutorial.active:
 			draw_sprite("merchant", pair(region["merchant"]) - Vector2(48, 72), Vector2(96, 80))
 			draw_world_label(pair(region["merchant"]), "MERCHANT")
@@ -1846,7 +1846,7 @@ func draw_world_label(world_pos: Vector2, label: String) -> void:
 	draw_string(font, world_pos - camera + Vector2(-48, -83), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
 
 func draw_hud() -> void:
-	draw_rect(Rect2(0, 0, VIEW.x, preload("res://scripts/town_hud.gd").height(self) if mode=="town" else 92), Color(0.06, 0.11, 0.14, 0.9))
+	draw_rect(Rect2(0, 0, VIEW.x, preload("res://scripts/town_hud.gd").height(self) if mode=="town" else 179), Color(0.06, 0.11, 0.14, 0.9))
 	if mode == "town":
 		draw_string(font, Vector2(24, 34), "CROSSROADS" if VIEW.x<1100 else "CROSSROADS  |  REALMS BEYOND", HORIZONTAL_ALIGNMENT_LEFT, -1, 20 if VIEW.x<1100 else 25, Color.WHITE)
 		preload("res://scripts/town_hud.gd").draw_on(self)
@@ -1875,12 +1875,12 @@ func draw_hud() -> void:
 				if position_in_world.distance_squared_to(candidate["pos"]) < position_in_world.distance_squared_to(closest_enemy["pos"]):
 					closest_enemy = candidate
 			var target_direction: Vector2 = (closest_enemy["pos"] - position_in_world).normalized()
-			var arrow_center := Vector2(VIEW.x-120, 135)
+			var arrow_center := Vector2(VIEW.x-120, 212)
 			draw_arc(arrow_center, 23, 0, TAU, 32, Color("#ffe3a1"), 2)
 			draw_line(arrow_center, arrow_center + target_direction * 19, Color("#ffe3a1"), 5)
 			draw_circle(arrow_center + target_direction * 19, 4, Color("#ffe3a1"))
 			draw_string(font, arrow_center + Vector2(-4, -28), "N", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
-			draw_string(font, Vector2(VIEW.x-265, 165), "Next enemy: " + str(int(position_in_world.distance_to(closest_enemy["pos"]) / 64)) + " tiles", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
+			draw_string(font, Vector2(VIEW.x-265, 242), "Next enemy: " + str(int(position_in_world.distance_to(closest_enemy["pos"]) / 64)) + " tiles", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 		draw_rect(Rect2(0, VIEW.y-70, VIEW.x, 70), Color(0.06, 0.11, 0.14, 0.83))
 		if invulnerable_time > 0:
 			draw_string(font, Vector2(910, 681), "Shield: %.1fs" % invulnerable_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))

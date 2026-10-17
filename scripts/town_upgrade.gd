@@ -91,7 +91,7 @@ func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
  npc(c,POINTS.healer-camera,Color("#779dac"),"healer")
  npc(c,POINTS.wayfinder-camera,Color("#59786c"),"human")
  npc(c,POINTS.seedhouse-camera,Color("#79915b"),"ram")
- for sign in [[Vector2(600,610),"CHARACTER HALL"],[Vector2(1290,517),"SUPPLY VENDOR • BARTLE"],[Vector2(1150,1198),"FOOD STAND"],[Vector2(1960,553),"HEALER HOUSE"],[Vector2(1580,613),"WAYFINDER LODGE"],[Vector2(900,1670),"SEEDHOUSE"]]:label(c,font,sign[0]-camera,sign[1])
+ for sign in [[Vector2(600,548),"CHARACTER HALL"],[Vector2(1290,517),"SUPPLY VENDOR • BARTLE"],[Vector2(1150,1198),"FOOD STAND"],[Vector2(1960,553),"HEALER HOUSE"],[Vector2(1580,613),"WAYFINDER LODGE"],[Vector2(900,1670),"SEEDHOUSE"]]:label(c,font,sign[0]-camera,sign[1])
  # Benches flank the statue plaza. Construction has a working carpenter.
  for place in [Vector2(820,1100),Vector2(1040,1030),Vector2(1760,720)]:
   if not Rect2(camera,c.get_viewport_rect().size).grow(100).has_point(place):continue

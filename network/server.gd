@@ -166,9 +166,20 @@ func send_actor(id:String,data:Dictionary)->void:
 func receive(key:int,data:Dictionary)->void:
  if not peers.has(key):return
  var kind=str(data.get("type",""));var connection:Dictionary=peers[key]
+ if kind=="browse":
+  if int(data.get("protocol",0))!=PROTOCOL:return
+  var listing=[]
+  for code in rooms:
+   var candidate:Dictionary=rooms[code];var game:Node=candidate.game
+   if not bool(candidate.get("public",false)) or game.started or not candidate.get("preparation",{}).is_empty() or candidate.members.size()>=int(candidate.seats):continue
+   if not identities.has(candidate.host) or int(identities[candidate.host].connection)<0:continue
+   var title:String={"arena":"Gladiator Arena","defense":"Gate Defence","descent":"Ram’s Descent","coop":"Realm co-op","battlegrounds":"Battlegrounds"}.get(game.mode,"Adventure")
+   if game.mode=="coop":title+=" • "+str(candidate.get("expedition_choice","")) if not str(candidate.get("expedition_choice","")).is_empty() else " • "+str(game.regions.get(game.realm_id,{}).get("name",game.realm_id))
+   listing.append({"room":code,"host":str(candidate.members.get(candidate.host,{}).get("name","Party")),"title":title,"mode":game.mode,"realm":game.realm_id,"players":candidate.members.size(),"seats":int(candidate.seats)})
+  send(key,{"type":"rooms","rooms":listing.slice(0,8)});return
  if connection.actor.is_empty():
   if kind not in ["host","join","resume"]:return
-  if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V176-preview (protocol 10). Install the matching private client.");return
+  if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V177-preview (protocol 10). Install the matching private client.");return
   join(key,data);return
  var id=str(connection.actor);var identity:Dictionary=identities[id];var room:Dictionary=rooms[identity.room];var g:Node=room.game
  if kind=="leave":
@@ -210,6 +221,9 @@ func receive(key:int,data:Dictionary)->void:
     if room.members.values().filter(func(m):return int(m.get("team",-1))==side).size()>side_limit:fail(key,"Move players to balanced teams before reducing capacity.");lobby(str(identity.room));return
    g.bg_team_size=side_limit;g._sync_bg_pickers()
   room.seats=seats;g.arena_seats=seats;lobby(str(identity.room));return
+ if kind=="visibility":
+  if room.host==id and not g.started:room.public=data.get("public",false)==true;lobby(str(identity.room))
+  return
  if kind=="start":
   if room.host!=id or g.started:return
   if expeditions.special(room) and not g.has_meta("expedition_committed"):expeditions.prepare(key,room);return
@@ -359,7 +373,7 @@ func join(key:int,data:Dictionary)->void:
     if map_id not in ["woodland","warzone"]:g.queue_free();fail(key,"Choose an official Battlegrounds map.");return
     g.bg_map=map_id;g.bg_team_size=seats/2;g._sync_bg_pickers()
    g.arena_map="crossroads" if str(data.get("arena_map","sand"))=="crossroads" else "sand";g._sync_arena_pickers()
-   rooms[code]={"expedition_choice":special,"preparation":{},"game":g,"members":{},"host":"","seats":seats,"events":[],"event_seq":0}
+   rooms[code]={"expedition_choice":special,"preparation":{},"game":g,"members":{},"host":"","public":data.get("public",false)==true,"seats":seats,"events":[],"event_seq":0}
   if not rooms.has(code):fail(key,"Room not found.");return
   var room:Dictionary=rooms[code]
   if not room.get("preparation",{}).is_empty():fail(key,"Entry confirmation in progress.");return
@@ -389,7 +403,7 @@ func lobby(code:String)->void:
  var public=[]
  for member in room.members.values():
   var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");public.append(copy)
- for id in room.members:send_actor(id,{"type":"lobby","expedition_tier":int(room.game.get_meta("expedition_tier",1)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
+ for id in room.members:send_actor(id,{"type":"lobby","expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
 func room_for(g:Node)->Dictionary:
  for room in rooms.values():
   if room.game==g:return room

@@ -18,17 +18,44 @@ static func draw_bakery(g:Node2D,camera:Vector2)->void:
   g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#d6a65e","#f5cf8c",8,1),Rect2(q-Vector2(10,7),Vector2(22,15)))
   for k in 3:g.draw_line(q+Vector2(-6+k*5,-3),q+Vector2(-3+k*5,2),Color("#9e6f38"),1.5,true)
  g.draw_string(g.font,p+Vector2(-72,43),"FREE ADVENTURE BREAD",HORIZONTAL_ALIGNMENT_CENTER,144,11,Color("#f5dfa6"))
+# Bounded native geometry: no lights, particles, textures or shader allocations.
 static func draw_portal(g:Node2D,camera:Vector2)->void:
- var p=Vector2(900,670)-camera;var t=g.town_life.clock
- if not Rect2(Vector2.ZERO,g.VIEW).grow(160).has_point(p):return
- g.draw_set_transform(p-Vector2(0,28),0,Vector2(1,.7))
- for n in range(3,0,-1):g.draw_arc(Vector2.ZERO,38+n*7,t*.3+n,t*.3+n+TAU*.85,40,Color(.45,.94,.88,.08+n*.02),3,true)
- g.draw_set_transform(Vector2.ZERO)
- for n in 3:
+ var p=Vector2(900,670)-camera
+ if not Rect2(Vector2.ZERO,g.VIEW).grow(110).has_point(p):return
+ var t:float=g.town_life.clock
+ var c:Vector2=p+Vector2(0,-9)
+ var pulse:float=.5+.5*sin(t*2.1)
+ # The aperture covers only the inside of the existing stone frame.
+ g.draw_set_transform(c,0,Vector2(1,1.72))
+ g.draw_circle(Vector2.ZERO,23,Color(.035,.20,.30,.95))
+ for n in range(5,0,-1):
+  g.draw_circle(Vector2(sin(t*.65+n*.4)*2,cos(t*.5+n)*2),float(n)*4.2,Color(.08,.56+float(n)*.04,.65,.15))
+ for n in 5:
   var points=PackedVector2Array()
-  for k in 26:
-   var a=t*(.5+n*.1)+k*TAU/25;points.append(p+Vector2(cos(a)*(12+n*4),sin(a)*(29+n*3)-33))
-  g.draw_polyline(points,Color(.75,1,.92,.18+n*.04),1.5,true)
- for n in 12:
-  var a=n*2.399+t*.35;var q=p+Vector2(cos(a)*48,sin(a)*64-30)
-  g.draw_circle(q,1.5+sin(t*2+n)*.4,Color(.75,.95,.86,.45))
+  for k in 41:
+   var u:float=float(k)/40
+   var a:float=t*(.8+float(n%2)*.15)+float(n)*TAU/5+u*4.6
+   var radius:float=2+u*19
+   points.append(Vector2(cos(a),sin(a))*radius)
+  g.draw_polyline(points,Color(.35+float(n)*.08,.94,1,.38),1.3,true)
+ g.draw_circle(Vector2.ZERO,3+pulse,Color(.72,1,1,.72))
+ g.draw_set_transform(Vector2.ZERO)
+ # Segmented currents travel in opposite directions around the rim.
+ for n in 8:
+  var points=PackedVector2Array()
+  var start:float=float(n)*TAU/8+t*(.48 if n%2==0 else -.32)
+  for k in 9:
+   var a:float=start+float(k)*.035
+   points.append(c+Vector2(cos(a)*32,sin(a)*48))
+  g.draw_polyline(points,Color(.5,.98,1,.45+pulse*.22),2.0,true)
+ # A soft ground reflection anchors the energy to the pedestal.
+ g.draw_set_transform(p+Vector2(0,49),0,Vector2(1,.22))
+ for n in range(3,0,-1):g.draw_circle(Vector2.ZERO,29+float(n)*7,Color(.18,.85,.89,.035+pulse*.012))
+ g.draw_set_transform(Vector2.ZERO)
+ # Sparks rise, fade, then wrap; their count never grows over time.
+ for n in 14:
+  var u:float=fposmod(t*.19+float(n)*.371,1)
+  var side:float=-1 if n%2==0 else 1
+  var q:Vector2=p+Vector2(side*(34+sin(t+float(n)*2)*9),38-u*112)
+  var alpha:float=sin(u*PI)*.8
+  g.draw_circle(q,1.3+float(n%3)*.35,Color(.6,1,.95,alpha))
