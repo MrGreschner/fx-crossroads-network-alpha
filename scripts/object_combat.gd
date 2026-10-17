@@ -155,7 +155,9 @@ func summon_enemy_to(id:String,source:String)->bool:
 	return source=="enemy" or adventure.game.mode in ["arena","battlegrounds"] and adventure.game._rival(source,str(body.get("owner","")))
 func summon_hurt(id:String,amount:float,source:String)->void:
 	if not adventure.authoritative() or not summon_enemy_to(id,source):return
-	var body:=summon_body(id);var taken:=minf(float(body.hp),maxf(0,amount))
+	var body:=summon_body(id)
+	amount=adventure.game.legacy.critical(source,amount,body.pos)
+	var taken:=minf(float(body.hp),maxf(0,amount))
 	if taken<=0:return
 	body.hp=float(body.hp)-taken
 	adventure.game._stat(source,"damage",taken);adventure.game._damage_feedback(body.pos,taken)

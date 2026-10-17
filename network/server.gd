@@ -4,7 +4,7 @@ const Arena=preload("res://network/arena.gd")
 const MAX_ROOMS=4
 const WORK_CAPACITY=4 # A troop-heavy Battleground reserves three ordinary room slots.
 const BUILD=preload("res://network/release.gd").BUILD
-const PROTOCOL=10
+const PROTOCOL=11
 const INPUT_BACKLOG=18
 const SOCKET_BACKLOG=32768
 const MAX_CONNECTIONS=64
@@ -50,7 +50,7 @@ func _ready()->void:
  var error=listener.listen(port,"127.0.0.1" if OS.get_environment("FX_PROXY")!="" else "*")
  if error!=OK:push_error("Server listen failed: "+error_string(error));get_tree().quit(1);return
  epoch_time=Time.get_ticks_msec();metrics_window=epoch_time
- print("FX authority listening on ",port,"; protocol 10; simulation 60Hz; snapshots 20Hz")
+ print("FX authority listening on ",port,"; protocol 11; simulation 60Hz; snapshots 20Hz")
 func _process(_delta:float)->void:
  var poll_start=Time.get_ticks_usec()
  var now=Time.get_ticks_msec()
@@ -175,11 +175,12 @@ func receive(key:int,data:Dictionary)->void:
    if not identities.has(candidate.host) or int(identities[candidate.host].connection)<0:continue
    var title:String={"arena":"Gladiator Arena","defense":"Gate Defence","descent":"Ram’s Descent","coop":"Realm co-op","battlegrounds":"Battlegrounds"}.get(game.mode,"Adventure")
    if game.mode=="coop":title+=" • "+str(candidate.get("expedition_choice","")) if not str(candidate.get("expedition_choice","")).is_empty() else " • "+str(game.regions.get(game.realm_id,{}).get("name",game.realm_id))
+   if bool(game.get_meta("crown_competition",false)):title+=" • Competition"
    listing.append({"room":code,"host":str(candidate.members.get(candidate.host,{}).get("name","Party")),"title":title,"mode":game.mode,"realm":game.realm_id,"players":candidate.members.size(),"seats":int(candidate.seats)})
   send(key,{"type":"rooms","rooms":listing.slice(0,8)});return
  if connection.actor.is_empty():
   if kind not in ["host","join","resume"]:return
-  if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V177-preview (protocol 10). Install the matching private client.");return
+  if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V178-preview (protocol 11). Install the matching private client.");return
   join(key,data);return
  var id=str(connection.actor);var identity:Dictionary=identities[id];var room:Dictionary=rooms[identity.room];var g:Node=room.game
  if kind=="leave":
@@ -221,6 +222,9 @@ func receive(key:int,data:Dictionary)->void:
     if room.members.values().filter(func(m):return int(m.get("team",-1))==side).size()>side_limit:fail(key,"Move players to balanced teams before reducing capacity.");lobby(str(identity.room));return
    g.bg_team_size=side_limit;g._sync_bg_pickers()
   room.seats=seats;g.arena_seats=seats;lobby(str(identity.room));return
+ if kind=="competition":
+  if room.host==id and not g.started:g.set_meta("crown_competition",data.get("enabled",false)==true);lobby(str(identity.room))
+  return
  if kind=="visibility":
   if room.host==id and not g.started:room.public=data.get("public",false)==true;lobby(str(identity.room))
   return
@@ -304,7 +308,9 @@ func clean_cosmetic(value:Variant)->Dictionary:
  if not value is Dictionary:return {}
  var result={"crown_damage":clampf(float(value.get("crown_damage",0)),0,1e12) if finite_number(value.get("crown_damage",0)) else 0,"colour":"#9bc7b8","title":"Traveller"}
  if not is_finite(float(result.crown_damage)):result.crown_damage=0
- result.crown_tier=preload("res://scripts/rolling_crowns.gd").remote_tier(result)
+ result.crown_tier=preload("res://scripts/rolling_crowns.gd").remote_active_tier(result)
+ result.crown_expiry=preload("res://scripts/rolling_crowns.gd").clean_expiry(value.get("crown_expiry",[]),int(result.crown_tier),Time.get_unix_time_from_system())
+ result.crown_best=clampi(int(value.get("crown_best",result.crown_tier)),int(result.crown_tier),18) if finite_number(value.get("crown_best",result.crown_tier)) else int(result.crown_tier)
  for key in ["colour","title","daily_date","extra_effect","weekly_week"]:
   if value.get(key) is String:result[key]=str(value[key]).left(64)
  for key in ["custom","balanced","media","playtest","game_dev"]:result[key]=value.get(key,false)==true
@@ -360,7 +366,7 @@ func join(key:int,data:Dictionary)->void:
    var unlocked=data.get("unlocked_realms",["grove","quarry"])
    if chosen=="coop" and special.is_empty() and (not unlocked is Array or realm not in unlocked):g.queue_free();fail(key,"The host must unlock this realm on their profile first.");return
    if chosen=="coop" and realm=="wayfarer" and data.get("quest_states",{}) is Dictionary:g.set_meta("fx_quest_seed",data.get("quest_states",{}))
-   g.mode=chosen;g._set_mode(chosen);g.realm_id=realm
+   g.mode=chosen;g._set_mode(chosen);g.realm_id=realm;g.set_meta("crown_competition",data.get("competition",false)==true)
    g.set_meta("expedition_tier",tier)
    for n in g.realm_picker.item_count:
     if str(g.realm_picker.get_item_metadata(n))==realm:g.realm_picker.select(n)
@@ -403,12 +409,12 @@ func lobby(code:String)->void:
  var public=[]
  for member in room.members.values():
   var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");public.append(copy)
- for id in room.members:send_actor(id,{"type":"lobby","expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
+ for id in room.members:send_actor(id,{"type":"lobby","competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
 func room_for(g:Node)->Dictionary:
  for room in rooms.values():
   if room.game==g:return room
  return {}
-func start_packet(g:Node)->Dictionary:return {"type":"start","mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
+func start_packet(g:Node)->Dictionary:return {"type":"start","competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
 func broadcast_game(g:Node,data:Dictionary)->void:
  var room=room_for(g)
  for id in room.get("members",{}):send_actor(str(id),data)

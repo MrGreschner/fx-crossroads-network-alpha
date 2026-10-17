@@ -24,6 +24,8 @@ func _draw()->void:
   var height:float=minf(64,tile.y-37)
   draw_circle(p+Vector2(0,height*.32),18,Color(0,0,0,.28))
   if texture!=null:draw_texture_rect(texture,Rect2(p-Vector2(height*.42,height*.65),Vector2(height*.84,height)),false)
+  var cosmetic:Dictionary=game.local_cosmetic() if local else member.get("cosmetic",{})
+  preload("res://scripts/rolling_crowns.gd").draw_on(self,p-Vector2(0,height*.65-20),clock,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
   var tint:Color=Color("#f2d49c") if local else Color("#a6d7df")
   draw_string(game.font,p+Vector2(-tile.x*.46,height*.55),str(member.get("name","Player"))+(" • You" if local else ""),HORIZONTAL_ALIGNMENT_CENTER,tile.x*.92,13,tint)
   draw_string(game.font,p+Vector2(-tile.x*.46,height*.55+16),str(spec.get("name",hero)),HORIZONTAL_ALIGNMENT_CENTER,tile.x*.92,11,Color("#a0bbb9"))

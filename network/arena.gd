@@ -1,7 +1,7 @@
 extends "res://scripts/arcade.gd"
 ## Arena vertical slice: original combat, dedicated authority, independent rendering.
 const BUILD=preload("res://network/release.gd").BUILD
-const PROTOCOL=10
+const PROTOCOL=11
 const ExpeditionProfile=preload("res://network/expedition_profile.gd")
 var expedition=preload("res://network/expeditions.gd").new()
 var expedition_tier:OptionButton
@@ -174,6 +174,7 @@ func _bind_test_controls()->void:
   if not InputMap.has_action(binding[0]):InputMap.add_action(binding[0])
   if not InputMap.action_has_event(binding[0],event):InputMap.action_add_event(binding[0],event)
 var public_toggle:CheckButton
+var competition_toggle:CheckButton
 var room_listing:VBoxContainer
 var browser_peer:WebSocketPeer
 var browser_sent:bool=false
@@ -306,7 +307,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
@@ -379,7 +380,7 @@ func receive_net(data:Dictionary)->void:
   "welcome":
    server_build=str(data.get("build","unknown"))
    my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
-   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the V177-preview server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
+   room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the V178-preview server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
   "lobby":
    mode=str(data.get("mode",mode));realm_id=str(data.get("realm",realm_id));roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
@@ -390,6 +391,7 @@ func receive_net(data:Dictionary)->void:
    for control_node in [net_panel.find_child("NetworkModes",true,false),net_panel.find_child("NetworkRealms",true,false)]:
     if control_node!=null:control_node.disabled=net_ready
    public_toggle.set_pressed_no_signal(bool(data.get("public",false)));public_toggle.disabled=not net_host
+   set_meta("crown_competition",data.get("competition",false)==true);competition_toggle.set_pressed_no_signal(bool(get_meta("crown_competition")));competition_toggle.disabled=not net_host
    var mode_control=net_panel.find_child("NetworkModes",true,false)
    var realm_control=net_panel.find_child("NetworkRealms",true,false)
    if mode_control!=null:mode_control.select(maxi(0,["defense","arena","coop","descent","battlegrounds"].find(mode)))
@@ -397,9 +399,10 @@ func receive_net(data:Dictionary)->void:
    test_arena.visible=mode=="arena"
    capacity.select(capacity.get_item_index(int(data.seats)))
    test_arena.disabled=not net_host;test_arena.select(1 if str(data.get("arena_map","sand"))=="crossroads" else 0)
-   net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+str(data.get("message",""))
+   net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+("COMPETITION • crown bonuses off" if bool(get_meta("crown_competition",false)) else str(data.get("message","")))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show()
   "start":
+   set_meta("crown_competition",data.get("competition",false)==true)
    var same_match=not match_id.is_empty() and match_id==str(data.match_id)
    if OS.has_feature("web") and data.has("report_token"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.start("+JSON.stringify({"endpoint":url_field.text.replace("wss://","https://").replace("ws://","http://"),"token":data.report_token,"enabled":data.get("reporting",false),"match_id":data.match_id,"room":net_room})+");",true)
    authority_epoch=-1;player_epochs.clear();realm_result="";economy_pending=false
@@ -1096,7 +1099,7 @@ func _report_network()->void:
  sample.mode=mode;sample.realm=realm_id
  sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
- JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'V177-preview',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
+ JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'V178-preview',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
  JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
 
 func profile_work(kind:String,elapsed:int)->void:
@@ -1104,7 +1107,7 @@ func profile_work(kind:String,elapsed:int)->void:
 func download_performance()->void:
  if not OS.has_feature("web"):return
  report_downloads+=1
- JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'V177-preview',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='Crossroads_V177_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
+ JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'V178-preview',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='Crossroads_V178_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
 
 func _actor_walking(id:String)->bool:
  if id==my_id:return float(net_dash.get(id,{}).get("time",0))>0 or super._actor_walking(id)

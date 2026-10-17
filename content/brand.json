@@ -3,9 +3,9 @@
   "short_title": "Crossroads",
   "subtitle": "Realms Beyond",
   "tagline": "Find your path. Create what\u2019s next.",
-  "build": 177,
+  "build": 178,
   "download_url": "",
   "room_service_url": "wss://fx-crossroads-rooms.onrender.com",
-  "revision": "v177-party-lobby-and-mobile-hud",
+  "revision": "v178-rolling-crown-progression",
   "network_service_url": "wss://fx-crossroads-network-alpha.onrender.com"
 }

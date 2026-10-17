@@ -38,6 +38,8 @@ static func build(g:Node)->void:
  g.capacity.select(1);g.capacity.item_selected.connect(g._capacity_changed)
  g.public_toggle=CheckButton.new();g.public_toggle.text="Public room";g.public_toggle.button_pressed=true;settings.add_child(g.public_toggle);g.public_toggle.toggled.connect(func(value:bool):
   if g.net_ready and g.net_host:g.send_net({"type":"visibility","public":value}))
+ g.competition_toggle=CheckButton.new();g.competition_toggle.name="CompetitionRules";g.competition_toggle.text="Competition • crown bonuses OFF for everyone";right.add_child(g.competition_toggle);g.competition_toggle.toggled.connect(func(value:bool):
+  if g.net_ready and g.net_host:g.send_net({"type":"competition","enabled":value}))
  g.test_arena=OptionButton.new();g.test_arena.add_item("Arena • players only",0);g.test_arena.add_item("Gladiator • players + enemies",1);right.add_child(g.test_arena);g.test_arena.item_selected.connect(g._test_arena_changed)
  var realms=OptionButton.new();realms.name="NetworkRealms";right.add_child(realms)
  for id in g.RealmCatalogue.lobby_ids():

@@ -1296,7 +1296,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 	if bool(opponents[index].get("buried",false)):return
 	if mode=="defense" and str(opponents[index].type)=="gate_bastion" and adventure.combat.effect_time(adventure.combat.npc_key(opponents[index]),"guard")>0:amount*=.55
 	if bool(opponents[index].get("converted",false)):amount=float(opponents[index].hp)
-	var actual := 0.0 if bool(opponents[index].get("converted",false)) else minf(amount,float(opponents[index]["hp"]))
+	var actual := 0.0 if bool(opponents[index].get("converted",false)) else maxf(0,minf(amount,float(opponents[index]["hp"])))
 	adventure.expansion.linked_hit(adventure.combat.npc_key(opponents[index]),actual)
 	adventure.combat.v112.on_hit(killer,adventure.combat.npc_key(opponents[index]),actual)
 	adventure.combat.v90.on_hit(killer,actual)
@@ -1368,7 +1368,7 @@ func _hurt(id: String, amount: float, source: String = "", melee_attacker:String
 		if adjusted<=0:return
 	if int(health.get(id,0))<=0:return
 	adjusted=adventure.combat.morrow.share_hero(id,adjusted)
-	if not linked_direct:_stat(source,"damage",minf(adjusted,float(health.get(id,0))))
+	if not linked_direct and mode in ["arena","battlegrounds"] and _rival(source,id):_stat(source,"damage",minf(adjusted,maxf(0,float(health.get(id,0)))))
 	journey.cue("hurt")
 	if id==my_id:presentation.impact(false,amount)
 	_damage_feedback(positions[id],adjusted,id)
@@ -2240,6 +2240,7 @@ func _draw() -> void:
 			preload("res://scripts/daily_challenge.gd").draw_on(self,pos,visual_time)
 		if int(health.get(id,0))>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,pos,visual_time,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")))
 		if int(health.get(id,0))>0:preload("res://scripts/creation_badges.gd").draw_on(self,pos,visual_time,cosmetic)
+		if int(health.get(id,0))>0:preload("res://scripts/rolling_crowns.gd").draw_on(self,pos-Vector2(0,28),visual_time,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
 		if bool(cosmetic.get("game_dev",false)) and int(health.get(id,0))>0:
 			preload("res://scripts/dev_insignia.gd").draw_on(self,pos,visual_time)
 		if not cosmetic.is_empty() and not (media.clean_view or media.capturing):
@@ -3095,7 +3096,7 @@ func local_cosmetic()->Dictionary:
 	var session:Node=get_tree().root.get_node_or_null("FXDevSession")
 	var testing:bool=session!=null and bool(session.active)
 	var identity_flags=custom_party.flags(my_id);identity_flags.media=media.active;identity_flags.playtest=get_tree().root.get_node("FXResearch").active
-	return {"crown_damage":legacy.crowns.payload().crown_damage,"crown_tier":legacy.crowns.payload().crown_tier,"custom":identity_flags.custom,"balanced":identity_flags.balanced,"media":identity_flags.media,"playtest":identity_flags.playtest,"colour":journey.ribbon().to_html(),"title":"GAME DEV" if testing else str(journey.data.get("title","Traveler")),"game_dev":testing,"daily_date":legacy.daily.cosmetic_date() if legacy.cosmetics.daily_visible() else "","extra_effect":legacy.cosmetics.effect(),"weekly_week":str(legacy.cosmetics.state().week)}
+	return {"crown_damage":legacy.crowns.payload().crown_damage,"crown_tier":legacy.crowns.payload().crown_tier,"crown_best":legacy.crowns.payload().crown_best,"crown_expiry":legacy.crowns.payload().crown_expiry,"custom":identity_flags.custom,"balanced":identity_flags.balanced,"media":identity_flags.media,"playtest":identity_flags.playtest,"colour":journey.ribbon().to_html(),"title":"GAME DEV" if testing else str(journey.data.get("title","Traveler")),"game_dev":testing,"daily_date":legacy.daily.cosmetic_date() if legacy.cosmetics.daily_visible() else "","extra_effect":legacy.cosmetics.effect(),"weekly_week":str(legacy.cosmetics.state().week)}
 func cosmetic_for(id:String)->Dictionary:
 	var value:Dictionary=(local_cosmetic() if id==my_id else player_cosmetics.get(id,{})).duplicate(true)
 	value.merge(custom_party.flags(id),true)

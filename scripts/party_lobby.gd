@@ -164,5 +164,5 @@ func _get_tooltip(point:Vector2)->String:
   var member:Dictionary=members()[i];var id=str(member.get("id",""));var p:Vector2=moving.get(id,position_for(id,i))
   if point.distance_to(p-Vector2(0,22))>45:continue
   var local=id==game.my_id or id=="preview";var cosmetic:Dictionary=game.local_cosmetic() if local else game.cosmetic_for(id);var rank=R.remote_tier(cosmetic)
-  if rank>0:return "Crown "+str(rank)+" / 8 • "+R.NAMES[rank-1]+"\n"+str(int(cosmetic.get("crown_damage",0)))+" damage in the last 7 days • cosmetic only"
+  if rank>0:return R.rank_name(rank)+" • worn crown\n"+str(int(cosmetic.get("crown_damage",0)))+" damage in the last 7 days\nActive: "+R.rank_name(R.remote_active_tier(cosmetic))
  return ""

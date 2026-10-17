@@ -215,7 +215,17 @@ func _ready() -> void:
 	if not get_tree().root.has_meta("fx_intro_seen"):
 		get_tree().root.set_meta("fx_intro_seen",true)
 		get_tree().root.set_meta("fx_show_main",true)
-		add_child(preload("res://scripts/title_intro.gd").new())
+		if not _has_web_sun_loader():add_child(preload("res://scripts/title_intro.gd").new())
+	if _has_web_sun_loader():call_deferred("_finish_web_sun_loading")
+
+func _has_web_sun_loader()->bool:
+	return OS.has_feature("web") and bool(JavaScriptBridge.eval("typeof window.fxSunLoading !== 'undefined'",true))
+func _finish_web_sun_loading()->void:
+	# Let the main-menu process and its first rendered frame finish before uncovering it.
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	JavaScriptBridge.eval("if(window.fxSunLoading)window.fxSunLoading.ready();",true)
 
 func load_json(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -1826,6 +1836,7 @@ func draw_world() -> void:
 	elif not adventure.combat.robot.transformed("solo") and not adventure.combat.twister.transformed("solo"):draw_sprite(hero_art,hero_rect.position,hero_rect.size,Color(1,1,1,.43) if stealth_time>0 and mode=="run" else Color.WHITE)
 	if health>0 and legacy.daily.earned() and legacy.cosmetics.daily_visible():preload("res://scripts/daily_challenge.gd").draw_on(self,position_in_world-camera,visual_clock)
 	var dev_session:Node=get_tree().root.get_node_or_null("FXDevSession")
+	if health>0:preload("res://scripts/rolling_crowns.gd").draw_on(self,position_in_world-camera-Vector2(0,28),visual_clock,legacy.crowns.display_tier())
 	if health>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,position_in_world-camera,visual_clock,legacy.cosmetics.effect(),str(legacy.cosmetics.state().week))
 	if dev_session!=null and bool(dev_session.active) and health>0:preload("res://scripts/dev_insignia.gd").draw_on(self,position_in_world-camera,visual_clock)
 	if health>0:preload("res://scripts/creation_badges.gd").draw_on(self,position_in_world-camera,visual_clock,{"custom":hero.has("studio_project"),"balanced":bool(hero.get("studio_checked",false)),"playtest":get_tree().root.get_node("FXResearch").active,"media":media.active})

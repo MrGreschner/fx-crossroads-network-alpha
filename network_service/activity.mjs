@@ -43,7 +43,7 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
   const completions=await pool.query(`SELECT kind,mode,realm,route,result,count(*)::int attempts,percentile_cont(0.5) WITHIN GROUP (ORDER BY duration) FILTER (WHERE duration>0) median_seconds,min(NULLIF(duration,0)) fastest_seconds,max(duration) longest_seconds FROM crossroads_activity WHERE created_at >= $1 AND kind!='interval' GROUP BY kind,mode,realm,route,result ORDER BY count(*) DESC LIMIT 100`,[cutoff]);
   const daily=await pool.query(`SELECT to_char(created_at AT TIME ZONE 'America/Edmonton','YYYY-MM-DD') AS "day",count(DISTINCT profile)::int profiles,count(DISTINCT device)::int devices,count(DISTINCT session)::int sessions,sum(active)::float active_seconds,count(*) FILTER (WHERE kind='graphics_loss')::int graphics_losses,0::int disconnects FROM crossroads_activity WHERE created_at >= $1 GROUP BY 1 ORDER BY 1`,[cutoff]);
   const totals=await pool.query(`SELECT count(*)::int batches,count(DISTINCT profile)::int profiles,count(DISTINCT device)::int devices,count(DISTINCT session)::int sessions,COALESCE(sum(active),0)::float active_seconds FROM crossroads_activity WHERE created_at >= $1`,[cutoff]);
-  return {version:'V177-preview',days:n,timezone:'America/Edmonton',retention_days:30,totals:totals.rows[0],activities:activities.rows,completions:completions.rows,daily:daily.rows,notes:['Self-reported play estimates, not verified learning outcomes.','Profiles and devices are anonymous identifiers, not counts of unique students.','Solo gameplay stays local; missing/offline uploads are not counted.','Completion times are gameplay/simulation times. Market days may finish while offline.']};
+  return {version:'V178-preview',days:n,timezone:'America/Edmonton',retention_days:30,totals:totals.rows[0],activities:activities.rows,completions:completions.rows,daily:daily.rows,notes:['Self-reported play estimates, not verified learning outcomes.','Profiles and devices are anonymous identifiers, not counts of unique students.','Solo gameplay stays local; missing/offline uploads are not counted.','Completion times are gameplay/simulation times. Market days may finish while offline.']};
  };
  async function handle(req,res){
   const url=new URL(req.url,'http://localhost');if(!url.pathname.startsWith('/activity')&&!url.pathname.startsWith('/analytics/'))return false;
@@ -86,7 +86,7 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
    if(url.pathname==='/activity/api/summary'||url.pathname==='/analytics/dashboard')send(res,200,await aggregate(days(url)));
    else if(url.pathname==='/activity/api/export'){
     const cutoff=new Date(now()-days(url)*86400000).toISOString();const rows=await pool.query('SELECT payload,created_at FROM crossroads_activity WHERE created_at >= $1 ORDER BY created_at DESC LIMIT 5000',[cutoff]);
-    send(res,200,{version:'V177-preview',retention_days:30,limit:5000,reports:rows.rows.map(r=>({...r.payload,received_at:r.created_at}))},{'Content-Disposition':'attachment; filename="Crossroads_V177_play_insights.json"'});
+    send(res,200,{version:'V178-preview',retention_days:30,limit:5000,reports:rows.rows.map(r=>({...r.payload,received_at:r.created_at}))},{'Content-Disposition':'attachment; filename="Crossroads_V178_play_insights.json"'});
    }else send(res,404,{error:'Not found'});
   }catch{send(res,503,{error:'Activity storage unavailable'});}finally{pending--;}
   return true;

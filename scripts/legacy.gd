@@ -135,31 +135,41 @@ func crit_tier(id:String)->int:
  for n in mini(3,milestones.size()):
   if int(record(id).clears)>=maxi(1,int(milestones[n].get("clears",(n+1)*3))):tier=n+1
  return tier
-func critical(owner:String,amount:float,point:Vector2,roll:float=-1)->float:
- if amount<=0 or owner=="enemy" or owner.is_empty():return amount
- if arcade and not game.hero_ids.has(owner):return amount
+func crown_bonus(owner:String)->Dictionary:
+ var normalized=arcade and (bool(game.get_meta("crown_competition",false)) or game.practice_match()) or not arcade and game.practice
+ var rank=preload("res://scripts/rolling_crowns.gd").timed_tier(build(owner),Time.get_unix_time_from_system()) if arcade else preload("res://scripts/rolling_crowns.gd").tier_from(crowns.total())
+ return preload("res://scripts/rolling_crowns.gd").bonus(rank,normalized)
+func critical_stats(owner:String)->Dictionary:
  var tier:=clampi(int(build(owner).get("crit_tier",0)),0,3)
- if tier==0:return amount
  var milestones:Array=game.characters.get(hero_for(owner),{}).get("mastery",{}).get("crit_milestones",[])
- var spec:Dictionary=milestones[tier-1] if milestones.size()>=tier else {}
- var chance:=clampf(float(spec.get("chance",tier*.02)),0,.06);var bonus:=clampf(float(spec.get("bonus",tier*.2)),0,.6)
- if (randf() if roll<0 else roll)>=chance:return amount
+ var spec:Dictionary=milestones[tier-1] if tier>0 and milestones.size()>=tier else {}
+ var powers=crown_bonus(owner)
+ var chance=clampf(float(spec.get("chance",tier*.02)),0,.06)+float(powers.chance)
+ var extra=clampf(float(spec.get("bonus",tier*.2)),0,.6)*game.adventure.combat.v98.crit_multiplier(owner)+float(powers.damage)
+ return {"chance":chance,"multiplier":1+extra}
+func critical(owner:String,amount:float,point:Vector2,roll:float=-1)->float:
+ if amount<=0 or not is_finite(amount) or owner=="enemy" or owner.is_empty():return amount
+ if arcade and not game.hero_ids.has(owner):return amount
+ var stats=critical_stats(owner)
+ if (randf() if roll<0 else roll)>=float(stats.chance):return amount
  if arcade:game.damage_labels.append({"pos":point-Vector2(22,68),"time":.7,"text":"CRIT!"})
  else:game.add_float_text(point-Vector2(22,68),"CRIT!",Color("#f5c777"))
- return amount*(1+bonus*game.adventure.combat.v98.crit_multiplier(owner))
+ return amount*float(stats.multiplier)
 func final_toggle(id:String)->void:
  if not final_eligible(id):return
  record(id).final_technique=not bool(record(id).final_technique);save();render()
 func payload(id:String)->Dictionary:
  var rec:=record(id)
- return {"technique":bool(rec.technique) and eligible(id),"final_technique":bool(rec.final_technique) and final_eligible(id),"crit_tier":crit_tier(id),"tuning":rec.tuning.duplicate(),"points":int(rec.points),"title":str(data.title)}
+ return {"technique":bool(rec.technique) and eligible(id),"final_technique":bool(rec.final_technique) and final_eligible(id),"crit_tier":crit_tier(id),"crown_damage":int(minf(1e12,crowns.total())),"crown_expiry":crowns.expiry_schedule(true) if arcade else [],"tuning":rec.tuning.duplicate(),"points":int(rec.points),"title":str(data.title)}
 func sanitize_build(value:Variant)->Dictionary:
  if not value is Dictionary:return {"technique":false,"tuning":[0,0,0],"points":0}
+ var crown_amount=float(value.get("crown_damage",0)) if preload("res://scripts/workshop_project.gd").number(value.get("crown_damage",0),0,1e12) else 0.0
+ var expiry=preload("res://scripts/rolling_crowns.gd").clean_expiry(value.get("crown_expiry",[]),preload("res://scripts/rolling_crowns.gd").tier_from(crown_amount),Time.get_unix_time_from_system())
  var points:=clampi(int(value.get("points",0)),0,6);var tuning:Array=[0,0,0];var remaining:=mini(points,4)
  var raw:Variant=value.get("tuning",[])
  if raw is Array:
   for n in mini(3,raw.size()):tuning[n]=clampi(int(raw[n]),-mini(2,remaining),mini(2,remaining));remaining-=absi(int(tuning[n]))
- return {"technique":bool(value.get("technique",false)),"final_technique":bool(value.get("final_technique",false)),"crit_tier":clampi(int(value.get("crit_tier",0)),0,3),"tuning":tuning,"points":points}
+ return {"technique":bool(value.get("technique",false)),"final_technique":bool(value.get("final_technique",false)),"crit_tier":clampi(int(value.get("crit_tier",0)),0,3),"crown_damage":crown_amount,"crown_expiry":expiry,"tuning":tuning,"points":points}
 func build(owner:String)->Dictionary:
  if arcade and game.has_method("network_build"):return game.network_build(owner)
  var id:=hero_for(owner)
@@ -305,6 +315,7 @@ func profile_ui()->void:
  var view=preload("res://scripts/player_card_view.gd").new();view.legacy=self;body.add_child(view)
  button(body,"Choose card portrait • "+str(card.unlocked_portraits())+" unlocked",func():portrait_picker_open=not portrait_picker_open;render())
  if portrait_picker_open:portrait_ui()
+ crowns.ui(body)
  text("Glimmers: %d   •   Waylight Shards: %d" % [glimmers.balance(),game.waylight.progress.state().shards])
  text("Your card grows with your adventures. Fishing has its own tab; save transfers and player settings are in Settings.")
  button(body,"Save & player settings",open_page.bind("settings"))
