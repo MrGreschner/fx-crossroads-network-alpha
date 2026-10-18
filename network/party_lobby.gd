@@ -1,5 +1,5 @@
 extends RefCounted
-const MODES=[["Gate Defence","defense"],["Gladiator Arena","arena"],["Co-op Realms","coop"],["Ram’s Descent","descent"],["Battlegrounds","battlegrounds"]]
+const MODES=[["Gate Defence","defense"],["Gladiator Arena","arena"],["Normal Realms","coop"],["Ram’s Descent","descent"],["Battlegrounds","battlegrounds"]]
 static func label(parent:Node,value:String,fs:int=16)->Label:
  var node=Label.new();node.text=value;node.add_theme_font_size_override("font_size",fs);parent.add_child(node);return node
 static func button(parent:Node,value:String,action:Callable)->Button:
@@ -13,8 +13,9 @@ static func build(g:Node)->void:
  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",8);scroll.add_child(body)
  var header=HBoxContainer.new();body.add_child(header)
  var heading=label(header,"GATHER YOUR PARTY",25);heading.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ var solo=button(header,"▶  PLAY SOLO",g.play_solo);solo.name="PlaySolo";solo.custom_minimum_size=Vector2(190,46);preload("res://scripts/studio_ui.gd").accent(solo);solo.tooltip_text="Play on this device without a server. Battlegrounds automatically fills both teams with AI."
  var back=button(header,"Back to town",func():
-  g._leave_room_connection();g.get_tree().root.set_meta("fx_hero",g.selected_hero);g.get_tree().change_scene_to_file("res://scenes/main.tscn"))
+  g._leave_room_connection();g.get_tree().root.set_meta("fx_hero",g.selected_hero);g.get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn"))
  back.size_flags_horizontal=Control.SIZE_SHRINK_END;back.custom_minimum_size.x=150
  var main=HBoxContainer.new();main.add_theme_constant_override("separation",16);body.add_child(main)
  var left=VBoxContainer.new();left.custom_minimum_size.x=230;main.add_child(left)
@@ -23,7 +24,14 @@ static func build(g:Node)->void:
  var modes=OptionButton.new();modes.name="NetworkModes";body.add_child(modes);modes.hide()
  for entry in MODES:modes.add_item(entry[0]);modes.set_item_metadata(modes.item_count-1,entry[1])
  for entry in MODES:
-  var mode_button=button(left,entry[0],func():g.select_network_mode(str(entry[1])));mode_button.name="Mode_"+str(entry[1]);mode_button.custom_minimum_size.y=43
+  var mode_button=button(left,entry[0],func():g.select_network_mode(str(entry[1])));mode_button.name="Mode_"+str(entry[1]);mode_button.custom_minimum_size.y=36
+ for entry in [["The Between","between"],["Quest Area • Wayfarer","wayfarer"],["Overcharged Realm","overcharge"]]:
+  var dest=str(entry[1]);var mode_button=button(left,str(entry[0]),func():
+   if g.net_ready:return
+   g.select_network_mode("coop");g.realm_id=dest;var picker=g.net_panel.find_child("NetworkRealms",true,false);picker.select(g.RealmCatalogue.lobby_ids().find(dest));g._sync_network_mode_controls())
+  mode_button.name="Destination_"+dest;mode_button.custom_minimum_size.y=36
+  var reason=g.ExpeditionProfile.progress(g).entry_issue(dest) if dest in ["between","overcharge"] else preload("res://scripts/realm_access.gd").reason(g.legacy,dest)
+  mode_button.disabled=not reason.is_empty();mode_button.tooltip_text=reason if not reason.is_empty() else "Choose solo or host/join co-op."
  var summary=label(left,"Your hero, your progress.\nShare a room code or browse\npublic parties below.",14);summary.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
  var right=VBoxContainer.new();right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;main.add_child(right)
  var identity=HBoxContainer.new();right.add_child(identity)
@@ -31,7 +39,10 @@ static func build(g:Node)->void:
  g.hero_button=button(identity,"Choose hero",func():
   if is_instance_valid(g.hero_grid):return
   g.hero_grid=preload("res://scripts/hero_grid.gd").new();g.hero_grid.open(g,g.selected_hero,g.net_select,g.net_permission))
- var stage=preload("res://network/party_stage.gd").new();stage.name="PartyStage";stage.game=g;stage.custom_minimum_size=Vector2(0,155);right.add_child(stage)
+ var stage=preload("res://network/party_stage.gd").new();stage.name="PartyStage";stage.game=g;stage.custom_minimum_size=Vector2(0,105);right.add_child(stage)
+ var ai=HBoxContainer.new();right.add_child(ai)
+ button(ai,"AI roster • choose heroes",func():preload("res://network/ai_roster_menu.gd").open(g)).name="AIRoster"
+ button(ai,"Fill Battlegrounds AI seats",g.fill_ai_seats).name="FillAI"
  var settings=HBoxContainer.new();right.add_child(settings)
  g.capacity=OptionButton.new();g.capacity.size_flags_horizontal=Control.SIZE_EXPAND_FILL;settings.add_child(g.capacity)
  for number in [2,4,6,8]:g.capacity.add_item(str(number)+" player seats",number)
@@ -67,7 +78,7 @@ static func build(g:Node)->void:
  button(connection,"Join room",g.connect_net.bind("join")).name="JoinRoom"
  g.net_start=button(connection,"Start match",func():g.send_net({"type":"start"}));g.net_start.name="StartMatch";g.net_start.disabled=true
  button(connection,"Leave room",g.return_to_network_menu).name="LeaveRoom"
- g.net_status=label(body,"Choose your adventure, then host or join a party.",14);g.net_status.name="NetworkStatus";g.net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+ g.net_status=label(body,"Play solo above, or Host / Join below. AI roster works solo and with friends.",14);g.net_status.name="NetworkStatus";g.net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
  var room_heading=HBoxContainer.new();body.add_child(room_heading);var title=label(room_heading,"PUBLIC ROOMS",16);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var refresh=button(room_heading,"Refresh rooms",g.browse_rooms);refresh.name="RefreshRooms";refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.custom_minimum_size.x=150
  g.room_listing=VBoxContainer.new();g.room_listing.name="RoomListing";body.add_child(g.room_listing);label(g.room_listing,"Select Refresh rooms to find a party.",14)

@@ -1,0 +1,40 @@
+{
+  "id": "npc_lumen",
+  "name": "Lumen Vale",
+  "sprite": "npc_lumen",
+  "npc_only": true,
+  "max_health": 125,
+  "speed": 235,
+  "ai_role": "healer",
+  "primary": {
+    "name": "Light Needle",
+    "style": "projectile",
+    "damage": 16,
+    "cooldown": 1.05,
+    "range": 600,
+    "speed": 430,
+    "arc_degrees": 55,
+    "color": "#92e0b3"
+  },
+  "secondary": {
+    "name": "Mending Tide",
+    "style": "heal_wave",
+    "damage": 20,
+    "heal": 24,
+    "cooldown": 7,
+    "range": 350,
+    "radius": 200,
+    "color": "#92e0b3"
+  },
+  "special": {
+    "name": "Dawn Shelter",
+    "style": "heal_wave",
+    "damage": 1,
+    "heal": 38,
+    "cooldown": 13,
+    "range": 340,
+    "radius": 210,
+    "color": "#92e0b3"
+  },
+  "passive_effect": ""
+}

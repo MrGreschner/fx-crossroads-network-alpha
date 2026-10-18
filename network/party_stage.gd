@@ -6,6 +6,7 @@ func _ready()->void:
  mouse_filter=Control.MOUSE_FILTER_IGNORE;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 func _process(delta:float)->void:
  if not is_visible_in_tree():return
+ custom_minimum_size.y=155 if game.roster.size()>4 else 105
  clock+=delta;queue_redraw()
 func _draw()->void:
  if game==null:return

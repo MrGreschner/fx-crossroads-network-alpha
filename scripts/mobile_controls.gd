@@ -123,7 +123,6 @@ func _process(_delta: float) -> void:
 			else: action_button("Interact",Vector2(730,610),"interact")
 			if arcade: pass # Native session Menu replaces the overlapping duplicate.
 			if game.adventure.quests.active:key_button("Journal",Vector2(20,275),KEY_Q)
-			for n in 3: key_button("Item "+str(n+1),Vector2(430+n*100,650),KEY_1+n)
 			if arcade:
 				key_button("Choice A",Vector2(850,120),KEY_J)
 				key_button("Choice B",Vector2(960,120),KEY_K)

@@ -192,6 +192,36 @@ func select_network_mode(value:String)->void:
  for id in ["defense","arena","coop","descent","battlegrounds"]:
   var button=net_panel.find_child("Mode_"+id,true,false)
   if button!=null:button.modulate=Color("#f2d49c") if id==mode else Color.WHITE
+func play_solo()->void:
+ if net_ready:net_status.text="Leave the online room before starting solo.";return
+ var root=get_tree().root
+ root.set_meta("fx_hero",selected_hero);root.set_meta("fx_mode",mode)
+ if mode=="coop":
+  var reason=ExpeditionProfile.progress(self).entry_issue(realm_id) if realm_id in ["between","overcharge","attunement"] else preload("res://scripts/realm_access.gd").reason(legacy,realm_id)
+  if not reason.is_empty():net_status.text=reason;return
+  if realm_id in ["between","overcharge","attunement"]:
+   root.set_meta("fx_solo_expedition",{"kind":realm_id,"tier":expedition_tier.get_selected_id()});get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn");return
+  if bot_plan.is_empty():root.set_meta("fx_retry_realm",realm_id);get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn");return
+ var plan=bot_plan.duplicate(true)
+ if mode=="battlegrounds":plan=filled_ai_plan(1,0)
+ var limit=8 if mode in ["arena","battlegrounds"] else 2 if mode=="coop" else 4
+ if plan.size()+1>limit:net_status.text="Choose at most %d AI companions for this mode." % (limit-1);return
+ root.set_meta("fx_solo_party",{"mode":mode,"hero":selected_hero,"realm":realm_id,"bg_map":bg_map,"bg_size":bg_team_size,"arena_map":"crossroads" if test_arena.selected==1 else "sand","bots":plan,"difficulty":ai_difficulty})
+ get_tree().call_deferred("change_scene_to_file","res://scenes/arcade.tscn")
+func filled_ai_plan(humans:int,team_zero:int)->Array:
+ var result=[];var counts=[team_zero,humans-team_zero];var kits=preload("res://scripts/arena_bots.gd").IDS;var used=0
+ for side in 2:
+  for n in maxi(0,bg_team_size-int(counts[side])):
+   var preferred=bot_plan.filter(func(b):return int(b.team)==side)
+   result.append({"hero":str(preferred[n%preferred.size()].hero) if not preferred.is_empty() else kits[used%kits.size()],"team":side});used+=1
+ return result
+func fill_ai_seats()->void:
+ if mode!="battlegrounds":net_status.text="Choose individual seats with AI roster.";return
+ var humans=roster.filter(func(m):return not str(m.id).begins_with("bot:"))
+ var zero=humans.filter(func(m):return int(m.get("team",0))==0).size()
+ bot_plan=filled_ai_plan(humans.size() if net_ready else 1,zero if net_ready else 1)
+ if net_ready:send_net({"type":"ai_party","bots":bot_plan,"difficulty":ai_difficulty})
+ else:net_status.text="Battlegrounds AI ready • %d seats filled." % bot_plan.size()
 func browse_rooms()->void:
  if dedicated:return
  if browser_peer!=null:browser_peer.close()
@@ -220,6 +250,18 @@ func _poll_browser()->void:
  if browser_peer.get_ready_state()==WebSocketPeer.STATE_CLOSED or Time.get_ticks_msec()-browser_started>7000:
   browser_peer.close();browser_peer=null;_show_public_rooms([],"Public-room browser unavailable. Host or join by room code; check the matching server update.")
 func _sync_network_mode_controls()->void:
+ var solo=net_panel.find_child("PlaySolo",true,false)
+ if solo!=null:solo.disabled=net_ready;solo.text="▶  PLAY SOLO vs AI" if mode=="battlegrounds" else "▶  PLAY SOLO"
+ var ai=net_panel.find_child("AIRoster",true,false)
+ if ai!=null:ai.disabled=(net_ready and not net_host) or mode=="coop" and realm_id in ["between","overcharge","attunement"]
+ var fill=net_panel.find_child("FillAI",true,false)
+ if fill!=null:fill.visible=mode=="battlegrounds";fill.disabled=net_ready and not net_host
+ for name in ["defense","arena","coop","descent","battlegrounds"]:
+  var b=net_panel.find_child("Mode_"+name,true,false)
+  if b!=null:b.disabled=net_ready
+ for name in ["between","overcharge","wayfarer"]:
+  var b=net_panel.find_child("Destination_"+name,true,false)
+  if b!=null:b.disabled=net_ready or not (ExpeditionProfile.progress(self).entry_issue(name) if name in ["between","overcharge"] else preload("res://scripts/realm_access.gd").reason(legacy,name)).is_empty()
  var bg=mode=="battlegrounds"
  if expedition_tier!=null:expedition_tier.visible=mode=="coop" and realm_id=="overcharge";expedition_tier.disabled=net_ready
  for i in capacity.item_count:
@@ -228,7 +270,7 @@ func _sync_network_mode_controls()->void:
  if bg_network_map==null:return
  bg_network_map.visible=bg;bg_network_map.disabled=net_ready and not net_host
  bg_network_map.select(1 if bg_map=="warzone" else 0)
- bg_team_controls.visible=bg;bg_team_roster.visible=bg
+ bg_team_controls.visible=bg or mode=="arena";bg_team_roster.visible=bg
  if not bg:return
  var lines=[]
  for side in 2:
@@ -311,7 +353,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"bots":([] if mode=="coop" and realm_id in ["between","overcharge","attunement"] else bot_plan),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
@@ -388,6 +430,7 @@ func receive_net(data:Dictionary)->void:
   "lobby":
    mode=str(data.get("mode",mode));realm_id=str(data.get("realm",realm_id));roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
+   bot_plan=preload("res://scripts/arena_bots.gd").clean_plan(data.get("bots",[]));bot_count=bot_plan.size()
    if not bool(data.get("preparing",false)):ExpeditionProfile.cancel(self)
    expedition_tier.select(clampi(int(data.get("expedition_tier",1))-1,0,2))
    bg_map=str(data.get("bg_map",bg_map));bg_team_size=int(data.get("bg_team_size",bg_team_size));_sync_network_mode_controls()
@@ -411,7 +454,7 @@ func receive_net(data:Dictionary)->void:
    if OS.has_feature("web") and data.has("report_token"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.start("+JSON.stringify({"endpoint":url_field.text.replace("wss://","https://").replace("ws://","http://"),"token":data.report_token,"enabled":data.get("reporting",false),"match_id":data.match_id,"room":net_room})+");",true)
    authority_epoch=-1;player_epochs.clear();realm_result="";economy_pending=false
    expedition.configure(data.get("expedition",{}));ExpeditionProfile.commit(self,data.get("expedition",{}))
-   mode=str(data.get("mode","arena"));realm_id=str(data.get("realm","grove"));match_party_size=data.heroes.size();match_id=str(data.match_id);floor_seed=int(data.seed);arena_map=str(data.arena_map);arena_seats=int(data.seats);spectator_host=false;bot_count=0;arena_no_items=mode=="arena";pvp_rule="teams" if mode=="battlegrounds" else "ffa"
+   mode=str(data.get("mode","arena"));realm_id=str(data.get("realm","grove"));match_party_size=data.heroes.size();match_id=str(data.match_id);floor_seed=int(data.seed);arena_map=str(data.arena_map);arena_seats=int(data.seats);spectator_host=false;bot_plan=preload("res://scripts/arena_bots.gd").clean_plan(data.get("bots",[]));bot_count=bot_plan.size();ai_difficulty=preload("res://scripts/arena_bots.gd").difficulty(data.get("difficulty","medium"));arena_no_items=mode=="arena";pvp_rule=str(data.get("rule","teams" if mode=="battlegrounds" else "ffa"))
    bg_map=str(data.get("bg_map","woodland"));bg_team_size=int(data.get("bg_team_size",4));teams=data.get("teams",{});_sync_bg_pickers();economy_pending=false;battleground_render.clear()
    for n in realm_picker.item_count:
     if str(realm_picker.get_item_metadata(n))==realm_id:realm_picker.select(n)
@@ -626,7 +669,7 @@ func _physics_process(_delta:float)->void:
     adventure.combat.release_heroes.holding(str(id),bool(f.sh),aim);adventure.combat.classics.holding(str(id),bool(f.sh));adventure.combat.v79.holding(str(id),bool(f.sh),aim);adventure.combat.v56.holding(str(id),bool(f.ph),aim)
     _execute_due_actions(str(id))
    _execute_due_actions(str(id))
-  run_time+=Move.DT;visual_time+=Move.DT;arena_world.step(Move.DT);adventure.step(Move.DT);_update_flames(Move.DT);_simulate_charges(Move.DT);_simulate(Move.DT)
+  bots.step(Move.DT);run_time+=Move.DT;visual_time+=Move.DT;arena_world.step(Move.DT);adventure.step(Move.DT);_update_flames(Move.DT);_simulate_charges(Move.DT);_simulate(Move.DT)
   expedition.step(Move.DT)
   _update_fountains(Move.DT);_update_revives(Move.DT);_track_card_progress()
   for actor in positions:net_velocity[actor]=(positions[actor]-before_positions.get(actor,positions[actor]))/Move.DT

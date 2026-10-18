@@ -171,12 +171,12 @@ func receive(key:int,data:Dictionary)->void:
   var listing=[]
   for code in rooms:
    var candidate:Dictionary=rooms[code];var game:Node=candidate.game
-   if not bool(candidate.get("public",false)) or game.started or not candidate.get("preparation",{}).is_empty() or candidate.members.size()>=int(candidate.seats):continue
+   if not bool(candidate.get("public",false)) or game.started or not candidate.get("preparation",{}).is_empty() or candidate.members.size()+game.bot_plan.size()>=int(candidate.seats):continue
    if not identities.has(candidate.host) or int(identities[candidate.host].connection)<0:continue
    var title:String={"arena":"Gladiator Arena","defense":"Gate Defence","descent":"Ram’s Descent","coop":"Realm co-op","battlegrounds":"Battlegrounds"}.get(game.mode,"Adventure")
    if game.mode=="coop":title+=" • "+str(candidate.get("expedition_choice","")) if not str(candidate.get("expedition_choice","")).is_empty() else " • "+str(game.regions.get(game.realm_id,{}).get("name",game.realm_id))
    if bool(game.get_meta("crown_competition",false)):title+=" • Competition"
-   listing.append({"room":code,"host":str(candidate.members.get(candidate.host,{}).get("name","Party")),"title":title,"mode":game.mode,"realm":game.realm_id,"players":candidate.members.size(),"seats":int(candidate.seats)})
+   listing.append({"room":code,"host":str(candidate.members.get(candidate.host,{}).get("name","Party")),"title":title,"mode":game.mode,"realm":game.realm_id,"players":candidate.members.size()+game.bot_plan.size(),"seats":int(candidate.seats)})
   send(key,{"type":"rooms","rooms":listing.slice(0,8)});return
  if connection.actor.is_empty():
   if kind not in ["host","join","resume"]:return
@@ -193,11 +193,12 @@ func receive(key:int,data:Dictionary)->void:
  if kind in ["expedition_accept","expedition_cancel"]:expeditions.receive(key,id,room,data);return
  if kind=="ping":send(key,{"type":"pong","sent":int(data.get("sent",0))});return
  if kind=="team":
-  if g.mode!="battlegrounds" or g.started:return
+  if g.mode not in ["arena","battlegrounds"] or g.started:return
   var team=int(data.get("team",-1))
   if team not in [0,1]:fail(key,"Choose Ram Alliance or Ironhollow Legion.");return
   var count=room.members.values().filter(func(m):return str(m.id)!=id and int(m.get("team",-1))==team).size()
-  if count>=g.bg_team_size:fail(key,"That team is full. Choose the other faction.");return
+  count+=g.bot_plan.filter(func(b):return int(b.team)==team).size()
+  if g.mode=="battlegrounds" and count>=g.bg_team_size:fail(key,"That team is full. Choose the other faction.");return
   room.members[id].team=team;lobby(str(identity.room));return
  if kind=="bg_choice":
   if g.mode!="battlegrounds" or room.host!=id or g.started:return
@@ -214,7 +215,7 @@ func receive(key:int,data:Dictionary)->void:
   if g.started:fail(key,"Capacity can be changed before the match starts.");return
   var seats=int(data.get("seats",0))
   if seats not in ([6,8] if g.mode=="battlegrounds" else [2,4,8] if g.mode=="arena" else [2] if g.mode=="coop" else [2,4]):fail(key,"Choose a supported capacity for this mode.");return
-  if seats<room.members.size():
+  if seats<room.members.size()+g.bot_plan.size():
    fail(key,"Cannot reduce capacity below the players already in this room.");lobby(str(identity.room));return
   if g.mode=="battlegrounds":
    var side_limit=seats/2
@@ -228,21 +229,26 @@ func receive(key:int,data:Dictionary)->void:
  if kind=="visibility":
   if room.host==id and not g.started:room.public=data.get("public",false)==true;lobby(str(identity.room))
   return
+ if kind=="ai_party":
+  if room.host!=id or g.started:return
+  var issue=set_ai(room,data.get("bots",[]),data.get("difficulty","medium"))
+  if not issue.is_empty():fail(key,issue);return
+  lobby(str(identity.room));return
  if kind=="start":
   if room.host!=id or g.started:return
   if expeditions.special(room) and not g.has_meta("expedition_committed"):expeditions.prepare(key,room);return
-  if room.members.size()<2:fail(key,"At least two connected players are needed.");return
+  if room.members.size()+g.bot_plan.size()<2:fail(key,"Invite a player or add an AI companion; Play solo is also available offline.");return
   if g.mode=="battlegrounds":
-   if room.members.size()!=g.bg_team_size*2:fail(key,"Battlegrounds requires full "+str(g.bg_team_size)+"v"+str(g.bg_team_size)+" teams.");return
+   if room.members.size()+g.bot_plan.size()!=g.bg_team_size*2:fail(key,"Battlegrounds requires full "+str(g.bg_team_size)+"v"+str(g.bg_team_size)+" teams.");return
    for side in 2:
-    if room.members.values().filter(func(m):return int(m.get("team",-1))==side).size()!=g.bg_team_size:fail(key,"Balance both factions before Start.");return
+    if room.members.values().filter(func(m):return int(m.get("team",-1))==side).size()+g.bot_plan.filter(func(b):return int(b.team)==side).size()!=g.bg_team_size:fail(key,"Balance both factions before Start.");return
   for member in room.members:
    if int(identities[member].connection)<0:fail(key,"Wait for disconnected players to reconnect.");return
-  g.roster.assign(room.members.values());g.positions.clear()
+  g.roster.assign(room.members.values());g.positions.clear();g.hero_ids.clear();g.teams.clear()
   for member in room.members:
    g._add_player(str(member),g.positions.size());g.lobby_heroes[member]=room.members[member].hero;g.lobby_builds[member]=room.members[member].get("build_choice",{})
-   if g.mode=="battlegrounds":g.teams[member]=int(room.members[member].team)
-  g.spectator_host=true;g.bot_count=0;g.no_items_picker.button_pressed=g.mode=="arena"
+   if g.mode in ["arena","battlegrounds"]:g.teams[member]=int(room.members[member].get("team",0))
+  g.spectator_host=true;g.bot_count=g.bot_plan.size();g.bots.sync_lobby();g.rule_picker.select(1 if g.mode=="battlegrounds" or g.mode=="arena" and g.bot_count>0 else 0);g.no_items_picker.button_pressed=g.mode=="arena"
   for member in room.members:
    g.legacy.builds[member]=g.legacy.sanitize_build(room.members[member].get("build_choice",{}))
    g.player_cosmetics[member]=room.members[member].get("cosmetic",{})
@@ -391,7 +397,7 @@ func join(key:int,data:Dictionary)->void:
   var room:Dictionary=rooms[code]
   if not room.get("preparation",{}).is_empty():fail(key,"Entry confirmation in progress.");return
   if room.game.started:fail(key,"Match already started. Reconnect using your existing seat.");return
-  if room.members.size()>=int(room.seats):fail(key,"Room full; disconnected seats are reserved for 60 seconds.");return
+  if room.members.size()+room.game.bot_plan.size()>=int(room.seats):fail(key,"Room full; disconnected seats are reserved for 60 seconds.");return
   var hero=str(data.get("hero","ram"))
   if not valid_hero(room.game,hero):fail(key,"Choose an official hero.");return
   id=Crypto.new().generate_random_bytes(8).hex_encode()
@@ -400,7 +406,12 @@ func join(key:int,data:Dictionary)->void:
   if room.game.mode=="battlegrounds":
    var count=room.members.values().filter(func(m):return int(m.get("team",-1))==0).size()
    var other=room.members.values().filter(func(m):return int(m.get("team",-1))==1).size()
+   count+=room.game.bot_plan.filter(func(b):return int(b.team)==0).size();other+=room.game.bot_plan.filter(func(b):return int(b.team)==1).size()
    room.members[id].team=0 if count<=other else 1
+  if room.game.mode=="arena":room.members[id].team=0
+  if kind=="host":
+   var issue=set_ai(room,data.get("bots",[]),data.get("difficulty","medium"))
+   if not issue.is_empty():room.members.erase(id);identities.erase(id);room.game.queue_free();rooms.erase(code);fail(key,issue);return
   room.members[id].expedition_profile=preload("res://network/expedition_profile.gd").clean(data.get("expedition_profile",{}))
   room.members[id].unlocked=data.get("unlocked_realms",[]) if data.get("unlocked_realms",[]) is Array else []
   if room.host.is_empty():room.host=id
@@ -411,17 +422,31 @@ func join(key:int,data:Dictionary)->void:
   g.server_inputs[id]=[];g.server_actions[id]=[];identities[id].action_seq=0
   send(key,start_packet(g));send_state(key,g,id)
  else:lobby(code)
+func set_ai(room:Dictionary,value:Variant,level:Variant)->String:
+ var plan=preload("res://scripts/arena_bots.gd").clean_plan(value);var g=room.game
+ if not value is Array or plan.size()!=value.size():return "Choose at most seven official AI heroes."
+ if expeditions.special(room) and not plan.is_empty():return "The Between and Overcharge use solo play or two human explorers."
+ if plan.size()+room.members.size()>int(room.seats):return "AI fills player seats. Remove an AI or increase room capacity."
+ if g.mode not in ["arena","battlegrounds"]:
+  for bot in plan:bot.team=0
+ if g.mode=="battlegrounds":
+  for side in 2:
+   if room.members.values().filter(func(m):return int(m.get("team",-1))==side).size()+plan.filter(func(b):return int(b.team)==side).size()>g.bg_team_size:return "Too many allies on one faction; use Fill AI seats to rebalance."
+ g.bot_plan=plan;g.bot_count=plan.size();g.ai_difficulty=preload("res://scripts/arena_bots.gd").difficulty(level)
+ return ""
 func lobby(code:String)->void:
  var room:Dictionary=rooms[code]
  var public=[]
  for member in room.members.values():
   var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");public.append(copy)
- for id in room.members:send_actor(id,{"type":"lobby","competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
+ for n in room.game.bot_plan.size():
+  var bot=room.game.bot_plan[n];var i=preload("res://scripts/arena_bots.gd").IDS.find(str(bot.hero));public.append({"id":"bot:"+str(n),"name":preload("res://scripts/arena_bots.gd").NAMES[i]+" [AI]","hero":bot.hero,"team":bot.team})
+ for id in room.members:send_actor(id,{"type":"lobby","bots":room.game.bot_plan,"difficulty":room.game.ai_difficulty,"competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
 func room_for(g:Node)->Dictionary:
  for room in rooms.values():
   if room.game==g:return room
  return {}
-func start_packet(g:Node)->Dictionary:return {"type":"start","competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
+func start_packet(g:Node)->Dictionary:return {"type":"start","rule":g.pvp_rule,"bots":g.bot_plan,"difficulty":g.ai_difficulty,"competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
 func broadcast_game(g:Node,data:Dictionary)->void:
  var room=room_for(g)
  for id in room.get("members",{}):send_actor(str(id),data)

@@ -161,7 +161,7 @@ func draw_hud(g:Node2D)->void:
   if game.mode=="run" and not game.practice and game.menu.is_empty():
    var assisted=not combat.items().is_empty()
    if assisted or bool(progress.state().fair):
-    g.draw_rect(Rect2(24,147,295,25),Color(.04,.10,.14,.90));g.draw_string(g.font,Vector2(34,165),"RELICS ACTIVE • separate time records" if assisted else "COMPETITION • relics disabled",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#dccdab"))
+    g.draw_rect(Rect2(24,94,295,25),Color(.04,.10,.14,.90));g.draw_string(g.font,Vector2(34,112),"RELICS ACTIVE • separate time records" if assisted else "COMPETITION • relics disabled",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#dccdab"))
   return
  var objective_top=preload("res://scripts/hud_layout.gd").objective_top(g)
  var box=Rect2(24,objective_top+(60 if kind=="overcharge" and game.adventure.immersive.active else 0),390,79);g.draw_rect(box,Color(.04,.10,.14,.94));g.draw_rect(box,Color("#86bdb7"),false,1)

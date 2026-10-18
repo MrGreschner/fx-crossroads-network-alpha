@@ -460,10 +460,10 @@ func draw_unit(c:Node2D,u:Dictionary,p:Vector2,draw_clock:float=-1)->void:
  c.draw_rect(Rect2(p+Vector2(-16,34),Vector2(32*float(u.hp)/float(u.max_hp),4)),Color("#79cdcf") if side==0 else Color("#ef997f"))
 func draw_hud(c:Node2D)->void:
  var font:=ThemeDB.fallback_font
- c.draw_rect(Rect2(20,205,900,38),Color(.04,.1,.14,.9))
- c.draw_string(font,Vector2(32,231),"BATTLEGROUNDS • "+MAPS.get(map_id,"Front")+" • Hearts "+str(int(heart_hp[0]))+" : "+str(int(heart_hp[1]))+" • "+str(units.size())+" troops",HORIZONTAL_ALIGNMENT_LEFT,880,21,Color("#ffe2a3"))
- c.draw_string(font,Vector2(24,game.VIEW.y-35),"Destroy barracks, then the heart. E at your barracks: recruit / upgrade. E in the middle: items.",HORIZONTAL_ALIGNMENT_LEFT,1100,14,Color("#efdfb7"))
- var area:=Rect2(game.VIEW.x-225,20,200,130);c.draw_rect(area,Color(.03,.1,.14,.85))
+ c.draw_rect(Rect2(20,100,860,38),Color(.04,.1,.14,.9))
+ c.draw_string(font,Vector2(32,126),"BATTLEGROUNDS • "+MAPS.get(map_id,"Front")+" • Hearts "+str(int(heart_hp[0]))+" : "+str(int(heart_hp[1]))+" • "+str(units.size())+" troops",HORIZONTAL_ALIGNMENT_LEFT,880,21,Color("#ffe2a3"))
+ c.draw_string(font,Vector2(24,game.VIEW.y-120),"Destroy barracks, then the heart. E at your barracks: recruit / upgrade. E in the middle: items.",HORIZONTAL_ALIGNMENT_LEFT,1100,14,Color("#efdfb7"))
+ var area:=Rect2(game.VIEW.x-225,145,200,130);c.draw_rect(area,Color(.03,.1,.14,.85))
  for b in bases.values():c.draw_rect(Rect2(area.position+(b.pos/SIZE)*area.size-Vector2(3,3),Vector2(6,6)),Color("#75cced") if int(b.team)==0 else Color("#ef9270"))
  for u in units.values():c.draw_circle(area.position+(u.pos/SIZE)*area.size,1.5,Color("#75cced") if int(u.team)==0 else Color("#ef9270"))
  for id in game.positions:

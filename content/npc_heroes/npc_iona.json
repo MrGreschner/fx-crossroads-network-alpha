@@ -1,0 +1,41 @@
+{
+  "id": "npc_iona",
+  "name": "Iona Stormglass",
+  "sprite": "npc_iona",
+  "npc_only": true,
+  "max_health": 120,
+  "speed": 245,
+  "ai_role": "storm",
+  "primary": {
+    "name": "Glass Bolt",
+    "style": "projectile",
+    "damage": 16,
+    "cooldown": 1.05,
+    "range": 600,
+    "speed": 430,
+    "arc_degrees": 55,
+    "color": "#8acfe8"
+  },
+  "secondary": {
+    "name": "Prism Volley",
+    "style": "projectile",
+    "damage": 14,
+    "cooldown": 6,
+    "range": 600,
+    "speed": 440,
+    "count": 3,
+    "spread": 0.18,
+    "color": "#8acfe8"
+  },
+  "special": {
+    "name": "Stormglass Bloom",
+    "style": "target_aoe",
+    "damage": 32,
+    "cooldown": 12,
+    "range": 480,
+    "travel_speed": 300,
+    "blast_radius": 125,
+    "color": "#8acfe8"
+  },
+  "passive_effect": ""
+}

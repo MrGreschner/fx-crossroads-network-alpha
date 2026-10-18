@@ -1,0 +1,32 @@
+{
+  "screens": [
+    "Atelier desktop 1280x720",
+    "catalogue scroll",
+    "details scroll",
+    "phone landscape 844x390"
+  ],
+  "scroll_regions": [
+    {
+      "max": 1924,
+      "page": 376,
+      "rect": [
+        346,
+        258,
+        402,
+        376
+      ]
+    },
+    {
+      "max": 875,
+      "page": 429,
+      "rect": [
+        786,
+        205,
+        402,
+        429
+      ]
+    }
+  ],
+  "native_script_errors": [],
+  "network_note": "The optional rankings request could not reach Render in this environment (ERR_EMPTY_RESPONSE / fetch failure); the Atelier displayed Rankings unavailable and remained interactive. No hosted server test is claimed."
+}

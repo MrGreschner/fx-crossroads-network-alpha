@@ -1,0 +1,20 @@
+{
+  "clicked_solo_button": true,
+  "local_battlegrounds": {
+    "bots": 5,
+    "local": "solo",
+    "mode": "battlegrounds",
+    "players": 6,
+    "role": "host",
+    "started": true
+  },
+  "unexpected_errors": [],
+  "network_deliberately_unavailable": true,
+  "inspected": [
+    "lobby destinations and locked buttons",
+    "seven AI choices and role editor",
+    "solo Gate Defence",
+    "solo 3v3 Battlegrounds",
+    "v180.2 combat HUD retained"
+  ]
+}

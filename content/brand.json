@@ -2,10 +2,10 @@
   "title": "Crossroads: Realms Beyond",
   "short_title": "Crossroads",
   "subtitle": "Realms Beyond",
-  "tagline": "Find your path. Create what\u2019s next.",
-  "build": 180,
+  "tagline": "Find your path. Create what’s next.",
+  "build": 181,
   "download_url": "",
   "room_service_url": "wss://fx-crossroads-rooms.onrender.com",
-  "revision": "v180-long-journey",
+  "revision": "v181-solo-and-ai-parties",
   "network_service_url": "wss://fx-crossroads-network-alpha.onrender.com"
 }

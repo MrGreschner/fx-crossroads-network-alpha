@@ -201,7 +201,9 @@ func _process(_delta:float)->void:
  menu_button.custom_minimum_size.y=44
  menu_button.size.y=menu_button.custom_minimum_size.y
  menu_button.position=Vector2(get_viewport().get_visible_rect().size.x-585,8) if not arcade else Vector2(get_viewport().get_visible_rect().size.x*.5-menu_button.size.x*.5,51-menu_button.size.y*.5) if not game.started else Vector2(get_viewport().get_visible_rect().size.x-(415 if game.spectating() else 330),8)
- if not arcade:preload("res://scripts/town_top_bar.gd").place(menu_button,"menu",get_viewport().get_visible_rect().size)
+ if not arcade and game.mode=="town":preload("res://scripts/town_top_bar.gd").place(menu_button,"menu",get_viewport().get_visible_rect().size)
+ if (arcade and game.started and not game.spectating()) or (not arcade and game.mode=="run"):
+  menu_button.scale=Vector2.ONE;menu_button.custom_minimum_size=Vector2(78,34);menu_button.size=Vector2(78,34);menu_button.position=Vector2(get_viewport().get_visible_rect().size.x-365,8)
  menu_button.visible=page.is_empty() and not game.has_node("FXIntro") and game.presentation.page.is_empty() and (arcade or game.menu.is_empty())
  if not arcade and not game.has_node("FXIntro") and get_tree().root.has_meta("fx_show_main"):
   get_tree().root.remove_meta("fx_show_main");game.presentation.asked=true;open("main")

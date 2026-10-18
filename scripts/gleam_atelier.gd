@@ -19,6 +19,8 @@ var clock:=0.0
 var refresh:=0.0
 var entries:Array=[]
 var signature=""
+var catalogue_scroll:ScrollContainer
+var detail_scroll:ScrollContainer
 class Preview extends Control:
  var page:CanvasLayer
  func _draw()->void:
@@ -61,28 +63,42 @@ func setup(owner:RefCounted)->void:
  var shell=VBoxContainer.new();shell.add_theme_constant_override("separation",12);panel.add_child(shell)
  var title=HBoxContainer.new();shell.add_child(title);text(title,"GLEAM ATELIER",30).size_flags_horizontal=Control.SIZE_EXPAND_FILL;button(title,"Back to profile" if previous=="legacy" else "Back to town" if not legacy.arcade else "Back to lobby",close)
  text(shell,"Make your hero your own. Inspect any style; equip the ones you have earned.",17).modulate=Color("#bfd3cf")
- var row=HBoxContainer.new();row.add_theme_constant_override("separation",20);row.size_flags_vertical=Control.SIZE_EXPAND_FILL;shell.add_child(row)
- var left=VBoxContainer.new();left.custom_minimum_size.x=300;row.add_child(left)
+ var row=HBoxContainer.new();row.add_theme_constant_override("separation",14);row.size_flags_vertical=Control.SIZE_EXPAND_FILL;shell.add_child(row)
+ var left=VBoxContainer.new();left.custom_minimum_size.x=240;row.add_child(left)
  var hero=str(legacy.game.selected_hero) if legacy.arcade else str(legacy.game.selected_character)
- text(left,str(legacy.game.characters[hero].name),23).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+ text(left,str(legacy.game.characters[hero].name),21).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  var modes=HBoxContainer.new();left.add_child(modes)
  for mode in [false,true]:
-  var b=button(modes,"Lobby preview" if mode else "Town preview",func():lobby_preview=mode;detail());b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- preview=Preview.new();preview.page=self;preview.name="AtelierHeroPreview";preview.custom_minimum_size=Vector2(300,285);preview.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;left.add_child(preview)
+  var b=button(modes,"Lobby" if mode else "Town",func():lobby_preview=mode;detail());b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ preview=Preview.new();preview.page=self;preview.name="AtelierHeroPreview";preview.custom_minimum_size=Vector2(240,275);preview.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;left.add_child(preview)
  text(left,"Competitive styles appear in multiplayer lobbies only. Preview them here without changing gameplay.",15).modulate=Color("#b8d7d6")
  var links=HBoxContainer.new();left.add_child(links)
  var weekly=button(links,"Weekly goals",func():close();legacy.close();legacy.weekly.open_board());weekly.tooltip_text="See goals for the existing activity rewards."
- button(links,"Titles & ribbons",func():close();legacy.close();legacy.game.menu="journey_cosmetics")
- var right=VBoxContainer.new();right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(right)
- var tabs=TabBar.new();right.add_child(tabs)
+ button(links,"Titles",func():close();legacy.close();legacy.game.menu="journey_cosmetics")
+ var centre=VBoxContainer.new();centre.custom_minimum_size.x=365;centre.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(centre)
+ var tabs=TabBar.new();centre.add_child(tabs)
  for name in ["All styles","Earned","Competitive"]:tabs.add_tab(name)
  tabs.tab_changed.connect(func(n):filter=n;populate())
- var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.custom_minimum_size.y=235;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
- gallery=GridContainer.new();gallery.columns=2;gallery.size_flags_horizontal=Control.SIZE_EXPAND_FILL;gallery.add_theme_constant_override("h_separation",8);gallery.add_theme_constant_override("v_separation",8);scroll.add_child(gallery)
- var detail_scroll=ScrollContainer.new();detail_scroll.custom_minimum_size.y=170;detail_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.add_child(detail_scroll);preload("res://scripts/touch_list_scroll.gd").attach(detail_scroll)
- details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;detail_scroll.add_child(details)
+ catalogue_scroll=scroll_area(centre,"STYLE CATALOGUE","Scroll to browse • select a style",false)
+ gallery=GridContainer.new();gallery.columns=1;gallery.size_flags_horizontal=Control.SIZE_EXPAND_FILL;gallery.add_theme_constant_override("h_separation",8);gallery.add_theme_constant_override("v_separation",8);catalogue_scroll.add_child(gallery)
+ var right=VBoxContainer.new();right.custom_minimum_size.x=420;right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(right)
+ detail_scroll=scroll_area(right,"SELECTED STYLE","Scroll for requirements, powers and progress",true)
+ details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",14);detail_scroll.add_child(details)
  sync_label=text(shell,"",14);sync_label.modulate=Color("#a5c3c4")
  entries=catalogue();populate();manager.rankings.delay=0;layout()
+func scroll_area(parent:Node,heading:String,hint:String,accent:bool)->ScrollContainer:
+ var frame=PanelContainer.new();frame.name="StyleDetailsFrame" if accent else "StyleCatalogueFrame";frame.size_flags_vertical=Control.SIZE_EXPAND_FILL
+ frame.add_theme_stylebox_override("panel",preload("res://scripts/studio_ui.gd").box("#0c2530","#d8bd7c" if accent else "#6aadb8",10,12));parent.add_child(frame)
+ var col=VBoxContainer.new();col.add_theme_constant_override("separation",7);frame.add_child(col)
+ text(col,heading,16).modulate=Color("#f4d599" if accent else "#b2e4e9")
+ text(col,hint,13).modulate=Color("#b9cfd4")
+ var rule=HSeparator.new();col.add_child(rule)
+ var scroll=ScrollContainer.new();scroll.name="StyleDetailsScroll" if accent else "StyleCatalogueScroll";scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.custom_minimum_size.y=360;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_ALWAYS;col.add_child(scroll)
+ var bar=scroll.get_v_scroll_bar();bar.custom_minimum_size.x=14
+ for state in ["grabber","grabber_highlight","grabber_pressed"]:bar.add_theme_stylebox_override(state,preload("res://scripts/studio_ui.gd").box("#dbbf7d" if accent else "#7bbdca","#e4d19f" if accent else "#9fd5df",6,3))
+ bar.add_theme_stylebox_override("scroll",preload("res://scripts/studio_ui.gd").box("#071b25","#32505b",6,3))
+ preload("res://scripts/touch_list_scroll.gd").attach(scroll)
+ return scroll
 func catalogue()->Array:
  var list=[{"id":"auto","name":"Automatic daily reward","need":"Show today’s completed Daily Mission effect."},{"id":"none","name":"No extra effect","need":"A clean look for your selected hero."},{"id":"daily","name":legacy.daily.reward_name(),"need":"Complete today’s Daily Mission. Available until local midnight."}]
  for n in 3:list.append({"id":C.IDS[n],"name":C.NAMES[n],"need":["Discover 50 different fish species. Permanent unlock.","Reach floor 50 in Ram’s Descent. Permanent unlock.","Clear Astral Rift and complete Attunement. Permanent unlock."][n]})
@@ -102,7 +118,8 @@ func populate()->void:
   var id=str(spec.id)
   if filter==1 and not earned(id) or filter==2 and id not in R.IDS:continue
   var tile=button(gallery,"",func():selected=id;lobby_preview=id in R.IDS;detail())
-  tile.custom_minimum_size=Vector2(300,76);tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.tooltip_text=str(spec.need)
+  tile.custom_minimum_size=Vector2(280,76);tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.tooltip_text=str(spec.need);tile.set_meta("style_id",id)
+  if id==selected:tile.add_theme_stylebox_override("normal",preload("res://scripts/studio_ui.gd").box("#315562","#edcd88",8,12))
   var row=HBoxContainer.new();row.mouse_filter=Control.MOUSE_FILTER_IGNORE;row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);row.offset_left=8;row.offset_top=6;row.offset_right=-8;row.offset_bottom=-6;tile.add_child(row)
   var art=Swatch.new();art.id=id;art.page=self;art.mouse_filter=Control.MOUSE_FILTER_IGNORE;art.custom_minimum_size=Vector2(52,52);row.add_child(art)
   var words=VBoxContainer.new();words.mouse_filter=Control.MOUSE_FILTER_IGNORE;words.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(words)
@@ -111,6 +128,8 @@ func populate()->void:
   text(words,rank_label,13).modulate=Color("#dcd092") if earned(id) else Color("#a4babf")
  detail()
 func detail()->void:
+ for tile in gallery.get_children():tile.add_theme_stylebox_override("normal",preload("res://scripts/studio_ui.gd").box("#315562" if str(tile.get_meta("style_id",""))==selected else "#294653","#edcd88" if str(tile.get_meta("style_id",""))==selected else "#577a82",8,12))
+ if is_instance_valid(detail_scroll):detail_scroll.scroll_vertical=0
  for node in details.get_children():details.remove_child(node);node.queue_free()
  var spec:Dictionary={}
  for entry in entries:
@@ -128,7 +147,7 @@ func detail()->void:
  else:
   var b=button(details,"Equipped" if str(manager.state().selected)==selected and earned(selected) else "Equip this style" if earned(selected) else "Locked • preview only",func():manager.select(selected);populate());b.disabled=not earned(selected) or str(manager.state().selected)==selected
 func layout()->void:
- var size=legacy.game.get_viewport_rect().size;panel.size=Vector2(1040,620);var logical=panel.get_combined_minimum_size().max(Vector2(1040,620));panel.size=logical;var fit=minf(1,minf((size.x-20)/logical.x,(size.y-20)/logical.y));panel.scale=Vector2.ONE*fit;panel.position=(size-panel.size*fit)*.5
+ var size=legacy.game.get_viewport_rect().size;panel.size=Vector2(1160,670);var logical=panel.get_combined_minimum_size().max(Vector2(1160,670));panel.size=logical;var fit=minf(1,minf((size.x-20)/logical.x,(size.y-20)/logical.y));panel.scale=Vector2.ONE*fit;panel.position=(size-panel.size*fit)*.5
 func _process(delta:float)->void:
  if manager==null:return
  clock+=delta;layout();preview.queue_redraw()

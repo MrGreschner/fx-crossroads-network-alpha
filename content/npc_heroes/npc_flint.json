@@ -1,0 +1,40 @@
+{
+  "id": "npc_flint",
+  "name": "Flint Gearwright",
+  "sprite": "npc_flint",
+  "npc_only": true,
+  "max_health": 145,
+  "speed": 215,
+  "ai_role": "siege",
+  "primary": {
+    "name": "Rivet Shot",
+    "style": "projectile",
+    "damage": 16,
+    "cooldown": 1.05,
+    "range": 600,
+    "speed": 430,
+    "arc_degrees": 55,
+    "color": "#edb779"
+  },
+  "secondary": {
+    "name": "Siege Shell",
+    "style": "target_aoe",
+    "damage": 24,
+    "cooldown": 7,
+    "range": 550,
+    "travel_speed": 310,
+    "blast_radius": 100,
+    "color": "#edb779"
+  },
+  "special": {
+    "name": "Stormglass Bloom",
+    "style": "target_aoe",
+    "damage": 32,
+    "cooldown": 12,
+    "range": 480,
+    "travel_speed": 300,
+    "blast_radius": 125,
+    "color": "#edb779"
+  },
+  "passive_effect": ""
+}

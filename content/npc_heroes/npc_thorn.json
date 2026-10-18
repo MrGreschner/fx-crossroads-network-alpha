@@ -1,0 +1,37 @@
+{
+  "id": "npc_thorn",
+  "name": "Thorn Reedwarden",
+  "sprite": "npc_thorn",
+  "npc_only": true,
+  "max_health": 155,
+  "speed": 225,
+  "ai_role": "spear",
+  "primary": {
+    "name": "Reed Thrust",
+    "style": "melee",
+    "damage": 23,
+    "cooldown": 0.8,
+    "range": 150,
+    "speed": 430,
+    "arc_degrees": 55,
+    "color": "#afd17b"
+  },
+  "secondary": {
+    "name": "Rootguard",
+    "style": "block",
+    "damage": 0,
+    "cooldown": 7,
+    "duration": 1.4,
+    "reduction": 0.5
+  },
+  "special": {
+    "name": "Bramble Rush",
+    "style": "charge",
+    "damage": 27,
+    "cooldown": 10,
+    "range": 350,
+    "speed": 500,
+    "color": "#afd17b"
+  },
+  "passive_effect": ""
+}

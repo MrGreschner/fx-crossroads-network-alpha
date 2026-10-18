@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "mode": "arena",
+      "humans": 1,
+      "bots": 1,
+      "started": true,
+      "AI_moved": true
+    },
+    {
+      "mode": "defense",
+      "humans": 1,
+      "bots": 1,
+      "started": true,
+      "AI_moved": true
+    },
+    {
+      "mode": "descent",
+      "humans": 1,
+      "bots": 1,
+      "started": true,
+      "AI_moved": true
+    },
+    {
+      "mode": "coop",
+      "humans": 1,
+      "bots": 1,
+      "started": true,
+      "AI_moved": true
+    },
+    {
+      "mode": "battlegrounds",
+      "humans": 1,
+      "bots": 5,
+      "started": true,
+      "AI_moved": true
+    },
+    {
+      "mode": "arena",
+      "humans": 2,
+      "bots": 2,
+      "host_configuration": true
+    }
+  ]
+}

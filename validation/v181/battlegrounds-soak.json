@@ -1,0 +1,9 @@
+{
+  "seconds": 32,
+  "players": 6,
+  "AI": 5,
+  "active_units": 22,
+  "AI_purchased_upgrades": 5,
+  "authority_hz": 60,
+  "max_tick_ms": 11.497
+}

@@ -1,0 +1,14 @@
+{
+  "rendered": [
+    "solo realm desktop",
+    "solo realm phone landscape",
+    "gate defense",
+    "ram descent",
+    "co-op realm",
+    "arena",
+    "battlegrounds"
+  ],
+  "unexpected_errors": [],
+  "hosted_server_tested": false,
+  "note": "Offline rendering fixtures; the room browser attempted the configured Render endpoint and those requests were unavailable in this environment. No hosted multiplayer play test is claimed."
+}

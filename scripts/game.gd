@@ -218,6 +218,11 @@ func _ready() -> void:
 		if not _has_web_sun_loader():add_child(preload("res://scripts/title_intro.gd").new())
 	if _has_web_sun_loader():call_deferred("_finish_web_sun_loading")
 
+	if get_tree().root.has_meta("fx_solo_expedition"):call_deferred("_solo_expedition")
+
+func _solo_expedition()->void:
+	var plan:Dictionary=get_tree().root.get_meta("fx_solo_expedition");get_tree().root.remove_meta("fx_solo_expedition");presentation.close();session_menu.resume();menu="";waylight.launch(str(plan.kind),int(plan.tier))
+
 func _has_web_sun_loader()->bool:
 	return OS.has_feature("web") and bool(JavaScriptBridge.eval("typeof window.fxSunLoading !== 'undefined'",true))
 func _finish_web_sun_loading()->void:
@@ -1858,61 +1863,51 @@ func draw_world_label(world_pos: Vector2, label: String) -> void:
 	draw_string(font, world_pos - camera + Vector2(-48, -83), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
 
 func draw_hud() -> void:
-	draw_rect(Rect2(0, 0, VIEW.x, preload("res://scripts/town_hud.gd").height(self) if mode=="town" else 179), Color(0.06, 0.11, 0.14, 0.9))
+	draw_rect(Rect2(0, 0, VIEW.x, preload("res://scripts/town_hud.gd").height(self) if mode=="town" else 90), Color(0.06, 0.11, 0.14, 0.9))
 	if mode == "town":
 		draw_string(font, Vector2(24, 34), "CROSSROADS" if VIEW.x<1100 else "CROSSROADS  |  REALMS BEYOND", HORIZONTAL_ALIGNMENT_LEFT, -1, 20 if VIEW.x<1100 else 25, Color.WHITE)
 		preload("res://scripts/town_hud.gd").draw_on(self)
 
 	else:
-		draw_string(font, Vector2(24, 34), ("RAM'S TRIAL" if trial else str(region.get("name", "Realm"))) + "  |  " + str(hero.get("name", "Hero")) + ("  |  PRACTICE CONTINUE" if continuation!=null and continuation.active else "") + "  |  Lv " + str(level) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Practice" if tutorial.active else "  |  "+str(enemies.size())+" echoes" if mistglass_rift!=null and mistglass_rift.active else "  |  Expedition" if waylight!=null and waylight.between() else "  |  " + str(kills) + "/" + str(region.get("enemies", []).size())), HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color.WHITE)
-		var controls:="Touch: move / aim-fire sticks • ability buttons • upgrades at Lv8" if mobile.enabled else "Shift dodge  |  LMB primary  |  RMB secondary Lv3  |  passive Lv5  |  Space special Lv6  |  attack upgrade Lv8"
-		if adventure.combat.robot.transformed("solo"):controls="SAW FORM • Move slowly • "+("Aim-fire stick" if mobile.enabled else "LMB")+": Shock Stomp • Dodge and other attacks disabled"
-		draw_string(font, Vector2(24,68),controls,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d5e2d8"))
-		draw_rect(Rect2(VIEW.x-270, 16, 235, 19), Color("#4d4146"))
-		draw_rect(Rect2(VIEW.x-270, 16, 235 * health / max_health(), 19), Color("#e48481"))
-		draw_string(font, Vector2(VIEW.x-260, 33), "HP " + str(int(health)), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
+		var layout=preload("res://scripts/combat_hud.gd")
+		var title=("RAM'S TRIAL" if trial else str(region.get("name","Realm")))+" • "+str(hero.get("name","Hero"))+" • Lv "+str(level)
+		layout.header(self,title,gold,health,max_health())
 		draw_ability_cooldowns()
-		draw_string(font, Vector2(870, 88), "%d:%02d" % [int(run_time) / 60, int(run_time) % 60], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
-		var level_span := int(region.get("xp_per_level", 5)) * 10
-		var xp_progress := clampf(float(tutorial.defeated)/7.0,0,1) if tutorial.active else clampf(float(experience - (level - 1) * level_span) / float(level_span), 0, 1)
-		draw_rect(Rect2(24, 103, 260, 14), Color(0.08, 0.19, 0.17, 0.9))
-		draw_rect(Rect2(24, 103, 260 * xp_progress if level < 10 else 260, 14), Color("#a9ecba"))
-		draw_string(font, Vector2(29, 136), "LODGE TRIAL • medals only" if lodges!=null and lodges.active else "RIFT PRACTICE • no profile rewards" if mistglass_rift!=null and mistglass_rift.active else "Practice abilities • Lv "+str(level)+" / 6" if tutorial.active else "XP " + ("MAX" if level == 10 else str(experience) + "/" + str(level * level_span)) + "  |  CC " + str(gold), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#f3ffdf"))
-		if continuation!=null and continuation.active:
-			draw_rect(Rect2(24,146,240,25),Color("#18475d"));draw_rect(Rect2(24,146,240,25),Color("#7abfd4"),false,1)
-			draw_string(font,Vector2(34,164),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
+		var span=int(region.get("xp_per_level",5))*10
+		var fraction=clampf(float(tutorial.defeated)/7.0,0,1) if tutorial.active else clampf(float(experience-(level-1)*span)/float(span),0,1)
+		var label="First steps • wave %d/3" % mini(3,1+int(tutorial.defeated)/3) if tutorial.active else "Lv %d • XP %s" % [level,"MAX" if level>=10 else str(experience)+" / "+str(level*span)]
+		layout.experience(self,label,1.0 if level>=10 else fraction)
+		draw_string(font,Vector2(24,78),"PRACTICE • discoveries only" if continuation!=null and continuation.active else "%02d:%02d" % [int(run_time)/60,int(run_time)%60],HORIZONTAL_ALIGNMENT_LEFT,240,13,Color("#b7cbd6"))
 		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active:
 			var closest_enemy: Dictionary = enemies[0]
 			for candidate in enemies:
 				if position_in_world.distance_squared_to(candidate["pos"]) < position_in_world.distance_squared_to(closest_enemy["pos"]):
 					closest_enemy = candidate
 			var target_direction: Vector2 = (closest_enemy["pos"] - position_in_world).normalized()
-			var arrow_center := Vector2(VIEW.x-120, 212)
+			var arrow_center := Vector2(VIEW.x-115, 138)
 			draw_arc(arrow_center, 23, 0, TAU, 32, Color("#ffe3a1"), 2)
 			draw_line(arrow_center, arrow_center + target_direction * 19, Color("#ffe3a1"), 5)
 			draw_circle(arrow_center + target_direction * 19, 4, Color("#ffe3a1"))
 			draw_string(font, arrow_center + Vector2(-4, -28), "N", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
-			draw_string(font, Vector2(VIEW.x-265, 242), "Next enemy: " + str(int(position_in_world.distance_to(closest_enemy["pos"]) / 64)) + " tiles", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
-		draw_rect(Rect2(0, VIEW.y-70, VIEW.x, 70), Color(0.06, 0.11, 0.14, 0.83))
+			draw_string(font, Vector2(VIEW.x-260, 177), "Next enemy: " + str(int(position_in_world.distance_to(closest_enemy["pos"]) / 64)) + " tiles", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
+
 		if invulnerable_time > 0:
-			draw_string(font, Vector2(910, 681), "Shield: %.1fs" % invulnerable_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
+			draw_string(font, Vector2(VIEW.x-260, VIEW.y-110), "Shield: %.1fs" % invulnerable_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
 		elif haste_time > 0:
-			draw_string(font, Vector2(910, 681), "Rush: %.1fs" % haste_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
+			draw_string(font, Vector2(VIEW.x-260, VIEW.y-110), "Rush: %.1fs" % haste_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
 		elif stealth_time > 0:
-			draw_string(font, Vector2(910, 681), "Stealth: %.1fs" % stealth_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
+			draw_string(font, Vector2(VIEW.x-260, VIEW.y-110), "Stealth: %.1fs" % stealth_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
 		elif stun_time > 0:
-			draw_string(font, Vector2(910, 681), "Stunned: %.1fs" % stun_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#ffb38d"))
+			draw_string(font, Vector2(VIEW.x-260, VIEW.y-110), "Stunned: %.1fs" % stun_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#ffb38d"))
 	if hint != "" and menu == "":
-		draw_string(font, Vector2(370, 545 if mobile.enabled else 625), hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 23, Color("#fbeba9"))
+		draw_string(font, Vector2(370, VIEW.y-135 if mobile.enabled else VIEW.y-110), hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 23, Color("#fbeba9"))
 	if message_time > 0 and menu == "":
-		draw_string(font, Vector2(24, 272 if tutorial.active and mobile.enabled else 205 if mobile.enabled else 580 if mode=="run" and waylight!=null and waylight.special() else 620 if mode == "run" else 692), message, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
+		draw_string(font, Vector2(24, 275 if tutorial.active and mobile.enabled else VIEW.y-150 if mode=="run" else VIEW.y-28), message, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
 
 func draw_ability_cooldowns() -> void:
-	draw_set_transform(Vector2(VIEW.x-1280,0))
 	var labels: Array[String] = ["LMB", "RMB", "SPC"]
 	if mobile.enabled: labels.assign(["AIM","2ND","SPC"])
 	var keys: Array[String] = ["primary", "secondary", "special"]
-	var colors: Array[Color] = [Color("#f4d58a"), Color("#9cdef1"), Color("#d5a8f0")]
 	for index in range(3):
 		var ability_key: String = keys[index]
 		var required_level: int = 1 if index == 0 else 3 if index == 1 else 6
@@ -1921,14 +1916,9 @@ func draw_ability_cooldowns() -> void:
 		var duration: float = maxf(0.1, float(stats.get("cooldown", 1.0)))
 		var remaining: float = maxf(0.0, float(cooldowns.get(ability_key, 0.0)))
 		var readiness: float = 0.0 if locked else clampf(1.0 - remaining / duration, 0.0, 1.0)
-		var y: float = 54.0 + float(index) * 16.0
-		draw_string(font, Vector2(942, y + 9.0), labels[index], HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("#a4abb3") if locked else Color.WHITE)
-		draw_rect(Rect2(1010, y, 165, 9), Color("#293640"))
-		draw_rect(Rect2(1010, y, 165.0 * readiness, 9), colors[index])
-		var state: String = "Lv" + str(required_level) if locked else "READY" if remaining <= 0.0 else "%.1fs" % remaining
-		draw_string(font, Vector2(1181, y + 9.0), state, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("#e7e9dc"))
 
-	draw_set_transform(Vector2.ZERO)
+		var state: String = "Lv" + str(required_level) if locked else "READY" if remaining <= 0.0 else "%.1fs" % remaining
+		preload("res://scripts/combat_hud.gd").cooldown(self,index,labels[index],readiness,state,locked)
 
 var list_scroll: Dictionary = {}
 var list_preview: Dictionary = {}

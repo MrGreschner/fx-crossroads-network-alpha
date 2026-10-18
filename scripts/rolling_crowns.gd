@@ -72,6 +72,7 @@ static func tier_from(amount:float)->int:
  var tier=0
  for threshold in GOALS:if amount>=threshold:tier+=1
  return tier
+static func glimmer_basis_points(rank:int)->int:return clampi(rank,0,GOALS.size())*25
 static func bonus(rank:int,competition:bool=false)->Dictionary:
  if competition:return {"chance":0.0,"damage":0.0}
  rank=clampi(rank,0,GOALS.size())
@@ -117,7 +118,9 @@ func ui(parent:Node)->void:
  var bar=ProgressBar.new();bar.custom_minimum_size.y=20;bar.show_percentage=false;bar.max_value=GOALS[rank] if rank<GOALS.size() else GOALS.back();bar.min_value=GOALS[rank-1] if rank>0 and rank<GOALS.size() else 0;bar.value=cached_sum;info.add_child(bar)
  line(info,"Next • "+rank_name(rank+1) if rank<GOALS.size() else "Beyonder • beyond the known paths",15)
  line(box,"ACTIVE POWER  •  +%.0f%% crit chance  •  +%.0f%% crit damage" % [float(powers.chance)*100,float(powers.damage)*100],17)
- line(box,"Power follows your rolling seven-day crown. Competition matches disable crown bonuses for everyone.",14)
+ line(box,"CROWN DIVIDEND  •  +%.2f%% Glimmers earned" % (glimmer_basis_points(rank)/100.0),17)
+ line(box,"Every crown tier adds 0.25%, up to 4.5%. Applies to Glimmer earnings; small fractions carry forward until they make a whole Glimmer. Hiding the crown does not remove its power.",14)
+ line(box,"Power follows your rolling seven-day crown. Competition matches disable combat crown bonuses for everyone.",14)
  var archive=ui.card(parent,"PERSONAL BEST",rank_name(int(state().best_tier))+" • highest recorded crown")
  line(archive,"Record only • keep playing to maintain your visible crown and its power. Expired crowns cannot be equipped.",15)
 static func line(parent:Node,value:String,fs:int)->void:

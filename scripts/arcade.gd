@@ -9,7 +9,7 @@ var media=preload("res://scripts/media_mode.gd").new()
 var dev_magic:Node2D
 var battlegrounds=preload("res://scripts/battlegrounds.gd").new()
 var bg_map:="woodland"
-var bg_team_size:=4
+var bg_team_size:=3
 var bg_map_picker:OptionButton
 var bg_help:Button
 var bg_size_picker:OptionButton
@@ -32,6 +32,7 @@ const SEND_INTERVAL := 0.10
 const MOVEMENT_INTERVAL := 0.05
 const MAX_PLAYERS := 8
 var arena_seats:=4
+var bot_plan:Array=[]
 var bot_count:=0
 var ai_difficulty:="medium"
 var difficulty_picker:OptionButton
@@ -228,6 +229,7 @@ func setup_media()->void:
 func media_mouse_world()->Vector2:
 	return media.world_mouse() if media.game!=null else get_global_mouse_position()+camera
 func _ready() -> void:
+	call_deferred("_add_combat_slots")
 	add_child(custom_party);custom_party.setup(self)
 	call_deferred("setup_media")
 	dev_magic=preload("res://scripts/dev_magic.gd").new();add_child(dev_magic);dev_magic.setup(self)
@@ -302,6 +304,16 @@ func _ready() -> void:
 	for n in realm_picker.item_count:
 		if str(realm_picker.get_item_metadata(n))==requested:realm_picker.select(n)
 	if get_tree().root.has_meta("fx_realm"):get_tree().root.remove_meta("fx_realm")
+
+	if get_tree().root.has_meta("fx_solo_party"):call_deferred("_begin_solo_party")
+
+func _begin_solo_party()->void:preload("res://scripts/solo_party.gd").begin(self)
+
+func return_to_network_menu()->void:
+	_track_card_progress();legacy.save();get_tree().root.set_meta("fx_mode",mode);get_tree().root.set_meta("fx_hero",selected_hero);get_tree().change_scene_to_file("res://network/client.tscn")
+func _add_combat_slots()->void:
+	if get("dedicated")==true:return
+	var quick=preload("res://scripts/loadout_hud.gd").new();add_child(quick);quick.setup(self)
 
 func _json(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path): return {}
@@ -382,8 +394,8 @@ func _ui() -> void:
 	spectator_picker.tooltip_text="A separate broadcast seat. No hero, combat or progression rewards. Change while the lobby is waiting."
 	spectator_picker.toggled.connect(func(value:bool):spectator_host=value;_update_lobby_settings())
 	bots_picker=OptionButton.new();control.add_child(bots_picker);bots_picker.position=Vector2(700,214);bots_picker.size=Vector2(210,32)
-	for n in 4:bots_picker.add_item("Practice bots: "+str(n),n)
-	bots_picker.item_selected.connect(func(index:int):bot_count=mini(index,3);arena_seats=maxi(arena_seats,bot_count+1);seats_picker.select(arena_seats-2);bots_picker.select(bot_count);_update_lobby_settings())
+	for n in 8:bots_picker.add_item("Practice bots: "+str(n),n)
+	bots_picker.item_selected.connect(func(index:int):bot_count=mini(index,7);arena_seats=maxi(arena_seats,bot_count+1);seats_picker.select(arena_seats-2);bots_picker.select(bot_count);_update_lobby_settings())
 	difficulty_picker=OptionButton.new();control.add_child(difficulty_picker);difficulty_picker.position=Vector2(1000,102);difficulty_picker.size=Vector2(225,26)
 	difficulty_picker.add_item("AI: Easy");difficulty_picker.add_item("AI: Medium");difficulty_picker.add_item("AI: Hard");difficulty_picker.select(1)
 	difficulty_picker.item_selected.connect(func(index:int):ai_difficulty=["easy","medium","hard"][index];_update_lobby_settings())
@@ -550,7 +562,7 @@ func _room_config(data: Dictionary) -> void:
 	var config: Dictionary = data.get("config", {})
 	bg_map=str(config.get("bg_map","woodland"));bg_team_size=clampi(int(config.get("bg_team_size",4)),3,4);_sync_bg_pickers()
 	ai_difficulty=bots.difficulty(config.get("ai_difficulty","medium"))
-	arena_seats=clampi(int(config.get("seats",4)),2,8);spectator_host=bool(config.get("spectator",false));bot_count=clampi(int(config.get("bots",0)),0,mini(3,arena_seats-1));arena_map=str(config.get("arena_map","sand"));arena_opening=bool(config.get("opening",false));_sync_arena_pickers()
+	arena_seats=clampi(int(config.get("seats",4)),2,8);spectator_host=bool(config.get("spectator",false));bot_count=clampi(int(config.get("bots",0)),0,mini(7,arena_seats-1));arena_map=str(config.get("arena_map","sand"));arena_opening=bool(config.get("opening",false));_sync_arena_pickers()
 	no_items_picker.set_pressed_no_signal(bool(config.get("no_items",false)));random_hero_picker.set_pressed_no_signal(bool(config.get("random_heroes",false)))
 	if config.has("mode"):
 		mode=str(config["mode"]);mode_picker.select(maxi(0,["defense","arena","coop","descent","battlegrounds"].find(mode)))
@@ -635,7 +647,7 @@ func _start_match() -> void:
 			selected_hero=str(hero_ids.get(my_id,preferred_hero))
 		else:
 			selected_hero=preferred_hero
-			if not spectating():hero_ids[my_id]=preferred_hero
+			if not spectating() and get("dedicated")!=true:hero_ids[my_id]=preferred_hero
 			for id in positions:
 				if id!=my_id:
 					hero_ids[id]=lobby_heroes.get(id,hero_ids.get(id,"ram"));legacy.builds[id]=lobby_builds.get(id,legacy.builds.get(id,{}))
@@ -1236,7 +1248,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 	if style == "heal_wave":
 		var healing_radius := float(stats.get("radius",180))
 		for other in positions:
-			if mode != "arena" or other == id or (pvp_rule == "teams" and int(teams.get(other,-1)) == int(teams.get(id,-2))):
+			if mode not in ["arena","battlegrounds"] or other == id or (pvp_rule == "teams" and int(teams.get(other,-1)) == int(teams.get(id,-2))):
 				if origin.distance_to(positions[other]) <= healing_radius: _heal(id,str(other),int(stats.get("heal",35 if kind == "special" else 25)))
 		_emit_effect({"pos":origin,"radius":healing_radius,"time":0.4,"color":color});return
 	if style == "summon":
@@ -1807,7 +1819,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 		"arena_rules":
 			if role=="guest" and remote_id==host_id and not started:
 				allow_custom=bool(data.get("allow_custom",false));custom_picker.set_pressed_no_signal(allow_custom)
-				arena_seats=clampi(int(data.get("seats",4)),2,8);spectator_host=bool(data.get("spectator",false));ai_difficulty=bots.difficulty(data.get("ai_difficulty","medium"));bot_count=clampi(int(data.get("bots",0)),0,mini(3,arena_seats-1));arena_opening=bool(data.get("opening",false));arena_map=str(data.get("arena_map","sand"));_sync_arena_pickers();arena_no_items=bool(data.get("no_items",false));arena_random=bool(data.get("random_heroes",false));no_items_picker.set_pressed_no_signal(arena_no_items);random_hero_picker.set_pressed_no_signal(arena_random)
+				arena_seats=clampi(int(data.get("seats",4)),2,8);spectator_host=bool(data.get("spectator",false));ai_difficulty=bots.difficulty(data.get("ai_difficulty","medium"));bot_count=clampi(int(data.get("bots",0)),0,mini(7,arena_seats-1));arena_opening=bool(data.get("opening",false));arena_map=str(data.get("arena_map","sand"));_sync_arena_pickers();arena_no_items=bool(data.get("no_items",false));arena_random=bool(data.get("random_heroes",false));no_items_picker.set_pressed_no_signal(arena_no_items);random_hero_picker.set_pressed_no_signal(arena_random)
 		"bg_notice":
 			if role=="guest" and remote_id==host_id:status_label.text=str(data.get("message",""))
 		"bg_upgrade":
@@ -1857,7 +1869,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			if role == "guest" and remote_id == host_id:
 				bg_map=str(data.get("bg_map","woodland"));bg_team_size=clampi(int(data.get("bg_team_size",4)),3,4);_sync_bg_pickers()
 				mode = str(data.get("mode","defense"));realm_id = str(data.get("realm","grove"));pvp_rule = str(data.get("rule","ffa"));floor_seed = int(data.get("seed",1))
-				arena_seats=clampi(int(data.get("seats",4)),2,8);spectator_host=bool(data.get("spectator",false));ai_difficulty=bots.difficulty(data.get("ai_difficulty","medium"));bot_count=clampi(int(data.get("bots",0)),0,mini(3,arena_seats-1));arena_opening=bool(data.get("opening",false));arena_map=str(data.get("arena_map","sand"));_sync_arena_pickers();arena_no_items=bool(data.get("no_items",false));arena_random=bool(data.get("random_heroes",false));no_items_picker.set_pressed_no_signal(arena_no_items);random_hero_picker.set_pressed_no_signal(arena_random)
+				arena_seats=clampi(int(data.get("seats",4)),2,8);spectator_host=bool(data.get("spectator",false));ai_difficulty=bots.difficulty(data.get("ai_difficulty","medium"));bot_count=clampi(int(data.get("bots",0)),0,mini(7,arena_seats-1));arena_opening=bool(data.get("opening",false));arena_map=str(data.get("arena_map","sand"));_sync_arena_pickers();arena_no_items=bool(data.get("no_items",false));arena_random=bool(data.get("random_heroes",false));no_items_picker.set_pressed_no_signal(arena_no_items);random_hero_picker.set_pressed_no_signal(arena_random)
 				match_id=str(data.get("match_id",""));match_party_size=int(data.get("party_size",1))
 				var assignments:Dictionary=data.get("heroes",{})
 				for id in assignments:
@@ -1901,7 +1913,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			descent.receive(data.get("descent",{}))
 			pvp_scores=data.get("pvp_scores",{});contributions=data.get("contributions",{});downed=data.get("downed",{});results_reason=str(data.get("results",""));status_label.text=str(data.get("notice",status_label.text))
 			arena_world.receive(data.get("arena_world",{}))
-			match_id=str(data.get("match_id",match_id));match_party_size=int(data.get("party_size",match_party_size));ai_difficulty=bots.difficulty(data.get("ai_difficulty",ai_difficulty));bot_count=clampi(int(data.get("bots",bot_count)),0,3);arena_random=bool(data.get("arena_random",arena_random));arena_no_items=bool(data.get("arena_no_items",arena_no_items));arena_records=data.get("arena_records",{});arena_outcomes=data.get("arena_outcomes",{});defense_cleared_wave=int(data.get("defense_cleared_wave",0))
+			match_id=str(data.get("match_id",match_id));match_party_size=int(data.get("party_size",match_party_size));ai_difficulty=bots.difficulty(data.get("ai_difficulty",ai_difficulty));bot_count=clampi(int(data.get("bots",bot_count)),0,7);arena_random=bool(data.get("arena_random",arena_random));arena_no_items=bool(data.get("arena_no_items",arena_no_items));arena_records=data.get("arena_records",{});arena_outcomes=data.get("arena_outcomes",{});defense_cleared_wave=int(data.get("defense_cleared_wave",0))
 			_profile_section("snapshot_aux",receive_began);receive_began=Time.get_ticks_usec()
 			adventure.receive(data.get("adventure",{}))
 			_profile_section("snapshot_adventure",receive_began);receive_began=Time.get_ticks_usec()
@@ -2277,22 +2289,17 @@ func _draw() -> void:
 	_draw_countdown(font)
 	adventure.school.draw_hud(self)
 	adventure.tech.draw_hud(self);adventure.immersive.draw_hud(self)
-	_draw_hero_cooldowns(font)
-	if mode!="arena" or not str(food_slots.get(my_id,"")).is_empty():draw_string(font,Vector2(30,VIEW.y-70 if mode=="arena" else 144),provisions.summary(str(food_slots.get(my_id,""))),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#cde1b5"))
 	if mode=="battlegrounds":battlegrounds.draw_hud(self)
 	if get("expedition")!=null and get("expedition").special():get("expedition").draw_hud()
 	var title := ("PRACTICE CONTINUE • " if continuation!=null and continuation.active else "") + ("Battlegrounds • "+str(battlegrounds.MAPS.get(bg_map,"Front")) if mode=="battlegrounds" else "Wave " + str(wave) + "  |  Town gate " + str(int(gate_hp)) + "/" + str(int(gate_max)) if mode == "defense" else "Floor " + str(floor_number) + "  |  Best " + str(best_floor) if mode == "descent" else "PvP " + pvp_rule.to_upper() + "  |  Score " + str(pvp_scores.get(my_id,0)) + "  |  " + str(maxi(0,300-int(run_time))) + "s left" if mode == "arena" else str(regions.get(realm_id,{}).get("name",realm_id)) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Stage " + str(wave) + "/3"))
 	if get("expedition")!=null and get("expedition").special():title=("Portal attunement" if get("expedition").kind=="attunement" else "The Between" if get("expedition").between() else "Overcharged "+str(regions.get(realm_id,{}).get("name",realm_id)))+" • 2-player expedition"
-	draw_rect(Rect2(20,15,780,65),Color(0.04,0.09,0.12,0.8))
-	draw_string(font,Vector2(36,40),title,HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#f5e8ba"))
-	draw_string(font,Vector2(36,65),"CC " + str(gold.get(my_id,0)) + "  |  XP " + str(xp.get(my_id,0)) + ("  |  SAW: "+("aim-fire" if mobile.enabled else "LMB")+" Stomp • no dodge" if adventure.combat.robot.transformed(my_id) else "  |  Interact at entrance to extract" if get("expedition")!=null and get("expedition").between() else "  |  Touch Interact to visit buildings" if mobile.enabled else "  |  Shift dodge • E buildings • Esc travel"),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d3e3de"))
-	var needed_xp:=5+int(levels.get(my_id,1))*3
-	draw_rect(Rect2(20,86,260,12),Color("#253343"))
-	draw_rect(Rect2(20,86,260*(1.0 if mode=="arena" and not arena_opening else clampf(float(xp.get(my_id,0))/needed_xp,0,1)),12),Color("#8dd8e5"))
-	draw_string(font,Vector2(290,98),("LEVEL 10 • ALL ABILITIES READY" if mode=="arena" and not arena_opening else "XP "+str(xp.get(my_id,0))+" / "+str(needed_xp)),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color.WHITE)
+	preload("res://scripts/combat_hud.gd").header(self,title,int(gold.get(my_id,0)),float(health.get(my_id,0)),float(_max_hp(my_id)))
+	_draw_hero_cooldowns(font)
+	var needed_xp=5+int(levels.get(my_id,1))*3
+	preload("res://scripts/combat_hud.gd").experience(self,"LEVEL 10 • ALL ABILITIES READY" if mode=="arena" and not arena_opening else "Lv %d • XP %d / %d" % [levels.get(my_id,1),xp.get(my_id,0),needed_xp],1.0 if mode=="arena" and not arena_opening else clampf(float(xp.get(my_id,0))/needed_xp,0,1))
 	if continuation!=null and continuation.active:
-		draw_rect(Rect2(20,105,245,24),Color("#18475d"));draw_string(font,Vector2(29,122),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
-	if mode!="arena":draw_string(font,Vector2(35,124),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#d9d1ae"))
+		draw_rect(Rect2(24,94,245,24),Color("#18475d"));draw_string(font,Vector2(29,111),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
+	if mode not in ["arena","battlegrounds"]:draw_string(font,Vector2(24,VIEW.y-115),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,VIEW.x-50,14,Color("#d9d1ae"))
 	elif arena_notice_left>0:
 		var opacity:=minf(1,arena_notice_left)
 		draw_rect(Rect2(20,110,600,53),Color(.03,.08,.11,.65*opacity))
@@ -2303,7 +2310,7 @@ func _draw() -> void:
 	if shop_open.is_empty():adventure.quests.draw_hud(self)
 	for building in world_buildings:
 		if str(building["name"]) != "Gate" and local_pos.distance_to(building["pos"]) < 220:
-			draw_string(font,Vector2(450,670),"E  Visit " + str(building["name"]),HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#ffe8a7"));break
+			draw_string(font,Vector2(450,VIEW.y-140),"E  Visit " + str(building["name"]),HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#ffe8a7"));break
 	if level_cards==null and int(levels.get(my_id,1)) >= 8 and str(attack_branch.get(my_id,"")) == "": draw_string(font,Vector2(420,635),"LV8: J +primary / K faster secondary",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#ffe9b7"))
 	elif level_cards==null and int(levels.get(my_id,1)) >= 10 and str(mastery_choice.get(my_id,"")) == "": draw_string(font,Vector2(420,635),"LV10: J faster special / K stronger passive",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#ffe9b7"))
 	if not shop_open.is_empty():
@@ -2420,7 +2427,7 @@ func _draw_effect(effect: Dictionary) -> void:
 func _draw_minimap() -> void:
 	if mode=="battlegrounds":return
 	if adventure.quests.active:return
-	var rect := Rect2(VIEW.x-220,20,200,145)
+	var rect := Rect2(VIEW.x-220,100,200,145)
 	draw_rect(rect,Color(0.03,0.08,0.10,0.85))
 	draw_rect(rect,Color("#8ba696"),false,2)
 	if mode == "defense":
@@ -2467,16 +2474,11 @@ func _draw_shop(font: Font) -> void:
 	draw_string(font,Vector2(380,470),"E / Escape: close  |  Combat continues while shopping",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#c5d6cf"))
 
 func _draw_hero_cooldowns(font: Font) -> void:
-	draw_set_transform(Vector2(0,-333) if mobile.enabled else Vector2(0,VIEW.y-720))
 	var hero: Dictionary = characters.get(str(hero_ids.get(my_id,"ram")),{})
 	var keys: Array[String] = ["primary","secondary","special"]
 	var labels: Array[String] = ["LMB","RMB","SPC"]
 	if mobile.enabled: labels.assign(["AIM","2ND","SPC"])
-	var tints: Array[Color] = [Color("#f4d58a"),Color("#9cdef1"),Color("#d5a8f0")]
-	draw_rect(Rect2(20,555,255,98),Color(0.05,0.10,0.16,0.86))
-	draw_rect(Rect2(33,562,225,11),Color("#393c43"))
-	draw_rect(Rect2(33,562,225.0*clampf(float(health.get(my_id,0))/maxf(1.0,float(_max_hp(my_id))),0.0,1.0),11),Color("#e48481"))
-	draw_string(font,Vector2(37,571),"HP " + str(health.get(my_id,0))+" / "+str(_max_hp(my_id)),HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color.WHITE)
+
 	for index in range(3):
 		var key: String = keys[index]
 		var needed: int = 1 if index==0 else 3 if index==1 else 6
@@ -2485,14 +2487,9 @@ func _draw_hero_cooldowns(font: Font) -> void:
 		var duration: float = maxf(0.1,float(stats.get("cooldown",1.0)))
 		var remaining: float = maxf(0.0,float(cooldown_remaining.get(my_id,{}).get(key,0.0))) if role=="guest" else maxf(0.0,float(int(cooldown_at.get(my_id,{}).get(key,0))-Time.get_ticks_msec())/1000.0)
 		var fraction: float = 0.0 if locked else clampf(1.0-remaining/duration,0.0,1.0)
-		var y: float = 579.0+float(index)*23.0
-		draw_string(font,Vector2(34,y+10),labels[index],HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color.WHITE)
-		draw_rect(Rect2(74,y,143,12),Color("#2d3943"))
-		draw_rect(Rect2(74,y,143.0*fraction,12),tints[index])
-		var text_value: String = "Lv"+str(needed) if locked else "READY" if remaining<=0 else "%.1f" % remaining
-		draw_string(font,Vector2(221,y+10),text_value,HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color.WHITE)
 
-	draw_set_transform(Vector2.ZERO)
+		var text_value: String = "Lv"+str(needed) if locked else "READY" if remaining<=0 else "%.1f" % remaining
+		preload("res://scripts/combat_hud.gd").cooldown(self,index,labels[index],fraction,text_value,locked)
 
 func _rebuild_grid() -> void:
 	obstacle_grid.clear()
@@ -2979,7 +2976,7 @@ func _receive_lobby(data:Dictionary)->void:
 		if member.get("cosmetic",{}) is Dictionary:player_cosmetics[id]=member.get("cosmetic",{})
 		if characters.has(hero):hero_ids[id]=hero
 	roster.assign(next);rule_picker.select(clampi(int(data.get("rule",0)),0,1))
-	arena_seats=clampi(int(data.get("seats",4)),2,8);spectator_host=bool(data.get("spectator",false));ai_difficulty=bots.difficulty(data.get("ai_difficulty","medium"));bot_count=clampi(int(data.get("bots",0)),0,mini(3,arena_seats-1));arena_opening=bool(data.get("opening",false));arena_map=str(data.get("arena_map","sand"));_sync_arena_pickers();arena_no_items=bool(data.get("no_items",false));arena_random=bool(data.get("random_heroes",false));no_items_picker.set_pressed_no_signal(arena_no_items);random_hero_picker.set_pressed_no_signal(arena_random)
+	arena_seats=clampi(int(data.get("seats",4)),2,8);spectator_host=bool(data.get("spectator",false));ai_difficulty=bots.difficulty(data.get("ai_difficulty","medium"));bot_count=clampi(int(data.get("bots",0)),0,mini(7,arena_seats-1));arena_opening=bool(data.get("opening",false));arena_map=str(data.get("arena_map","sand"));_sync_arena_pickers();arena_no_items=bool(data.get("no_items",false));arena_random=bool(data.get("random_heroes",false));no_items_picker.set_pressed_no_signal(arena_no_items);random_hero_picker.set_pressed_no_signal(arena_random)
 
 func _teams_ready()->bool:
 	var silver:=0;var blue:=0
