@@ -1,10 +1,19 @@
 extends RefCounted
-const ROTATION=["grove","quarry","ice","honeyglass","sunfield"]
+const ROTATION=["grove","quarry","ice","honeyglass","sunfield","silverfall","clockwork_orchard","astral_rift"]
 const COSTS=[100,200,300]
 const CHANCES=[.10,.15,.20]
-const NAMES={"grove":"Whispering Grove","quarry":"Ember Quarry","ice":"Frostbound Rink","honeyglass":"Honeyglass Gardens","sunfield":"Sunfield Expanse"}
-const FAMILIES={"grove":["thornroot","grove_seed"],"quarry":["emberstep","quarry_heart"],"ice":["frost_lens","river_pearl"],"honeyglass":["nectar_vial","prism_comb"],"sunfield":["sunseed","sunward"]}
+const NAMES={"grove":"Whispering Grove","quarry":"Ember Quarry","ice":"Frostbound Rink","honeyglass":"Honeyglass Gardens","sunfield":"Sunfield Expanse","silverfall":"Silverfall Reach","clockwork_orchard":"The Clockwork Orchard","astral_rift":"Astral Rift"}
+const FAMILIES={"grove":["thornroot","grove_seed"],"quarry":["emberstep","quarry_heart"],"ice":["frost_lens","river_pearl"],"honeyglass":["nectar_vial","prism_comb"],"sunfield":["sunseed","sunward"],"silverfall":["reed_oath","undertow_mark","tideheart"],"clockwork_orchard":["stormfolio","clockwork_drive","secondhand_guard"],"astral_rift":["astral_echo","gravity_anchor","eventide_seed"]}
 const RELICS={
+ "reed_oath":{"name":"Ferryman\u2019s Oath","color":"#80d8ce","effect":"Dodge grants a 6\u20139 HP shield for 4s (10s cooldown). Reed of Silverfall also restores 3 HP when it triggers. All heroes can use it.","range":[6,9],"kind":"oath"},
+ "undertow_mark":{"name":"Undertow Seal","color":"#93bfef","effect":"A damaging hit slows its target by 25% for 0.8\u20131.1s. 7s cooldown.","range":[0.8,1.1],"kind":"tide"},
+ "tideheart":{"name":"Tideheart Vessel","color":"#a9dfd1","effect":"Eating healing food empowers your next damaging hit within 4s by 8\u201312%. 10s cooldown.","range":[8,12],"kind":"vessel"},
+ "stormfolio":{"name":"Stormscribe\u2019s Lost Folio","color":"#bfaff1","effect":"Every sixth damaging hit releases an 8\u201312 damage echo (6s cooldown). Stormscribe also arcs half that echo to up to two enemies within 130 units. Echoes cannot trigger relics. All heroes can use it.","range":[8,12],"kind":"folio"},
+ "clockwork_drive":{"name":"Orchard Flywheel","color":"#d6b479","effect":"While above 80% health, your attacks deal 3\u20135% additional damage.","range":[3,5],"kind":"gear"},
+ "secondhand_guard":{"name":"Secondhand Aegis","color":"#9abfd5","effect":"Reduce the first damaging hit after 8 seconds without incoming damage by 10\u201314%. Each incoming hit restarts that respite.","range":[10,14],"kind":"clock"},
+ "astral_echo":{"name":"Echo of the Rift","color":"#c6a4ec","effect":"A damaging hit releases a 6\u20139 damage echo against that target. 10s cooldown. Echoes cannot trigger relics.","range":[6,9],"kind":"rift"},
+ "gravity_anchor":{"name":"Gravity Anchor","color":"#8fa9df","effect":"After dodging, your next hit within 4s slows its target by 40% for 0.8\u20131.2s. 10s cooldown.","range":[0.8,1.2],"kind":"anchor"},
+ "eventide_seed":{"name":"Eventide Heart","color":"#deabd9","effect":"Defeating an enemy restores 3\u20135 HP. 12s cooldown.","range":[3,5],"kind":"starheart"},
  "nectar_vial":{"name":"Mellifera's Nectar Vial","color":"#edd09b","effect":"Eating healing food restores an extra 3–5 HP. 8s cooldown.","range":[3,5],"kind":"vial"},
  "prism_comb":{"name":"Prismatic Honeycomb","color":"#b9dce4","effect":"After dodging, your next hit within 4s deals 6–9% extra damage. 8s cooldown.","range":[6,9],"kind":"comb"},
  "sunseed":{"name":"Solstice Sunseed","color":"#e6c97e","effect":"A kill grants a 4–6 HP shield for 4s. 10s cooldown; shields do not stack.","range":[4,6],"kind":"sun"},

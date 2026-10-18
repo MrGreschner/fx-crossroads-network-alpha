@@ -41,9 +41,9 @@ func _process(delta:float)->void:
  clock+=delta
  var view=get_viewport_rect().size;var hud_fit=minf(1,(view.x-24)/980);hud.size=Vector2(980,108);hud.scale=Vector2.ONE*hud_fit;hud.position=Vector2((view.x-980*hud_fit)*.5,10)
  interact.disabled=player.distance_to(keeper)>=150
- touch.position=Vector2(14,view.y-65);touch.visible=not is_instance_valid(dialogue) and not is_instance_valid(fishing.journal)
+ touch.position=Vector2(14,view.y-65);touch.visible=not is_instance_valid(dialogue) and not is_instance_valid(fishing.journal) and not is_instance_valid(fishing.inspector)
  if is_instance_valid(dialogue):fishing.fit_panel(dialogue,Vector2(720,430))
- if not is_instance_valid(dialogue) and not is_instance_valid(fishing.journal):
+ if not is_instance_valid(dialogue) and not is_instance_valid(fishing.journal) and not is_instance_valid(fishing.inspector):
   var direction=touch_move+Input.get_vector("move_left","move_right","move_up","move_down");moving=direction.length_squared()>.01
   var candidate=(player+direction.normalized()*180*delta).clamp(Vector2(75,240),Vector2(945,586))
   if Rect2(765,425,195,115).has_point(candidate):candidate=player
@@ -60,7 +60,8 @@ func _process(delta:float)->void:
  queue_redraw()
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_ESCAPE:
-  if is_instance_valid(fishing.journal):fishing.close_journal()
+  if is_instance_valid(fishing.inspector):fishing.inspector.close()
+  elif is_instance_valid(fishing.journal):fishing.close_journal()
   elif is_instance_valid(dialogue):dialogue.queue_free();dialogue=null
   else:fishing.close_shop()
   get_viewport().set_input_as_handled()
@@ -74,6 +75,9 @@ func _draw()->void:
   draw_line(Vector2(45,y),Vector2(975,y),Color("#705e4b"),2)
   for x in range(45+(y%54)*3,970,125):draw_line(Vector2(x,y),Vector2(x,y+27),Color("#77664e"),1)
  draw_rect(Rect2(45,140,930,100),Color("#274854"));draw_line(Vector2(45,240),Vector2(975,240),Color("#c4ab7b"),6)
+ var displayed:Array=[]
+ for id in fishing.records().state().display:displayed.append(fishing.records().specimen(str(id)))
+ var shared_scale=C.tank_scale(displayed)
  for n in 5:
   var p=Vector2(90+n*183,175);var water=Rect2(p,Vector2(150,146))
   draw_style_box(UI.box("#15353f","#bdac7d",6,0),water.grow(6));draw_rect(water,Color("#397d92"))
@@ -84,7 +88,7 @@ func _draw()->void:
    var b=p+Vector2(116+sin(bubble)*12,128-fposmod(clock*13+bubble*29,119));draw_arc(b,2+float(bubble%2),0,TAU,10,Color(.7,.93,.94,.55),1)
   var catch=fishing.records().specimen(str(fishing.records().state().display[n]))
   if not catch.is_empty():
-   var dimensions:Vector2=C.display_size(catch);var pos=p+Vector2(75+sin(clock*.6+n)*6,77+sin(clock+n)*4)-dimensions*.5;draw_texture_rect(C.texture(str(catch.species)),Rect2(pos,dimensions),false)
+   var dimensions:Vector2=C.display_size(catch,shared_scale);var pos=p+Vector2(75+sin(clock*.6+n)*6,77+sin(clock+n)*4)-dimensions*.5;draw_texture_rect_region(C.texture(str(catch.species)),Rect2(pos,dimensions),C.display_region(catch))
    var name=("★ " if C.is_trophy(catch) else "")+str(C.fish()[catch.species].name);text(p+Vector2(-2,174),name,13,Color("#fae4b4"));text(p+Vector2(20,195),"%.2f kg" % catch.kg,14)
   else:text(p+Vector2(28,80),"Empty tank",14);text(p+Vector2(35,174),"DISPLAY "+str(n+1),14,Color("#fae4b4"))
   draw_rect(Rect2(p+Vector2(8,6),Vector2(8,112)),Color(1,1,1,.09))
@@ -104,3 +108,25 @@ func _draw()->void:
  if sprite!=null:draw_texture_rect(sprite,Rect2(player-Vector2(25,54),Vector2(50,58)),false)
  else:draw_texture_rect(keeper_art,Rect2(player-Vector2(25,54),Vector2(50,58)),false)
  if player.distance_to(keeper)<115:text(keeper+Vector2(-47,51),"Talk / E",15,Color("#ffe1a7"))
+
+func tank_at(local_point:Vector2)->int:
+ var factor=minf(size.x/1020,size.y/660)
+ if factor<=0:return -1
+ var point=(local_point-(size-Vector2(1020,660)*factor)*.5)/factor
+ for n in 5:
+  if Rect2(Vector2(90+n*183,175),Vector2(150,146)).has_point(point):return n
+ return -1
+func _gui_input(event:InputEvent)->void:
+ if is_instance_valid(fishing.journal) or is_instance_valid(dialogue) or is_instance_valid(fishing.inspector):return
+ var pressed=event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT or event is InputEventScreenTouch and event.pressed
+ if not pressed:return
+ var slot=tank_at(event.position)
+ if slot<0:return
+ var id=str(fishing.records().state().display[slot])
+ if fishing.records().specimen(id).is_empty():return
+ fishing.show_catch_details(id);accept_event()
+func _get_tooltip(local_point:Vector2)->String:
+ var slot=tank_at(local_point)
+ if slot<0:return ""
+ var catch=fishing.records().specimen(str(fishing.records().state().display[slot]))
+ return "Select for full fish details" if not catch.is_empty() else "Choose a kept catch to fill this tank"

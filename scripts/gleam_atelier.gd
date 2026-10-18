@@ -29,7 +29,12 @@ class Preview extends Control:
   if page.lobby_preview:A.draw_lobby(self,Vector2.ZERO,page.clock,m.rankings.lobby_payload())
   if tex!=null:draw_texture_rect(tex,Rect2(-Vector2(27,65),Vector2(54,65)),false)
   var id=str(page.selected)
-  if id in R.IDS:
+  if id=="crown" or page.lobby_preview or not bool(m.state().get("hide_town_crown",false)):
+   var crown_rank=preload("res://scripts/rolling_crowns.gd").tier_from(page.legacy.crowns.total())
+   if page.lobby_preview:preload("res://scripts/rolling_crowns.gd").draw_on(self,Vector2(0,-45),page.clock,crown_rank)
+   else:preload("res://scripts/rolling_crowns.gd").draw_town(self,Vector2(0,-62),page.clock,crown_rank)
+  if id=="crown":pass
+  elif id in R.IDS:
    if page.lobby_preview and id not in A.active(m.rankings.lobby_payload()):A.draw_single(self,Vector2.ZERO,page.clock,id)
   elif id=="daily" or id=="auto":
    if page.legacy.daily.earned():preload("res://scripts/daily_challenge.gd").draw_on(self,Vector2.ZERO,page.clock,page.legacy.daily.today)
@@ -40,7 +45,8 @@ class Swatch extends Control:
  var page:CanvasLayer
  func _draw()->void:
   draw_circle(Vector2(26,26),23,Color("#24444e"))
-  if id in R.IDS:A.draw_single(self,[Vector2(-8,53),Vector2(61,34),Vector2(63,69)][R.IDS.find(id)],page.clock,id)
+  if id=="crown":preload("res://scripts/rolling_crowns.gd").draw_on(self,Vector2(26,65),page.clock,maxi(1,preload("res://scripts/rolling_crowns.gd").tier_from(page.legacy.crowns.total())))
+  elif id in R.IDS:A.draw_single(self,[Vector2(-8,53),Vector2(61,34),Vector2(63,69)][R.IDS.find(id)],page.clock,id)
   elif id in ["none","auto","daily"]:draw_arc(Vector2(26,26),13,page.clock*.4,page.clock*.4+PI*1.7,24,Color("#e1c78c"),2,true)
   else:
    draw_set_transform(Vector2(0,0),0,Vector2.ONE*.65);C.draw_on(self,Vector2(40,125),page.clock,id,str(page.manager.state().week));draw_set_transform(Vector2.ZERO)
@@ -73,21 +79,23 @@ func setup(owner:RefCounted)->void:
  tabs.tab_changed.connect(func(n):filter=n;populate())
  var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.custom_minimum_size.y=235;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
  gallery=GridContainer.new();gallery.columns=2;gallery.size_flags_horizontal=Control.SIZE_EXPAND_FILL;gallery.add_theme_constant_override("h_separation",8);gallery.add_theme_constant_override("v_separation",8);scroll.add_child(gallery)
- details=VBoxContainer.new();details.custom_minimum_size.y=138;right.add_child(details)
+ var detail_scroll=ScrollContainer.new();detail_scroll.custom_minimum_size.y=170;detail_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.add_child(detail_scroll);preload("res://scripts/touch_list_scroll.gd").attach(detail_scroll)
+ details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;detail_scroll.add_child(details)
  sync_label=text(shell,"",14);sync_label.modulate=Color("#a5c3c4")
  entries=catalogue();populate();manager.rankings.delay=0;layout()
 func catalogue()->Array:
  var list=[{"id":"auto","name":"Automatic daily reward","need":"Show today’s completed Daily Mission effect."},{"id":"none","name":"No extra effect","need":"A clean look for your selected hero."},{"id":"daily","name":legacy.daily.reward_name(),"need":"Complete today’s Daily Mission. Available until local midnight."}]
- for n in 3:list.append({"id":C.IDS[n],"name":C.NAMES[n],"need":["Discover 10 different fish species. Permanent unlock.","Reach floor 25 in Ram’s Descent. Permanent unlock.","Clear Astral Rift and complete Attunement. Permanent unlock."][n]})
+ for n in 3:list.append({"id":C.IDS[n],"name":C.NAMES[n],"need":["Discover 50 different fish species. Permanent unlock.","Reach floor 50 in Ram’s Descent. Permanent unlock.","Clear Astral Rift and complete Attunement. Permanent unlock."][n]})
  for id in W.REWARDS:list.append({"id":id,"name":str(W.REWARDS[id].name),"need":legacy.weekly.goal_text(id)+". Resets Sunday on this device."})
- for n in 3:list.append({"id":C.LODGE_IDS[n],"name":["Bronze Laurel","Silver Laurel","Golden Laurel"][n],"need":"Earn %d Challenge Lodge medal points. Permanent unlock." % [5,15,30][n]})
+ for n in 3:list.append({"id":C.LODGE_IDS[n],"name":["Bronze Laurel","Silver Laurel","Golden Laurel"][n],"need":"Earn %d Challenge Lodge medal points. Permanent unlock." % [15,30,50][n]})
  list.append({"id":"lodge_week","name":"Weekly Lantern","need":"Complete all three featured Challenge Lodge trials this week."})
- list.append({"id":"easter","name":"Easter Egg","need":"Earn all four Expert realm badges. Permanent unlock."})
+ list.append({"id":"easter","name":"Echo of the Four Paths","need":"Earn all four Expert realm badges. Permanent unlock."})
  list.append({"id":R.IDS[0],"name":"Vanguard Comets","need":"Be in the current top 10 for damage since Monday. Compared across connected profiles; resets Monday 00:00 Edmonton. Lobby only."})
  list.append({"id":R.IDS[1],"name":"Leviathan’s Wake","need":"Be in the current top 10 for the heaviest single fish (kg) caught this week. Kept and released catches count. Resets Monday 00:00 Edmonton. Lobby only."})
  list.append({"id":R.IDS[2],"name":"Eternal Constellation","need":"Be in the current top 5 for lifetime damage across connected profiles. No weekly reset; stays visible while you hold a top-five place. Lobby only."})
+ list.insert(2,{"id":"crown","name":"Damage Crown","need":"Your current rolling seven-day damage crown. Keep playing to maintain it; expired crowns cannot be worn. Hide or show it in town without changing crown power or lobby display."})
  return list
-func earned(id:String)->bool:return id in manager.rankings.badges() if id in R.IDS else manager.eligible(id)
+func earned(id:String)->bool:return legacy.crowns.total()>=1000 if id=="crown" else id in manager.rankings.badges() if id in R.IDS else manager.eligible(id)
 func populate()->void:
  for node in gallery.get_children():gallery.remove_child(node);node.queue_free()
  for spec in entries:
@@ -99,7 +107,7 @@ func populate()->void:
   var art=Swatch.new();art.id=id;art.page=self;art.mouse_filter=Control.MOUSE_FILTER_IGNORE;art.custom_minimum_size=Vector2(52,52);row.add_child(art)
   var words=VBoxContainer.new();words.mouse_filter=Control.MOUSE_FILTER_IGNORE;words.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(words)
   text(words,str(spec.name),16).mouse_filter=Control.MOUSE_FILTER_IGNORE
-  var rank_label="Eligible • lobby style" if id in R.IDS and earned(id) else "Equipped" if str(manager.state().selected)==id and earned(id) else "Available" if earned(id) else "Locked • tap to inspect"
+  var rank_label=("Hidden in town" if bool(manager.state().get("hide_town_crown",false)) else "Shown in town") if id=="crown" and earned(id) else "Eligible • lobby style" if id in R.IDS and earned(id) else "Equipped" if str(manager.state().selected)==id and earned(id) else "Available" if earned(id) else "Locked • tap to inspect"
   text(words,rank_label,13).modulate=Color("#dcd092") if earned(id) else Color("#a4babf")
  detail()
 func detail()->void:
@@ -110,7 +118,10 @@ func detail()->void:
  if spec.is_empty():return
  text(details,str(spec.name)+(" • LOBBY PREVIEW" if selected in R.IDS else ""),22).modulate=Color("#f4d599")
  text(details,str(spec.need),16)
- if selected in R.IDS:
+ if selected=="crown":
+  button(details,"Show crown in town" if bool(manager.state().get("hide_town_crown",false)) else "Hide crown in town",func():manager.state().hide_town_crown=not bool(manager.state().get("hide_town_crown",false));legacy.save();detail())
+  legacy.crowns.ui(details)
+ elif selected in R.IDS:
   var key=["week_damage","week_fish","all_damage"][R.IDS.find(selected)];var rank=manager.rankings.snapshot.get("ranks",{}).get(key,null)
   text(details,("Your current position: #"+str(int(rank)) if rank!=null and manager.rankings.fresh() else "Connect to compare this profile")+" • server comparison refreshed every minute",14)
   var b=button(details,("Hide in lobbies" if manager.rankings.enabled(selected) else "Show in lobbies") if earned(selected) else "Not currently eligible • preview only",func():manager.rankings.toggle(selected);detail());b.disabled=not earned(selected)
@@ -127,7 +138,7 @@ func _process(delta:float)->void:
  sync_label.text=manager.rankings.status+" • Ranked week: "+manager.rankings.week()+" • Mondays, Edmonton time"
  refresh+=delta
  if refresh>=1:
-  refresh=0;var current=JSON.stringify(manager.rankings.badges())+str(manager.state().selected)
+  refresh=0;var current=JSON.stringify(manager.rankings.badges())+str(manager.state().selected)+str(legacy.crowns.display_tier())
   if current!=signature:signature=current;populate()
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:close();get_viewport().set_input_as_handled()

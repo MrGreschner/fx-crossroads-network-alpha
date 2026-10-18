@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "import": "Fresh project import passed",
+  "wire": "Packaged server reached V180-preview health and passed eight-player crown, competition and reconnect checks",
+  "database_migration_required": false
+}

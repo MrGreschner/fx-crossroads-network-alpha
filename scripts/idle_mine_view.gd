@@ -36,7 +36,7 @@ func setup(owner:RefCounted)->void:
  report=label(body,"",16);report.add_theme_color_override("font_color",Color("#d7c792"))
  construction=label(body,"",15);construction_bar=ProgressBar.new();construction_bar.custom_minimum_size.y=16;body.add_child(construction_bar)
  tabs=TabBar.new();body.add_child(tabs)
- for tab in ["Mine & crews","Buildings","Milestones & geology","How it works","Mineral gallery","Smelter & metals"]:tabs.add_tab(tab)
+ for tab in ["Mine & crews","Buildings","Milestones & geology","How it works","Mineral gallery","Smelter & metals","Underworks"]:tabs.add_tab(tab)
  tabs.tab_changed.connect(func(_index:int):render())
  var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;body.add_child(scroll)
  preload("res://scripts/touch_list_scroll.gd").attach(scroll).form_controls=true
@@ -120,6 +120,7 @@ func render()->void:
   2:ledger_page()
   4:geology_page()
   5:foundry_page()
+  6:underworks_page()
   3:help_page()
  refresh()
 func dynamic(parent:Node,key:String,text:String="")->Label:
@@ -159,7 +160,7 @@ func buildings_page()->void:
   var spec:Dictionary=mine.CATALOG.data().services[id];var lv=int(mine.state().levels[id])
   var card=UI.card(page,str(spec.name)+" • "+("Level "+str(lv) if lv>0 else "Not built"),str(spec.description))
   var row=HBoxContainer.new();card.add_child(row);tracked(row,"",mine.upgrade.bind(id),"upgrade",id)
-  label(row,"Unlock: shaft "+str(int(spec.depth))+" • building time "+time_text(mini(600,int(spec.seconds)+lv*8)),15).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  label(row,"Unlock: shaft "+str(int(spec.depth))+" • building time "+time_text(mine.build_seconds(id)),15).size_flags_horizontal=Control.SIZE_EXPAND_FILL
   if id=="smelter":
    button(card,"Open Smelter & metals",func():tabs.current_tab=5)
    tracked(card,"",mine.refine,"refine");progress_bar(card,"refine_progress")
@@ -185,7 +186,7 @@ func help_page()->void:
   ["BUILDINGS AND COOLDOWNS","One construction order runs at a time. The smelter makes timed bar batches or refines ordinary ore for gold. Metal seams unlock at shafts 2, 4, 7, 11, 15 and 18. Collect them, then combine with coal. Bars can be sold at the Market, used for deeper buildings or delivered to shorten a current build. Rally, Flush and Survey are free timed boosts with reusable cooldowns; boosts help only if transport and storage can handle the output."],
   ["YOUR PROFILE IS THE SAVE","The whole operation lives in your downloaded player profile. Download before leaving a shared school computer, then upload your newest ZIP to resume elsewhere. New Game clears this device's mine too. There is no login or remote account server."],
   ["TESTING AND CLOCKS","Playtest views the mine without changing it. Game Dev opens a temporary fully built mine; refresh or exit to restore normal progress. Offline production uses the device clock, and moving it backward gives no extra income. This is a personal idle game, not a verified leaderboard."],
-  ["THE LONG GAME","Twenty shafts, eight building types and twelve milestones give the mine room to grow. Ore production raises Mine level, opening access to deeper shafts. Upgrades improve your mine only; its wealth never buys combat equipment or changes hero statistics."]]:UI.card(page,pair[0],pair[1])
+  ["THE LONG GAME","Forty shafts, twelve building types and sixteen milestones give the mine room to grow. Ore production raises Mine level, opening access to deeper shafts. Upgrades improve your mine only; its wealth never buys combat equipment or changes hero statistics."]]:UI.card(page,pair[0],pair[1])
 static func completion(end:float,stamp:float,duration:float)->float:return clampf(100*(1-(end-stamp)/maxf(1,duration)),0,100)
 func progress_bar(parent:Node,key:String)->ProgressBar:
  var bar=ProgressBar.new();bar.max_value=100;bar.show_percentage=true;bar.custom_minimum_size.y=20;var fill=StyleBoxFlat.new();fill.bg_color=Color("#77bda6");fill.set_corner_radius_all(5);bar.add_theme_stylebox_override("fill",fill);parent.add_child(bar);bars[key]=bar;return bar
@@ -211,12 +212,12 @@ func refresh()->void:
   labels.job.text="Construction crew ready • "+mine.next_requirement() if s.job.is_empty() else ("Excavating shaft "+str(mine.depth()+1) if s.job.kind=="shaft" else "Building "+str(mine.CATALOG.data().services[s.job.service].name))+" • "+time_text(float(s.job.end)-stamp)+" remaining"
  construction.visible=not s.job.is_empty();construction_bar.visible=not s.job.is_empty()
  if not s.job.is_empty():
-  var duration=minf(1800,60*pow(1.25,mine.depth()-1)) if s.job.kind=="shaft" else mini(600,int(mine.CATALOG.data().services[s.job.service].seconds)+int(s.levels[s.job.service])*8)
+  var duration=mine.build_seconds("" if s.job.kind=="shaft" else str(s.job.service))
   construction.text=("Excavating next shaft" if s.job.kind=="shaft" else "Upgrading "+str(mine.CATALOG.data().services[s.job.service].name))+" • "+time_text(float(s.job.end)-stamp)+" remaining"
   construction_bar.value=completion(float(s.job.end),stamp,duration)
  if bars.has("job_progress"):
   var duration=1.0
-  if not s.job.is_empty():duration=minf(1800,60*pow(1.25,mine.depth()-1)) if s.job.kind=="shaft" else mini(600,int(mine.CATALOG.data().services[s.job.service].seconds)+int(s.levels[s.job.service])*8)
+  if not s.job.is_empty():duration=mine.build_seconds("" if s.job.kind=="shaft" else str(s.job.service))
   bars.job_progress.value=100 if s.job.is_empty() else completion(float(s.job.end),stamp,duration)
   bars.job_progress.tooltip_text="Construction ready" if s.job.is_empty() else "Elapsed construction time"
  if bars.has("refine_progress"):bars.refine_progress.value=100 if s.refine.is_empty() else completion(float(s.refine.end),stamp,30)
@@ -234,10 +235,10 @@ func refresh()->void:
    "hire","hire_quick":
     var index=int(entry.id);var full=int(s.shafts[index].crew)>=12;b.text="Crew full" if full else ("Hire shaft "+str(index+1)+" digger • " if entry.kind=="hire_quick" else "Hire digger • ")+cost_text(mine.hire_cost(index));ready=not full and mine.afford(mine.hire_cost(index))
    "upgrade":
-    var id=str(entry.id);var spec:Dictionary=mine.CATALOG.data().services[id];var full=int(s.levels[id])>=25
+    var id=str(entry.id);var spec:Dictionary=mine.CATALOG.data().services[id];var full=int(s.levels[id])>=mine.CATALOG.data().max_upgrade
     b.text="Maximum level" if full else ("Build" if int(s.levels[id])==0 else "Upgrade to Lv "+str(int(s.levels[id])+1))+" • "+full_cost(mine.upgrade_cost(id),mine.material_cost(id))
     ready=not full and mine.depth()>=int(spec.depth) and s.job.is_empty() and mine.afford(mine.upgrade_cost(id)) and mine.FOUNDRY.affordable(mine,mine.material_cost(id))
-   "excavate":b.text="Open shaft "+str(mine.depth()+1)+" • "+full_cost(mine.next_shaft_cost(),mine.material_cost()) if mine.depth()<20 else "All shafts open";ready=mine.depth()<20 and s.job.is_empty() and mine.next_requirement().is_empty() and mine.afford(mine.next_shaft_cost()) and mine.FOUNDRY.affordable(mine,mine.material_cost())
+   "excavate":b.text="Open shaft "+str(mine.depth()+1)+" • "+full_cost(mine.next_shaft_cost(),mine.material_cost()) if mine.depth()<mine.CATALOG.data().max_shafts else "All shafts open";ready=mine.depth()<mine.CATALOG.data().max_shafts and s.job.is_empty() and mine.next_requirement().is_empty() and mine.afford(mine.next_shaft_cost()) and mine.FOUNDRY.affordable(mine,mine.material_cost())
    "cancel":ready=not s.job.is_empty()
    "boost":
     var id=str(entry.id);var spec:Dictionary=mine.BOOSTS[id];var locked=mine.depth()<int(spec.depth) or id=="survey" and int(s.levels.assay)==0
@@ -276,9 +277,9 @@ func foundry_page()->void:
  var intro=UI.card(page,"RAMFORGE • from seam to bar","Six metals unlock deeper underground. Collect the depot, then use metal ore + coal at the furnace. Keep bars for machinery or prepare them as Market stock.")
  var row=HBoxContainer.new();intro.add_child(row);tracked(row,"Collect depot",mine.collect,"collect");button(row,"Sell bars at Market",func():close();mine.legacy.commerce.open())
  labels.furnace=label(intro,"",17);progress_bar(intro,"furnace");tracked(intro,"Cancel bar batch • refund materials",mine.FOUNDRY.cancel_forge.bind(mine),"forge_cancel")
- if mine.depth()<20 or not mine.state().job.is_empty():
+ if mine.depth()<mine.CATALOG.data().max_shafts or not mine.state().job.is_empty():
   var next=UI.card(page,"YOUR NEXT BUILD")
-  if mine.depth()<20:label(next,"Next shaft materials: "+full_cost(mine.next_shaft_cost(),mine.material_cost()),17)
+  if mine.depth()<mine.CATALOG.data().max_shafts:label(next,"Next shaft materials: "+full_cost(mine.next_shaft_cost(),mine.material_cost()),17)
   if not mine.state().job.is_empty():tracked(next,"",mine.FOUNDRY.reinforce.bind(mine),"reinforce")
  var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",14);grid.add_theme_constant_override("v_separation",12);page.add_child(grid)
  for id in mine.FOUNDRY.METALS:
@@ -306,3 +307,13 @@ func refresh_foundry(stamp:float)->void:
   if labels.has("metal:"+id):
    labels["metal:"+id].text="Collected ore "+amount(float(f.wallet[id]))+" • Bars "+str(int(f.bars[id]))+"\nIn depot "+amount(float(f.stored[id]))+" / 1200 • forged "+str(int(f.forged[id]))
    bars["metal:"+id].value=float(f.stored[id])
+
+func underworks_page()->void:
+ label(page,"LANTERNRAIL UNDERWORKS",25)
+ label(page,"Beyond shaft 20, build a permanent underground operation. New buildings unlock at shafts 22, 26, 30 and 36. Deep construction takes real hours; crews keep working while you adventure.",16)
+ var picture=preload("res://scripts/mine_underworks_view.gd").new();picture.mine=mine;picture.custom_minimum_size=Vector2(980,300);page.add_child(picture)
+ for id in ["relay","habitat","sorter","core"]:
+  var spec:Dictionary=mine.CATALOG.data().services[id];var lv=int(mine.state().levels.get(id,0))
+  var box=UI.card(page,str(spec.name)+" • "+("Level "+str(lv) if lv>0 else "Shaft "+str(spec.depth)+" unlock"),str(spec.description))
+  tracked(box,"",mine.upgrade.bind(id),"upgrade",id)
+  label(box,"Build: "+time_text(mine.build_seconds(id))+" • "+full_cost(mine.upgrade_cost(id),mine.material_cost(id)),15)

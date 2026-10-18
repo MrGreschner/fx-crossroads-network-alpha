@@ -1,8 +1,8 @@
 {
   "name": "Deepwell Mine",
-  "max_shafts": 20,
+  "max_shafts": 40,
   "max_crew": 12,
-  "max_upgrade": 25,
+  "max_upgrade": 40,
   "offline_hours": 24,
   "services": {
     "vent": {
@@ -76,6 +76,42 @@
       "ore": 200,
       "gems": 3,
       "seconds": 90
+    },
+    "relay": {
+      "name": "Underground Rail Depot",
+      "depth": 22,
+      "gold": 250000,
+      "ore": 180000,
+      "gems": 300,
+      "seconds": 3600,
+      "description": "A local rail hub below the surface. Each level adds 4% lift capacity, helping the deep galleries reach the main shaft."
+    },
+    "habitat": {
+      "name": "Deepcrew Refuge",
+      "depth": 26,
+      "gold": 600000,
+      "ore": 420000,
+      "gems": 600,
+      "seconds": 5400,
+      "description": "A staffed underground base with bunks and warm lamps. Each level reduces air demand by 2%, capped at 30%."
+    },
+    "sorter": {
+      "name": "Prismatic Sorting Hall",
+      "depth": 30,
+      "gold": 1500000,
+      "ore": 1000000,
+      "gems": 1200,
+      "seconds": 7200,
+      "description": "An underground mineral-processing hall. Each level improves gem recovery by 5%."
+    },
+    "core": {
+      "name": "Bedrock Enginehouse",
+      "depth": 36,
+      "gold": 5000000,
+      "ore": 3200000,
+      "gems": 2400,
+      "seconds": 10800,
+      "description": "The deepest powered outpost. Each level increases digging output by 3%; transport and ventilation still matter."
     }
   },
   "biomes": [
@@ -119,7 +155,35 @@
       "name": "Starlight Bedrock",
       "rock": "#34384d",
       "accent": "#d2c7ed",
-      "lore": "The deepest seams shine like a night sky. A complete twenty-shaft operation is a long-term account achievement."
+      "lore": "Starlight seams mark the end of the old works. Underground infrastructure opens after shaft twenty."
+    },
+    {
+      "depth": 22,
+      "name": "Lanternrail Underworks",
+      "rock": "#383c43",
+      "accent": "#c5c996",
+      "lore": "The first underground rail depot brings a working settlement into the deep rock."
+    },
+    {
+      "depth": 26,
+      "name": "Deepcrew Hearth",
+      "rock": "#493d43",
+      "accent": "#e2ab81",
+      "lore": "Rest chambers and air conduits support crews far below the surface."
+    },
+    {
+      "depth": 30,
+      "name": "Prismatic Fault",
+      "rock": "#3a4058",
+      "accent": "#99d9e3",
+      "lore": "Sorting halls illuminate long crystal seams. Strong transport carries the new output."
+    },
+    {
+      "depth": 36,
+      "name": "Worldroot Vault",
+      "rock": "#353348",
+      "accent": "#d7b8ed",
+      "lore": "An enginehouse powers the final descent. Forty shafts are an account-scale ambition."
     }
   ]
 }

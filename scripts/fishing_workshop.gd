@@ -8,7 +8,8 @@ var notice=""
 var previous=""
 var selected_tab=0
 var pot_labels:Array=[]
-var tree_zoom=.8
+var tree_zoom=.9
+var tree_branch=0
 func setup(f:Node)->void:
  fishing=f;layer=92;previous=f.menu_key();f.game.set("shop_open" if f.multi else "menu","fishing_workshop");f.game.mobile.reset_controls();build()
 func close()->void:
@@ -24,9 +25,9 @@ func build()->void:
  var compact=selected_tab==1
  fishing.label(top,"RIPPLE & REEL • "+("FISHING MASTERY" if compact else "ANGLER'S WORKSHOP"),20 if compact else 24);fishing.button(top,"Close",close)
  var prog=fishing.records().progress;var level=prog.level();var xp=int(prog.state().xp)
- fishing.label(col,"Fishing level %d / 40 • %d XP • %d Glimmers" % [level,xp,fishing.game.legacy.glimmers.balance()],16)
+ fishing.label(col,"Fishing level %d / 80 • %d XP • %d Glimmers" % [level,xp,fishing.game.legacy.glimmers.balance()],16)
  if not compact:
-  fishing.label(col,prog.title()+" • rarity weight +%.1f%% • Bag %d/%d" % [10.0*(level-1)/39,fishing.records().state().kept.size(),fishing.records().capacity()],15)
+  fishing.label(col,prog.title()+" • rarity weight +%.1f%% • Bag %d/%d" % [10.0*clampf((level-1)/39.0,0,1),fishing.records().state().kept.size(),fishing.records().capacity()],15)
   var bar=ProgressBar.new();bar.custom_minimum_size.y=14;bar.show_percentage=false;bar.value=100 if level==P.MAX_LEVEL else 100.0*(xp-P.threshold(level))/maxi(1,P.threshold(level+1)-P.threshold(level));col.add_child(bar)
   fishing.label(col,notice if not notice.is_empty() else "All rod fish are possible from level one. Unlock more methods and bait as you grow. Keep or release: both earn XP.",15)
  elif not notice.is_empty():fishing.label(col,notice,15)
@@ -49,7 +50,7 @@ func build()->void:
 func feedback(value:String)->void:notice=value;build()
 func gear_ui(body:Node)->void:
  var p=fishing.records().progress
- fishing.label(body,"ROD • patient casts and full XP. NET • a quick timed scoop for small fish and creatures. BASKET • one catch after 15–20 real minutes, then stops. Start with a free rod and bare hook. Buy a net at level 5 and baskets at level 10. Equipment is permanent; bait is consumed.",17)
+ fishing.label(body,"ROD • patient casts and full XP. NET • a quick timed scoop for small fish and creatures. BASKET • one catch after 13–20 real minutes, then stops. Start with a free rod and bare hook. Buy a net at level 5 and baskets at level 10. Equipment is permanent; bait is consumed.",17)
  var row=HBoxContainer.new();body.add_child(row)
  for method in ["rod","net","pot"]:
   var b=fishing.button(row,method.capitalize()+(" ✓" if p.state().method==method else ""),func():p.state().method=method;fishing.records().save();feedback("Selected "+method+". Return to a shore marker."));b.disabled=not p.method_unlocked(method)
@@ -67,7 +68,7 @@ func gear_ui(body:Node)->void:
   if id!="basic":
    var names=[]
    for ingredient in spec.needs:names.append(str(spec.needs[ingredient])+" "+str(preload("res://scripts/lodge_catalog.gd").INGREDIENTS[ingredient].name))
-   fishing.label(box,"Recipe: "+" + ".join(names)+" → "+str(8 if p.has("cook") else 6)+" bait",15)
+   fishing.label(box,"Recipe: "+" + ".join(names)+" → "+str((8 if p.has("cook") else 6)+int(p.perk_bonus("bait_yield")))+" bait",15)
    var craft=fishing.button(controls,"Craft batch",func():feedback(p.craft(id)));craft.disabled=not p.bait_unlocked(id)
    var buy=fishing.button(controls,"Buy 3 • %d Glimmers" % int(spec.cost),func():feedback(p.buy(id,fishing.game)));buy.disabled=not p.bait_unlocked(id)
  if p.bait_unlocked("scraps") and not fishing.records().state().kept.is_empty():
@@ -85,14 +86,17 @@ func gear_ui(body:Node)->void:
  fishing.label(body,"Gatherers' Lodge → worms, herbs and insects. Seed House harvests → two herb/petal ingredients in addition to food. Sell catches and gathered/grown ingredients in Sell goods → buy consumable bait here. Profitable Market days earn a daily Glimmer reward. Special bait shifts species groups; it never unlocks a level-gated fish.",16)
 func tree_ui(body:Node)->void:
  var prog=fishing.records().progress
- fishing.label(body,"%d points available • %d / %d earned • 20 perks across four branches" % [prog.available_points(),prog.earned_points(),P.MAX_POINTS],19)
- fishing.label(body,"1 point every 3 levels through level 36. Click a node for its effect. Choose a fork; learn both forks for its crown.",15)
+ fishing.label(body,"%d points available • %d / %d earned • 60 perks across six branches" % [prog.available_points(),prog.earned_points(),P.MAX_POINTS],19)
+ fishing.label(body,"1 point every 3 levels through level 78. Click a node for its effect. Choose a fork; learn both forks for its crown.",15)
+ var branches=HFlowContainer.new();body.add_child(branches)
+ for index in P.BRANCHES.size():
+  var branch=P.BRANCHES[index];var pick=fishing.button(branches,str(branch.name)+(" ✓" if tree_branch==index else ""),func():tree_branch=index;build());pick.modulate=Color(branch.color);pick.custom_minimum_size.y=34
  var row=HBoxContainer.new();body.add_child(row)
  fishing.button(row,"Reset • %d Glimmers…" % prog.reset_cost(),func():
   var d=ConfirmationDialog.new();d.title="Reset fishing mastery?";d.dialog_text="Refund all %d spent points for %d Glimmers. XP, equipment and fish stay yours. Collect or retrieve all baskets first. Each reset increases the next price by 250, up to 2,500 Glimmers." % [prog.state().talents.size(),prog.reset_cost()];add_child(d)
   d.confirmed.connect(func():d.queue_free();feedback(prog.reset_tree()));d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(530,235)))
  var wrapper=Control.new();wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom
- var tree=preload("res://scripts/fishing_tree.gd").new();wrapper.add_child(tree);tree.setup(prog);tree.scale=Vector2.ONE*tree_zoom
+ var tree=preload("res://scripts/fishing_tree.gd").new();wrapper.add_child(tree);tree.branch_index=tree_branch;tree.setup(prog);tree.scale=Vector2.ONE*tree_zoom
  fishing.button(row,"−",func():tree_zoom=maxf(.65,tree_zoom-.15);tree.scale=Vector2.ONE*tree_zoom;wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom)
  fishing.label(row,"Zoom • drag/scroll",14)
  fishing.button(row,"+",func():tree_zoom=minf(1.6,tree_zoom+.15);tree.scale=Vector2.ONE*tree_zoom;wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom)

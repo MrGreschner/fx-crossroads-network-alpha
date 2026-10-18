@@ -1,11 +1,13 @@
 extends RefCounted
 const C=preload("res://scripts/waylight_catalog.gd")
+const X=preload("res://scripts/relic_extensions.gd")
+var pending=[]
 var game:Node
 var loadouts={}
 var states={}
 var processing=false
 func setup(g:Node,offers:Dictionary)->void:
- game=g;loadouts.clear();states.clear()
+ game=g;loadouts.clear();states.clear();pending.clear()
  for id in offers:
   loadouts[id]=offers[id].get("relics",[]).duplicate(true);states[id]={"timers":{},"hits":0,"empowered":0.0,"shield":0.0,"shield_time":0.0,"embers":[]}
 func value(id:String,type:String)->float:
@@ -19,12 +21,14 @@ func bonus(id:String,stat:String)->float:
  return minf(total,.06 if stat=="power" else .08 if stat=="vitality" else .04)
 func damage(id:String,amount:float)->float:
  var result=amount*(1+bonus(id,"power"));var s:Dictionary=states.get(id,{})
+ if not s.is_empty() and not processing:result*=X.damage(s,extra_values(id),float(game.health.get(id,0))/game._max_hp(id))
  if not s.is_empty() and float(s.empowered)>0 and not processing:result*=1+value(id,"thornroot")/100;s.empowered=0.0
  if not s.is_empty() and not processing and float(s.timers.get("prism_charge",0))>0:result*=1+value(id,"prism_comb")/100;s.timers.prism_charge=0.0
  return result
 func incoming(id:String,amount:float)->float:
  var s:Dictionary=states.get(id,{})
  if s.is_empty():return amount
+ amount=X.incoming(s,extra_values(id),amount)
  if int(game.health.get(id,0))>game._max_hp(id)*.80:amount*=1-value(id,"sunward")/100
  if int(game.health.get(id,0))<game._max_hp(id)*.35:amount*=1-value(id,"quarry_heart")/100
  if float(s.shield_time)>0:
@@ -33,6 +37,7 @@ func incoming(id:String,amount:float)->float:
  return amount
 func hit(id:String,foe:Dictionary,amount:float)->void:
  if processing or amount<=0 or not states.has(id):return
+ extended(id,"hit",foe)
  var s:Dictionary=states[id];s.hits+=1
  if value(id,"frost_lens")>0 and float(s.timers.get("frost_lens",0))<=0:
   s.timers.frost_lens=6.0;game.adventure.combat.apply_status(game.adventure.combat.npc_key(foe),"slow",value(id,"frost_lens"),id,.20)
@@ -42,21 +47,29 @@ func hit(id:String,foe:Dictionary,amount:float)->void:
    if int(game.opponents[n].uid)==int(foe.uid):game._hit_enemy(n,value(id,"stormglass"),id);break
   processing=false;game._emit_effect({"pos":foe.pos,"radius":40.0,"time":.2,"color":"#bfbaff"})
 func killed(id:String)->void:
+ if processing:return
+ if states.has(id):extended(id,"kill")
  var s:Dictionary=states.get(id,{})
  if not s.is_empty() and value(id,"sunseed")>0 and float(s.timers.get("sunseed",0))<=0:s.timers.sunseed=10.0;s.shield=maxf(float(s.shield),value(id,"sunseed"));s.shield_time=maxf(float(s.shield_time),4)
  if s.is_empty() or value(id,"grove_seed")<=0 or float(s.timers.get("grove_seed",0))>0:return
  s.timers.grove_seed=8.0;game._heal(id,id,int(value(id,"grove_seed")))
 func dodge(id:String)->void:
+ if states.has(id):extended(id,"dodge")
  var s:Dictionary=states.get(id,{})
  if not s.is_empty() and value(id,"prism_comb")>0 and float(s.timers.get("prism_comb",0))<=0:s.timers.prism_comb=8.0;s.timers.prism_charge=4.0
  if s.is_empty() or value(id,"emberstep")<=0 or float(s.timers.get("emberstep",0))>0:return
  s.timers.emberstep=6.0;s.embers.append({"at":game.positions[id],"time":3.0,"tick":0.0,"damage":value(id,"emberstep")})
 func food(id:String)->void:
+ if states.has(id):extended(id,"food")
  var s:Dictionary=states.get(id,{});var strength=maxf(value(id,"river_pearl"),value(id,"master_fisher"))
  if not s.is_empty() and value(id,"nectar_vial")>0 and float(s.timers.get("nectar_vial",0))<=0:s.timers.nectar_vial=8.0;game._heal(id,id,int(value(id,"nectar_vial")))
  if not s.is_empty() and strength>0:s.shield=maxf(float(s.shield),strength);s.shield_time=5.0
 func step(dt:float)->void:
  processing=true
+ var work=pending.duplicate();pending.clear()
+ for proc in work:
+  for n in game.opponents.size():
+   if int(game.opponents[n].uid)==int(proc.uid):game._hit_enemy(n,float(proc.damage),str(proc.id));break
  for id in states:
   var s:Dictionary=states[id]
   for key in s.timers:s.timers[key]=maxf(0,float(s.timers[key])-dt)
@@ -76,3 +89,25 @@ func visuals()->Array:
   for ember in s.embers:out.append({"at":[ember.at.x,ember.at.y],"radius":65,"color":"#eb925e"})
   if float(s.shield_time)>0 and float(s.shield)>0 and game.positions.has(id):out.append({"at":[game.positions[id].x,game.positions[id].y],"radius":35,"color":"#b8e5e2"})
  return out
+
+func extra_values(id:String)->Dictionary:
+ var out={}
+ for type in X.IDS:out[type]=value(id,type)
+ return out
+func extended(id:String,event:String,foe:Dictionary={})->void:
+ var hero=str(game.hero_ids.get(id,"ram"))
+ for command in X.event(event,states[id],extra_values(id),hero):
+  match str(command.kind):
+   "shield":states[id].shield=maxf(float(states[id].shield),float(command.value));states[id].shield_time=maxf(float(states[id].shield_time),float(command.duration))
+   "heal":game._heal(id,id,int(command.value))
+   "slow":
+    if not foe.is_empty():game.adventure.combat.apply_status(game.adventure.combat.npc_key(foe),"slow",float(command.duration),id,float(command.value))
+   "echo":
+    if foe.is_empty():continue
+    pending.append({"id":id,"uid":int(foe.uid),"damage":float(command.value)})
+    if bool(command.chain):
+     var count=0
+     for other in game.opponents:
+      if int(other.uid)!=int(foe.uid) and other.pos.distance_to(foe.pos)<=130:
+       pending.append({"id":id,"uid":int(other.uid),"damage":float(command.value)*.5});count+=1
+       if count>=2:break

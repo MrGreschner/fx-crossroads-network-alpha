@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "Desktop specialization trees and later forks",
+    "Landscape phone tree and Atelier layout",
+    "Crown hide/show through actual button click",
+    "Underground operation and controls",
+    "All three school entrances"
+  ],
+  "service": "Mocked ranking response for visual checks; actual gateway verified separately"
+}

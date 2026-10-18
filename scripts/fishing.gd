@@ -33,6 +33,7 @@ var cast_button:Button
 var meter:ProgressBar
 var catch_frame:PanelContainer
 var catch_text:Label
+var inspector:CanvasLayer
 var journal:CanvasLayer
 var journal_panel:PanelContainer
 var room_layer:CanvasLayer
@@ -152,6 +153,7 @@ func _process(delta:float)->void:
   cast_button.disabled=not unlocked;cast_button.modulate=Color.WHITE;meter.visible=false
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and not event.echo:
+  if event.keycode==KEY_ESCAPE and is_instance_valid(inspector):inspector.close();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(journal):close_journal();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and busy():cancel("Cast cancelled.");get_viewport().set_input_as_handled();return
   if event.keycode==KEY_F and playable() and not is_instance_valid(room):
@@ -304,6 +306,7 @@ func open_journal()->void:
   else:species_ui(body)
  fit_panel(journal_panel,Vector2(1000,610));UI.enter(journal_panel)
 func close_journal()->void:
+ if is_instance_valid(inspector):inspector.close()
  if is_instance_valid(journal):journal.queue_free()
  journal=null;journal_panel=null
  if not multi and game.menu=="fishing_journal":
@@ -323,6 +326,7 @@ func kept_ui(body:Node)->void:
  for catch in all_catches.slice(journal_page*10,journal_page*10+10):
   var id=str(catch.id);var spec:Dictionary=C.fish()[catch.species];var box=UI.card(body,str(spec.name)+(" • ★ TROPHY" if C.is_trophy(catch) else "")+(" • Favourite" if records().state().favorite==id else ""),"%s • %.2f kg • %.1f cm • %s" % [spec.rarity,catch.kg,catch.cm,C.pools()[catch.pool].name]);var row=HBoxContainer.new();box.add_child(row);picture(row,str(catch.species),Vector2(160,88))
   var actions=VBoxContainer.new();actions.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(actions)
+  button(actions,"View fish details",show_catch_details.bind(id))
   button(actions,"Feature on player card",func():records().set_favorite(id);refresh_journal())
   var tank=HBoxContainer.new();actions.add_child(tank)
   for n in 5:
@@ -330,6 +334,12 @@ func kept_ui(body:Node)->void:
   button(actions,"Release this kept fish…",func():
    var dialog=ConfirmationDialog.new();dialog.title="Release "+str(spec.name)+"?";dialog.dialog_text="This removes the kept fish and any display/favourite using it. Your journal record remains.";journal.add_child(dialog);dialog.confirmed.connect(func():records().release(id);dialog.queue_free();refresh_journal());dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(460,180)))
  if not records().state().favorite.is_empty():button(body,"Clear player-card favourite",func():records().set_favorite("");refresh_journal())
+func show_catch_details(id:String)->void:
+ if records().specimen(id).is_empty():return
+ if is_instance_valid(inspector):
+  if inspector.catch_id==id:return
+  inspector.close()
+ inspector=preload("res://scripts/fish_details.gd").new();game.add_child(inspector);inspector.setup(self,id)
 func species_ui(body:Node)->void:
  for id in C.fish():
   var seen=records().state().journal.has(id);var spec:Dictionary=C.fish()[id]

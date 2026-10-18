@@ -16,6 +16,28 @@ class RelicIcon extends Control:
   var spec=C.RELICS[type];var c=Color(spec.color);var p=size*.5;var radius=minf(size.x,size.y)*.34
   draw_circle(p,radius*1.35,Color(c,.08));draw_arc(p,radius*1.2,0,TAU,40,Color(c,.5),1.5,true)
   match spec.kind:
+   "oath":
+    draw_arc(p,radius*.7,0,TAU,32,c,4,true);draw_line(p+Vector2(-radius*.9,-radius*.7),p+Vector2(radius*.8,radius*.8),Color("#eadbb5"),4,true);draw_arc(p+Vector2(-radius*.65,-radius*.5),radius*.32,0,TAU,18,Color("#eadbb5"),3,true)
+   "tide":
+    for n in 3:draw_arc(p+Vector2((n-1)*5,(n-1)*radius*.6),radius*.7,PI*.1,PI*.9,20,c,3,true)
+   "vessel":
+    draw_arc(p,radius*.75,0,PI,24,c,4,true);draw_line(p-Vector2(radius*.75,0),p+Vector2(radius*.75,0),c,3,true);draw_line(p+Vector2(0,radius*.75),p+Vector2(0,radius),c,4,true);draw_circle(p-Vector2(0,radius*.5),radius*.22,Color("#f3e1b3"))
+   "folio":
+    draw_rect(Rect2(p-Vector2(radius*.8,radius*.7),Vector2(radius*1.6,radius*1.5)),c,false,3);draw_line(p-Vector2(0,radius*.7),p+Vector2(0,radius*.8),c,2);draw_polyline(PackedVector2Array([p+Vector2(8,-15),p+Vector2(1,0),p+Vector2(10,-2),p+Vector2(3,14)]),Color("#ffe2aa"),3,true)
+   "gear","clock":
+    draw_arc(p,radius*.65,0,TAU,32,c,4,true)
+    for n in 8:
+     var dir=Vector2.from_angle(n*TAU/8);draw_line(p+dir*radius*.65,p+dir*radius,c,4,true)
+    if spec.kind=="clock":draw_polyline(PackedVector2Array([p+Vector2(0,-radius*.45),p,p+Vector2(radius*.3,radius*.15)]),Color("#f6dfaa"),3,true)
+    else:draw_circle(p,radius*.22,Color("#f6dfaa"))
+   "rift":
+    draw_arc(p,radius*.9,PI*.15,PI*.85,24,c,4,true);draw_arc(p,radius*.9,PI*1.1,PI*1.8,24,c,4,true);draw_polyline(PackedVector2Array([p+Vector2(0,-radius),p+Vector2(-7,-3),p+Vector2(7,4),p+Vector2(0,radius)]),Color("#ead8ff"),3,true)
+   "anchor":
+    draw_line(p-Vector2(0,radius),p+Vector2(0,radius*.65),c,4,true);draw_arc(p-Vector2(0,radius*.7),radius*.25,0,TAU,20,c,3,true);draw_arc(p,radius*.75,0,PI,24,c,4,true);draw_line(p-Vector2(radius*.5,0),p+Vector2(radius*.5,0),c,3,true)
+   "starheart":
+    var poly=PackedVector2Array()
+    for n in 10:poly.append(p+Vector2.from_angle(-PI*.5+n*PI/5)*(radius if n%2==0 else radius*.48))
+    draw_colored_polygon(poly,c);draw_circle(p,radius*.25,Color("#fff0c4"))
    "comb":
     for offset in [Vector2(-10,-6),Vector2(10,-6),Vector2(0,11)]:draw_arc(p+offset,radius*.44,0,TAU,6,c,3,true)
    "vial":

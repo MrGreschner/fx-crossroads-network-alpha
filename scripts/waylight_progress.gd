@@ -52,9 +52,9 @@ func reroll(id:String,rng:RandomNumberGenerator)->String:
  state().shards-=8;state().dust-=1;v.roll=rng.randi_range(1,4);save();return "Supporting stat rerolled. Main effect and upgrades retained."
 func fisher_ready()->bool:
  var f=legacy.fishing_records
- return f.progress.level()>=40 and f.state().journal.size()>=15 and not state().fisher_claimed
+ return f.progress.level()>=80 and f.state().journal.size()>=50 and not state().fisher_claimed
 func fisher_claim()->String:
- if not fisher_ready():return "Requires fishing level 40 and 15 discovered species."
+ if not fisher_ready():return "Requires fishing level 80 and 50 discovered species."
  if state().relics.size()>=60:return "Make room in your relic collection first."
  state().relics.append({"id":"master-fisher-covenant","type":"master_fisher","value":12,"rank":0,"stat":"vitality","roll":2,"tier":1,"source":"fishing"});state().fisher_claimed=true;save();return "Earned Riverkeeper's Covenant. Equip it in a relic slot."
 func pay_ticket(kind:String,realm:String,tier:int,seed_value:int,day:int)->String:

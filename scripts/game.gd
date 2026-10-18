@@ -662,7 +662,7 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	message = "Speak to the villagers. Q / Journal shows your quests. Progress saves here." if adventure.quests.active else "Follow the target pointer, earn XP and bounties, then face the boss."
 	message_time = 5.0
 
-func finish_run(won: bool) -> void:
+func finish_run(won: bool, abandoned:bool=false) -> void:
 	if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.finish(won);return
 	if tutorial.active:tutorial.finish(won);return
 	if mode != "run" or menu=="results":
@@ -670,8 +670,8 @@ func finish_run(won: bool) -> void:
 	if won and waylight!=null and waylight.active():
 		if waylight.kind=="overcharge" and not boss_defeated:return
 		if waylight.between() and position_in_world.distance_to(waylight.expedition.ORIGIN)>120:return
-	get_tree().root.get_node("FXActivity").event(self,"complete","cleared" if won else "defeated",run_time,{"damage":dealt_damage,"enemies":kills,"players":1,"banked_shards":waylight.expedition.carried if waylight!=null and waylight.between() else 0})
-	respawn_clinic=not won
+	get_tree().root.get_node("FXActivity").event(self,"complete","cleared" if won else "returned" if abandoned else "defeated",run_time,{"damage":dealt_damage,"enemies":kills,"players":1,"banked_shards":waylight.expedition.carried if waylight!=null and waylight.between() else 0})
+	respawn_clinic=not won and not abandoned
 	var waylight_run:bool=waylight!=null and waylight.special()
 	var waylight_result:String=waylight.finish(won) if waylight_run else ""
 	if won and not waylight_run and not practice and not preload("res://scripts/profile_store.gd").progression_blocked():
@@ -698,7 +698,7 @@ func finish_run(won: bool) -> void:
 			if region_id == "shattered_oath": unlock_cosmetic("Oath Restorer")
 		if won and not waylight_run: journey.won(region_id)
 	save_profile()
-	result_text = ("CLEARED " if won else "DEFEATED IN ") + label + "\nCharacter: " + str(hero.get("name", "Hero")) + "    Time: " + time_text + "\nReached level " + str(level) + "    Bounties earned: " + str(bounty_earned) + " CC"
+	result_text = ("CLEARED " if won else "RETURNED FROM " if abandoned else "DEFEATED IN ") + label + "\nCharacter: " + str(hero.get("name", "Hero")) + "    Time: " + time_text + "\nReached level " + str(level) + "    Bounties earned: " + str(bounty_earned) + " CC"
 	if new_best:
 		result_text += "\nNEW PERSONAL BEST!"
 	result_text += "\nDamage dealt: "+str(int(dealt_damage))+"   Damage taken: "+str(int(damage_taken))
@@ -706,7 +706,7 @@ func finish_run(won: bool) -> void:
 	result_text += "\n"+legacy.result_line(character_id)
 	result_text += "\nPress Enter to return to town."
 	menu = "results"
-	presentation.results(won)
+	presentation.results(won,abandoned)
 
 func _process(delta: float) -> void:
 	town_life.calendar.step()
@@ -921,7 +921,7 @@ func handle_run(delta: float) -> void:
 	if not (waylight!=null and waylight.between()) and position_in_world.distance_to(return_gate) < 85:
 		hint = "E  Abandon run and return to town"
 		if Input.is_action_just_pressed("interact"):
-			finish_run(false)
+			finish_run(false,true)
 			return
 	if boss_defeated and position_in_world.distance_to(pair(region["boss"])) < 105:
 		hint = "E  Finish run and return to town"

@@ -11,13 +11,13 @@
 [node name="Points" type="Node2D" parent="."]
 
 [node name="Spawn" type="Marker2D" parent="Points"]
-position = Vector2(2700, 5750)
+position = Vector2(2700, 5270)
 
 [node name="ReturnGate" type="Marker2D" parent="Points"]
-position = Vector2(2700, 5750)
+position = Vector2(2700, 5270)
 
 [node name="Merchant" type="Marker2D" parent="Points"]
 position = Vector2(3450, 5570)
 
 [node name="Boss" type="Marker2D" parent="Points"]
-position = Vector2(2700, 5750)
+position = Vector2(2700, 5270)

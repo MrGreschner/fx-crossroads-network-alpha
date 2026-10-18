@@ -23,7 +23,7 @@ func state()->Dictionary:
 func dev_preview()->bool:
  var dev=preload("res://scripts/profile_store.gd").dev_session()
  return bool(legacy.data.get("teacher",false)) and dev!=null and dev.active
-func capacity()->int:return 10+10*mini(4,progress.level()/5)
+func capacity()->int:return mini(CAPACITY,10+10*mini(4,progress.level()/5)+int(progress.perk_bonus("capacity")))
 func save()->void:legacy.save()
 func unlock()->void:state().rod=true;save()
 func specimen(id:String)->Dictionary:

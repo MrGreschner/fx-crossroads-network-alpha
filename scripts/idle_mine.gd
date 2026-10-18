@@ -3,7 +3,7 @@ extends RefCounted
 const FOUNDRY=preload("res://scripts/mine_foundry.gd")
 const CATALOG=preload("res://scripts/idle_mine_catalog.gd")
 const RESOURCES=["gold","ore","gems"]
-const SERVICES=["vent","lift","depot","tools","smelter","assay","pump","drill"]
+const SERVICES=["vent","lift","depot","tools","smelter","assay","pump","drill","relay","habitat","sorter","core"]
 const BOOSTS={"rally":{"name":"Crew Rally","duration":60,"cooldown":300,"depth":2},"air":{"name":"Vent Flush","duration":120,"cooldown":600,"depth":3},"survey":{"name":"Gem Survey","duration":180,"cooldown":900,"depth":3}}
 var legacy:Node
 var time_for_test=-1.0
@@ -13,10 +13,12 @@ var arrival:Dictionary={}
 func now()->float:return time_for_test if time_for_test>=0 else Time.get_unix_time_from_system()
 static func zeros()->Dictionary:return {"gold":0.0,"ore":0.0,"gems":0.0}
 static func fresh(stamp:float)->Dictionary:
- return {"version":1,"commissioned":false,"wallet":{"gold":120.0,"ore":0.0,"gems":0.0},"stored":zeros(),"lifetime":zeros(),"since_visit":zeros(),"last":stamp,"visit":stamp,"shafts":[],"levels":{"vent":1,"lift":1,"depot":1,"tools":1,"smelter":0,"assay":0,"pump":0,"drill":0},"job":{},"refine":{},"active":{"rally":0.0,"air":0.0,"survey":0.0},"ready":{"rally":0.0,"air":0.0,"survey":0.0},"milestones":[],"refined":0.0}
+ return {"version":1,"commissioned":false,"wallet":{"gold":120.0,"ore":0.0,"gems":0.0},"stored":zeros(),"lifetime":zeros(),"since_visit":zeros(),"last":stamp,"visit":stamp,"shafts":[],"levels":{"vent":1,"lift":1,"depot":1,"tools":1,"smelter":0,"assay":0,"pump":0,"drill":0,"relay":0,"habitat":0,"sorter":0,"core":0},"job":{},"refine":{},"active":{"rally":0.0,"air":0.0,"survey":0.0},"ready":{"rally":0.0,"air":0.0,"survey":0.0},"milestones":[],"refined":0.0}
 func setup(owner:Node)->void:
  legacy=owner
  if not legacy.data.has("mine") or not valid(legacy.data.mine):legacy.data.mine=fresh(now())
+ for id in SERVICES:
+  if not legacy.data.mine.levels.has(id):legacy.data.mine.levels[id]=0
  FOUNDRY.state(self)
  advance()
 func state()->Dictionary:return legacy.data.mine
@@ -29,7 +31,7 @@ func workers()->int:
  var total=0
  for shaft in state().shafts:total+=int(shaft.crew)
  return total
-func level()->int:return mini(50,1+int(sqrt(float(state().lifetime.ore)/200)))
+func level()->int:return mini(100,1+int(sqrt(float(state().lifetime.ore)/200)))
 func capacity()->float:return 3600*pow(1.7,int(state().levels.depot)-1)
 func stored_units()->float:return float(state().stored.gold)+float(state().stored.ore)+float(state().stored.gems)*10
 func rates(at:float=-1)->Dictionary:
@@ -40,14 +42,16 @@ func rates(at:float=-1)->Dictionary:
  for shaft in s.shafts:digging+=int(shaft.crew)*.65*(1+.15*(int(shaft.depth)-1))
  digging*=1+.15*int(s.levels.tools);digging*=1+.06*int(s.levels.drill)
  if depth()>=4:digging*=1+.03*int(s.levels.pump)
+ digging*=1+.03*int(s.levels.get("core",0))
  if float(s.active.rally)>at:digging*=2
  var supply=6+14*int(s.levels.vent)
  if float(s.active.air)>at:supply*=2
  var demand=workers()+depth()*1.5+int(s.levels.drill)*2
+ demand*=1-minf(.30,.02*int(s.levels.get("habitat",0)))
  var air=clampf(supply/maxf(demand,1),.2,1)
- var lift=2.2*pow(1.41,int(s.levels.lift)-1)
+ var lift=2.2*pow(1.41,int(s.levels.lift)-1)*(1+.04*int(s.levels.get("relay",0)))
  var flow=minf(digging*air,lift)
- result.merge({"dig":digging,"lift":lift,"air":air,"air_supply":supply,"air_demand":demand,"flow":flow,"gold":flow*.45,"ore":flow*.75,"gems":flow*(.0015+.00035*depth())*(1+.2*int(s.levels.assay))*(2 if float(s.active.survey)>at else 1)},true)
+ result.merge({"dig":digging,"lift":lift,"air":air,"air_supply":supply,"air_demand":demand,"flow":flow,"gold":flow*.45,"ore":flow*.75,"gems":flow*(.0015+.00035*depth())*(1+.2*int(s.levels.assay))*(1+.05*int(s.levels.get("sorter",0)))*(2 if float(s.active.survey)>at else 1)},true)
  return result
 func integrate(seconds:float,at:float)->void:
  if seconds<=0:return
@@ -125,18 +129,27 @@ func upgrade(id:String)->bool:
  var cost=upgrade_cost(id);var materials=material_cost(id)
  if not afford(cost) or not FOUNDRY.affordable(self,materials):return false
  FOUNDRY.reserve(self,materials)
- pay(cost);s.job={"kind":"upgrade","service":id,"end":now()+mini(600,int(spec.seconds)+int(s.levels[id])*8),"cost":cost};changed();return true
+ pay(cost);s.job={"kind":"upgrade","service":id,"end":now()+build_seconds(id),"cost":cost};changed();return true
+func build_seconds(id:String="")->float:
+ if id.is_empty():return minf(1800,60*pow(1.25,depth()-1)) if depth()<20 else minf(86400,7200*pow(1.12,depth()-20))
+ var spec:Dictionary=CATALOG.data().services[id];var lv=int(state().levels.get(id,0))
+ return minf(600,int(spec.seconds)+lv*8) if int(spec.depth)<20 else minf(43200,int(spec.seconds)*(1+lv*.15))
 func next_shaft_cost()->Dictionary:
- var scale=pow(1.55,maxi(0,depth()-1))
+ var scale=pow(1.55,mini(19,maxi(0,depth()-1)))*pow(1.32,maxi(0,depth()-20))
  return {"gold":ceil(80*scale),"ore":ceil(50*scale),"gems":maxi(0,depth()-1)}
 func next_requirement()->String:
- if depth()>=CATALOG.data().max_shafts:return "All twenty shafts are open. Keep improving your crews and buildings."
+ if depth()>=CATALOG.data().max_shafts:return "All forty shafts are open. Keep improving your crews and buildings."
  var target=depth()+1
  var cleared=int(legacy.data.get("card",{}).get("descent_best",0))
- var required=5 if target<=10 else 10
- if target>=5 and not preload("res://scripts/realm_access.gd").unrestricted(legacy) and cleared<required:return "Clear Ram Descent floor %d to dig shafts %d–%d • best clear %d" % [required,5 if target<=10 else 11,10 if target<=10 else 20,cleared]
+ var required=5 if target<=10 else 10 if target<=20 else 20 if target<=30 else 35 if target<40 else 50
+ if target>=5 and not preload("res://scripts/realm_access.gd").unrestricted(legacy) and cleared<required:return "Clear Ram Descent floor %d to dig shafts %d–%d • best clear %d" % [required,target,target,cleared]
  if target>=5 and int(state().levels.smelter)==0:return "Needs Ramforge Smelter • forge bars for deeper construction"
- if level()<ceili(target/2.0):return "Needs Mine level "+str(ceili(target/2.0))+" • earn it through ore production"
+ var needed_level=ceili(target/2.0) if target<=20 else target*2-20
+ if level()<needed_level:return "Needs Mine level "+str(needed_level)+" • earn it through ore production"
+ if target>22 and int(state().levels.get("relay",0))<ceili((target-22)/6.0):return "Improve the Underground Rail Depot to reach the next deep galleries."
+ if target>28 and int(state().levels.get("habitat",0))<ceili((target-28)/6.0):return "Improve the Deepcrew Refuge before extending the settlement."
+ if target>32 and int(state().levels.get("sorter",0))<ceili((target-32)/4.0):return "Improve the Prismatic Sorting Hall before digging deeper."
+ if target>36 and int(state().levels.get("core",0))<ceili((target-36)/2.0):return "Improve the Bedrock Enginehouse before entering the final vault."
  var vent=ceili(target/3.0);var pump=maxi(0,ceili((target-3)/4.0))
  if int(state().levels.vent)<vent:return "Needs Ventilation House level "+str(vent)
  if int(state().levels.pump)<pump:return "Needs Drainage Station level "+str(pump)
@@ -148,7 +161,7 @@ func excavate()->bool:
  var cost=next_shaft_cost();var materials=material_cost()
  if not afford(cost) or not FOUNDRY.affordable(self,materials):return false
  FOUNDRY.reserve(self,materials)
- pay(cost);s.job={"kind":"shaft","service":"","end":now()+minf(1800,60*pow(1.25,depth()-1)),"cost":cost};changed();return true
+ pay(cost);s.job={"kind":"shaft","service":"","end":now()+build_seconds(),"cost":cost};changed();return true
 func cancel_build()->void:
  if readonly():return
  advance();var s=state()
@@ -189,7 +202,11 @@ func milestones()->Array:
   {"id":"ore","name":"Ore entrepreneur","need":float(state().lifetime.ore),"target":100000,"reward":{"gold":3000,"gems":25}},
   {"id":"depth15","name":"Emberstone explorer","need":depth(),"target":15,"reward":{"gold":7000,"ore":5000,"gems":40}},
   {"id":"crew100","name":"A ram-run industry","need":workers(),"target":100,"reward":{"gold":12000,"gems":60}},
-  {"id":"depth20","name":"Master of Deepwell","need":depth(),"target":20,"reward":{"gold":25000,"ore":15000,"gems":100}}]
+  {"id":"depth20","name":"Master of Deepwell","need":depth(),"target":20,"reward":{"gold":25000,"ore":15000,"gems":100}},
+  {"id":"depth25","name":"Lanternrail founder","need":depth(),"target":25,"reward":{"gold":100000,"ore":75000,"gems":250}},
+  {"id":"depth30","name":"A city below","need":depth(),"target":30,"reward":{"gold":400000,"ore":250000,"gems":600}},
+  {"id":"depth35","name":"Prismatic magnate","need":depth(),"target":35,"reward":{"gold":1000000,"ore":650000,"gems":1200}},
+  {"id":"depth40","name":"Keeper of the Worldroot","need":depth(),"target":40,"reward":{"gold":4000000,"ore":2500000,"gems":3000}}]
 func claim(id:String)->bool:
  if readonly() or id in state().milestones:return false
  advance()
@@ -211,7 +228,7 @@ func open()->void:
 func preview()->void:
  legacy.data.mine=fresh(now());var s=state();s.commissioned=true
  for n in CATALOG.data().max_shafts:s.shafts.append({"depth":n+1,"crew":12})
- for id in SERVICES:s.levels[id]=25
+ for id in SERVICES:s.levels[id]=40
  var foundry=FOUNDRY.state(self)
  for id in FOUNDRY.METALS:foundry.wallet[id]=1000.0;foundry.bars[id]=100.0
  preload("res://scripts/mine_geology.gd").state(self).wallet.coal=1000.0
@@ -240,29 +257,32 @@ static func valid(value:Variant)->bool:
  for key in ["wallet","stored","lifetime","since_visit"]:if not resources(value.get(key)):return false
  for key in ["last","visit"]:if not numeric(value.get(key),0,4102444800):return false
  if not numeric(value.get("refined"),0,1e15):return false
- if not value.get("shafts") is Array or value.shafts.size()>20 or value.commissioned!=(not value.shafts.is_empty()):return false
+ if not value.get("shafts") is Array or value.shafts.size()>40 or value.commissioned!=(not value.shafts.is_empty()):return false
  for n in value.shafts.size():
   var shaft:Variant=value.shafts[n]
   if not shaft is Dictionary or shaft.size()!=2 or shaft.get("depth")!=n+1 or not numeric(shaft.get("crew"),1,12,true):return false
- if not value.get("levels") is Dictionary or value.levels.size()!=SERVICES.size():return false
- for id in SERVICES:if not numeric(value.levels.get(id),1 if id in ["vent","lift","depot","tools"] else 0,25,true):return false
+ if not value.get("levels") is Dictionary or value.levels.size() not in [8,SERVICES.size()]:return false
+ for id in value.levels:
+  if id not in SERVICES or not numeric(value.levels[id],1 if id in ["vent","lift","depot","tools"] else 0,40,true):return false
+ for id in SERVICES.slice(0,8):
+  if not value.levels.has(id):return false
  for key in ["active","ready"]:
   if not value.get(key) is Dictionary or value[key].size()!=3:return false
   for id in BOOSTS:if not numeric(value[key].get(id),0,4102444800):return false
- if not value.get("milestones") is Array or value.milestones.size()>12:return false
- var ids=["crew","depth2","depot","refine","gems","depth5","crew20","depth10","ore","depth15","crew100","depth20"]
+ if not value.get("milestones") is Array or value.milestones.size()>16:return false
+ var ids=["crew","depth2","depot","refine","gems","depth5","crew20","depth10","ore","depth15","crew100","depth20","depth25","depth30","depth35","depth40"]
  for id in value.milestones:if not id is String or id not in ids:return false
  if not value.get("job") is Dictionary or not value.get("refine") is Dictionary:return false
  if not value.job.is_empty():
   var job:Dictionary=value.job
   if job.size()!=4 or job.get("kind") not in ["shaft","upgrade"] or not numeric(job.get("end"),0,4102444800) or not job.get("cost") is Dictionary:return false
   if job.get("kind")=="upgrade" and job.get("service") not in SERVICES:return false
-  if job.get("kind")=="shaft" and (job.get("service")!="" or value.shafts.size()>=20):return false
-  if job.get("kind")=="upgrade" and int(value.levels.get(job.get("service"),25))>=25:return false
+  if job.get("kind")=="shaft" and (job.get("service")!="" or value.shafts.size()>=40):return false
+  if job.get("kind")=="upgrade" and int(value.levels.get(job.get("service"),40))>=40:return false
   if not value.commissioned:return false
   if job.cost.size()!=3:return false
   for id in RESOURCES:if not numeric(job.cost.get(id),0,1e15):return false
  if not value.refine.is_empty():
   var order:Dictionary=value.refine
-  if order.size()!=3 or not numeric(order.get("end"),0,4102444800) or not numeric(order.get("amount"),1,750) or not numeric(order.get("reward"),0,1000):return false
+  if order.size()!=3 or not numeric(order.get("end"),0,4102444800) or not numeric(order.get("amount"),1,1200) or not numeric(order.get("reward"),0,2000):return false
  return true

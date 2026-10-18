@@ -70,7 +70,7 @@ static func construction_cost(target_depth:int,level:int=0)->Dictionary:
  var metal="copper"
  for id in METALS:
   if int(METALS[id].depth)<=target_depth-1:metal=id
- return {metal:mini(12,1+int(level/5))}
+ return {metal:mini(10000,(1+int(level/5))*int(ceil(pow(1.16,maxi(0,target_depth-20)))))}
 static func affordable(mine:RefCounted,cost:Dictionary)->bool:
  var s=state(mine)
  for id in cost:

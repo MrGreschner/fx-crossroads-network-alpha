@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "results": [
+    "V180 gateway and authority identify the same build; protocol stays 11",
+    "Signed qualifications reach actual T4 roster without exposing tokens",
+    "Forged lobby ranks stripped by gateway and never enter roster",
+    "Live lobby refresh respects independent show/hide preferences",
+    "Expired proofs revoke previously displayed effects",
+    "Two-player authoritative combat still starts after ranked lobby updates"
+  ]
+}

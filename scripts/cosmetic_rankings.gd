@@ -83,7 +83,8 @@ func display_payload()->Dictionary:
  var value=lobby_payload();value.erase("rank_ticket");value.erase("rank_enabled");return value
 func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
  busy=false
- var data=JSON.parse_string(body.get_string_from_utf8())
+ var parsed=JSON.new();var data:Variant=null
+ if not body.is_empty() and parsed.parse(body.get_string_from_utf8())==OK:data=parsed.data
  if data is Dictionary and data.get("server_time") is float:server_offset=float(data.server_time)-Time.get_unix_time_from_system()
  if data is Dictionary and data.get("week_start") is float and data.get("reset_at") is float and data.get("week") is String:
   week_start=float(data.week_start);week_end=float(data.reset_at);server_week=str(data.week)

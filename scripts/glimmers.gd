@@ -18,7 +18,8 @@ func debit(amount:int)->bool:
 func fish_price(catch:Dictionary)->int:
  if catch.is_empty() or catch.get("species","") not in C.fish():return 0
  var base=int({"Common":4,"Uncommon":7,"Rare":15,"Very rare":22,"Legendary":45,"Mystical":70}.get(str(C.fish()[catch.species].rarity),4))
- return base+maxi(1,base/4) if preload("res://scripts/fishing_catalog.gd").is_trophy(catch) else base
+ var price=base+maxi(1,base/4) if C.is_trophy(catch) else base
+ return maxi(1,int(round(price*(1+legacy.fishing_records.progress.perk_bonus("sale")))))
 func sell_fish(id:String)->String:
  if legacy.game.mode!="town" or not allowed():return "Return to a normal town profile to trade."
  var records=legacy.fishing_records;var catch=records.specimen(id);var price=fish_price(catch)

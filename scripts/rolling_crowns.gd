@@ -77,7 +77,7 @@ static func bonus(rank:int,competition:bool=false)->Dictionary:
  rank=clampi(rank,0,GOALS.size())
  return {"chance":(.02 if rank>=8 else 0.0)+(.02 if rank>=13 else 0.0)+(.02 if rank>=18 else 0.0),"damage":clampi(rank-7,0,10)*.05}
 func active_bonus()->Dictionary:return bonus(tier_from(cached_sum))
-func display_tier()->int:return tier_from(cached_sum)
+func display_tier()->int:return 0 if bool(legacy.cosmetics.state().get("hide_town_crown",false)) else tier_from(cached_sum)
 func expiry_schedule(force:bool=false)->Array:
  if not force and now()<expiry_cache_until:return expiry_cache
  var rank=tier_from(cached_sum);var remaining=cached_sum;var values:Array=[];values.resize(rank);values.fill(int(now())+WINDOW)

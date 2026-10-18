@@ -1,0 +1,12 @@
+{
+  "build": "V180-preview",
+  "protocol": 11,
+  "passed": true,
+  "results": [
+    "Old clients explicitly rejected; health/report release identity matches",
+    "Eight-player lobby retains current crown, never equips an archived style",
+    "Guest cannot override host competition rule",
+    "All eight players start with the same competition rule; authority replicates bounded crown expiry schedule",
+    "Reconnect preserves competition and authoritative state"
+  ]
+}

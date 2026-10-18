@@ -57,6 +57,26 @@ static func size_summary(catch:Dictionary)->String:
  var percentile:float=size_percentile(id,float(catch.kg),clampf(float(catch.get("trophy_rate",.025)),0,1))
  var rank:String="TROPHY" if is_trophy(catch) else "Small" if percentile<25 else "Typical" if percentile<75 else "Large" if percentile<95 else "Exceptional"
  return "%s size • %.0f%% of species average\nAverage ordinary catch: %.2f kg • Trophy: %.2f+ kg\nHeavier than about %.0f%% of catches (current size model)" % [rank,float(catch.kg)/mean*100,mean,trophy_threshold_kg(id),percentile]
-static func display_size(catch:Dictionary)->Vector2:
- # Actual caught length drives scale across species and within a species.
- return Vector2(115,65)*clampf(float(catch.get("cm",30))/55.0,.32,1.13)
+static var display_cache:Dictionary={}
+static func display_geometry(id:String)->Dictionary:
+ if display_cache.is_empty():
+  var parsed=JSON.parse_string(FileAccess.get_file_as_string("res://content/fish_display_geometry.json"))
+  if parsed is Dictionary:display_cache=parsed.get("fish",{})
+ return display_cache.get(id,{"rect":[0,0,256,144],"area":18432.0,"source":[256,144]})
+static func display_region(catch:Dictionary)->Rect2:
+ var g=display_geometry(str(catch.species));var r:Array=g.rect;var source:Array=g.source;var tex=texture(str(catch.species))
+ var ratio=Vector2(tex.get_width()/float(source[0]),tex.get_height()/float(source[1]))
+ return Rect2(Vector2(float(r[0]),float(r[1]))*ratio,Vector2(float(r[2]),float(r[3]))*ratio)
+static func display_size(catch:Dictionary,shared_scale:float=48.0)->Vector2:
+ # Visible painted area grows with mass^(2/3); one common scale preserves ordering.
+ # Cropping transparent padding keeps a thin loach comparable with a deep-bodied salmon.
+ var g=display_geometry(str(catch.species));var r:Array=g.rect
+ var linear=pow(maxf(.000001,float(catch.get("kg",0))),1.0/3.0)/sqrt(maxf(1,float(g.area)))
+ return Vector2(float(r[2]),float(r[3]))*linear*shared_scale
+static func tank_scale(catches:Array,limit:Vector2=Vector2(128,96))->float:
+ var shared=48.0
+ for catch in catches:
+  if not catch is Dictionary or catch.is_empty():continue
+  var unit=display_size(catch,1.0)
+  shared=minf(shared,minf(limit.x/maxf(.001,unit.x),limit.y/maxf(.001,unit.y)))
+ return shared

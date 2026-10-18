@@ -31,7 +31,7 @@ static func build(l:Node,body:Node)->void:
    label(box,str(C.RELICS[item.type].effect))
    l.button(box,"Unequip",func():s.equipped[n]="";p.save();l.render())
  if p.fisher_ready():l.button(relics,"Claim Riverkeeper's Covenant • master fisher",func():l.notice.text=p.fisher_claim();l.render())
- else:label(relics,"Riverkeeper's Covenant • claimed" if s.fisher_claimed else "Master fisher relic • reach fishing level 40 and discover 15 species.")
+ else:label(relics,"Riverkeeper's Covenant • claimed" if s.fisher_claimed else "Master fisher relic • reach fishing level 80 and discover 50 species.")
  label(relics,"COLLECTION • %d / 60" % s.relics.size(),20)
  if s.relics.is_empty():label(relics,"No relics yet. The daily overcharge offers a chance after a successful clear; ten eligible clears without a drop guarantee one.")
  for v in s.relics:

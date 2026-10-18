@@ -51,9 +51,9 @@ func eligible(id:String)->bool:
  if id=="daily":return legacy.daily.earned()
  if id=="easter":return easter_unlocked()
  if id=="lodge_week":return legacy.lodge_economy.weekly_earned()
- if id in LODGE_IDS:return legacy.lodge_economy.medal_total()>=[5,15,30][LODGE_IDS.find(id)]
- if id=="weekly_1":return legacy.fishing_records.state().journal.size()>=10
- if id=="weekly_2":return int(legacy.card.state().descent_best)>=25
+ if id in LODGE_IDS:return legacy.lodge_economy.medal_total()>=[15,30,50][LODGE_IDS.find(id)]
+ if id=="weekly_1":return legacy.fishing_records.state().journal.size()>=50
+ if id=="weekly_2":return int(legacy.card.state().descent_best)>=50
  if id=="weekly_3":return "astral_rift" in legacy.card.badges() and bool(legacy.data.get("waylight",{}).get("attuned",false))
  return false
 func select(id:String)->void:
@@ -112,4 +112,5 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="")->vo
   c.draw_circle(q,6,Color("#ffe2a1"));c.draw_arc(q,11,0,TAU,24,Color(ink,.7),1.5,true)
 func valid(value:Variant)->bool:
  if not value is Dictionary:return false
+ if value.has("hide_town_crown") and not value.hide_town_crown is bool:return false
  return value.get("week") is String and str(value.week).length()==10 and value.get("selected") is String and str(value.selected) in ["auto","none","daily","easter"]+IDS+LODGE_IDS+W.REWARDS.keys() and (value.get("damage") is float or value.get("damage") is int) and is_finite(float(value.damage)) and float(value.damage)>=0 and float(value.damage)<=1e12

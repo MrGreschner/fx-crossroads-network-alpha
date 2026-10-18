@@ -292,11 +292,11 @@ func unlocks(id:String)->Array[String]:
  for key in game.legacy.PROJECTS:
   if not bool(game.legacy.data.town.get(key,false)) and game.legacy.town_ready(str(key)) and not bool(before_ready.get(key,false)):found.append(str(game.legacy.PROJECTS[key].name)+" • ready to build")
  return found
-func results(won:bool)->void:
+func results(won:bool,abandoned:bool=false)->void:
  var token:String=game.match_id if arcade else game.region_id+":"+str(game.run_time)
  if last_result==token:return
- var returned=arcade and game.get("realm_result")=="returned"
- last_result=token;window("EXPEDITION CHECKPOINT SAVED" if returned else "VICTORY" if won else "ADVENTURE OVER • YOU WERE DEFEATED","results")
+ var returned=(arcade and game.get("realm_result")=="returned") or (not arcade and abandoned)
+ last_result=token;window(("EXPEDITION CHECKPOINT SAVED" if arcade else "RETURNED TO THE CROSSROADS") if returned else "VICTORY" if won else "ADVENTURE OVER • YOU WERE DEFEATED","results")
  var id:String=str(game.hero_ids.get(game.my_id,game.selected_hero)) if arcade else game.character_id
  var title:String=game.results_reason if arcade else str(game.region.get("name","Realm"))
  label(content,title,23)
