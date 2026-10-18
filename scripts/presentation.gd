@@ -1,5 +1,6 @@
 extends CanvasLayer
 ## Shared presentation; no combat authority or progression rewards live here.
+var elder_guide=preload("res://scripts/elder_guidance.gd").new()
 var game:Node
 var arcade:=false
 var panel:Control
@@ -24,7 +25,7 @@ var unlock_until=0.0
 var unlock_buttons:Array=[]
 var read_until=0.0
 func setup(owner:Node,multi:bool)->void:
- game=owner;arcade=multi;layer=46
+ game=owner;arcade=multi;layer=46;elder_guide.game=owner
  panel=Control.new();panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);panel.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(panel);panel.draw.connect(paint)
  feedback=Control.new();feedback.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);feedback.mouse_filter=Control.MOUSE_FILTER_IGNORE;feedback.z_index=10;panel.add_child(feedback);feedback.draw.connect(paint_feedback)
  var cfg:=ConfigFile.new();cfg.load("user://fx_sound.cfg");AudioServer.set_bus_mute(0,bool(cfg.get_value("sound","mute",false)))
@@ -73,7 +74,7 @@ func window(title:String,kind:String)->void:
    if arcade:game._town()
    else:return_to_town())
  elif kind=="skill_unlock":button(col,"Got it — continue training",close)
- elif kind!="unlock_celebration":button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
+ elif kind not in ["unlock_celebration","elder_guidance"]:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
 func _unhandled_input(event:InputEvent)->void:
  if not event is InputEventKey or not event.pressed or event.echo:return
  if page=="starter" and event.keycode>=KEY_1 and event.keycode<=KEY_9:
@@ -118,7 +119,7 @@ func _process(delta:float)->void:
   if float(rings[n].age)>1.2:rings.remove_at(n)
  panel.queue_redraw();feedback.queue_redraw()
 func skip_intro()->void:
- game.profile["tutorial_seen"]=true;game.save_profile();game.journey.data.skipped=true;game.journey.save();close()
+ game.profile["tutorial_seen"]=true;game.save_profile();game.journey.data.skipped=true;game.journey.save();close();elder_guide.welcome()
 func starter()->void:
  get_tree().root.set_meta("fx_tutorial_offered",true)
  window("FIRST STEPS • choose your first hero","starter")
@@ -158,7 +159,7 @@ func show_skill_unlock(kind:String)->void:
  read_until=clock+.65;disable_modal_buttons()
 func tutorial_end(won:bool,skipped:bool)->void:
  close()
- if skipped:return
+ if won or skipped:elder_guide.welcome();return
  window("FIRST STEPS COMPLETE" if won else "DEFEATED • FIRST STEPS", "tutorial_end")
  if not won:
   label(content,"You were defeated. Try the battle again with what you learned.",23)

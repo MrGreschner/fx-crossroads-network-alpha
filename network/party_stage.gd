@@ -25,7 +25,27 @@ func _draw()->void:
   draw_circle(p+Vector2(0,height*.32),18,Color(0,0,0,.28))
   if texture!=null:draw_texture_rect(texture,Rect2(p-Vector2(height*.42,height*.65),Vector2(height*.84,height)),false)
   var cosmetic:Dictionary=game.local_cosmetic() if local else member.get("cosmetic",{})
-  preload("res://scripts/rolling_crowns.gd").draw_on(self,p-Vector2(0,height*.65-20),clock,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
+  draw_set_transform(p-Vector2(0,height*.15),0,Vector2.ONE*minf(1,height/64))
+  preload("res://scripts/rolling_crowns.gd").draw_on(self,Vector2.ZERO,clock,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
+  draw_set_transform(Vector2.ZERO)
+  draw_set_transform(p+Vector2(0,height*.20),0,Vector2.ONE*minf(.65,height/80))
+  preload("res://scripts/player_cosmetics.gd").draw_on(self,Vector2.ZERO,clock,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")))
+  draw_set_transform(p+Vector2(0,height*.12),0,Vector2.ONE*minf(1,height/64))
+  preload("res://scripts/ranked_cosmetic_art.gd").draw_lobby(self,Vector2.ZERO,clock,cosmetic)
+  draw_set_transform(Vector2.ZERO)
   var tint:Color=Color("#f2d49c") if local else Color("#a6d7df")
   draw_string(game.font,p+Vector2(-tile.x*.46,height*.55),str(member.get("name","Player"))+(" • You" if local else ""),HORIZONTAL_ALIGNMENT_CENTER,tile.x*.92,13,tint)
   draw_string(game.font,p+Vector2(-tile.x*.46,height*.55+16),str(spec.get("name",hero)),HORIZONTAL_ALIGNMENT_CENTER,tile.x*.92,11,Color("#a0bbb9"))
+
+func _get_tooltip(at:Vector2)->String:
+ if game==null:return ""
+ var members:Array=game.roster if not game.roster.is_empty() else [{"id":"preview","hero":game.selected_hero}]
+ var cols=mini(4,maxi(1,members.size()));var tile=Vector2(size.x/cols,size.y/ceili(float(members.size())/cols))
+ var index=int(at.y/tile.y)*cols+int(at.x/tile.x)
+ if index<0 or index>=members.size():return ""
+ var member:Dictionary=members[index];var local=str(member.get("id","preview")) in [game.my_id,"preview"]
+ var cosmetic:Dictionary=game.local_cosmetic() if local else member.get("cosmetic",{})
+ var words=PackedStringArray()
+ var labels={"rank_week_damage":"Vanguard Comets • current weekly top 10 damage","rank_week_fish":"Leviathan’s Wake • current weekly top 10 heaviest fish","rank_all_damage":"Eternal Constellation • current lifetime top 5 damage"}
+ for id in preload("res://scripts/ranked_cosmetic_art.gd").active(cosmetic):words.append(labels[id])
+ return "\n".join(words)

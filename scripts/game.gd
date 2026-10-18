@@ -221,7 +221,7 @@ func _ready() -> void:
 func _has_web_sun_loader()->bool:
 	return OS.has_feature("web") and bool(JavaScriptBridge.eval("typeof window.fxSunLoading !== 'undefined'",true))
 func _finish_web_sun_loading()->void:
-	# Let the main-menu process and its first rendered frame finish before uncovering it.
+	# Signal the completed first frame; the browser then opens its portal and plays the fixed intro.
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
@@ -1712,6 +1712,7 @@ func draw_world() -> void:
 		town_life.draw_residents(self,camera)
 		town_scenery.draw_patrols(self,camera)
 		town_life.draw_recognition(self,camera,font)
+		presentation.elder_guide.draw_marker(self,camera)
 	else:
 		draw_sprite("portal", pair(region["gate"]["position"]) - Vector2(40, 76), Vector2(80, 120))
 		if region.has("merchant") and not practice and not tutorial.active:
@@ -1836,7 +1837,7 @@ func draw_world() -> void:
 	elif not adventure.combat.robot.transformed("solo") and not adventure.combat.twister.transformed("solo"):draw_sprite(hero_art,hero_rect.position,hero_rect.size,Color(1,1,1,.43) if stealth_time>0 and mode=="run" else Color.WHITE)
 	if health>0 and legacy.daily.earned() and legacy.cosmetics.daily_visible():preload("res://scripts/daily_challenge.gd").draw_on(self,position_in_world-camera,visual_clock)
 	var dev_session:Node=get_tree().root.get_node_or_null("FXDevSession")
-	if health>0:preload("res://scripts/rolling_crowns.gd").draw_on(self,position_in_world-camera-Vector2(0,28),visual_clock,legacy.crowns.display_tier())
+	if mode=="town" and health>0:preload("res://scripts/rolling_crowns.gd").draw_town(self,Vector2(hero_rect.get_center().x,hero_rect.position.y+5)-camera,visual_clock,legacy.crowns.display_tier())
 	if health>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,position_in_world-camera,visual_clock,legacy.cosmetics.effect(),str(legacy.cosmetics.state().week))
 	if dev_session!=null and bool(dev_session.active) and health>0:preload("res://scripts/dev_insignia.gd").draw_on(self,position_in_world-camera,visual_clock)
 	if health>0:preload("res://scripts/creation_badges.gd").draw_on(self,position_in_world-camera,visual_clock,{"custom":hero.has("studio_project"),"balanced":bool(hero.get("studio_checked",false)),"playtest":get_tree().root.get_node("FXResearch").active,"media":media.active})

@@ -7,7 +7,7 @@ func blocked(p:Vector2)->bool:return WALL.grow(5).has_point(p)
 func interact(g:Node)->bool:
  if g.position_in_world.distance_to(ENTRY)>80:return false
  g.hint="E • Gleam Atelier • cosmetics and titles"
- if Input.is_action_just_pressed("interact"):g.legacy.open_page("cosmetics")
+ if Input.is_action_just_pressed("interact"):g.legacy.cosmetics.open_picker()
  return true
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not Rect2(camera,c.VIEW).grow(150).intersects(WALL):return

@@ -508,6 +508,11 @@ func town_ui()->void:
   if bool(data.town.get("clinic",false)):button(body,"Choose free Cleansing Tea instead",claim_food.bind("cleansing_tea"))
   if bool(data.town.get("relay",false)):button(body,"Choose free Hearty Stew instead",claim_food.bind("hearty_stew"))
 func elder_ui()->void:
+ if not arcade:
+  button(body,"Elder Ram • Welcome & first adventures",func():game.presentation.elder_guide.begin("welcome"))
+  var guide=button(body,"Elder Ram • The Between, shards & relics",func():game.presentation.elder_guide.begin("between"))
+  guide.disabled=not game.presentation.elder_guide.earned_between()
+  guide.tooltip_text="Clear Sunfield Expanse or Frostbound Rink to discover this path."
  text("Elder Ram: Hello, traveler! Welcome to Crossroads: Realms Beyond. Find your path. Create what’s next. Ask me anything, or pick a topic below.")
  chat_ui()
  var topics={
@@ -519,7 +524,7 @@ func elder_ui()->void:
   "Gate Defence & Ram Descent":"Gate Defence has three paths, outposts, marching guards and opposing hero rivals. Upgrade at buildings and beat the wave-30 guardian to earn the stronger town wall. One to three heroes can defend. Ram Descent supports up to four: clear dungeon floors, watch your XP bar, and manage health carefully—new floors do not heal you automatically.",
   "Battlegrounds":"Beyond the north gate, two teams build armies from personal barracks. Choose 3v3 or 4v4; upgrade soldiers, archers, healers and stronger units, then break the enemy heart. The central item shop rewards control of the middle. The war-zone map also has dangerous falling air strikes.",
   "Realms, quests & exploration":"The portal lists realms by difficulty; encounter enemies to reveal named portraits, with bosses shown separately. Ten clears earn a realm star. Follow the east bridge and forest trail to Wayfarer Wilds for a longer quest expedition, villagers, dungeons and the snowy summit. The Challenge Lodge offers five quick trial styles and three weekly featured trials. The Gatherers’ Lodge sends timed crews for herbs and rare seeds; Willowglass Apothecary brews these into potions for your three item slots.",
-  "Weekly activities":"Every Sunday starts eight appearance-only rewards: a species-and-size fishing target, a profitable market day, three player-only arena goals, Descent floor 10, two lodge trials and Gate Defence wave 10. Check Adventures, Records & style or the cosmetic pavilion. Equip one earned effect for the rest of the week. Game Dev, Playtest, continued practice and bot arena matches do not earn these rewards.",
+  "Weekly activities":"Every Sunday starts eight appearance-only rewards: a species-and-size fishing target, a profitable market day, three player-only arena goals, Descent floor 10, two lodge trials and Gate Defence wave 10. Check Adventures, Records & style or Gleam Atelier. Equip one earned effect for the rest of the week. Game Dev, Playtest, continued practice and bot arena matches do not earn these rewards.",
   "Lodges, gathering & potions":"Daily Mission is a separate daily objective in the main menu and Adventures. Challenge Lodge offers five quick combat trials at level 10. Bronze, silver and gold medals unlock cosmetics; clear three featured weekly trials for a temporary lantern. No realm clears or mastery progress. Gatherers’ Lodge sends timed crews for herbs, mushrooms, bark, insects and petals. Claim returns and occasional rare seeds; brew consumable bottles at Willowglass Apothecary. Potions use ordinary item slots. Upgrade the apothecary with ingredients for new recipes.",
   "Food, seeds & a growing town":"Carry three items and one automatically eaten food. Visit the Food Stand; healing food triggers at its health threshold and cleansing food removes matching effects. Grow plants and unlock more seeds at the Seed House. Clears, co-op accomplishments and helping townsfolk build projects. Death returns you to the healer house with your chosen hero.",
   "Player card, cosmetics & saving":"Profile holds lifetime statistics, arena trophies, difficult-realm badges and earned hero portraits. Journey cosmetics has buttons to equip ribbons and titles. Download your personal profile before changing computers; Upload replaces this device's progress. New/Clear removes local progress—download it first. Transfers are available in town.",
@@ -611,7 +616,7 @@ func answer(value:String)->void:
  elif "descent" in q:reply="Watch the XP bar and protect your health: clearing a floor no longer gives a free heal. Bring a support hero or food, and invite up to three friends."
  elif "gate" in q or "defen" in q:reply="Defend three outposts and their long roads. Up to three heroes can play; marching guards share bounty. Buy upgrades at buildings. Clear the wave-30 guardian to earn the town wall."
  elif "lodge" in q or "challenge" in q or "trial" in q or "potion" in q or "gather" in q:reply=ELDER_TOPICS.get("Lodges, gathering & potions","Gather ingredients, brew potions and try the Challenge Lodge.")
- elif "cosmetic" in q or "ribbon" in q:reply="Adventures opens Journey cosmetics. Choose an earned title or ribbon using its buttons. They change appearance, never combat power."
+ elif "cosmetic" in q or "ribbon" in q:reply="Visit Gleam Atelier to preview your current hero, inspect locked styles and equip earned effects. Its Competitive tab explains server-compared weekly top-ten and lifetime top-five styles; those appear in multiplayer lobbies only. Titles & ribbons opens your Journey collection. Appearance effects never add combat power."
  elif "fps" in q or "lag" in q or "crash" in q or "sound" in q:reply="Open main-menu Options to lower the FPS cap, use school mode, mute sound or download a diagnostic report. The downloadable edition uses the same multiplayer rooms."
  elif "food" in q or "poison" in q:reply="Cleansing food is eaten when its matching harmful effect arrives. Healing food is eaten at its listed health threshold. You can only pack one."
  elif "save" in q or "profile" in q or "account" in q:reply="Open Profile to download your save. Upload it on another device. There is no login server, so export your newest progress before leaving."
@@ -743,6 +748,7 @@ func validate(value:Variant)->bool:
   if not progress.education is Dictionary or progress.education.size()!=1 or not progress.education.get("studio_seconds",0) is float and not progress.education.get("studio_seconds",0) is int:return false
   if not is_finite(float(progress.education.studio_seconds)) or float(progress.education.studio_seconds)<0 or float(progress.education.studio_seconds)>315360000:return false
  if bool(progress.get("teacher",false)):return false
+ if progress.has("elder_guidance") and not preload("res://scripts/elder_guidance.gd").valid(progress.elder_guidance):return false
  if progress.has("glimmers") and not preload("res://scripts/glimmers.gd").valid(progress.glimmers):return false
  if progress.has("waylight") and not preload("res://scripts/waylight_progress.gd").valid(progress.waylight):return false
  if progress.has("fishing") and not preload("res://scripts/fishing_records.gd").valid(progress.fishing):return false
@@ -752,6 +758,7 @@ func validate(value:Variant)->bool:
  if progress.has("commerce") and not preload("res://scripts/commerce.gd").valid(progress.commerce):return false
  if progress.has("rolling_damage") and not preload("res://scripts/rolling_crowns.gd").valid(progress.rolling_damage):return false
  if progress.has("weekly_activities") and not weekly.valid(progress.weekly_activities):return false
+ if progress.has("cosmetic_rankings") and not preload("res://scripts/cosmetic_rankings.gd").valid(progress.cosmetic_rankings):return false
  if progress.has("cosmetics") and not cosmetics.valid(progress.cosmetics):return false
  if progress.has("daily") and not daily.valid(progress.daily):return false
  if progress.has("card") and not card.valid(progress.card):return false
@@ -864,7 +871,10 @@ func _process(delta:float)->void:
  quick.text="Mastery for this hero" if game.menu=="characters" else "Profile / Mastery / Town"
  var view=get_viewport().get_visible_rect().size
  root.size=Vector2(1060,640);root.scale=Vector2.ONE*minf(1,minf((view.x-24)/1060,(view.y-24)/640));root.position=(view-root.size*root.scale)*.5
- if game.menu=="elder" and last_menu!="elder":talk("elder");open_page("elder")
+ if game.menu=="elder" and last_menu!="elder":
+  var guidance=game.presentation.elder_guide.pending()
+  if not guidance.is_empty():game.presentation.elder_guide.begin(guidance)
+  else:talk("elder");open_page("elder")
  if game.menu in ["supplies","healer","seedhouse","food","wayfinder"] and game.menu!=last_menu:talk(game.menu)
  last_menu=game.menu
  tick+=delta

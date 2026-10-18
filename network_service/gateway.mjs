@@ -1,3 +1,4 @@
+import {createCosmeticRankings} from './cosmetic-rankings.mjs';
 import {createActivity} from './activity.mjs';
 import http from 'node:http';
 import {BUILD} from './release.mjs';
@@ -32,11 +33,12 @@ createInterface({input:game.stdout}).on('line',line=>{
 });game.stderr.on('data',b=>process.stderr.write(b));
 const reporting=createReporting();
 const activity=createActivity({pool:reporting.pool,admin:reporting.admin});
+const rankings=createCosmeticRankings({pool:reporting.pool});
 const server=http.createServer(async(req,res)=>{
- try{if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
+ try{if(await rankings.handle(req,res))return;if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({game_name:"Crossroads: Realms Beyond",ready,public_rooms:true,crown_competition:true,crown_stages:18,protocol:11,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),activity:activity.status(),supported_realms:JSON.parse(readFileSync(resolve(root,"content/manifest.json"),"utf8")).regions.concat(["wayfarer","between","overcharge"]),supported_modes:["arena","defense","descent","coop","battlegrounds"],gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
+ res.end(JSON.stringify({game_name:"Crossroads: Realms Beyond",ready,public_rooms:true,crown_competition:true,ranked_cosmetics:rankings.status(),crown_stages:18,protocol:11,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),activity:activity.status(),supported_realms:JSON.parse(readFileSync(resolve(root,"content/manifest.json"),"utf8")).regions.concat(["wayfarer","between","overcharge"]),supported_modes:["arena","defense","descent","coop","battlegrounds"],gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{
@@ -73,6 +75,7 @@ wss.on('connection',client=>{
    }
   }catch{}}
 
+  if(!binary&&bytes.includes('"cosmetic"')){try{const data=JSON.parse(bytes.toString());if(data.cosmetic){data.cosmetic=rankings.cleanCosmetic(data.cosmetic);bytes=Buffer.from(JSON.stringify(data));}}catch{close('invalid_cosmetic',1008);return;}}
   if(upstream.readyState===WebSocket.OPEN){
    if(upstream.bufferedAmount>262144){close('upstream_flood',1008);return;}
    upstream.send(bytes,{binary});
@@ -97,5 +100,5 @@ wss.on('connection',client=>{
  client.on('error',()=>close());upstream.on('error',()=>close('authority_connection_error'));
 });
 server.listen(port,'0.0.0.0',()=>console.log('Crossroads '+BUILD+' gateway port '+port));
-game.on('exit',code=>{ready=false;clearInterval(cpuTimer);console.error('Authority exited: '+code);for(const ws of wss.clients)ws.close(1012,'Server stopped');server.close(async()=>{activity.close();await reporting.close();process.exit(code||1);});});
+game.on('exit',code=>{ready=false;clearInterval(cpuTimer);console.error('Authority exited: '+code);for(const ws of wss.clients)ws.close(1012,'Server stopped');server.close(async()=>{activity.close();rankings.close();await reporting.close();process.exit(code||1);});});
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{game.kill('SIGTERM');server.close();});

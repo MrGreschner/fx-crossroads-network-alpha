@@ -180,7 +180,7 @@ func receive(key:int,data:Dictionary)->void:
   send(key,{"type":"rooms","rooms":listing.slice(0,8)});return
  if connection.actor.is_empty():
   if kind not in ["host","join","resume"]:return
-  if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V178-preview (protocol 11). Install the matching private client.");return
+  if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V179-preview (protocol 11). Install the matching private client.");return
   join(key,data);return
  var id=str(connection.actor);var identity:Dictionary=identities[id];var room:Dictionary=rooms[identity.room];var g:Node=room.game
  if kind=="leave":
@@ -313,6 +313,13 @@ func clean_cosmetic(value:Variant)->Dictionary:
  result.crown_best=clampi(int(value.get("crown_best",result.crown_tier)),int(result.crown_tier),18) if finite_number(value.get("crown_best",result.crown_tier)) else int(result.crown_tier)
  for key in ["colour","title","daily_date","extra_effect","weekly_week"]:
   if value.get(key) is String:result[key]=str(value[key]).left(64)
+ if OS.get_environment("FX_PROXY")=="1":
+  var until=value.get("rank_until",0)
+  if finite_number(until) and float(until)>Time.get_unix_time_from_system() and float(until)<=Time.get_unix_time_from_system()+95:
+   result.rank_until=int(until);result.rank_week=str(value.get("rank_week","")).left(10);result.rank_badges=[]
+   if value.get("rank_badges") is Array:
+    for id in value.rank_badges:
+     if id in preload("res://scripts/cosmetic_rankings.gd").IDS and id not in result.rank_badges:result.rank_badges.append(id)
  for key in ["custom","balanced","media","playtest","game_dev"]:result[key]=value.get(key,false)==true
  return result
 func valid_frame(value)->bool:

@@ -2240,7 +2240,6 @@ func _draw() -> void:
 			preload("res://scripts/daily_challenge.gd").draw_on(self,pos,visual_time)
 		if int(health.get(id,0))>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,pos,visual_time,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")))
 		if int(health.get(id,0))>0:preload("res://scripts/creation_badges.gd").draw_on(self,pos,visual_time,cosmetic)
-		if int(health.get(id,0))>0:preload("res://scripts/rolling_crowns.gd").draw_on(self,pos-Vector2(0,28),visual_time,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
 		if bool(cosmetic.get("game_dev",false)) and int(health.get(id,0))>0:
 			preload("res://scripts/dev_insignia.gd").draw_on(self,pos,visual_time)
 		if not cosmetic.is_empty() and not (media.clean_view or media.capturing):
@@ -3096,7 +3095,8 @@ func local_cosmetic()->Dictionary:
 	var session:Node=get_tree().root.get_node_or_null("FXDevSession")
 	var testing:bool=session!=null and bool(session.active)
 	var identity_flags=custom_party.flags(my_id);identity_flags.media=media.active;identity_flags.playtest=get_tree().root.get_node("FXResearch").active
-	return {"crown_damage":legacy.crowns.payload().crown_damage,"crown_tier":legacy.crowns.payload().crown_tier,"crown_best":legacy.crowns.payload().crown_best,"crown_expiry":legacy.crowns.payload().crown_expiry,"custom":identity_flags.custom,"balanced":identity_flags.balanced,"media":identity_flags.media,"playtest":identity_flags.playtest,"colour":journey.ribbon().to_html(),"title":"GAME DEV" if testing else str(journey.data.get("title","Traveler")),"game_dev":testing,"daily_date":legacy.daily.cosmetic_date() if legacy.cosmetics.daily_visible() else "","extra_effect":legacy.cosmetics.effect(),"weekly_week":str(legacy.cosmetics.state().week)}
+	var result={"crown_damage":legacy.crowns.payload().crown_damage,"crown_tier":legacy.crowns.payload().crown_tier,"crown_best":legacy.crowns.payload().crown_best,"crown_expiry":legacy.crowns.payload().crown_expiry,"custom":identity_flags.custom,"balanced":identity_flags.balanced,"media":identity_flags.media,"playtest":identity_flags.playtest,"colour":journey.ribbon().to_html(),"title":"GAME DEV" if testing else str(journey.data.get("title","Traveler")),"game_dev":testing,"daily_date":legacy.daily.cosmetic_date() if legacy.cosmetics.daily_visible() else "","extra_effect":legacy.cosmetics.effect(),"weekly_week":str(legacy.cosmetics.state().week)}
+	result.merge(legacy.cosmetics.rankings.display_payload());return result
 func cosmetic_for(id:String)->Dictionary:
 	var value:Dictionary=(local_cosmetic() if id==my_id else player_cosmetics.get(id,{})).duplicate(true)
 	value.merge(custom_party.flags(id),true)

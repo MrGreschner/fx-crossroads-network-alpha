@@ -146,3 +146,20 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,tier:int)->void:
   c.draw_arc(top,32,-PI*.85+t*.12,PI*.85+t*.12,40,Color(ink,.5),1.4,true)
   for n in 4:
    var v=top+Vector2.from_angle(t*.25+n*TAU/4)*30;c.draw_line(v-Vector2(0,3),v+Vector2(0,3),ink,1,true);c.draw_line(v-Vector2(3,0),v+Vector2(3,0),ink,1,true)
+
+static func draw_town(c:CanvasItem,p:Vector2,t:float,tier:int)->void:
+ # A compact worn crown. No halo, orbit or large glow over the character/name.
+ if tier<1 or tier>GOALS.size():return
+ var ink=Color(COLORS[tier-1]);var edge=Color("#273239");var width=10.0 if tier<8 else 13.0
+ var points=PackedVector2Array([p+Vector2(-width,2),p+Vector2(-width-1,-9),p+Vector2(-width*.48,-4),p+Vector2(0,-15),p+Vector2(width*.48,-4),p+Vector2(width+1,-9),p+Vector2(width,2),p+Vector2(-width,2)])
+ c.draw_colored_polygon(points,ink.darkened(.12));c.draw_polyline(points,edge,1.5,true)
+ c.draw_line(p+Vector2(-width+2,-1),p+Vector2(width-2,-1),ink.lightened(.32),1.5,true)
+ c.draw_circle(p+Vector2(0,-7),1.8,Color("#fff2ca") if tier<13 else Color("#dce0ff"))
+ if tier>=8:
+  var stage=clampi(tier-7 if tier<13 else tier-12,1,5)
+  for n in 5:c.draw_circle(p+Vector2((n-2)*4.4,5),1.25,ink if n<stage else Color(ink,.25))
+ if tier>=13:
+  for side in [-1,1]:c.draw_line(p+Vector2(side*width,0),p+Vector2(side*(width+4),-6),ink,1.4,true)
+ if tier==18:
+  var shimmer=.45+.25*sin(t*1.4)
+  for side in [-1,1]:c.draw_circle(p+Vector2(side*8,-11),1.2,Color("#e5fffd",shimmer))

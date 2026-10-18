@@ -89,7 +89,7 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 	if arcade:return
 	var font:=ThemeDB.fallback_font
 	var player:Vector2=game.position_in_world-camera
-	if not (game.media.clean_view or game.media.capturing):canvas.draw_string(font,player+Vector2(-40,-58),str(data.get("title","Traveler")),HORIZONTAL_ALIGNMENT_LEFT,-1,12,ribbon())
+	if not (game.media.clean_view or game.media.capturing):canvas.draw_string(font,player+Vector2(-40,-78 if game.mode=="town" and game.legacy.crowns.display_tier()>0 else -58),str(data.get("title","Traveler")),HORIZONTAL_ALIGNMENT_LEFT,-1,12,ribbon())
 
 func draw_town(canvas:Node2D,camera:Vector2)->void:
 	if game.has_method("_attack_request") or game.mode!="town":return

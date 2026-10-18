@@ -15,8 +15,8 @@ func sync(delta:float)->void:
  elapsed=0;width=game.VIEW.x;height=game.VIEW.y
  var profile:Dictionary=game.perf_latest.get("client_profile",{})
  lines=["Update p95 %.1f ms • draw commands p95 %.1f ms • F8: download performance report" % [profile.get("client_process",{}).get("p95_ms",0),profile.get("draw_commands",{}).get("p95_ms",0)],
- "V178-preview • server %s • RTT %d ms • sim %.2f ms • snapshot %.2f ms • input queue %d • authority %.0f Hz" % [game.server_build,game.metrics.rtt_ms,game.metrics.tick_ms,game.server_snapshot_ms,game.history.size(),game.server_hz],
- "V178-preview • remote buffer %d ms • buffer holds %d • FPS %d • F6 graphics: %s" % [maxf(0,game.world_view.latest_time-game.world_view.render_time)*1000,game.world_view.underruns,Engine.get_frames_per_second(),("Auto %d%%" % roundi(game.render_budget.scale_for(true)*100)) if game.balanced_graphics else "Full"]]
+ "V179-preview • server %s • RTT %d ms • sim %.2f ms • snapshot %.2f ms • input queue %d • authority %.0f Hz" % [game.server_build,game.metrics.rtt_ms,game.metrics.tick_ms,game.server_snapshot_ms,game.history.size(),game.server_hz],
+ "V179-preview • remote buffer %d ms • buffer holds %d • FPS %d • F6 graphics: %s" % [maxf(0,game.world_view.latest_time-game.world_view.render_time)*1000,game.world_view.underruns,Engine.get_frames_per_second(),("Auto %d%%" % roundi(game.render_budget.scale_for(true)*100)) if game.balanced_graphics else "Full"]]
  if game.recovery_active:lines[0]="CONNECTION DELAY • waiting for fresh server state; controls paused during recovery"
  rebuilds+=1;queue_redraw()
 func _draw()->void:

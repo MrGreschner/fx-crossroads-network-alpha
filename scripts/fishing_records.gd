@@ -48,6 +48,7 @@ func complete(catch:Dictionary,keep:bool)->bool:
   legacy.game.add_float_text(point-Vector2(36,62),"+%d Fishing XP" % progress.last_xp,Color("#90e9df"))
  elif legacy.game.get("fishing")!=null:legacy.game.fishing.xp_popup(progress.last_xp)
  legacy.weekly.catch_fish(catch)
+ legacy.cosmetics.rankings.catch_fish(catch)
  save();return true
 func release(id:String)->void:
  for n in state().kept.size():
