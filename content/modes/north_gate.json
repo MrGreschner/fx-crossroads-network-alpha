@@ -27,7 +27,7 @@
   "rival_respawn_seconds": 14,
   "rival_level_cap": 12,
   "wave_30_boss": "tollbreaker",
-  "max_players": 3,
+  "max_players": 4,
   "guard_speed": 105,
   "opening_march_seconds": 8,
   "opening_march_multiplier": 2,

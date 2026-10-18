@@ -9,7 +9,8 @@ static func field(parent:Node,value:String,hint:String)->LineEdit:
 static func build(g:Node)->void:
  var layer=CanvasLayer.new();layer.layer=100;g.add_child(layer)
  g.net_panel=PanelContainer.new();g.net_panel.name="NetworkPartyLobby";layer.add_child(g.net_panel);preload("res://scripts/studio_ui.gd").apply(g.net_panel)
- var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;g.net_panel.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
+ var frame=VBoxContainer.new();frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.size_flags_vertical=Control.SIZE_EXPAND_FILL;g.net_panel.add_child(frame)
+ var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;frame.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",8);scroll.add_child(body)
  var header=HBoxContainer.new();body.add_child(header)
  var heading=label(header,"GATHER YOUR PARTY",25);heading.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -43,6 +44,9 @@ static func build(g:Node)->void:
  var ai=HBoxContainer.new();right.add_child(ai)
  button(ai,"AI roster • choose heroes",func():preload("res://network/ai_roster_menu.gd").open(g)).name="AIRoster"
  button(ai,"Fill Battlegrounds AI seats",g.fill_ai_seats).name="FillAI"
+ var format=OptionButton.new();format.name="ArenaFormat";right.add_child(format)
+ for title in ["Free for all • every hero is an opponent","Teams • 2 vs 2","Teams • 3 vs 3","Teams • 4 vs 4"]:format.add_item(title)
+ format.item_selected.connect(g.choose_arena_format)
  var settings=HBoxContainer.new();right.add_child(settings)
  g.capacity=OptionButton.new();g.capacity.size_flags_horizontal=Control.SIZE_EXPAND_FILL;settings.add_child(g.capacity)
  for number in [2,4,6,8]:g.capacity.add_item(str(number)+" player seats",number)
@@ -70,15 +74,16 @@ static func build(g:Node)->void:
   g.bg_map=str(g.bg_network_map.get_item_metadata(i))
   if g.net_ready and g.net_host:g.send_net({"type":"bg_choice","bg_map":g.bg_map}))
  g.bg_team_controls=HBoxContainer.new();right.add_child(g.bg_team_controls)
- for side in 2:button(g.bg_team_controls,"Join "+str(g.battlegrounds.FACTIONS[side]),func():g.send_net({"type":"team","team":side}))
+ for side in 2:button(g.bg_team_controls,"Join "+str(g.battlegrounds.FACTIONS[side]),func():g.choose_lobby_team(side))
+ right.move_child(format,1);right.move_child(g.bg_team_controls,2)
  g.bg_team_roster=label(right,"");g.bg_team_roster.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
- var connection=HBoxContainer.new();body.add_child(connection)
+ var connection=HBoxContainer.new();frame.add_child(connection)
  g.room_field=field(connection,"","Room code");g.room_field.name="NetworkRoomCode";g.room_field.max_length=6
  button(connection,"Host room",g.connect_net.bind("host")).name="HostRoom"
  button(connection,"Join room",g.connect_net.bind("join")).name="JoinRoom"
  g.net_start=button(connection,"Start match",func():g.send_net({"type":"start"}));g.net_start.name="StartMatch";g.net_start.disabled=true
  button(connection,"Leave room",g.return_to_network_menu).name="LeaveRoom"
- g.net_status=label(body,"Play solo above, or Host / Join below. AI roster works solo and with friends.",14);g.net_status.name="NetworkStatus";g.net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+ g.net_status=label(frame,"Play solo above, or Host / Join below. AI allies are available in Gate Defence, team Arena and Battlegrounds.",14);g.net_status.name="NetworkStatus";g.net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
  var room_heading=HBoxContainer.new();body.add_child(room_heading);var title=label(room_heading,"PUBLIC ROOMS",16);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var refresh=button(room_heading,"Refresh rooms",g.browse_rooms);refresh.name="RefreshRooms";refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.custom_minimum_size.x=150
  g.room_listing=VBoxContainer.new();g.room_listing.name="RoomListing";body.add_child(g.room_listing);label(g.room_listing,"Select Refresh rooms to find a party.",14)

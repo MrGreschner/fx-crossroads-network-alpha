@@ -18,6 +18,7 @@ var local_date:Dictionary={}
 var preview_time:float=-1
 var preview_weather=""
 var almanac:CanvasLayer
+var animation_time_for_test:float=-1
 var test_time:float=-1
 var lights:Array[Dictionary]=[]
 var mesh=ArrayMesh.new()
@@ -255,23 +256,33 @@ func draw_puddles(c:Node2D,camera:Vector2)->void:
    polygon.append(p+(Vector2(cos(angle)*puddle.width,sin(angle)*puddle.depth)*(1+sin(n*2+puddle.salt)*.21)).rotated(puddle.turn))
   c.draw_colored_polygon(polygon,Color(.23,.43,.53,.65))
   c.draw_line(p+Vector2(-puddle.width*.5,-1),p+Vector2(puddle.width*.3,-1),Color(.74,.86,.88,.48),1.5,true)
-  if int(puddle.salt)%3==0:c.draw_arc(p,3+fposmod(now*5+puddle.salt,8),0,TAU,14,Color(.75,.88,.91,.24),1,true)
+  if int(puddle.salt)%3==0:c.draw_arc(p,3+fposmod(animation_seconds()*5+puddle.salt,8),0,TAU,14,Color(.75,.88,.91,.24),1,true)
   drawn+=1
 
+func animation_seconds()->float:
+ # Visual motion is independent of civil time and a frozen Dev clock preview.
+ return animation_time_for_test if animation_time_for_test>=0 else Time.get_ticks_msec()/1000.0
+
 func draw_weather(c:Node2D,camera:Vector2)->void:
- if weather() in ["Cloudy","Rain"]:
+ var sky=weather()
+ var seconds=animation_seconds()
+ var motion=preload("res://scripts/town_weather_motion.gd")
+ if sky in ["Cloudy","Rain"]:
   var strength=.14*(1-night_amount()*.70)
-  for n in 4:
-   var p=Vector2(fposmod(n*433+now*13-camera.x*.28,c.VIEW.x+1150)-560,fposmod(n*311+now*4-camera.y*.22,c.VIEW.y+480)-180)
+  for cloud in motion.particles(camera,c.VIEW,seconds,true):
+   var p:Vector2=cloud.world-camera
    c.draw_set_transform(p,-.12,Vector2(1,.48))
    for k in range(3,0,-1):c.draw_circle(Vector2.ZERO,185+k*28,Color(.06,.12,.20,strength*.12))
    c.draw_circle(Vector2(150,10),165,Color(.06,.12,.20,strength*.30));c.draw_circle(Vector2(-130,15),155,Color(.06,.12,.20,strength*.23))
    c.draw_set_transform(Vector2.ZERO)
- if weather()=="Rain":
-  for n in 26:
-   var p=Vector2(fposmod(n*97+now*34,c.VIEW.x),fposmod(n*137+now*230,c.VIEW.y))
-   c.draw_line(p,p+Vector2(-4,12),Color(.74,.86,.91,.46),1,true)
- elif weather()=="Mist":
-  for n in 5:
-   var p=Vector2(-30,fposmod(n*173+now*3,c.VIEW.y))
-   c.draw_rect(Rect2(p,Vector2(c.VIEW.x+60,45)),Color(.65,.8,.83,.085))
+ if sky=="Rain":
+  for drop in motion.particles(camera,c.VIEW,seconds,false):
+   var p:Vector2=drop.world-camera
+   c.draw_line(p,p+Vector2(-3,15),Color(.74,.86,.91,.56),1,true)
+ elif sky=="Mist":
+  # Mist banks drift over the landscape too, rather than following the player.
+  for cloud in motion.particles(camera,c.VIEW,seconds*.3,true):
+   var p:Vector2=cloud.world-camera
+   c.draw_set_transform(p,0,Vector2(1,.18))
+   for k in range(3,0,-1):c.draw_circle(Vector2.ZERO,220+k*36,Color(.65,.8,.83,.035))
+   c.draw_set_transform(Vector2.ZERO)

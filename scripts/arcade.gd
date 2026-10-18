@@ -345,7 +345,7 @@ func _ui() -> void:
 	for title in ["Gate Defence","Gladiator Arena","Co-op Realms","Ram Descent","Battlegrounds"]:mode_picker.add_item(title)
 	mode_picker.item_selected.connect(func(index:int):_set_mode(["defense","arena","coop","descent","battlegrounds"][index]))
 	for index in 5:
-		var title:String=["GATE DEFENCE\nProtect town • 1–3 players","GLADIATOR ARENA\nRivals & teams • 2–8 players","CO-OP REALMS\nExplore together • 2–4 players","RAM DESCENT\nSurvive the depths • 1–4 players","BATTLEGROUNDS\nBuild armies • 3v3 / 4v4"][index]
+		var title:String=["GATE DEFENCE\nProtect town • 1–4 heroes","GLADIATOR ARENA\nRivals & teams • 2–8 players","CO-OP REALMS\nExplore together • 2–4 players","RAM DESCENT\nSurvive the depths • 1–4 players","BATTLEGROUNDS\nBuild armies • 3v3 / 4v4"][index]
 		var card:=_button(title,32,144+index*74,_set_mode.bind(["defense","arena","coop","descent","battlegrounds"][index]),292);card.size.y=68;mode_cards.append(card)
 	bg_map_picker=OptionButton.new();control.add_child(bg_map_picker);bg_map_picker.position=Vector2(700,173);bg_map_picker.size=Vector2(290,32)
 	for id in battlegrounds.MAPS:bg_map_picker.add_item(str(battlegrounds.MAPS[id]));bg_map_picker.set_item_metadata(bg_map_picker.item_count-1,id)

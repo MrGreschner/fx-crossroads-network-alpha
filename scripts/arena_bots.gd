@@ -26,6 +26,7 @@ static func clean_plan(value:Variant)->Array:
 func sync_lobby()->void:
  if game.role!="host":return
  var plan=game.bot_plan
+ if not preload("res://network/party_rules.gd").allows_ai(game.mode):plan=[];game.bot_plan=[];game.bot_count=0
  if plan.is_empty() and game.bot_count>0:
   for n in mini(7,game.bot_count):plan.append({"hero":IDS[n%IDS.size()],"team":(n+1)%2 if game.mode in ["arena","battlegrounds"] else 0})
  game.bot_count=plan.size()

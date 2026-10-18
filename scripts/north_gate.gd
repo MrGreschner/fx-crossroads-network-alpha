@@ -10,9 +10,9 @@ const ROUTES=[
 ]
 const NAMES=["BELLWOOD ROAD","OLD MILL ROAD","EMBERWATCH ROAD"]
 const OUTPOST_DISTANCE=[2800.0,2400.0,2400.0]
-const RIVALS=["gate_rival","gate_bastion","gate_cinder"]
-const RIVAL_NAMES=["Sable Voss","Brass Bastion","Cinder Oracle"]
-const TYPES=["gate_rival","gate_bastion","gate_cinder","tollbreaker"]
+const RIVALS=["gate_rival","gate_bastion","gate_cinder","gate_iona"]
+const RIVAL_NAMES=["Sable Voss","Brass Bastion","Cinder Oracle","Iona Stormglass"]
+const TYPES=["gate_rival","gate_bastion","gate_cinder","gate_iona","tollbreaker"]
 var rivals:Dictionary={}
 var game:Node
 var config:Dictionary={}
@@ -47,15 +47,15 @@ var outpost_hp:Array[float]=[1200.0,1200.0,1200.0]
 var outpost_max:=1200.0
 func setup(owner:Node)->void:
  game=owner;config=game._json("res://content/modes/north_gate.json")
- rivals.clear();party_size=clampi(game.positions.size(),1,3);shares.clear();xp_shares.clear();warnings.clear()
+ rivals.clear();party_size=clampi(game.positions.size(),1,4);shares.clear();xp_shares.clear();warnings.clear()
  outpost_max=1200.0*factor("party_health_scale");outpost_hp.assign([outpost_max,outpost_max,outpost_max])
  rival_level=1;rival_xp=0;rival_kills=0;rival_deaths=0;rival_respawn=0;rival_lane=0;boss_defeated=false;boss_spawned=false;clock=0
  game.enemy_defs.gate_rival={"name":"Sable Voss","health":260,"speed":235,"damage":15,"behaviour":"ranged","expansion_only":true}
  game.enemy_defs.tollbreaker={"name":"The Tollbreaker","health":2100,"speed":105,"damage":28,"behaviour":"chase","expansion_only":true}
- for n in 3:
+ for n in RIVALS.size():
   var id:String=RIVALS[n];rival_state(id)
   game.enemy_defs[id]={"name":RIVAL_NAMES[n],"health":260,"speed":235,"damage":15,"behaviour":"chase" if n==1 else "ranged","expansion_only":true}
-  for pose in ["walk1","walk2"]:game.art[id+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+["npc_sable","npc_bastion","npc_cinder"][n]+"_"+pose+".svg")
+  for pose in ["walk1","walk2"]:game.art[id+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+["npc_sable","npc_bastion","npc_cinder","npc_iona"][n]+"_"+pose+".svg")
  for pose in ["walk1","walk2"]:game.art["tollbreaker_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/tollbreaker_"+pose+".svg")
 func factor(key:String)->float:return float(config.get(key,[1,1,1,1])[party_size-1])
 func wave_count(number:int)->int:return roundi((18.0+minf(24,number*.8))*factor("party_count_scale"))
@@ -178,9 +178,9 @@ func rival_body(id:String="gate_rival")->Dictionary:
  return {}
 func spawn_rival(id:String="gate_rival")->void:
  if not rival_body(id).is_empty():return
- var lane:int=RIVALS.find(id);var hp:=rival_hp(id)
- game.opponents.append({"pos":enemy_spawn(lane,game.wave,0),"hp":hp,"max_hp":hp,"type":id,"lane":lane,"boss":true,"campaign_hero":true,"attack_timer":1.0,"secondary_cd":3.0,"special_cd":7.0,"dodge_cd":2.0,"dodge_left":0.0,"think":0.0,"target":"","uid":randi(),"hit_radius":24})
- game.status_label.text=RIVAL_NAMES[lane]+" has arrived • "+NAMES[lane]
+ var index:int=RIVALS.find(id);var lane:int=index%3;var hp:=rival_hp(id)
+ game.opponents.append({"pos":point_at(lane,length_of(lane)-90-(index/3)*110,(index%2)*70-35),"hp":hp,"max_hp":hp,"type":id,"lane":lane,"boss":true,"campaign_hero":true,"attack_timer":1.0,"secondary_cd":3.0,"special_cd":7.0,"dodge_cd":2.0,"dodge_left":0.0,"think":0.0,"target":"","uid":randi(),"hit_radius":24})
+ game.status_label.text=RIVAL_NAMES[index]+" has arrived • "+NAMES[lane]
 func opening_speed(foe:Dictionary,delta:float)->float:
  var left:=float(foe.get("opening_march",0));foe.opening_march=maxf(0,left-delta)
  if left<=0:return 1.0
@@ -194,7 +194,7 @@ func opening_speed(foe:Dictionary,delta:float)->float:
 func step(delta:float)->void:
  if game.mode!="defense" or game.role!="host" or not game.started:return
  clock+=delta
- party_size=clampi(game.positions.size(),1,3)
+ party_size=clampi(game.positions.size(),1,4)
  for i in range(game.opponents.size()-1,-1,-1):
   var kind:=str(game.opponents[i].type)
   if kind in RIVALS and RIVALS.find(kind)>=party_size:game.opponents.remove_at(i)
@@ -397,7 +397,7 @@ func receive(data:Dictionary)->void:
  outpost_max=float(data.get("outpost_max",1200))
  var incoming:Array=data.get("outpost_hp",[1200,1200,1200])
  if incoming.size()==3:outpost_hp.assign(incoming)
- rival_level=int(data.get("rival_level",1));rival_xp=int(data.get("rival_xp",0));rival_kills=int(data.get("rival_kills",0));rival_deaths=int(data.get("rival_deaths",0));rival_respawn=float(data.get("rival_respawn",0));boss_defeated=bool(data.get("boss_defeated",false));boss_spawned=bool(data.get("boss_spawned",false));party_size=clampi(int(data.get("party_size",1)),1,3)
+ rival_level=int(data.get("rival_level",1));rival_xp=int(data.get("rival_xp",0));rival_kills=int(data.get("rival_kills",0));rival_deaths=int(data.get("rival_deaths",0));rival_respawn=float(data.get("rival_respawn",0));boss_defeated=bool(data.get("boss_defeated",false));boss_spawned=bool(data.get("boss_spawned",false));party_size=clampi(int(data.get("party_size",1)),1,4)
  warnings.assign(data.get("warnings",[]).slice(0,24))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if game.mode!="defense":return
@@ -475,7 +475,7 @@ func draw_hud(canvas:Node2D)->void:
  var lines:Array[String]=[]
  for n in party_size:
   var id:String=RIVALS[n];var state:=rival_state(id)
-  lines.append(["Sable","Bastion","Oracle"][n]+" Lv"+str(state.level))
+  lines.append(["Sable","Bastion","Oracle","Iona"][n]+" Lv"+str(state.level))
  var notice:String=" • ".join(lines)
  canvas.draw_rect(Rect2(20,105,660,25),Color(.04,.09,.12,.82))
  canvas.draw_string(font,Vector2(34,123),notice+"   |   Guards share 20% bounty",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#d6c3ed"))

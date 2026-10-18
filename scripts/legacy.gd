@@ -411,7 +411,7 @@ func result_line(id:String)->String:
  var rec:=record(id)
  return "Mastery: "+str(rec.clears)+" clears • "+str(int(rec.damage))+" damage • "+str(rec.points)+" points"+(" • Technique unlocked" if eligible(id) else "")
 func mastery_label(parent:Node,value:String,size:int=17)->Label:
- var label:=Label.new();label.text=value;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.add_theme_font_size_override("font_size",size);parent.add_child(label);return label
+ var label:=Label.new();label.text=value;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.add_theme_font_override("font",preload("res://assets/fonts/CrossroadsUI.ttf"));label.add_theme_font_size_override("font_size",size);parent.add_child(label);return label
 func mastery_panel(parent:Node)->VBoxContainer:
  var panel:=PanelContainer.new();panel.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(panel)
  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#203c46");skin.border_color=Color("#46616b");skin.set_border_width_all(1);skin.set_corner_radius_all(10);skin.content_margin_left=16;skin.content_margin_right=16;skin.content_margin_top=14;skin.content_margin_bottom=14;panel.add_theme_stylebox_override("panel",skin)
