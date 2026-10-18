@@ -33,7 +33,7 @@ func _draw()->void:
    var entries=members
    if side==1:
     entries=[]
-    for n in mini(4,members.size()):entries.append({"id":"rival:"+str(n),"hero":B_IDS()[n],"name":["Sable Voss","Brass Bastion","Cinder Oracle","Iona Stormglass"][n]})
+    for n in mini(4,members.size()):entries.append({"id":"rival:"+str(n),"hero":game.gate_rival_plan[n],"name":game.bots.NAMES[game.bots.IDS.find(str(game.gate_rival_plan[n]))]})
    lineup(entries,Rect2(area.position+Vector2(0,27),area.size-Vector2(0,27)))
  else:lineup(members,Rect2(Vector2.ZERO,size))
 static func B_IDS()->Array:return ["npc_sable","npc_bastion","npc_cinder","npc_iona"]

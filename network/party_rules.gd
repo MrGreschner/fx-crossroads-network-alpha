@@ -1,5 +1,13 @@
 extends RefCounted
 ## One policy for the lobby, local simulation, and server admission.
+const DEFAULT_RIVALS=["npc_sable","npc_bastion","npc_cinder","npc_iona"]
+static func clean_rivals(value:Variant)->Array:
+ if not value is Array or value.size()!=4:return []
+ var result=[]
+ for id in value:
+  if not id is String or id not in ["npc_sable","npc_bastion","npc_cinder","npc_lumen","npc_thorn","npc_iona","npc_flint"] or id in result:return []
+  result.append(id)
+ return result
 static func allows_ai(mode:String)->bool:return mode in ["arena","battlegrounds","defense"]
 static func teamed(g:Node)->bool:return g.mode=="battlegrounds" or g.mode=="arena" and g.arena_party_rule=="teams"
 static func side_limit(g:Node)->int:return g.bg_team_size if g.mode=="battlegrounds" else g.arena_team_size

@@ -196,7 +196,7 @@ func select_network_mode(value:String)->void:
  test_arena.visible=mode=="arena";_sync_network_mode_controls()
  for id in ["defense","arena","coop","descent","battlegrounds"]:
   var button=net_panel.find_child("Mode_"+id,true,false)
-  if button!=null:button.modulate=Color("#f2d49c") if id==mode else Color.WHITE
+  if button!=null:button.modulate=Color("#f2d49c") if id==mode and not (id=="coop" and realm_id in ["between","overcharge","wayfarer"]) else Color.WHITE
 func play_solo()->void:
  if net_ready:net_status.text="Leave the online room before starting solo.";return
  var root=get_tree().root
@@ -211,7 +211,7 @@ func play_solo()->void:
  if preload("res://network/party_rules.gd").teamed(self):plan=filled_ai_plan(1,1 if local_lobby_team==0 else 0)
  var limit=8 if mode in ["arena","battlegrounds"] else 2 if mode=="coop" else 4
  if plan.size()+1>limit:net_status.text="Choose at most %d AI companions for this mode." % (limit-1);return
- root.set_meta("fx_solo_party",{"mode":mode,"hero":selected_hero,"realm":realm_id,"bg_map":bg_map,"bg_size":bg_team_size,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"arena_map":"crossroads" if test_arena.selected==1 else "sand","bots":plan,"difficulty":ai_difficulty})
+ root.set_meta("fx_solo_party",{"mode":mode,"hero":selected_hero,"realm":realm_id,"bg_map":bg_map,"bg_size":bg_team_size,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"arena_map":"crossroads" if test_arena.selected==1 else "sand","bots":plan,"rivals":gate_rival_plan,"difficulty":ai_difficulty})
  get_tree().call_deferred("change_scene_to_file","res://scenes/arcade.tscn")
 func filled_ai_plan(humans:int,team_zero:int)->Array:
  var result=[];var counts=[team_zero,humans-team_zero];var kits=preload("res://scripts/arena_bots.gd").IDS;var used=0
@@ -237,7 +237,7 @@ func browse_rooms()->void:
  if browser_peer.connect_to_url(DEFAULT_SERVER)!=OK:_show_public_rooms([],"Room browser unavailable. You can still join by room code.")
 func _show_public_rooms(list:Array,message:String="")->void:
  for child in room_listing.get_children():child.queue_free()
- if list.is_empty():preload("res://network/party_lobby.gd").label(room_listing,message if not message.is_empty() else "No open public parties. Host a room to invite other players.",14)
+ if list.is_empty():preload("res://network/party_lobby.gd").label(room_listing,message if not message.is_empty() else "No public rooms yet. Host a public room to invite others, or refresh to check again.",14)
  for entry in list.slice(0,8):
   var row=HBoxContainer.new();room_listing.add_child(row)
   var title=preload("res://network/party_lobby.gd").label(row,"%s • %s • %d/%d" % [str(entry.get("host","Party")),str(entry.get("title","Adventure")),int(entry.get("players",0)),int(entry.get("seats",0))],14);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -260,6 +260,7 @@ func _sync_network_mode_controls()->void:
  if solo!=null:solo.disabled=net_ready;solo.text="▶  PLAY SOLO vs AI" if mode=="battlegrounds" else "▶  PLAY SOLO"
  var ai=net_panel.find_child("AIRoster",true,false)
  if ai!=null:ai.disabled=(net_ready and not net_host) or not preload("res://network/party_rules.gd").allows_ai(mode)
+ if ai!=null:ai.text="Choose AI allies & enemy rivals" if mode=="defense" else "Choose AI opponents" if mode=="arena" and arena_party_rule=="ffa" else "Choose AI heroes & teams" if preload("res://network/party_rules.gd").allows_ai(mode) else "AI unavailable in this adventure"
  if ai!=null:ai.tooltip_text="AI allies: team Arena, Battlegrounds and Gate Defence only. FFA Arena bots are opponents."
  var fill=net_panel.find_child("FillAI",true,false)
  if fill!=null:fill.visible=preload("res://network/party_rules.gd").teamed(self);fill.disabled=net_ready and not net_host;fill.text="Fill empty team seats with AI"
@@ -268,7 +269,9 @@ func _sync_network_mode_controls()->void:
   if b!=null:b.disabled=net_ready
  for name in ["between","overcharge","wayfarer"]:
   var b=net_panel.find_child("Destination_"+name,true,false)
-  if b!=null:b.disabled=net_ready or not (ExpeditionProfile.progress(self).entry_issue(name) if name in ["between","overcharge"] else preload("res://scripts/realm_access.gd").reason(legacy,name)).is_empty()
+  if b!=null:
+   b.disabled=net_ready or not (ExpeditionProfile.progress(self).entry_issue(name) if name in ["between","overcharge"] else preload("res://scripts/realm_access.gd").reason(legacy,name)).is_empty()
+   b.modulate=Color("#f2d49c") if mode=="coop" and realm_id==name else Color.WHITE
  var bg=mode=="battlegrounds"
  if expedition_tier!=null:expedition_tier.visible=mode=="coop" and realm_id=="overcharge";expedition_tier.disabled=net_ready
  for i in capacity.item_count:
@@ -379,7 +382,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
@@ -456,7 +459,7 @@ func receive_net(data:Dictionary)->void:
   "lobby":
    mode=str(data.get("mode",mode));realm_id=str(data.get("realm",realm_id));roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
    capacity.disabled=not net_host
-   bot_plan=preload("res://scripts/arena_bots.gd").clean_plan(data.get("bots",[]));bot_count=bot_plan.size()
+   bot_plan=preload("res://scripts/arena_bots.gd").clean_plan(data.get("bots",[]));bot_count=bot_plan.size();gate_rival_plan=data.get("rivals",preload("res://network/party_rules.gd").DEFAULT_RIVALS).duplicate()
    if not bool(data.get("preparing",false)):ExpeditionProfile.cancel(self)
    expedition_tier.select(clampi(int(data.get("expedition_tier",1))-1,0,2))
    arena_party_rule=str(data.get("rule","ffa"));arena_team_size=int(data.get("team_size",2))
@@ -480,12 +483,13 @@ func receive_net(data:Dictionary)->void:
    net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+("COMPETITION • crown bonuses off" if bool(get_meta("crown_competition",false)) else str(data.get("message","")))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show();_sync_network_mode_controls()
   "start":
+   gate_rival_plan=data.get("rivals",preload("res://network/party_rules.gd").DEFAULT_RIVALS).duplicate()
    set_meta("crown_competition",data.get("competition",false)==true)
    var same_match=not match_id.is_empty() and match_id==str(data.match_id)
    if OS.has_feature("web") and data.has("report_token"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.start("+JSON.stringify({"endpoint":url_field.text.replace("wss://","https://").replace("ws://","http://"),"token":data.report_token,"enabled":data.get("reporting",false),"match_id":data.match_id,"room":net_room})+");",true)
    authority_epoch=-1;player_epochs.clear();realm_result="";economy_pending=false
    expedition.configure(data.get("expedition",{}));ExpeditionProfile.commit(self,data.get("expedition",{}))
-   mode=str(data.get("mode","arena"));realm_id=str(data.get("realm","grove"));match_party_size=data.heroes.size();match_id=str(data.match_id);floor_seed=int(data.seed);arena_map=str(data.arena_map);arena_seats=int(data.seats);spectator_host=false;bot_plan=preload("res://scripts/arena_bots.gd").clean_plan(data.get("bots",[]));bot_count=bot_plan.size();ai_difficulty=preload("res://scripts/arena_bots.gd").difficulty(data.get("difficulty","medium"));arena_no_items=mode=="arena";pvp_rule=str(data.get("rule","teams" if mode=="battlegrounds" else "ffa"))
+   mode=str(data.get("mode","arena"));realm_id=str(data.get("realm","grove"));match_party_size=data.heroes.size();match_id=str(data.match_id);floor_seed=int(data.seed);arena_map=str(data.arena_map);arena_seats=int(data.seats);spectator_host=false;bot_plan=preload("res://scripts/arena_bots.gd").clean_plan(data.get("bots",[]));bot_count=bot_plan.size();gate_rival_plan=data.get("rivals",preload("res://network/party_rules.gd").DEFAULT_RIVALS).duplicate();ai_difficulty=preload("res://scripts/arena_bots.gd").difficulty(data.get("difficulty","medium"));arena_no_items=mode=="arena";pvp_rule=str(data.get("rule","teams" if mode=="battlegrounds" else "ffa"))
    bg_map=str(data.get("bg_map","woodland"));bg_team_size=int(data.get("bg_team_size",4));teams=data.get("teams",{});_sync_bg_pickers();economy_pending=false;battleground_render.clear()
    for n in realm_picker.item_count:
     if str(realm_picker.get_item_metadata(n))==realm_id:realm_picker.select(n)

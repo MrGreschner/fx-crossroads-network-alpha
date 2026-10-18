@@ -243,8 +243,11 @@ func receive(key:int,data:Dictionary)->void:
   return
  if kind=="ai_party":
   if room.host!=id or g.started:return
+  var rivals=preload("res://network/party_rules.gd").clean_rivals(data.get("rivals",g.gate_rival_plan))
+  if g.mode=="defense" and rivals.is_empty():fail(key,"Choose four different enemy rival heroes.");return
   var issue=set_ai(room,data.get("bots",[]),data.get("difficulty","medium"))
   if not issue.is_empty():fail(key,issue);return
+  if g.mode=="defense":g.gate_rival_plan=rivals
   lobby(str(identity.room));return
  if kind=="start":
   if room.host!=id or g.started:return
@@ -424,8 +427,10 @@ func join(key:int,data:Dictionary)->void:
   if room.game.mode=="arena" and room.game.arena_party_rule=="ffa":room.members[id].team=0
   if kind=="host" and preload("res://network/party_rules.gd").teamed(room.game):room.members[id].team=clampi(int(data.get("team",0)),0,1)
   if kind=="host":
-   var issue=set_ai(room,data.get("bots",[]),data.get("difficulty","medium"))
+   var rivals=preload("res://network/party_rules.gd").clean_rivals(data.get("rivals",preload("res://network/party_rules.gd").DEFAULT_RIVALS))
+   var issue="Choose four different enemy rival heroes." if room.game.mode=="defense" and rivals.is_empty() else set_ai(room,data.get("bots",[]),data.get("difficulty","medium"))
    if not issue.is_empty():room.members.erase(id);identities.erase(id);room.game.queue_free();rooms.erase(code);fail(key,issue);return
+   if room.game.mode=="defense":room.game.gate_rival_plan=rivals
   room.members[id].expedition_profile=preload("res://network/expedition_profile.gd").clean(data.get("expedition_profile",{}))
   room.members[id].unlocked=data.get("unlocked_realms",[]) if data.get("unlocked_realms",[]) is Array else []
   if room.host.is_empty():room.host=id
@@ -455,12 +460,12 @@ func lobby(code:String)->void:
   var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");public.append(copy)
  for n in room.game.bot_plan.size():
   var bot=room.game.bot_plan[n];var i=preload("res://scripts/arena_bots.gd").IDS.find(str(bot.hero));public.append({"id":"bot:"+str(n),"name":preload("res://scripts/arena_bots.gd").NAMES[i]+" [AI]","hero":bot.hero,"team":bot.team})
- for id in room.members:send_actor(id,{"type":"lobby","rule":room.game.arena_party_rule,"team_size":room.game.arena_team_size,"bots":room.game.bot_plan,"difficulty":room.game.ai_difficulty,"competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
+ for id in room.members:send_actor(id,{"type":"lobby","rivals":room.game.gate_rival_plan,"rule":room.game.arena_party_rule,"team_size":room.game.arena_team_size,"bots":room.game.bot_plan,"difficulty":room.game.ai_difficulty,"competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
 func room_for(g:Node)->Dictionary:
  for room in rooms.values():
   if room.game==g:return room
  return {}
-func start_packet(g:Node)->Dictionary:return {"type":"start","rule":g.pvp_rule,"bots":g.bot_plan,"difficulty":g.ai_difficulty,"competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
+func start_packet(g:Node)->Dictionary:return {"type":"start","rivals":g.gate_rival_plan,"rule":g.pvp_rule,"bots":g.bot_plan,"difficulty":g.ai_difficulty,"competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
 func broadcast_game(g:Node,data:Dictionary)->void:
  var room=room_for(g)
  for id in room.get("members",{}):send_actor(str(id),data)

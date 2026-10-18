@@ -32,6 +32,7 @@ const SEND_INTERVAL := 0.10
 const MOVEMENT_INTERVAL := 0.05
 const MAX_PLAYERS := 8
 var arena_seats:=4
+var gate_rival_plan:Array=["npc_sable","npc_bastion","npc_cinder","npc_iona"]
 var bot_plan:Array=[]
 var bot_count:=0
 var ai_difficulty:="medium"
@@ -1306,7 +1307,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 		if index>=0 and index<opponents.size() and not bool(opponents[index].get("converted",false)):amount=legacy.critical(killer,amount,opponents[index].pos)
 	if index < 0 or index >= opponents.size(): return
 	if bool(opponents[index].get("buried",false)):return
-	if mode=="defense" and str(opponents[index].type)=="gate_bastion" and adventure.combat.effect_time(adventure.combat.npc_key(opponents[index]),"guard")>0:amount*=.55
+	if mode=="defense" and str(opponents[index].type) in north_gate.RIVALS and north_gate.rival_kit(str(opponents[index].type)) in ["npc_bastion","npc_thorn"] and adventure.combat.effect_time(adventure.combat.npc_key(opponents[index]),"guard")>0:amount*=.55
 	if bool(opponents[index].get("converted",false)):amount=float(opponents[index].hp)
 	var actual := 0.0 if bool(opponents[index].get("converted",false)) else maxf(0,minf(amount,float(opponents[index]["hp"])))
 	adventure.expansion.linked_hit(adventure.combat.npc_key(opponents[index]),actual)

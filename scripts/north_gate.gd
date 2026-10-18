@@ -13,6 +13,12 @@ const OUTPOST_DISTANCE=[2800.0,2400.0,2400.0]
 const RIVALS=["gate_rival","gate_bastion","gate_cinder","gate_iona"]
 const RIVAL_NAMES=["Sable Voss","Brass Bastion","Cinder Oracle","Iona Stormglass"]
 const TYPES=["gate_rival","gate_bastion","gate_cinder","gate_iona","tollbreaker"]
+func rival_kit(id:String)->String:
+ var index=RIVALS.find(id)
+ return str(game.gate_rival_plan[index]) if index>=0 and game.gate_rival_plan.size()==4 else "npc_sable"
+func rival_name(id:String)->String:
+ var kit=rival_kit(id);var i=preload("res://scripts/arena_bots.gd").IDS.find(kit)
+ return preload("res://scripts/arena_bots.gd").NAMES[maxi(0,i)]
 var rivals:Dictionary={}
 var game:Node
 var config:Dictionary={}
@@ -54,8 +60,8 @@ func setup(owner:Node)->void:
  game.enemy_defs.tollbreaker={"name":"The Tollbreaker","health":2100,"speed":105,"damage":28,"behaviour":"chase","expansion_only":true}
  for n in RIVALS.size():
   var id:String=RIVALS[n];rival_state(id)
-  game.enemy_defs[id]={"name":RIVAL_NAMES[n],"health":260,"speed":235,"damage":15,"behaviour":"chase" if n==1 else "ranged","expansion_only":true}
-  for pose in ["walk1","walk2"]:game.art[id+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+["npc_sable","npc_bastion","npc_cinder","npc_iona"][n]+"_"+pose+".svg")
+  game.enemy_defs[id]={"name":rival_name(id),"health":260,"speed":235,"damage":15,"behaviour":"chase" if rival_kit(id) in ["npc_bastion","npc_thorn"] else "ranged","expansion_only":true}
+  for pose in ["walk1","walk2"]:game.art[id+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+rival_kit(id)+"_"+pose+".svg")
  for pose in ["walk1","walk2"]:game.art["tollbreaker_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/tollbreaker_"+pose+".svg")
 func factor(key:String)->float:return float(config.get(key,[1,1,1,1])[party_size-1])
 func wave_count(number:int)->int:return roundi((18.0+minf(24,number*.8))*factor("party_count_scale"))
@@ -161,7 +167,7 @@ func killed(foe:Dictionary)->void:
  var id:=str(foe.get("type",""))
  if id in RIVALS:
   var state:=rival_state(id);state.deaths+=1;state.respawn=float(config.get("rival_respawn_seconds",14))+float(state.level)*.6
-  game.status_label.text=RIVAL_NAMES[RIVALS.find(id)]+" defeated • returns in %ds" % int(state.respawn)
+  game.status_label.text=rival_name(id)+" defeated • returns in %ds" % int(state.respawn)
  elif id=="tollbreaker":
   boss_defeated=true;game.status_label.text="The Tollbreaker has fallen! Clear remaining wave-30 attackers to fortify the town gate."
 func rival_gain(amount:int,id:String="gate_rival")->void:
@@ -171,7 +177,7 @@ func rival_gain(amount:int,id:String="gate_rival")->void:
   var body:=rival_body(id)
   if not body.is_empty():body.max_hp=rival_hp(id);body.hp=minf(float(body.max_hp),float(body.hp)+40)
 func rival_hp(id:String="gate_rival")->float:
- return (320 if id=="gate_bastion" else 240 if id=="gate_cinder" else 260)+int(rival_state(id).level)*36.0
+ return (320 if rival_kit(id)=="npc_bastion" else 240 if rival_kit(id)=="npc_cinder" else 260)+int(rival_state(id).level)*36.0
 func rival_body(id:String="gate_rival")->Dictionary:
  for foe in game.opponents:
   if str(foe.type)==id:return foe
@@ -180,7 +186,7 @@ func spawn_rival(id:String="gate_rival")->void:
  if not rival_body(id).is_empty():return
  var index:int=RIVALS.find(id);var lane:int=index%3;var hp:=rival_hp(id)
  game.opponents.append({"pos":point_at(lane,length_of(lane)-90-(index/3)*110,(index%2)*70-35),"hp":hp,"max_hp":hp,"type":id,"lane":lane,"boss":true,"campaign_hero":true,"attack_timer":1.0,"secondary_cd":3.0,"special_cd":7.0,"dodge_cd":2.0,"dodge_left":0.0,"think":0.0,"target":"","uid":randi(),"hit_radius":24})
- game.status_label.text=RIVAL_NAMES[index]+" has arrived • "+NAMES[lane]
+ game.status_label.text=rival_name(id)+" has arrived • "+NAMES[lane]
 func opening_speed(foe:Dictionary,delta:float)->float:
  var left:=float(foe.get("opening_march",0));foe.opening_march=maxf(0,left-delta)
  if left<=0:return 1.0
@@ -241,7 +247,8 @@ func closest_lane(point:Vector2)->int:
 func step_rival(foe:Dictionary,delta:float)->void:
  var combat=game.adventure.combat
  var source:=str(foe.type);var level:=int(rival_state(source).level)
- var melee:bool=source=="gate_bastion"
+ var kit=rival_kit(source)
+ var melee:bool=kit in ["npc_bastion","npc_thorn"]
  var hard:bool=game.ai_difficulty=="hard"
  var reaction:float=.18 if hard else .36
  if combat.stunned(combat.npc_key(foe)):return
@@ -278,12 +285,17 @@ func step_rival(foe:Dictionary,delta:float)->void:
   foe.dodge_cd=3.5 if hard else 6.0;foe.dodge_left=.22;foe.dodge_direction=toward if retreat else -toward if distance<145 else toward.orthogonal()*(1 if int(foe.uid)%2 else -1)
   game._emit_effect({"pos":origin,"end":origin+foe.dodge_direction*130,"style":"line","color":"#a7baf3","time":.25})
  if float(foe.dodge_left)>0:wish=foe.get("dodge_direction",wish)
- var speed:float=(570 if float(foe.dodge_left)>0 else 235)*combat.speed_factor(combat.npc_key(foe))
+ var speed:float=(570 if float(foe.dodge_left)>0 else 255 if kit=="npc_thorn" else 215 if kit=="npc_flint" else 235)*combat.speed_factor(combat.npc_key(foe))
  var proposed:Vector2=game._guard_blocked_move(origin,wish*speed*delta,-1,44)
  foe.pos=game._move_actor(origin,proposed-origin)
  if hold_at_outpost(foe,delta):return
  # Recover slowly at the backline; never heal while actively dueling.
  if retreat and (target.is_empty() or origin.distance_to(target_point(target))>600):foe.hp=minf(float(foe.max_hp),float(foe.hp)+float(foe.max_hp)*.015*delta)
+ if kit=="npc_lumen" and level>=3 and float(foe.secondary_cd)<=0:
+  foe.secondary_cd=10
+  for ally in game.opponents:
+   if bool(ally.get("campaign_hero",false)) and (ally.pos as Vector2).distance_to(foe.pos)<280:ally.hp=minf(float(ally.max_hp),float(ally.hp)+25+level*3)
+  game._emit_effect({"pos":foe.pos,"radius":100.0,"color":"#9aebbb","time":.65})
  if target.is_empty() or retreat or distance>580 or not game._clear_path(origin,goal):return
  if melee:
   if float(foe.attack_timer)<=0 and distance<125:
@@ -296,24 +308,24 @@ func step_rival(foe:Dictionary,delta:float)->void:
    warn(goal,115,.65,30+level,"bastion_stomp",source)
   return
  if float(foe.attack_timer)<=0:
-  foe.attack_timer=1.25
+  foe.attack_timer=1.8 if kit=="npc_flint" else 1.25
   var predicted:Vector2=Brain.lead(origin,goal,(foe.get("target_velocity",Vector2.ZERO) as Vector2)*(.95 if hard else .5),390)
   var aim:Vector2=(predicted-origin).normalized().rotated(sin(clock*2+int(foe.uid))*(.025 if hard else .11))
-  fire(origin,aim,(14+level*1.4)*factor("party_damage_scale"),source,0)
-  if level>=4 and source=="gate_rival":fire(origin,aim.rotated(.13),8+level,source,0)
+  fire(origin,aim,(14+level*1.4)*factor("party_damage_scale"),source,65 if kit=="npc_flint" else 0)
+  if level>=4 and rival_kit(source)=="npc_sable":fire(origin,aim.rotated(.13),8+level,source,0)
  if level>=3 and float(foe.secondary_cd)<=0:
   foe.secondary_cd=8
-  warn(goal,110,.95,16+level,"cinder_burst" if source=="gate_cinder" else "rival_snare",source)
+  warn(goal,110,.95,16+level,"cinder_burst" if rival_kit(source)=="npc_cinder" else "rival_snare",source)
  if level>=6 and float(foe.special_cd)<=0:
   foe.special_cd=17
   var aim:Vector2=(goal-origin).normalized()
-  if source=="gate_cinder":
+  if rival_kit(source)=="npc_cinder":
    for n in 3:warn(goal+Vector2.from_angle(n*TAU/3)*85,100,1.1+n*.3,22+level,"cinder_burst",source)
   else:
    for angle in [-.45,0,.45]:warn(origin+aim.rotated(angle)*250,80,1.1,24+level*1.5,"crossfire",source,origin+aim.rotated(angle)*250,aim)
 func fire(origin:Vector2,aim:Vector2,amount:float,source:String,explode:float,cause:Dictionary={})->void:
  if game.missiles.size()>=128:return
- game.missiles.append({"credit":cause if not cause.is_empty() else preload("res://scripts/defeat_credit.gd").resolve(game,source,"Explosive projectile" if explode>0 else "Projectile"),"pos":origin,"direction":aim,"speed":390.0,"damage":amount,"owner":"enemy","npc_source":source,"distance":0.0,"range":820.0,"color":"#cc94ed" if source=="gate_rival" else "#ffc47d","explode":explode})
+ game.missiles.append({"credit":cause if not cause.is_empty() else preload("res://scripts/defeat_credit.gd").resolve(game,source,"Explosive projectile" if explode>0 else "Projectile"),"pos":origin,"direction":aim,"speed":390.0,"damage":amount,"owner":"enemy","npc_source":source,"distance":0.0,"range":820.0,"color":"#cc94ed" if rival_kit(source)=="npc_sable" else "#ffc47d","explode":explode})
 func warn(point:Vector2,radius:float,delay:float,amount:float,kind:String,source:String,start:Vector2=Vector2.ZERO,aim:Vector2=Vector2.RIGHT)->void:
  if warnings.size()>=24:return
  warnings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(game,source,kind.replace("_"," ").capitalize()),"pos":[point.x,point.y],"radius":radius,"left":delay,"duration":delay,"damage":amount,"kind":kind,"source":source,"start":[start.x,start.y],"aim":[aim.x,aim.y]})
@@ -332,7 +344,7 @@ func detonate(warning:Dictionary)->void:
  if str(warning.kind)=="siege":
   for n in 8:fire(center,Vector2.from_angle(n*TAU/8),12*factor("party_damage_scale"),"tollbreaker",0)
 func blast(center:Vector2,radius:float,amount:float,source:String,slow:float=0,cause:Dictionary={})->void:
- game._emit_effect({"pos":center,"radius":radius,"color":"#d99cf0" if source=="gate_rival" else "#ffb978","time":.45})
+ game._emit_effect({"pos":center,"radius":radius,"color":"#d99cf0" if rival_kit(source)=="npc_sable" else "#ffb978","time":.45})
  for id in game.positions:
   if center.distance_to(game.positions[id])<=radius and game._clear_path(center,game.positions[id]):
    game._hurt(str(id),amount,source,"",cause if not cause.is_empty() else preload("res://scripts/defeat_credit.gd").resolve(game,source,"Area explosion"))
@@ -468,14 +480,14 @@ func draw_attacks(canvas:Node2D,camera:Vector2)->void:
   if str(foe.type) not in TYPES:continue
   var pos:Vector2=foe.pos-camera
   if not Rect2(Vector2(-100,-150),game.VIEW+Vector2(200,300)).has_point(pos):continue
-  canvas.draw_string(font,pos+Vector2(-60,-128 if str(foe.type)=="tollbreaker" else -70),RIVAL_NAMES[RIVALS.find(str(foe.type))]+" • Lv "+str(rival_state(str(foe.type)).level) if str(foe.type) in RIVALS else "THE TOLLBREAKER",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#e3c4f7") if str(foe.type)=="gate_rival" else Color("#ffdeab"))
+  canvas.draw_string(font,pos+Vector2(-60,-128 if str(foe.type)=="tollbreaker" else -70),rival_name(str(foe.type))+" • Lv "+str(rival_state(str(foe.type)).level) if str(foe.type) in RIVALS else "THE TOLLBREAKER",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#e3c4f7") if str(foe.type)=="gate_rival" else Color("#ffdeab"))
 func draw_hud(canvas:Node2D)->void:
  if game.mode!="defense":return
  var font:Font=ThemeDB.fallback_font
  var lines:Array[String]=[]
  for n in party_size:
   var id:String=RIVALS[n];var state:=rival_state(id)
-  lines.append(["Sable","Bastion","Oracle","Iona"][n]+" Lv"+str(state.level))
+  lines.append(rival_name(id).split(" ")[0]+" Lv"+str(state.level))
  var notice:String=" • ".join(lines)
  canvas.draw_rect(Rect2(20,105,660,25),Color(.04,.09,.12,.82))
  canvas.draw_string(font,Vector2(34,123),notice+"   |   Guards share 20% bounty",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#d6c3ed"))

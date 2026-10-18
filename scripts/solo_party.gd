@@ -3,6 +3,7 @@ extends RefCounted
 static func begin(g:Node)->void:
  if not g.get_tree().root.has_meta("fx_solo_party"):return
  var plan:Dictionary=g.get_tree().root.get_meta("fx_solo_party");g.get_tree().root.remove_meta("fx_solo_party")
+ g.gate_rival_plan=preload("res://network/party_rules.gd").clean_rivals(plan.get("rivals",preload("res://network/party_rules.gd").DEFAULT_RIVALS));
  g._set_mode(str(plan.mode));g.selected_hero=str(plan.hero);g.preferred_hero=g.selected_hero;g.bg_map=str(plan.get("bg_map","woodland"));g.bg_team_size=int(plan.get("bg_size",3));g.arena_map=str(plan.get("arena_map","sand"))
  for n in g.realm_picker.item_count:
   if str(g.realm_picker.get_item_metadata(n))==str(plan.get("realm","grove")):g.realm_picker.select(n)

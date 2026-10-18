@@ -1,4 +1,5 @@
 extends RefCounted
+const MODE_ORDER=["Mode_coop","Destination_between","Destination_overcharge","Mode_descent","Mode_arena","Mode_defense","Mode_battlegrounds","Destination_wayfarer"]
 const MODES=[["Gate Defence","defense"],["Gladiator Arena","arena"],["Normal Realms","coop"],["Ram’s Descent","descent"],["Battlegrounds","battlegrounds"]]
 static func label(parent:Node,value:String,fs:int=16)->Label:
  var node=Label.new();node.text=value;node.add_theme_font_size_override("font_size",fs);parent.add_child(node);return node
@@ -19,13 +20,17 @@ static func build(g:Node)->void:
   g._leave_room_connection();g.get_tree().root.set_meta("fx_hero",g.selected_hero);g.get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn"))
  back.size_flags_horizontal=Control.SIZE_SHRINK_END;back.custom_minimum_size.x=150
  var main=HBoxContainer.new();main.add_theme_constant_override("separation",16);body.add_child(main)
- var left=VBoxContainer.new();left.custom_minimum_size.x=230;main.add_child(left)
+ var left=VBoxContainer.new();left.custom_minimum_size.x=230;left.add_theme_constant_override("separation",6);main.add_child(left)
  label(left,"CHOOSE YOUR ADVENTURE",14)
  # A hidden picker preserves one source of truth for room replication.
  var modes=OptionButton.new();modes.name="NetworkModes";body.add_child(modes);modes.hide()
  for entry in MODES:modes.add_item(entry[0]);modes.set_item_metadata(modes.item_count-1,entry[1])
  for entry in MODES:
-  var mode_button=button(left,entry[0],func():g.select_network_mode(str(entry[1])));mode_button.name="Mode_"+str(entry[1]);mode_button.custom_minimum_size.y=36
+  var mode_button=button(left,entry[0],func():
+   if g.net_ready:return
+   if str(entry[1])=="coop" and g.realm_id in ["between","overcharge","wayfarer"]:
+    g.realm_id="grove";g.net_panel.find_child("NetworkRealms",true,false).select(g.RealmCatalogue.lobby_ids().find("grove"))
+   g.select_network_mode(str(entry[1])));mode_button.name="Mode_"+str(entry[1]);mode_button.custom_minimum_size.y=36
  for entry in [["The Between","between"],["Quest Area • Wayfarer","wayfarer"],["Overcharged Realm","overcharge"]]:
   var dest=str(entry[1]);var mode_button=button(left,str(entry[0]),func():
    if g.net_ready:return
@@ -33,7 +38,11 @@ static func build(g:Node)->void:
   mode_button.name="Destination_"+dest;mode_button.custom_minimum_size.y=36
   var reason=g.ExpeditionProfile.progress(g).entry_issue(dest) if dest in ["between","overcharge"] else preload("res://scripts/realm_access.gd").reason(g.legacy,dest)
   mode_button.disabled=not reason.is_empty();mode_button.tooltip_text=reason if not reason.is_empty() else "Choose solo or host/join co-op."
- var summary=label(left,"Your hero, your progress.\nShare a room code or browse\npublic parties below.",14);summary.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+ for i in MODE_ORDER.size():
+  var choice=left.get_node(MODE_ORDER[i]);left.move_child(choice,i+1);choice.custom_minimum_size.y=32;choice.add_theme_font_size_override("font_size",15)
+  for state in ["normal","hover","pressed","focus","disabled"]:
+   var skin=preload("res://scripts/studio_ui.gd").box("#18323d" if state=="disabled" else "#244854","#42636c",7,7);choice.add_theme_stylebox_override(state,skin)
+ var summary=label(left,"Solo or co-op.\nHost a party or join below.",14);summary.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
  var right=VBoxContainer.new();right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;main.add_child(right)
  var identity=HBoxContainer.new();right.add_child(identity)
  g.net_name=field(identity,str(g.legacy.data.get("name","Traveller")),"Display name");g.net_name.name="NetworkName";g.net_name.max_length=24
@@ -84,9 +93,15 @@ static func build(g:Node)->void:
  g.net_start=button(connection,"Start match",func():g.send_net({"type":"start"}));g.net_start.name="StartMatch";g.net_start.disabled=true
  button(connection,"Leave room",g.return_to_network_menu).name="LeaveRoom"
  g.net_status=label(frame,"Play solo above, or Host / Join below. AI allies are available in Gate Defence, team Arena and Battlegrounds.",14);g.net_status.name="NetworkStatus";g.net_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
- var room_heading=HBoxContainer.new();body.add_child(room_heading);var title=label(room_heading,"PUBLIC ROOMS",16);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- var refresh=button(room_heading,"Refresh rooms",g.browse_rooms);refresh.name="RefreshRooms";refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.custom_minimum_size.x=150
- g.room_listing=VBoxContainer.new();g.room_listing.name="RoomListing";body.add_child(g.room_listing);label(g.room_listing,"Select Refresh rooms to find a party.",14)
+ # Public browsing has a permanent, outlined lower section of its own.
+ var public_frame=PanelContainer.new();public_frame.name="PublicRoomsSection";frame.add_child(public_frame);frame.move_child(public_frame,1)
+ var skin=StyleBoxFlat.new();skin.bg_color=Color("#0c222b");skin.border_color=Color("#659aab");skin.set_border_width_all(2);skin.set_corner_radius_all(8);skin.set_content_margin_all(10);public_frame.add_theme_stylebox_override("panel",skin)
+ var public_body=VBoxContainer.new();public_frame.add_child(public_body)
+ var room_heading=HBoxContainer.new();public_body.add_child(room_heading);var title=label(room_heading,"PUBLIC ROOMS • FIND A PARTY",16);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ var refresh=button(room_heading,"Refresh rooms",g.browse_rooms);refresh.name="RefreshRooms";refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.custom_minimum_size=Vector2(150,30);refresh.add_theme_font_size_override("font_size",14)
+ for state in ["normal","hover","pressed","focus"]:refresh.add_theme_stylebox_override(state,preload("res://scripts/studio_ui.gd").box("#244854","#659aab",6,6))
+ var public_scroll=ScrollContainer.new();public_scroll.name="PublicRoomsScroll";public_scroll.custom_minimum_size.y=52;public_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;public_body.add_child(public_scroll)
+ g.room_listing=VBoxContainer.new();g.room_listing.name="RoomListing";g.room_listing.size_flags_horizontal=Control.SIZE_EXPAND_FILL;public_scroll.add_child(g.room_listing);label(g.room_listing,"Public rooms hosted by other players appear here.",14)
  # Address is configuration, never a required student input.
  g.url_field=LineEdit.new();g.url_field.name="NetworkEndpoint";g.url_field.text=g.DEFAULT_SERVER;body.add_child(g.url_field);g.url_field.hide()
  for edit in [g.net_name,g.room_field]:
