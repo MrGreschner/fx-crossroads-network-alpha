@@ -26,8 +26,6 @@ var staged:Dictionary={}
 var username:LineEdit
 var password:LineEdit
 var confirmation:LineEdit
-var school_last:LineEdit
-var school_first:LineEdit
 var status_label:Label
 var guest:Dictionary={}
 var previous_menu="town"
@@ -66,7 +64,7 @@ func _process(delta:float)->void:
  timer-=delta
  if timer<=0:timer=60;save_cloud()
 func school_role()->String:return str(user.get("role","player")) if loaded else "player"
-func private_ready()->bool:return not bool(user.get("needs_identity",false))
+func private_ready()->bool:return true
 func make_bundle(l:Node)->Dictionary:
  if loaded:l.data.name=str(user.username)
  l.save()
@@ -136,12 +134,9 @@ func refresh()->void:
    if password.text!=confirmation.text or password.text.length()<15:message="Use at least 15 characters and matching passwords.";refresh();return
    call_api("password",{"current":username.text,"password":password.text},"password"))
   button("Cancel",func():mode="login";refresh())
- elif not private_ready():
-  label("School identification • private",23);label("Your administrator assigned a "+str(user.role)+" account. Enter only the first five letters of your last name (all letters if shorter), and your first initial. This is for future marks and is never displayed publicly.")
-  school_last=field("First five letters of last name");school_last.max_length=5;school_first=field("First initial");school_first.max_length=1
-  button("Save private identification",func():call_api("identity",{"last":school_last.text,"initial":school_first.text},"identity"))
  elif not loaded:
   label("Signed in as "+str(user.username),23)
+  if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code)+" • keep this for your teacher",18)
   if user.get("has_save",false):
    button("Load my cloud profile",func():call_api("save",null,"load"))
    var owner_copy=STORE.read("user://fx_cloud_owner.json")
@@ -157,7 +152,9 @@ func refresh()->void:
     loaded=true;revision=0;mark_owner();apply(p))
   button("Sign out",sign_out)
  else:
-  label(str(user.username)+" • "+str(user.role).capitalize(),24);label("Cloud revision "+str(revision)+" • "+("SAVING PAUSED — resolve conflict" if conflict else "automatic save every 60 seconds")+"\nDownloadable profiles still work as backups.")
+  label(str(user.username)+" • "+str(user.role).capitalize(),24)
+  if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code),18)
+  label("Cloud revision "+str(revision)+" • "+("SAVING PAUSED — resolve conflict" if conflict else "automatic save every 60 seconds")+"\nDownloadable profiles still work as backups.")
   button("Save now",func():save_cloud(true)).disabled=busy or conflict
   button("Download this device’s profile backup",func():close();legacy().export_profile())
   if conflict:button("Load cloud save instead (local backup kept)",func():call_api("save",null,"load"))
@@ -190,7 +187,7 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
   "auth":
    mode="login";token=p.token;user=p.user;revision=int(user.revision);loaded=false;message="Signed in. Choose your profile below.";refresh()
   "password":mode="login";message="Password updated. Other sessions have been signed out.";refresh()
-  "identity":user.needs_identity=false;message="Private identification saved.";refresh()
+
   "load":
    if p.get("profile")==null:message="No cloud save exists for this account.";refresh();return
    var l=legacy()

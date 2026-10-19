@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/ram_0.png" id="1"]
 
@@ -11,8 +11,6 @@
 [ext_resource type="Texture2D" path="res://assets/archer_idle.png" id="5"]
 
 [ext_resource type="Texture2D" path="res://assets/bramble_idle.png" id="6"]
-
-[ext_resource type="Texture2D" path="res://assets/spore_thrower_idle.png" id="7"]
 
 [ext_resource type="Texture2D" path="res://assets/tree.png" id="8"]
 
@@ -214,16 +212,6 @@ scale = Vector2(2, 2)
 
 metadata/enemy_id = "archer"
 
-[node name="Enemy_011" type="Sprite2D" parent="Enemies"]
-
-position = Vector2(3525, 1017)
-
-texture = ExtResource("7")
-
-scale = Vector2(2, 2)
-
-metadata/enemy_id = "spore_thrower"
-
 [node name="Enemy_012" type="Sprite2D" parent="Enemies"]
 
 position = Vector2(3650, 1031)
@@ -253,16 +241,6 @@ texture = ExtResource("6")
 scale = Vector2(2, 2)
 
 metadata/enemy_id = "bramble"
-
-[node name="Enemy_015" type="Sprite2D" parent="Enemies"]
-
-position = Vector2(4025, 877)
-
-texture = ExtResource("7")
-
-scale = Vector2(2, 2)
-
-metadata/enemy_id = "spore_thrower"
 
 [node name="Enemy_016" type="Sprite2D" parent="Enemies"]
 
@@ -303,16 +281,6 @@ texture = ExtResource("5")
 scale = Vector2(2, 2)
 
 metadata/enemy_id = "archer"
-
-[node name="Enemy_020" type="Sprite2D" parent="Enemies"]
-
-position = Vector2(4650, 815)
-
-texture = ExtResource("7")
-
-scale = Vector2(2, 2)
-
-metadata/enemy_id = "spore_thrower"
 
 [node name="Enemy_021" type="Sprite2D" parent="Enemies"]
 

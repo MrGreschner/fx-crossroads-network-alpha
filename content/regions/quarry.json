@@ -8,7 +8,7 @@
   "unlock_cost": 0,
   "background": "#38363d",
   "accent": "#b5816e",
-  "boss_health": 680,
+  "boss_health": 620,
   "xp_per_level": 4,
   "terrain": "ash",
   "boss_split": true,

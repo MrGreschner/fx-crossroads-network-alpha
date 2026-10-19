@@ -1072,6 +1072,8 @@ func _process(delta: float) -> void:
 		if adventure.combat.classics.channeling(my_id):speed*=legacy.channel_speed(my_id)
 		for carried_id in inventory.get(my_id,[]):
 			if str(items.get(str(carried_id),{}).get("effect","")) == "bonus_speed": speed += float(items[str(carried_id)].get("amount",0))
+		for carried_id in inventory.get(my_id,[]):
+			if str(items.get(str(carried_id),{}).get("effect","")) == "bonus_speed": speed *= float(items[str(carried_id)].get("speed_multiplier",1.0))
 		if Time.get_ticks_msec() < int(haste_until.get(my_id,0)): speed *= float(item_haste_scale.get(my_id,1.35))
 		if Time.get_ticks_msec() < int(stealth_until.get(my_id,0)): speed *= 1.45
 		if dodge_time > 0:
@@ -1572,6 +1574,15 @@ func _simulate(delta: float) -> void:
 			for guard_index in guards.size():
 				if str(guards[guard_index].get("type","")) != "summoned" and (enemy["pos"] as Vector2).distance_to(guards[guard_index]["pos"]) < (330 if adventure.combat.ranged_enemy(enemy,definition) else 95):
 					guard_target = guard_index;destination = guards[guard_index]["pos"];break
+		var starter_boss:bool=mode=="coop" and preload("res://scripts/starter_boss.gd").managed(realm_id,enemy)
+		if starter_boss:
+			enemy.attack_timer=maxf(0,float(enemy.get("attack_timer",0))-delta)
+			var swing:int=preload("res://scripts/starter_boss.gd").advance(enemy,destination,delta,target_id!="")
+			if swing>0:
+				if swing==2:
+					for player_id in positions:
+						if int(health.get(player_id,0))>0 and preload("res://scripts/starter_boss.gd").hits(enemy,positions[player_id]):_hurt(str(player_id),22.0 if realm_id=="quarry" else 25.0,"enemy",adventure.combat.npc_key(enemy))
+				opponents[i]=enemy;continue
 		var diff := destination - (enemy["pos"] as Vector2)
 		var steering:Vector2=descent_direction(enemy,destination,delta) if mode == "descent" else diff.normalized()
 		if target_id!="" and adventure.combat.ranged_enemy(enemy,definition) and (mode!="defense" or nearest<=480):
@@ -1586,7 +1597,7 @@ func _simulate(delta: float) -> void:
 			if mode == "defense": sidestep = _guard_blocked_move(enemy["pos"],sidestep,-1,44.0)-(enemy["pos"] as Vector2)
 			if _clear_path(enemy["pos"],enemy["pos"]+sidestep): enemy["pos"] += sidestep
 		if mode=="defense" and north_gate.hold_at_outpost(enemy,delta):continue
-		enemy["attack_timer"] = maxf(0.0,float(enemy.get("attack_timer",0.0))-delta)
+		if not starter_boss:enemy["attack_timer"] = maxf(0.0,float(enemy.get("attack_timer",0.0))-delta)
 		if mode == "defense" and (enemy["pos"] as Vector2).distance_to(GATE) < 85:
 			gate_hp -= 8.0 if not bool(enemy["boss"]) else 65.0
 			opponents.remove_at(i)
@@ -1599,7 +1610,7 @@ func _simulate(delta: float) -> void:
 			guards[guard_target]["hp"] = float(guards[guard_target]["hp"])-maxf(1.0,float(definition.get("damage",10))-float(upgrade_level["armor"])*2.0)
 			if float(guards[guard_target]["hp"])<=0: guards.remove_at(guard_target)
 			enemy["attack_timer"] = 1.2
-		elif float(enemy["attack_timer"]) <= 0 and target_id != "":
+		elif not starter_boss and float(enemy["attack_timer"]) <= 0 and target_id != "":
 			var windup := float(enemy.get("warning",-1.0))
 			if windup<0 and nearest<340:
 				enemy["warning"]=.55
@@ -1779,7 +1790,7 @@ func _snapshot() -> Dictionary:
 			remaining[ability] = maxf(0.0,float(int(timers.get(ability,0))-Time.get_ticks_msec())/1000.0)
 		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
 	var foes: Array = []
-	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"warning":float(enemy.get("warning",-1)),"v143_pose":float(enemy.get("v143_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false))})
+	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"warning":float(enemy.get("warning",-1)),"melee_warning":float(enemy.get("melee_warning",0)),"melee_x":float(enemy.get("melee_x",0)),"melee_y":float(enemy.get("melee_y",1)),"v143_pose":float(enemy.get("v143_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false))})
 	var shots: Array = []
 	for bullet in missiles: shots.append({"pos":[roundi(bullet["pos"].x),roundi(bullet["pos"].y)],"owner":bullet["owner"],"color":str(bullet.get("color","#ffd985"))})
 	var sent_guards: Array = []
@@ -1997,7 +2008,7 @@ func dict_with_start(data:Dictionary)->Dictionary:
 
 func foes_from_packet(value: Dictionary) -> void:
 	var point:=Vector2(float(value["pos"][0]),float(value["pos"][1]));smoothing.push("e:"+str(value.get("uid",0)),point,Time.get_ticks_msec()/1000.0)
-	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false))})
+	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"melee_warning":float(value.get("melee_warning",0)),"melee_x":float(value.get("melee_x",0)),"melee_y":float(value.get("melee_y",1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false))})
 
 func _consume(id: String, slot: int) -> void:
 	if mode=="arena" and arena_no_items:return
@@ -2199,7 +2210,7 @@ func _draw() -> void:
 		var pos: Vector2 = visual_actor("e:"+str(foe.get("uid",0)),foe["pos"])-camera
 		if bool(foe.get("health_gem",false)):pos.y-=8+sin(descent.clock*2+int(foe.uid)%7)*5
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
-		var texture: Texture2D = art.get(id+"_"+("attack" if float(foe.get("v143_pose",0))>adventure.newcomers.clock else "walk1" if int(visual_time*5)%2==0 else "walk2"))
+		var texture: Texture2D = art.get(id+"_"+("attack" if float(foe.get("melee_warning",0))>0 or float(foe.get("v143_pose",0))>adventure.newcomers.clock else "walk1" if int(visual_time*5)%2==0 else "walk2"))
 		var size := Vector2(130,146) if str(foe.type)=="tollbreaker" else Vector2(54,68) if str(foe.type) in north_gate.RIVALS else Vector2(82,88) if bool(foe["boss"]) else Vector2(46,50)
 		if str(foe.type)=="depth_sovereign":size=Vector2(124,136)
 		if str(foe.type) in adventure.tech.TYPES:size=adventure.tech.body_size(str(foe.type))
@@ -2207,6 +2218,7 @@ func _draw() -> void:
 		if float(foe.get("down_time",0))>0:size=Vector2(70,28)
 		if str(foe["type"]) in ["gongbreaker","silence_regent","rootbound_keeper"]: size=Vector2(120,128)
 		if str(foe["type"])=="gilded_usurper":size*=1.0 if int(foe.get("generation",0))==0 else .78 if int(foe.get("generation",0))==1 else .56
+		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
 		if float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
 		if texture != null: draw_texture_rect(texture,Rect2(pos-size*Vector2(0.5,0.7),size),false)
 		else: draw_circle(pos,19,Color("#ffad7a"))

@@ -13,6 +13,8 @@ static func advance(g:Node,id:String,p:Vector2,direction:Vector2)->Vector2:
  if c.classics.channeling(id):speed*=g.legacy.channel_speed(id)
  for item in g.inventory.get(id,[]):
   if str(g.items.get(str(item),{}).get("effect",""))=="bonus_speed":speed+=float(g.items[item].get("amount",0))
+ for item in g.inventory.get(id,[]):
+  if str(g.items.get(str(item),{}).get("effect",""))=="bonus_speed":speed*=float(g.items[item].get("speed_multiplier",1.0))
  if Time.get_ticks_msec()<int(g.haste_until.get(id,0)):speed*=float(g.item_haste_scale.get(id,1.35))
  if Time.get_ticks_msec()<int(g.stealth_until.get(id,0)):speed*=1.45
  var dash:Dictionary=g.net_dash.get(id,{})
@@ -33,6 +35,8 @@ static func prepare(g:Node,id:String)->Dictionary:
  for item in g.inventory.get(id,[]):
   if str(g.items.get(str(item),{}).get("effect",""))=="bonus_speed":bonus+=float(g.items[item].get("amount",0))
  var multiplier=1.0
+ for item in g.inventory.get(id,[]):
+  if str(g.items.get(str(item),{}).get("effect",""))=="bonus_speed":multiplier*=float(g.items[item].get("speed_multiplier",1.0))
  if Time.get_ticks_msec()<int(g.haste_until.get(id,0)):multiplier*=float(g.item_haste_scale.get(id,1.35))
  if Time.get_ticks_msec()<int(g.stealth_until.get(id,0)):multiplier*=1.45
  return {"movable":true,"speed":speed,"bonus":bonus,"multiplier":multiplier}

@@ -3,6 +3,7 @@
   "name": "Trail Boots",
   "cost": 60,
   "effect": "bonus_speed",
-  "amount": 35,
-  "description": "Move 35 faster while carried."
+  "amount": 0,
+  "description": "Move 10% faster while carried.",
+  "speed_multiplier": 1.1
 }

@@ -42,5 +42,6 @@
       960
     ]
   ],
-  "difficulty_tier": "starter"
+  "difficulty_tier": "starter",
+  "enemies": []
 }

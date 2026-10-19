@@ -85,8 +85,4 @@ func draw_ground(g:Node2D,camera:Vector2)->void:
   var bench:Vector2=p+Vector2(0,48)
   g.draw_rect(Rect2(bench-Vector2(32,10),Vector2(64,12)),Color("#aa825b"));g.draw_line(bench-Vector2(32,18),bench+Vector2(32,-18),Color("#cfaa7a"),5)
   for x in [-25,25]:g.draw_line(bench+Vector2(x,2),bench+Vector2(x,13),Color("#5b6153"),4)
- # Campus lanterns form two gentle rows rather than random objects across paths.
- for spot in [Vector2(-720,1415),Vector2(-340,1415),Vector2(-810,2120),Vector2(-1100,2120),Vector2(-495,1710),Vector2(165,2160)]:
-  if not view.has_point(spot):continue
-  var p:Vector2=spot-camera
-  g.draw_line(p,p-Vector2(0,44),Color("#5f6b62"),4);g.draw_rect(Rect2(p-Vector2(7,59),Vector2(14,18)),Color("#4b6265"));g.draw_rect(Rect2(p-Vector2(4,56),Vector2(8,12)),Color("#efcf90"))
+

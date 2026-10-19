@@ -9,7 +9,7 @@ const CAMP=Vector2(2890,1450)
 const TENT=Vector2(2950,1515)
 const FISH=Vector2(2475,480)
 const LAMPS=[Vector2(-940,1060),Vector2(-1020,555),Vector2(-550,555),Vector2(-780,760),Vector2(700,810),Vector2(1180,810),Vector2(720,610),Vector2(1080,610),Vector2(440,870),Vector2(1450,870),Vector2(1940,870),Vector2(780,1205),Vector2(1515,1205),Vector2(2100,1205),Vector2(2550,1185),Vector2(2810,1320),Vector2(-820,920),Vector2(-350,920),Vector2(580,1765),Vector2(920,1765),Vector2(1560,1765),Vector2(2020,2100)]
-const EXISTING_LAMPS=[Vector2(-720,1362),Vector2(-340,1362),Vector2(-810,2067),Vector2(-1100,2067),Vector2(-495,1657),Vector2(165,2107)]
+const EXISTING_LAMPS=[Vector2(-720,1415),Vector2(-340,1415),Vector2(-810,2120),Vector2(-1100,2120),Vector2(-495,1710),Vector2(165,2160)]
 var now:float=0
 var hour:float=0
 var weekday:int=0
@@ -100,13 +100,10 @@ func draw_props(c:Node2D,camera:Vector2)->void:
  draw_puddles(c,camera)
  var view=Rect2(camera,c.VIEW).grow(130)
  var lit=night_amount()
- for spot in LAMPS:
+ for spot in LAMPS+EXISTING_LAMPS:
   if not view.has_point(spot):continue
   var p:Vector2=spot-camera
-  c.draw_circle(p,8,Color(0,0,0,.18));c.draw_line(p,p-Vector2(0,48),Color("#52665e"),4)
-  c.draw_rect(Rect2(p-Vector2(7,64),Vector2(14,19)),Color("#344c50"))
-  c.draw_rect(Rect2(p-Vector2(4,61),Vector2(8,13)),Color("#ffe2a0") if lit>.1 else Color("#8d9985"))
-  c.draw_colored_polygon(PackedVector2Array([p+Vector2(-10,-64),p+Vector2(0,-71),p+Vector2(10,-64)]),Color("#52665e"))
+  draw_lantern(c,p,lit)
  if view.has_point(TENT):
   var p:Vector2=TENT-camera
   c.draw_circle(p+Vector2(0,8),38,Color(0,0,0,.18))
@@ -132,7 +129,7 @@ func collect_lights(c:Node2D,camera:Vector2)->void:
  for spot in LAMPS:
   if view.has_point(spot):lights.append({"pos":spot-camera-Vector2(0,55),"radius":150.0,"strength":1.0})
  for spot in EXISTING_LAMPS:
-  if view.has_point(spot):lights.append({"pos":spot-camera,"radius":135.0,"strength":1.0})
+  if view.has_point(spot):lights.append({"pos":spot-camera-Vector2(0,55),"radius":135.0,"strength":1.0})
  for lamp in preload("res://scripts/town_v173.gd").LIGHTS:
   if view.has_point(lamp):lights.append({"pos":lamp-camera,"radius":95.0,"strength":.85})
  for torch in c.arena_town.TORCHES:
@@ -291,3 +288,11 @@ func draw_weather(c:Node2D,camera:Vector2)->void:
    c.draw_set_transform(p,0,Vector2(1,.18))
    for k in range(3,0,-1):c.draw_circle(Vector2.ZERO,220+k*36,Color(.65,.8,.83,.035))
    c.draw_set_transform(Vector2.ZERO)
+
+static func draw_lantern(c:Node2D,p:Vector2,lit:float)->void:
+ c.draw_circle(p,8,Color(0,0,0,.18))
+ c.draw_rect(Rect2(p-Vector2(6,5),Vector2(12,6)),Color("#344c50"))
+ c.draw_line(p,p-Vector2(0,48),Color("#52665e"),4)
+ c.draw_rect(Rect2(p-Vector2(7,64),Vector2(14,19)),Color("#344c50"))
+ c.draw_rect(Rect2(p-Vector2(4,61),Vector2(8,13)),Color("#ffe2a0") if lit>.1 else Color("#8d9985"))
+ c.draw_colored_polygon(PackedVector2Array([p+Vector2(-10,-64),p+Vector2(0,-71),p+Vector2(10,-64)]),Color("#52665e"))

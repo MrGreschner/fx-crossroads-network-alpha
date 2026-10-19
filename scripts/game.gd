@@ -794,15 +794,17 @@ func _process(delta: float) -> void:
 				attack_effects.remove_at(effect_index)
 		for key in cooldowns:
 			cooldowns[key] = maxf(0.0, float(cooldowns[key]) - delta)
+	var carried_multiplier := 1.0
 	var carried_speed := bonus_speed
 	if mode == "run":
 		for carried_id in inventory:
 			var carried: Dictionary = items.get(carried_id, {})
 			if str(carried.get("effect", "")) == "bonus_speed":
 				carried_speed += float(carried.get("amount", 0))
+				carried_multiplier *= float(carried.get("speed_multiplier",1.0))
 	var speed := (float(characters.get(selected_character,{}).get("speed",230)) if selected_character in ["gopher","snail","kite"] else 230.0) if mode == "town" else (float(hero.get("speed", 230)) + carried_speed) * (1.45 if stealth_time > 0 else 1.0) * (haste_multiplier if haste_time > 0 else 1.0)
 	if mode=="run":
-		speed*=legacy.speed_factor("solo")
+		speed*=carried_multiplier*legacy.speed_factor("solo")
 		if adventure.combat.classics.channeling("solo"):speed*=legacy.channel_speed("solo")
 	if mode != "town":speed*=adventure.combat.speed_factor("p:solo")
 	var direction: Vector2 = mobile.movement if mobile.enabled else Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down")).normalized()
@@ -1348,7 +1350,7 @@ func damage_enemy(index: int, amount: float) -> void:
 		enemies.remove_at(index)
 		for fragment_index in 2:
 			var fragment_position := split_point + Vector2(-125 if fragment_index == 0 else 125, -60 if fragment_index == 0 else 60)
-			enemies.append({"pos": fragment_position, "hp": 300.0, "max_hp": 300.0, "attack_timer": 0.0, "secondary_timer": 3.5 + fragment_index, "windup": 0.0, "boss": true, "type": "fragment", "uid": 1000001 + fragment_index})
+			enemies.append({"pos": fragment_position, "hp": 240.0 if region_id=="quarry" else 300.0, "max_hp": 240.0 if region_id=="quarry" else 300.0, "attack_timer": 0.0, "secondary_timer": 3.5 + fragment_index, "windup": 0.0, "boss": true, "type": "fragment", "uid": 1000001 + fragment_index})
 		add_float_text(split_point, "SPLIT! TWO GUARDIANS", Color("#ffb987"))
 		message = "The Quarry Guardian split in two! Defeat both fragments."
 		message_time = 7.0
@@ -1425,6 +1427,12 @@ func update_enemies(delta: float) -> void:
 		if not enemy.boss and not leaf.is_empty() and adventure.combat.path_clear(enemy.pos,adventure.combat.vec(leaf.pos)):target_point=adventure.combat.vec(leaf.pos)
 		var diff: Vector2 = target_point - enemy["pos"]
 		enemy["attack_timer"] = maxf(0.0, float(enemy["attack_timer"]) - delta)
+		if preload("res://scripts/starter_boss.gd").managed(region_id,enemy) and not tutorial.active:
+			var swing:int=preload("res://scripts/starter_boss.gd").advance(enemy,position_in_world,delta,stealth_time<=0)
+			if swing>0:
+				if swing==2 and stealth_time<=0 and preload("res://scripts/starter_boss.gd").hits(enemy,position_in_world):
+					take_player_damage((16.0 if str(enemy.type)=="fragment" else 22.0) if region_id=="quarry" else 25.0,adventure.combat.npc_key(enemy))
+				continue
 		if enemy["boss"]:
 			enemy["secondary_timer"] = maxf(0.0, float(enemy.get("secondary_timer", 3.0)) - delta)
 			if float(enemy.get("windup", 0.0)) > 0.0:
@@ -1434,7 +1442,7 @@ func update_enemies(delta: float) -> void:
 					if str(region.get("boss_secondary", "stomp")) == "fireball":
 						var aim: Vector2 = position_in_world - enemy["pos"]
 						if aim.length() > 0:
-							enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos": enemy["pos"], "direction": aim.normalized(), "damage": 24.0, "speed": 245.0, "distance": 0.0, "fireball": true})
+							enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos": enemy["pos"], "direction": aim.normalized(), "damage": 20.0 if region_id=="quarry" else 24.0, "speed": 225.0 if region_id=="quarry" else 245.0, "distance": 0.0, "fireball": true})
 					elif str(region.get("boss_secondary", "stomp")) in ["sunburst", "frostburst", "seekerstorm", "sporeburst"]:
 						for ray in 10:
 							var angle := TAU * float(ray) / 10.0 + visual_clock * 0.35
@@ -1446,7 +1454,7 @@ func update_enemies(delta: float) -> void:
 						add_float_text(position_in_world + Vector2(-25, -74), "STUNNED 1s", Color("#f7c384"))
 			elif float(enemy["secondary_timer"]) <= 0 and diff.length() < 550 and stealth_time <= 0:
 				enemy["windup"] = 0.8
-				enemy["secondary_timer"] = 5.0 if str(enemy["type"]) == "fragment" else 4.0
+				enemy["secondary_timer"] = 5.0 if str(enemy["type"]) == "fragment" else (4.8 if region_id=="quarry" else 4.0)
 		if str(definition.get("behaviour", "")) == "summoner":
 			enemy["summon_timer"] = maxf(0.0, float(enemy.get("summon_timer", 1.5)) - delta)
 			if stealth_time <= 0 and diff.length() < float(definition.get("aggro_range", 450)):
@@ -1491,7 +1499,7 @@ func update_enemies(delta: float) -> void:
 				continue
 			if diff.length() < (570 if enemy["boss"] else float(definition.get("aggro_range", 320))) and diff.length() > (46 if enemy["boss"] else 37):
 				move_enemy_around_obstacles(enemy, (adventure.combat.ranged_direction(enemy,target_point) if adventure.combat.ranged_enemy(enemy,definition) else diff.normalized()) * enemy_speed * delta, bool(definition.get("flying", false)))
-			if not adventure.combat.ranged_enemy(enemy,definition) and diff.length() < (54 if enemy["boss"] else 41) and float(enemy["attack_timer"]) <= 0.0:
+			if not preload("res://scripts/starter_boss.gd").managed(region_id,enemy) and not adventure.combat.ranged_enemy(enemy,definition) and diff.length() < (54 if enemy["boss"] else 41) and float(enemy["attack_timer"]) <= 0.0:
 				var incoming := (18.0 if str(enemy["type"]) == "fragment" else 25.0) if enemy["boss"] else float(definition.get("damage", 9))
 				if position_in_world.distance_to(enemy.pos)<65:
 					enemy["strike_flash"]=.28;enemy["strike_direction"]=(position_in_world-enemy.pos).normalized()
@@ -1745,7 +1753,7 @@ func draw_world() -> void:
 			var sprite_prefix := str(definition.get("sprite", "bramble"))
 			var boss_size := Vector2(72, 72) if str(enemy["type"]) == "fragment" else Vector2(100, 100)
 			if str(enemy["type"]) in ["gongbreaker","silence_regent"]: boss_size=Vector2(120,120)
-			var enemy_pose := "attack" if (float(enemy.get("strike_flash",0))>0 or float(enemy.get("v143_pose",0))>adventure.newcomers.clock) else ("walk1" if int(visual_clock * 3.0) % 2 == 0 else "walk2")
+			var enemy_pose := "attack" if (float(enemy.get("melee_warning",0))>0 or float(enemy.get("strike_flash",0))>0 or float(enemy.get("v143_pose",0))>adventure.newcomers.clock) else ("walk1" if int(visual_clock * 3.0) % 2 == 0 else "walk2")
 			var enemy_sprite := sprite_prefix + "_" + enemy_pose if art.has(sprite_prefix + "_" + enemy_pose) else sprite_prefix + "_" + str(int(visual_clock * 3.0) % 2)
 			if is_boss:
 				var boss_prefix := "bramble_boss" if str(enemy["type"]) == "fragment" else str(enemy.get("type")) if enemy.get("expansion_boss",false) else str(enemy.get("sprite",region.get("boss_sprite", "bramble_boss")))
@@ -1769,6 +1777,7 @@ func draw_world() -> void:
 					preload("res://scripts/combat_cues.gd").danger(self,ep,225 if str(region.get("boss_secondary", ""))=="sunburst" else 175,float(enemy.windup),.8)
 				else:
 					preload("res://scripts/combat_cues.gd").corridor(self,ep,position_in_world-camera,14)
+			preload("res://scripts/starter_boss.gd").draw_warning(self,enemy,ep)
 			var hp_y:float=-adventure.tech.body_size(str(enemy.type)).y*.7-8 if str(enemy.type) in adventure.tech.TYPES else -47 if is_boss else -32
 			if not (adventure.school.active and is_boss) and not (media.clean_view or media.capturing):draw_rect(Rect2(ep + Vector2(-27,hp_y), Vector2(54 * float(enemy["hp"]) / float(enemy["max_hp"]), 5)), Color("#e8d586"))
 		for bullet in bullets:

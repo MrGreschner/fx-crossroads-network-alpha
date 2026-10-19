@@ -64,8 +64,6 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
   for n in 9:
    var p:=Vector2(-290+n*85,1798)-camera
    c.draw_circle(p,4,Color("#99b977"));c.draw_circle(p+Vector2(6,-3),3,Color("#e0c997"))
-  for p in [Vector2(-230,1700),Vector2(380,1700),Vector2(60,2040)]:
-   var q:Vector2=p-camera;c.draw_line(q,q-Vector2(0,52),Color("#687568"),4);c.draw_circle(q-Vector2(0,54),8,Color("#e8cd8c"))
  # Western cliff silhouettes support the cave instead of leaving it in a field.
  for n in 6:
   var origin:=Vector2(-1310,550 if n==0 else 470+n*145)
@@ -144,7 +142,7 @@ func draw_east_details(c:Node2D,camera:Vector2)->void:
  for y in [-32,-15,2]:c.draw_line(pier+Vector2(-11,y),pier+Vector2(11,y),Color("#acb096"),2)
  # Trail-side lanterns mark the two destinations without obstructing either lane.
  for spot in [Vector2(2540,980),Vector2(2850,1080)]:
-  var p:Vector2=spot-camera;c.draw_line(p,p-Vector2(0,43),Color("#4c5b50"),4);c.draw_circle(p-Vector2(0,45),13,Color(1,.83,.48,.1));c.draw_rect(Rect2(p-Vector2(6,51),Vector2(12,15)),Color("#e6d29a"));c.draw_rect(Rect2(p-Vector2(7,52),Vector2(14,17)),Color("#41594e"),false,2)
+  preload("res://scripts/town_calendar.gd").draw_lantern(c,spot-camera,c.town_life.calendar.night_amount())
  for spot in [Vector2(2510,1010)]:
   var p:Vector2=spot-camera;c.draw_rect(Rect2(p,Vector2(52,10)),Color("#a28662"));c.draw_line(p-Vector2(0,8),p+Vector2(52,-8),Color("#ba9e75"),4)
   for x in [7,45]:c.draw_line(p+Vector2(x,10),p+Vector2(x,19),Color("#6b6150"),3)
