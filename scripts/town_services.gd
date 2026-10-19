@@ -44,7 +44,7 @@ func render()->void:
   text(body,"Profile files travel with you. This post office does not upload your data or share rankings online.",16)
  else:
   var pr=game.provisions
-  button(header,"Bait recipes",func():close();game.fishing.open_workshop())
+  button(header,"Fish bait recipes",func():close();game.fishing.open_workshop())
   text(body,"CC: "+str(game.gold)+" • Packed: "+pr.name_of(pr.packed)+" • One crop at a time. Clear an adventure to ripen it.",17)
   var crop_text:="No crop planted" if pr.crop=="empty" else str(pr.garden[pr.garden_id].name)+" • "+("Ready to harvest!" if pr.crop=="ready" else "Growing • needs an adventure clear")
   var row:=HBoxContainer.new();body.add_child(row);text(row,crop_text,18).size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -58,16 +58,24 @@ func render()->void:
   for id in pr.garden:
    var spec:Dictionary=pr.garden[id]
    if str(spec.family)!=family:continue
-   var card:=PanelContainer.new();card.custom_minimum_size=Vector2(445,160);grid.add_child(card)
+   var card:=PanelContainer.new();card.custom_minimum_size=Vector2(445,245);grid.add_child(card)
    var skin:=StyleBoxFlat.new();skin.bg_color=Color("#24484a");skin.set_content_margin_all(12);skin.set_corner_radius_all(8);card.add_theme_stylebox_override("panel",skin)
    var col:=VBoxContainer.new();card.add_child(col);text(col,str(spec.name),20).modulate=Color("#e9cf94")
-   if bool(spec.get("rare",false)):
-    var icon=TextureRect.new();icon.texture=preload("res://scripts/source_art.gd").texture("res://assets/lodges/"+str(id)+".svg");icon.custom_minimum_size=Vector2(48,48);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;col.add_child(icon)
+   growth_strip(col,str(id),(2 if pr.crop=="ready" else 1) if pr.crop!="empty" and str(pr.garden_id)==str(id) else -1)
    text(col,"Grows "+pr.name_of(str(spec.food))+" • "+str(pr.defs[spec.food].description),15)
    var unlocked:bool=pr.unlocked(str(id));var b:=button(col,"Plant • "+str(int(spec.cost))+" CC" if unlocked else "Find a rare seed at Gatherers’ Lodge" if bool(spec.get("rare",false)) else "Unlock at "+str(spec.need)+" family harvests",func():action(pr.plant.bind(str(id))));b.disabled=not unlocked or pr.crop!="empty"
   text(body,"Each family unlocks seeds after 1, 3 and 6 harvests. Rare gathering seeds unlock four extra garden-only crops.",15)
  message=text(body,game.message if game.message_time>0 else "",16);message.modulate=Color("#e7d79b")
+func growth_strip(parent:Node,id:String,selected:int)->void:
+ var row=HBoxContainer.new();row.add_theme_constant_override("separation",8);parent.add_child(row)
+ for stage in 3:
+  var frame=PanelContainer.new();frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  frame.add_theme_stylebox_override("panel",preload("res://scripts/studio_ui.gd").box("#203d42","#e2c383" if selected==stage else "#4e7170",6,2 if selected==stage else 1));row.add_child(frame)
+  var column=VBoxContainer.new();frame.add_child(column)
+  var icon=TextureRect.new();icon.texture=preload("res://scripts/source_art.gd").texture("res://assets/seedhouse/"+id+"_"+str(stage)+".svg");icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;icon.custom_minimum_size=Vector2(100,74);column.add_child(icon)
+  var caption=text(column,["Seeds","Growing","Harvest"][stage]+(" • now" if selected==stage else ""),13);caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 func _process(_delta:float)->void:
+ if game.menu=="seedhouse":panel.hide();current="";game.legacy.gardening.open();return
  var wanted:String=game.menu if (game.mode=="town" and game.menu in ["seedhouse","postoffice","arcane_tower","barracks"] or game.practice and game.menu=="training_guide") else ""
  panel.visible=not wanted.is_empty()
  if wanted.is_empty():current="";return
@@ -105,11 +113,11 @@ func draw_post(c:Node2D,camera:Vector2,font:Font)->void:
 
 func draw_garden(c:Node2D,camera:Vector2)->void:
  if not Rect2(camera,c.get_viewport_rect().size).grow(70).has_point(Vector2(1040,1620)):return
- var pr=game.provisions
- var p:Vector2=Vector2(1040,1620)-camera;c.draw_rect(Rect2(p-Vector2(34,12),Vector2(68,30)),Color("#775b43"))
- if pr.crop=="empty":return
- var grown:bool=pr.crop=="ready";var family_name:=str(pr.garden[pr.garden_id].family);var height:=42.0 if grown else 18.0
- for n in 3:
-  var stem:=p+Vector2(-22+n*22,5);c.draw_line(stem,stem-Vector2(0,height),Color("#74a86a"),3);c.draw_circle(stem-Vector2(5,height*.55),5,Color("#94b977"))
-  if grown:
-   var tint:=Color({"orchard":"#e4a461","river":"#9dbb87","roots":"#d8bd92","flowers":"#dba5c4"}[family_name]);c.draw_circle(stem-Vector2(0,height),7,tint);c.draw_arc(stem-Vector2(0,height),9,0,TAU,16,Color(tint,.4),2)
+ var gardening=game.legacy.gardening;var beds=gardening.state().beds
+ for i in mini(2,gardening.capacity()):
+  var at=Vector2(1040+(i%2)*100,1620+int(i/2)*74)-camera
+  c.draw_style_box(preload("res://scripts/studio_ui.gd").box("#5a4938","#c3aa78",5,2),Rect2(at-Vector2(38,13),Vector2(76,31)))
+  if beds[i].is_empty():continue
+  var b=beds[i];var stage=2 if gardening.now()>=float(b.end) else 1
+  var art=preload("res://scripts/source_art.gd").texture("res://assets/seedhouse/"+str(b.seed)+"_"+str(stage)+".svg")
+  if art!=null:c.draw_texture_rect(art,Rect2(at-Vector2(56,99),Vector2(112,105)),false)

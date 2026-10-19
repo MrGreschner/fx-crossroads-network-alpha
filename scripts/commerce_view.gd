@@ -31,7 +31,7 @@ func setup(owner:RefCounted)->void:
  var header=HBoxContainer.new();body.add_child(header)
  var title=label(header,"CROSSROADS MARKET",26);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;title.add_theme_color_override("font_color",Color("#ebcc87"))
  button(header,"Idle Mining",func():close();market.legacy.mine.open())
- if not market.legacy.arcade:button(header,"Fishing bait",func():close();market.legacy.game.fishing.open_workshop())
+ if not market.legacy.arcade:button(header,"Fishing fish bait",func():close();market.legacy.game.fishing.open_workshop())
  button(header,"Back to town",close)
  var pacing=HBoxContainer.new();body.add_child(pacing)
  var pacing_title=label(pacing,"One business day (minutes):",16);pacing_title.custom_minimum_size=Vector2(260,40);pacing_title.vertical_alignment=VERTICAL_ALIGNMENT_CENTER

@@ -337,7 +337,7 @@ func build_scenery() -> void:
 func can_stand_at(point: Vector2) -> bool:
 	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if mistglass_rift!=null and mistglass_rift.active and not Rect2(55,220,VIEW.x-110,VIEW.y-275).has_point(point):return false
-	if mode=="town" and (arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
+	if mode=="town" and (preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
 	if not adventure.can_stand(point): return false
 	for tx in range(maxi(0, int(point.x / 64) - 1), mini(int(region_size().x / 64) + 1, int(point.x / 64) + 2)):
 		for ty in range(maxi(0, int(point.y / 64) - 1), mini(int(region_size().y / 64) + 1, int(point.y / 64) + 2)):
@@ -714,6 +714,10 @@ func finish_run(won: bool, abandoned:bool=false) -> void:
 	presentation.results(won,abandoned)
 
 func _process(delta: float) -> void:
+	if mode in ["town","run"] and menu.is_empty() and legacy!=null and not practice and session_menu.page.is_empty() and presentation.page.is_empty() and not tutorial.active:
+		if mode=="town" and preload("res://scripts/community_records.gd").interact(self) and Input.is_action_just_pressed("interact"):return
+		if preload("res://scripts/garden_hunting.gd").interact(self):
+			if Input.is_action_just_pressed("interact"):return
 	town_life.calendar.step()
 	town_life.events.step(self,delta)
 	if mode=="town" and not has_node("FXIntro") and get_tree().root.has_meta("fx_daily_launch"):
@@ -1604,10 +1608,14 @@ func _draw() -> void:
 	tutorial.draw_world(self,camera)
 	adventure.draw_on(self,camera)
 	if studio_live!=null:studio_live.draw_on(self,camera)
+	if mode=="town":preload("res://scripts/community_records.gd").draw_on(self,camera)
+	if mode in ["town","run"] and not practice:preload("res://scripts/garden_hunting.gd").draw_on(self,camera)
 	draw_flames()
 	journey.draw_on(self,camera)
 	if waylight!=null:waylight.draw_fog(self,camera);waylight.draw_world(self,camera)
-	if mode=="town":town_life.calendar.draw_lighting(self,camera)
+	if mode=="town":
+		town_life.calendar.draw_lighting(self,camera)
+		preload("res://scripts/town_afterglow.gd").draw_on(self,camera)
 	VIEW=screen;draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 	if (media.clean_view or media.capturing) and menu.is_empty():return
 	draw_hud()
@@ -1686,7 +1694,7 @@ func draw_world() -> void:
 			var landmark_size: Vector2 = landmark["size"]
 			var landmark_pos: Vector2 = landmark["pos"]
 			if Rect2(camera - landmark_size, VIEW + landmark_size * 2).has_point(landmark_pos):
-				draw_sprite(str(landmark["sprite"]), landmark_pos - landmark_size * 0.5, landmark_size)
+				if str(landmark.sprite)!="portal":draw_sprite(str(landmark["sprite"]), landmark_pos - landmark_size * 0.5, landmark_size)
 				if str(landmark.sprite)=="portal":preload("res://scripts/town_v176.gd").draw_portal(self,camera)
 				if not str(landmark["label"]).is_empty():
 					if str(landmark.sprite)=="creator_board":

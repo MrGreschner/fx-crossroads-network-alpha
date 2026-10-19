@@ -33,7 +33,7 @@ func setup(owner:Node,id:String)->void:
  var provenance=UI.card(col,"CATCH DETAILS")
  var method=str(specimen.get("method",""));var bait=str(specimen.get("bait",""))
  fishing.label(provenance,"Water: "+str(C.pools().get(str(specimen.pool),{}).get("name",specimen.pool))+" • Date: "+str(specimen.get("date","Not recorded")),17)
- fishing.label(provenance,"Method: "+str({"rod":"Rod","net":"Net","pot":"Baited basket"}.get(method,"Not recorded"))+" • Bait: "+str(E.BAITS.get(bait,{}).get("name","Not recorded")),17)
+ fishing.label(provenance,"Method: "+str({"rod":"Rod","net":"Net","pot":"Baited basket"}.get(method,"Not recorded"))+" • Fish bait: "+str(E.BAITS.get(bait,{}).get("name","Not recorded")),17)
  fishing.label(provenance,"Habitat: "+str(spec.get("habitat",""))+"\n"+E.window_text(spec),16)
  var places=PackedStringArray()
  for n in 5:

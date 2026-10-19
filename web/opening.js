@@ -4,7 +4,7 @@ const root=document.getElementById('loading'),work=document.getElementById('work
 const canvas=document.getElementById('canvas'),status=document.getElementById('load-status'),detail=document.getElementById('load-detail');
 const stone=[...document.querySelectorAll('.arch-stone')],crew=[...document.querySelectorAll('.crew')],portal=document.getElementById('portal-energy');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const BUILD_SECONDS=3.4,HOLD_SECONDS=.85,OPEN_SECONDS=1.05,PULSE_SECONDS=.9,INTRO_SECONDS=5.6;
+const BUILD_SECONDS=3.4,HOLD_SECONDS=.35,OPEN_SECONDS=1.05,PULSE_SECONDS=.9,INTRO_SECONDS=5.6,JOURNEY_SECONDS=1.35;
 let releaseEngine;const engineGate=new Promise(resolve=>{releaseEngine=resolve;});
 let completedPulses=0;
 let phase='building',phaseTime=0,age=0,buildProgress=0,introProgress=0,download=0,knownTotal=false;
@@ -15,7 +15,7 @@ const attr=(id,key,value)=>document.getElementById(id).setAttribute(key,String(v
 const pose=(id,time,strike=false)=>{const frames=document.querySelectorAll('#'+id+' .pose');frames.forEach((el,i)=>el.style.opacity=strike?(i===2?'1':'0'):(i===(Math.floor(time*7)%2)?'1':'0'));};
 try{const h=Number(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',hour:'numeric',hourCycle:'h23'}).format(new Date()));night=h>=21||h<6;}catch(_){}
 if(night){root.classList.add('night');document.getElementById('intro-fish').setAttribute('href',document.getElementById('intro-fish').dataset.night);}
-function resize(){const narrow=innerWidth/innerHeight<.82;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));}
+function resize(){const narrow=innerWidth/innerHeight<.82,vw=narrow?840:1280;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));const scale=Math.min(innerWidth/vw,innerHeight/720),boot=document.getElementById('boot-compositor');boot.style.width=200*scale+'px';boot.style.height=310*scale+'px';boot.style.left=(innerWidth/2-100*scale)+'px';boot.style.top=((innerHeight-720*scale)/2+230*scale)+'px';work.style.transformOrigin=(innerWidth/2)+'px '+((innerHeight-720*scale)/2+379*scale)+'px';}
 resize();addEventListener('resize',resize);
 function construction(){
  buildProgress=clamp(phaseTime/BUILD_SECONDS);
@@ -87,15 +87,21 @@ function intro(){
   pose('ram-actor',t,strike);pose('foe-actor',t);
   attr('impact','opacity',strike?1-ease(1.8,2.25,t):0);
   const leap=clamp((p-.28)/.47);
-  attr('intro-fish','transform','translate('+(-180+360*leap)+' '+(-60*Math.sin(Math.PI*leap))+') rotate('+(-12+24*leap)+' 640 655)');
-  attr('fish-splash','opacity',(1-ease(.76,.9,p))*ease(.70,.77,p));
+  attr('intro-fish','transform','translate('+(-195+390*leap)+' '+(-96*Math.sin(Math.PI*leap))+') rotate('+(-12+24*leap)+' 640 655)');
+  attr('fish-splash','opacity',(1-ease(.79,.94,p))*ease(.70,.76,p));
  }
  attr('intro-reflection','opacity',.15+altitude*.18);
  attr('intro-veil','opacity',ease(5.08,5.6,t));
 }
 function enter(next){
  phase=next;phaseTime=0;root.dataset.phase=phase;
+ if(next==='charging'){
+  // Give the browser two paints to upload the animated layers before Godot can occupy JS.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>{if(!failed)releaseEngine();},0)));
+ }
  if(next==='intro'){
+  document.getElementById('journey-wash').style.transition='opacity .45s ease-out';
+  document.getElementById('journey-wash').style.opacity='0';
   work.style.opacity='0';cinema.style.opacity='1';cinema.setAttribute('aria-hidden','false');
   root.setAttribute('role','status');root.setAttribute('aria-label','Crossroads opening cinematic');root.removeAttribute('aria-valuenow');
  }
@@ -111,12 +117,22 @@ function tick(now){
  age+=dt;phaseTime+=dt;
  if(phase==='building'){
   construction();if(phaseTime>=BUILD_SECONDS)enter('built');
- }else if(phase==='built'&&phaseTime>=HOLD_SECONDS){enter('charging');releaseEngine();}
+ }else if(phase==='built'&&phaseTime>=HOLD_SECONDS){enter('charging');}
  else if(phase==='charging'&&started&&sceneReady)enter('opening');
  else if(phase==='opening'&&phaseTime>=OPEN_SECONDS)enter('pulsing');
- else if(phase==='pulsing'&&phaseTime>=PULSE_SECONDS*2){completedPulses=2;enter('intro');}
+ else if(phase==='pulsing'&&phaseTime>=PULSE_SECONDS*2){completedPulses=2;enter('journey');}
+ else if(phase==='journey'&&phaseTime>=JOURNEY_SECONDS)enter('intro');
  else if(phase==='intro'&&phaseTime>=INTRO_SECONDS){introProgress=1;intro();finish();return;}
- if(phase!=='intro'){workers();charge();}else intro();
+ if(phase!=='intro'){
+  workers();charge();
+  if(phase==='journey'){
+   const u=ease(0,1,phaseTime/JOURNEY_SECONDS);
+   work.style.transform='scale('+(reduced?1:1+u*12)+')';
+   document.getElementById('journey-wash').style.opacity=String(ease(.65,1,u));
+   status.textContent='Entering the Crossroads…';detail.textContent='';
+   attr('portal-energy','opacity',1);attr('portal-rim','opacity',1);attr('boot-light','opacity',1);
+  }
+ }else intro();
  raf=requestAnimationFrame(tick);
 }
 function blockKeys(event){if(failed&&event.target===document.getElementById('retry'))return;if(!finished&&!(failed&&event.key==='Tab')){event.stopImmediatePropagation();if([' ','Enter','Escape','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Tab'].includes(event.key))event.preventDefault();}}
@@ -129,7 +145,7 @@ window.fxSunLoading={
  started(){started=true;lastEvidence=performance.now();},
  ready(){sceneReady=true;lastEvidence=performance.now();},
  error(error){failed=true;cancelAnimationFrame(raf);root.classList.add('failed');status.textContent='The portal could not open';detail.textContent='Please try loading the game again';document.getElementById('error').textContent=String(error);document.getElementById('retry').style.display='block';},
- inspect(){return {phase,phaseTime,age,value:introProgress,buildProgress,introProgress,download,knownTotal,started,sceneReady,failed,finished,night,minimumSeconds:INTRO_SECONDS,buildSeconds:BUILD_SECONDS,openingSeconds:OPEN_SECONDS,holdSeconds:HOLD_SECONDS,pulseSeconds:PULSE_SECONDS,completedPulses};}
+ inspect(){return {phase,phaseTime,age,value:introProgress,buildProgress,introProgress,download,knownTotal,started,sceneReady,failed,finished,night,minimumSeconds:INTRO_SECONDS,buildSeconds:BUILD_SECONDS,openingSeconds:OPEN_SECONDS,holdSeconds:HOLD_SECONDS,pulseSeconds:PULSE_SECONDS,journeySeconds:JOURNEY_SECONDS,completedPulses};}
 };
 construction();charge();raf=requestAnimationFrame(tick);
 })();

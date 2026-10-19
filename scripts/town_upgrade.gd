@@ -4,7 +4,7 @@ const POINTS={"food":Vector2(1150,1150),"healer":Vector2(1960,740),"wayfinder":V
 var clock:=0.0
 var route_filter:=0
 const FILTERS=["All adventures","Easy / first steps","Medium / challenging","Hard / expert"]
-const SOLIDS=[Rect2(408,1320,274,170),Rect2(435,295,330,235),Rect2(1125,410,330,175),Rect2(1065,973,170,134),Rect2(1830,500,260,195),Rect2(1470,555,220,175),Rect2(780,1410,240,160)]
+const SOLIDS=[Rect2(1556,936,188,91),Rect2(408,1320,274,170),Rect2(435,295,330,235),Rect2(1125,410,330,175),Rect2(1065,973,170,134),Rect2(1830,500,260,195),Rect2(1470,555,220,175),Rect2(780,1410,240,160)]
 func step(delta:float)->void:clock+=delta
 func blocked(point:Vector2)->bool:
  for solid in SOLIDS:

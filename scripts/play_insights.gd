@@ -107,6 +107,7 @@ func classification(game:Node)->String:
  if expedition!=null and expedition.special() and game.get("started")==true:return "overcharge" if expedition.kind=="overcharge" else "between"
  var legacy=game.get("legacy")
  if legacy!=null:
+  if str(game.get("menu"))=="legacy" and str(legacy.page)=="gardening":return "gardening"
   if is_instance_valid(legacy.mine.view) and legacy.mine.view.active:return "mine"
   if is_instance_valid(legacy.commerce.view) and legacy.commerce.view.active:return "market"
  var fishing=game.get("fishing")
@@ -165,6 +166,7 @@ func world_metrics(game:Node)->Dictionary:
  var mobile=game.get("mobile");result.touch_controls=1 if mobile!=null and mobile.enabled else 0
  var legacy=game.get("legacy")
  if legacy!=null:
+  if current.get("category")=="gardening":result.garden_level=legacy.gardening.level()
   if current.get("category")=="fishing":result.fish_level=legacy.fishing_records.progress.level()
   if current.get("category")=="mine":result.mine_depth=legacy.mine.depth();result.mine_level=legacy.mine.level()
  var waylight=game.get("waylight");var expedition=game.get("expedition")
@@ -214,6 +216,7 @@ func packet(kind:String,result:String="",duration:float=0,metrics:Dictionary={})
  if game!=null:
   p.details={"rules":safe_key(game.get("pvp_rule")),"map":safe_key(game.get("arena_map")),"input":"touch" if latest_metrics.get("touch_controls",0)==1 else "keyboard_mouse","graphics":"auto" if game.get("balanced_graphics")==true else "full"}
  p.metrics=latest_metrics.duplicate();p.metrics.merge(metrics,true)
+ if kind=="garden_harvest":p.details.garden_seed=safe_key(metrics.get("seed_id",""))
  if kind=="fish_catch":p.details.fish_species=safe_key(metrics.get("species_id",""))
  p.merge(current);return p
 func flush(kind:String="interval")->void:

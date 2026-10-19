@@ -173,11 +173,14 @@ func boost(id:String)->bool:
  advance();var s=state();var spec:Dictionary=BOOSTS[id]
  if depth()<int(spec.depth) or float(s.ready[id])>now() or id=="survey" and int(s.levels.assay)==0:return false
  s.active[id]=now()+int(spec.duration);s.ready[id]=now()+int(spec.cooldown);changed();return true
+func refine_amount()->float:
+ var lv=int(state().levels.smelter)
+ return floor(maxf(30.0*lv,minf(float(state().wallet.ore)*.05,maxf(30.0*lv,float(rates().ore)*600))))
 func refine()->bool:
  if readonly():return false
  advance();var s=state();var lv=int(s.levels.smelter)
  if lv<1 or not s.refine.is_empty() or not FOUNDRY.state(self).job.is_empty():return false
- var amount=30.0*lv
+ var amount=refine_amount()
  if float(s.wallet.ore)<amount:return false
  s.wallet.ore-=amount;s.refine={"end":now()+30,"amount":amount,"reward":amount*(.6+.015*lv)};changed();return true
 func recommendation()->String:
@@ -284,5 +287,5 @@ static func valid(value:Variant)->bool:
   for id in RESOURCES:if not numeric(job.cost.get(id),0,1e15):return false
  if not value.refine.is_empty():
   var order:Dictionary=value.refine
-  if order.size()!=3 or not numeric(order.get("end"),0,4102444800) or not numeric(order.get("amount"),1,1200) or not numeric(order.get("reward"),0,2000):return false
+  if order.size()!=3 or not numeric(order.get("end"),0,4102444800) or not numeric(order.get("amount"),1,1000000000) or not numeric(order.get("reward"),0,1000000000):return false
  return true

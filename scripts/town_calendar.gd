@@ -141,6 +141,8 @@ func collect_lights(c:Node2D,camera:Vector2)->void:
   var spot:Vector2=home.door+Vector2(38,-50)
   if view.has_point(spot):lights.append({"pos":spot-camera,"radius":120.0,"strength":1.0})
  if view.has_point(CAMP) and fire_strength()>.01:lights.append({"pos":CAMP-camera,"radius":190.0,"strength":fire_strength()})
+ for source in preload("res://scripts/town_afterglow.gd").light_sources(c):
+  if view.has_point(source.at):lights.append({"pos":source.at-camera,"radius":source.radius,"strength":source.strength})
  lights.append({"pos":Vector2(900,670)-camera,"radius":100.0,"strength":.6})
 func shade_at(p:Vector2,night:float,twilight:float)->Color:
  var light=0.0

@@ -39,6 +39,13 @@ var journal_panel:PanelContainer
 var room_layer:CanvasLayer
 var room:Control
 var journal_page=0
+var collection_tab=0
+var journal_rarity="all"
+var journal_pool="all"
+var journal_discovery="all"
+var collection_tabs:TabContainer
+var collection_scrolls:Array=[]
+var collection_offsets:Array=[0,0]
 var status=""
 var basket_index=-1
 var basket_note:Button
@@ -56,7 +63,7 @@ func setup(owner:Node,is_multi:bool=false)->void:
  bait_picker=OptionButton.new()
  for id in E.BAITS:bait_picker.add_item(str(E.BAITS[id].name))
  controls.add_child(bait_picker);bait_picker.item_selected.connect(func(i):records().state().selected_bait=E.BAITS.keys()[i];records().save())
- button(col,"Gear • bait • fishing mastery",open_workshop)
+ button(col,"Gear • fish bait • fishing mastery",open_workshop)
  odds_button=button(col,"Read this water • fish odds",open_odds);odds_button.visible=false
  meter=ProgressBar.new();meter.custom_minimum_size.y=10;meter.show_percentage=false;col.add_child(meter)
  cast_button=button(col,"F • Cast",activate);UI.accent(cast_button);panel.visible=false
@@ -127,6 +134,7 @@ func _process(delta:float)->void:
  if busy() and not spot_available(cast_spot):cancel("The dawn shoal has vanished. Return between 4 and 6 am Edmonton time.")
  if busy() and (not playable() or local_pos().distance_to(cast_pos)>18 or local_hp()<cast_hp or region!=cast_region):cancel("Cast cancelled — moving, damage or a menu interrupted it.")
  var spot=nearest()
+ if playable() and not spot.is_empty():records().discover_pool(str(spot.id))
  panel.visible=playable() and (not spot.is_empty() or busy()) and not is_instance_valid(journal)
  var view=game.get_viewport_rect().size;var dims=panel.get_combined_minimum_size().max(Vector2(360,0));var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)));panel.size=dims;panel.scale=Vector2.ONE*fit;panel.position=Vector2((view.x-dims.x*fit)*.5,view.y-dims.y*fit-12)
  if not panel.visible:return
@@ -180,7 +188,7 @@ func activate()->void:
  if not playable():return
  if phase=="bite":land();return
  if busy():cancel("Cast cancelled.");return
- if not bool(records().state().rod):status="Talk to Marina inside Ripple & Reel first.";return
+ if not bool(records().state().rod):status="Talk to Bramble inside Ripple & Reel first.";return
  var spot=nearest()
  if spot.is_empty():return
  var prog=records().progress;var method=str(records().state().method)
@@ -267,7 +275,7 @@ func open_odds()->void:
  lines.append("Bite chance per attempt: %.0f%%" % (100*prog.bite_chance(method)) if method!="pot" else "Basket fills once in %d real minutes; odds use current conditions, actual catch uses conditions at ready time." % prog.basket_minutes())
  for entry in entries:lines.append("%s • %.2f%%" % [C.fish()[entry.id].name,100*float(entry.weight)/total])
  if entries.is_empty():lines.append("Nothing feeds here with this method and these conditions.")
- lines.append("Weather, weekday, feeding hours, bait and mastery all affect this list. Reopen to refresh. Trophy size is a separate %.2f%% roll." % (2.5+100*prog.trophy_bonus()))
+ lines.append("Weather, weekday, feeding hours, fish bait and mastery all affect this list. Reopen to refresh. Trophy size is a separate %.2f%% roll." % (2.5+100*prog.trophy_bonus()))
  var dialog=AcceptDialog.new();dialog.name="FishOdds";dialog.title="Read the Water";hud.add_child(dialog)
  var scroll=ScrollContainer.new();scroll.custom_minimum_size=Vector2(560,330);dialog.add_child(scroll)
  label(scroll,"\n\n".join(lines),16)
@@ -292,64 +300,31 @@ func open_journal()->void:
  journal=CanvasLayer.new();journal.layer=90;game.add_child(journal)
  var backdrop=ColorRect.new();backdrop.color=Color(0.025,.065,.085,.96);backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);journal.add_child(backdrop)
  journal_panel=PanelContainer.new();UI.apply(journal_panel);journal.add_child(journal_panel)
- var col=VBoxContainer.new();journal_panel.add_child(col)
- var header=HBoxContainer.new();col.add_child(header);label(header,"RIPPLE & REEL • YOUR CATCHES",25);button(header,"Close",close_journal)
- label(col,"%d / %d species discovered • %d catches • %d / %d kept. Display five in the shop, and one favourite on your player card." % [records().state().journal.size(),C.fish().size(),records().state().total,records().state().kept.size(),records().capacity()],16)
- button(col,"Fishing level %d • gear, bait & mastery tree" % records().progress.level(),open_workshop)
- label(col,records().progress.title(),16)
- button(col,"Weekly fishing challenge & rewards",game.legacy.weekly.open_board)
- var task=game.legacy.weekly.fishing_task();label(col,"This week: "+str(C.fish()[task.species].name)+" • at least %.2f kg • %s" % [task.kg,C.pools()[task.pool].name],16)
- var tabs=TabContainer.new();tabs.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(tabs)
- for kind in ["Kept catches","Species journal"]:
-  var scroll=ScrollContainer.new();scroll.name=kind;scroll.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tabs.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
-  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(body)
-  if kind=="Kept catches":kept_ui(body)
-  else:species_ui(body)
+ preload("res://scripts/fish_collection_ui.gd").build(self,journal_panel)
  fit_panel(journal_panel,Vector2(1000,610));UI.enter(journal_panel)
 func close_journal()->void:
+ if is_instance_valid(collection_tabs):collection_tab=collection_tabs.current_tab
+ for i in collection_scrolls.size():
+  if is_instance_valid(collection_scrolls[i]):collection_offsets[i]=collection_scrolls[i].scroll_vertical
+ collection_scrolls.clear();collection_tabs=null
  if is_instance_valid(inspector):inspector.close()
  if is_instance_valid(journal):journal.queue_free()
  journal=null;journal_panel=null
  if not multi and game.menu=="fishing_journal":
   game.menu=modal_previous
   if modal_previous=="legacy":game.legacy.render()
-func refresh_journal()->void:
- var original=modal_previous;open_journal();modal_previous=original
-func kept_ui(body:Node)->void:
- if records().state().kept.is_empty():label(body,"No fish kept yet. Talk to Marina, find bubbles at the pond or river, and press F to cast.",19)
- var all_catches:Array=records().state().kept
- journal_page=clampi(journal_page,0,maxi(0,(all_catches.size()-1)/10))
- if all_catches.size()>10:
-  var navigation=HBoxContainer.new();body.add_child(navigation)
-  var back=button(navigation,"Previous 10",func():journal_page-=1;refresh_journal());back.disabled=journal_page==0
-  label(navigation,"Page %d / %d" % [journal_page+1,ceili(all_catches.size()/10.0)],16)
-  var next=button(navigation,"Next 10",func():journal_page+=1;refresh_journal());next.disabled=(journal_page+1)*10>=all_catches.size()
- for catch in all_catches.slice(journal_page*10,journal_page*10+10):
-  var id=str(catch.id);var spec:Dictionary=C.fish()[catch.species];var box=UI.card(body,str(spec.name)+(" • ★ TROPHY" if C.is_trophy(catch) else "")+(" • Favourite" if records().state().favorite==id else ""),"%s • %.2f kg • %.1f cm • %s" % [spec.rarity,catch.kg,catch.cm,C.pools()[catch.pool].name]);var row=HBoxContainer.new();box.add_child(row);picture(row,str(catch.species),Vector2(160,88))
-  var actions=VBoxContainer.new();actions.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(actions)
-  button(actions,"View fish details",show_catch_details.bind(id))
-  button(actions,"Feature on player card",func():records().set_favorite(id);refresh_journal())
-  var tank=HBoxContainer.new();actions.add_child(tank)
-  for n in 5:
-   button(tank,"Tank "+str(n+1)+( " ✓" if records().state().display[n]==id else ""),func():records().showcase(id,n);refresh_journal())
-  button(actions,"Release this kept fish…",func():
-   var dialog=ConfirmationDialog.new();dialog.title="Release "+str(spec.name)+"?";dialog.dialog_text="This removes the kept fish and any display/favourite using it. Your journal record remains.";journal.add_child(dialog);dialog.confirmed.connect(func():records().release(id);dialog.queue_free();refresh_journal());dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(460,180)))
- if not records().state().favorite.is_empty():button(body,"Clear player-card favourite",func():records().set_favorite("");refresh_journal())
+func refresh_journal(reset_tab:int=-1)->void:
+ var original=modal_previous;close_journal()
+ if reset_tab in [0,1]:collection_offsets[reset_tab]=0
+ open_journal();modal_previous=original
+func kept_ui(body:Node)->void:preload("res://scripts/fish_collection_ui.gd").kept(self,body)
 func show_catch_details(id:String)->void:
  if records().specimen(id).is_empty():return
  if is_instance_valid(inspector):
   if inspector.catch_id==id:return
   inspector.close()
  inspector=preload("res://scripts/fish_details.gd").new();game.add_child(inspector);inspector.setup(self,id)
-func species_ui(body:Node)->void:
- for id in C.fish():
-  var seen=records().state().journal.has(id);var spec:Dictionary=C.fish()[id]
-  var box=UI.card(body,str(spec.name) if seen else "? • Undiscovered fish",str(spec.habitat) if seen else "Unknown waters")
-  var row=HBoxContainer.new();box.add_child(row)
-  if seen:
-   picture(row,id,Vector2(145,80));var rec:Dictionary=records().state().journal[id]
-   label(row,"%s • %d caught • Best %.2f kg / %.1f cm\n%s" % [spec.rarity,rec.count,rec.kg,rec.cm,str(spec.note)+"\n"+E.window_text(spec)+" • "+"/".join(spec.get("methods",["rod"]))],17)
-  else:label(row,"Explore fishing waters to discover this species. Size varies even within the same species.",16)
+func species_ui(body:Node)->void:preload("res://scripts/fish_collection_ui.gd").species(self,body)
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  draw_baskets(canvas,camera)
  var region=region_key();var active_spots=spots if region==cached_region else C.spots(region)

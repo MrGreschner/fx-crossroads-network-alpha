@@ -10,6 +10,12 @@ func state()->Dictionary:
  legacy.data.fishing.rod=true
  progress.records=self
  progress.migrate(legacy.data.fishing)
+ if not legacy.data.fishing.has("visited_pools"):
+  legacy.data.fishing.visited_pools={}
+  for catch in legacy.data.fishing.kept:
+   if C.pools().has(str(catch.get("pool",""))):legacy.data.fishing.visited_pools[str(catch.pool)]=true
+  for pot in legacy.data.fishing.get("pots",[]):
+   if C.pools().has(str(pot.get("pool",""))):legacy.data.fishing.visited_pools[str(pot.pool)]=true
  for key in progress.extras():
   if not legacy.data.fishing.has(key):legacy.data.fishing[key]=progress.extras()[key]
  var dev=preload("res://scripts/profile_store.gd").dev_session()
@@ -23,6 +29,12 @@ func state()->Dictionary:
 func dev_preview()->bool:
  var dev=preload("res://scripts/profile_store.gd").dev_session()
  return bool(legacy.data.get("teacher",false)) and dev!=null and dev.active
+func discover_pool(id:String)->bool:
+ if not C.pools().has(id) or state().visited_pools.has(id):return false
+ if dev_preview() or preload("res://scripts/profile_store.gd").progression_blocked():return false
+ state().visited_pools[id]=true;save();return true
+func known_pools()->Array:
+ return C.pools().keys() if dev_preview() else state().visited_pools.keys()
 func capacity()->int:return mini(CAPACITY,10+10*mini(4,progress.level()/5)+int(progress.perk_bonus("capacity")))
 func save()->void:legacy.save()
 func unlock()->void:state().rod=true;save()
@@ -39,6 +51,7 @@ func complete(catch:Dictionary,keep:bool)->bool:
  if str(catch.id) in state().recent:return false
  var s=state();var id=str(catch.species);var first=not s.journal.has(id);var better=first or float(catch.kg)>float(s.journal.get(id,{}).get("kg",0));var rec:Dictionary=s.journal.get(id,{"count":0,"kg":0.0,"cm":0.0})
  rec.count=int(rec.count)+1;rec.kg=maxf(float(rec.kg),float(catch.kg));rec.cm=maxf(float(rec.cm),float(catch.cm));s.journal[id]=rec;s.total=int(s.total)+1
+ s.visited_pools[str(catch.pool)]=true
  if keep:s.kept.append(catch.duplicate(true))
  s.recent.append(str(catch.id))
  if s.recent.size()>100:s.recent.pop_front()
@@ -47,6 +60,7 @@ func complete(catch:Dictionary,keep:bool)->bool:
   var point:Vector2=legacy.game.local_pos if legacy.arcade else legacy.game.position_in_world
   legacy.game.add_float_text(point-Vector2(36,62),"+%d Fishing XP" % progress.last_xp,Color("#90e9df"))
  elif legacy.game.get("fishing")!=null:legacy.game.fishing.xp_popup(progress.last_xp)
+ legacy.gardening.find_seed("fishing")
  legacy.weekly.catch_fish(catch)
  legacy.cosmetics.rankings.catch_fish(catch)
  save();return true
@@ -82,6 +96,9 @@ static func valid(v:Variant)->bool:
  if not preload("res://scripts/fishing_progress.gd").valid_extra(v):return false
  for pot in v.get("pots",[]):
   if not valid_catch(pot.catch):return false
+ if not v.get("visited_pools",{}) is Dictionary or v.get("visited_pools",{}).size()>C.pools().size():return false
+ for pool in v.get("visited_pools",{}):
+  if not pool is String or not C.pools().has(pool) or v.visited_pools[pool]!=true:return false
  if not v.get("journal",null) is Dictionary or v.journal.size()>C.fish().size():return false
  if not v.get("kept",null) is Array or v.kept.size()>CAPACITY:return false
  if not v.get("display",null) is Array or v.display.size()!=5:return false

@@ -81,6 +81,8 @@ func settle(won:bool,carried:int,ring:int,guardian:bool,events:int,trial:Diction
   var complete=won and ticket.kind=="attunement" and int(ticket.get("trial_version",0))==2 and int(trial.get("seals",0))==6
   var bonus=trial_bonus(carried,float(trial.get("seconds",0))) if complete else 0
   var earned=(carried if won else floori(carried*.5))+bonus;state().shards=mini(1000000,int(state().shards)+earned)
+  if won:
+   legacy.community.record_between(carried,"coop" if ticket.has("coop") else "solo")
   if won:state().best_ring=maxi(int(state().best_ring),ring);state().best_extraction=maxi(int(state().best_extraction),carried)
   if won and carried>=20:state().expeditions=mini(1000000,int(state().expeditions)+1)
   text="Banked %d Waylight Shards%s." % [earned,"" if won else " (half of your haul)"]
@@ -102,6 +104,7 @@ func settle(won:bool,carried:int,ring:int,guardian:bool,events:int,trial:Diction
   else:text="Overcharge cleared. Complete Portal Attunement to become eligible for relic drops."
   text+=" +%d Waydust." % (1+events)
   if bool(trial.get("conclave",false)):
+   legacy.gardening.find_seed("elite","",false)
    state().dust=mini(1000000,int(state().dust)+3);text+=" CONCLAVE CACHE: +3 Waydust."
    var cache_rng=RandomNumberGenerator.new();cache_rng.seed=int(ticket.seed)^351771
    if bool(ticket.eligible) and cache_rng.randf()<.35:

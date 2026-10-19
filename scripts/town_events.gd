@@ -1,6 +1,6 @@
 extends RefCounted
 ## Discoveries are awarded only by being near an active town event.
-const EVENTS={"music":{"name":"Wednesday on the Square","days":[2],"hours":[19,22],"at":Vector2(960,800),"text":"Neighbours gather for music every Wednesday, 19:00–22:00."},"picnic":{"name":"The Reedbank Picnic","days":[1,3],"hours":[12,14],"at":Vector2(380,680),"text":"A family brings a covered picnic to the pond garden on Tuesday and Thursday, 12:00–14:00."},"visitors":{"name":"Faraway Flavours","days":[0,3],"hours":[10,15],"at":Vector2(1700,1120),"text":"Monday and Thursday, 10:00–15:00: a travelling stall sells exotic fruit and fishing bait."},"fair":{"name":"Saturday Makers' Fair","days":[5],"hours":[11,16],"at":Vector2(950,1295),"text":"Saturday, 11:00–16:00: makers and neighbours fill the square with handmade wares."},"lanterns":{"name":"The Lantern Walk","days":[4],"hours":[20,22],"at":Vector2(1700,1180),"text":"Friday, 20:00–22:00: residents carry lanterns along the eastern street."},"stars":{"name":"Stories Under Stars","days":[5],"hours":[22,24],"at":Vector2(2810,1360),"text":"Saturday, 22:00–midnight: a small group shares constellations beside the forest."},"anglers":{"name":"Sunday Anglers","days":[6],"hours":[9,12],"at":Vector2(230,520),"text":"Sunday, 09:00–12:00: neighbours swap fishing stories at the pond."},"fireflies":{"name":"Midnight Fireflies","days":[4],"hours":[23,24],"at":Vector2(2660,1440),"text":"Friday, 23:00–midnight: fireflies trace a message by the river."},"inscription":{"name":"First-Light Letters","days":[0],"hours":[6,7],"at":Vector2(-1030,1010),"text":"Monday, 06:00–07:00: the old courtyard fountain reveals an inscription."},"dawn_shoal":{"name":"The Northern Dawn Shoal","days":[0,1,2,3,4,5,6],"hours":[4,6],"at":Vector2(2475,480),"text":"Every day, 04:00–06:00: the northern river shoal appears, with fish found nowhere else."}}
+const EVENTS={"music":{"name":"Wednesday on the Square","days":[2],"hours":[19,22],"at":Vector2(960,800),"text":"Neighbours gather for music every Wednesday, 19:00–22:00."},"picnic":{"name":"The Reedbank Picnic","days":[1,3],"hours":[12,14],"at":Vector2(380,680),"text":"A family brings a covered picnic to the pond garden on Tuesday and Thursday, 12:00–14:00."},"visitors":{"name":"Faraway Flavours","days":[0,3],"hours":[10,15],"at":Vector2(1700,1120),"text":"Monday and Thursday, 10:00–15:00: a travelling stall sells exotic fruit and fishing fish bait."},"fair":{"name":"Saturday Makers' Fair","days":[5],"hours":[11,16],"at":Vector2(950,1295),"text":"Saturday, 11:00–16:00: makers and neighbours fill the square with handmade wares."},"lanterns":{"name":"The Lantern Walk","days":[4],"hours":[20,22],"at":Vector2(1700,1180),"text":"Friday, 20:00–22:00: residents carry lanterns along the eastern street."},"stars":{"name":"Stories Under Stars","days":[5],"hours":[22,24],"at":Vector2(2810,1360),"text":"Saturday, 22:00–midnight: a small group shares constellations beside the forest."},"anglers":{"name":"Sunday Anglers","days":[6],"hours":[9,12],"at":Vector2(230,520),"text":"Sunday, 09:00–12:00: neighbours swap fishing stories at the pond."},"fireflies":{"name":"Midnight Fireflies","days":[4],"hours":[23,24],"at":Vector2(2660,1440),"text":"Friday, 23:00–midnight: fireflies trace a message by the river."},"inscription":{"name":"First-Light Letters","days":[0],"hours":[6,7],"at":Vector2(-1030,1010),"text":"Monday, 06:00–07:00: the old courtyard fountain reveals an inscription."},"dawn_shoal":{"name":"The Northern Dawn Shoal","days":[0,1,2,3,4,5,6],"hours":[4,6],"at":Vector2(2475,480),"text":"Every day, 04:00–06:00: the northern river shoal appears, with fish found nowhere else."}}
 var elapsed=0.0
 func active(id:String,cal:RefCounted)->bool:
  var e=EVENTS[id]
@@ -20,7 +20,7 @@ func step(g:Node,delta:float)->void:
  if changed:records.save()
 func interact(g:Node)->bool:
  if not active("visitors",g.town_life.calendar) or g.position_in_world.distance_to(EVENTS.visitors.at)>90:return false
- g.hint="E • Faraway Flavours • fruit & bait"
+ g.hint="E • Faraway Flavours • fruit & fish bait"
  if Input.is_action_just_pressed("interact"):g.fishing.open_workshop()
  return true
 func draw_on(g:Node2D,camera:Vector2)->void:
@@ -43,7 +43,7 @@ func draw_on(g:Node2D,camera:Vector2)->void:
      for side in [-1,1]:g.draw_line(q+Vector2(side*52,20),q+Vector2(side*52,-88),Color("#c5a473"),4)
      for stripe in 8:g.draw_rect(Rect2(q+Vector2(-60+stripe*15,-88),Vector2(15,29)),Color("#93bfad") if stripe%2==0 else Color("#ecd49d"))
      for fruit in 6:g.draw_circle(q+Vector2(-40+fruit*15,-33),7,Color("#eab367") if fruit%2 else Color("#c9a0cf"))
-     g.draw_string(ThemeDB.fallback_font,q+Vector2(-57,42),"FRUIT & BAIT" if id=="visitors" else "MAKERS' FAIR",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#ffe6b1"))
+     g.draw_string(ThemeDB.fallback_font,q+Vector2(-57,42),"FRUIT & FISH BAIT" if id=="visitors" else "MAKERS' FAIR",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#ffe6b1"))
    "lanterns","stars":
     for n in 5:
      var q=p+Vector2((n-2)*32,sin(n)*18)

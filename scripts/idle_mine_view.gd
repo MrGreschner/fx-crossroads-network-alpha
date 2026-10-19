@@ -56,7 +56,7 @@ func geology_page()->void:
   var row=HBoxContainer.new();card.add_child(row);var picture=TextureRect.new();picture.texture=geology.icon(id);picture.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;picture.custom_minimum_size=Vector2(72,72);picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.size_flags_vertical=Control.SIZE_SHRINK_CENTER;row.add_child(picture)
   labels["geo:"+id]=label(row,"",17);labels["geo:"+id].size_flags_horizontal=Control.SIZE_EXPAND_FILL
   var bar=ProgressBar.new();bar.max_value=250;bar.value=float(state.stored[id]);bar.show_percentage=false;card.add_child(bar);bars["geo:"+id]=bar;labels["geo_store:"+id]=label(card,"",15)
-  var action_button=button(card,"Assay batch • "+str(item.price)+" Mine Gold / specimen",func():action(geology.sell.bind(mine,str(id))));action_button.disabled=mine.readonly() or mine.depth()<int(item.depth) or not state.order.is_empty() or float(state.wallet[id])<1;controls.append({"button":action_button,"kind":"mineral","id":id})
+  var action_button=button(card,"Sell batch • earn "+str(item.price)+" Mine Gold per specimen",func():action(geology.sell.bind(mine,str(id))));action_button.disabled=mine.readonly() or mine.depth()<int(item.depth) or not state.order.is_empty() or float(state.wallet[id])<1;controls.append({"button":action_button,"kind":"mineral","id":id})
 func label(parent:Node,text:String,size:int=17)->Label:
  var l=Label.new();l.text=text;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.add_theme_font_size_override("font_size",size);parent.add_child(l);return l
 func button(parent:Node,text:String,action:Callable)->Button:
@@ -182,7 +182,7 @@ func help_page()->void:
   ["START SMALL","The camp costs 80 of your 120 starter Mine Gold. Hire another digger, collect the depot, and use those resources to deepen the mine."],
   ["FIX THE BOTTLENECK","Digging output is reduced when airflow is insufficient. The lift then limits how much reaches the surface. More diggers cannot overcome a full depot or slow lift. The Mine tab recommends your next improvement."],
   ["RETURN WITHOUT A PENALTY","A full depot pauses further production; stored resources stay safe. Upgrade storage for longer breaks. Offline production catches up at the current operation's rates, up to 24 hours per absence. Expired boosts and finished building timers are included."],
-  ["GOLD, ORE AND GEMS","Mine Gold hires crews and pays construction costs. Ore builds machinery or can be refined. Gem fractions accumulate into gems, used for advanced upgrades. Collecting transfers depot supplies into your spendable mine wallet. Gold and ore use one storage unit each; gems use ten."],
+  ["GOLD, ORE AND GEMS","Surface mastery can reach 100 long before the mine is complete. Forty shafts, deep metal requirements and later construction timers are the long-term progression. Mine Gold hires crews and pays construction costs. Ore builds machinery or can be refined. Gem fractions accumulate into gems, used for advanced upgrades. Collecting transfers depot supplies into your spendable mine wallet. Gold and ore use one storage unit each; gems use ten."],
   ["BUILDINGS AND COOLDOWNS","One construction order runs at a time. The smelter makes timed bar batches or refines ordinary ore for gold. Metal seams unlock at shafts 2, 4, 7, 11, 15 and 18. Collect them, then combine with coal. Bars can be sold at the Market, used for deeper buildings or delivered to shorten a current build. Rally, Flush and Survey are free timed boosts with reusable cooldowns; boosts help only if transport and storage can handle the output."],
   ["YOUR PROFILE IS THE SAVE","The whole operation lives in your downloaded player profile. Download before leaving a shared school computer, then upload your newest ZIP to resume elsewhere. New Game clears this device's mine too. There is no login or remote account server."],
   ["TESTING AND CLOCKS","Playtest views the mine without changing it. Game Dev opens a temporary fully built mine; refresh or exit to restore normal progress. Offline production uses the device clock, and moving it backward gives no extra income. This is a personal idle game, not a verified leaderboard."],
@@ -202,7 +202,7 @@ func refresh()->void:
    labels["geo_store:"+id].text="Deposit case "+amount(float(minerals.stored[id]))+" / 250"
    bars["geo:"+id].value=float(minerals.stored[id])
  wallet.text="MINE WALLET   Mine Gold "+amount(float(s.wallet.gold))+"   •   Ore "+amount(float(s.wallet.ore))+"   •   Gems "+amount(float(s.wallet.gems))
- ticker.text="LEVEL "+str(mine.level())+"   •   DEPTH "+str(mine.depth()*30)+"m   •   "+str(mine.workers())+" DIGGERS   •   Surface output / minute: "+amount(float(r.gold)*60)+" gold, "+amount(float(r.ore)*60)+" ore, "+amount(float(r.gems)*60)+" gems"
+ ticker.text="SURFACE MASTERY "+str(mine.level())+" / 100   •   SHAFT "+str(mine.depth())+" / 40   •   DEPTH "+str(mine.depth()*30)+"m   •   "+str(mine.workers())+" DIGGERS   •   Surface output / minute: "+amount(float(r.gold)*60)+" gold, "+amount(float(r.ore)*60)+" ore, "+amount(float(r.gems)*60)+" gems"
  if labels.has("air"):
   labels.air.text="Air: "+amount(float(r.air_supply))+" supply / "+amount(float(r.air_demand))+" demand";bars.air.value=float(r.air)*100
   labels.lift.text="Lift: "+amount(float(r.lift))+" /s • digging "+amount(float(r.dig))+" /s";bars.lift.value=minf(100,float(r.lift)/maxf(float(r.dig)*float(r.air),.01)*100)
@@ -245,7 +245,7 @@ func refresh()->void:
     b.text=str(spec.name)+( " • shaft "+str(spec.depth)+(" + Assay" if id=="survey" else "") if locked else " • active "+time_text(float(s.active[id])-stamp) if float(s.active[id])>stamp else " • ready in "+time_text(float(s.ready[id])-stamp) if float(s.ready[id])>stamp else " • READY")
     ready=not locked and float(s.ready[id])<=stamp
    "refine":
-    var lv=int(s.levels.smelter);b.text="Refining • "+time_text(float(s.refine.end)-stamp) if not s.refine.is_empty() else "Refine "+str(lv*30)+" ore → "+amount(lv*30*(.6+.015*lv))+" Mine Gold • 30s";ready=lv>0 and s.refine.is_empty() and mine.FOUNDRY.state(mine).job.is_empty() and float(s.wallet.ore)>=lv*30
+    var lv=int(s.levels.smelter);b.text="Refining • "+time_text(float(s.refine.end)-stamp) if not s.refine.is_empty() else "Bulk refine "+amount(mine.refine_amount())+" ore → "+amount(mine.refine_amount()*(.6+.015*lv))+" Mine Gold • 30s";ready=lv>0 and s.refine.is_empty() and mine.FOUNDRY.state(mine).job.is_empty() and float(s.wallet.ore)>=lv*30
    "forge":
     var id=str(entry.id[0]);var count=int(entry.id[1]);ready=mine.FOUNDRY.can_forge(mine,id,count)
    "forge_cancel":ready=not mine.FOUNDRY.state(mine).job.is_empty()

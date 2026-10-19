@@ -1,0 +1,63 @@
+import {createHmac} from 'node:crypto';
+import {readFileSync} from 'node:fs';
+import {rankWeek} from './cosmetic-rankings.mjs';
+const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),'utf8'));
+const manifest=read('../content/manifest.json'),fish=read('../content/fishing.json').fish;
+const heroes=new Set(manifest.characters),realms=new Set(manifest.regions);
+export const schema=`CREATE TABLE IF NOT EXISTS crossroads_community_totals(profile text NOT NULL,kind text NOT NULL,key text NOT NULL,value double precision NOT NULL CHECK(value>=0),PRIMARY KEY(profile,kind,key));
+CREATE TABLE IF NOT EXISTS crossroads_community_fish(profile text NOT NULL,scope text NOT NULL,species text NOT NULL,kg double precision NOT NULL CHECK(kg>0),reached_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(profile,scope));
+CREATE INDEX IF NOT EXISTS crossroads_community_fish_weight ON crossroads_community_fish(scope,kg DESC);`;
+const number=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max;
+export function clean(raw,now=Date.now()){
+ if(!raw||raw.version!==1||!/^[a-f0-9]{32}$/.test(raw.profile||''))throw Error('Invalid profile');
+ const out={profile:raw.profile,week:rankWeek(now).week,totals:[],fish:[]};
+ for(const [kind,allowed,max]of [['hero',heroes,1e12],['realm',realms,1e6]]){
+  const values=raw[kind==='hero'?'hero_damage':'realm_clears'];if(!values||typeof values!=='object'||Array.isArray(values)||Object.keys(values).length>128)throw Error('Invalid totals');
+  for(const [key,value]of Object.entries(values)){if(!allowed.has(key)||!number(value,max)||(kind==='realm'&&!Number.isInteger(value)))throw Error('Invalid total');if(value>0)out.totals.push({kind,key,value});}
+ }
+ for(const kind of ['solo','coop']){const value=raw.between?.[kind]??0;if(!number(value,1e6)||!Number.isInteger(value))throw Error('Invalid expedition');if(value)out.totals.push({kind:'between',key:kind,value});}
+ for(const scope of ['all','week']){
+  const entry=raw[scope==='all'?'fish_all':'fish_week'];if(!entry||!entry.kg)continue;
+  if(scope==='week'&&raw.week!==out.week)continue;
+  if(!Object.hasOwn(fish,entry.species)||!number(entry.kg,Math.min(10000,fish[entry.species].max_kg*4+.01))||entry.kg<=0)throw Error('Invalid fish');
+  out.fish.push({scope:scope==='all'?'all':out.week,species:entry.species,kg:entry.kg});
+ }
+ return out;
+}
+export function postgresStore(pool){return {
+ async submit(profile,p){
+  const a=p.totals;
+  if(a.length)await pool.query(`INSERT INTO crossroads_community_totals(profile,kind,key,value) SELECT $1,unnest($2::text[]),unnest($3::text[]),unnest($4::float8[]) ON CONFLICT(profile,kind,key) DO UPDATE SET value=GREATEST(crossroads_community_totals.value,EXCLUDED.value)`,[profile,a.map(x=>x.kind),a.map(x=>x.key),a.map(x=>x.value)]);
+  for(const f of p.fish)await pool.query(`INSERT INTO crossroads_community_fish(profile,scope,species,kg) VALUES($1,$2,$3,$4) ON CONFLICT(profile,scope) DO UPDATE SET species=CASE WHEN EXCLUDED.kg>crossroads_community_fish.kg THEN EXCLUDED.species ELSE crossroads_community_fish.species END,kg=GREATEST(crossroads_community_fish.kg,EXCLUDED.kg),reached_at=CASE WHEN EXCLUDED.kg>crossroads_community_fish.kg THEN now() ELSE crossroads_community_fish.reached_at END`,[profile,f.scope,f.species,f.kg]);
+ },
+ async snapshot(week){
+  const heroes=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='hero' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 5`);
+  const realms=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='realm' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 5`);
+  const between=await pool.query(`SELECT key id,max(value)::float8 value FROM crossroads_community_totals WHERE kind='between' GROUP BY key`);
+  const all=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_fish WHERE scope='all' ORDER BY kg DESC,reached_at,species LIMIT 1`);
+  const weekly=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_fish WHERE scope=$1 ORDER BY kg DESC,reached_at,species LIMIT 1`,[week]);
+  return {heroes:heroes.rows,realms:realms.rows,between:between.rows,fish_all:all.rows[0]||null,fish_week:weekly.rows[0]||null};
+ }
+};}
+export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||'',store,now=()=>Date.now()}={}){
+ const configured=!!(pool||store)&&secret.length>=32;let ready=false,pending=0,cache=null,expires=0,retry=0;const limits=new Map();store=store||(pool?postgresStore(pool):null);
+ const init=async()=>{try{if(pool)await pool.query(schema);ready=configured;}catch{ready=false;}};const initialized=configured?init():Promise.resolve();
+ const send=(res,code,data)=>{res.writeHead(code,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(data));};
+ const hash=s=>createHmac('sha256',secret).update(s).digest('hex');
+ async function handle(req,res){const path=new URL(req.url,'http://localhost').pathname;if(!['/community/records','/community/sync'].includes(path))return false;
+  const origin=req.headers.origin||'';const permitted=!origin||/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)||(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)||(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin));
+  if(!permitted){send(res,403,{error:'Origin rejected'});req.resume();return true;}
+  if(origin){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
+  if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Methods':'GET,POST','Access-Control-Allow-Headers':'content-type'});res.end();return true;}
+  if((path.endsWith('/sync')&&req.method!=='POST')||(path.endsWith('/records')&&req.method!=='GET')){send(res,405,{error:'Method rejected'});req.resume();return true;}
+  if(!ready&&configured&&now()>retry){retry=now()+15000;void init();}if(!ready){send(res,503,{error:'Community records unavailable'});req.resume();return true;}
+  const ip=hash(req.socket.remoteAddress||'unknown'),rate=limits.get(ip)||{at:now(),count:0};if(now()-rate.at>60000){rate.at=now();rate.count=0;}limits.set(ip,rate);if(limits.size>2048)limits.delete(limits.keys().next().value);
+  if(++rate.count>1000||pending>=4){send(res,429,{error:'Please retry later'});req.resume();return true;}pending++;
+  try{
+   if(path.endsWith('/sync')){let size=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),5000);timer.unref();let raw;try{for await(const chunk of req){size+=chunk.length;if(size>32768){send(res,413,{error:'Too large'});req.destroy();return true;}chunks.push(chunk);}raw=JSON.parse(Buffer.concat(chunks));}catch{send(res,400,{error:'Invalid record'});return true;}finally{clearTimeout(timer);}let p;try{p=clean(raw,now());}catch{send(res,400,{error:'Invalid record'});return true;}await store.submit(hash('community:'+p.profile),p);send(res,200,{saved:true,week:p.week});return true;}
+   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week){cache={version:1,week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week)};expires=now()+30000;}
+   send(res,200,cache);return true;
+  }catch{send(res,503,{error:'Community records unavailable'});return true;}finally{pending--;}
+ }
+ return {handle,initialized,status:()=>({configured,ready}),stop(){}};
+}

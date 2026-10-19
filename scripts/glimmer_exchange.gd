@@ -13,7 +13,7 @@ static func build(body:Node,f:Node,reply:Callable)->void:
   f.button(box,"Sell for %d Glimmers…" % price,func():
    var d=ConfirmationDialog.new();d.title="Sell this catch?";d.dialog_text="Remove this specimen from your collection and displays for %d Glimmers? Your journal and XP stay." % price;body.add_child(d)
    d.confirmed.connect(func():reply.call(wallet.sell_fish(id));d.queue_free());d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(440,200)))
- f.label(body,"GATHERED & GROWN INGREDIENTS • save some for bait and apothecary recipes.",18)
+ f.label(body,"GATHERED & GROWN INGREDIENTS • save some for fish bait and apothecary recipes.",18)
  var stock=f.game.legacy.lodge_economy.state().ingredients
  for id in wallet.ING:
   var count=int(stock.get(id,0));var box=UI.card(body,str(wallet.ING[id].name),"Owned: %d • %d Glimmers each" % [count,wallet.ingredient_price(id)])

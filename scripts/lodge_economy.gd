@@ -25,11 +25,12 @@ func claim(index:int)->String:
  var job:Dictionary=s.jobs[index]
  if now()<float(job.end):return "The crew is still gathering."
  s.jobs.remove_at(index)
+ legacy.gardening.find_seed("gather")
  var lines=[]
  for id in job.finds:s.ingredients[id]=mini(100000,int(s.ingredients.get(id,0))+int(job.finds[id]));s.gathered=int(s.get("gathered",0))+int(job.finds[id]);lines.append(str(job.finds[id])+" "+str(C.INGREDIENTS[id].name))
  var seed=str(job.get("seed",""))
  if not seed.is_empty():
-  if seed not in s.seeds:s.seeds.append(seed);lines.append("Rare seed found! Visit the Seed House.")
+  if seed not in s.seeds:s.seeds.append(seed);legacy.gardening.grant(seed);lines.append("Rare seed found! Visit the Seed House.")
   else:lines.append("An extra seed became 1 Sunleaf.");s.ingredients.sunleaf=mini(100000,int(s.ingredients.get("sunleaf",0))+1)
  save();return "Gathered: "+", ".join(lines)
 func can_pay(needs:Dictionary)->bool:

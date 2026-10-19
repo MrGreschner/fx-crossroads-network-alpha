@@ -29,10 +29,10 @@ func build()->void:
  if not compact:
   fishing.label(col,prog.title()+" • rarity weight +%.1f%% • Bag %d/%d" % [10.0*clampf((level-1)/39.0,0,1),fishing.records().state().kept.size(),fishing.records().capacity()],15)
   var bar=ProgressBar.new();bar.custom_minimum_size.y=14;bar.show_percentage=false;bar.value=100 if level==P.MAX_LEVEL else 100.0*(xp-P.threshold(level))/maxi(1,P.threshold(level+1)-P.threshold(level));col.add_child(bar)
-  fishing.label(col,notice if not notice.is_empty() else "All rod fish are possible from level one. Unlock more methods and bait as you grow. Keep or release: both earn XP.",15)
+  fishing.label(col,notice if not notice.is_empty() else "All rod fish are possible from level one. Unlock more methods and fish bait as you grow. Keep or release: both earn XP.",15)
  elif not notice.is_empty():fishing.label(col,notice,15)
  var tabs=TabContainer.new();tabs.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(tabs)
- for name in ["Gear & bait","Mastery tree","Baskets","Cosmetics","Sell goods"]:
+ for name in ["Gear & fish bait","Mastery tree","Baskets","Cosmetics","Sell goods"]:
   var margin=MarginContainer.new();margin.name=name;tabs.add_child(margin)
   margin.add_theme_constant_override("margin_top",16);margin.add_theme_constant_override("margin_bottom",8)
   var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO if name=="Mastery tree" else ScrollContainer.SCROLL_MODE_DISABLED;margin.add_child(scroll)
@@ -40,7 +40,7 @@ func build()->void:
   var touch=preload("res://scripts/touch_list_scroll.gd").attach(scroll)
   touch.horizontal_drag=name=="Mastery tree"
   match name:
-   "Gear & bait":gear_ui(body)
+   "Gear & fish bait":gear_ui(body)
    "Mastery tree":tree_ui(body)
    "Baskets":pot_ui(body)
    "Cosmetics":cosmetic_ui(body)
@@ -50,7 +50,7 @@ func build()->void:
 func feedback(value:String)->void:notice=value;build()
 func gear_ui(body:Node)->void:
  var p=fishing.records().progress
- fishing.label(body,"ROD • patient casts and full XP. NET • a quick timed scoop for small fish and creatures. BASKET • one catch after 13–20 real minutes, then stops. Start with a free rod and bare hook. Buy a net at level 5 and baskets at level 10. Equipment is permanent; bait is consumed.",17)
+ fishing.label(body,"ROD • patient casts and full XP. NET • a quick timed scoop for small fish and creatures. BASKET • one catch after 13–20 real minutes, then stops. Start with a free rod and bare hook. Buy a net at level 5 and baskets at level 10. Equipment is permanent; fish bait is consumed.",17)
  var row=HBoxContainer.new();body.add_child(row)
  for method in ["rod","net","pot"]:
   var b=fishing.button(row,method.capitalize()+(" ✓" if p.state().method==method else ""),func():p.state().method=method;fishing.records().save();feedback("Selected "+method+". Return to a shore marker."));b.disabled=not p.method_unlocked(method)
@@ -68,7 +68,7 @@ func gear_ui(body:Node)->void:
   if id!="basic":
    var names=[]
    for ingredient in spec.needs:names.append(str(spec.needs[ingredient])+" "+str(preload("res://scripts/lodge_catalog.gd").INGREDIENTS[ingredient].name))
-   fishing.label(box,"Recipe: "+" + ".join(names)+" → "+str((8 if p.has("cook") else 6)+int(p.perk_bonus("bait_yield")))+" bait",15)
+   fishing.label(box,"Recipe: "+" + ".join(names)+" → "+str((8 if p.has("cook") else 6)+int(p.perk_bonus("bait_yield")))+" fish bait",15)
    var craft=fishing.button(controls,"Craft batch",func():feedback(p.craft(id)));craft.disabled=not p.bait_unlocked(id)
    var buy=fishing.button(controls,"Buy 3 • %d Glimmers" % int(spec.cost),func():feedback(p.buy(id,fishing.game)));buy.disabled=not p.bait_unlocked(id)
  if p.bait_unlocked("scraps") and not fishing.records().state().kept.is_empty():
@@ -77,13 +77,13 @@ func gear_ui(body:Node)->void:
   for catch in fishing.records().state().kept:pick.add_item(str(fishing.C.fish()[catch.species].name)+" • %.2f kg" % float(catch.kg))
   fishing.button(scraps,"Make 6 scraps from selected catch…",func():
    var catch_id=str(fishing.records().state().kept[pick.selected].id)
-   var dialog=ConfirmationDialog.new();dialog.title="Turn this catch into bait?";dialog.dialog_text="The kept specimen will be released from your collection and displays. Your journal remains.";add_child(dialog)
+   var dialog=ConfirmationDialog.new();dialog.title="Turn this catch into fish bait?";dialog.dialog_text="The kept specimen will be released from your collection and displays. Your journal remains.";add_child(dialog)
    dialog.confirmed.connect(func():
-    if int(p.state().bait.scraps)>990:dialog.queue_free();feedback("Your bait box is full.");return
+    if int(p.state().bait.scraps)>990:dialog.queue_free();feedback("Your fish bait box is full.");return
     if fishing.records().specimen(catch_id).is_empty():dialog.queue_free();return
     fishing.records().release(catch_id);p.state().bait.scraps=int(p.state().bait.scraps)+6;fishing.records().save();dialog.queue_free();feedback("Made six River Scraps."))
    dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(460,190)))
- fishing.label(body,"Gatherers' Lodge → worms, herbs and insects. Seed House harvests → two herb/petal ingredients in addition to food. Sell catches and gathered/grown ingredients in Sell goods → buy consumable bait here. Profitable Market days earn a daily Glimmer reward. Special bait shifts species groups; it never unlocks a level-gated fish.",16)
+ fishing.label(body,"Gatherers' Lodge → worms, herbs and insects. Seed House harvests → two herb/petal ingredients in addition to food. Sell catches and gathered/grown ingredients in Sell goods → buy consumable fish bait here. Profitable Market days earn a daily Glimmer reward. Special fish bait shifts species groups; it never unlocks a level-gated fish.",16)
 func tree_ui(body:Node)->void:
  var prog=fishing.records().progress
  fishing.label(body,"%d points available • %d / %d earned • 60 perks across six branches" % [prog.available_points(),prog.earned_points(),P.MAX_POINTS],19)
@@ -126,7 +126,7 @@ func pot_ui(body:Node)->void:
   var b=fishing.button(row,"Inspect catch",func():fishing.open_basket(i));b.disabled=not ready
   pot_labels.append({"label":countdown,"ready":float(pot.ready),"button":b})
   fishing.button(row,"Retrieve basket…",func():
-   var dialog=ConfirmationDialog.new();dialog.title="Retrieve this basket?";dialog.dialog_text="This cancels the basket and discards its catch. Bait is not refunded. Collect & keep or Collect & release to earn catch XP instead.";add_child(dialog)
+   var dialog=ConfirmationDialog.new();dialog.title="Retrieve this basket?";dialog.dialog_text="This cancels the basket and discards its catch. Fish bait is not refunded. Collect & keep or Collect & release to earn catch XP instead.";add_child(dialog)
    dialog.confirmed.connect(func():p.state().pots.remove_at(i);fishing.records().save();dialog.queue_free();feedback("Basket retrieved."));dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(460,190)))
 func cosmetic_ui(body:Node)->void:
  var p=fishing.records().progress

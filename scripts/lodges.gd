@@ -125,7 +125,7 @@ func pantry(parent:Node)->void:
  for id in C.INGREDIENTS:
   var box=HBoxContainer.new();box.custom_minimum_size.x=300;box.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(box);image(box,id);label(box,str(C.INGREDIENTS[id].name)+"\n"+str(int(state().ingredients.get(id,0))),16)
 func gather_menu(body:Node)->void:
- button(body,"Fishing bait • use your gathered ingredients",func():game.presentation.close();game.menu="";game.fishing.open_workshop())
+ button(body,"Fishing fish bait • use your gathered ingredients",func():game.presentation.close();game.menu="";game.fishing.open_workshop())
  pantry(body);label(body,"YOUR CREWS • "+str(state().jobs.size())+" / "+str(state().get("crew",2))+" busy",22)
  ui_clock=label(body,"",16)
  for index in state().jobs.size():

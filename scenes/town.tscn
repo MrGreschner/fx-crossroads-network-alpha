@@ -185,12 +185,12 @@ metadata/label = "RAM DESCENT"
 
 
 [node name="Practice" type="Marker2D" parent="Points"]
-position = Vector2(1550, 1020)
+position = Vector2(1650, 1050)
 metadata/menu = "practice_entrance"
 metadata/hint = "Enter the training yard (all attacks unlocked)"
 
 [node name="TrainingYard" type="Sprite2D" parent="Landmarks"]
-position = Vector2(1550, 930)
+position = Vector2(1650, 960)
 texture = ExtResource("15")
 scale = Vector2(2.2, 2.2)
 metadata/label = "TRAINING YARD"
@@ -367,10 +367,6 @@ metadata/tile = "path"
 
 [node name="PlannedStreet_14_3" type="Polygon2D" parent="GroundPaint"]
 polygon = PackedVector2Array(2220.0, 1112.0, 2510.0, 1112.0, 2510.0, 1188.0, 2220.0, 1188.0)
-metadata/tile = "path"
-
-[node name="PlannedStreet_15_1" type="Polygon2D" parent="GroundPaint"]
-polygon = PackedVector2Array(1588.0, 1020.0, 1588.0, 1180.0, 1512.0, 1180.0, 1512.0, 1020.0)
 metadata/tile = "path"
 
 [node name="PlannedStreet_16_1" type="Polygon2D" parent="GroundPaint"]

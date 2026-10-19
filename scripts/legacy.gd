@@ -15,6 +15,8 @@ const PROJECTS={
  "bastion":{"name":"Veteran Gate Wall","need":{"defense30":1},"automatic":true,"reward":"Automatically earned by clearing Gate Defence wave 30. Stone blocks, iron braces and stronger gate towers appear in town."},
  "clinic":{"name":"Healer Supply Wing","need":{"clears":4,"food":3},"reward":"Bakery also offers Cleansing Tea. Still one free provision per successful adventure."}}
 var fishing_records=preload("res://scripts/fishing_records.gd").new()
+var gardening=preload("res://scripts/gardening.gd").new()
+var community=preload("res://scripts/community_records.gd").new()
 var lodge_economy=preload("res://scripts/lodge_economy.gd").new()
 var weekly=preload("res://scripts/weekly_activities.gd").new()
 var cosmetics=preload("res://scripts/player_cosmetics.gd").new()
@@ -76,7 +78,7 @@ func setup(owner:Node,multi:bool=false)->void:
   data.teacher=false;data.erase("teacher_backup");data.erase("backup_saves")
  teacher_backup={}
  glimmers.legacy=self;glimmers.state()
- weekly.legacy=self;fishing_records.legacy=self;fishing_records.state();lodge_economy.setup(self);daily.setup(self);cosmetics.setup(self);crowns.setup(self);mine.setup(self);commerce.setup(self)
+ weekly.legacy=self;fishing_records.legacy=self;fishing_records.state();lodge_economy.setup(self);daily.setup(self);cosmetics.setup(self);crowns.setup(self);mine.setup(self);commerce.setup(self);gardening.setup(self);community.setup(self)
  layer=35
  root=PanelContainer.new();root.position=Vector2(110,45);root.size=Vector2(1060,640);root.visible=false;add_child(root)
  var style:=StyleBoxFlat.new();style.bg_color=Color("#142b32");style.border_color=Color("#c7ad78");style.set_border_width_all(2);style.set_corner_radius_all(8);root.add_theme_stylebox_override("panel",style)
@@ -84,7 +86,7 @@ func setup(owner:Node,multi:bool=false)->void:
  var col:=VBoxContainer.new();col.add_theme_constant_override("separation",10);margins.add_child(col)
  heading=Label.new();heading.add_theme_font_size_override("font_size",27);col.add_child(heading)
  var tabs:=HFlowContainer.new();tabs.add_theme_constant_override("h_separation",6);col.add_child(tabs)
- for item in [["Profile","profile"],["Inventory","inventory"],["Fishing","fishing"],["Mastery","mastery"],["Town projects","town"],["Records & style","records"],["Settings","settings"],["Elder Ram","elder"]]:
+ for item in [["Profile","profile"],["Inventory","inventory"],["Fishing","fishing"],["Gardening","gardening"],["Mastery","mastery"],["Town projects","town"],["Records & style","records"],["Settings","settings"],["Elder Ram","elder"]]:
   var tab:=button(tabs,str(item[0]),open_page.bind(str(item[1])))
   tab.toggle_mode=true;profile_tabs[str(item[1])]=tab
   if item[1]=="mastery":mastery_tab=tab
@@ -281,6 +283,7 @@ func text(value:String)->void:
  var label:=Label.new();label.text=value;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.add_theme_font_size_override("font_size",19);body.add_child(label)
 func open_page(which:String)->void:
  if arcade or game.mode!="town":return
+ if which=="mastery":acknowledge_mastery()
  refresh_point_notice()
  page=which;game.menu="legacy";root.visible=true;game.mobile.reset_controls();notice.text="";render();profile_scroll.set_deferred("scroll_vertical",0)
 func open_hero(id:String)->void:
@@ -297,6 +300,8 @@ func render()->void:
  match page:
   "profile":profile_ui()
   "inventory":preload("res://scripts/player_inventory.gd").build(self,body)
+  "community":community.build(body)
+  "gardening":gardening.build(body)
   "fishing":fishing_ui()
   "records":records_ui()
   "settings":settings_ui()
@@ -326,7 +331,7 @@ func fishing_ui()->void:
  var bar=ProgressBar.new();bar.custom_minimum_size.y=16;bar.show_percentage=false;bar.value=100 if level==80 else 100.0*(xp-prog.threshold(level))/maxi(1,prog.threshold(level+1)-prog.threshold(level));box.add_child(bar)
  text("Free rod and bare hook to begin. Keep or release for XP; sell or release kept catches to make room. Aquarium fish share your carrying limit.")
  button(body,"Collection • species, kept fish, tanks & favourite",f.open_journal)
- button(body,"Angler’s Workshop • gear, bait & mastery tree",f.open_workshop)
+ button(body,"Angler’s Workshop • gear, fish bait & mastery tree",f.open_workshop)
  button(body,"Baskets • check timers and collect catches",func():f.open_workshop();f.workshop.selected_tab=2;f.workshop.build())
  button(body,"Sell catches & gathered goods • Glimmer exchange",func():f.open_workshop();f.workshop.selected_tab=4;f.workshop.build())
  var ui=preload("res://scripts/studio_ui.gd")
@@ -342,7 +347,7 @@ func fishing_ui()->void:
  var gear_row=HFlowContainer.new();gear.add_child(gear_row)
  for id in ["rod","net","pot"]:
   var unlocked=prog.method_unlocked(id);var label=Label.new();label.text=("Rod" if id=="rod" else "Net" if id=="net" else "Basket")+" • "+("Ready" if unlocked else "Unlock at level "+str(5 if id=="net" else 10));label.modulate=Color("#aee0bc") if unlocked else Color("#a5b6be");gear_row.add_child(label)
- var baits=ui.card(body,"BAIT BOX","Bare hook is always free. Special bait is consumed when used.")
+ var baits=ui.card(body,"FISH BAIT BOX","Bare hook is always free. Special fish bait is consumed when used.")
  var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;baits.add_child(grid)
  for id in preload("res://scripts/fishing_ecology.gd").BAITS:
   var spec=preload("res://scripts/fishing_ecology.gd").BAITS[id]
@@ -350,6 +355,7 @@ func fishing_ui()->void:
   var stock=Label.new();stock.text="Unlimited" if id=="basic" else "%d stocked" % int(prog.state().bait.get(id,0)) if prog.bait_unlocked(id) else "Level %d" % int(preload("res://scripts/fishing_progress.gd").BAIT_LEVELS[id]);stock.modulate=Color("#edd196") if id=="basic" else Color("#aed3cf") if prog.bait_unlocked(id) else Color("#93a6b2");grid.add_child(stock)
 func records_ui()->void:
  var ui=preload("res://scripts/studio_ui.gd")
+ button(body,"Community records • heroes, fish, realms & Waylight",community.open)
  text("YOUR ADVENTURE RECORDS")
  var overview=HFlowContainer.new();overview.add_theme_constant_override("h_separation",10);body.add_child(overview)
  var clears=0;var mastered=0
@@ -518,7 +524,7 @@ func elder_ui()->void:
  var topics={
   "Crossroads: Realms Beyond • our world":"Crossroads is our town, a meeting place for travellers, creators and the worlds beyond the portal. Follow a path into adventure, build your own hero or realm in Crossroads Studio, or take time to fish and help the town grow. Find your path. Create what’s next.",
   "First adventure & training":"The first nine heroes offer a short practice adventure. Speak to the training guide to replay it, learn buffs and try bouncing attacks or projectile counters. All 80 heroes are available; the hall has numbered search, favourites and role filters.",
-  "Abilities, buffs & mastery":"Primary starts at level 1, secondary at 3, passive at 5 and special at 6. In the hall, tap each ability for full details. Mastery techniques are optional alternatives: earn the first with 10,000 damage plus clears, and the final with 85,000 plus more varied clears. Crit rewards arrive at 3, 6 and 9 clears. Sliders trade one strength for another; a glowing Profile button means unspent points.",
+  "Abilities, buffs & mastery":"Primary starts at level 1, secondary at 3, passive at 5 and special at 6. In the hall, tap each ability for full details. Mastery techniques are optional alternatives: earn the first with 10,000 damage plus clears, and the final with 85,000 plus more varied clears. Crit rewards arrive at 3, 6 and 9 clears. Sliders trade one strength for another; a glowing Profile button means newly earned mastery points. Open Mastery to clear the notification; unspent points remain beside each hero in the selector.",
   "Arena, teams & spectators":"The stadium offers free-for-all or teams, map choice, up to eight fighters and a separate spectator host. Opening Act is off by default: start at level 10. Practice solo with up to three AI heroes; bots grant damage mastery but no PvP trophies or records. Use Leaderboard during play; it also appears while waiting to respawn.",
   "Gather your party":"Host a public or private room, share its code, or browse waiting Public Rooms. Change your hero without leaving. Tap Silver or Blue before starting team matches. Friends can request to join supported live adventures; new arrivals start at level 1. After a match, stay together in the lobby to play again.",
   "Gate Defence & Ram Descent":"Gate Defence has three paths, outposts, marching guards and opposing hero rivals. Upgrade at buildings and beat the wave-30 guardian to earn the stronger town wall. One to three heroes can defend. Ram Descent supports up to four: clear dungeon floors, watch your XP bar, and manage health carefully—new floors do not heal you automatically.",
@@ -546,7 +552,7 @@ func elder_ui()->void:
   topics["Teacher review • class view"]="Teacher Mode gives a class dashboard, outcome marking, a 31-seat lesson broadcast and Spotlight. Host a Submit assignment room and share its ED code. Joining students consent to send their educational portfolio; no full game profile is sent. Review snapshots, quick checks and journals, save ratings, then students accept returned feedback. Class records remain on your device and in your profile download. Passcodes are local classroom shortcuts, not secure authentication."
  topics["Idle Mining • minerals"]="Idle Mining grows while you adventure. Coal, silver, rubies, sapphires, diamonds and moonstone unlock with deeper shafts. Collect the depot, then assay specimens for Mine Gold. Copper, iron, cobalt, mithril, emberite and starsteel seams appear at shafts 2, 4, 7, 11, 15 and 18. Collect these ores and coal, then forge bars in Smelter & metals. Bars can be sold at Crossroads Market or used for deeper construction. Deliver one reinforcement batch to shorten a running build by 35%. Adventures now opens the Mine and Market directly. Ore and gems also feed Crossroads Market; forecast sales, set a message and compare profit in Reports. Download your profile to preserve both simulations."
  topics["Create, share & Showcase"]="Studio → Projects & Showcase shows your next step: save, test the exact revision, finalize, then share a frozen submission. A teacher can approve it for a class Showcase pack or return feedback. Import the returned file, improve your editable copy and test again. Adventures → Build, trade & create opens the Showcase directly. Profile ZIP includes this journey and feedback. Checkmarks show recorded actions, not grades."
- topics["Fishing • Ripple & Reel"]="Ripple & Reel is the enterable aquarium on the southeast riverbank, south of the training yard. Talk to Marina to discover a free fishing rod. Find bubbling water, stand at its shore marker and press F or Cast. Wait for a bite, then press F / Hook before the gold window closes. Moving or taking damage cancels a cast; combat stays live. Keep or release: both reveal a species, and size is independent of rarity. Display five kept fish inside the shop and choose one for your player card. Fish follow real-world hours, weekdays and game weather. Some river and pond fish bite only by day or night; the northern dawn shoal appears only from 04:00–06:00. Explore other realm waters too. Start with a free rod and bare hook. Buy the net at fishing level 5 and baited baskets at level 10; each basket fills once after twenty real minutes. Craft or buy bait in the Angler’s Workshop, available in your Profile or collection. Both keeping and releasing earn fishing XP, with cosmetic rewards through level 80 and 26 mastery points to choose from 60 connected perks across six specializations. Reset mastery in town for Glimmers. Trophy fish weigh at least 250% of their species average and earn 50% extra catch XP. Every species is catchable from level one in the right conditions. Catches travel in Download Profile. Practice and test catches do not earn normal profile progress."
+ topics["Fishing • Ripple & Reel"]="Ripple & Reel is the enterable aquarium on the southeast riverbank, south of the training yard. Talk to Bramble to discover a free fishing rod. Find bubbling water, stand at its shore marker and press F or Cast. Wait for a bite, then press F / Hook before the gold window closes. Moving or taking damage cancels a cast; combat stays live. Keep or release: both reveal a species, and size is independent of rarity. Display five kept fish inside the shop and choose one for your player card. Fish follow real-world hours, weekdays and game weather. Some river and pond fish bite only by day or night; the northern dawn shoal appears only from 04:00–06:00. Explore other realm waters too. Start with a free rod and bare hook. Buy the net at fishing level 5 and baited baskets at level 10; each basket fills once after twenty real minutes. Craft or buy fish bait in the Angler’s Workshop, available in your Profile or collection. Both keeping and releasing earn fishing XP, with cosmetic rewards through level 80 and 26 mastery points to choose from 60 connected perks across six specializations. Reset mastery in town for Glimmers. Trophy fish weigh at least 250% of their species average and earn 50% extra catch XP. Every species is catchable from level one in the right conditions. Catches travel in Download Profile. Practice and test catches do not earn normal profile progress."
  ELDER_TOPICS=topics
  for label in topics:button(body,str(label),func():notice.text="Elder Ram: "+str(topics[label]);talk("elder"))
 
@@ -595,7 +601,7 @@ func answer(value:String)->void:
  if value=="gameDev":asking_code=true;question_ui();return
  var q:=value.to_lower();var reply:="I'm best at explaining Crossroads. Ask about food, mastery, saving, controls, friends, quests or town projects."
  if "rebrand" in q or "game name" in q or "realms beyond" in q or q=="fx":reply="Welcome to Crossroads: Realms Beyond! Crossroads is our town; the portal opens onto the realms beyond. Our motto is: Find your path. Create what’s next. Adventure, fish, build a hero or create a world in Studio—the choice is yours."
- elif "fish" in q or "rod" in q or "aquarium" in q:reply=str(ELDER_TOPICS.get("Fishing • Ripple & Reel","Visit Ripple & Reel and talk to Marina."))
+ elif "fish" in q or "rod" in q or "aquarium" in q:reply=str(ELDER_TOPICS.get("Fishing • Ripple & Reel","Visit Ripple & Reel and talk to Bramble."))
  elif "balance" in q or "custom" in q:reply=str(ELDER_TOPICS.get("Custom builds & Forced Balance","Try Forced Balance in Studio."))
  elif "teacher" in q:reply=str(ELDER_TOPICS.get("Teacher review","Ask your teacher."))
  elif "market" in q or "commerce" in q or "business" in q or "marketing" in q:reply="For your first market day, press Basic setup: 30 market cash buys five sorted ore units and sets beginner prices. Choose a day duration, press Open Market, and return to Reports after the timer. For more control, collect mine materials, prepare goods at Crossroads Market, target a customer group and set your price, advertising channel and message. Make a forecast, run one business day, then compare sales, stock costs, advertising and profit in Reports. Profile shows mine levels separately from commerce results. Download your business report for your teacher. Sales are not profit—my wool accountant insists on that."
@@ -744,12 +750,18 @@ func validate(value:Variant)->bool:
  for id in progress.get("favourites",[]):
   if not id is String or id.length()>32:return false
  if not progress.get("heroes",{}) is Dictionary or not progress.get("town",{}) is Dictionary or not progress.get("tasks",{}) is Dictionary:return false
+ if not progress.get("mastery_seen",{}) is Dictionary or progress.get("mastery_seen",{}).size()>game.manifest.characters.size():return false
+ for id in progress.get("mastery_seen",{}):
+  var seen=progress.mastery_seen[id]
+  if id not in game.manifest.characters or not (seen is int or seen is float) or not is_finite(float(seen)) or float(seen)<0 or float(seen)>4 or float(seen)!=floor(float(seen)):return false
  if progress.has("education"):
   if not progress.education is Dictionary or progress.education.size()!=1 or not progress.education.get("studio_seconds",0) is float and not progress.education.get("studio_seconds",0) is int:return false
   if not is_finite(float(progress.education.studio_seconds)) or float(progress.education.studio_seconds)<0 or float(progress.education.studio_seconds)>315360000:return false
  if bool(progress.get("teacher",false)):return false
  if progress.has("elder_guidance") and not preload("res://scripts/elder_guidance.gd").valid(progress.elder_guidance):return false
  if progress.has("glimmers") and not preload("res://scripts/glimmers.gd").valid(progress.glimmers):return false
+ if progress.has("gardening") and not preload("res://scripts/gardening.gd").valid(progress.gardening):return false
+ if progress.has("community_records") and not preload("res://scripts/community_records.gd").valid(progress.community_records):return false
  if progress.has("waylight") and not preload("res://scripts/waylight_progress.gd").valid(progress.waylight):return false
  if progress.has("fishing") and not preload("res://scripts/fishing_records.gd").valid(progress.fishing):return false
  if progress.has("lodges") and not preload("res://scripts/lodge_catalog.gd").valid(progress.lodges):return false
@@ -846,16 +858,23 @@ func unspent_points(id:String)->int:
  var used:=0
  for value in tuning:used+=absi(int(value))
  return maxi(0,mini(4,int(rec.get("points",0)))-used)
+func acknowledge_mastery()->void:
+ if not data.has("mastery_seen"):data.mastery_seen={}
+ var changed=false
+ for id in data.heroes:
+  var earned=mini(4,int(data.heroes[id].get("points",0)))
+  if int(data.mastery_seen.get(id,0))<earned:data.mastery_seen[id]=earned;changed=true
+ if changed:save()
 func refresh_point_notice()->void:
  point_notice=false
  for id in data.heroes:
-  if unspent_points(str(id))>0:point_notice=true;break
+  if unspent_points(str(id))>0 and mini(4,int(data.heroes[id].get("points",0)))>int(data.get("mastery_seen",{}).get(id,0)):point_notice=true;break
  if is_instance_valid(mastery_tab):
   mastery_tab.modulate=Color("#ffe1a0") if point_notice else Color.WHITE
   mastery_tab.text="Mastery •" if point_notice else "Mastery"
   mastery_tab.tooltip_text="Unspent mastery points available" if point_notice else "Hero mastery"
 func _process(delta:float)->void:
- daily.step(delta);cosmetics.step(delta);crowns.step(delta);mine.step(delta);commerce.step(delta)
+ daily.step(delta);cosmetics.step(delta);crowns.step(delta);mine.step(delta);commerce.step(delta);gardening.step(delta);community.step(delta)
  if arcade:return
  point_check-=delta
  if point_check<=0:point_check=.4;refresh_point_notice()

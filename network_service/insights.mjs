@@ -2,7 +2,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 // Bounded, parameterized dashboard queries. Existing JSONB tables stay compatible.
 const catalogue={realms:{},heroes:{}};
 for(const [folder,bucket] of [['regions','realms'],['characters','heroes'],['npc_heroes','heroes']]){try{for(const file of readdirSync(new URL('../content/'+folder+'/',import.meta.url))){if(!file.endsWith('.json'))continue;try{const d=JSON.parse(readFileSync(new URL('../content/'+folder+'/'+file,import.meta.url),'utf8'));if(typeof d.name==='string')catalogue[bucket][file.slice(0,-5)]=d.name.slice(0,100);}catch{}}}catch{}}
-export const CATEGORIES=['arena','realm','between','overcharge','descent','defense','battlegrounds','quest','town','fishing','mine','market','studio','menu'];
+export const CATEGORIES=['arena','realm','between','overcharge','descent','defense','battlegrounds','quest','town','fishing','gardening','mine','market','studio','menu'];
 export function filters(url){
  const pick=(key,allowed)=>allowed.includes(url.searchParams.get(key))?url.searchParams.get(key):'';
  const key=k=>/^[a-z0-9_-]{1,64}$/.test(url.searchParams.get(k)||'')?url.searchParams.get(k):'';
