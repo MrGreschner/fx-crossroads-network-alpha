@@ -23,6 +23,7 @@ var attempt=""
 var attempt_game=0
 var attempt_time=-1.0
 var latest_metrics:Dictionary={}
+var watch_active=false
 var hardware:Dictionary={}
 const FRAME_BUCKETS=[8.34,16.67,20.0,25.0,33.34,50.0,100.0,250.0,1000.0,60000.0]
 var dashboard:CanvasLayer
@@ -126,7 +127,9 @@ func _process(delta:float)->void:
  var game=current_game()
  if not allowed(game):
   if enabled:flush("interval")
-  current={};reset_stats();clear_web_packet();return
+  current={};reset_stats();clear_web_packet();
+  if OS.has_feature("web") and watch_active:JavaScriptBridge.eval("window.fxFreezeWatch&&window.fxFreezeWatch.stop()",true);watch_active=false
+  return
  identity(game)
  var next=context(game)
  if next!=current:
@@ -137,6 +140,7 @@ func _process(delta:float)->void:
   sample_timer+=step;record_frame(delta*1000);stats.frame_max_ms=maxf(float(stats.frame_max_ms),minf(delta*1000,60000))
   if sample_timer>=1:
    sample_timer=0;sample(game)
+   if OS.has_feature("web"):watch_active=true;JavaScriptBridge.eval("window.fxFreezeWatch&&window.fxFreezeWatch.pulse("+JSON.stringify(endpoint)+","+JSON.stringify(packet("client_stall","interrupted"))+")",true)
   if elapsed>=60:flush("interval")
  pump()
 func record_frame(ms:float)->void:
@@ -163,6 +167,11 @@ func world_metrics(game:Node)->Dictionary:
  for pair in [["opponents","enemies"],["enemies","enemies"],["render_shots","projectiles"],["projectiles","projectiles"],["missiles","projectiles"],["guards","guards"]]:
   var value=game.get(pair[0])
   if value is Array or value is Dictionary:result[pair[1]]=maxi(int(result.get(pair[1],0)),value.size())
+ var bg=game.get("battlegrounds")
+ if bg!=null and str(game.get("mode"))=="battlegrounds":
+  result.bg_units=bg.units.size();result.bg_shots=bg.shots.size();result.bg_bombs=bg.bombs.size();result.bg_work_ms=float(bg.work.get("step_ms",0));result.bg_units_ms=float(bg.work.get("units_ms",0));result.bg_spawn_queued=0
+  for base in bg.bases.values():result.bg_spawn_queued+=base.get("queue",[]).size()
+  result.enemies=maxi(int(result.get("enemies",0)),bg.units.size());result.projectiles=int(result.get("projectiles",0))+bg.shots.size()
  var mobile=game.get("mobile");result.touch_controls=1 if mobile!=null and mobile.enabled else 0
  var legacy=game.get("legacy")
  if legacy!=null:
@@ -214,7 +223,7 @@ func packet(kind:String,result:String="",duration:float=0,metrics:Dictionary={})
  p.stats.frame_p95_upper_ms=frame_p95();p.graphics=hardware.duplicate()
  var game=current_game();p.details={}
  if game!=null:
-  p.details={"rules":safe_key(game.get("pvp_rule")),"map":safe_key(game.get("arena_map")),"input":"touch" if latest_metrics.get("touch_controls",0)==1 else "keyboard_mouse","graphics":"auto" if game.get("balanced_graphics")==true else "full"}
+  p.details={"rules":safe_key(game.get("pvp_rule")),"map":safe_key(game.get("bg_map") if str(game.get("mode"))=="battlegrounds" else game.get("arena_map")),"input":"touch" if latest_metrics.get("touch_controls",0)==1 else "keyboard_mouse","graphics":"auto" if game.get("balanced_graphics")==true else "full"}
  p.metrics=latest_metrics.duplicate();p.metrics.merge(metrics,true)
  if kind=="garden_harvest":p.details.garden_seed=safe_key(metrics.get("seed_id",""))
  if kind=="fish_catch":p.details.fish_species=safe_key(metrics.get("species_id",""))

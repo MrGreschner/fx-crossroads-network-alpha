@@ -676,6 +676,7 @@ func finish_run(won: bool, abandoned:bool=false) -> void:
 		if waylight.kind=="overcharge" and not boss_defeated:return
 		if waylight.between() and position_in_world.distance_to(waylight.expedition.ORIGIN)>120:return
 	get_tree().root.get_node("FXActivity").event(self,"complete","cleared" if won else "returned" if abandoned else "defeated",run_time,{"damage":dealt_damage,"enemies":kills,"players":1,"banked_shards":waylight.expedition.carried if waylight!=null and waylight.between() else 0})
+	if not won and not abandoned and not practice:legacy.cosmetics.competitive.defeated()
 	respawn_clinic=not won and not abandoned
 	var waylight_run:bool=waylight!=null and waylight.special()
 	var waylight_result:String=waylight.finish(won) if waylight_run else ""
@@ -1608,7 +1609,6 @@ func _draw() -> void:
 	tutorial.draw_world(self,camera)
 	adventure.draw_on(self,camera)
 	if studio_live!=null:studio_live.draw_on(self,camera)
-	if mode=="town":preload("res://scripts/community_records.gd").draw_on(self,camera)
 	if mode in ["town","run"] and not practice:preload("res://scripts/garden_hunting.gd").draw_on(self,camera)
 	draw_flames()
 	journey.draw_on(self,camera)
@@ -1818,6 +1818,7 @@ func draw_world() -> void:
 					draw_arc(position_in_world - camera, reach, sweep - half_arc, sweep + half_arc, 20, Color(1, 0.9, 0.6, strike_time * 5), 8, true)
 		if charge_time > 0:
 			draw_line(position_in_world - charge_direction * 75 - camera, position_in_world - camera, Color(0.63, 0.89, 0.68, 0.58), 12)
+	if mode=="town":preload("res://scripts/community_records.gd").draw_on(self,camera)
 	for trail in dodge_trails:
 		var trail_sprite := str(hero.get("sprite", "ram")) + "_walk1"
 		draw_sprite(trail_sprite, trail["pos"] - Vector2(28,42), Vector2(56,64), Color(0.7,0.9,1.0, float(trail["time"])*1.8))

@@ -178,6 +178,7 @@ func step(delta:float)->void:
     if foe.pos.distance_to(d.crystal)<230:guarded=true;break
    if guarded:g.hint="Clear nearby guardians to gather Waylight";continue
    var amount=deposit_value(int(d.ring));collected[k]=true;carried+=amount
+   g.legacy.cosmetics.competitive.explore(str(manager.ticket().get("id",manager.ticket().get("seed",""))),collected)
    g.message="Gathered %d Waylight • %d carried. Return to the entrance to bank it." % [amount,carried];g.message_time=4;manager.checkpoint()
  if g.position_in_world.distance_to(ORIGIN)<100:
   g.hint="E • Extract & bank %d Waylight" % carried

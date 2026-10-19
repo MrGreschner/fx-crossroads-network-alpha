@@ -222,8 +222,11 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    "chop":
     draw_sector(c,p,aim,r,PI*.28,Color(.95,.82,.65,.1*(1-t)))
     c.draw_arc(p,r,aim.angle()-PI*.28,aim.angle()+PI*.28,24,Color(.95,.82,.65,.75*(1-t)),2,true)
-    var end:=p+aim*(r-14);c.draw_line(p+aim*20,end,Color("#f7dec2"),4,true)
-    c.draw_colored_polygon(PackedVector2Array([end-side*10,end+side*10,end+aim*12]),Color("#b5c8ca"))
+    var swing=aim.rotated((t-.5)*.7);var cross=swing.orthogonal();var end=p+swing*(r-25)
+    c.draw_line(p+swing*12,end,Color("#754b32"),7,true);c.draw_line(p+swing*14,end,Color("#e6b97b"),3,true)
+    var blade=PackedVector2Array([end-cross*12,end+cross*12,end+swing*24+cross*10,end+swing*27-cross*10])
+    c.draw_colored_polygon(blade,Color("#d3e3e5"));var border=blade.duplicate();border.append(blade[0]);c.draw_polyline(border,Color("#54747d"),2,true)
+    for n in [-1,0,1]:c.draw_line(end+swing*5+cross*n*6,end+swing*20+cross*n*6,Color("#52727a"),2,true)
    "steps","haven","nest","pot":
     if str(e.style)=="steps":p=draw_position(owner)-camera
     var tint:=Color("#d9b770") if str(e.style) in ["pot","nest"] else Color("#a9e0c7")

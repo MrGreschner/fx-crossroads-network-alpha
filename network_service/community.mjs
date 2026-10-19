@@ -1,3 +1,4 @@
+import {namedSchema,submitNamed,namedSnapshot} from './named-records.mjs';
 import {createHmac} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {rankWeek} from './cosmetic-rankings.mjs';
@@ -68,23 +69,23 @@ export function postgresStore(pool){return {
   return {rarest_all:rareall.rows[0]||null,rarest_week:rareweek.rows[0]||null,garden_all:cropall.rows,garden_month:cropmonth.rows,heroes:heroes.rows,realms:realms.rows,between:between.rows,fish_all:all.rows[0]||null,fish_week:weekly.rows[0]||null};
  }
 };}
-export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||'',store,now=()=>Date.now()}={}){
+export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||'',store,accounts,now=()=>Date.now()}={}){
  const configured=!!(pool||store)&&secret.length>=32;let ready=false,pending=0,cache=null,expires=0,retry=0;const limits=new Map();store=store||(pool?postgresStore(pool):null);
- const init=async()=>{try{if(pool)await pool.query(schema);ready=configured;}catch{ready=false;}};const initialized=configured?init():Promise.resolve();
+ const init=async()=>{try{if(pool){await pool.query(schema);if(accounts){await accounts.initialized;await pool.query(namedSchema);}}ready=configured;}catch{ready=false;}};const initialized=configured?init():Promise.resolve();
  const send=(res,code,data)=>{res.writeHead(code,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(data));};
  const hash=s=>createHmac('sha256',secret).update(s).digest('hex');
  async function handle(req,res){const path=new URL(req.url,'http://localhost').pathname;if(!['/community/records','/community/sync'].includes(path))return false;
   const origin=req.headers.origin||'';const permitted=!origin||/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)||(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)||(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin));
   if(!permitted){send(res,403,{error:'Origin rejected'});req.resume();return true;}
   if(origin){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
-  if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Methods':'GET,POST','Access-Control-Allow-Headers':'content-type'});res.end();return true;}
+  if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Methods':'GET,POST','Access-Control-Allow-Headers':'content-type,authorization'});res.end();return true;}
   if((path.endsWith('/sync')&&req.method!=='POST')||(path.endsWith('/records')&&req.method!=='GET')){send(res,405,{error:'Method rejected'});req.resume();return true;}
   if(!ready&&configured&&now()>retry){retry=now()+15000;void init();}if(!ready){send(res,503,{error:'Community records unavailable'});req.resume();return true;}
   const ip=hash(req.socket.remoteAddress||'unknown'),rate=limits.get(ip)||{at:now(),count:0};if(now()-rate.at>60000){rate.at=now();rate.count=0;}limits.set(ip,rate);if(limits.size>2048)limits.delete(limits.keys().next().value);
   if(++rate.count>1000||pending>=4){send(res,429,{error:'Please retry later'});req.resume();return true;}pending++;
   try{
-   if(path.endsWith('/sync')){let size=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),5000);timer.unref();let raw;try{for await(const chunk of req){size+=chunk.length;if(size>32768){send(res,413,{error:'Too large'});req.destroy();return true;}chunks.push(chunk);}raw=JSON.parse(Buffer.concat(chunks));}catch{send(res,400,{error:'Invalid record'});return true;}finally{clearTimeout(timer);}let p;try{p=clean(raw,now());}catch{send(res,400,{error:'Invalid record'});return true;}await store.submit(hash('community:'+p.profile),p);send(res,200,{saved:true,week:p.week});return true;}
-   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week||cache.month!==monthKey(now())){cache={version:1,month:monthKey(now()),week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week,monthKey(now()))};expires=now()+30000;}
+   if(path.endsWith('/sync')){let size=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),5000);timer.unref();let raw;try{for await(const chunk of req){size+=chunk.length;if(size>524288){send(res,413,{error:'Too large'});req.destroy();return true;}chunks.push(chunk);}raw=JSON.parse(Buffer.concat(chunks));}catch{send(res,400,{error:'Invalid record'});return true;}finally{clearTimeout(timer);}let p;try{p=clean(raw,now());}catch{send(res,400,{error:'Invalid record'});return true;}if(req.headers.authorization&&accounts){const a=await accounts.authenticate(req);if(!a){send(res,401,{error:'Sign in again to submit named records'});return true;}await submitNamed(pool,a,p,raw,now());}await store.submit(hash('community:'+p.profile),p);send(res,200,{saved:true,week:p.week});return true;}
+   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week||cache.month!==monthKey(now())){cache={version:1,month:monthKey(now()),week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week,monthKey(now())),...(accounts?{named:await namedSnapshot(pool,now())}:{})};expires=now()+30000;}
    send(res,200,cache);return true;
   }catch{send(res,503,{error:'Community records unavailable'});return true;}finally{pending--;}
  }

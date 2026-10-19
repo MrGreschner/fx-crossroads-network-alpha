@@ -69,6 +69,7 @@ func open(kind:String)->void:
   var continue_button=button("CONTINUE • current profile",resume,"#345866");continue_button.grab_focus()
   for state in ["normal","hover","pressed"]:
    var border=continue_button.get_theme_stylebox(state).duplicate();border.border_color=Color("#f2d699");border.set_border_width_all(2);continue_button.add_theme_stylebox_override(state,border)
+  if not arcade:button("CLOUD ACCOUNT • sign in / save",func():resume(false);game.get_node("/root/FXAccount").open(),"#3e7968")
   button("NEW GAME • start your adventure",func():request_clear(),"#3e7968")
   if not arcade:button("CROSSROADS STUDIO • create & test",func():resume(false);game.hero_workshop.open(),"#665e81")
   button("DOWNLOAD GAME • WINDOWS",func():open("download"),"#496681")
@@ -169,8 +170,11 @@ func request_clear()->void:
  if not in_town():message.text="Return to town before starting a new player or clearing the profile.";return
  open("clear")
 func clear_profile()->void:
+ var account=game.get_node_or_null("/root/FXAccount")
+ if account!=null and account.loaded:message.text="Sign out of your cloud account before starting a new local profile.";return
  if preload("res://scripts/profile_store.gd").testing():message.text="Exit game Dev mode before changing or transferring profiles.";return
  if not in_town():return
+ if get_tree().root.has_meta("fx_local_recovery"):get_tree().root.remove_meta("fx_local_recovery")
  var store=preload("res://scripts/profile_store.gd")
  for file in game.legacy.save_names():store.erase("user://"+str(file))
  store.erase(game.legacy.PATH)

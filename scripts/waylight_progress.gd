@@ -97,6 +97,7 @@ func settle(won:bool,carried:int,ring:int,guardian:bool,events:int,trial:Diction
    var misses=int(state().pity.get(ticket.realm,0));var rng=RandomNumberGenerator.new();rng.seed=int(ticket.seed)^791901
    if misses>=9 or rng.randf()<C.CHANCES[int(ticket.tier)-1]:
     var relic=C.roll(str(ticket.realm),int(ticket.tier),int(ticket.seed))
+    preload("res://scripts/named_records.gd").note_relic(legacy,relic)
     if state().relics.size()<60:state().relics.append(relic);text="RELIC FOUND: "+str(C.RELICS[relic.type].name)+"!"
     else:state().dust=mini(1000000,int(state().dust)+8);text="Relic found; collection full, converted to 8 bonus Waydust."
     state().pity[ticket.realm]=0
@@ -109,6 +110,7 @@ func settle(won:bool,carried:int,ring:int,guardian:bool,events:int,trial:Diction
    var cache_rng=RandomNumberGenerator.new();cache_rng.seed=int(ticket.seed)^351771
    if bool(ticket.eligible) and cache_rng.randf()<.35:
     var extra=C.conclave_roll(str(ticket.realm),int(ticket.tier),int(ticket.seed))
+    preload("res://scripts/named_records.gd").note_relic(legacy,extra)
     if state().relics.size()<60:state().relics.append(extra);text+=" BONUS RELIC: "+C.display_name(extra)+"!"
     else:state().dust=mini(1000000,int(state().dust)+8);text+=" Bonus relic converted to 8 Waydust; collection full."
  else:text="Overcharge attempt ended. A new attempt requires shards."

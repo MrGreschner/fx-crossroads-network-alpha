@@ -280,6 +280,7 @@ func speed_factor(key:String)->float:
 		factor*=adventure.immersive.terrain_speed(target.pos)
 		if key.begins_with("p:") and adventure.school.active:factor*=adventure.school.terrain_speed(target.pos)
 	if key.begins_with("p:"):factor*=twister.speed(key.substr(2))*halloween.speed(key.substr(2))*v110.speed(key.substr(2))
+	if key.begins_with("p:") and support_aura(key.substr(2),"storm_aura"):factor*=1.15
 	return factor
 func reduction(id:String)->float:
 	if adventure.arcade and adventure.game.custom_party.runtimes.has(id):return adventure.game.custom_party.runtimes[id].reduction()
@@ -330,6 +331,10 @@ func passive(owner:String,effect:String)->bool:
 	if owner=="training_ally" or not playing():return false
 	if adventure.arcade:return int(adventure.game.levels.get(owner,1))>=5 and str(adventure.game.characters.get(str(adventure.game.hero_ids.get(owner,"ram")),{}).get("passive_effect",""))==effect
 	return adventure.game.level>=5 and str(adventure.game.hero.get("passive_effect",""))==effect
+func support_aura(owner:String,effect:String)->bool:
+	for source in adventure.points():
+		if adventure.alive(str(source)) and passive(str(source),effect) and (str(source)==owner or v75.friendly(str(source),owner) and owner_pos(str(source)).distance_to(owner_pos(owner))<=160 and path_clear(owner_pos(str(source)),owner_pos(owner))):return true
+	return false
 func effective_stats(owner:String,kind:String,stats:Dictionary)->Dictionary:
 	var result:Dictionary=robot.effective(owner,kind,stats).duplicate(true)
 	if adventure.game.get("legacy")!=null:result=adventure.game.legacy.stats(owner,kind,result)

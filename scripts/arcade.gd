@@ -148,6 +148,7 @@ var basketball_motion=preload("res://scripts/basketball_motion.gd").new()
 var visual_time := 0.0
 var last_aim := Vector2.RIGHT
 var selected_hero := "ram"
+var manifest:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
 var characters: Dictionary = {}
 var items: Dictionary = {}
 var enemy_defs: Dictionary = {}
@@ -253,7 +254,7 @@ func _ready() -> void:
 	for action in ["move_left","move_right","move_up","move_down","secondary","special","dodge","interact"]:
 		if not InputMap.has_action(action): InputMap.add_action(action)
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var manifest: Dictionary = _json("res://content/manifest.json")
+	manifest = _json("res://content/manifest.json")
 	for entry in manifest.get("characters", []):
 		var data := _json("res://content/characters/" + str(entry) + ".json")
 		characters[str(entry)] = data
@@ -2878,6 +2879,7 @@ func legacy_results()->void:
 	var hero_id:String=str(hero_ids.get(my_id,selected_hero))
 	_track_card_progress()
 	if mode=="arena":legacy.card.arena_result(match_id,arena_random,str(arena_outcomes.get(my_id,"draw")))
+	if mode=="battlegrounds":legacy.cosmetics.competitive.result(match_id,"win" if battlegrounds.winner==int(teams.get(my_id,-1)) else "loss")
 	if mode=="coop" and adventure_won(results_reason) and not (get("expedition")!=null and get("expedition").special()):
 		legacy.clear_adventure(hero_id,realm_id)
 		if realm_id=="confluence" and match_party_size>=2 and hero_id in ["tidewright","cantor"] and hero_ids.values().has("tidewright") and hero_ids.values().has("cantor"):

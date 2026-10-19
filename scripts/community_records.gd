@@ -2,7 +2,7 @@ extends RefCounted
 const UI=preload("res://scripts/studio_ui.gd")
 const FISH=preload("res://scripts/fishing_catalog.gd")
 const ENTRY=Vector2(1035,600)
-const WALL=Rect2(973,430,124,134)
+const WALL=Rect2(957,403,156,192)
 var legacy:Node
 var sync_request:HTTPRequest
 var read_request:HTTPRequest
@@ -17,7 +17,7 @@ var endpoint=""
 func setup(owner:Node)->void:
  legacy=owner;state();endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
  sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=4096;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
- read_request=HTTPRequest.new();read_request.timeout=8;read_request.body_size_limit=32768;legacy.add_child(read_request);read_request.request_completed.connect(received)
+ read_request=HTTPRequest.new();read_request.timeout=8;read_request.body_size_limit=131072;legacy.add_child(read_request);read_request.request_completed.connect(received)
 func state()->Dictionary:
  if not legacy.data.has("community_records"):legacy.data.community_records={"version":1,"solo":0,"coop":0}
  return legacy.data.community_records
@@ -46,23 +46,23 @@ func note_fish(catch:Dictionary)->void:
  var week=legacy.cosmetics.rankings.week();var r:Dictionary=state().get("rare_week",{})
  if r.get("week","")!=week or rarer(catch,r):state().rare_week={"week":week,"species":catch.species,"kg":catch.kg};delay=1
 func payload()->Dictionary:
- var scores=legacy.cosmetics.rankings.scores();var hero_damage={};var realm_clears={}
+ var scores=legacy.cosmetics.rankings.scores();var hero_damage={};var realm_clears={};var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
  for id in legacy.data.heroes:
-  if id in legacy.game.manifest.characters:hero_damage[id]=minf(1e12,float(legacy.data.heroes[id].get("damage",0)))
+  if id in manifest.characters:hero_damage[id]=minf(1e12,float(legacy.data.heroes[id].get("damage",0)))
  for id in legacy.data.realm_counts:
-  if id in legacy.game.manifest.regions:realm_clears[id]=mini(1000000,int(legacy.data.realm_counts[id]))
+  if id in manifest.regions:realm_clears[id]=mini(1000000,int(legacy.data.realm_counts[id]))
  var best={"species":"","kg":0.0};var rare={}
  for id in legacy.fishing_records.state().journal:
   var weight=float(legacy.fishing_records.state().journal[id].get("kg",0))
   var entry={"species":id,"kg":weight}
   if weight>0 and rarer(entry,rare):rare=entry
   if weight>float(best.kg):best={"species":id,"kg":weight}
- return {"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
+ return {"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
 func step(delta:float)->void:
  if not allowed() or endpoint.is_empty() or not legacy.get_tree().root.get_node("FXActivity").enabled:return
  delay-=delta;read_delay=maxf(0,read_delay-delta)
  if delay<=0 and not busy:
-  delay=120+randf()*15;busy=sync_request.request(endpoint+"/community/sync",["Content-Type: application/json"],HTTPClient.METHOD_POST,JSON.stringify(payload()))==OK
+  delay=120+randf()*15;busy=sync_request.request(endpoint+"/community/sync",legacy.get_node("/root/FXAccount").record_headers(),HTTPClient.METHOD_POST,JSON.stringify(payload()))==OK
   if not busy:delay=30
 func synced(result:int,code:int,_headers:PackedStringArray,_body:PackedByteArray)->void:
  busy=false
@@ -93,10 +93,10 @@ func build(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd")
  gui.label(parent,"COMMUNITY RECORDS",22);gui.label(parent,status,15)
  var tabs=HFlowContainer.new();parent.add_child(tabs)
- for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm clears","realms"],["Between runs","between"],["Garden fair","garden"]]:
+ for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm clears","realms"],["Between runs","between"],["Garden fair","garden"],["Realm times","times"],["Life streaks","streak"],["Relic finds","relic"]]:
   var tab=gui.button(tabs,entry[0],func():category=entry[1];redraw());tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size.x=160
  var refresh=gui.button(tabs,"Refresh",func():read_delay=0;fetch());refresh.disabled=reading
- gui.label(parent,"All connected players • anonymous community play records",14).tooltip_text="Combined portable-profile high-water records. Repeat uploads do not add totals again. Co-op clears count per profile. These are client-reported, not verified competition scores."
+ gui.label(parent,"Community play records • public game names for cloud accounts",14).tooltip_text="Combined portable-profile high-water records. Repeat uploads do not add totals again. Co-op clears count per profile. These are client-reported, not verified competition scores."
  if snapshot.is_empty():preload("res://scripts/garden_ui.gd").label(parent,"No community data loaded yet. An internet connection and the matching server update are needed.",19);return
  for entry in [["TOP 5 HEROES • CUMULATIVE DAMAGE","heroes"],["TOP 5 REALMS • RECORDED CLEARS","realms"]]:
   if category!=entry[1]:continue
@@ -110,15 +110,18 @@ func build(parent:Node)->void:
    if entry[1]=="heroes":
     var art=TextureRect.new();var sprite=str(data.get("sprite",id));art.texture=legacy.game.art.get(sprite+"_idle",legacy.game.art.get(sprite+"_0"));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(44,48);line.add_child(art)
    preload("res://scripts/garden_ui.gd").label(line,"%d. %s    %s" % [n,str(data.get("name",id)),String.num(float(row.value),0)],20)
- if category in ["heroes","realms"]:return
+ preload("res://scripts/named_records_ui.gd").build(parent,legacy,snapshot.get("named",{}),category)
+ if category in ["heroes","realms","times","streak","relic"]:return
  if category=="garden":garden_records(parent);return
  var fish_row=HFlowContainer.new();parent.add_child(fish_row)
  for entry in [["BIGGEST FISH • ALL TIME","fish_all"],["BIGGEST FISH • THIS WEEK","fish_week"],["RAREST FISH • ALL TIME","rarest_all"],["RAREST FISH • THIS WEEK","rarest_week"]]:
   if category!="fish":continue
-  var card=UI.card(fish_row,entry[0],"");card.get_parent().custom_minimum_size.x=425;var f=snapshot.get(entry[1])
+  var card=UI.card(fish_row,entry[0],"");card.get_parent().custom_minimum_size.x=425;var f=snapshot.get(entry[1]);var named=snapshot.get("named",{}).get(entry[1])
+  if named is Dictionary and (f==null or (rarer(named,f) if str(entry[1]).begins_with("rarest") else float(named.kg)>=float(f.kg))):f=named
   if f==null:preload("res://scripts/garden_ui.gd").label(card,"No fish record submitted yet.");continue
   var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(300,110);card.add_child(art)
   preload("res://scripts/garden_ui.gd").label(card,str(FISH.fish()[f.species].name)+" • %.2f kg" % float(f.kg),22)
+  gui.label(card,str(f.get("username","Earlier anonymous record")),18)
  if category=="fish":gui.label(parent,"Rarest: species rarity first, then its base catalogue catch weight. Fish weight breaks ties within a species. Weekly records reset Monday.",15)
  if category!="between":return
  var expeditions=UI.card(parent,"THE BETWEEN • SINGLE-RUN SHARD RECORDS","Successful extractions only • raw carried shards, before trial bonus")
@@ -129,17 +132,23 @@ func build(parent:Node)->void:
   preload("res://scripts/garden_ui.gd").label(expeditions,("Solo" if route=="solo" else "Co-op")+" • "+(str(value)+" Waylight Shards" if value>0 else "No successful extraction recorded yet"),20)
 func garden_records(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd");var id=legacy.gardening.fair.crop();var spec=legacy.gardening.crops()[id]
- gui.label(parent,"GIANT GROWERS FAIR • "+str(spec.name),22);gui.label(parent,"Monthly records follow the planting month; seven real days of growth. Community records are anonymous, client-reported weights.",15)
+ gui.label(parent,"GIANT GROWERS FAIR • "+str(spec.name),22);gui.label(parent,"Monthly records follow the planting month; seven real days of growth. Cloud account usernames appear on new records; weights are client-reported.",15)
  var row=HFlowContainer.new();parent.add_child(row)
  for entry in [["THIS MONTH","garden_month"],["ALL-TIME BEST","garden_all"]]:
-  var card=UI.card(row,entry[0],str(spec.name));card.get_parent().custom_minimum_size.x=425;gui.icon(card,id,3,Vector2(220,140));var kg=0.0
+  var card=UI.card(row,entry[0],str(spec.name));card.get_parent().custom_minimum_size.x=425;gui.icon(card,id,3,Vector2(220,140));var kg=0.0;var grower=""
   for r in snapshot.get(entry[1],[]):
    if r.get("crop")==id:kg=maxf(kg,float(r.get("kg",0)))
+  for r in snapshot.get("named",{}).get("garden",[]):
+   if r.get("crop")==id and r.get("scope")==("all" if entry[1]=="garden_all" else snapshot.get("month","")) and float(r.kg)>=kg:grower=str(r.username);kg=float(r.kg)
   gui.label(card,"%.3f kg" % kg if kg>0 else "No harvest submitted yet",22)
+  if not grower.is_empty():gui.label(card,grower,18)
  var archive=UI.card(parent,"YEAR-ROUND ALL-TIME RECORDS","")
  for r in snapshot.get("garden_all",[]):
   if not legacy.gardening.crops().has(r.get("crop")):continue
-  gui.label(archive,str(legacy.gardening.crops()[r.crop].name)+" • %.3f kg" % float(r.kg),17)
+  var name=""
+  for nr in snapshot.get("named",{}).get("garden",[]):
+   if nr.crop==r.crop and nr.scope=="all" and float(nr.kg)>=float(r.kg):name=" • "+str(nr.username)
+  gui.label(archive,str(legacy.gardening.crops()[r.crop].name)+" • %.3f kg" % float(r.kg)+name,17)
 static func blocked(point:Vector2)->bool:return WALL.grow(3).has_point(point)
 static func interact(g:Node)->bool:
  if g.position_in_world.distance_to(ENTRY)>=75:return false

@@ -23,9 +23,15 @@ static func read(path:String,accept:Callable=Callable())->Dictionary:
   if parsed is Dictionary and (not accept.is_valid() or bool(accept.call(parsed))):return parsed
  return {}
 static func write(path:String,value:Dictionary,serialized:String="",accept:Callable=Callable())->Error:
+ var tree=Engine.get_main_loop() as SceneTree
+ if tree!=null and tree.root.has_meta("fx_local_recovery") and not path.begins_with("user://fx_cloud_") and path!="user://fx_before_cloud.json":return ERR_UNAUTHORIZED
  if testing():
   if dev_session()!=null and dev_session().active:dev_session().memory[path]=value.duplicate(true)
   return OK
+ if FileAccess.file_exists(path) and not FileAccess.file_exists(path+".recovery"):
+  var probe=JSON.new()
+  if probe.parse(FileAccess.get_file_as_string(path))!=OK or not probe.data is Dictionary:DirAccess.copy_absolute(path,path+".recovery")
+ if accept.is_valid() and not bool(accept.call(value)):return ERR_INVALID_DATA
  var temp:=path+".tmp";var file:=FileAccess.open(temp,FileAccess.WRITE)
  if file==null:return FileAccess.get_open_error()
  file.store_string(serialized if not serialized.is_empty() else JSON.stringify(value));file.flush();file.close()

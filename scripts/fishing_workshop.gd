@@ -45,7 +45,9 @@ func build()->void:
    "Baskets":pot_ui(body)
    "Cosmetics":cosmetic_ui(body)
    "Sell goods":preload("res://scripts/glimmer_exchange.gd").build(body,fishing,feedback)
- tabs.current_tab=selected_tab;tabs.tab_changed.connect(func(i:int):selected_tab=i;call_deferred("build"))
+ tabs.current_tab=selected_tab;tabs.tab_changed.connect(func(i:int):
+  selected_tab=i;call_deferred("build")
+  if i==1:fishing.open_mastery())
  fit()
 func feedback(value:String)->void:notice=value;build()
 func gear_ui(body:Node)->void:
@@ -86,33 +88,9 @@ func gear_ui(body:Node)->void:
  fishing.label(body,"Gatherers' Lodge → worms, herbs and insects. Seed House harvests → two herb/petal ingredients in addition to food. Sell catches and gathered/grown ingredients in Sell goods → buy consumable fish bait here. Profitable Market days earn a daily Glimmer reward. Special fish bait shifts species groups; it never unlocks a level-gated fish.",16)
 func tree_ui(body:Node)->void:
  var prog=fishing.records().progress
- fishing.label(body,"%d points available • %d / %d earned • 60 perks across six branches" % [prog.available_points(),prog.earned_points(),P.MAX_POINTS],19)
- fishing.label(body,"1 point every 3 levels through level 78. Click a node for its effect. Choose a fork; learn both forks for its crown.",15)
- var branches=HFlowContainer.new();body.add_child(branches)
- for index in P.BRANCHES.size():
-  var branch=P.BRANCHES[index];var pick=fishing.button(branches,str(branch.name)+(" ✓" if tree_branch==index else ""),func():tree_branch=index;build());pick.modulate=Color(branch.color);pick.custom_minimum_size.y=34
- var row=HBoxContainer.new();body.add_child(row)
- fishing.button(row,"Reset • %d Glimmers…" % prog.reset_cost(),func():
-  var d=ConfirmationDialog.new();d.title="Reset fishing mastery?";d.dialog_text="Refund all %d spent points for %d Glimmers. XP, equipment and fish stay yours. Collect or retrieve all baskets first. Each reset increases the next price by 250, up to 2,500 Glimmers." % [prog.state().talents.size(),prog.reset_cost()];add_child(d)
-  d.confirmed.connect(func():d.queue_free();feedback(prog.reset_tree()));d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(530,235)))
- var wrapper=Control.new();wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom
- var tree=preload("res://scripts/fishing_tree.gd").new();wrapper.add_child(tree);tree.branch_index=tree_branch;tree.setup(prog);tree.scale=Vector2.ONE*tree_zoom
- fishing.button(row,"−",func():tree_zoom=maxf(.65,tree_zoom-.15);tree.scale=Vector2.ONE*tree_zoom;wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom)
- fishing.label(row,"Zoom • drag/scroll",14)
- fishing.button(row,"+",func():tree_zoom=minf(1.6,tree_zoom+.15);tree.scale=Vector2.ONE*tree_zoom;wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom)
- fishing.button(row,"Overview",func():tree_zoom=.7;tree.scale=Vector2.ONE*tree_zoom;wrapper.custom_minimum_size=preload("res://scripts/fishing_tree.gd").CANVAS*tree_zoom)
- for control in row.get_children():
-  if control is Button:control.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
- var center=func():tree.position.x=maxf(0,(wrapper.size.x-preload("res://scripts/fishing_tree.gd").CANVAS.x*tree_zoom)*.5)
- wrapper.resized.connect(center);center.call()
- body.add_child(wrapper)
- tree.selected.connect(func(id:String):
-  var spec=P.TALENTS[id];var reason=prog.learn_reason(id)
-  var d=ConfirmationDialog.new();d.title=str(spec.name);d.dialog_text=str(spec.text)+"\n\n"+("Learn for 1 point?" if reason.is_empty() else reason)
-  d.get_ok_button().text="Learn • 1 point";d.get_ok_button().disabled=not reason.is_empty();add_child(d)
-  d.confirmed.connect(func():
-   var learned=prog.choose(id);d.queue_free();feedback("Learned "+str(spec.name) if learned else prog.learn_reason(id)))
-  d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(500,215)))
+ fishing.label(body,"%d points available • 60 perks across six connected branches" % prog.available_points(),20)
+ fishing.label(body,"One full tree. Zoom with the mouse wheel or + / −, drag to explore, then select a badge for its details.",16)
+ fishing.button(body,"Open full Fishing mastery tree",fishing.open_mastery)
 func pot_ui(body:Node)->void:
  var p=fishing.records().progress;var now=E.context(fishing.game).utc
  fishing.label(body,"%d / %d baskets placed. Cast a basket at a shore marker, then claim here from any location. The catch is determined for its ready time, not your collection time. Dawn baskets must finish before 06:00." % [p.state().pots.size(),p.basket_limit()],17)

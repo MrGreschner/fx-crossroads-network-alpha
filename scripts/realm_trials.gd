@@ -767,7 +767,7 @@ func step_healing_zones(delta: float) -> void:
 func launch_lob(owner: String, origin: Vector2, target: Vector2, stats: Dictionary, damage: float) -> void:
 	if not authoritative() or lob_shots.size() >= 64: return
 	var speed := maxf(100,float(stats.get("travel_speed",400)))
-	lob_shots.append({"owner":owner,"start":[origin.x,origin.y],"end":[target.x,target.y],"elapsed":0.0,"flight":clampf(origin.distance_to(target)/speed,.45,2.5),"radius":float(stats.get("blast_radius",110)),"damage":damage,"color":str(stats.get("color","#d6efff")),"ice":str(stats.get("style",""))=="ice_wall","slow":float(stats.get("slow_duration",0)),"cast_visual":str(stats.get("cast_visual","")),"fragments":clampi(int(stats.get("fragment_count",0)),0,8),"fragment_damage":float(stats.get("fragment_damage",4)),"fragment_radius":float(stats.get("fragment_radius",32)),"fragment_distance":float(stats.get("fragment_distance",95)),"wall_time":float(stats.get("duration",4)),"comet_size":lerpf(1,1.8,float(stats.get("charge_power",0))) if bool(stats.get("sky_comet",false)) else 1.0})
+	lob_shots.append({"stun":clampf(float(stats.get("stun_duration",0)),0,2),"owner":owner,"start":[origin.x,origin.y],"end":[target.x,target.y],"elapsed":0.0,"flight":clampf(origin.distance_to(target)/speed,.45,2.5),"radius":float(stats.get("blast_radius",110)),"damage":damage,"color":str(stats.get("color","#d6efff")),"ice":str(stats.get("style",""))=="ice_wall","slow":float(stats.get("slow_duration",0)),"cast_visual":str(stats.get("cast_visual","")),"fragments":clampi(int(stats.get("fragment_count",0)),0,8),"fragment_damage":float(stats.get("fragment_damage",4)),"fragment_radius":float(stats.get("fragment_radius",32)),"fragment_distance":float(stats.get("fragment_distance",95)),"wall_time":float(stats.get("duration",4)),"comet_size":lerpf(1,1.8,float(stats.get("charge_power",0))) if bool(stats.get("sky_comet",false)) else 1.0})
 
 func step_lobs(delta: float) -> void:
 	for i in range(lob_blasts.size()-1,-1,-1):
@@ -795,6 +795,10 @@ func step_lobs(delta: float) -> void:
 			var direction:=Vector2.from_angle(TAU*n/int(shot.fragments))
 			var landing:Vector2=combat.chain.clip(center,direction,float(shot.get("fragment_distance",95)))
 			launch_lob(owner,center,landing,{"travel_speed":180,"blast_radius":shot.fragment_radius,"color":"#e6f3b3","cast_visual":"fragment"},float(shot.fragment_damage))
+		if float(shot.get("stun",0))>0:
+			for key in combat.hostile(owner):
+				var victim=combat.actor(str(key))
+				if not victim.is_empty() and center.distance_to(victim.pos)<=radius and combat.path_clear(center,victim.pos):combat.apply_status(str(key),"stun",float(shot.stun),owner)
 		for index in range(foes().size()-1,-1,-1):
 			if center.distance_to(foes()[index]["pos"]) > radius: continue
 			if float(shot.get("slow",0)) > 0 and combat.path_clear(center,foes()[index]["pos"]): combat.apply_status(combat.npc_key(foes()[index]),"slow",float(shot["slow"]),owner,.6)

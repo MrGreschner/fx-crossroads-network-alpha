@@ -6,7 +6,6 @@ const ExpeditionProfile=preload("res://network/expedition_profile.gd")
 var expedition=preload("res://network/expeditions.gd").new()
 var expedition_tier:OptionButton
 var expedition_offer={}
-var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
 var font=preload("res://assets/fonts/CrossroadsUI.ttf")
 var selected_character:String:
  get:return selected_hero

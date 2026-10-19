@@ -30,8 +30,8 @@
     "range": 165,
     "description": "After a one-second stir, a hot serving splash hits foes for 24. Allies in range heal 18 and clear poison/burn."
   },
-  "passive": "Well Fed: cleaver hits during Simmer Pot grant 15% protection for 1s.",
-  "passive_effect": "well_fed",
+  "passive": "Kitchen Confidence: you and allied heroes within 160 units gain 4 percentage points of critical-hit chance. Critical hits deal at least 150% damage. Multiple Kitchen Auras do not stack.",
+  "passive_effect": "kitchen_aura",
   "mastery": {
     "title": "Master P\u00e2tissier",
     "technique": {

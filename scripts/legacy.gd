@@ -47,6 +47,7 @@ var last_menu:=""
 var bread_credit:=false
 var flash:=0.0
 var last_saved_json:=""
+var recovery_required=false
 var ELDER_TOPICS:Dictionary={}
 var mastery_tab:Button
 var profile_scroll:ScrollContainer
@@ -66,8 +67,13 @@ func setup(owner:Node,multi:bool=false)->void:
  game=owner;arcade=multi;card.legacy=self;data=defaults()
  var value:Dictionary=preload("res://scripts/profile_store.gd").read(PATH,func(candidate:Dictionary):
   var probe:Dictionary=candidate.duplicate(true);probe.teacher=false
+  if not probe.has_all(["name","tasks","heroes"]):return false
   return validate({"format":"fx-crossroads-profile","version":1,"progress":probe,"saves":{}}))
  if not value.is_empty():data.merge(value,true)
+ elif FileAccess.file_exists(PATH) or FileAccess.file_exists(PATH+".bak"):
+  recovery_required=true;get_tree().root.set_meta("fx_local_recovery",true)
+  for suffix in ["",".bak"]:
+   if FileAccess.file_exists(PATH+suffix) and not FileAccess.file_exists(PATH+suffix+".recovery"):DirAccess.copy_absolute(PATH+suffix,PATH+suffix+".recovery")
  var tasks:Dictionary=defaults().tasks;tasks.merge(data.tasks,true);data.tasks=tasks
  if not card.valid(data.get("card",{})):data.card=card.defaults()
  card.state();card.recover_abandoned()
@@ -94,7 +100,7 @@ func setup(owner:Node,multi:bool=false)->void:
  var scroll:=ScrollContainer.new();profile_scroll=scroll;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
  body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",12);scroll.add_child(body)
  notice=Label.new();notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;col.add_child(notice)
- var footer:=HBoxContainer.new();col.add_child(footer);button(footer,"Back to town",close)
+ var footer:=HBoxContainer.new();col.add_child(footer);button(footer,"Back to town",close);button(footer,"Cloud account",func():close();get_node("/root/FXAccount").open())
  if not arcade:
   var quick:=Button.new();quick.text="Profile / Mastery / Town";quick.position=Vector2(820,12);quick.size=Vector2(300,42);quick.add_theme_font_size_override("font_size",17);quick.pressed.connect(func():
    if game.menu=="characters":open_hero(game.selected_character)
@@ -109,12 +115,15 @@ func setup(owner:Node,multi:bool=false)->void:
   js_callback=JavaScriptBridge.create_callback(import_web)
   JavaScriptBridge.get_interface("window").fxCrossroadsImport=js_callback
 func save()->void:
+ if recovery_required:
+  if is_instance_valid(notice):notice.text="Local profile needs recovery. Original files preserved. Open Cloud account for recovery options."
+  return
  if mine.legacy!=null:mine.advance()
  if bool(data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").testing():return
  preload("res://scripts/release_support.gd").scan_mastery(self)
  var serialized:=JSON.stringify(data)
  if serialized==last_saved_json and FileAccess.file_exists(PATH):return
- var result:Error=preload("res://scripts/profile_store.gd").write(PATH,data,serialized)
+ var result:Error=preload("res://scripts/profile_store.gd").write(PATH,data,serialized,func(candidate:Dictionary):return validate({"format":"fx-crossroads-profile","version":1,"progress":candidate,"saves":{}}))
  if result==OK:last_saved_json=serialized
  if result!=OK and is_instance_valid(notice):notice.text="Could not save progress on this device. Download your profile before leaving."
 func record(id:String)->Dictionary:
@@ -149,6 +158,7 @@ func critical_stats(owner:String)->Dictionary:
  var powers=crown_bonus(owner)
  var chance=clampf(float(spec.get("chance",tier*.02)),0,.06)+float(powers.chance)
  var extra=clampf(float(spec.get("bonus",tier*.2)),0,.6)*game.adventure.combat.v98.crit_multiplier(owner)+float(powers.damage)
+ if game.adventure.combat.support_aura(owner,"kitchen_aura"):chance=minf(.5,chance+.04);extra=maxf(.5,extra)
  return {"chance":chance,"multiplier":1+extra}
 func critical(owner:String,amount:float,point:Vector2,roll:float=-1)->float:
  if amount<=0 or not is_finite(amount) or owner=="enemy" or owner.is_empty():return amount
@@ -215,6 +225,7 @@ func add_damage(id:String,amount:float)->void:
 func clear_adventure(id:String,realm:String)->void:
  if bool(data.teacher) or preload("res://scripts/profile_store.gd").progression_blocked():return
  daily.realm_clear(id,realm)
+ preload("res://scripts/named_records.gd").cleared(self,realm,float(game.run_time))
  var entry:=record(id);entry.clears=int(entry.clears)+1
  if realm not in entry.realms:
   entry.realms.append(realm);entry.points=mini(6,int(entry.points)+1)
@@ -326,34 +337,7 @@ func profile_ui()->void:
  text("Your card grows with your adventures. Fishing has its own tab; save transfers and player settings are in Settings.")
  button(body,"Save & player settings",open_page.bind("settings"))
 func fishing_ui()->void:
- var f=game.fishing;var rec=fishing_records;var prog=rec.progress
- var level=prog.level();var xp=int(prog.state().xp)
- var box=preload("res://scripts/studio_ui.gd").card(body,"FISHING • LEVEL %d / 80" % level,"%d XP • %s • %d / %d fish carried" % [xp,prog.title(),rec.state().kept.size(),rec.capacity()])
- var bar=ProgressBar.new();bar.custom_minimum_size.y=16;bar.show_percentage=false;bar.value=100 if level==80 else 100.0*(xp-prog.threshold(level))/maxi(1,prog.threshold(level+1)-prog.threshold(level));box.add_child(bar)
- text("Free rod and bare hook to begin. Keep or release for XP; sell or release kept catches to make room. Aquarium fish share your carrying limit.")
- button(body,"Collection • species, kept fish, tanks & favourite",f.open_journal)
- button(body,"Angler’s Workshop • gear, fish bait & mastery tree",f.open_workshop)
- button(body,"Baskets • check timers and collect catches",func():f.open_workshop();f.workshop.selected_tab=2;f.workshop.build())
- button(body,"Sell catches & gathered goods • Glimmer exchange",func():f.open_workshop();f.workshop.selected_tab=4;f.workshop.build())
- var ui=preload("res://scripts/studio_ui.gd")
- var basket=ui.card(body,"BASKET WATCH",prog.basket_summary(preload("res://scripts/fishing_ecology.gd").context(game).utc))
- var cap=ui.card(body,"CATCH BAG • %d / %d" % [rec.state().kept.size(),rec.capacity()],"Kept fish and aquarium displays share this space. Sell or release a catch to make room; your discovery and XP remain.")
- var capacity_bar=ProgressBar.new();capacity_bar.show_percentage=false;capacity_bar.max_value=rec.capacity();capacity_bar.value=rec.state().kept.size();capacity_bar.custom_minimum_size.y=14;cap.add_child(capacity_bar)
- var next_level=5*(int(level)/5+1)
- var more=Label.new();more.text="Next expansion: level %d → %d fish" % [next_level,rec.capacity()+10] if level<20 else "Base bag complete • Trailcraft mastery can expand it to 100 fish";cap.add_child(more)
- var milestones=HFlowContainer.new();cap.add_child(milestones)
- for entry in [[1,10],[5,20],[10,30],[15,40],[20,50]]:
-  var tag=Label.new();tag.text="Lv %d · %d fish" % entry;tag.modulate=Color("#aee0bc") if level>=entry[0] else Color("#92a6af");milestones.add_child(tag)
- var gear=ui.card(body,"YOUR EQUIPMENT","All three styles share fishing XP and mastery.")
- var gear_row=HFlowContainer.new();gear.add_child(gear_row)
- for id in ["rod","net","pot"]:
-  var unlocked=prog.method_unlocked(id);var label=Label.new();label.text=("Rod" if id=="rod" else "Net" if id=="net" else "Basket")+" • "+("Ready" if unlocked else "Unlock at level "+str(5 if id=="net" else 10));label.modulate=Color("#aee0bc") if unlocked else Color("#a5b6be");gear_row.add_child(label)
- var baits=ui.card(body,"FISH BAIT BOX","Bare hook is always free. Special fish bait is consumed when used.")
- var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;baits.add_child(grid)
- for id in preload("res://scripts/fishing_ecology.gd").BAITS:
-  var spec=preload("res://scripts/fishing_ecology.gd").BAITS[id]
-  var name=Label.new();name.text=spec.name;name.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_child(name)
-  var stock=Label.new();stock.text="Unlimited" if id=="basic" else "%d stocked" % int(prog.state().bait.get(id,0)) if prog.bait_unlocked(id) else "Level %d" % int(preload("res://scripts/fishing_progress.gd").BAIT_LEVELS[id]);stock.modulate=Color("#edd196") if id=="basic" else Color("#aed3cf") if prog.bait_unlocked(id) else Color("#93a6b2");grid.add_child(stock)
+ preload("res://scripts/fishing_dashboard.gd").build(self,body)
 func records_ui()->void:
  var ui=preload("res://scripts/studio_ui.gd")
  button(body,"Community records • heroes, fish, realms & Waylight",community.open)
@@ -751,18 +735,21 @@ func validate(value:Variant)->bool:
  for id in progress.get("favourites",[]):
   if not id is String or id.length()>32:return false
  if not progress.get("heroes",{}) is Dictionary or not progress.get("town",{}) is Dictionary or not progress.get("tasks",{}) is Dictionary:return false
- if not progress.get("mastery_seen",{}) is Dictionary or progress.get("mastery_seen",{}).size()>game.manifest.characters.size():return false
+ var known_heroes=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json")).characters
+ if not progress.get("mastery_seen",{}) is Dictionary or progress.get("mastery_seen",{}).size()>known_heroes.size():return false
  for id in progress.get("mastery_seen",{}):
   var seen=progress.mastery_seen[id]
-  if id not in game.manifest.characters or not (seen is int or seen is float) or not is_finite(float(seen)) or float(seen)<0 or float(seen)>4 or float(seen)!=floor(float(seen)):return false
+  if id not in known_heroes or not (seen is int or seen is float) or not is_finite(float(seen)) or float(seen)<0 or float(seen)>4 or float(seen)!=floor(float(seen)):return false
  if progress.has("education"):
   if not progress.education is Dictionary or progress.education.size()!=1 or not progress.education.get("studio_seconds",0) is float and not progress.education.get("studio_seconds",0) is int:return false
   if not is_finite(float(progress.education.studio_seconds)) or float(progress.education.studio_seconds)<0 or float(progress.education.studio_seconds)>315360000:return false
  if bool(progress.get("teacher",false)):return false
  if progress.has("elder_guidance") and not preload("res://scripts/elder_guidance.gd").valid(progress.elder_guidance):return false
  if progress.has("glimmers") and not preload("res://scripts/glimmers.gd").valid(progress.glimmers):return false
+ if progress.has("competitive") and not preload("res://scripts/competitive_progress.gd").valid(progress.competitive):return false
  if progress.has("giant_garden") and not preload("res://scripts/giant_garden.gd").valid(progress.giant_garden):return false
  if progress.has("gardening") and not preload("res://scripts/gardening.gd").valid(progress.gardening):return false
+ if progress.has("named_records") and not preload("res://scripts/named_records.gd").valid(progress.named_records):return false
  if progress.has("community_records") and not preload("res://scripts/community_records.gd").valid(progress.community_records):return false
  if progress.has("waylight") and not preload("res://scripts/waylight_progress.gd").valid(progress.waylight):return false
  if progress.has("fishing") and not preload("res://scripts/fishing_records.gd").valid(progress.fishing):return false
@@ -815,10 +802,13 @@ func import_preview()->void:
  text("This replaces this device’s progress and Studio library. Download first to keep them. Custom heroes: "+str(pending.get("studio",{}).get("heroes",{}).size())+" • abilities: "+str(pending.get("studio",{}).get("abilities",{}).size())+" • enemies: "+str(pending.get("studio",{}).get("enemies",{}).size())+" • behaviours: "+str(pending.get("studio",{}).get("behaviors",{}).size()))
  button(body,"Download current profile first",export_profile);button(body,"Confirm replacement",apply_import);button(body,"Cancel",func():pending={};render())
 func apply_import()->void:
+ var account=get_node_or_null("/root/FXAccount")
+ if account!=null and account.loaded and not account.applying:notice.text="Sign out of the cloud account before replacing or resetting this device profile.";return
  if blocked_transfer():return
  if arcade or game.mode!="town":notice.text="Return to town before uploading or downloading a profile.";return
  var fresh:=pending.has("new")
  if not fresh and not validate(pending):return
+ if get_tree().root.has_meta("fx_local_recovery"):get_tree().root.remove_meta("fx_local_recovery")
  if not fresh:
   var music_issue=preload("res://scripts/music_library.gd").save_data(pending.get("music",preload("res://scripts/music_library.gd").fresh()))
   if not music_issue.is_empty():notice.text=music_issue;return
@@ -838,6 +828,7 @@ func apply_import()->void:
    var f=FileAccess.open(preload("res://scripts/workshop_project.gd").PATH,FileAccess.WRITE)
    if f!=null:f.store_string(JSON.stringify(pending.studio_draft))
   else:DirAccess.remove_absolute(preload("res://scripts/workshop_project.gd").PATH)
+ recovery_required=false
  data=defaults()
  if not fresh:
   data.merge(pending.progress,true)

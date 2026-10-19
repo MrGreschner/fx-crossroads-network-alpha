@@ -236,6 +236,7 @@ func receive(state:Dictionary)->void:
  for collection in [events,warnings]:
   for e in collection:e.at=Vector2(float(e.at[0]),float(e.at[1]))
  if state.get("finished",false):outcome=state.duplicate(true)
+ if between():game.legacy.cosmetics.competitive.explore(str(config.id),expedition.collected)
  var text=Profile.record(game,state)
  if not text.is_empty():settlement=text
 func draw_world()->void:

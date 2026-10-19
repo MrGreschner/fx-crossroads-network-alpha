@@ -163,7 +163,11 @@ func battlegrounds()->Dictionary:
   if not after.is_empty() and after.get("unit")!=null:
    var other=after.unit.pos;var end=Vector2(float(other[0]),float(other[1]))
    var fraction=clampf((render_time-float(before.t))/maxf(.0001,float(after.t)-float(before.t)),0,1)
-   if pos.distance_to(end)<160:pos=pos.lerp(end,fraction)
+   if pos.distance_to(end)<160:
+    pos=pos.lerp(end,fraction);copy.walk=lerpf(float(unit.get("walk",0)),float(after.unit.get("walk",0)),fraction)
+  elif render_time>float(before.t):
+   var elapsed=clampf(render_time-float(before.t),0,.067);var age=maxf(.01,float(before.t)-float(unit.get("last_step",float(before.t)-.1)));var previous=Vector2(float(unit.get("last_x",pos.x)),float(unit.get("last_y",pos.y)));var velocity=(pos-previous)/age
+   if velocity.length()<200:pos+=velocity*elapsed;copy.walk=float(unit.get("walk",0))+velocity.length()*elapsed*.13
   copy.pos=pos;result.units[key]=copy
  for field in ["shots","bombs"]:
   var indexed={}

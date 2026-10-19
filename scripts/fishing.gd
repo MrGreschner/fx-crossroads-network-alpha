@@ -10,6 +10,7 @@ var method_picker:OptionButton
 var bait_picker:OptionButton
 var odds_button:Button
 var bite_window=2.4
+var mastery_window:CanvasLayer
 var game:Node
 var multi=false
 var rng=RandomNumberGenerator.new()
@@ -403,3 +404,7 @@ func xp_popup(amount:int)->void:
  var at:Vector2=game._local_draw_position() if game.has_method("_local_draw_position") else game.local_pos
  label.position=at-game.camera-Vector2(40,70)
  var tween=create_tween();tween.set_parallel(true);tween.tween_property(label,"position:y",label.position.y-36,.95);tween.tween_property(label,"modulate:a",0.0,.95);tween.chain().tween_callback(layer.queue_free)
+
+func open_mastery()->void:
+ if is_instance_valid(mastery_window):return
+ mastery_window=preload("res://scripts/fishing_mastery_view.gd").new();game.add_child(mastery_window);mastery_window.setup(self)

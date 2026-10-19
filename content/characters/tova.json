@@ -5,7 +5,7 @@
   "max_health": 135,
   "speed": 200,
   "run_cost": 0,
-  "lore": "A lantern newt who guides lost travellers through Lanternmarsh. Her reed tongue and waylights keep nearby companions fighting together.",
+  "lore": "A lantern newt who guides lost travellers through Lanternmarsh. Her reed tongue and marsh lanterns keep nearby companions fighting together.",
   "primary": {
     "name": "Reed Tap",
     "style": "v90_reed",
@@ -15,7 +15,7 @@
     "description": "Aim a narrow tongue strike. The tongue and its round tip hit along the visible path for 21 damage; the most injured nearby ally (or you) heals 2 HP."
   },
   "secondary": {
-    "name": "Waylight Steps",
+    "name": "Lantern Steps",
     "style": "v90_steps",
     "damage": 0,
     "cooldown": 7,
@@ -30,10 +30,10 @@
     "range": 145,
     "description": "A five-second lantern refuge at your feet: allies heal 4 HP/sec and gain 15% protection; foes inside are slowed."
   },
-  "passive": "Waylight Lifeblood: you and allied heroes within 160 reach heal 2 HP on a successful attack hit, at most once every 0.75 seconds per hero.",
+  "passive": "Lantern Lifeblood: you and allied heroes within 160 reach heal 2 HP on a successful attack hit, at most once every 0.75 seconds per hero.",
   "passive_effect": "waylight_life",
   "mastery": {
-    "title": "Keeper of Marsh Waylights",
+    "title": "Keeper of Marsh Lanterns",
     "technique": {
       "name": "Long Reed",
       "ability": "primary",

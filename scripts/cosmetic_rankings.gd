@@ -1,6 +1,7 @@
 extends RefCounted
 ## Anonymous portable-profile rankings. Server awards are short-lived and never saved as unlocks.
-const IDS=["rank_week_damage","rank_week_fish","rank_all_damage"]
+const IDS=["rank_week_damage","rank_week_fish","rank_all_damage","week_arena_1","week_arena_2","week_arena_3","week_gate","week_descent","week_market"]
+const RANK_KEYS={"rank_week_damage":"week_damage","rank_week_fish":"week_fish","rank_all_damage":"all_damage","week_arena_1":"week_wins","week_arena_2":"week_kos","week_arena_3":"week_ratio","week_gate":"week_explore","week_descent":"all_descent","week_market":"all_glimmers"}
 const CLOCK=preload("res://scripts/town_clock_math.gd")
 var legacy:Node
 var request:HTTPRequest
@@ -23,10 +24,14 @@ func week()->String:return server_week if not server_week.is_empty() and now()>=
 func state()->Dictionary:
  if not legacy.data.has("cosmetic_rankings"):legacy.data.cosmetic_rankings={"version":1,"fish_week":week(),"fish":0.0,"fish_species":"","enabled":IDS.duplicate()}
  var s:Dictionary=legacy.data.cosmetic_rankings
+ if int(s.get("awards_version",1))<2:
+  for id in IDS.slice(3):
+   if id not in s.enabled:s.enabled.append(id)
+  s.awards_version=2
  if str(s.fish_week)!=week():s.fish_week=week();s.fish=0.0;s.fish_species=""
  return s
 static func valid(v:Variant)->bool:
- if not v is Dictionary or v.get("version")!=1 or not v.get("fish_week") is String or v.fish_week.length()!=10 or not v.get("enabled") is Array or v.enabled.size()>3:return false
+ if not v is Dictionary or v.get("version")!=1 or not v.get("fish_week") is String or v.fish_week.length()!=10 or not v.get("enabled") is Array or v.enabled.size()>IDS.size():return false
  if not (v.get("fish") is int or v.get("fish") is float) or not is_finite(float(v.fish)) or float(v.fish)<0 or float(v.fish)>10000:return false
  if not v.get("fish_species") is String:return false
  if float(v.fish)>0:
@@ -53,7 +58,8 @@ func weekly_damage()->float:
 func scores()->Dictionary:
  var activity=legacy.get_tree().root.get_node("FXActivity");activity.identity(legacy.game)
  var lifetime=minf(float(legacy.data.tasks.get("damage",0)),1e12)
- return {"version":1,"profile":str(legacy.data.analytics_id),"week":week(),"lifetime":lifetime,"damage":minf(lifetime,weekly_damage()),"fish":float(state().fish),"fish_species":str(state().fish_species)}
+ var c=legacy.cosmetics.competitive.state()
+ return {"wins":int(c.wins),"kos":int(c.kos),"deaths":int(c.deaths),"matches":int(c.matches),"explore":int(c.explore),"descent":int(legacy.card.state().descent_best),"glimmers":int(legacy.glimmers.state().earned),"version":1,"profile":str(legacy.data.analytics_id),"week":week(),"lifetime":lifetime,"damage":minf(lifetime,weekly_damage()),"fish":float(state().fish),"fish_species":str(state().fish_species)}
 func catch_fish(catch:Dictionary)->void:
  if not allowed():return
  if float(catch.kg)>float(state().fish):state().fish=float(catch.kg);state().fish_species=str(catch.species)
@@ -78,7 +84,7 @@ func toggle(id:String)->void:
  else:state().enabled.append(id)
  legacy.save();notify()
 func lobby_payload()->Dictionary:
- return {"rank_ticket":str(snapshot.get("rank_ticket","")) if fresh() else "","rank_enabled":state().enabled,"rank_badges":badges().filter(func(id):return enabled(str(id))),"rank_until":int(snapshot.get("expires",0)) if fresh() else 0,"rank_week":str(snapshot.get("week",""))}
+ return {"rank_pennant":int(snapshot.get("pennant",0)) if fresh() else 0,"rank_ticket":str(snapshot.get("rank_ticket","")) if fresh() else "","rank_enabled":state().enabled,"rank_badges":badges().filter(func(id):return enabled(str(id))),"rank_until":int(snapshot.get("expires",0)) if fresh() else 0,"rank_week":str(snapshot.get("week",""))}
 func display_payload()->Dictionary:
  var value=lobby_payload();value.erase("rank_ticket");value.erase("rank_enabled");return value
 func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
@@ -91,7 +97,7 @@ func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArra
  if result!=HTTPRequest.RESULT_SUCCESS or code!=200 or not data is Dictionary:
   status="Rankings unavailable • local cosmetics still work";delay=1 if code==409 else 30+randf()*10;return
  var found:Variant=data.get("badges",null)
- if not found is Array or found.size()>3 or not data.get("rank_ticket") is String or str(data.rank_ticket).length()>2048:return
+ if not found is Array or found.size()>IDS.size() or not data.get("rank_ticket") is String or str(data.rank_ticket).length()>2048:return
  for id in found:
   if id not in IDS:return
  if not data.get("expires") is float or not data.get("server_time") is float or not data.get("ranks") is Dictionary:return

@@ -87,6 +87,7 @@ func sync_match(match_id:String,mode:String,random_heroes:bool,hero:String,stats
   if added>0:legacy.add_damage(hero,added)
   seen.damage=maxf(total,float(seen.damage))
  seen["mode"]=mode;seen["random"]=random_heroes
+ legacy.cosmetics.competitive.match_stats(match_id,mode,stats)
  if mode!="arena":return
  var record:Dictionary=state().arena["random" if random_heroes else "standard"]
  for key in ["kills","npc_kills","deaths"]:
@@ -99,6 +100,7 @@ func arena_result(match_id:String,random_heroes:bool,outcome:String)->void:
  if (bool(legacy.data.teacher) or preload("res://scripts/profile_store.gd").progression_blocked()) or match_id.is_empty() or outcome not in ["win","loss","draw"]:return
  var seen:=cursor(match_id)
  if bool(seen.done):return
+ legacy.cosmetics.competitive.result(match_id,outcome)
  seen.done=true
  if outcome!="loss" or legacy.arcade and not legacy.game.results_reason.is_empty():legacy.weekly.advance("arena_matches",1)
  if outcome=="win":legacy.weekly.advance("arena_wins",1)

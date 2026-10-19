@@ -31,7 +31,9 @@ func advance(key:String,value:int,maximum:bool=false)->void:
  var counts:Dictionary=state().counts;var before=int(counts.get(key,0));var after=mini(1000000,maxi(before,value) if maximum else before+value)
  if after==before:return
  counts[key]=after
- for reward in REWARDS.values():
+ for id in REWARDS:
+  if id in preload("res://scripts/cosmetic_rankings.gd").IDS:continue
+  var reward=REWARDS[id]
   if str(reward.key)==key and before<int(reward.goal) and after>=int(reward.goal):legacy.cosmetics.notify();legacy.gardening.find_seed("mission")
  legacy.save()
 func fishing_task()->Dictionary:
@@ -42,20 +44,24 @@ func catch_fish(catch:Dictionary)->void:
  var task=fishing_task()
  if str(catch.species)==str(task.species) and float(catch.kg)>=float(task.kg):advance("fish",1,true)
 func earned(id:String)->bool:
+ if id in preload("res://scripts/cosmetic_rankings.gd").IDS:return id in legacy.cosmetics.rankings.badges()
  if not REWARDS.has(id):return false
  return int(state().counts.get(REWARDS[id].key,0))>=int(REWARDS[id].goal)
 func goal_text(id:String)->String:
  var task=fishing_task()
- return {"week_fish":"Catch a %s weighing at least %.2f kg" % [F.fish()[task.species].name,task.kg],"week_market":"Complete 1 profitable market day with a sale","week_arena_1":"Finish 1 player-versus-player match","week_arena_2":"Earn 3 player KOs in the arena","week_arena_3":"Win 2 player-versus-player matches","week_descent":"Clear Descent floor 10","week_challenge":"Complete 2 lodge trials","week_gate":"Clear Gate Defence wave 10"}.get(id,"")
+ return {"week_fish":"Catch a %s weighing at least %.2f kg" % [F.fish()[task.species].name,task.kg],"week_market":"Hold a server top-10 place for all-time Glimmers earned; spending does not reduce your total","week_arena_1":"Weekly PvP wins: top 30 Bronze, top 15 Silver, top 5 Gold. Human-only Arena and Battleground matches count","week_arena_2":"Hold a server top-10 place for player KOs this week","week_arena_3":"Lead the weekly KO/death ratio with at least 10 KOs and 5 completed human-only PvP matches. KOs / max(1, deaths); ties: more KOs, then fewer deaths","week_descent":"Hold a server top-5 place for deepest Ram’s Descent floor reached, all time","week_challenge":"Complete 2 lodge trials","week_gate":"Hold a server top-5 place for cleared, visited Between sections this week. Collect a defended section’s Waylight deposit to record it"}.get(id,"")
+
 func open_board()->void:
  legacy.game.presentation.window("WEEKLY ACTIVITIES • "+week(),"weekly_activities")
  var body=legacy.game.presentation.content
- legacy.game.presentation.label(body,"Earn appearance rewards, then equip one at the cosmetic pavilion. Sunday 00:00 starts a fresh week on this device. Existing records do not auto-complete a new week. Normal play only; arena rewards require human opponents and no bots.",18)
+ legacy.game.presentation.label(body,"Earn appearance rewards, then equip one at the cosmetic pavilion. Server ranking styles update while connected and reset Mondays where weekly. The fishing and lodge activity goals use their own local weekly schedule. PvP awards exclude bot matches.",18)
  var counts:Dictionary=state().counts
  for id in REWARDS:
   var spec:Dictionary=REWARDS[id];var done=earned(id);var box=UI.card(body,("✓ " if done else "")+str(spec.name),goal_text(id));var row=HBoxContainer.new();box.add_child(row)
   var icon=WeeklyIcon.new();icon.effect=id;icon.custom_minimum_size=Vector2(75,80);row.add_child(icon)
   var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(col)
+  if id in preload("res://scripts/cosmetic_rankings.gd").IDS:
+   legacy.game.presentation.label(col,"Currently eligible" if done else "Climb the server rankings • inspect in Gleam Atelier",16);continue
   var bar=ProgressBar.new();bar.max_value=int(spec.goal);bar.value=mini(int(spec.goal),int(counts.get(spec.key,0)));bar.custom_minimum_size.y=18;col.add_child(bar)
   legacy.game.presentation.label(col,"Unlocked for this week" if done else "%d / %d" % [mini(int(spec.goal),int(counts.get(spec.key,0))),spec.goal],16)
   if id=="week_fish":

@@ -4,7 +4,7 @@ config_version=5
 boot_splash/show_image=false
 boot_splash/bg_color=Color(0.03137,0.10588,0.14902,1)
 config/name="Crossroads: Realms Beyond"
-config/version="186"
+config/version="188"
 config/icon="res://assets/crossroads_emblem.svg"
 ; Keep the established desktop save location for existing players.
 config/use_custom_user_dir=true
@@ -29,6 +29,7 @@ textures/canvas_textures/default_texture_filter=0
 pointing/emulate_mouse_from_touch=true
 
 [autoload]
+FXAccount="*res://scripts/cloud_account.gd"
 FXActivity="*res://scripts/activity_analytics.gd"
 FXStudioPartner="*res://scripts/studio_partner.gd"
 FXEducationRoom="*res://scripts/education_room.gd"

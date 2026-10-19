@@ -1,4 +1,5 @@
 import {createCosmeticRankings} from './cosmetic-rankings.mjs';
+import {createAccounts} from './accounts.mjs';
 import {createCommunity} from './community.mjs';
 import {createActivity} from './activity.mjs';
 import http from 'node:http';
@@ -35,12 +36,13 @@ createInterface({input:game.stdout}).on('line',line=>{
 const reporting=createReporting();
 const activity=createActivity({pool:reporting.pool,admin:reporting.admin});
 const rankings=createCosmeticRankings({pool:reporting.pool});
-const community=createCommunity({pool:reporting.pool});
+const accounts=createAccounts({pool:reporting.pool,admin:reporting.admin});
+const community=createCommunity({pool:reporting.pool,accounts});
 const server=http.createServer(async(req,res)=>{
- try{if(await community.handle(req,res))return;if(await rankings.handle(req,res))return;if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
+ try{if(await accounts.handle(req,res))return;if(await community.handle(req,res))return;if(await rankings.handle(req,res))return;if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
- res.end(JSON.stringify({game_name:"Crossroads: Realms Beyond",ready,public_rooms:true,crown_competition:true,ranked_cosmetics:rankings.status(),community_records:community.status(),crown_stages:18,protocol:11,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),activity:activity.status(),supported_realms:JSON.parse(readFileSync(resolve(root,"content/manifest.json"),"utf8")).regions.concat(["wayfarer","between","overcharge"]),supported_modes:["arena","defense","descent","coop","battlegrounds"],gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
+ res.end(JSON.stringify({game_name:"Crossroads: Realms Beyond",ready,public_rooms:true,crown_competition:true,ranked_cosmetics:rankings.status(),community_records:community.status(),accounts:accounts.status(),crown_stages:18,protocol:11,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),activity:activity.status(),supported_realms:JSON.parse(readFileSync(resolve(root,"content/manifest.json"),"utf8")).regions.concat(["wayfarer","between","overcharge"]),supported_modes:["arena","defense","descent","coop","battlegrounds"],gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));
 });
 const wss=new WebSocketServer({noServer:true,maxPayload:16384,perMessageDeflate:false});
 server.on('upgrade',(req,socket,head)=>{

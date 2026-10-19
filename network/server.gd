@@ -338,7 +338,7 @@ func clean_cosmetic(value:Variant)->Dictionary:
  if OS.get_environment("FX_PROXY")=="1":
   var until=value.get("rank_until",0)
   if finite_number(until) and float(until)>Time.get_unix_time_from_system() and float(until)<=Time.get_unix_time_from_system()+95:
-   result.rank_until=int(until);result.rank_week=str(value.get("rank_week","")).left(10);result.rank_badges=[]
+   result.rank_pennant=clampi(int(value.get("rank_pennant",0)),0,3) if finite_number(value.get("rank_pennant",0)) else 0;result.rank_until=int(until);result.rank_week=str(value.get("rank_week","")).left(10);result.rank_badges=[]
    if value.get("rank_badges") is Array:
     for id in value.rank_badges:
      if id in preload("res://scripts/cosmetic_rankings.gd").IDS and id not in result.rank_badges:result.rank_badges.append(id)

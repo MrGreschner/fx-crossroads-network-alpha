@@ -42,13 +42,14 @@
     "color": "#c6dcff",
     "travel_speed": 420,
     "cast_visual": "storm",
-    "description": "Hold Space to show and position Thunderfall\u2019s landing circle. Release to launch the storm orb for 55 area damage.",
+    "description": "Hold Space to show and position Thunderfall\u2019s landing circle. Release to launch the storm orb for 55 area damage. Enemies hit are stunned for 2 seconds.",
     "hold_charge": {
       "seconds": 0
-    }
+    },
+    "stun_duration": 2
   },
-  "passive": "Spell Rhythm: primary cooldown is 20% shorter.",
-  "passive_effect": "quick_primary",
+  "passive": "Storm Aura: you and allied heroes within 160 units move 15% faster while your passive is unlocked. Multiple Storm Auras do not stack.",
+  "passive_effect": "storm_aura",
   "mastery": {
     "title": "Master of Thunder",
     "technique": {
