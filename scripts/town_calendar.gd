@@ -143,7 +143,7 @@ func collect_lights(c:Node2D,camera:Vector2)->void:
  if view.has_point(CAMP) and fire_strength()>.01:lights.append({"pos":CAMP-camera,"radius":190.0,"strength":fire_strength()})
  for source in preload("res://scripts/town_afterglow.gd").light_sources(c):
   if view.has_point(source.at):lights.append({"pos":source.at-camera,"radius":source.radius,"strength":source.strength})
- lights.append({"pos":Vector2(900,670)-camera,"radius":100.0,"strength":.6})
+ lights.append({"pos":Vector2(900,670)-camera,"radius":140.0,"strength":.7,"portal":true})
 func shade_at(p:Vector2,night:float,twilight:float)->Color:
  var light=0.0
  for lamp in lights:
@@ -180,6 +180,9 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
  for lamp in lights:
   if float(lamp.strength)<.1:continue
   var p:Vector2=lamp.pos
+  if lamp.get("portal",false):
+   for radius in [95,70,45]:c.draw_circle(p,radius,Color(.24,.55,1,night*.025))
+   continue
   for radius in [17,10,4]:c.draw_circle(p,radius,Color(1,.79,.4,night*float(lamp.strength)*(.03 if radius>4 else .6)))
  # A silver reflection tracks the moonlit hours over the river, not over the HUD.
  if moon_amount()>.01:

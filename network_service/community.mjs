@@ -2,15 +2,19 @@ import {createHmac} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {rankWeek} from './cosmetic-rankings.mjs';
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),'utf8'));
-const manifest=read('../content/manifest.json'),fish=read('../content/fishing.json').fish;
+const manifest=read('../content/manifest.json'),fish=read('../content/fishing.json').fish,crops=read('../content/gardening.json').seeds;
+const grades={'Common':0,'Uncommon':1,'Rare':2,'Very rare':3,'Legendary':4,'Mystical':5};
+export const monthKey=(now=Date.now())=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',year:'numeric',month:'2-digit'}).format(new Date(now));
 const heroes=new Set(manifest.characters),realms=new Set(manifest.regions);
 export const schema=`CREATE TABLE IF NOT EXISTS crossroads_community_totals(profile text NOT NULL,kind text NOT NULL,key text NOT NULL,value double precision NOT NULL CHECK(value>=0),PRIMARY KEY(profile,kind,key));
 CREATE TABLE IF NOT EXISTS crossroads_community_fish(profile text NOT NULL,scope text NOT NULL,species text NOT NULL,kg double precision NOT NULL CHECK(kg>0),reached_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(profile,scope));
-CREATE INDEX IF NOT EXISTS crossroads_community_fish_weight ON crossroads_community_fish(scope,kg DESC);`;
+CREATE INDEX IF NOT EXISTS crossroads_community_fish_weight ON crossroads_community_fish(scope,kg DESC);
+CREATE TABLE IF NOT EXISTS crossroads_community_rarity(profile text NOT NULL,scope text NOT NULL,species text NOT NULL,kg double precision NOT NULL,grade integer NOT NULL,baseweight double precision NOT NULL,PRIMARY KEY(profile,scope));
+CREATE TABLE IF NOT EXISTS crossroads_community_crops(profile text NOT NULL,scope text NOT NULL,crop text NOT NULL,kg double precision NOT NULL CHECK(kg>0),PRIMARY KEY(profile,scope,crop));`;
 const number=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max;
 export function clean(raw,now=Date.now()){
  if(!raw||raw.version!==1||!/^[a-f0-9]{32}$/.test(raw.profile||''))throw Error('Invalid profile');
- const out={profile:raw.profile,week:rankWeek(now).week,totals:[],fish:[]};
+ const out={profile:raw.profile,week:rankWeek(now).week,totals:[],fish:[],rarest:[],crops:[]};
  for(const [kind,allowed,max]of [['hero',heroes,1e12],['realm',realms,1e6]]){
   const values=raw[kind==='hero'?'hero_damage':'realm_clears'];if(!values||typeof values!=='object'||Array.isArray(values)||Object.keys(values).length>128)throw Error('Invalid totals');
   for(const [key,value]of Object.entries(values)){if(!allowed.has(key)||!number(value,max)||(kind==='realm'&&!Number.isInteger(value)))throw Error('Invalid total');if(value>0)out.totals.push({kind,key,value});}
@@ -22,6 +26,25 @@ export function clean(raw,now=Date.now()){
   if(!Object.hasOwn(fish,entry.species)||!number(entry.kg,Math.min(10000,fish[entry.species].max_kg*4+.01))||entry.kg<=0)throw Error('Invalid fish');
   out.fish.push({scope:scope==='all'?'all':out.week,species:entry.species,kg:entry.kg});
  }
+ for(const scope of ['all','week']){
+  for(const entry of [raw[scope==='all'?'rarest_all':'rarest_week'],raw[scope==='all'?'fish_all':'fish_week']]){
+   if(!entry||!entry.kg||scope==='week'&&raw.week!==out.week)continue;
+   const f=fish[entry.species];if(!f||!number(entry.kg,Math.min(10000,f.max_kg*4+.01))||entry.kg<=0)throw Error('Invalid rare fish');
+   out.rarest.push({scope:scope==='all'?'all':out.week,species:entry.species,kg:entry.kg,grade:grades[f.rarity]??0,baseweight:f.chance??1});
+  }
+ }
+ if(raw.garden_records!==undefined){
+  if(!Array.isArray(raw.garden_records)||raw.garden_records.length>48)throw Error('Invalid garden records');
+  const current=monthKey(now);
+  for(const r of raw.garden_records){
+   const c=crops[r.crop];if(!c||c.source!=='seasonal'||!number(r.kg,c.base_kg*4)||r.kg<=0)throw Error('Invalid crop');
+   if(r.scope!=='all'){
+    if(!/^20[2-9][0-9]-(0[1-9]|1[0-2])$/.test(r.scope)||Number(r.scope.slice(5))!==c.month||r.scope>current)throw Error('Invalid crop season');
+    if(Number(r.scope.slice(0,4))<Number(current.slice(0,4))-2)continue;
+   }
+   out.crops.push({scope:r.scope,crop:r.crop,kg:r.kg});
+  }
+ }
  return out;
 }
 export function postgresStore(pool){return {
@@ -29,14 +52,20 @@ export function postgresStore(pool){return {
   const a=p.totals;
   if(a.length)await pool.query(`INSERT INTO crossroads_community_totals(profile,kind,key,value) SELECT $1,unnest($2::text[]),unnest($3::text[]),unnest($4::float8[]) ON CONFLICT(profile,kind,key) DO UPDATE SET value=GREATEST(crossroads_community_totals.value,EXCLUDED.value)`,[profile,a.map(x=>x.kind),a.map(x=>x.key),a.map(x=>x.value)]);
   for(const f of p.fish)await pool.query(`INSERT INTO crossroads_community_fish(profile,scope,species,kg) VALUES($1,$2,$3,$4) ON CONFLICT(profile,scope) DO UPDATE SET species=CASE WHEN EXCLUDED.kg>crossroads_community_fish.kg THEN EXCLUDED.species ELSE crossroads_community_fish.species END,kg=GREATEST(crossroads_community_fish.kg,EXCLUDED.kg),reached_at=CASE WHEN EXCLUDED.kg>crossroads_community_fish.kg THEN now() ELSE crossroads_community_fish.reached_at END`,[profile,f.scope,f.species,f.kg]);
+  for(const f of p.rarest||[])await pool.query(`INSERT INTO crossroads_community_rarity(profile,scope,species,kg,grade,baseweight) VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT(profile,scope) DO UPDATE SET species=EXCLUDED.species,kg=EXCLUDED.kg,grade=EXCLUDED.grade,baseweight=EXCLUDED.baseweight WHERE (EXCLUDED.grade>crossroads_community_rarity.grade) OR (EXCLUDED.grade=crossroads_community_rarity.grade AND EXCLUDED.baseweight<crossroads_community_rarity.baseweight) OR (EXCLUDED.grade=crossroads_community_rarity.grade AND EXCLUDED.baseweight=crossroads_community_rarity.baseweight AND EXCLUDED.species<crossroads_community_rarity.species) OR (EXCLUDED.species=crossroads_community_rarity.species AND EXCLUDED.kg>crossroads_community_rarity.kg)`,[profile,f.scope,f.species,f.kg,f.grade,f.baseweight]);
+  for(const r of p.crops||[])await pool.query(`INSERT INTO crossroads_community_crops(profile,scope,crop,kg) VALUES($1,$2,$3,$4) ON CONFLICT(profile,scope,crop) DO UPDATE SET kg=GREATEST(crossroads_community_crops.kg,EXCLUDED.kg)`,[profile,r.scope,r.crop,r.kg]);
  },
- async snapshot(week){
+ async snapshot(week,month){
   const heroes=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='hero' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 5`);
   const realms=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='realm' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 5`);
   const between=await pool.query(`SELECT key id,max(value)::float8 value FROM crossroads_community_totals WHERE kind='between' GROUP BY key`);
   const all=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_fish WHERE scope='all' ORDER BY kg DESC,reached_at,species LIMIT 1`);
   const weekly=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_fish WHERE scope=$1 ORDER BY kg DESC,reached_at,species LIMIT 1`,[week]);
-  return {heroes:heroes.rows,realms:realms.rows,between:between.rows,fish_all:all.rows[0]||null,fish_week:weekly.rows[0]||null};
+  const rareall=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_rarity WHERE scope='all' ORDER BY grade DESC,baseweight,species,kg DESC LIMIT 1`);
+  const rareweek=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_rarity WHERE scope=$1 ORDER BY grade DESC,baseweight,species,kg DESC LIMIT 1`,[week]);
+  const cropall=await pool.query(`SELECT crop,max(kg)::float8 kg FROM crossroads_community_crops WHERE scope='all' GROUP BY crop ORDER BY crop LIMIT 12`);
+  const cropmonth=await pool.query(`SELECT crop,max(kg)::float8 kg FROM crossroads_community_crops WHERE scope=$1 GROUP BY crop ORDER BY crop LIMIT 12`,[month]);
+  return {rarest_all:rareall.rows[0]||null,rarest_week:rareweek.rows[0]||null,garden_all:cropall.rows,garden_month:cropmonth.rows,heroes:heroes.rows,realms:realms.rows,between:between.rows,fish_all:all.rows[0]||null,fish_week:weekly.rows[0]||null};
  }
 };}
 export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||'',store,now=()=>Date.now()}={}){
@@ -55,7 +84,7 @@ export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||
   if(++rate.count>1000||pending>=4){send(res,429,{error:'Please retry later'});req.resume();return true;}pending++;
   try{
    if(path.endsWith('/sync')){let size=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),5000);timer.unref();let raw;try{for await(const chunk of req){size+=chunk.length;if(size>32768){send(res,413,{error:'Too large'});req.destroy();return true;}chunks.push(chunk);}raw=JSON.parse(Buffer.concat(chunks));}catch{send(res,400,{error:'Invalid record'});return true;}finally{clearTimeout(timer);}let p;try{p=clean(raw,now());}catch{send(res,400,{error:'Invalid record'});return true;}await store.submit(hash('community:'+p.profile),p);send(res,200,{saved:true,week:p.week});return true;}
-   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week){cache={version:1,week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week)};expires=now()+30000;}
+   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week||cache.month!==monthKey(now())){cache={version:1,month:monthKey(now()),week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week,monthKey(now()))};expires=now()+30000;}
    send(res,200,cache);return true;
   }catch{send(res,503,{error:'Community records unavailable'});return true;}finally{pending--;}
  }

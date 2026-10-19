@@ -63,6 +63,7 @@ func complete(catch:Dictionary,keep:bool)->bool:
  legacy.gardening.find_seed("fishing")
  legacy.weekly.catch_fish(catch)
  legacy.cosmetics.rankings.catch_fish(catch)
+ legacy.community.note_fish(catch)
  save();return true
 func release(id:String)->void:
  for n in state().kept.size():

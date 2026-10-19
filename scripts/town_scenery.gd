@@ -17,6 +17,8 @@ var patrols:Array=[]
 var patrol_times:Array=[]
 var patrol_cycles:Array=[]
 func _init()->void:
+	routes.append([Vector2(-1210,1240),Vector2(-1210,1280),Vector2(-1160,1280),Vector2(-1160,1240)])
+	routes.append([Vector2(-940,1220),Vector2(-940,1280),Vector2(-1000,1280),Vector2(-1000,1220)])
 	for x in range(70,3100,125):trees.append(Vector2(x,-510))
 	for y in [-350,-180,-20]:
 		trees.append(Vector2(65,y));trees.append(Vector2(3040,y))

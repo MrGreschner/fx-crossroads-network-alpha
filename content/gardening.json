@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "max_level": 100,
   "seeds": {
     "orchard0": {
@@ -15,7 +15,9 @@
       "realm": "",
       "food": "sunapple",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "orchard1": {
       "name": "Iron Plum Tree",
@@ -30,7 +32,9 @@
       "realm": "",
       "food": "iron_plum",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "orchard2": {
       "name": "Clear Peach Tree",
@@ -45,7 +49,9 @@
       "realm": "",
       "food": "clear_peach",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "orchard3": {
       "name": "Golden Apple Tree",
@@ -60,7 +66,9 @@
       "realm": "",
       "food": "golden_apple",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "river0": {
       "name": "Mint Patch",
@@ -75,7 +83,9 @@
       "realm": "",
       "food": "mint_leaf",
       "ingredient": "mint",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "river1": {
       "name": "Cool Cucumber Vine",
@@ -90,7 +100,9 @@
       "realm": "",
       "food": "cool_cucumber",
       "ingredient": "mint",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "river2": {
       "name": "River Melon Vine",
@@ -105,7 +117,9 @@
       "realm": "",
       "food": "river_melon",
       "ingredient": "mint",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "river3": {
       "name": "Star Melon Vine",
@@ -120,7 +134,9 @@
       "realm": "",
       "food": "star_melon",
       "ingredient": "mint",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "roots0": {
       "name": "Berry Bed",
@@ -135,7 +151,9 @@
       "realm": "",
       "food": "berry_bun",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "roots1": {
       "name": "Roasting Roots",
@@ -150,7 +168,9 @@
       "realm": "",
       "food": "root_roast",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "roots2": {
       "name": "Stew Garden",
@@ -165,7 +185,9 @@
       "realm": "",
       "food": "hearty_stew",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "roots3": {
       "name": "Silver Pear Tree",
@@ -180,7 +202,9 @@
       "realm": "",
       "food": "silver_pear",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "flowers0": {
       "name": "Antidote Pear Seed",
@@ -195,7 +219,9 @@
       "realm": "",
       "food": "antidote_pear",
       "ingredient": "petal",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "flowers1": {
       "name": "Moonberry Bush",
@@ -210,7 +236,9 @@
       "realm": "",
       "food": "moonberry_tart",
       "ingredient": "petal",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "flowers2": {
       "name": "Tea Blossom",
@@ -225,7 +253,9 @@
       "realm": "",
       "food": "cleansing_tea",
       "ingredient": "petal",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "flowers3": {
       "name": "Dawn Bloom",
@@ -240,7 +270,9 @@
       "realm": "",
       "food": "dawn_bloom",
       "ingredient": "petal",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "forage_sun": {
       "name": "Sunleaf Tea Shrub",
@@ -255,7 +287,9 @@
       "realm": "",
       "food": "forage_sun_food",
       "ingredient": "petal",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "forage_mint": {
       "name": "River Mint Patch",
@@ -270,7 +304,9 @@
       "realm": "",
       "food": "forage_mint_food",
       "ingredient": "mint",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "forage_moon": {
       "name": "Mooncap Nursery",
@@ -285,7 +321,9 @@
       "realm": "",
       "food": "forage_moon_food",
       "ingredient": "mooncap",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "forage_glow": {
       "name": "Glowberry Bush",
@@ -300,7 +338,9 @@
       "realm": "",
       "food": "forage_glow_food",
       "ingredient": "sunleaf",
-      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers."
+      "description": "A familiar garden crop. Harvest it for food, ingredients or Glimmers.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "copper_carrot": {
       "name": "Copper Carrot",
@@ -315,7 +355,9 @@
       "realm": "",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Find seed satchels tucked around town."
+      "description": "Find seed satchels tucked around town.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "honey_pea": {
       "name": "Honey Pea",
@@ -330,7 +372,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mint",
-      "description": "Find seed satchels tucked around town."
+      "description": "Find seed satchels tucked around town.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "velvet_sage": {
       "name": "Velvet Sage",
@@ -345,7 +389,9 @@
       "realm": "",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Find seed satchels tucked around town."
+      "description": "Find seed satchels tucked around town.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "lantern_tomato": {
       "name": "Lantern Tomato",
@@ -360,7 +406,9 @@
       "realm": "",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Sold by Rowan once you reach its gardening level."
+      "description": "Sold by Rowan once you reach its gardening level.",
+      "rarity": "Common",
+      "hunt_weight": 3
     },
     "grove_fern": {
       "name": "Grove Fern",
@@ -375,7 +423,9 @@
       "realm": "grove",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "ember_ginger": {
       "name": "Ember Ginger",
@@ -390,7 +440,9 @@
       "realm": "quarry",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "frost_turnip": {
       "name": "Frost Turnip",
@@ -405,7 +457,9 @@
       "realm": "ice",
       "food": "",
       "ingredient": "mint",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "sunfield_corn": {
       "name": "Sunfield Corn",
@@ -420,7 +474,9 @@
       "realm": "sunfield",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "honeyglass_melon": {
       "name": "Honeyglass Melon",
@@ -435,7 +491,9 @@
       "realm": "honeyglass",
       "food": "",
       "ingredient": "mint",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "silverfall_cress": {
       "name": "Silverfall Cress",
@@ -450,7 +508,9 @@
       "realm": "silverfall",
       "food": "",
       "ingredient": "mint",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "marsh_lotus": {
       "name": "Marsh Lotus",
@@ -465,7 +525,9 @@
       "realm": "lantern_marsh",
       "food": "",
       "ingredient": "petal",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "oath_olive": {
       "name": "Oath Olive",
@@ -480,7 +542,9 @@
       "realm": "shattered_oath",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "astral_orchid": {
       "name": "Astral Orchid",
@@ -495,7 +559,9 @@
       "realm": "astral_rift",
       "food": "",
       "ingredient": "petal",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "moonveil_grape": {
       "name": "Moonveil Grape",
@@ -510,7 +576,9 @@
       "realm": "moonveil",
       "food": "",
       "ingredient": "mooncap",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "clockwork_bean": {
       "name": "Clockwork Bean",
@@ -525,7 +593,9 @@
       "realm": "clockwork_orchard",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "wayfarer_thyme": {
       "name": "Wayfarer Thyme",
@@ -540,7 +610,9 @@
       "realm": "wayfarer",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "river_pearl": {
       "name": "River Pearl Herb",
@@ -555,7 +627,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mint",
-      "description": "A low-chance extra discovery while fishing."
+      "description": "A low-chance extra discovery while fishing.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "tide_mint": {
       "name": "Tide Mint",
@@ -570,7 +644,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mint",
-      "description": "A low-chance extra discovery while fishing."
+      "description": "A low-chance extra discovery while fishing.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "glowkelp": {
       "name": "Glowkelp",
@@ -585,7 +661,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mint",
-      "description": "A low-chance extra discovery while fishing."
+      "description": "A low-chance extra discovery while fishing.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "coral_berry": {
       "name": "Coral Berry",
@@ -600,7 +678,9 @@
       "realm": "",
       "food": "",
       "ingredient": "petal",
-      "description": "A low-chance extra discovery while fishing."
+      "description": "A low-chance extra discovery while fishing.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "rainbell": {
       "name": "Rainbell",
@@ -615,7 +695,9 @@
       "realm": "",
       "food": "",
       "ingredient": "petal",
-      "description": "Find seed satchels tucked around town."
+      "description": "Find seed satchels tucked around town.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "cinder_plum": {
       "name": "Cinder Plum",
@@ -630,7 +712,9 @@
       "realm": "",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "stormroot": {
       "name": "Stormroot",
@@ -645,7 +729,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mooncap",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "prism_bloom": {
       "name": "Prism Bloom",
@@ -660,7 +746,9 @@
       "realm": "",
       "food": "",
       "ingredient": "petal",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "aurora_quince": {
       "name": "Aurora Quince",
@@ -675,7 +763,9 @@
       "realm": "ice",
       "food": "",
       "ingredient": "mint",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "deepwell_truffle": {
       "name": "Deepwell Truffle",
@@ -690,7 +780,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mooncap",
-      "description": "A rare discovery from gathering expeditions."
+      "description": "A rare discovery from gathering expeditions.",
+      "rarity": "Uncommon",
+      "hunt_weight": 3
     },
     "star_anise": {
       "name": "Star Anise",
@@ -705,7 +797,9 @@
       "realm": "astral_rift",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "elder_sunapple": {
       "name": "Elder Sunapple",
@@ -720,7 +814,9 @@
       "realm": "",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "midnight_saffron": {
       "name": "Midnight Saffron",
@@ -735,7 +831,9 @@
       "realm": "",
       "food": "",
       "ingredient": "petal",
-      "description": "A low-chance extra discovery while fishing."
+      "description": "A low-chance extra discovery while fishing.",
+      "rarity": "Rare",
+      "hunt_weight": 3
     },
     "echo_mandrake": {
       "name": "Echo Mandrake",
@@ -750,7 +848,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mooncap",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
     },
     "skyward_cedar": {
       "name": "Skyward Cedar Cone",
@@ -765,7 +865,9 @@
       "realm": "astral_rift",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "Search seed caches near scenery in this realm."
+      "description": "Search seed caches near scenery in this realm.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
     },
     "eternal_lotus": {
       "name": "Eternal Lotus",
@@ -780,7 +882,9 @@
       "realm": "",
       "food": "",
       "ingredient": "petal",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
     },
     "worldroot": {
       "name": "Worldroot",
@@ -795,7 +899,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mooncap",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
     },
     "moon_citron": {
       "name": "Moon Citron",
@@ -810,7 +916,9 @@
       "realm": "",
       "food": "",
       "ingredient": "mint",
-      "description": "A low-chance extra discovery while fishing."
+      "description": "A low-chance extra discovery while fishing.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
     },
     "crossing_rose": {
       "name": "Crossing Rose",
@@ -825,7 +933,9 @@
       "realm": "",
       "food": "",
       "ingredient": "petal",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
     },
     "waylight_bough": {
       "name": "Waylight Bough",
@@ -840,7 +950,429 @@
       "realm": "",
       "food": "",
       "ingredient": "sunleaf",
-      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm."
+      "description": "A rare seed from a defeated roaming Conclave in an Overcharged Realm.",
+      "rarity": "Very rare",
+      "hunt_weight": 3
+    },
+    "glass_pomegranate": {
+      "name": "Glass Pomegranate",
+      "produce": "Glass Pomegranate",
+      "family": "orchard",
+      "level": 32,
+      "seconds": 345600,
+      "xp": 30720,
+      "price": 3840,
+      "seed_price": 0,
+      "source": "mission",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from completed rotating missions and weekly goals.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "velvet_fig": {
+      "name": "Velvet Fig",
+      "produce": "Velvet Fig",
+      "family": "orchard",
+      "level": 40,
+      "seconds": 432000,
+      "xp": 38400,
+      "price": 4800,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "cobalt_thistle": {
+      "name": "Cobalt Thistle",
+      "produce": "Cobalt Thistle",
+      "family": "flowers",
+      "level": 46,
+      "seconds": 604800,
+      "xp": 53760,
+      "price": 6720,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "petal",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "ember_artichoke": {
+      "name": "Ember Artichoke",
+      "produce": "Ember Artichoke",
+      "family": "roots",
+      "level": 50,
+      "seconds": 691200,
+      "xp": 61440,
+      "price": 7680,
+      "seed_price": 0,
+      "source": "mission",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from completed rotating missions and weekly goals.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "spiral_romanesco": {
+      "name": "Spiral Romanesco",
+      "produce": "Spiral Romanesco",
+      "family": "roots",
+      "level": 54,
+      "seconds": 777600,
+      "xp": 69120,
+      "price": 8640,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "inkmorel": {
+      "name": "Inkmorel",
+      "produce": "Inkmorel",
+      "family": "roots",
+      "level": 60,
+      "seconds": 864000,
+      "xp": 76800,
+      "price": 9600,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "ribbon_salsify": {
+      "name": "Ribbon Salsify",
+      "produce": "Ribbon Salsify",
+      "family": "roots",
+      "level": 64,
+      "seconds": 1036800,
+      "xp": 92160,
+      "price": 11520,
+      "seed_price": 0,
+      "source": "mission",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from completed rotating missions and weekly goals.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "crown_protea": {
+      "name": "Crown Protea",
+      "produce": "Crown Protea",
+      "family": "flowers",
+      "level": 70,
+      "seconds": 1209600,
+      "xp": 107520,
+      "price": 13440,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "petal",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Rare",
+      "hunt_weight": 1
+    },
+    "dragon_cacao": {
+      "name": "Dragon Cacao",
+      "produce": "Dragon Cacao",
+      "family": "orchard",
+      "level": 78,
+      "seconds": 1814400,
+      "xp": 161280,
+      "price": 20160,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Legendary",
+      "hunt_weight": 0.14
+    },
+    "cathedral_agave": {
+      "name": "Cathedral Agave",
+      "produce": "Cathedral Agave",
+      "family": "flowers",
+      "level": 84,
+      "seconds": 2073600,
+      "xp": 184320,
+      "price": 23040,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "petal",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Legendary",
+      "hunt_weight": 0.14
+    },
+    "phoenix_strelitzia": {
+      "name": "Phoenix Strelitzia",
+      "produce": "Phoenix Strelitzia",
+      "family": "flowers",
+      "level": 92,
+      "seconds": 2419200,
+      "xp": 215040,
+      "price": 26880,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "petal",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Legendary",
+      "hunt_weight": 0.14
+    },
+    "cosmic_daikon": {
+      "name": "Cosmic Daikon",
+      "produce": "Cosmic Daikon",
+      "family": "roots",
+      "level": 96,
+      "seconds": 3024000,
+      "xp": 268800,
+      "price": 33600,
+      "seed_price": 0,
+      "source": "elite",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "A scarce bonus seed from defeating an entire roaming Conclave in an Overcharged Realm.",
+      "rarity": "Legendary",
+      "hunt_weight": 0.14
+    },
+    "fair_winter_cabbage": {
+      "name": "Winter Cabbage",
+      "produce": "Winter Cabbage",
+      "family": "roots",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 1,
+      "base_kg": 4
+    },
+    "fair_heart_beet": {
+      "name": "Heart Beet",
+      "produce": "Heart Beet",
+      "family": "roots",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 2,
+      "base_kg": 2
+    },
+    "fair_emerald_broccoli": {
+      "name": "Emerald Broccoli",
+      "produce": "Emerald Broccoli",
+      "family": "roots",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 3,
+      "base_kg": 3
+    },
+    "fair_rainbow_chard": {
+      "name": "Rainbow Chard",
+      "produce": "Rainbow Chard",
+      "family": "river",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 4,
+      "base_kg": 1.5
+    },
+    "fair_sunburst_squash": {
+      "name": "Sunburst Squash",
+      "produce": "Sunburst Squash",
+      "family": "river",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 5,
+      "base_kg": 5
+    },
+    "fair_ruby_strawberry": {
+      "name": "Ruby Strawberry",
+      "produce": "Ruby Strawberry",
+      "family": "orchard",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 6,
+      "base_kg": 0.3
+    },
+    "fair_summer_watermelon": {
+      "name": "Summer Watermelon",
+      "produce": "Summer Watermelon",
+      "family": "river",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 7,
+      "base_kg": 12
+    },
+    "fair_golden_sunflower": {
+      "name": "Golden Sunflower",
+      "produce": "Golden Sunflower",
+      "family": "flowers",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 8,
+      "base_kg": 2
+    },
+    "fair_autumn_gourd": {
+      "name": "Autumn Gourd",
+      "produce": "Autumn Gourd",
+      "family": "river",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 9,
+      "base_kg": 7
+    },
+    "fair_harvest_pumpkin": {
+      "name": "Harvest Pumpkin",
+      "produce": "Harvest Pumpkin",
+      "family": "river",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 10,
+      "base_kg": 18
+    },
+    "fair_hearth_parsnip": {
+      "name": "Hearth Parsnip",
+      "produce": "Hearth Parsnip",
+      "family": "roots",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 11,
+      "base_kg": 3
+    },
+    "fair_winter_pineapple": {
+      "name": "Winter Pineapple",
+      "produce": "Winter Pineapple",
+      "family": "orchard",
+      "level": 1,
+      "seconds": 604800,
+      "xp": 24000,
+      "price": 2400,
+      "seed_price": 0,
+      "source": "seasonal",
+      "realm": "",
+      "food": "",
+      "ingredient": "sunleaf",
+      "description": "Grow in the dedicated monthly fair plot. Seven real days; daily care improves size.",
+      "rarity": "Seasonal",
+      "month": 12,
+      "base_kg": 4
     }
   }
 }

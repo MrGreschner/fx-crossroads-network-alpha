@@ -7,12 +7,13 @@
     "amount": 0.04,
     "group": "",
     "position": [
-      1580,
-      100
+      2200,
+      2380
     ],
     "any": false,
     "text": "+4% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 0
   },
   "root1": {
     "name": "Soil Notes",
@@ -24,12 +25,13 @@
     "amount": 0.03,
     "group": "",
     "position": [
-      1580,
-      210
+      2200,
+      2230
     ],
     "any": false,
     "text": "+3% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 1
   },
   "root2": {
     "name": "Patient Hands",
@@ -41,12 +43,13 @@
     "amount": 0.03,
     "group": "",
     "position": [
-      1580,
-      320
+      2200,
+      2080
     ],
     "any": false,
     "text": "+3% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 2
   },
   "root3": {
     "name": "Living Soil",
@@ -58,12 +61,13 @@
     "amount": 0.03,
     "group": "",
     "position": [
-      1580,
-      430
+      2200,
+      1930
     ],
     "any": false,
     "text": "+3% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 3
   },
   "cultivation0": {
     "name": "Cultivation",
@@ -75,12 +79,13 @@
     "amount": 0.05,
     "group": "",
     "position": [
-      500,
-      600
+      700,
+      1760
     ],
     "any": false,
     "text": "+5% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 4
   },
   "cultivation1": {
     "name": "Season Study",
@@ -92,12 +97,13 @@
     "amount": 0.05,
     "group": "",
     "position": [
-      500,
-      720
+      700,
+      1610
     ],
     "any": false,
     "text": "+5% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 5
   },
   "cultivation2": {
     "name": "Careful Tending",
@@ -109,12 +115,13 @@
     "amount": 0.04,
     "group": "",
     "position": [
-      500,
-      840
+      700,
+      1460
     ],
     "any": false,
     "text": "+4% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 6
   },
   "cultivationfork0": {
     "name": "Save the Seed",
@@ -126,12 +133,13 @@
     "amount": 0.08,
     "group": "cultivationfork",
     "position": [
-      360,
-      960
+      570,
+      1300
     ],
     "any": false,
     "text": "+8% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 7
   },
   "cultivationfork1": {
     "name": "Good Harvest",
@@ -143,12 +151,13 @@
     "amount": 0.12,
     "group": "cultivationfork",
     "position": [
-      640,
-      960
+      830,
+      1300
     ],
     "any": false,
     "text": "+12% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 8
   },
   "cultivation_s00": {
     "name": "Orchard",
@@ -160,12 +169,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      150,
-      1160
+      260,
+      1030
     ],
     "any": false,
     "text": "Orchard crops: +8% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 9
   },
   "cultivation_s0choice0": {
     "name": "Abundance",
@@ -177,12 +187,13 @@
     "amount": 0.1,
     "group": "cultivation_s0choice",
     "position": [
-      80,
-      1330
+      160,
+      810
     ],
     "any": false,
     "text": "Orchard crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 10
   },
   "cultivation_s0choice1": {
     "name": "Preservation",
@@ -194,12 +205,13 @@
     "amount": 0.1,
     "group": "cultivation_s0choice",
     "position": [
-      220,
-      1330
+      360,
+      810
     ],
     "any": false,
     "text": "Orchard crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 11
   },
   "cultivation_s02": {
     "name": "Orchard Craft",
@@ -212,12 +224,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      150,
-      1510
+      260,
+      590
     ],
     "any": true,
     "text": "Orchard crops: +12% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 12
   },
   "cultivation_s03": {
     "name": "Orchard Legacy",
@@ -229,12 +242,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      150,
-      1680
+      260,
+      350
     ],
     "any": false,
     "text": "Orchard crops: +15% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 13
   },
   "cultivation_s10": {
     "name": "Kitchen Garden",
@@ -246,12 +260,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      500,
-      1160
+      700,
+      1030
     ],
     "any": false,
     "text": "River crops: +8% extra ingredient chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 14
   },
   "cultivation_s1choice0": {
     "name": "Abundance",
@@ -263,12 +278,13 @@
     "amount": 0.1,
     "group": "cultivation_s1choice",
     "position": [
-      430,
-      1330
+      600,
+      810
     ],
     "any": false,
     "text": "River crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 15
   },
   "cultivation_s1choice1": {
     "name": "Preservation",
@@ -280,12 +296,13 @@
     "amount": 0.1,
     "group": "cultivation_s1choice",
     "position": [
-      570,
-      1330
+      800,
+      810
     ],
     "any": false,
     "text": "River crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 16
   },
   "cultivation_s12": {
     "name": "Kitchen Garden Craft",
@@ -298,12 +315,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      500,
-      1510
+      700,
+      590
     ],
     "any": true,
     "text": "River crops: +12% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 17
   },
   "cultivation_s13": {
     "name": "Kitchen Garden Legacy",
@@ -315,12 +333,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      500,
-      1680
+      700,
+      350
     ],
     "any": false,
     "text": "River crops: +15% seed discovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 18
   },
   "cultivation_s20": {
     "name": "Deep Roots",
@@ -332,12 +351,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      850,
-      1160
+      1140,
+      1030
     ],
     "any": false,
     "text": "Roots crops: +8% seed discovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "roots"
+    "family": "roots",
+    "badge": 19
   },
   "cultivation_s2choice0": {
     "name": "Abundance",
@@ -349,12 +369,13 @@
     "amount": 0.1,
     "group": "cultivation_s2choice",
     "position": [
-      780,
-      1330
+      1040,
+      810
     ],
     "any": false,
     "text": "Roots crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "roots"
+    "family": "roots",
+    "badge": 20
   },
   "cultivation_s2choice1": {
     "name": "Preservation",
@@ -366,12 +387,13 @@
     "amount": 0.1,
     "group": "cultivation_s2choice",
     "position": [
-      920,
-      1330
+      1240,
+      810
     ],
     "any": false,
     "text": "Roots crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "roots"
+    "family": "roots",
+    "badge": 21
   },
   "cultivation_s22": {
     "name": "Deep Roots Craft",
@@ -384,12 +406,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      850,
-      1510
+      1140,
+      590
     ],
     "any": true,
     "text": "Roots crops: +12% extra ingredient chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "roots"
+    "family": "roots",
+    "badge": 22
   },
   "cultivation_s23": {
     "name": "Deep Roots Legacy",
@@ -401,12 +424,13 @@
     "amount": 1,
     "group": "",
     "position": [
-      850,
-      1680
+      1140,
+      350
     ],
     "any": false,
     "text": "+1 garden bed. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 23
   },
   "botany0": {
     "name": "Botany",
@@ -418,12 +442,13 @@
     "amount": 0.05,
     "group": "",
     "position": [
-      1580,
-      600
+      2200,
+      1760
     ],
     "any": false,
     "text": "+5% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 24
   },
   "botany1": {
     "name": "Season Study",
@@ -435,12 +460,13 @@
     "amount": 0.05,
     "group": "",
     "position": [
-      1580,
-      720
+      2200,
+      1610
     ],
     "any": false,
     "text": "+5% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 25
   },
   "botany2": {
     "name": "Careful Tending",
@@ -452,12 +478,13 @@
     "amount": 0.04,
     "group": "",
     "position": [
-      1580,
-      840
+      2200,
+      1460
     ],
     "any": false,
     "text": "+4% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 26
   },
   "botanyfork0": {
     "name": "Save the Seed",
@@ -469,12 +496,13 @@
     "amount": 0.08,
     "group": "botanyfork",
     "position": [
-      1440,
-      960
+      2070,
+      1300
     ],
     "any": false,
     "text": "+8% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 27
   },
   "botanyfork1": {
     "name": "Good Harvest",
@@ -486,12 +514,13 @@
     "amount": 0.12,
     "group": "botanyfork",
     "position": [
-      1720,
-      960
+      2330,
+      1300
     ],
     "any": false,
     "text": "+12% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 28
   },
   "botany_s00": {
     "name": "Herbalist",
@@ -503,12 +532,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      1230,
-      1160
+      1760,
+      1030
     ],
     "any": false,
     "text": "Flowers crops: +8% extra ingredient chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 29
   },
   "botany_s0choice0": {
     "name": "Abundance",
@@ -520,12 +550,13 @@
     "amount": 0.1,
     "group": "botany_s0choice",
     "position": [
-      1160,
-      1330
+      1660,
+      810
     ],
     "any": false,
     "text": "Flowers crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 30
   },
   "botany_s0choice1": {
     "name": "Preservation",
@@ -537,12 +568,13 @@
     "amount": 0.1,
     "group": "botany_s0choice",
     "position": [
-      1300,
-      1330
+      1860,
+      810
     ],
     "any": false,
     "text": "Flowers crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 31
   },
   "botany_s02": {
     "name": "Herbalist Craft",
@@ -555,12 +587,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      1230,
-      1510
+      1760,
+      590
     ],
     "any": true,
     "text": "Flowers crops: +12% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 32
   },
   "botany_s03": {
     "name": "Herbalist Legacy",
@@ -572,12 +605,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      1230,
-      1680
+      1760,
+      350
     ],
     "any": false,
     "text": "Flowers crops: +15% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 33
   },
   "botany_s10": {
     "name": "Florist",
@@ -589,12 +623,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      1580,
-      1160
+      2200,
+      1030
     ],
     "any": false,
     "text": "Flowers crops: +8% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 34
   },
   "botany_s1choice0": {
     "name": "Abundance",
@@ -606,12 +641,13 @@
     "amount": 0.1,
     "group": "botany_s1choice",
     "position": [
-      1510,
-      1330
+      2100,
+      810
     ],
     "any": false,
     "text": "Flowers crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 35
   },
   "botany_s1choice1": {
     "name": "Preservation",
@@ -623,12 +659,13 @@
     "amount": 0.1,
     "group": "botany_s1choice",
     "position": [
-      1650,
-      1330
+      2300,
+      810
     ],
     "any": false,
     "text": "Flowers crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 36
   },
   "botany_s12": {
     "name": "Florist Craft",
@@ -641,12 +678,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      1580,
-      1510
+      2200,
+      590
     ],
     "any": true,
     "text": "Flowers crops: +12% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 37
   },
   "botany_s13": {
     "name": "Florist Legacy",
@@ -658,12 +696,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      1580,
-      1680
+      2200,
+      350
     ],
     "any": false,
     "text": "Flowers crops: +15% seed discovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "flowers"
+    "family": "flowers",
+    "badge": 38
   },
   "botany_s20": {
     "name": "Wild Nursery",
@@ -675,12 +714,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      1930,
-      1160
+      2640,
+      1030
     ],
     "any": false,
     "text": "+8% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 39
   },
   "botany_s2choice0": {
     "name": "Abundance",
@@ -692,12 +732,13 @@
     "amount": 0.1,
     "group": "botany_s2choice",
     "position": [
-      1860,
-      1330
+      2540,
+      810
     ],
     "any": false,
     "text": "+10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 40
   },
   "botany_s2choice1": {
     "name": "Preservation",
@@ -709,12 +750,13 @@
     "amount": 0.1,
     "group": "botany_s2choice",
     "position": [
-      2000,
-      1330
+      2740,
+      810
     ],
     "any": false,
     "text": "+10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 41
   },
   "botany_s22": {
     "name": "Wild Nursery Craft",
@@ -727,12 +769,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      1930,
-      1510
+      2640,
+      590
     ],
     "any": true,
     "text": "+12% extra ingredient chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 42
   },
   "botany_s23": {
     "name": "Wild Nursery Legacy",
@@ -744,12 +787,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      1930,
-      1680
+      2640,
+      350
     ],
     "any": false,
     "text": "+15% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 43
   },
   "stewardship0": {
     "name": "Stewardship",
@@ -761,12 +805,13 @@
     "amount": 0.05,
     "group": "",
     "position": [
-      2660,
-      600
+      3700,
+      1760
     ],
     "any": false,
     "text": "+5% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 44
   },
   "stewardship1": {
     "name": "Season Study",
@@ -778,12 +823,13 @@
     "amount": 0.05,
     "group": "",
     "position": [
-      2660,
-      720
+      3700,
+      1610
     ],
     "any": false,
     "text": "+5% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 45
   },
   "stewardship2": {
     "name": "Careful Tending",
@@ -795,12 +841,13 @@
     "amount": 0.04,
     "group": "",
     "position": [
-      2660,
-      840
+      3700,
+      1460
     ],
     "any": false,
     "text": "+4% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 46
   },
   "stewardshipfork0": {
     "name": "Save the Seed",
@@ -812,12 +859,13 @@
     "amount": 0.08,
     "group": "stewardshipfork",
     "position": [
-      2520,
-      960
+      3570,
+      1300
     ],
     "any": false,
     "text": "+8% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 47
   },
   "stewardshipfork1": {
     "name": "Good Harvest",
@@ -829,12 +877,13 @@
     "amount": 0.12,
     "group": "stewardshipfork",
     "position": [
-      2800,
-      960
+      3830,
+      1300
     ],
     "any": false,
     "text": "+12% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 48
   },
   "stewardship_s00": {
     "name": "Seed Seeker",
@@ -846,12 +895,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      2310,
-      1160
+      3260,
+      1030
     ],
     "any": false,
     "text": "+8% seed discovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 49
   },
   "stewardship_s0choice0": {
     "name": "Abundance",
@@ -863,12 +913,13 @@
     "amount": 0.1,
     "group": "stewardship_s0choice",
     "position": [
-      2240,
-      1330
+      3160,
+      810
     ],
     "any": false,
     "text": "+10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 50
   },
   "stewardship_s0choice1": {
     "name": "Preservation",
@@ -880,12 +931,13 @@
     "amount": 0.1,
     "group": "stewardship_s0choice",
     "position": [
-      2380,
-      1330
+      3360,
+      810
     ],
     "any": false,
     "text": "+10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 51
   },
   "stewardship_s02": {
     "name": "Seed Seeker Craft",
@@ -898,12 +950,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      2310,
-      1510
+      3260,
+      590
     ],
     "any": true,
     "text": "+12% harvest XP. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 52
   },
   "stewardship_s03": {
     "name": "Seed Seeker Legacy",
@@ -915,12 +968,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      2310,
-      1680
+      3260,
+      350
     ],
     "any": false,
     "text": "+15% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 53
   },
   "stewardship_s10": {
     "name": "Waterside",
@@ -932,12 +986,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      2660,
-      1160
+      3700,
+      1030
     ],
     "any": false,
     "text": "River crops: +8% Glimmer sale value. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 54
   },
   "stewardship_s1choice0": {
     "name": "Abundance",
@@ -949,12 +1004,13 @@
     "amount": 0.1,
     "group": "stewardship_s1choice",
     "position": [
-      2590,
-      1330
+      3600,
+      810
     ],
     "any": false,
     "text": "River crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 55
   },
   "stewardship_s1choice1": {
     "name": "Preservation",
@@ -966,12 +1022,13 @@
     "amount": 0.1,
     "group": "stewardship_s1choice",
     "position": [
-      2730,
-      1330
+      3800,
+      810
     ],
     "any": false,
     "text": "River crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 56
   },
   "stewardship_s12": {
     "name": "Waterside Craft",
@@ -984,12 +1041,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      2660,
-      1510
+      3700,
+      590
     ],
     "any": true,
     "text": "River crops: +12% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 57
   },
   "stewardship_s13": {
     "name": "Waterside Legacy",
@@ -1001,12 +1059,13 @@
     "amount": 0.15,
     "group": "",
     "position": [
-      2660,
-      1680
+      3700,
+      350
     ],
     "any": false,
     "text": "River crops: +15% seed discovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "river"
+    "family": "river",
+    "badge": 58
   },
   "stewardship_s20": {
     "name": "Homestead",
@@ -1018,12 +1077,13 @@
     "amount": 0.08,
     "group": "",
     "position": [
-      3010,
-      1160
+      4140,
+      1030
     ],
     "any": false,
     "text": "Orchard crops: +8% growth time reduction. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 59
   },
   "stewardship_s2choice0": {
     "name": "Abundance",
@@ -1035,12 +1095,13 @@
     "amount": 0.1,
     "group": "stewardship_s2choice",
     "position": [
-      2940,
-      1330
+      4040,
+      810
     ],
     "any": false,
     "text": "Orchard crops: +10% extra harvest chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 60
   },
   "stewardship_s2choice1": {
     "name": "Preservation",
@@ -1052,12 +1113,13 @@
     "amount": 0.1,
     "group": "stewardship_s2choice",
     "position": [
-      3080,
-      1330
+      4240,
+      810
     ],
     "any": false,
     "text": "Orchard crops: +10% seed recovery chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 61
   },
   "stewardship_s22": {
     "name": "Homestead Craft",
@@ -1070,12 +1132,13 @@
     "amount": 0.12,
     "group": "",
     "position": [
-      3010,
-      1510
+      4140,
+      590
     ],
     "any": true,
     "text": "Orchard crops: +12% extra ingredient chance. Applies when you plant or harvest; does not affect combat.",
-    "family": "orchard"
+    "family": "orchard",
+    "badge": 62
   },
   "stewardship_s23": {
     "name": "Homestead Legacy",
@@ -1087,11 +1150,12 @@
     "amount": 1,
     "group": "",
     "position": [
-      3010,
-      1680
+      4140,
+      350
     ],
     "any": false,
     "text": "+1 garden bed. Applies when you plant or harvest; does not affect combat.",
-    "family": ""
+    "family": "",
+    "badge": 63
   }
 }

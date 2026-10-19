@@ -1,6 +1,6 @@
 extends RefCounted
 ## Bounded, culled facade accents; emissive details render after the ambient tint.
-const TORCHES=[Vector2(-948,430),Vector2(-612,430)]
+const TORCHES=[Vector2(-1205,1210),Vector2(-955,1210),Vector2(-948,430),Vector2(-612,430)]
 const WINDOWS={
  "character_hall_v65":[Vector2(360,255),[Rect2(72,126,16,41),Rect2(283,126,16,41)]],
  "healer_shack":[Vector2(290,220),[Rect2(52,117,44,33),Rect2(212,117,25,33)]],

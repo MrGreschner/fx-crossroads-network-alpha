@@ -32,7 +32,7 @@ func advance(key:String,value:int,maximum:bool=false)->void:
  if after==before:return
  counts[key]=after
  for reward in REWARDS.values():
-  if str(reward.key)==key and before<int(reward.goal) and after>=int(reward.goal):legacy.cosmetics.notify()
+  if str(reward.key)==key and before<int(reward.goal) and after>=int(reward.goal):legacy.cosmetics.notify();legacy.gardening.find_seed("mission")
  legacy.save()
 func fishing_task()->Dictionary:
  var day=int(Time.get_unix_time_from_datetime_string(week()+"T00:00:00"))/86400

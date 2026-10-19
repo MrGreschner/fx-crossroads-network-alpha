@@ -11,6 +11,9 @@ var selected_perk=""
 var note=""
 var tick:float=0
 var labels:Array=[]
+var inventory_page=0
+var tree_window:CanvasLayer
+var fair=preload("res://scripts/giant_garden.gd").new()
 var world_region=""
 var caches:Array=[]
 static func crops()->Dictionary:
@@ -30,7 +33,7 @@ func allowed()->bool:return not bool(legacy.data.get("teacher",false)) and not p
 func setup(owner:Node)->void:
  legacy=owner;world_region="";caches.clear()
  var migrate=not legacy.data.has("gardening") and not legacy.arcade and legacy.game.provisions.crop in ["growing","ready"]
- state();save()
+ state();fair.setup(self);save()
  if migrate:legacy.game.provisions.crop="empty";legacy.game.provisions.save()
 func state()->Dictionary:
  if not legacy.data.has("gardening"):
@@ -105,6 +108,7 @@ func grant(id:String,count:int=1)->void:
 func plant(index:int,id:String)->void:
  if not allowed() or index<0 or index>=capacity() or not crops().has(id):return
  var s=state();var spec=crops()[id]
+ if spec.source=="seasonal":message("Plant monthly crops in the Giant growers fair plot.");return
  if not s.beds[index].is_empty():message("Harvest this bed before planting again.");return
  if level()<int(spec.level):message("Requires Gardening level %d." % int(spec.level));return
  if int(s.seeds.get(id,0))<1:message("Find or buy this seed first.");return
@@ -150,21 +154,28 @@ func reset()->void:
  state().perks={};state().resets=int(state().resets)+1;save();message("Gardening mastery reset. Active plants and XP stay safe.")
 func find_seed(source:String,realm:String="",forced:bool=false)->String:
  if not allowed():return ""
- var chance=.20 if source=="elite" else .08 if source=="gather" else .012
- var choices=[]
+ var chance=.20 if source=="elite" else .14 if source=="mission" else .08 if source=="gather" else .012
+ var choices=[];var total=0.0
  for id in crops():
   var p=crops()[id]
-  if p.source==source and (source!="realm" or p.realm==realm) and int(p.level)<=mini(100,level()+20):choices.append(id)
+  if p.source==source and (source!="realm" or p.realm==realm) and int(p.level)<=mini(100,level()+20):choices.append(id);total+=float(p.get("hunt_weight",3))
  if choices.is_empty():return ""
- var id=str(choices.pick_random())
+ var roll=randf()*total;var id=str(choices.back())
+ for key in choices:
+  roll-=float(crops()[key].get("hunt_weight",3))
+  if roll<=0:id=str(key);break
  if not forced and randf()>=minf(.45,chance*(1+bonus("hunt",str(crops()[id].family)))):return ""
  grant(id);save();message("SEED DISCOVERED • "+str(crops()[id].name));return id
+func open_tree()->void:
+ if is_instance_valid(tree_window):return
+ tree_window=preload("res://scripts/garden_mastery_view.gd").new();legacy.add_child(tree_window);tree_window.setup(self)
 func open()->void:legacy.open_page("gardening")
 func build(parent:Node)->void:preload("res://scripts/garden_ui.gd").build(self,parent)
 func step(delta:float)->void:
  tick+=delta
  if tick<1:return
  tick=0
+ fair.step()
  for entry in labels:
   if is_instance_valid(entry.label):entry.label.text=bed_text(int(entry.index))
 func bed_text(index:int)->String:

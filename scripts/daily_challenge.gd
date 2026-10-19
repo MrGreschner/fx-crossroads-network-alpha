@@ -72,7 +72,7 @@ func event(kind:String,count:int,party_size:int,realm:String="",hero:String="")-
  if count<=int(progress.get("best",0)):return
  progress.best=maxi(int(progress.get("best",0)),mini(count,int(goal.target)))
  if count>=int(goal.target):
-  progress.done=true;notify_network()
+  progress.done=true;notify_network();legacy.gardening.find_seed("mission")
  legacy.save()
 func notify_network()->void:
  # Existing reliable hero/cosmetic metadata carries the reward, not every movement packet.

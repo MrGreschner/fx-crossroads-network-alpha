@@ -9,14 +9,16 @@ static func icon(parent:Node,id:String,stage:int,dimensions:Vector2=Vector2(100,
 static func refresh(g:RefCounted)->void:g.legacy.render()
 static func build(g:RefCounted,parent:Node)->void:
  g.labels.clear();var lv=g.level();var state=g.state()
- label(parent,"GARDENING • LEVEL %d / 100    •    %d XP    •    %d Glimmers" % [lv,int(state.xp),g.legacy.glimmers.balance()],21)
- label(parent,"%d beds available • %d / %d seeds discovered • Harvest to gain XP; plants grow while away and never spoil." % [g.capacity(),state.seen.size(),g.crops().size()],15)
- var bar=ProgressBar.new();bar.show_percentage=false;bar.custom_minimum_size.y=8;bar.value=100 if lv==100 else 100.0*(int(state.xp)-g.threshold(lv))/maxi(1,g.threshold(lv+1)-g.threshold(lv));parent.add_child(bar)
+ label(parent,"GARDENING • Lv %d / 100 • %d XP • %d beds • %d / %d seeds • %d Glimmers" % [lv,int(state.xp),g.capacity(),state.seen.size(),g.crops().size(),g.legacy.glimmers.balance()],18)
+ if g.page=="beds":
+  var bar=ProgressBar.new();bar.show_percentage=false;bar.custom_minimum_size.y=8;bar.value=100 if lv==100 else 100.0*(int(state.xp)-g.threshold(lv))/maxi(1,g.threshold(lv+1)-g.threshold(lv));parent.add_child(bar)
  var tabs=HFlowContainer.new();parent.add_child(tabs)
- for entry in [["Garden beds","beds"],["Seeds & harvests","inventory"],["Mastery tree","tree"]]:
-  var b=button(tabs,entry[0],func():g.page=entry[1];refresh(g));b.toggle_mode=true;b.set_pressed_no_signal(g.page==entry[1]);b.custom_minimum_size.x=190
- if not g.note.is_empty():label(parent,g.note,18).modulate=Color("#f3d294")
+ for entry in [["Garden beds","beds"],["Seeds & harvests","inventory"],["Mastery tree","tree"],["Giant growers fair","fair"]]:
+  var b=button(tabs,entry[0],func():
+   if entry[1]=="tree":g.open_tree()
+   else:g.page=entry[1];refresh(g));b.toggle_mode=true;b.set_pressed_no_signal(g.page==entry[1]);b.custom_minimum_size.x=190
  if g.page=="tree":tree(g,parent);return
+ if g.page=="fair":g.fair.build(parent);return
  if g.page=="inventory":inventory(g,parent);return
  label(parent,"One seed per bed. Extra beds unlock at levels 5, 15, 30, 50, 75, 90 and 100. Harvests become food, ingredients or Glimmers.",15)
  var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(grid)
@@ -30,7 +32,7 @@ static func build(g:RefCounted,parent:Node)->void:
   if b.is_empty():
    var select=OptionButton.new();select.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.add_child(select);var ids=[]
    for id in g.crops():
-    if int(state.seeds.get(id,0))>0 and lv>=int(g.crops()[id].level):ids.append(id);select.add_item(str(g.crops()[id].name)+" ×"+str(int(state.seeds[id])))
+    if int(state.seeds.get(id,0))>0 and lv>=int(g.crops()[id].level) and g.crops()[id].source!="seasonal":ids.append(id);select.add_item(str(g.crops()[id].name)+" ×"+str(int(state.seeds[id])))
    if ids.is_empty():select.add_item("No plantable seeds • visit Seeds & harvests")
    button(card,"Plant selected seed",func():
     if not ids.is_empty():g.plant(i,str(ids[select.selected]));refresh(g)).disabled=ids.is_empty() or i>=g.capacity() or not g.allowed()
@@ -39,21 +41,35 @@ static func build(g:RefCounted,parent:Node)->void:
  label(parent,"New seeds: look for satchels near town scenery and realm trees or houses. Fishing and defeated Overcharge Conclaves can reveal rare seeds. Finding a high-level seed lets you save it until you can grow it.",16)
  button(parent,"Browse seeds, sources & harvested goods",func():g.page="inventory";refresh(g))
 static func inventory(g:RefCounted,parent:Node)->void:
- button(parent,"Fish bait recipes",g.legacy.game.fishing.open_workshop)
- label(parent,"Choose a collection below. Each card shows its source, planting level, growth time and uses.",15)
  var filters=HBoxContainer.new();parent.add_child(filters)
- for entry in [["Owned seeds & produce","owned"],["Rowan’s shop","shop"],["All seed discoveries","all"]]:
-  button(filters,entry[0],func():g.inventory_filter=entry[1];refresh(g))
- var families=HBoxContainer.new();parent.add_child(families)
- for family in ["all","orchard","river","roots","flowers"]:
-  button(families,family.capitalize(),func():g.family=family;refresh(g)).set_pressed_no_signal(g.family==family)
- var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(grid)
+ var collection=OptionButton.new();collection.custom_minimum_size=Vector2(230,34);collection.size_flags_horizontal=Control.SIZE_EXPAND_FILL;filters.add_child(collection)
+ var selections=[["Owned seeds & produce","owned"],["Rowan’s shop","shop"],["All seed discoveries","all"]]
+ for i in selections.size():
+  collection.add_item(selections[i][0])
+  if g.inventory_filter==selections[i][1]:collection.selected=i
+ collection.item_selected.connect(func(i):g.inventory_filter=selections[i][1];g.inventory_page=0;refresh(g))
+ var families=OptionButton.new();families.custom_minimum_size=Vector2(180,34);families.size_flags_horizontal=Control.SIZE_EXPAND_FILL;filters.add_child(families);var names=["all","orchard","river","roots","flowers"]
+ for i in names.size():
+  families.add_item("All families" if i==0 else names[i].capitalize())
+  if g.family==names[i]:families.selected=i
+ families.item_selected.connect(func(i):g.family=names[i];g.inventory_page=0;refresh(g))
+ button(filters,"Fish bait recipes",g.legacy.game.fishing.open_workshop).custom_minimum_size.y=34
+ var eligible=[]
  for id in g.crops():
   var spec=g.crops()[id]
   if g.family!="all" and spec.family!=g.family:continue
   if g.inventory_filter=="owned" and int(g.state().seeds.get(id,0))+int(g.state().produce.get(id,0))==0:continue
   if g.inventory_filter=="shop" and spec.source!="shop":continue
-  var card=UI.card(grid,str(spec.name),"Lv %d • %s • Seeds %d • Harvests %d" % [int(spec.level),g.duration(float(spec.seconds)),int(g.state().seeds.get(id,0)),int(g.state().produce.get(id,0))]);card.get_parent().custom_minimum_size.x=425
+  eligible.append(id)
+ g.inventory_page=clampi(g.inventory_page,0,maxi(0,(eligible.size()-1)/12))
+ var pages=HBoxContainer.new();parent.add_child(pages)
+ var prev=button(pages,"Previous",func():g.inventory_page-=1;refresh(g));prev.disabled=g.inventory_page==0;prev.custom_minimum_size.y=30
+ label(pages,"Page %d / %d • %d plants" % [g.inventory_page+1,maxi(1,ceili(eligible.size()/12.0)),eligible.size()],16)
+ var next=button(pages,"Next",func():g.inventory_page+=1;refresh(g));next.disabled=(g.inventory_page+1)*12>=eligible.size();next.custom_minimum_size.y=30
+ var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(grid)
+ for id in eligible.slice(g.inventory_page*12,(g.inventory_page+1)*12):
+  var spec=g.crops()[id]
+  var card=UI.card(grid,str(spec.name),"%s • Lv %d • %s • Seeds %d • Harvests %d" % [str(spec.get("rarity","Common")),int(spec.level),g.duration(float(spec.seconds)),int(g.state().seeds.get(id,0)),int(g.state().produce.get(id,0))]);card.get_parent().custom_minimum_size.x=425
   var art=HBoxContainer.new();card.add_child(art)
   for stage in [0,2,3]:
    var column=VBoxContainer.new();art.add_child(column);icon(column,str(id),stage,Vector2(115,90));label(column,{0:"Seed",2:"Mature plant",3:"Harvest"}[stage],13)
@@ -65,17 +81,5 @@ static func inventory(g:RefCounted,parent:Node)->void:
   button(row,"Prepare ingredient",func():g.use_produce(str(id),"ingredients");refresh(g)).disabled=stock<1 or not g.allowed()
   if not str(spec.food).is_empty():button(row,"Pack as food",func():g.use_produce(str(id),"food");refresh(g)).disabled=stock<1 or not g.allowed() or not g.legacy.game.provisions.packed.is_empty()
 static func tree(g:RefCounted,parent:Node)->void:
- label(parent,"%d points available • %d / 33 earned • 64 connected perks" % [mini(33,g.level()/3)-g.state().perks.size(),mini(33,g.level()/3)],21)
- label(parent,"One point every 3 levels. Forks marked by paired nodes are choices: learn one. Bonuses are modest and capped. Scroll inside the outlined tree; branch buttons jump to readable views.",16)
- var selected=HBoxContainer.new();parent.add_child(selected)
- var info=label(selected,"Select a node to see its effect and level requirement.",15);var learn=button(selected,"Learn selected perk",func():g.learn(g.selected_perk);refresh(g));learn.size_flags_horizontal=Control.SIZE_SHRINK_END;learn.disabled=true
- var row=HFlowContainer.new();parent.add_child(row)
- var frame=PanelContainer.new();frame.add_theme_stylebox_override("panel",UI.box("#102b31","#bda977",8,2));parent.add_child(frame)
- var scroll=ScrollContainer.new();scroll.custom_minimum_size=Vector2(0,420);scroll.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_child(scroll)
- var graph=preload("res://scripts/garden_tree.gd").new();scroll.add_child(graph);graph.setup(g)
- graph.picked.connect(func(id):g.selected_perk=id;var p=g.perks()[id];info.text=str(p.name)+" • level "+str(p.level)+"\n"+str(p.text)+("\nLearned" if g.state().perks.has(id) else "");learn.disabled=g.state().perks.has(id) or not g.allowed())
- for entry in [["Trunk",1580,70],["Cultivation",500,570],["Botany",1580,570],["Stewardship",2660,570]]:
-  button(row,entry[0],func():scroll.scroll_horizontal=maxi(0,int(entry[1])-400);scroll.scroll_vertical=int(entry[2]))
- button(row,"Reset • %d Glimmers" % g.reset_cost(),func():
-  var dialog=ConfirmationDialog.new();dialog.title="Reset Gardening mastery?";dialog.dialog_text="Costs %d Glimmers. XP, plants, seeds and harvests stay safe. Mastery points are refunded." % g.reset_cost();g.legacy.add_child(dialog);dialog.confirmed.connect(func():g.reset();dialog.queue_free();refresh(g));dialog.canceled.connect(dialog.queue_free);dialog.popup_centered()).disabled=g.state().perks.is_empty()
- scroll.set_deferred("scroll_horizontal",1180)
+ label(parent,"Explore all 64 perks in one connected tree. Wheel to zoom; drag to pan.",18)
+ button(parent,"Open full Gardening mastery tree",g.open_tree)

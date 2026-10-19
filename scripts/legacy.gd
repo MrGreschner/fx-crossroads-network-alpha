@@ -21,7 +21,7 @@ var lodge_economy=preload("res://scripts/lodge_economy.gd").new()
 var weekly=preload("res://scripts/weekly_activities.gd").new()
 var cosmetics=preload("res://scripts/player_cosmetics.gd").new()
 var daily=preload("res://scripts/daily_challenge.gd").new()
-const WATER_BEDS=[Vector2(1350,1040),Vector2(1430,1040),Vector2(1350,1120)]
+const WATER_BEDS=[Vector2(1320,1005),Vector2(1320,1065),Vector2(1320,1125)]
 var card=preload("res://scripts/profile_card.gd").new()
 var portrait_picker_open:=false
 var game:Node
@@ -88,6 +88,7 @@ func setup(owner:Node,multi:bool=false)->void:
  var tabs:=HFlowContainer.new();tabs.add_theme_constant_override("h_separation",6);col.add_child(tabs)
  for item in [["Profile","profile"],["Inventory","inventory"],["Fishing","fishing"],["Gardening","gardening"],["Mastery","mastery"],["Town projects","town"],["Records & style","records"],["Settings","settings"],["Elder Ram","elder"]]:
   var tab:=button(tabs,str(item[0]),open_page.bind(str(item[1])))
+  tab.add_theme_font_size_override("font_size",16);tab.custom_minimum_size.y=34
   tab.toggle_mode=true;profile_tabs[str(item[1])]=tab
   if item[1]=="mastery":mastery_tab=tab
  var scroll:=ScrollContainer.new();profile_scroll=scroll;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
@@ -760,6 +761,7 @@ func validate(value:Variant)->bool:
  if bool(progress.get("teacher",false)):return false
  if progress.has("elder_guidance") and not preload("res://scripts/elder_guidance.gd").valid(progress.elder_guidance):return false
  if progress.has("glimmers") and not preload("res://scripts/glimmers.gd").valid(progress.glimmers):return false
+ if progress.has("giant_garden") and not preload("res://scripts/giant_garden.gd").valid(progress.giant_garden):return false
  if progress.has("gardening") and not preload("res://scripts/gardening.gd").valid(progress.gardening):return false
  if progress.has("community_records") and not preload("res://scripts/community_records.gd").valid(progress.community_records):return false
  if progress.has("waylight") and not preload("res://scripts/waylight_progress.gd").valid(progress.waylight):return false
