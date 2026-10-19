@@ -19,6 +19,12 @@ var sample_timer=0.0
 var stats:Dictionary={}
 var seen:Dictionary={}
 var last_frame=0.0
+var attempt=""
+var attempt_game=0
+var attempt_time=-1.0
+var latest_metrics:Dictionary={}
+var hardware:Dictionary={}
+const FRAME_BUCKETS=[8.34,16.67,20.0,25.0,33.34,50.0,100.0,250.0,1000.0,60000.0]
 var dashboard:CanvasLayer
 var status="Waiting for play"
 var sent=0
@@ -77,9 +83,25 @@ func context(game:Node)->Dictionary:
  if hero==null:hero=game.get("selected_hero")
  var category=classification(game)
  if game.get("gateway")!=null:return {}
- var route="dedicated" if game.get("net_ready")!=null else "legacy" if game.get("shop_open")!=null else "solo"
- if route=="dedicated" and not bool(game.get("started")):category="menu"
- return {"category":category,"mode":safe_key(mode),"realm":safe_key(realm),"hero":safe_key(hero),"route":route}
+ var route="dedicated" if game.get("net_ready")==true else "legacy" if game.get("links") is Dictionary and not game.links.is_empty() else "solo"
+ if game.get("net_ready")!=null and not bool(game.get("started")):category="menu"
+ var running=mode=="run" or game.get("started")==true
+ var run_time=float(game.get("run_time")) if game.get("run_time")!=null else 0.0
+ var match_key=str(game.get("match_id"))
+ if running:
+  if valid_id(match_key):attempt=match_key
+  elif attempt.is_empty() or attempt_game!=game.get_instance_id() or run_time<attempt_time-.1:attempt=identifier()
+  attempt_game=game.get_instance_id();attempt_time=run_time
+ elif mode=="town":attempt="";attempt_game=0;attempt_time=-1
+ return {"category":category,"mode":safe_key(mode),"realm":safe_key(realm),"hero":safe_key(hero),"route":route,"attempt":attempt}
+func gameplay_category(game:Node)->String:
+ var expedition=game.get("expedition")
+ if expedition!=null and expedition.special():return "overcharge" if expedition.kind=="overcharge" else "between"
+ if game.get("waylight")!=null and game.waylight.active():return "between" if game.waylight.between() else "overcharge"
+ var realm=str(game.get("region_id") if game.get("region_id")!=null else game.get("realm_id"))
+ if realm=="wayfarer":return "quest"
+ var mode=str(game.get("mode"))
+ return "realm" if mode in ["run","coop"] else mode if mode in ["arena","descent","defense","battlegrounds","town","quest"] else "menu"
 func classification(game:Node)->String:
  var expedition=game.get("expedition")
  if expedition!=null and expedition.special() and game.get("started")==true:return "overcharge" if expedition.kind=="overcharge" else "between"
@@ -96,9 +118,9 @@ func classification(game:Node)->String:
  if menu not in ["","<null>"]:return "menu"
  if game.get("started")!=null and not bool(game.started):return "menu"
  var mode=str(game.get("mode"))
- return "realm" if mode in ["run","coop"] else mode if mode in ["town","arena","defense","descent","battlegrounds","quest"] else "menu"
+ return gameplay_category(game)
 func reset_stats()->void:
- stats={"count":0,"fps_sum":0.0,"fps_min":1000.0,"fps_max":0.0,"below_50":0,"below_40":0,"frame_max_ms":0.0,"draw_max":0,"video_max_bytes":0,"rtt_max_ms":0.0,"rtt_sum_ms":0.0};elapsed=0;active_seconds=0;sample_timer=0
+ stats={"count":0,"fps_sum":0.0,"fps_min":1000.0,"fps_max":0.0,"below_50":0,"below_40":0,"frame_max_ms":0.0,"draw_max":0,"video_max_bytes":0,"rtt_max_ms":0.0,"rtt_sum_ms":0.0,"frames":0,"frame_buckets":[0,0,0,0,0,0,0,0,0,0],"frames_over_33":0,"frames_over_50":0,"process_max_ms":0.0,"physics_max_ms":0.0,"memory_max_bytes":0,"entities_max":0,"projectiles_max":0,"guards_max":0,"fps_firing_sum":0.0,"firing_samples":0,"fps_moving_sum":0.0,"moving_samples":0,"fps_idle_sum":0.0,"idle_samples":0};latest_metrics={};elapsed=0;active_seconds=0;sample_timer=0
 func _process(delta:float)->void:
  var game=current_game()
  if not allowed(game):
@@ -111,21 +133,88 @@ func _process(delta:float)->void:
  if focused:
   var step=minf(maxf(delta,0),1.0);elapsed+=step
   if Input.is_anything_pressed() or clock()-last_input<120:active_seconds+=step
-  sample_timer+=step;stats.frame_max_ms=maxf(float(stats.frame_max_ms),minf(delta*1000,60000))
+  sample_timer+=step;record_frame(delta*1000);stats.frame_max_ms=maxf(float(stats.frame_max_ms),minf(delta*1000,60000))
   if sample_timer>=1:
    sample_timer=0;sample(game)
   if elapsed>=60:flush("interval")
  pump()
+func record_frame(ms:float)->void:
+ stats.frames+=1
+ if ms>33.34:stats.frames_over_33+=1
+ if ms>50:stats.frames_over_50+=1
+ for i in FRAME_BUCKETS.size():
+  if ms<=FRAME_BUCKETS[i] or i==FRAME_BUCKETS.size()-1:stats.frame_buckets[i]+=1;break
+func frame_p95()->float:
+ var count=0;var target=ceili(float(stats.get("frames",0))*.95)
+ if target==0:return 0
+ for i in FRAME_BUCKETS.size():
+  count+=int(stats.frame_buckets[i])
+  if count>=target:return FRAME_BUCKETS[i]
+ return 60000
+func world_metrics(game:Node)->Dictionary:
+ var result={"fps_cap":Engine.max_fps}
+ var positions=game.get("positions");var bots=int(game.get("bot_count")) if game.get("bot_count")!=null else 0
+ var players=positions.size() if positions is Dictionary else 1
+ result.players=players;result.ai_players=bots;result.human_players=maxi(0,players-bots)
+ for pair in [["wave","wave"],["floor_number","floor"],["floor","floor"],["recovery_stalls","state_stalls"]]:
+  var value=game.get(pair[0])
+  if value is int or value is float:result[pair[1]]=maxf(0,float(value))
+ for pair in [["opponents","enemies"],["enemies","enemies"],["render_shots","projectiles"],["projectiles","projectiles"],["missiles","projectiles"],["guards","guards"]]:
+  var value=game.get(pair[0])
+  if value is Array or value is Dictionary:result[pair[1]]=maxi(int(result.get(pair[1],0)),value.size())
+ var mobile=game.get("mobile");result.touch_controls=1 if mobile!=null and mobile.enabled else 0
+ var legacy=game.get("legacy")
+ if legacy!=null:
+  if current.get("category")=="fishing":result.fish_level=legacy.fishing_records.progress.level()
+  if current.get("category")=="mine":result.mine_depth=legacy.mine.depth();result.mine_level=legacy.mine.level()
+ var waylight=game.get("waylight");var expedition=game.get("expedition")
+ var world=expedition.expedition if expedition!=null and expedition.special() else waylight.expedition if waylight!=null and waylight.between() else null
+ if world!=null:result.depth=world.farthest;result.streamed_chunks=world.chunks.size();result.shards_carried=world.carried
+ var budget=game.get("render_budget")
+ if budget!=null and game.get("balanced_graphics")!=null:result.quality_scale=budget.scale_for(game.balanced_graphics)
+ return result
+func collect_hardware()->void:
+ if not hardware.is_empty():return
+ hardware={"hardwareConcurrency":OS.get_processor_count()}
+ if OS.has_feature("web"):
+  var raw=JavaScriptBridge.eval("JSON.stringify((window.fxDiagnostics&&window.fxDiagnostics.inspect().graphics)||{})",true)
+  var value=JSON.parse_string(str(raw))
+  if value is Dictionary:hardware.merge(value)
 func sample(game:Node)->void:
  var fps=clampf(float(Engine.get_frames_per_second()),0,1000);stats.count+=1;stats.fps_sum+=fps;stats.fps_min=minf(stats.fps_min,fps);stats.fps_max=maxf(stats.fps_max,fps)
  if fps<50:stats.below_50+=1
  if fps<40:stats.below_40+=1
  stats.draw_max=maxi(stats.draw_max,int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
  stats.video_max_bytes=maxi(stats.video_max_bytes,int(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED)))
+ latest_metrics=world_metrics(game);collect_hardware()
+ stats.process_max_ms=maxf(stats.process_max_ms,Performance.get_monitor(Performance.TIME_PROCESS)*1000)
+ stats.physics_max_ms=maxf(stats.physics_max_ms,Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000)
+ stats.memory_max_bytes=maxi(stats.memory_max_bytes,int(Performance.get_monitor(Performance.MEMORY_STATIC)))
+ stats.entities_max=maxi(stats.entities_max,int(latest_metrics.get("enemies",0)))
+ stats.projectiles_max=maxi(stats.projectiles_max,int(latest_metrics.get("projectiles",0)))
+ stats.guards_max=maxi(stats.guards_max,int(latest_metrics.get("guards",0)))
+ var server=game.get("server_metrics")
+ if server is Dictionary:
+  if server.has("step_work_ms"):stats.server_work_max_ms=maxf(float(stats.get("server_work_max_ms",0)),float(server.step_work_ms))
+ var hz=game.get("server_hz")
+ if hz is float and hz>0:stats.authority_hz_min=minf(float(stats.get("authority_hz_min",1000)),hz)
+ var mobile=game.get("mobile");var moving=(mobile!=null and mobile.enabled and mobile.movement.length_squared()>.01) or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down")
+ var firing=(mobile!=null and mobile.enabled and mobile.attacking) or Input.is_action_pressed("primary") or Input.is_action_pressed("secondary")
+ if firing:stats.firing_samples+=1;stats.fps_firing_sum+=fps
+ if moving:stats.moving_samples+=1;stats.fps_moving_sum+=fps
+ if not moving and not firing:stats.idle_samples+=1;stats.fps_idle_sum+=fps
  var metrics=game.get("metrics");var rtt=float(metrics.get("rtt_ms",0)) if metrics is Dictionary else 0
  stats.rtt_max_ms=maxf(stats.rtt_max_ms,rtt);stats.rtt_sum_ms+=rtt
 func packet(kind:String,result:String="",duration:float=0,metrics:Dictionary={})->Dictionary:
  var count=maxi(1,int(stats.count));var p={"version":1,"event":identifier(),"session":session,"profile":profile,"device":device,"build":BRAND.BUILD,"release":preload("res://network/release.gd").BUILD,"platform":"web" if OS.has_feature("web") else "mobile" if OS.get_name() in ["Android","iOS"] else "desktop","kind":kind,"result":result,"duration":clampf(duration,0,604800),"seconds":clampf(elapsed,0,90),"active":clampf(active_seconds,0,minf(elapsed,90)),"stats":{"samples":stats.count,"fps_mean":stats.fps_sum/count,"fps_min":stats.fps_min if int(stats.count)>0 else 0,"fps_max":stats.fps_max,"below_50":stats.below_50,"below_40":stats.below_40,"frame_max_ms":stats.frame_max_ms,"draw_max":stats.draw_max,"video_max_bytes":stats.video_max_bytes,"rtt_mean_ms":stats.rtt_sum_ms/count,"rtt_max_ms":stats.rtt_max_ms},"metrics":metrics}
+ for key in ["frames","frames_over_33","frames_over_50","process_max_ms","physics_max_ms","memory_max_bytes","entities_max","projectiles_max","guards_max","server_work_max_ms","authority_hz_min","fps_firing_sum","firing_samples","fps_moving_sum","moving_samples","fps_idle_sum","idle_samples"]:
+  if stats.has(key):p.stats[key]=stats[key]
+ p.stats.frame_p95_upper_ms=frame_p95();p.graphics=hardware.duplicate()
+ var game=current_game();p.details={}
+ if game!=null:
+  p.details={"rules":safe_key(game.get("pvp_rule")),"map":safe_key(game.get("arena_map")),"input":"touch" if latest_metrics.get("touch_controls",0)==1 else "keyboard_mouse","graphics":"auto" if game.get("balanced_graphics")==true else "full"}
+ p.metrics=latest_metrics.duplicate();p.metrics.merge(metrics,true)
+ if kind=="fish_catch":p.details.fish_species=safe_key(metrics.get("species_id",""))
  p.merge(current);return p
 func flush(kind:String="interval")->void:
  if current.is_empty() or elapsed<.5 or not enabled:return
@@ -142,6 +231,7 @@ func event(game:Node,kind:String,result:String="",duration:float=0,metrics:Dicti
   seen[key]=true
   if seen.size()>128:seen.erase(seen.keys()[0])
  var old=current;current=context(game)
+ if kind=="complete":current.category=gameplay_category(game)
  var p=packet(kind,result,duration,metrics);p.seconds=0;p.active=0;enqueue(p);current=old;return true
 func pump()->void:
  if request!=null or queue.is_empty() or clock()<retry_at or not enabled:return

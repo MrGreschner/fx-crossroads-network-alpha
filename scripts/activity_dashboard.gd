@@ -14,13 +14,14 @@ func setup(source:Node)->void:
  var column=VBoxContainer.new();column.add_theme_constant_override("separation",12);margin.add_child(column)
  var title=Label.new();title.text="CROSSROADS • PRIVATE ACTIVITY DASHBOARD";title.add_theme_font_size_override("font_size",25);column.add_child(title)
  var note=Label.new();note.text="Anonymous estimates • no names, student work or profile contents uploaded. Game Dev sessions excluded. Shared computers are not a reliable count of individual students.";note.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;column.add_child(note)
+ var full=Button.new();full.text="Open full dashboard • mode filters, devices & exports";full.custom_minimum_size.y=42;column.add_child(full);full.pressed.connect(func():OS.shell_open(owner_node.endpoint+"/reports"))
  var row=HBoxContainer.new();column.add_child(row)
  secret=LineEdit.new();secret.secret=true;secret.placeholder_text="Private server dashboard key";secret.max_length=128;secret.size_flags_horizontal=Control.SIZE_EXPAND_FILL;secret.custom_minimum_size.y=46;row.add_child(secret)
  period=OptionButton.new()
  for days in [1,7,30]:period.add_item(str(days)+" days",days)
  period.select(1);row.add_child(period)
  var refresh=Button.new();refresh.text="Refresh trends";refresh.pressed.connect(load_data);row.add_child(refresh)
- status=Label.new();status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status.text="Enter REPORT_ADMIN_PASSWORD from the V176 server. Username: teacher. This password is never saved.";column.add_child(status)
+ status=Label.new();status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status.text="Enter REPORT_ADMIN_PASSWORD from your Render service. Username: teacher. This password is never saved.";column.add_child(status)
  var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;column.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
  body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",10);scroll.add_child(body)
  var close=Button.new();close.text="Close dashboard";close.custom_minimum_size.y=46;close.pressed.connect(queue_free);column.add_child(close)
@@ -37,7 +38,7 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
  request.queue_free();request=null
  if not owner_node.game_dev():queue_free();return
  if code==401:status.text="Private key rejected. Check REPORT_ADMIN_PASSWORD on Render.";return
- if code==503:status.text="Activity storage is not configured. Configure DATABASE_URL and a stable REPORT_SIGNING_SECRET on the V176 server.";return
+ if code==503:status.text="Activity storage is not configured. Configure DATABASE_URL and a stable REPORT_SIGNING_SECRET on your Render service.";return
  var data=JSON.parse_string(bytes.get_string_from_utf8()) if result==HTTPRequest.RESULT_SUCCESS and code==200 else null
  if not data is Dictionary:status.text="Unable to load trends. Try again when the server is available.";return
  for child in body.get_children():child.queue_free()

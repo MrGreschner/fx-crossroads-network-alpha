@@ -4,17 +4,17 @@ import {readFileSync} from 'node:fs';
 const ID=/^[a-f0-9]{32}$/;
 const categories=new Set('town realm descent defense arena battlegrounds quest studio mine market fishing menu between overcharge'.split(' '));
 const modes=new Set('town run coop descent defense arena battlegrounds quest'.split(' '));
-const kinds=new Set(['interval','complete','market_day','mine_depth','graphics_loss']);
+const kinds=new Set(['interval','complete','market_day','mine_depth','graphics_loss','fish_catch']);
 const results=new Set(['','cleared','defeated','completed','win','loss','draw','interrupted','returned']);
 const numeric=(v,max=1e15,min=0)=>typeof v==='number'&&Number.isFinite(v)&&v>=min&&v<=max;
 const key=v=>typeof v==='string'&&/^[a-z0-9_-]{0,64}$/.test(v)?v:'';
-const statisticKeys=['samples','fps_mean','fps_min','fps_max','below_50','below_40','frame_max_ms','draw_max','video_max_bytes','rtt_mean_ms','rtt_max_ms'];
-const metricKeys=['damage','enemies','players','floor','wave','banked_shards','fish_level','mine_depth','mine_level','mine_ore','day','sold','profit','duration_configured'];
+const statisticKeys=['frames','frame_p95_upper_ms','frames_over_33','frames_over_50','process_max_ms','physics_max_ms','memory_max_bytes','entities_max','projectiles_max','guards_max','server_work_max_ms','authority_hz_min','quality_scale_min','fps_firing_sum','firing_samples','fps_moving_sum','moving_samples','fps_idle_sum','idle_samples','samples','fps_mean','fps_min','fps_max','below_50','below_40','frame_max_ms','draw_max','video_max_bytes','rtt_mean_ms','rtt_max_ms'];
+const metricKeys=['damage','enemies','players','floor','wave','banked_shards','fish_level','mine_depth','mine_level','mine_ore','day','sold','profit','duration_configured','human_players','ai_players','projectiles','guards','depth','streamed_chunks','shards_carried','fps_cap','touch_controls','quality_scale','state_stalls','corrections','rivals','fish_weight','fish_xp_gain','fish_trophy','fish_kept'];
 export function cleanActivity(raw){
  if(!raw||raw.version!==1||!['event','session','profile','device'].every(k=>typeof raw[k]==='string'&&ID.test(raw[k]))||!categories.has(raw.category)||!modes.has(raw.mode)||!kinds.has(raw.kind)||!results.has(raw.result)||!['solo','dedicated','legacy'].includes(raw.route)||!['web','mobile','desktop'].includes(raw.platform)||!Number.isInteger(raw.build)||raw.build<171||raw.build>99999||!numeric(raw.seconds,90)||!numeric(raw.active,raw.seconds)||!numeric(raw.duration,604800))throw Error('Invalid activity');
  const p=Object.fromEntries(['version','event','session','profile','device','category','mode','kind','result','route','platform','build','seconds','active','duration'].map(k=>[k,raw[k]]));
- p.release=raw.release===BUILD?BUILD:"unknown";p.hero=key(raw.hero);p.realm=key(raw.realm);p.stats={};p.metrics={};
- for(const k of statisticKeys)if(numeric(raw.stats?.[k],k==='samples'?90:k.startsWith('fps')?1000:k==='frame_max_ms'?60000:1e12))p.stats[k]=raw.stats[k];
+ p.release=typeof raw.release==='string'&&/^(V[0-9]+(?:\.[0-9]+)*-preview|T4\.[0-9.]+)$/.test(raw.release)?raw.release:"unknown";p.attempt=typeof raw.attempt==='string'&&ID.test(raw.attempt)?raw.attempt:"";p.details={};for(const k of ["rules","map","input","graphics","fish_species"])if(raw.details&&key(raw.details[k]))p.details[k]=key(raw.details[k]);p.graphics={};for(const k of ["renderer","vendor","version","webglVersion"])if(typeof raw.graphics?.[k]==='string')p.graphics[k]=raw.graphics[k].slice(0,160);for(const k of ["hardwareConcurrency","deviceMemory","maxTextureSize"])if(numeric(raw.graphics?.[k],1e8))p.graphics[k]=raw.graphics[k];p.hero=key(raw.hero);p.realm=key(raw.realm);p.stats={};p.metrics={};
+ for(const k of statisticKeys)if(numeric(raw.stats?.[k],k==='samples'?90:k==='fps_mean'||k==='fps_min'||k==='fps_max'?1000:k==='frame_max_ms'?60000:1e12))p.stats[k]=raw.stats[k];
  for(const k of metricKeys)if(numeric(raw.metrics?.[k],1e15,k==='profit'?-1e15:0))p.metrics[k]=raw.metrics[k];
  if(p.kind!=='interval'){p.seconds=0;p.active=0;}
  return p;
@@ -43,7 +43,7 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
   const completions=await pool.query(`SELECT kind,mode,realm,route,result,count(*)::int attempts,percentile_cont(0.5) WITHIN GROUP (ORDER BY duration) FILTER (WHERE duration>0) median_seconds,min(NULLIF(duration,0)) fastest_seconds,max(duration) longest_seconds FROM crossroads_activity WHERE created_at >= $1 AND kind!='interval' GROUP BY kind,mode,realm,route,result ORDER BY count(*) DESC LIMIT 100`,[cutoff]);
   const daily=await pool.query(`SELECT to_char(created_at AT TIME ZONE 'America/Edmonton','YYYY-MM-DD') AS "day",count(DISTINCT profile)::int profiles,count(DISTINCT device)::int devices,count(DISTINCT session)::int sessions,sum(active)::float active_seconds,count(*) FILTER (WHERE kind='graphics_loss')::int graphics_losses,0::int disconnects FROM crossroads_activity WHERE created_at >= $1 GROUP BY 1 ORDER BY 1`,[cutoff]);
   const totals=await pool.query(`SELECT count(*)::int batches,count(DISTINCT profile)::int profiles,count(DISTINCT device)::int devices,count(DISTINCT session)::int sessions,COALESCE(sum(active),0)::float active_seconds FROM crossroads_activity WHERE created_at >= $1`,[cutoff]);
-  return {version:'V180-preview',days:n,timezone:'America/Edmonton',retention_days:30,totals:totals.rows[0],activities:activities.rows,completions:completions.rows,daily:daily.rows,notes:['Self-reported play estimates, not verified learning outcomes.','Profiles and devices are anonymous identifiers, not counts of unique students.','Solo gameplay stays local; missing/offline uploads are not counted.','Completion times are gameplay/simulation times. Market days may finish while offline.']};
+  return {version:BUILD,days:n,timezone:'America/Edmonton',retention_days:30,totals:totals.rows[0],activities:activities.rows,completions:completions.rows,daily:daily.rows,notes:['Self-reported play estimates, not verified learning outcomes.','Profiles and devices are anonymous identifiers, not counts of unique students.','Solo gameplay stays local; missing/offline uploads are not counted.','Completion times are gameplay/simulation times. Market days may finish while offline.']};
  };
  async function handle(req,res){
   const url=new URL(req.url,'http://localhost');if(!url.pathname.startsWith('/activity')&&!url.pathname.startsWith('/analytics/'))return false;
@@ -86,7 +86,7 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
    if(url.pathname==='/activity/api/summary'||url.pathname==='/analytics/dashboard')send(res,200,await aggregate(days(url)));
    else if(url.pathname==='/activity/api/export'){
     const cutoff=new Date(now()-days(url)*86400000).toISOString();const rows=await pool.query('SELECT payload,created_at FROM crossroads_activity WHERE created_at >= $1 ORDER BY created_at DESC LIMIT 5000',[cutoff]);
-    send(res,200,{version:'V180-preview',retention_days:30,limit:5000,reports:rows.rows.map(r=>({...r.payload,received_at:r.created_at}))},{'Content-Disposition':'attachment; filename="Crossroads_V180_play_insights.json"'});
+    send(res,200,{version:BUILD,retention_days:30,limit:5000,reports:rows.rows.map(r=>({...r.payload,received_at:r.created_at}))},{'Content-Disposition':'attachment; filename="Crossroads_play_insights.json"'});
    }else send(res,404,{error:'Not found'});
   }catch{send(res,503,{error:'Activity storage unavailable'});}finally{pending--;}
   return true;

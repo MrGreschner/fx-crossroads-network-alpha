@@ -1102,13 +1102,18 @@ func _report_network()->void:
  report_at=Time.get_ticks_msec()+1000
  var sample={"build":BUILD,"protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
  sample.mode=mode;sample.realm=realm_id;sample.players=positions.size()
+ sample.category=get_tree().root.get_node("FXActivity").gameplay_category(self)
+ sample.platform="web"
+ sample.moving=_actor_walking(my_id);sample.ai_players=bot_count;sample.human_players=maxi(0,positions.size()-bot_count)
+ sample.wave=wave;sample.floor=floor_number;sample.gate_hp=gate_hp;sample.downed_heroes=downed.size()
+ sample.rival_heroes=opponents.filter(func(e):return bool(e.get("campaign_hero",false))).size() if mode=="defense" else 0
  if expedition.special():sample.expedition={"between":expedition.between(),"overcharge":expedition.kind=="overcharge","attunement":expedition.kind=="attunement","tier":int(expedition.config.get("tier",1)),"shared_shards":expedition.expedition.carried,"depth":expedition.expedition.farthest,"streamed_chunks":expedition.expedition.chunks.size(),"bonus_events":expedition.completed_events()}
  if mode=="battlegrounds":sample.battlegrounds={"warzone":bg_map=="warzone","lanes":bg_team_size,"strategy_work":battlegrounds.work,"troops":battlegrounds.units.size(),"siege_shots":battlegrounds.shots.size(),"airstrike_warnings":battlegrounds.bombs.size(),"hearts":battlegrounds.heart_hp,"team":int(teams.get(my_id,-1))}
  sample.client_profile=client_perf.summary()
  var browser_json=JavaScriptBridge.eval("JSON.stringify(window.fxFrameTiming?window.fxFrameTiming.sample():{})",true)
  var parsed_browser=JSON.parse_string(str(browser_json))
  browser_timing=parsed_browser if parsed_browser is Dictionary else {}
- sample.browser_timing=browser_timing
+ sample.browser_timing=browser_timing;sample.focused=not bool(browser_timing.get("hidden",false))
  sample.client_frame_gap_ms=client_frame_gap_ms;sample.frame_gap_peak_ms=frame_gap_peak_ms
  sample.frame_gap_stalls=frame_stalls;sample.delivery_gap_stalls=delivery_stalls;sample.last_stall_context=last_stall_context
  sample.visual_correction_px=local_view.correction.length()

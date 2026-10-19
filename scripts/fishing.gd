@@ -240,6 +240,7 @@ func finish_catch(keep:bool)->void:
  else:
   saved=records().complete(pending,keep)
   if saved:records().progress.spend_bait(rng)
+ if saved:game.get_tree().root.get_node("FXActivity").event(game,"fish_catch","completed",0,{"species_id":str(pending.species),"fish_level":records().progress.level(),"fish_weight":float(pending.kg),"fish_xp_gain":records().progress.last_xp,"fish_trophy":1 if C.is_trophy(pending) else 0,"fish_kept":1 if keep else 0})
  var weekly_reward=" • Moonlit Minnow earned! Equip it in Cosmetics." if saved and not reward_before and game.legacy.weekly.earned("week_fish") else ""
  cancel(("Kept " if keep else "Released ")+name+(" • temporary Game Dev collection; saved profile unchanged." if bool(game.legacy.data.get("teacher",false)) else " • journal updated." if saved else " • practice/test catch; no profile progress.")+(" • +%d fishing XP" % records().progress.last_xp if saved else "")+weekly_reward)
 func label(parent:Node,text:String,font_size:int=17)->Label:
