@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS crossroads_community_crops(profile text NOT NULL,scop
 const number=(x,max)=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max;
 export function clean(raw,now=Date.now()){
  if(!raw||raw.version!==1||!/^[a-f0-9]{32}$/.test(raw.profile||''))throw Error('Invalid profile');
- const out={profile:raw.profile,week:rankWeek(now).week,totals:[],fish:[],rarest:[],crops:[]};
+ const out={profile:raw.profile,week:rankWeek(now).week,totals:[],fish:[],rarest:[],crops:[],trophies:[]};
  for(const [kind,allowed,max]of [['hero',heroes,1e12],['realm',realms,1e6]]){
   const values=raw[kind==='hero'?'hero_damage':'realm_clears'];if(!values||typeof values!=='object'||Array.isArray(values)||Object.keys(values).length>128)throw Error('Invalid totals');
   for(const [key,value]of Object.entries(values)){if(!allowed.has(key)||!number(value,max)||(kind==='realm'&&!Number.isInteger(value)))throw Error('Invalid total');if(value>0)out.totals.push({kind,key,value});}
@@ -33,6 +33,10 @@ export function clean(raw,now=Date.now()){
    const f=fish[entry.species];if(!f||!number(entry.kg,Math.min(10000,f.max_kg*4+.01))||entry.kg<=0)throw Error('Invalid rare fish');
    out.rarest.push({scope:scope==='all'?'all':out.week,species:entry.species,kg:entry.kg,grade:grades[f.rarity]??0,baseweight:f.chance??1});
   }
+ }
+ if(raw.trophies!==undefined){
+  if(!Array.isArray(raw.trophies)||raw.trophies.length>Object.keys(fish).length)throw Error('Invalid trophies');
+  for(const entry of raw.trophies){const f=fish[entry.species];if(!f||!number(entry.kg,Math.min(10000,f.max_kg*4+.01))||entry.kg+1e-7<(f.min_kg+(f.max_kg-f.min_kg)*.4)*2.5)throw Error('Invalid species trophy');out.trophies.push({species:entry.species,kg:entry.kg});}
  }
  if(raw.garden_records!==undefined){
   if(!Array.isArray(raw.garden_records)||raw.garden_records.length>48)throw Error('Invalid garden records');

@@ -13,10 +13,11 @@ var runtimes:Dictionary={}
 var tick=0.0
 var input_clock=0.0
 var held:Dictionary={}
+var last_input:Dictionary={}
 func setup(owner:Node)->void:game=owner
 func project_for(id:String)->Dictionary:return game.characters.get(id,{}).get("studio_project",{})
 func identity(owner:String)->String:return "custom_net_"+owner.sha256_text().left(16)
-func allowed(p:Dictionary)->bool:return game.allow_custom and (not game.public_room.button_pressed or Balance.hero_checked(p))
+func allowed(p:Dictionary)->bool:return game.allow_custom and not p.is_empty() and preload("res://scripts/community_validation.gd").art_issue(p).is_empty() and (not game.public_room.button_pressed or Balance.hero_checked(p))
 func issue()->String:
  if not pending_builds.is_empty() or not incoming.is_empty():return "Receiving a custom build… please wait."
  for member in game.fighters():
@@ -45,12 +46,12 @@ func enqueue(peer:String,owner:String,p:Dictionary)->void:
  if sent.get(key)==token:return
  sent[key]=token;game._send_channel(peer,{"type":"custom_offer","owner":owner,"token":token,"cosmetic":game.local_cosmetic() if owner==game.my_id else game.cosmetic_for(owner)});var text=JSON.stringify(p);queues.append({"peer":peer,"owner":owner,"token":token,"text":text,"index":0})
 func _process(delta:float)->void:
- if game==null:return
+ if game==null or game.get("room_paused")==true:return
  if game.role.is_empty():queues.clear();sent.clear();projects.clear();acknowledgements.clear();return
  tick+=delta
  if not game.my_id.is_empty():
   var p=project_for(game.selected_hero)
-  if not p.is_empty() and game.allow_custom and (not game.public_room.button_pressed or bool(game.characters[game.selected_hero].get("studio_checked",false))):
+  if game.selected_hero.begins_with("custom_") and not p.is_empty() and game.allow_custom and (not game.public_room.button_pressed or bool(game.characters[game.selected_hero].get("studio_checked",false))):
    if game.role=="host":
     if game.selected_hero!=identity(game.my_id) or not projects.has(game.my_id):install(game.my_id,p)
    elif game._link_open(game.host_id):enqueue(game.host_id,game.my_id,p)
@@ -80,7 +81,7 @@ func _process(delta:float)->void:
    if down!=bool(held.get(kind,false)) or down and input_clock>=.12:
     var p:Vector2=game.local_pos+game.mobile.aim*400 if game.mobile.enabled else game.media_mouse_world()
     if game.role=="host":input(game.my_id,kind,down,p)
-    else:game._send_channel(game.host_id,{"type":"custom_input","kind":kind,"down":down,"point":[p.x,p.y]})
+    else:game._send_channel(game.host_id,{"type":"community_input" if str(game.hero_ids.get(game.my_id,game.selected_hero)).begins_with("community_") else "custom_input","kind":kind,"down":down,"point":[p.x,p.y]})
     held[kind]=down
   if input_clock>=.12:input_clock=0
  if game.role=="host":
@@ -89,13 +90,18 @@ func _process(delta:float)->void:
    if p.is_empty():continue
    if not runtimes.has(owner):
     var runtime=preload("res://scripts/custom_party_runtime.gd").new();add_child(runtime);runtime.setup_party(game,str(owner),p);runtimes[owner]=runtime
+   if Time.get_ticks_msec()-int(last_input.get(owner,Time.get_ticks_msec()))>2500:runtimes[owner].cancel_holds()
    runtimes[owner].step(minf(delta,.05))
 func input(owner:String,kind:String,down:bool,point:Vector2)->void:
  if game.role!="host" or not game.started or game.start_countdown>0 or not Project.KINDS.has(kind) or not game.positions.has(owner):return
  if not is_finite(point.x) or not is_finite(point.y) or int(game.health.get(owner,0))<=0:return
  if game.adventure.combat.stunned("p:"+owner) or int(game.levels.get(owner,1))<({"primary":1,"secondary":3,"special":6}[kind]):return
- if not runtimes.has(owner):return
- var runtime=runtimes[owner];runtime.aim_point=game.positions[owner]+(point-game.positions[owner]).limit_length(600);runtime.aim=(runtime.aim_point-game.positions[owner]).normalized()
+ if not runtimes.has(owner):
+  var p=project_for(str(game.hero_ids.get(owner,"")))
+  if p.is_empty():return
+  var created=preload("res://scripts/custom_party_runtime.gd").new();add_child(created);created.setup_party(game,owner,p);runtimes[owner]=created
+ last_input[owner]=Time.get_ticks_msec()
+ var runtime=runtimes[owner];runtime.step(0);runtime.aim_point=game.positions[owner]+(point-game.positions[owner]).limit_length(600);runtime.aim=(runtime.aim_point-game.positions[owner]).normalized()
  if down:runtime.press(kind)
  else:runtime.release(kind)
 func packet(sender:String,data:Dictionary)->bool:
@@ -139,7 +145,7 @@ func packet(sender:String,data:Dictionary)->bool:
  return true
 func reset()->void:
  for runtime in runtimes.values():runtime.queue_free()
- runtimes.clear();held.clear()
+ runtimes.clear();held.clear();last_input.clear()
 func flags(id:String)->Dictionary:
  var p=project_for(str(game.hero_ids.get(id,game.selected_hero if id==game.my_id else "")))
  return {"custom":not p.is_empty(),"balanced":bool(game.characters.get(str(game.hero_ids.get(id,game.selected_hero if id==game.my_id else "")),{}).get("studio_checked",false))}

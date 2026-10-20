@@ -6,5 +6,6 @@
   "amount": 65,
   "description": "Restore 65 health.",
   "duration": 3,
-  "radius": 145
+  "radius": 145,
+  "shop": false
 }

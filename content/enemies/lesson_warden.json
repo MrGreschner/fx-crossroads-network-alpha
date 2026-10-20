@@ -1,0 +1,12 @@
+{
+  "name": "Lesson Warden",
+  "health": 180,
+  "speed": 68,
+  "damage": 15,
+  "custom_attack": "school_lesson_warden",
+  "id": "lesson_warden",
+  "sprite": "lesson_warden",
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "expansion_only": true
+}

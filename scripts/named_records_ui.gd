@@ -8,7 +8,7 @@ static func build(parent:Node,l:Node,n:Dictionary,category:String)->void:
    var card=UI.card(parent,e[0],"Named cloud accounts • current rolling window matches damage crowns" if e[1]=="damage_rolling" else "Top five connected accounts")
    list(card,n.get(e[1],[])," damage")
  if category=="times":
-  G.label(parent,"REALM SPEED RECORDS",23);G.label(parent,"Each realm’s fastest recorded completion. Co-op clears count for each participant. Weekly runs reset Monday; damage above uses a rolling seven-day window.",15)
+  G.label(parent,"REALM TIMES • SPEED RECORDS",23);G.label(parent,"Each realm’s fastest recorded completion. Co-op clears count for each participant. Weekly runs reset Monday; damage above uses a rolling seven-day window.",15)
   for id in l.game.manifest.regions:
    var rows=[]
    for entry in [["All time","realm_times_all"],["This week","realm_times_week"]]:

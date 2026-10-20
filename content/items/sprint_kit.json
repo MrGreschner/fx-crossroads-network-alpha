@@ -6,5 +6,6 @@
   "amount": 1.6,
   "description": "Short burst of speed.",
   "duration": 3,
-  "radius": 145
+  "radius": 145,
+  "shop": false
 }

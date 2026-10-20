@@ -4,7 +4,7 @@ const TITLE="Crossroads: Realms Beyond"
 const SHORT="Crossroads"
 const SUBTITLE="Realms Beyond"
 const TAGLINE="Find your path. Create what’s next."
-const BUILD=188
+const BUILD=193
 static var cached:Dictionary={}
 static func config()->Dictionary:
  if cached.is_empty():

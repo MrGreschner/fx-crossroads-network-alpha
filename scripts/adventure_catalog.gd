@@ -52,6 +52,7 @@ func render()->void:
  panel.find_child("Coop",true,false).visible=context in ["portal","wayfinder"]
  for n in entries.size():
   var id:=str(entries[n]);var spec:=data(id);var b:=button(rows,("LOCKED • " if context in ["portal","wayfinder"] and not preload("res://scripts/realm_access.gd").unlocked(game.legacy,id) else "")+str(spec.get("name",id)),select.bind(n));b.toggle_mode=true;b.set_pressed_no_signal(n==selected);b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.tooltip_text=str(spec.get("name",id))
+  if context in ["supplies","merchant","food"]:b.icon=preload("res://scripts/item_icons.gd").texture(id);b.add_theme_constant_override("icon_max_width",42)
   if context in ["portal","wayfinder"] and game.legacy.realm_mastered(id):b.icon=preload("res://scripts/ui_reward_icons.gd").texture();b.add_theme_constant_override("icon_max_width",22)
  render_detail()
 func select(index:int)->void:
@@ -62,6 +63,8 @@ func render_detail()->void:
  clear(detail)
  if entries.is_empty():enter.disabled=true;return
  var id:=str(entries[selected]);var spec:=data(id);label(detail,str(spec.get("name",id)),27).modulate=Color("#edd19b")
+ if context in ["supplies","merchant","food"]:
+  var icon=TextureRect.new();icon.texture=preload("res://scripts/item_icons.gd").texture(id);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;icon.custom_minimum_size=Vector2(110,110);detail.add_child(icon)
  label(detail,str(spec.get("description","Explore, fight and watch for attack warnings.")),19)
  if context in ["portal","wayfinder"]:
   var difficulty:=label(detail,str(spec.get("difficulty_label",""))+" • "+str(game.legacy.realm_clears(id))+" clears",20)

@@ -22,7 +22,7 @@ var nav_cache:Dictionary={}
 var prop_cells:Dictionary={}
 var textures:Dictionary={}
 var rng:=RandomNumberGenerator.new()
-const TYPES=["pencil_scrapper","paper_sprite","backpack_biter","hall_monitor","gravel_skater","chalkling","culture_blob","recess_ringleader","yellow_bus","lunchline_leviathan","bellwork_colossus","spotlight_sovereign","layercake_golem","iron_barbell","exam_math","exam_english","exam_history","exam_science"]
+const TYPES=["lesson_warden","pencil_scrapper","paper_sprite","backpack_biter","hall_monitor","gravel_skater","chalkling","culture_blob","recess_ringleader","yellow_bus","lunchline_leviathan","bellwork_colossus","spotlight_sovereign","layercake_golem","iron_barbell","exam_math","exam_english","exam_history","exam_science"]
 const EXAMS=["exam_math","exam_english","exam_history","exam_science"]
 const COLOURS={"exam_math":"#f4a274","exam_english":"#abd7c7","exam_history":"#a8daef","exam_science":"#b9d68c"}
 func v(a:Array)->Vector2:return Vector2(float(a[0]),float(a[1]))
@@ -113,7 +113,7 @@ func interact(id:String)->bool:
  return false
 func spawn_foe(kind:String,point:Vector2,group:String,boss:bool=false,hp:float=-1)->Dictionary:
  adventure.spawn(kind,point,float(definition(kind).get("health",60)) if hp<0 else hp,boss)
- var enemy:Dictionary=adventure.foes()[-1];enemy["school_group"]=group;enemy["hit_radius"]=85.0 if kind=="yellow_bus" else 50.0 if boss else 22.0;enemy["school_anchor"]=a(point);enemy["school_timer"]=1.0;enemy["school_turn"]=0
+ var enemy:Dictionary=adventure.foes()[-1];enemy["school_group"]=group;enemy["hit_radius"]=32.0 if kind=="lesson_warden" else 85.0 if kind=="yellow_bus" else 50.0 if boss else 22.0;enemy["school_anchor"]=a(point);enemy["school_timer"]=1.0;enemy["school_turn"]=0
  return enemy
 func spawn_group(key:String)->void:
  if spawned.has(key):return
@@ -288,6 +288,10 @@ func step_enemies(delta:float)->void:
   var aim:Vector2=(target-(enemy.pos as Vector2)).normalized();var turn:=int(enemy.get("school_turn",0));enemy.school_turn=turn+1
   enemy.school_timer=3.0
   match kind:
+   "lesson_warden":
+    enemy.school_timer=3.6
+    if turn%2==0:telegraph(enemy,target,95,15,1.1)
+    else:shoot(enemy,target,3,9,.25,235,{"color":"#e2c47d"})
    "pencil_scrapper","backpack_biter","chalkling":
     enemy.school_timer=.2
     if distance<90:enemy.school_timer=1.3;telegraph(enemy,enemy.pos,30,float(definition(kind).damage),.45,{"melee":true},advance(enemy.pos,aim,90),.15,"line")
@@ -473,6 +477,7 @@ func guidance(point:Vector2)->Vector2:
   if door_rect(door).get_center().distance_to(point)<300:return v(door.pos)
  return target
 func body_size(kind:String)->Vector2:
+ if kind=="lesson_warden":return Vector2(82,94)
  if kind=="yellow_bus":return Vector2(300,180)
  if kind=="iron_barbell":return Vector2(190,125)
  if kind in EXAMS:return Vector2(150,150)

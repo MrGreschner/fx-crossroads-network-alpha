@@ -1,0 +1,19 @@
+[
+  "web/browser/art-085b3f41522e84cb.png",
+  "web/browser/art-26a6dbc5c1d5d702.svg",
+  "web/browser/art-31dad8c43b548848.png",
+  "web/browser/art-760027f0c14c0d05.svg",
+  "web/browser/art-7dacfefbb3e48f9f.svg",
+  "web/browser/art-847b33e13925f19f.ttf",
+  "web/browser/art-8ac925e84edfe7a2.png",
+  "web/browser/art-8de26c53ab79886c.png",
+  "web/browser/art-d24ac02ce7f0976e.png",
+  "web/browser/diagnostics.js",
+  "web/browser/frame-timing.js",
+  "web/browser/opening.js",
+  "web/browser/reports.js",
+  "web/browser/runtime-watch.js",
+  "web/browser/stall-worker.js",
+  "web/browser/start-game.js",
+  "web/browser/town.css"
+]

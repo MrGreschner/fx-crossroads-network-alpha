@@ -20,8 +20,8 @@
     "damage": 0,
     "cooldown": 9,
     "range": 420,
-    "description": "Aim at grave markers within a 140-radius area. Raise up to two melee echoes, 42 HP each, for 18s. Each deals 10 damage every 1.2s. Corpses are consumed.",
-    "radius": 140
+    "description": "Raise grave markers within a 200-radius area. Up to three melee echoes, 42 HP each, last 30s and deal 10 damage every 1.2s.",
+    "radius": 200
   },
   "special": {
     "name": "Life Lattice",
@@ -31,17 +31,16 @@
     "range": 450,
     "description": "For 7s, share remaining health with your echoes. Red links steal up to 6 HP/s from crossing foes. At the end, reserve 60% of remaining health for you, 40% for echoes, capped by each maximum. Area attacks can hit several linked bodies."
   },
-  "passive": "Grave Chorus: Raise a third, ranged echo and increase each echo to 60 HP. The ranged echo deals 8 damage every 1.2s.",
+  "passive": "Grave Chorus: Add up to two ranged echoes (five total). All echoes have 60 HP; ranged echoes deal 8 damage every 1.2s.",
   "passive_effect": "grave_chorus",
   "mastery": {
     "title": "Warden of the Remembered",
     "technique": {
-      "name": "Wide Vigil",
+      "name": "Merciful Vigil",
       "ability": "secondary",
-      "description": "Raise from a 210-radius area instead of 140, but cooldown becomes 12s instead of 9.",
+      "description": "With Grave Chorus, replace the two ranged echoes with one healer (three melee + one healer). It heals a wounded friendly for 6 HP every 1.5s; otherwise fires a 4-damage dart that slows for 2s.",
       "set": {
-        "radius": 210,
-        "cooldown": 12
+        "healer_vigil": true
       }
     },
     "final_technique": {

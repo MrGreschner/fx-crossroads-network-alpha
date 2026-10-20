@@ -25,6 +25,7 @@ var shortcut:Button
 var staged:Dictionary={}
 var username:LineEdit
 var password:LineEdit
+var recovery_answer:LineEdit
 var confirmation:LineEdit
 var status_label:Label
 var guest:Dictionary={}
@@ -47,7 +48,7 @@ func call_api(path:String,payload:Variant=null,op:String="")->void:
  if busy:return
  busy=true;operation=op if not op.is_empty() else path
  var err=request.request(endpoint+"/accounts/"+path,headers(),HTTPClient.METHOD_GET if payload==null else HTTPClient.METHOD_POST,"" if payload==null else JSON.stringify(payload))
- if err!=OK:busy=false;message="Could not connect. Your local progress is safe.";refresh()
+ if err!=OK:busy=false;notify("Could not connect. Your local progress is safe.")
 func _process(delta:float)->void:
  var l=legacy()
  if l==null:return
@@ -106,33 +107,57 @@ func button(text:String,fn:Callable)->Button:
  var style=StyleBoxFlat.new();style.bg_color=Color("#245867");style.border_color=Color("#609caa");style.set_border_width_all(1);style.set_corner_radius_all(6);b.add_theme_stylebox_override("normal",style);var hover=style.duplicate();hover.bg_color=Color("#337387");b.add_theme_stylebox_override("hover",hover);col.add_child(b);return b
 func field(hint:String,secret=false)->LineEdit:
  var f=LineEdit.new();f.placeholder_text=hint;f.secret=secret;f.custom_minimum_size.y=45;f.virtual_keyboard_enabled=true;col.add_child(f);var mobile=preload("res://scripts/mobile_text_entry.gd").new();f.add_child(mobile);mobile.setup(f);return f
+func notify(value:String)->void:
+ message=value
+ if is_instance_valid(status_label):status_label.text=message
+ var d=AcceptDialog.new();d.title="Check your cloud account";d.dialog_text=value;d.ok_button_text="Got it";add_child(d);d.confirmed.connect(d.queue_free);d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(520,180))
 func refresh()->void:
  if not is_instance_valid(col):return
  for c in col.get_children():col.remove_child(c);c.queue_free()
- label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17)
+ label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17);status_label=col.get_child(col.get_child_count()-1)
  var l=legacy()
  if l!=null and l.recovery_required:
   label("LOCAL PROFILE RECOVERY",24);label("An existing profile could not be validated. It has been preserved and automatic local/cloud saving is paused. Download these files before importing a backup or loading a cloud profile.")
   button("Download preserved local save",download_recovery)
   button("Import a downloaded profile backup",func():close();legacy().pick_import())
  if token.is_empty():
-  label("Choose a game username and a password of your choice. Please do not use your real name. Keep names appropriate. Do not reuse your school password.")
+  label("Choose a game username. Please do not use your real name. Keep names appropriate. Create a new unique password and do not share it.")
   username=field("Username • 3–20 letters / numbers / underscores");username.max_length=20
-  password=field("Password • 15–128 characters",true);password.max_length=128
-  if mode=="register":confirmation=field("Confirm password",true);confirmation.max_length=128
+  password=field("Password • 9–128 characters",true);password.max_length=128
+  if mode=="register":
+   confirmation=field("Confirm password",true);confirmation.max_length=128
+   label("Recovery question: What is the made-up name of your imaginary portal guardian?",17)
+   label("Invent an answer. Use no real names or personal information. Remember it for teacher-assisted password resets.",15)
+   recovery_answer=field("Made-up answer • 6–64 letters / numbers / spaces",true);recovery_answer.max_length=64
   button("Create account" if mode=="register" else "Sign in",func():
-   var name=username.text;var pw=password.text
-   if mode=="register" and pw!=confirmation.text:message="The passwords do not match.";refresh();return
-   if name.is_empty() or pw.length()<15:message="Enter a username and a password with at least 15 characters.";refresh();return
-   call_api("register" if mode=="register" else "login",{"username":name,"password":pw},"auth");password.clear())
+   var name=username.text.strip_edges();var pw=password.text
+   var pattern=RegEx.new();pattern.compile("^[A-Za-z][A-Za-z0-9_]{2,19}$")
+   if not pattern.search(name):notify("Enter a username of 3–20 letters, numbers or underscores, starting with a letter.");return
+   if mode=="register" and pw!=confirmation.text:notify("The passwords do not match. Please check both password fields.");return
+   if pw.length()<9:notify("Enter a password with at least 9 characters.");return
+   var payload={"username":name,"password":pw}
+   if mode=="register":
+    var answer=recovery_answer.text.strip_edges()
+    if answer.length()<6:notify("Enter your made-up recovery answer with at least 6 characters. Use no real information.");return
+    payload.answer=answer
+   call_api("register" if mode=="register" else "login",payload,"auth"))
   button("Have an account? Sign in" if mode=="register" else "New here? Create an account",func():mode="login" if mode=="register" else "register";refresh())
   label("Forgot your password? Ask your teacher or the game administrator. Signing in does not upload or replace this device’s profile automatically.",16)
   button("Continue without cloud account",guest_play)
  elif mode=="password":
-  label("Change your password",23);username=field("Current password",true);password=field("New password • at least 15 characters",true);confirmation=field("Confirm new password",true)
+  label("Change your password",23);username=field("Current password",true);password=field("New password • at least 9 characters",true);confirmation=field("Confirm new password",true)
   button("Update password",func():
-   if password.text!=confirmation.text or password.text.length()<15:message="Use at least 15 characters and matching passwords.";refresh();return
+   if password.text!=confirmation.text or password.text.length()<9:notify("Use at least 9 characters and matching passwords.");return
    call_api("password",{"current":username.text,"password":password.text},"password"))
+  button("Cancel",func():mode="login";refresh())
+ elif mode=="recovery":
+  label("Recovery question: What is the made-up name of your imaginary portal guardian?",21)
+  label("Invent an answer with no real names or personal information. Remember it for teacher-assisted password resets.",16)
+  username=field("Current password",true);recovery_answer=field("Made-up answer • 6–64 letters / numbers / spaces",true);recovery_answer.max_length=64
+  button("Save recovery answer",func():
+   if username.text.length()<9:notify("Enter your current password.");return
+   if recovery_answer.text.strip_edges().length()<6:notify("Enter a made-up recovery answer of at least 6 characters.");return
+   call_api("recovery",{"current":username.text,"answer":recovery_answer.text},"recovery"))
   button("Cancel",func():mode="login";refresh())
  elif not loaded:
   label("Signed in as "+str(user.username),23)
@@ -150,6 +175,7 @@ func refresh()->void:
     var current=legacy();guest=make_bundle(current);backup_local(guest);STORE.write("user://fx_cloud_guest.json",guest)
     var p={"format":"fx-crossroads-profile","version":1,"progress":current.defaults(),"saves":{},"studio":{"heroes":{},"abilities":{}}}
     loaded=true;revision=0;mark_owner();apply(p))
+  if not bool(user.get("has_recovery",false)):button("Add recovery answer",func():mode="recovery";refresh())
   button("Sign out",sign_out)
  else:
   label(str(user.username)+" • "+str(user.role).capitalize(),24)
@@ -158,6 +184,7 @@ func refresh()->void:
   button("Save now",func():save_cloud(true)).disabled=busy or conflict
   button("Download this device’s profile backup",func():close();legacy().export_profile())
   if conflict:button("Load cloud save instead (local backup kept)",func():call_api("save",null,"load"))
+  button("Set / change recovery answer",func():mode="recovery";refresh())
   button("Change password",func():mode="password";refresh())
   button("Sign out & restore guest profile",sign_out)
   if save_error or conflict:button("Sign out without uploading • download a backup first",confirm_offline_logout)
@@ -180,12 +207,16 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
  if result!=HTTPRequest.RESULT_SUCCESS or not p is Dictionary or code<200 or code>=300:
   message=str(p.get("error","Connection failed. Local progress is safe.")) if p is Dictionary else "Connection failed. Local progress is safe."
   if code==409 and op=="save":conflict=true
-  if code==401:loaded=false;token=""
+  if code==401 and op not in ["auth","password","recovery"]:loaded=false;token=""
   if op in ["save","save_logout"]:save_error=true
-  timer=60;refresh();return
+  timer=60
+  if op in ["auth","password","recovery"]:notify(message)
+  else:refresh()
+  return
  match op:
   "auth":
    mode="login";token=p.token;user=p.user;revision=int(user.revision);loaded=false;message="Signed in. Choose your profile below.";refresh()
+  "recovery":user.has_recovery=true;mode="login";message="Recovery answer saved. Keep your made-up answer private.";refresh()
   "password":mode="login";message="Password updated. Other sessions have been signed out.";refresh()
 
   "load":

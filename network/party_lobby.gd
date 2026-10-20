@@ -17,7 +17,7 @@ static func build(g:Node)->void:
  var heading=label(header,"GATHER YOUR PARTY",25);heading.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var solo=button(header,"▶  PLAY SOLO",g.play_solo);solo.name="PlaySolo";solo.custom_minimum_size=Vector2(190,46);preload("res://scripts/studio_ui.gd").accent(solo);solo.tooltip_text="Play on this device without a server. Battlegrounds automatically fills both teams with AI."
  var back=button(header,"Back to town",func():
-  g._leave_room_connection();g.get_tree().root.set_meta("fx_hero",g.selected_hero);g.get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn"))
+  g.return_to_town())
  back.size_flags_horizontal=Control.SIZE_SHRINK_END;back.custom_minimum_size.x=150
  var main=HBoxContainer.new();main.add_theme_constant_override("separation",16);body.add_child(main)
  var left=VBoxContainer.new();left.custom_minimum_size.x=230;left.add_theme_constant_override("separation",6);main.add_child(left)

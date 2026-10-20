@@ -345,6 +345,13 @@ func return_to_network_menu()->void:
  room_field.text="";capacity.disabled=false;test_arena.disabled=false;public_toggle.disabled=false;net_start.disabled=true
  net_status.text="Ready for another match • Host a new room or enter a room code and Join."
  shop_open="";economy_pending=false;battleground_render.clear();_sync_network_mode_controls();control.hide();net_panel.show();queue_redraw()
+func return_to_town()->void:
+ if dedicated or has_meta("leaving_for_town"):return
+ set_meta("leaving_for_town",true)
+ _leave_room_connection();set_process(false);set_physics_process(false)
+ get_tree().root.set_meta("fx_hero",selected_hero)
+ if is_instance_valid(net_panel):net_panel.hide()
+ get_tree().root.call_deferred("add_child",preload("res://network/town_return.gd").new())
 func _town()->void:
  # Post-match return keeps Host / Join available.
  return_to_network_menu()
@@ -799,7 +806,7 @@ func _send_channel(_id:String,data:Dictionary)->void:
   if gateway!=null:gateway.send_actor(_id,data)
   return
  # Critical actions must not wait for the next 30 Hz movement batch.
- if str(data.get("type","")) in ["attack","dodge","consume","rift","bg_upgrade","purchase"] or str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
+ if str(data.get("type","")) in ["attack","community_input","dodge","consume","rift","bg_upgrade","purchase"] or str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
   _flush_action_inputs()
  action_serial+=1
  if str(data.get("type",""))=="dodge":
@@ -1320,6 +1327,7 @@ func _exit_tree()->void:
  if dedicated:return
  _track_card_progress();legacy.save()
  get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+ super._exit_tree()
  Engine.max_fps=60
  if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('leave');",true)
 

@@ -16,7 +16,8 @@ var difficulty:="Any difficulty"
 var query:=""
 var favourites_only:=false
 var was_open:=false
-var custom_toggle:CheckButton
+var collection_picker:OptionButton
+var collection=0
 var custom_only:=false
 var shown:Array=[]
 var role_buttons:Dictionary={}
@@ -45,7 +46,10 @@ func setup(owner:Node)->void:
  for tag in ["All","Melee","Ranged","Support","Control","Summoner"]:
   var b:=button(filters,tag,filter_role.bind(tag));b.toggle_mode=true;role_buttons[tag]=b
  var stars:=CheckButton.new();stars.text="Favourites";stars.toggled.connect(func(value:bool):favourites_only=value;refresh());filters.add_child(stars)
- var toggle=CheckButton.new();custom_toggle=toggle;toggle.text="Custom heroes";filters.add_child(toggle);toggle.toggled.connect(func(value:bool):custom_only=value;refresh())
+ collection_picker=OptionButton.new();filters.add_child(collection_picker)
+ for title in ["Official heroes","Custom heroes","Community heroes"]:collection_picker.add_item(title)
+ collection_picker.item_selected.connect(func(index:int):collection=index;custom_only=index>0;refresh())
+ get_tree().root.get_node("FXCommunityHeroes").changed.connect(func():if is_instance_valid(panel) and panel.visible:refresh(false))
  var search_row:=HBoxContainer.new();col.add_child(search_row)
  var search:=LineEdit.new();search.placeholder_text="Find a hero…";search.custom_minimum_size=Vector2(400,42);search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search.text_changed.connect(func(value:String):query=value;refresh());search_row.add_child(search)
  var skill:=OptionButton.new();skill.custom_minimum_size=Vector2(220,42);search_row.add_child(skill)
@@ -68,7 +72,7 @@ func clear(node:Node)->void:
 func open_grid()->void:
  if is_instance_valid(portrait_grid):return
  portrait_grid=preload("res://scripts/hero_grid.gd").new()
- portrait_grid.open(game,game.selected_character,func(id:String):custom_only=id.begins_with("custom_");custom_toggle.set_pressed_no_signal(custom_only);select(id))
+ portrait_grid.open(game,game.selected_character,func(id:String):collection=2 if id.begins_with("community_") else 1 if id.begins_with("custom_") else 0;custom_only=collection>0;collection_picker.select(collection);select(id))
 func test_hero()->void:
  close(false);game.start_training()
 func close(apply_selection:bool=true)->void:
@@ -89,11 +93,13 @@ func refresh(reset_scroll:bool=true)->void:
  shown=library.entries(game,role,difficulty,query,favourites_only)
  if custom_only:
   shown=[]
-  for id in preload("res://scripts/studio_library.gd").load_data().heroes:
+  for id in game.characters:
+   if not str(id).begins_with("community_" if collection==2 else "custom_"):continue
    var h:Dictionary=game.characters.get(id,{})
    if h.is_empty():continue
    if role!="All" and h.role!=role:continue
    if not query.is_empty() and not str(h.name).to_lower().contains(query.to_lower()):continue
+   if favourites_only and id not in game.legacy.data.get("favourites",[]):continue
    shown.append(id)
  count_label.text=str(shown.size())+" / "+str(game.characters.size())
  for tag in role_buttons:role_buttons[tag].set_pressed_no_signal(tag==role)
@@ -102,11 +108,11 @@ func refresh(reset_scroll:bool=true)->void:
   var h:Dictionary=game.characters[id];var info:Dictionary=library.entry(id,h);var card:=VBoxContainer.new();rows.add_child(card);var line:=HBoxContainer.new();card.add_child(line)
   var marked:bool=id in game.legacy.data.get("favourites",[])
   var star:=button(line,"",favourite.bind(id));star.custom_minimum_size.x=42;star.icon=favourite_on if marked else favourite_off;star.tooltip_text="Remove favourite" if marked else "Add favourite";star.toggle_mode=true;star.set_pressed_no_signal(marked)
-  var b:=button(line,("Custom" if str(id).begins_with("custom_") else str(library.number(game,str(id))))+". "+str(h.name)+"\n"+str(info.role)+" • "+str(info.difficulty),select.bind(id));b.custom_minimum_size.y=62;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.add_theme_font_size_override("font_size",16)
+  var b:=button(line,("Community" if str(id).begins_with("community_") else "Custom" if str(id).begins_with("custom_") else str(library.number(game,str(id))))+". "+str(h.name)+"\n"+str(info.role)+" • "+str(info.difficulty),select.bind(id));b.custom_minimum_size.y=62;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.add_theme_font_size_override("font_size",16)
   if id==game.selected_character:b.modulate=Color("#ffe0a1");b.tooltip_text="Selected hero"
   var icon:Texture2D=game.art.get(str(h.get("sprite",id))+"_idle")
   if icon!=null:b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",36)
-  var progress:Dictionary={"ratio":1.0,"label":"Local custom creation"} if str(id).begins_with("custom_") else library.progress(game,id);var small:=ProgressBar.new();small.custom_minimum_size.y=5;small.show_percentage=false;small.value=float(progress.ratio)*100;small.tooltip_text=str(progress.label);card.add_child(small)
+  var progress:Dictionary={"ratio":1.0,"label":"Local custom creation"} if game.characters[id].has("studio_project") else library.progress(game,id);var small:=ProgressBar.new();small.custom_minimum_size.y=5;small.show_percentage=false;small.value=float(progress.ratio)*100;small.tooltip_text=str(progress.label);card.add_child(small)
  scroller.scroll_vertical=0 if reset_scroll else old
  render_details()
 func render_details()->void:
@@ -172,19 +178,24 @@ func handle_key(event:InputEvent)->bool:
 
 func render_custom()->void:
  clear(details)
+ if collection==2:
+  var service=get_tree().root.get_node("FXCommunityHeroes")
+  label(details,"COMMUNITY HEROES",22);label(details,service.status,16);button(details,"Refresh community",service.refresh)
  if shown.is_empty():
-  label(details,"Your Custom Hall is ready for creations.",22)
+  label(details,"Approved creations appear here after admin review." if collection==2 else "Your Custom Hall is ready for creations.",22)
   button(details,"Open Crossroads Studio",func():close(false);game.hero_workshop.open())
   label(details,"Import a friend's hero project in Studio → Hero Workshop → Open project, then Add to Custom Hall. Your profile ZIP carries the library.",17);return
  var id=game.selected_character if game.selected_character in shown else str(shown[0])
  var h:Dictionary=game.characters[id];var p:Dictionary=h.studio_project
- label(details,str(h.name)+" • Custom",24);label(details,str(p.hero.role)+" • "+str(p.hero.species)+"\n"+str(p.hero.lore),17)
+ label(details,str(h.name)+(" • Community • by "+str(h.get("community_author","Creator")) if collection==2 else " • Custom"),24);label(details,str(p.hero.role)+" • "+str(p.hero.species)+"\n"+str(p.hero.lore),17)
  for kind in ["primary","secondary","passive","special"]:
   var text=preload("res://scripts/workshop_project.gd").PASSIVES.get(p.hero.passive,"") if kind=="passive" else str(p.hero[kind].name)+" • "+str(p.hero[kind].style)+" • "+str(p.hero[kind].damage)+" damage"
   label(details,kind.to_upper()+" • "+str(text),17)
  button(details,"Select hero",func():select(id))
  button(details,"Test in training yard",func():select(id);test_hero())
  button(details,"Compare heroes",func():var comparison=preload("res://scripts/hero_compare.gd").new();comparison.open(game))
+ if collection==2:
+  label(details,"Admin-approved, Forced Balance checked. This published copy is read-only.",16);return
  button(details,"Edit in Studio",func():close(false);game.hero_workshop.open();game.hero_workshop.project=p.duplicate(true);game.hero_workshop.hub.hide();game.hero_workshop.panel.show();game.hero_workshop.render())
  button(details,"Remove from this library",func():
   var data=preload("res://scripts/studio_library.gd").load_data();data.heroes.erase(id);preload("res://scripts/studio_library.gd").save_data(data)

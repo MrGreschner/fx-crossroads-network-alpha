@@ -1,10 +1,17 @@
 import {randomInt,randomBytes,createHash,scrypt as derive,timingSafeEqual,createCipheriv,createDecipheriv} from 'node:crypto';
 import {promisify} from 'node:util';
-import {readFileSync} from 'node:fs';
 import {checkUsername} from './usernames.mjs';
 const scrypt=promisify(derive),digest=x=>createHash('sha256').update(x).digest('hex');
+export const RECOVERY_QUESTION="What is the made-up name of your imaginary portal guardian?";
+export function recoveryAnswer(value,{username='',password=''}={}){
+ if(typeof value!=='string')fail(400,'Enter a made-up recovery answer of 6–64 letters, numbers or spaces. No real information.');
+ const answer=value.normalize('NFKC').trim().toLowerCase().replace(/\s+/g,' ');
+ if(!/^[a-z0-9 ]{6,64}$/.test(answer)||['password','secret','guardian','123456','abcdef'].includes(answer)||answer===username.toLowerCase()||answer===password.normalize('NFKC').trim().toLowerCase())fail(400,'Invent a recovery answer of 6–64 letters, numbers or spaces, different from your username and password. No real information.');
+ return answer;
+}
 export const accountSchema=`CREATE TABLE IF NOT EXISTS crossroads_accounts(id text PRIMARY KEY,username text NOT NULL,username_key text UNIQUE NOT NULL,password_hash text NOT NULL,role text NOT NULL DEFAULT 'player',identity text,disabled boolean NOT NULL DEFAULT false,revision integer NOT NULL DEFAULT 0,save text,profile text UNIQUE,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
 ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS student_number text;
+ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS recovery_hash text;
 ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS identity_version integer NOT NULL DEFAULT 0;
 CREATE UNIQUE INDEX IF NOT EXISTS crossroads_student_number_unique ON crossroads_accounts(student_number) WHERE student_number IS NOT NULL;
 -- Remove obsolete surname fragments from live rows, leaving progress and passwords untouched.
@@ -29,12 +36,16 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
  const seal=v=>{const iv=randomBytes(12),c=createCipheriv('aes-256-gcm',encryption,iv);const b=Buffer.concat([c.update(JSON.stringify(v),'utf8'),c.final()]);return Buffer.concat([iv,c.getAuthTag(),b]).toString('base64');};
  const unseal=s=>{const b=Buffer.from(s,'base64'),d=createDecipheriv('aes-256-gcm',encryption,b.subarray(0,12));d.setAuthTag(b.subarray(12,28));return JSON.parse(Buffer.concat([d.update(b.subarray(28)),d.final()]).toString());};
  async function password(value,saved){
-  if(typeof value!=='string'||value.length<15||value.length>128)fail(400,'Choose a password of 15–128 characters. A few words work well. Do not use your school password.');
+  if(typeof value!=='string'||value.length<9||value.length>128)fail(400,'Create a new unique password of 9–128 characters and do not share it.');
   if(hashing>=2)fail(429,'Sign-in busy; please try again shortly.');hashing++;
   try{const salt=saved?saved.split(':')[0]:randomBytes(16).toString('hex'),out=await scrypt(value,salt,64,{N:131072,r:8,p:1,maxmem:192*1024*1024});return saved?timingSafeEqual(out,Buffer.from(saved.split(':')[1],'hex')):salt+':'+out.toString('hex');}finally{hashing--;}
  }
+ async function answerHash(value,saved){
+  if(hashing>=2)fail(429,'Account verification busy; please retry shortly.');hashing++;
+  try{const salt=saved?saved.split(':')[0]:randomBytes(16).toString('hex'),out=await scrypt(value,salt,64,{N:131072,r:8,p:1,maxmem:192*1024*1024});return saved?timingSafeEqual(out,Buffer.from(saved.split(':')[1],'hex')):salt+':'+out.toString('hex');}finally{hashing--;}
+ }
  async function authenticate(req){const raw=(req.headers.authorization||'').replace(/^Bearer /,'');if(!/^[a-f0-9]{64}$/.test(raw))return null;const q=await pool.query(`SELECT a.*,s.token session_token FROM crossroads_sessions s JOIN crossroads_accounts a ON a.id=s.account WHERE s.token=$1 AND s.expires_at>to_timestamp($2) AND NOT a.disabled`,[digest(raw),now()/1000]);return q.rows[0]||null;}
- const publicUser=async a=>({id:a.id,username:a.username,role:a.role,needs_identity:false,school_code:await assignNumber(a),revision:a.revision,has_save:!!a.save});
+ const publicUser=async a=>({id:a.id,username:a.username,role:a.role,needs_identity:false,school_code:await assignNumber(a),revision:a.revision,has_save:!!a.save,has_recovery:!!a.recovery_hash});
  async function assignNumber(a){
   if(a.student_number)return a.student_number;
   for(let retry=0;retry<12;retry++){
@@ -63,7 +74,8 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
   const isAdmin=path==='/accounts'||path.startsWith('/accounts/admin')||path==='/accounts/control.js';
   if(isAdmin){if(!admin(req)){send(res,401,{error:'Private account controls'},{'WWW-Authenticate':'Basic realm="Crossroads private accounts"'});req.resume();return true;}if(req.method==='POST'&&req.headers.origin&&new URL(req.headers.origin).host!==req.headers.host){send(res,403,{error:'Origin rejected'});req.resume();return true;}}
   else{const origin=req.headers.origin||'';if(origin&&!/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)&&!(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)&&!(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin))){send(res,403,{error:'Origin rejected'});req.resume();return true;}if(origin){res.setHeader('access-control-allow-origin',origin);res.setHeader('vary','Origin');}if(req.method==='OPTIONS'){send(res,204,{}, {'access-control-allow-methods':'GET,POST','access-control-allow-headers':'content-type,authorization'});return true;}}
-  if(isAdmin&&req.method==='GET'&&['/accounts','/accounts/control.js'].includes(path)){res.writeHead(200,{'content-type':path==='/accounts'?'text/html; charset=utf-8':'text/javascript','cache-control':'no-store','content-security-policy':"default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"});res.end(readFileSync(new URL(path==='/accounts'?'./accounts.html':'./accounts-control.js',import.meta.url)));return true;}
+  // Temporary reduced release: the browser account console is not shipped.
+  if(['/accounts','/accounts/control.js','/accounts/admin/recovery','/accounts/admin/password'].includes(path)){send(res,503,{error:'Browser account controls and administrator password recovery are temporarily unavailable in this profile-core release. Player login and cloud saves remain available.'});req.resume();return true;}
   if(!ready&&pool&&encryption&&now()>retryAt)await initialize();if(!ready){send(res,503,{error:isAdmin?'Cloud accounts unavailable. Set CLOUD_SAVE_KEY (32 random bytes, base64) and DATABASE_URL, then redeploy.':'Cloud accounts are not available yet. Keep a downloaded profile backup and ask your teacher or game administrator.'});req.resume();return true;}
   const ip=req.socket.remoteAddress||'unknown';let rr=rate.get(ip);if(!rr||now()-rr.at>60000)rr={at:now(),auth:0,other:0};rate.set(ip,rr);if(rate.size>4096)rate.delete(rate.keys().next().value);
   const authRoute=['/accounts/register','/accounts/login'].includes(path);if((authRoute?++rr.auth>80:++rr.other>1200)||busy>=8){send(res,429,{error:'Please retry shortly.'});req.resume();return true;}
@@ -80,13 +92,12 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
     let action='';
     if(path==='/accounts/admin/role'){if(!['player','student','teacher'].includes(p.role))fail(400,'Invalid role');await pool.query('UPDATE crossroads_accounts SET role=$1,identity=NULL,identity_version=2 WHERE id=$2',[p.role,p.id]);action='role:'+p.role;}
     else if(path==='/accounts/admin/disable'){await pool.query('UPDATE crossroads_accounts SET disabled=$1 WHERE id=$2',[!!p.disabled,p.id]);await pool.query('DELETE FROM crossroads_sessions WHERE account=$1',[p.id]);action=p.disabled?'disabled':'enabled';}
-    else if(path==='/accounts/admin/password'){const hashed=await password(p.password);await pool.query('UPDATE crossroads_accounts SET password_hash=$1 WHERE id=$2',[hashed,p.id]);await pool.query('DELETE FROM crossroads_sessions WHERE account=$1',[p.id]);action='password_reset';}
     else if(path==='/accounts/admin/history'){const rows=await pool.query('SELECT revision,created_at FROM crossroads_save_history WHERE account=$1 ORDER BY revision DESC LIMIT 10',[p.id]);send(res,200,{history:rows.rows});return true;}
     else if(path==='/accounts/admin/restore'){const old=(await pool.query('SELECT save FROM crossroads_save_history WHERE account=$1 AND revision=$2',[p.id,p.revision])).rows[0];if(!old)fail(404,'Save revision not found');const revision=await save(a,unseal(old.save),a.revision);await pool.query('DELETE FROM crossroads_sessions WHERE account=$1',[p.id]);action='restore:'+p.revision;}
     else fail(404,'Not found');await pool.query('INSERT INTO crossroads_account_audit(account,action) VALUES($1,$2)',[p.id,action]);send(res,200,{saved:true});return true;
    }
    if(authRoute){if(req.method!=='POST')fail(405,'POST required');const p=await body(req);let a;
-    if(path.endsWith('/register')){const name=checkUsername(p.username),hashed=await password(p.password),id=randomBytes(16).toString('hex');try{a=(await pool.query('INSERT INTO crossroads_accounts(id,username,username_key,password_hash) VALUES($1,$2,$3,$4) RETURNING *',[id,name.username,name.key,hashed])).rows[0];}catch(e){if(e.code==='23505')fail(409,'That username is already taken. Choose another.');throw e;}}
+    if(path.endsWith('/register')){const name=checkUsername(p.username),hashed=await password(p.password),id=randomBytes(16).toString('hex'),recovery=await answerHash(recoveryAnswer(p.answer,{username:name.username,password:p.password}));try{a=(await pool.query('INSERT INTO crossroads_accounts(id,username,username_key,password_hash,recovery_hash) VALUES($1,$2,$3,$4,$5) RETURNING *',[id,name.username,name.key,hashed,recovery])).rows[0];}catch(e){if(e.code==='23505')fail(409,'That username is already taken. Choose another.');throw e;}}
     else{if(typeof p.username!=='string'||p.username.length>20)fail(401,'Username or password is incorrect');const fk=digest(p.username.toLowerCase()),attempt=failures.get(fk)||{at:now(),count:0};if(now()-attempt.at>900000){attempt.at=now();attempt.count=0;}if(attempt.count>=12)fail(429,'Too many attempts for this username. Try again in 15 minutes.');a=(await pool.query('SELECT * FROM crossroads_accounts WHERE username_key=$1',[p.username.toLowerCase()])).rows[0];const dummy='01234567890123456789012345678901:'+('00'.repeat(64));const good=await password(p.password,a?.password_hash||dummy);if(!a||!good||a.disabled){attempt.count++;failures.set(fk,attempt);if(failures.size>8192)failures.delete(failures.keys().next().value);fail(401,'Username or password is incorrect');}failures.delete(fk);}
     const token=randomBytes(32).toString('hex');await pool.query('DELETE FROM crossroads_sessions WHERE expires_at<to_timestamp($1)',[now()/1000]);await pool.query('INSERT INTO crossroads_sessions(token,account,expires_at) VALUES($1,$2,to_timestamp($3))',[digest(token),a.id,now()/1000+43200]);send(res,200,{token,user:await publicUser(a)});return true;
    }
@@ -97,6 +108,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
    if(path==='/accounts/save'){const revision=await save(a,p.profile,p.revision);send(res,200,{saved:true,revision});}
    else if(path==='/accounts/identity')fail(410,'Personal identification is no longer collected. Reload the updated game to see your automatic game ID.');
    else if(path==='/accounts/logout'){await pool.query('DELETE FROM crossroads_sessions WHERE token=$1',[a.session_token]);send(res,200,{signed_out:true});}
+   else if(path==='/accounts/recovery'){if(!await password(p.current,a.password_hash))fail(401,'Current password is incorrect');const hashed=await answerHash(recoveryAnswer(p.answer,{username:a.username,password:p.current}));await pool.query('UPDATE crossroads_accounts SET recovery_hash=$1 WHERE id=$2',[hashed,a.id]);send(res,200,{saved:true});}
    else if(path==='/accounts/password'){if(!await password(p.current,a.password_hash))fail(401,'Current password is incorrect');const hashed=await password(p.password);await pool.query('UPDATE crossroads_accounts SET password_hash=$1 WHERE id=$2',[hashed,a.id]);await pool.query('DELETE FROM crossroads_sessions WHERE account=$1 AND token<>$2',[a.id,a.session_token]);send(res,200,{saved:true});}
    else fail(404,'Not found');
   }catch(e){send(res,e.status||503,{error:e.status?e.message:'Account service unavailable. Your previous save is safe.'});req.resume();}finally{busy--;}

@@ -4,7 +4,7 @@ var game:Node
 var last_hero=""
 func setup(owner:Node)->void:
  game=owner;hide();set_process(false);external=true;locked_player=true;hit_callback=contact;heal_callback=recover
-func active()->bool:return game.mode=="run" and game.character_id.begins_with("custom_")
+func active()->bool:return game.mode=="run" and game.hero.has("studio_project")
 func initialise()->void:
  var p:Dictionary=game.hero.studio_project
  var variants:Array=[];var build=game.legacy.payload(game.character_id)

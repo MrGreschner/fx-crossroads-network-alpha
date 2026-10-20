@@ -1,0 +1,12 @@
+{
+  "name": "Royal Nectar Nurse",
+  "health": 48,
+  "speed": 96,
+  "damage": 0,
+  "custom_attack": "royal_nurse",
+  "id": "royal_nurse",
+  "sprite": "royal_nurse",
+  "aggro_range": 850,
+  "behaviour": "custom",
+  "expansion_only": true
+}

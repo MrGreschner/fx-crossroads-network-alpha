@@ -407,7 +407,7 @@ func _ui() -> void:
 	roster_label=_label("",900,612,326,15)
 	item_picker=OptionButton.new()
 	for id in item_list:
-		item_picker.add_item(str(items[id].get("name",id))+" ("+str(items[id].get("cost",0))+"g)");item_picker.set_item_metadata(item_picker.item_count-1,id)
+		item_picker.add_icon_item(preload("res://scripts/item_icons.gd").texture(id),str(items[id].get("name",id))+" ("+str(items[id].get("cost",0))+"g)");item_picker.set_item_metadata(item_picker.item_count-1,id)
 	item_picker.position=Vector2(28,684);item_picker.size=Vector2(210,30);control.add_child(item_picker)
 	_button("BUY ITEM",245,683,_buy_item,102)
 	for child in control.get_children():
@@ -456,7 +456,7 @@ func _town() -> void:
 	get_tree().root.set_meta("fx_clinic",not results_reason.is_empty() and int(health.get(my_id,1))<=0)
 	var return_hero=preferred_hero if mode=="arena" and arena_random else selected_hero
 	var return_project=custom_party.project_for(return_hero)
-	if not return_project.is_empty():return_hero=preload("res://scripts/studio_library.gd").hero_id(return_project)
+	if not return_project.is_empty() and not return_hero.begins_with("community_"):return_hero=preload("res://scripts/studio_library.gd").hero_id(return_project)
 	get_tree().root.set_meta("fx_hero",return_hero)
 	_reset_connection()
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
@@ -1153,7 +1153,7 @@ func _clear_path(start: Vector2, finish: Vector2) -> bool:
 
 func _attack_request(style: String) -> void:
 	if fishing!=null and fishing.busy():return
-	if selected_hero.begins_with("custom_"):return
+	if characters.get(selected_hero,{}).has("studio_project"):return
 	if not dev_magic.aiming.is_empty() or Time.get_ticks_msec()<dev_magic.input_until:return
 	if adventure.combat.held_cast.suppressed(my_id,style):return
 	if spectating() or start_countdown>0:return
@@ -1178,7 +1178,7 @@ func _attack_request(style: String) -> void:
 		_send_channel(host_id,{"type":"attack","style":style,"angle":aim.angle(),"target":[position.x,position.y]})
 
 func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.ZERO) -> void:
-	if str(hero_ids.get(id,"")).begins_with("custom_"):return
+	if characters.get(str(hero_ids.get(id,"")),{}).has("studio_project"):return
 	if adventure.combat.held_cast.charges.has(id) and not adventure.combat.held_cast.context.has(id):return
 	if start_countdown>0:return
 	if adventure.immersive.aboard(id):return
@@ -1254,7 +1254,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 		for other in positions:
 			if mode not in ["arena","battlegrounds"] or other == id or (pvp_rule == "teams" and int(teams.get(other,-1)) == int(teams.get(id,-2))):
 				if origin.distance_to(positions[other]) <= healing_radius: _heal(id,str(other),int(stats.get("heal",35 if kind == "special" else 25)))
-		_emit_effect({"pos":origin,"radius":healing_radius,"time":0.4,"color":color});return
+		_emit_effect({"pos":origin,"radius":healing_radius,"time":0.4,"visual":str(stats.get("visual","")),"color":color});return
 	if style == "summon":
 		for n in int(stats.get("count",1)):
 			guards.append({"pos":origin+Vector2(45+n*25,30),"lane":-1,"hp":70.0,"max_hp":70.0,"net_uid":transport.next(),"damage":damage,"type":"summoned","owner":id,"sprite":str(stats.get("minion_sprite","mini_basketball")),"speed":float(stats.get("minion_speed",270)),"time":float(stats.get("duration",12))+(2 if adventure.combat.passive(id,"long_buddies") else 0),"attack_timer":0.3})
@@ -2063,7 +2063,7 @@ func _buy_item() -> void:
 
 func _purchase(id: String, item_id: String) -> void:
 	if mode=="arena" and arena_no_items:status_label.text="Host rule: items and food are disabled for this arena match.";return
-	if not items.has(item_id) or not gold.has(id) or not _near_building(id,"Supplies"): return
+	if not items.has(item_id) or not bool(items[item_id].get("shop",true)) or not gold.has(id) or not _near_building(id,"Supplies"): return
 	var data: Dictionary = items[item_id]
 	var price := int(data.get("cost",0))
 	if int(gold[id])<price or (inventory.get(id,[]) as Array).size()>=3: return
@@ -2252,6 +2252,7 @@ func _draw() -> void:
 		var hero_rect:Rect2=adventure.combat.v78.visual_rect(str(id),pos) if hero_id=="gopher" else fish_motion.sprite_rect(str(id),pos) if hero_id=="ripplejaw" else wing_motion.sprite_rect(str(id),pos) if hero_id=="velvetwing" else basketball_motion.sprite_rect(str(id),pos) if hero_id=="basketball" else Rect2(pos+adventure.combat.v48.visual_offset(str(id))-Vector2(28,42),Vector2(56,64))
 		hero_rect.position+=adventure.combat.stance_heroes.visual_offset(str(id))+adventure.combat.release_heroes.visual_offset(str(id))+adventure.combat.v79.visual_offset(str(id))+motion_v85.offset(hero_id)+adventure.combat.halloween.visual_offset(str(id))
 		hero_rect.position+=adventure.combat.classics.body_offset(str(id))
+		if hero_id=="navigator":hero_rect.position.y-=3+sin(visual_time*2.8)*2.5
 		hero_rect=adventure.combat.v110.resize(str(id),hero_rect)
 		if adventure.combat.v90.pending_rebirth(str(id)):pass
 		elif hero_id=="snail" and adventure.combat.v79.moving(str(id)):
@@ -2308,6 +2309,7 @@ func _draw() -> void:
 	var title := ("PRACTICE CONTINUE • " if continuation!=null and continuation.active else "") + ("Battlegrounds • "+str(battlegrounds.MAPS.get(bg_map,"Front")) if mode=="battlegrounds" else "Wave " + str(wave) + "  |  Town gate " + str(int(gate_hp)) + "/" + str(int(gate_max)) if mode == "defense" else "Floor " + str(floor_number) + "  |  Best " + str(best_floor) if mode == "descent" else "PvP " + pvp_rule.to_upper() + "  |  Score " + str(pvp_scores.get(my_id,0)) + "  |  " + str(maxi(0,300-int(run_time))) + "s left" if mode == "arena" else str(regions.get(realm_id,{}).get("name",realm_id)) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Stage " + str(wave) + "/3"))
 	if get("expedition")!=null and get("expedition").special():title=("Portal attunement" if get("expedition").kind=="attunement" else "The Between" if get("expedition").between() else "Overcharged "+str(regions.get(realm_id,{}).get("name",realm_id)))+" • 2-player expedition"
 	preload("res://scripts/combat_hud.gd").header(self,title,int(gold.get(my_id,0)),float(health.get(my_id,0)),float(_max_hp(my_id)))
+	preload("res://scripts/boss_health.gd").draw_on(self)
 	_draw_hero_cooldowns(font)
 	var needed_xp=5+int(levels.get(my_id,1))*3
 	preload("res://scripts/combat_hud.gd").experience(self,"LEVEL 10 • ALL ABILITIES READY" if mode=="arena" and not arena_opening else "Lv %d • XP %d / %d" % [levels.get(my_id,1),xp.get(my_id,0),needed_xp],1.0 if mode=="arena" and not arena_opening else clampf(float(xp.get(my_id,0))/needed_xp,0,1))
@@ -2417,6 +2419,8 @@ func _draw_effect(effect: Dictionary) -> void:
 	color.a = clampf(float(effect["time"])*4.0,0,1)
 	var pos: Vector2 = effect["pos"]-camera
 	var radius := float(effect.get("radius",40))
+	if effect.get("visual","")=="medic_pulse":
+		preload("res://scripts/medic_visuals.gd").pulse(self,pos,radius,1-float(effect.time)/.4);return
 	var style := str(effect.get("style","ring"))
 	var angle := float(effect.get("angle",0))
 	var aim := Vector2.from_angle(angle)
@@ -2425,6 +2429,8 @@ func _draw_effect(effect: Dictionary) -> void:
 		var visual := str(effect.get("visual",style))
 		if visual == "bounce":
 			draw_arc(pos+aim*(radius-12),12,0,TAU,20,color,4,true)
+		elif visual == "medic_boot":
+			preload("res://scripts/medic_visuals.gd").boot(self,pos,aim,radius,1-float(effect.time)/.28)
 		elif visual in ["kick","punch"]:
 			draw_line(pos+aim*24,pos+aim*radius,color,10,true)
 		elif visual == "scratch":

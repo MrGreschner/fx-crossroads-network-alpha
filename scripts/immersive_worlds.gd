@@ -30,7 +30,7 @@ var guide_distance:=0.0
 var guide_angle:=0.0
 var guide_ready:=false
 const IDS=["honeyglass","sunfield","lantern_marsh","silverfall","petalbrook"]
-const NEW_TYPES=["sunbeam_cantor","petal_ducker","briar_tail","nectar_keeper","bloomtail_regent","saffron_hopper","silk_spinner","dewcap_guard"]
+const NEW_TYPES=["royal_nurse","sunbeam_cantor","petal_ducker","briar_tail","nectar_keeper","bloomtail_regent","saffron_hopper","silk_spinner","dewcap_guard"]
 func v(p:Array)->Vector2:return Vector2(float(p[0]),float(p[1]))
 func a(p:Vector2)->Array:return [p.x,p.y]
 func r(p:Array)->Rect2:return Rect2(float(p[0]),float(p[1]),float(p[2]),float(p[3]))
@@ -164,6 +164,9 @@ func add_beam(point:Vector2,radius:float=145,source:String="")->void:
 func warning(enemy:Dictionary,target:Vector2,style:String,radius:float,damage:float,delay:float=.85)->void:
  if attacks.size()<40:attacks.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),style.replace("_"," ").capitalize()),"uid":int(enemy.uid),"start":a(enemy.pos),"pos":a(target),"style":style,"radius":radius,"damage":damage,"time":delay,"total":delay})
 func shoot(enemy:Dictionary,target:Vector2,count:int=1,style:String="pellet")->void:
+ if str(enemy.get("type",""))=="archer":
+  adventure.combat.launch_projectile("enemy",enemy.pos,(target-enemy.pos).normalized(),{"range":700,"speed":float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("shot_speed",275)),"thorn_arrow":true,"color":"#9ecb75"},float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("damage",9)))
+  return
  var aim:Vector2=(target-enemy.pos).normalized();var damage:float=float(defs().get(enemy.type,{}).get("damage",10))
  for n in count:adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated((n-(count-1)*.5)*.23),{"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),"Projectile"),"range":850,"speed":255,"amplitude":24,"wavelength":150,"color":"#efd49a" if data.id=="honeyglass" else "#afe5db" if data.id=="silverfall" else "#deaed0"},damage,style)
 func skill(enemy:Dictionary,target:Vector2)->void:
@@ -188,6 +191,7 @@ func skill(enemy:Dictionary,target:Vector2)->void:
    else:
     for n in 12:shoot(enemy,enemy.pos+Vector2.from_angle(TAU*n/12),1,"weaving")
   "glass_queen":
+   summon_nurse(enemy)
    if turn%2==0:
     for n in 3:warning(enemy,target+Vector2((n-1)*100,0),"amber",75,17,1+n*.15)
    else:shoot(enemy,target,5)
@@ -229,6 +233,7 @@ func step(delta:float)->void:
  var defenders:=0
  for enemy in adventure.foes().duplicate():
   if not bool(enemy.get("immersive",false)):continue
+  if str(enemy.type)=="royal_nurse":step_nurse(enemy,delta);continue
   if not bool(enemy.boss):defenders+=1
   if adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
   var target:=target_for(enemy);var distance:float=enemy.pos.distance_to(target)
@@ -513,7 +518,7 @@ func draw_hud(canvas:Node2D)->void:
  canvas.draw_rect(Rect2(20,top,minf(850,canvas.VIEW.x-210),53),Color(.06,.16,.18,.9))
  var count:=0
  for enemy in adventure.foes():
-  if bool(enemy.get("immersive",false)) and not bool(enemy.boss):count+=1
+  if bool(enemy.get("immersive",false)) and not bool(enemy.boss) and str(enemy.type)!="royal_nurse":count+=1
  var text:= "Guardian defeated • interact at the exit" if done else str(data.stages[mini(stage,data.stages.size()-1)])+ (" • "+str(count)+" defenders left" if stage==0 else "")
  canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Orchard canopies conceal patrols. Golden meadows are open; move out of warning sunbeams!","lantern_marsh":"Black water blocks travel. Mud slows you; glowing spore pools pulse. E / Interact: discoveries.","silverfall":"E / Interact: treehouse doors, discoveries, board or call the raft. Both shore routes connect.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
  canvas.draw_string(font,Vector2(33,top+43),str(tips.get(data.id,"Explore")),HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),14,Color("#b9dccc"))
@@ -671,3 +676,25 @@ func draw_water(canvas:Node2D,camera:Vector2)->void:
    for y in range(maxi(int(bounds.position.y+35),int(camera.y)),mini(int(bounds.end.y),int(camera.y+850)),90):
     var p:=Vector2(x+sin(clock+x*.03)*10,y)-camera;canvas.draw_arc(p,16+sin(clock+y*.03)*3,0,PI,12,Color(.7,.9,.88,.35),2)
 
+
+func summon_nurse(queen:Dictionary)->void:
+ if clock<float(queen.get("nurse_next",0)):return
+ if adventure.foes().any(func(e):return str(e.type)=="royal_nurse" and float(e.hp)>0):return
+ queen.nurse_next=clock+12.0
+ var p=advance(queen.pos,Vector2(105,50))
+ var nurse=spawn("royal_nurse",p);nurse.summoned=true;nurse.nurse_for=int(queen.uid);nurse.nurse_tick=1.0
+ adventure.announce("Royal Nectar Nurse • defeat it to stop the Queen's healing")
+func step_nurse(nurse:Dictionary,delta:float)->void:
+ var queen:Dictionary={}
+ for foe in adventure.foes():
+  if int(foe.uid)==int(nurse.get("nurse_for",-1)) and float(foe.hp)>0:queen=foe;break
+ if queen.is_empty():nurse.hp=0;return
+ if adventure.combat.stunned(adventure.combat.npc_key(nurse)):return
+ var gap:Vector2=queen.pos-nurse.pos
+ if gap.length()>170:nurse.pos=advance(nurse.pos,gap.normalized()*96*delta)
+ nurse.nurse_tick=float(nurse.get("nurse_tick",1))-delta
+ if float(nurse.nurse_tick)<=0:
+  nurse.nurse_tick=1.0
+  if gap.length()<240 and adventure.combat.path_clear(nurse.pos,queen.pos):
+   queen.hp=minf(float(queen.max_hp),float(queen.hp)+6)
+   warning(nurse,queen.pos,"heal",38,0,.3)

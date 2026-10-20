@@ -6,13 +6,14 @@
   "speed": 235,
   "primary": {
     "name": "Pulse Bolt",
-    "style": "projectile",
+    "style": "navigator_bolt",
     "damage": 26,
     "cooldown": 0.75,
     "range": 340,
     "speed": 480,
     "arc_degrees": 70,
-    "color": "#b8a9ff"
+    "color": "#98e4f6",
+    "navigator_star": true
   },
   "secondary": {
     "name": "Seeking Orb",
@@ -34,7 +35,9 @@
       "size": 2.0,
       "splash": 1.35
     },
-    "description": "Hold secondary up to 1.4s to grow a seeking star. Release for 27\u201344.6 damage plus a small splash. Twin Stars still launches two missiles."
+    "description": "Charge a single seeking star for up to 1.4s. Its impact marks enemies in the splash for 5s. Marked enemies defeated in time burst for 20 damage within 95 units.",
+    "star_mark": true,
+    "navigator_star": true
   },
   "special": {
     "name": "Orbital Beam",
@@ -45,8 +48,8 @@
     "duration": 4,
     "color": "#b8a9ff"
   },
-  "passive": "Twin Stars: Seeking Orb launches two tracking projectiles.",
-  "passive_effect": "twin_orbs",
+  "passive": "Telescope Aura: You and friendly heroes within 160 units gain 15% attack/projectile range. Does not stack.",
+  "passive_effect": "telescope_aura",
   "run_cost": 0,
   "mastery": {
     "title": "Celestial Pathfinder",

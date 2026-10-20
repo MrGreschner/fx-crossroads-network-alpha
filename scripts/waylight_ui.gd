@@ -10,6 +10,7 @@ var notice=""
 var countdown:Label
 var rendered_day=-1
 var selected_realm="grove"
+var realm_scroll=0
 class RelicIcon extends Control:
  var type="stormglass"
  func _draw()->void:
@@ -67,6 +68,12 @@ func button(parent:Node,value:String,call:Callable)->Button:
  var b=Button.new();b.text=value;b.custom_minimum_size.y=44;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(b);b.pressed.connect(call);return b
 func setup(owner:Node,selected:int)->void:
  manager=owner;tab=selected;layer=93;previous=manager.game.menu;manager.game.menu="waylight";manager.game.mobile.reset_controls();build()
+func open_lobby()->void:
+ var g=manager.game
+ close();g.legacy.close()
+ var root=g.get_tree().root
+ root.set_meta("fx_mode","coop");root.set_meta("fx_realm",selected_realm);root.set_meta("fx_hero",g.selected_character)
+ g.get_tree().change_scene_to_file("res://network/client.tscn")
 func close()->void:
  if manager.game.menu=="waylight":manager.game.menu=previous
  manager.window=null;queue_free()
@@ -82,6 +89,7 @@ func build()->void:
  panel=PanelContainer.new();UI.apply(panel);panel.add_theme_stylebox_override("panel",UI.box("#102c38","#bba777",12,14));add_child(panel)
  var body=VBoxContainer.new();body.add_theme_constant_override("separation",7);panel.add_child(body)
  var header=HBoxContainer.new();body.add_child(header);text(header,"THE CROSSING • PORTAL EXPEDITIONS",22)
+ var lobby_button=button(header,"Multiplayer lobby",open_lobby);lobby_button.name="MultiplayerLobby";lobby_button.size_flags_horizontal=0;lobby_button.custom_minimum_size=Vector2(155,34)
  var close_button=button(header,"Close",close);close_button.size_flags_horizontal=0;close_button.custom_minimum_size=Vector2(90,34)
  var s=manager.progress.state()
  text(body,"%d Waylight Shards    •    %d Waydust    •    %s" % [s.shards,s.dust,"Attuned" if s.attuned else "Attunement awaits"],16).modulate=Color("#edd6a2")
@@ -132,11 +140,11 @@ func standard(area:Node)->void:
   var data=manager.game.realms.get(id,{})
   if data.is_empty():continue
   var unlocked=preload("res://scripts/realm_access.gd").unlocked(manager.game.legacy,str(id))
-  var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():selected_realm=str(id);rebuild());entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=37
+  var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():realm_scroll=scroll.scroll_vertical;selected_realm=str(id);rebuild());entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=37
   if not unlocked:entry.modulate=Color("#9cacaf")
   if selected_realm==str(id):active_index=index;UI.accent(entry)
   index+=1
- scroll.set_deferred("scroll_vertical",maxi(0,(active_index-2)*44))
+ restore_realm_scroll.call_deferred(scroll)
  var details=ScrollContainer.new();details.name="RealmDetailsScroll";details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;area.add_child(details);preload("res://scripts/touch_list_scroll.gd").attach(details)
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_child(col)
  var data=manager.game.realms.get(selected_realm,{})
@@ -151,6 +159,10 @@ func standard(area:Node)->void:
  var art=preload("res://scripts/realm_landscape.gd").new();art.realm=selected_realm;art.game=manager.game;art.name="RealmLandscape";art.custom_minimum_size=Vector2(0,125);col.add_child(art)
  var fair=CheckButton.new();fair.text="Competition rules • relics disabled";fair.button_pressed=bool(manager.progress.state().fair);col.add_child(fair);fair.toggled.connect(func(on:bool):manager.progress.state().fair=on;manager.progress.save())
  text(col,"First visit? Start with Whispering Grove. Select any realm on the left to see its route and unlock requirements.",15)
+func restore_realm_scroll(scroll:ScrollContainer)->void:
+ await get_tree().process_frame
+ await get_tree().process_frame
+ if is_instance_valid(scroll):scroll.scroll_vertical=realm_scroll
 func between_ui(col:Node)->void:
  var reach=preload("res://scripts/between_access.gd").depth(manager.game.legacy)
  text(col,"PORTAL STRENGTH • ring %d • co-op follows the host" % reach,18)

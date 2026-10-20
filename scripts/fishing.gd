@@ -162,6 +162,10 @@ func _process(delta:float)->void:
   cast_button.disabled=not unlocked;cast_button.modulate=Color.WHITE;meter.visible=false
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and not event.echo:
+  if (event.keycode==KEY_R or event.physical_keycode==KEY_R) and phase=="landed" and not pending.is_empty():
+   var focus=get_viewport().gui_get_focus_owner()
+   if not (focus is LineEdit or focus is TextEdit):
+    finish_catch(false);get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(inspector):inspector.close();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(journal):close_journal();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and busy():cancel("Cast cancelled.");get_viewport().set_input_as_handled();return
@@ -231,7 +235,7 @@ func land()->void:
  if not previous.is_empty():
   label(col,"NEW WEIGHT RECORD! +%.2f kg" % (float(pending.kg)-float(previous.kg)) if float(pending.kg)>float(previous.kg) else "%.2f kg below your best" % (float(previous.kg)-float(pending.kg)),17).modulate=Color("#ffe19c")
  catch_text=label(col,"Keep it for your aquarium, or release it. Both record a discovery. Combat is still live!",15)
- var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"Keep catch",finish_catch.bind(true)));button(row,"Release",finish_catch.bind(false))
+ var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"Keep catch",finish_catch.bind(true)));button(row,"R • Release",finish_catch.bind(false))
  call_deferred("fit_catch_frame")
 func fit_catch_frame()->void:
  if not is_instance_valid(catch_frame):return

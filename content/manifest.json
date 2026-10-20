@@ -246,7 +246,9 @@
     "silk_spinner",
     "dewcap_guard",
     "brass_sapper",
-    "keywing_courier"
+    "keywing_courier",
+    "lesson_warden",
+    "royal_nurse"
   ],
   "regions": [
     "grove",
@@ -267,8 +269,8 @@
     "confluence",
     "brasslock",
     "clockwork_orchard",
-    "high_school",
     "neon_crucible",
+    "high_school",
     "astral_rift",
     "chimevault",
     "ebonwake",

@@ -40,39 +40,52 @@ func fallen(foe:Dictionary)->void:
  var sprite:=str(foe.get("corpse_sprite",defs.get(str(foe.get("type","")),{}).get("sprite","bramble")))
  if corpses.size()>=24:corpses.pop_front()
  corpses.append({"pos":combat.point_array(foe.pos),"sprite":sprite,"time":25.0})
+func slots(owner:String,stats:Dictionary)->Array:
+ var result:Array=[];var counts={"melee":0,"ranged":0,"healer":0}
+ for id in owned(owner):
+  var body:Dictionary=units[id];var kind="healer" if bool(body.get("healer",false)) else "ranged" if bool(body.ranged) else "melee";counts[kind]+=1
+ for n in maxi(0,3-int(counts.melee)):result.append("melee")
+ if combat.passive(owner,"grave_chorus"):
+  var kind="healer" if bool(stats.get("healer_vigil",false)) else "ranged"
+  for n in maxi(0,(1 if kind=="healer" else 2)-int(counts[kind])):result.append(kind)
+ return result
 func prepare(owner:String,stats:Dictionary,aim:Vector2)->bool:
  var style:=str(stats.get("style",""))
  if style=="life_lattice" or style=="last_procession":
   if owned(owner).is_empty():combat.adventure.announce("Raise fallen enemies before using this special.");return false
  if style!="raise_remains":return true
- var cap:=3 if combat.passive(owner,"grave_chorus") else 2
+ var vacancies=slots(owner,stats);var cap=owned(owner).size()+vacancies.size()
  if owned(owner).size()>=cap:combat.adventure.announce("Your echo companions are already at full strength.");return false
  var p:Vector2=combat.v79.destination(owner,aim,float(stats.get("range",420)))
  if not combat.adventure.arcade and combat.adventure.game.practice and corpses.is_empty():
   for n in cap:corpses.append({"pos":combat.point_array(combat.v75.clip(p,Vector2.from_angle(n*TAU/cap),28)),"sprite":"bramble","time":25.0})
  for corpse in corpses:
-  if p.distance_to(combat.vec(corpse.pos))<=float(stats.get("radius",140)) and combat.path_clear(p,combat.vec(corpse.pos)):return true
+  if p.distance_to(combat.vec(corpse.pos))<=float(stats.get("radius",200)) and combat.path_clear(p,combat.vec(corpse.pos)):return true
  combat.adventure.announce("Aim Raise Remains at the small grave markers left by fallen enemies.");return false
 func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
  var style:=str(stats.get("style",""))
  if style not in STYLES:return false
  if not combat.adventure.authoritative() or not combat.adventure.alive(owner):return true
  var origin:Vector2=combat.owner_pos(owner)
+ if combat.passive(owner,"grave_chorus"):
+  for id in owned(owner):
+   if not units[id].has("family") and float(units[id].max_hp)==42.0:units[id].hp=float(units[id].hp)/42.0*60.0;units[id].max_hp=60.0
  match style:
   "gravespark":combat.launch_projectile(owner,origin+aim*20,aim,{"range":float(stats.get("range",430)),"speed":360,"color":"#a9dcca"},amount)
   "raise_remains":
    if links.has(owner):finish_link(owner)
    var target:Vector2=combat.v79.destination(owner,aim,float(stats.get("range",420)))
-   var cap:=3 if combat.passive(owner,"grave_chorus") else 2
+   var vacancies=slots(owner,stats);var cap=owned(owner).size()+vacancies.size()
    var available:Array=[]
    for corpse in corpses:
-    if target.distance_to(combat.vec(corpse.pos))<=float(stats.get("radius",140)) and combat.path_clear(origin,combat.vec(corpse.pos)):available.append(corpse)
+    if target.distance_to(combat.vec(corpse.pos))<=float(stats.get("radius",200)) and combat.path_clear(origin,combat.vec(corpse.pos)):available.append(corpse)
    available.sort_custom(func(a,b):return target.distance_squared_to(combat.vec(a.pos))<target.distance_squared_to(combat.vec(b.pos)))
    for corpse in available:
     var count:=owned(owner).size()
     if count>=cap:break
-    serial+=1;var id:="risen:"+str(serial);var hp:=60.0 if cap==3 else 42.0
-    units[id]={"owner":owner,"pos":corpse.pos,"sprite":corpse.sprite,"hp":hp,"max_hp":hp,"time":18.0,"ranged":cap==3 and count>=2 and not owned(owner).any(func(existing):return bool(units[existing].ranged)),"attack":.35,"contacts":{},"pose":"idle"}
+    var role:String=vacancies.pop_front()
+    serial+=1;var id:="risen:"+str(serial);var hp:=60.0 if combat.passive(owner,"grave_chorus") else 42.0
+    units[id]={"self_id":id,"owner":owner,"pos":corpse.pos,"sprite":"morrow_healer" if role=="healer" else corpse.sprite,"healer":role=="healer","hp":hp,"max_hp":hp,"time":30.0,"ranged":role!="melee","attack":.35,"contacts":{},"pose":"idle"}
     corpses.erase(corpse);flashes.append({"pos":corpse.pos,"time":.6,"radius":36})
   "life_lattice":
    if links.has(owner):finish_link(owner)
@@ -208,8 +221,9 @@ func step(delta:float)->void:
    if p.distance_to(end)<40 or float(body.march_time)<=0:
     combat.v75.area(owner,p,80,float(body.burst),{"slow_duration":1.5,"slow":.6});flashes.append({"pos":body.pos,"time":.6,"radius":80});units.erase(id)
    continue
+  var tending:bool=bool(body.get("healer",false)) and healer_step(body,delta)
   var target:="";var best:=480.0
-  for key in combat.hostile(owner):
+  for key in ([] if tending else combat.hostile(owner)):
    var foe:Dictionary=combat.actor(key)
    if not foe.is_empty() and bool(foe.alive) and p.distance_to(foe.pos)<best and combat.path_clear(p,foe.pos):target=key;best=p.distance_to(foe.pos)
   if str(body.get("family",""))=="mosaic":
@@ -227,7 +241,7 @@ func step(delta:float)->void:
    direction=(q-p).normalized() if best>reach else -(q-p).normalized() if bool(body.ranged) and best<130 else Vector2.ZERO
    if best<=reach and float(body.attack)<=0 and not combat.stunned("p:"+str(id)):
     body.attack=float(body.get("interval",1.2))/(1.4 if float(body.get("haste",0))>0 else 1.0);body.pose="attack"
-    if bool(body.ranged):combat.launch_projectile(owner,p,(q-p).normalized(),{"range":400,"speed":310,"color":"#db96bb"},float(body.get("damage",8)))
+    if bool(body.ranged):combat.launch_projectile(owner,p,(q-p).normalized(),{"range":400,"speed":310,"color":"#bce6cf" if bool(body.get("healer",false)) else "#db96bb","slow_duration":2.0 if bool(body.get("healer",false)) else 0.0,"slow_factor":.8},4.0 if bool(body.get("healer",false)) else float(body.get("damage",8)))
     else:combat.damage(target,float(body.get("damage",10)),owner)
   if float(body.attack)<.9:body.pose="walk1" if int(clock*6)%2==0 else "walk2"
   # Mild separation keeps three bodies readable and their life-link lines distinct.
@@ -258,12 +272,37 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for id in units:
   var body:Dictionary=units[id];var p:Vector2=combat.vec(body.pos)-camera
   var texture:Texture2D=combat.adventure.game.art.get(str(body.sprite)+"_"+str(body.pose),combat.adventure.game.art.get(str(body.sprite)+"_0"))
+  if bool(body.get("healer",false)):texture=preload("res://scripts/source_art.gd").texture("res://assets/morrow_healer_"+str(body.pose)+".svg")
   c.draw_circle(p+Vector2(0,14),18,Color(0,0,0,.2));c.draw_arc(p,23,0,TAU,24,Color("#d899ca") if bool(body.ranged) else Color("#9bcdbb"),2,true)
   if texture!=null:
    var scale_factor:float=1+.18*(int(body.get("weight",1))-1);c.draw_texture_rect(texture,Rect2(p-Vector2(23,35)*scale_factor,Vector2(46,52)*scale_factor),false,Color.WHITE if body.has("family") else Color(.68,.85,.78,.85))
    if int(body.get("weight",1))>1:c.draw_string(ThemeDB.fallback_font,p+Vector2(-6,-53),"×"+str(body.weight),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#ebc9fa"))
   else:
    c.draw_circle(p-Vector2(0,15),9,Color("#d6dbba"));c.draw_rect(Rect2(p-Vector2(10,5),Vector2(20,24)),Color("#718b81"))
+  if bool(body.get("healer",false)):
+   c.draw_line(p+Vector2(12,-18),p+Vector2(26,-18),Color("#c5f2cd"),4);c.draw_line(p+Vector2(19,-25),p+Vector2(19,-11),Color("#c5f2cd"),4)
   if bool(body.ranged):c.draw_arc(p+Vector2(18,-8),15,-PI*.5,PI*.5,12,Color("#e7b3da"),2)
   c.draw_rect(Rect2(p+Vector2(-22,-43),Vector2(44,4)),Color("#263c38"));c.draw_rect(Rect2(p+Vector2(-22,-43),Vector2(44*clampf(float(body.hp)/float(body.max_hp),0,1),4)),Color("#a3dfc8"))
  for f in flashes:c.draw_arc(combat.vec(f.pos)-camera,float(f.radius)*(1-float(f.time)),0,TAU,24,Color(.75,.9,.8,float(f.time)),3,true)
+
+func healer_step(body:Dictionary,_delta:float)->bool:
+ var owner=str(body.owner);var p=combat.vec(body.pos);var chosen="";var lowest=.9
+ for friend in combat.adventure.points():
+  if not combat.adventure.alive(str(friend)) or not combat.v75.friendly(owner,str(friend)):continue
+  var at:Vector2=combat.owner_pos(str(friend));var fraction=current_hp(str(friend))/maxf(1,max_hp(str(friend)))
+  if fraction<lowest and p.distance_to(at)<230 and combat.path_clear(p,at):lowest=fraction;chosen="p:"+str(friend)
+ for id in units:
+  var unit:Dictionary=units[id];var fraction=float(unit.hp)/maxf(1,float(unit.max_hp))
+  if fraction<lowest and combat.v75.friendly(owner,str(unit.owner)) and p.distance_to(combat.vec(unit.pos))<230 and combat.path_clear(p,combat.vec(unit.pos)):lowest=fraction;chosen=str(id)
+ if chosen.is_empty():return false
+ if float(body.attack)<=0 and not combat.stunned("p:"+str(body.get("self_id",""))):
+  body.attack=1.5;body.pose="attack";var at:Vector2=p
+  var recipient=chosen.substr(2) if chosen.begins_with("p:") else str(units[chosen].owner)
+  var amount=6.0
+  if links.has(recipient):links[recipient].hp=minf(float(links[recipient].max_hp),float(links[recipient].hp)+amount);sync_link(recipient)
+  elif chosen.begins_with("p:"):amount=minf(6,max_hp(recipient)-current_hp(recipient));set_hp(recipient,current_hp(recipient)+amount)
+  else:amount=minf(6,float(units[chosen].max_hp)-float(units[chosen].hp));units[chosen].hp=float(units[chosen].hp)+amount
+  at=combat.owner_pos(recipient) if chosen.begins_with("p:") else combat.vec(units[chosen].pos)
+  flashes.append({"pos":combat.point_array(at),"time":.5,"radius":22})
+  if combat.adventure.arcade:combat.adventure.game._stat(owner,"healing",amount)
+ return true

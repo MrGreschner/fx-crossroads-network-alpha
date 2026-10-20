@@ -219,6 +219,11 @@ func _ready() -> void:
 	if _has_web_sun_loader():call_deferred("_finish_web_sun_loading")
 
 	if get_tree().root.has_meta("fx_solo_expedition"):call_deferred("_solo_expedition")
+	if get_tree().root.has_meta("fx_return_from_lobby"):
+		get_tree().root.remove_meta("fx_return_from_lobby")
+		if get_tree().root.has_meta("fx_show_main"):get_tree().root.remove_meta("fx_show_main")
+		presentation.close();session_menu.resume();menu="";mode="town";mobile.reset_controls()
+
 
 func _solo_expedition()->void:
 	var plan:Dictionary=get_tree().root.get_meta("fx_solo_expedition");get_tree().root.remove_meta("fx_solo_expedition");presentation.close();session_menu.resume();menu="";waylight.launch(str(plan.kind),int(plan.tier))
@@ -1058,7 +1063,7 @@ func fire(kind: String) -> void:
 	elif attack_style == "homing":
 		spawn_hero_projectiles(stats,damage,direction,true)
 	elif attack_style == "heal_wave":
-		attack_effects.append({"center":position_in_world,"radius":float(stats.get("radius",180)),"time":.5,"color":Color("#a7e99b")})
+		attack_effects.append({"center":position_in_world,"radius":float(stats.get("radius",180)),"time":.5,"visual":str(stats.get("visual","")),"color":Color("#a7e99b")})
 		health = minf(max_health(), health + float(stats.get("heal", 25))*adventure.combat.v98.heal_factor("solo"))
 		if practice and position_in_world.distance_to(training_yard.ALLY)<=float(stats.get("radius",180)):training_yard.heal(self,float(stats.get("heal",25)))
 	elif attack_style == "trap":
@@ -1177,6 +1182,7 @@ func pulse() -> void:
 		adventure.create_healing_zone("solo",stats)
 		return
 	if special_style == "heal_wave":
+		if stats.get("visual","")=="medic_pulse":attack_effects.append({"center":position_in_world,"radius":float(stats.get("radius",155)),"time":.5,"visual":"medic_pulse"})
 		health = minf(max_health(), health + float(stats.get("heal", 35))*adventure.combat.v98.heal_factor("solo"))
 		if practice and position_in_world.distance_to(training_yard.ALLY)<=float(stats.get("radius",180)):training_yard.heal(self,float(stats.get("heal",35)))
 		add_float_text(position_in_world - Vector2(20, 60), "+HEAL", Color("#91efad"))
@@ -1790,6 +1796,8 @@ func draw_world() -> void:
 		for ally in allies:
 			draw_sprite(str(ally["sprite"]), ally["pos"] - Vector2(19, 19), Vector2(38, 38))
 		for effect in attack_effects:
+			if effect.get("visual","")=="medic_pulse":
+				preload("res://scripts/medic_visuals.gd").pulse(self,effect.center-camera,float(effect.radius),1-float(effect.time)/.5);continue
 			if effect.has("start"):
 				if bool(effect.get("lightning",false)):
 					preload("res://scripts/lightning.gd").draw_on(self,effect["start"]-camera,effect["end"]-camera,Color(effect.get("color",Color.WHITE),minf(1,float(effect["time"])*3)))
@@ -1818,6 +1826,8 @@ func draw_world() -> void:
 						draw_line(start, start + strike_direction * (reach - 31), Color(0.77, 0.96, 0.89, strike_time * 5), 4)
 				elif visual == "punch":
 					draw_circle(position_in_world + strike_direction * reach - camera, 16, Color(1, 0.8, 0.5, strike_time * 4))
+				elif visual == "medic_boot":
+					preload("res://scripts/medic_visuals.gd").boot(self,position_in_world-camera,strike_direction,reach,1-clampf(strike_time/.18,0,1))
 				elif visual == "kick":
 					draw_line(position_in_world + strike_direction * 24 - camera, position_in_world + strike_direction * reach - camera, Color(1, 0.8, 0.5, strike_time * 4), 13)
 				elif visual == "bounce":
@@ -1844,6 +1854,7 @@ func draw_world() -> void:
 	if sprite=="goalie":skating_motion.draw_skates(self,"solo",position_in_world-camera)
 	adventure.combat.halloween.draw_mount(self,"solo",camera)
 	var hero_rect:Rect2=adventure.combat.v78.visual_rect("solo",position_in_world) if sprite=="gopher" else fish_motion.sprite_rect("solo",position_in_world) if sprite=="ripplejaw" else wing_motion.sprite_rect("solo",position_in_world) if sprite=="velvetwing" else basketball_motion.sprite_rect("solo",position_in_world) if sprite=="basketball" else Rect2(position_in_world+adventure.combat.v48.visual_offset("solo")-Vector2(28,42),Vector2(56,64))
+	if sprite=="navigator":hero_rect.position.y-=3+sin(visual_clock*2.8)*2.5
 	hero_rect.position+=adventure.combat.stance_heroes.visual_offset("solo")+adventure.combat.release_heroes.visual_offset("solo")+adventure.combat.v79.visual_offset("solo")+motion_v85.offset(sprite)+adventure.combat.halloween.visual_offset("solo")
 	hero_rect.position+=adventure.combat.classics.body_offset("solo")
 	hero_rect=adventure.combat.v110.resize("solo",hero_rect)
@@ -1890,6 +1901,7 @@ func draw_hud() -> void:
 		var layout=preload("res://scripts/combat_hud.gd")
 		var title=("RAM'S TRIAL" if trial else str(region.get("name","Realm")))+" • "+str(hero.get("name","Hero"))+" • Lv "+str(level)
 		layout.header(self,title,gold,health,max_health())
+		preload("res://scripts/boss_health.gd").draw_on(self)
 		draw_ability_cooldowns()
 		var span=int(region.get("xp_per_level",5))*10
 		var fraction=clampf(float(tutorial.defeated)/7.0,0,1) if tutorial.active else clampf(float(experience-(level-1)*span)/float(span),0,1)

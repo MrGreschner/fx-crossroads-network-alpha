@@ -14,7 +14,8 @@
     "arc_degrees": 70,
     "color": "#9ee8b4",
     "poison_damage": 2,
-    "poison_duration": 5
+    "poison_duration": 5,
+    "visual": "medic_boot"
   },
   "secondary": {
     "name": "Field Dressing",
@@ -26,7 +27,8 @@
     "duration": 1.1,
     "reduction": 0.9,
     "reflect": true,
-    "color": "#9ee8b4"
+    "color": "#9ee8b4",
+    "visual": "medic_pulse"
   },
   "special": {
     "name": "Healing Beacon",
@@ -36,7 +38,8 @@
     "radius": 155,
     "duration": 4,
     "color": "#9ee8b4",
-    "heal": 40
+    "heal": 40,
+    "visual": "medic_pulse"
   },
   "passive": "Triage: heal on kill",
   "passive_effect": "heal_on_kill",

@@ -7,6 +7,22 @@ class Emblem extends Control:
  func _draw()->void:
   var at=size*.5;var ink=Color("#9ed8d0");draw_circle(at,24,Color("#244b56"));draw_arc(at,24,0,TAU,32,Color("#668e91"),1,true)
   match kind:
+   "net":
+    draw_circle(at-Vector2(0,4),13,Color("#3c6d72"));draw_arc(at-Vector2(0,4),13,0,TAU,24,ink,2,true);draw_line(at+Vector2(8,6),at+Vector2(18,20),Color("#d1b47d"),4,true)
+    for n in [-6,0,6]:draw_line(at+Vector2(n,-15),at+Vector2(n,7),ink,1,true);draw_line(at+Vector2(-11,n-4),at+Vector2(11,n-4),ink,1,true)
+   "worms":
+    var points=PackedVector2Array()
+    for n in 24:points.append(at+Vector2((n-12)*1.1,sin(n*.4)*8))
+    draw_polyline(points,Color("#deaa93"),6,true);draw_circle(points[-1],3,Color("#efd0af"))
+   "insects":
+    for x in [-1,1]:
+     for y in [-1,1]:draw_circle(at+Vector2(x*8,y*6),6,Color("#bad8b7"))
+    draw_line(at-Vector2(0,12),at+Vector2(0,14),Color("#d2b77f"),5,true);draw_circle(at-Vector2(0,13),3,ink)
+   "dough":
+    for offset in [Vector2(-8,6),Vector2(8,6),Vector2(0,-7)]:draw_circle(at+offset,8,Color("#e1cb8e"));draw_arc(at+offset,8,PI,TAU,12,Color("#f1dfa6"),2,true)
+   "scraps":
+    draw_line(at-Vector2(15,0),at+Vector2(13,0),Color("#ced5bd"),3,true);draw_circle(at+Vector2(12,0),5,Color("#a4c6bd"))
+    for x in [-8,0,7]:draw_line(at+Vector2(x,-8),at+Vector2(x,8),Color("#ced5bd"),2,true)
    "tree":
     for n in 3:draw_line(at+Vector2(0,14),at+Vector2((n-1)*15,-11),ink,1.5,true);draw_circle(at+Vector2((n-1)*15,-11),4,Color("#dac587"))
     draw_circle(at+Vector2(0,14),4,ink)
@@ -45,11 +61,18 @@ static func build(legacy:Node,parent:Node)->void:
   ["Weekly catch","bait","A new fishing challenge",legacy.weekly.open_board]]
  for entry in entries:
   var card=SKIN.card(tiles,"","");card.get_parent().custom_minimum_size.x=275;var line=HBoxContainer.new();card.add_child(line);icon(line,entry[1]);var words=VBoxContainer.new();words.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(words);UI.label(words,entry[0],18);UI.label(words,entry[2],13);UI.button(card,"Open",entry[3]).custom_minimum_size.y=30
- var inventory=SKIN.card(parent,"EQUIPMENT & FISH BAIT","");var gear=HFlowContainer.new();inventory.add_child(gear)
+ var inventory=SKIN.card(parent,"EQUIPMENT & FISH BAIT","");var gear=HFlowContainer.new();gear.name="FishingEquipmentCards";gear.size_flags_horizontal=Control.SIZE_EXPAND_FILL;gear.add_theme_constant_override("h_separation",10);gear.add_theme_constant_override("v_separation",10);inventory.add_child(gear)
  for id in ["rod","net","pot"]:
-  var item=HBoxContainer.new();gear.add_child(item);icon(item,id);UI.label(item,("Basket" if id=="pot" else id.capitalize())+"\n"+("Ready" if prog.method_unlocked(id) else "Level %d" % (5 if id=="net" else 10)),14)
+  equipment_card(gear,id,"Basket" if id=="pot" else id.capitalize(),"Ready" if prog.method_unlocked(id) else "Unlocks at level %d" % (5 if id=="net" else 10))
  for id in preload("res://scripts/fishing_ecology.gd").BAITS:
-  var spec=preload("res://scripts/fishing_ecology.gd").BAITS[id];var item=HBoxContainer.new();gear.add_child(item);icon(item,"bait");UI.label(item,str(spec.name)+"\n"+("Unlimited" if id=="basic" else "%d stocked" % int(prog.state().bait.get(id,0)) if prog.bait_unlocked(id) else "Level %d" % int(P.BAIT_LEVELS[id])),14)
+  var spec=preload("res://scripts/fishing_ecology.gd").BAITS[id]
+  equipment_card(gear,id,str(spec.name),"Unlimited" if id=="basic" else "%d stocked" % int(prog.state().bait.get(id,0)) if prog.bait_unlocked(id) else "Unlocks at level %d" % int(P.BAIT_LEVELS[id]))
  UI.label(parent,"Bare hook is free. Keep or release catches for XP. Selling fish makes room while keeping your journal and XP.",14)
 static func open_tab(f:Node,index:int)->void:
  f.open_workshop();f.workshop.selected_tab=index;f.workshop.build()
+
+static func equipment_card(parent:Node,kind:String,title:String,status:String)->void:
+ var card=PanelContainer.new();card.custom_minimum_size=Vector2(235,88);card.add_theme_stylebox_override("panel",SKIN.box("#20434e","#426773",8,10));parent.add_child(card)
+ var row=HBoxContainer.new();row.add_theme_constant_override("separation",8);card.add_child(row);icon(row,kind)
+ var words=VBoxContainer.new();words.custom_minimum_size.x=150;words.size_flags_horizontal=Control.SIZE_EXPAND_FILL;words.size_flags_vertical=Control.SIZE_SHRINK_CENTER;row.add_child(words)
+ UI.label(words,title,16);UI.label(words,status,13).modulate=Color("#a9dac5")

@@ -1,5 +1,5 @@
 // ASCII-only public aliases prevent invisible characters and homoglyph ambiguity.
-const reserved=['admin','administrator','teacher','moderator','crossroads','support','principal','student','god','null','undefined'];
+const reserved=['admin','administrator','teacher','moderator','crossroads','support','principal','student','god','null','undefined','gamedev','developer','staff','headteacher','headmaster','headmistress','headadmin','sysadmin','owner','official','system','server','security','helpdesk','techsupport','crossroadsdev','modteam','moderatorteam','schooladmin','reportadmin','gameadmin'];
 const blocked=['fuck','shit','bitch','cunt','cock','dick','pussy','porn','sex','nigger','nigga','faggot','fag','retard','rape','rapist','nazi','hitler','kkk','suicide','killall','whore','slut','asshole','motherfucker','cum','penis','vagina','boob','tits','chink','spic','tranny','paki','kike','dyke','jizz','wank','blowjob','handjob','anal','dildo','hentai','pedo','xxx','phuck','fvck','fuk','nlgger','niqqer','nigg','niglet','whitepower','heilhitler','putain','merde','salope','connard','encule','puta'];
 export function checkUsername(value){
  if(typeof value!=='string'||!/^[A-Za-z][A-Za-z0-9_]{2,19}$/.test(value))throw Object.assign(Error('Use 3–20 letters, numbers or underscores, starting with a letter. No spaces or symbols.'),{status:400});

@@ -136,6 +136,10 @@ func number(parent:Node,caption:String,data:Dictionary,key:String,lo:float,hi:fl
 func render()->void:
  clear(content)
  preload("res://scripts/studio_balance.gd").toggle(content,project,func():edited();render())
+ var sharing=HBoxContainer.new();content.add_child(sharing)
+ button(sharing,"Submit hero to Community review",submit_community).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ button(sharing,"My submissions",func():get_tree().root.get_node("FXCommunityHeroes").show_status(self))
+ label(content,"Required: four poses (30% filled), lore, play style, three named attacks, passive, two mastery choices and Forced Balance.",14)
  if preload("res://scripts/education_access.gd").student():button(content,"Student Mode • learning journal",func():game.legacy.learning_open())
  if preload("res://scripts/education_access.gd").student():button(content,"Finalize & submit to active module",func():notice.text=preload("res://scripts/studio_finalize.gd").submit("hero",project,str(project.hero.name)))
  if project.get("forced_balance",false):label(content,"CHECKED BUDGET • Raising damage or reach lengthens cooldown. More health / protection lowers movement. Re-test after each trade-off.",15)
@@ -144,21 +148,22 @@ func render()->void:
    label(content,"1 • Hero details",24)
    line(content,"Project author",project,"author",100);line(content,"Hero name",project.hero,"name")
    choice(content,"Role",project.hero,"role",{"Melee":"Melee","Ranged":"Ranged","Support":"Support","Summoner":"Summoner","Control":"Control"})
-   line(content,"Species / object",project.hero,"species",100);note(content,"Lore (optional)",project.hero,"lore")
-   if preload("res://scripts/education_access.gd").student():note(content,"Design concept • what should make playing this hero interesting?",project,"concept")
+   line(content,"Species / object",project.hero,"species",100);note(content,"Lore • required for community submission",project.hero,"lore")
+   note(content,"Design concept • what should make playing this hero interesting?",project,"concept")
    if not project.hero.has("defence"):project.hero.defence=0.0
    if not project.hero.has("balance_tradeoff"):project.hero.balance_tradeoff="speed"
    choice(content,"Health trade-off",project.hero,"balance_tradeoff",{"speed":"Pay with movement speed","defence":"Use defence first, then speed"})
    number(content,"Defence (0.1 = 10%)",project.hero,"defence",0,.25,.01)
    number(content,"Health",project.hero,"max_health",70,200,5);number(content,"Movement speed",project.hero,"speed",100,300,5)
   1:
-   label(content,"2 • Bring your hero to life",24);label(content,"Upload four PNG poses. Maximum 256 × 256 pixels and 128 KB each. Transparent 64 × 64 pixel art works well. Artwork travels inside your project file.")
+   label(content,"2 • Bring your hero to life",24);label(content,"Upload four PNG poses, each at least 30% filled (half opacity or higher). Maximum 256 × 256 pixels and 128 KB each. Transparent 64 × 64 pixel art works well. Artwork travels inside your project file.")
    var row=HBoxContainer.new();content.add_child(row)
    for pose in ["idle","walk1","walk2","attack"]:
     var frame=PanelContainer.new();frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",UI.box("#183945","#355b68",10,12));row.add_child(frame);var box=VBoxContainer.new();frame.add_child(box);label(box,pose.capitalize())
     var pic=TextureRect.new();pic.custom_minimum_size=Vector2(128,128);pic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;pic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;pic.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;box.add_child(pic)
     if project.hero.art.has(pose):
      var image=Image.new();image.load_png_from_buffer(Marshalls.base64_to_raw(project.hero.art[pose]));pic.texture=ImageTexture.create_from_image(image)
+    label(box,"%d%% filled" % roundi(preload("res://scripts/community_validation.gd").coverage(str(project.hero.art.get(pose,"")))*100),14)
     button(box,"Edit pixels",edit_pixels.bind(pose));button(box,"Upload PNG",choose_file.bind(pose));button(box,"Remove",func():project.hero.art.erase(pose);edited();render())
    var animated=preload("res://scripts/studio_animation.gd").new();content.add_child(animated);animated.setup([project.hero.art.get("walk1",project.hero.art.get("idle","")),project.hero.art.get("walk2",project.hero.art.get("idle",""))])
    label(content,"LIVE WALK • alternates Walk 1 / Walk 2. Keep the face and contact point aligned; change feet, wings or body tilt by a few pixels.")
@@ -287,6 +292,7 @@ func attack_fields(parent:Node,a:Dictionary)->void:
  label(parent,"Charge 0 = instant. Hold/release a charged ability for up to 60% extra damage, 30% extra healing and 20% extra radius. Stun stops movement/attacks; slow reduces speed; burn, poison and bleed deal status damage per second. Unused settings are retained if you switch types.",14)
 func start_test()->void:
  var error=Project.validate(project)
+ if error.is_empty():error=preload("res://scripts/community_validation.gd").art_issue(project)
  if not error.is_empty():notice.text="Fix before testing: "+error;return
  save_draft();latest_report={};panel.hide();test_panel.show();clear(test_panel)
  var column=VBoxContainer.new();test_panel.add_child(column)
@@ -329,6 +335,7 @@ func finish_test()->void:
  arena.queue_free();arena=null
 func export_project()->void:
  var error=Project.validate(project)
+ if error.is_empty():error=preload("res://scripts/community_validation.gd").art_issue(project)
  if not error.is_empty():notice.text="Cannot export: "+error;return
  save_draft();write_download(JSON.stringify(project,"  "),project_filename("project.json"))
 func export_report()->void:
@@ -569,3 +576,11 @@ func alternate_form_editor(parent:Node)->void:
     if t.attack.get("form_id","")==id:t.attack.form_id=""
    edited();render()
   )
+
+func submit_community()->void:
+ save_draft()
+ var issue=preload("res://scripts/community_validation.gd").issue(project)
+ if not issue.is_empty():notice.text="Not ready: "+issue;return
+ var dialog=ConfirmationDialog.new();dialog.title="Submit for community review?";dialog.dialog_text="Your hero, artwork, lore and cloud username will be visible to admins. Approved heroes become playable by the community. Keep real names out of your work. Editing your draft later will not change this submitted copy.";dialog.ok_button_text="Send for review";add_child(dialog)
+ dialog.confirmed.connect(func():get_tree().root.get_node("FXCommunityHeroes").submit(project,func(message:String):notice.text=message);dialog.queue_free())
+ dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(600,230))

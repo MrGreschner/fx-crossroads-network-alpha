@@ -10,7 +10,7 @@
     "style": "projectile",
     "damage": 30,
     "cooldown": 1.0,
-    "range": 560,
+    "range": 720,
     "speed": 520,
     "color": "#eff5de"
   },
@@ -20,20 +20,20 @@
     "damage": 28,
     "cooldown": 4.0,
     "range": 330,
-    "blast_radius": 80,
+    "blast_radius": 125,
     "color": "#bde79d",
     "travel_speed": 380,
     "fragment_count": 6,
     "fragment_damage": 4,
-    "fragment_radius": 32,
-    "fragment_distance": 95,
+    "fragment_radius": 50,
+    "fragment_distance": 110,
     "hold_charge": {
       "seconds": 1.4,
       "damage": 1.5,
       "min_range": 85,
       "distance_charge": true
     },
-    "description": "Hold secondary to wind up your club. The landing marker moves from 85 to 330 reach over 1.4s. Release to lob a chip for 28\u201342 damage, followed by six small 4-damage fragments."
+    "description": "Hold to aim a charged golf ball. A wider 125-radius landing blast releases six 50-radius fragments."
   },
   "special": {
     "name": "Course Ricochet",
@@ -79,7 +79,7 @@
         "damage": 11,
         "cooldown": 0.95,
         "color": "#c4e4bd",
-        "range": 330,
+        "range": 420,
         "width": 75,
         "duration": 1.65,
         "description": "Send a hook and slice around opposite sides before returning. Each foe takes at most 11 on each leg. Wider control, slower firing.",

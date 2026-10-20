@@ -1,5 +1,6 @@
 extends Node
 ## Shared effects and object hero mechanics. Only the host applies damage.
+var starfield:Node
 var feedback:Node
 var v112:Node
 var v110:Node
@@ -56,8 +57,9 @@ var shot_turn:Dictionary={}
 var mines:Array=[]
 var received_at:=0
 var coast:Node
-const STYLES=["meteor_shower","split_lance","manual_mines","ground_sequence","cross_shot","charged_beam","chill_aura","rolling_snow","pulse_wave","pulse_burst","magnet_pin","magnet_pull","magnet_wire","waterfall_wave","ricochet_projectile","burst_projectile","spiral_shot","orbit_shards","vortex_field"]
+const STYLES=["navigator_bolt","meteor_shower","split_lance","manual_mines","ground_sequence","cross_shot","charged_beam","chill_aura","rolling_snow","pulse_wave","pulse_burst","magnet_pin","magnet_pull","magnet_wire","waterfall_wave","ricochet_projectile","burst_projectile","spiral_shot","orbit_shards","vortex_field"]
 func _ready()->void:
+	starfield=preload("res://scripts/starfield.gd").new();add_child(starfield);starfield.combat=self
 	feedback=preload("res://scripts/combat_feedback.gd").new();add_child(feedback);feedback.combat=self
 	v112=preload("res://scripts/v112_combat.gd").new();add_child(v112);v112.combat=self
 	v110=preload("res://scripts/v110_combat.gd").new();add_child(v110);v110.combat=self
@@ -93,6 +95,7 @@ func _ready()->void:
 	variants=preload("res://scripts/hero_variants.gd").new();add_child(variants);variants.combat=self
 	coast=preload("res://scripts/folded_coast.gd").new();add_child(coast);coast.combat=self
 func setup(id:String)->void:
+	starfield.reset()
 	feedback.contacts.clear()
 	actor_index.clear();actor_frame=-1
 	v112.reset()
@@ -241,7 +244,7 @@ func damage(key:String,amount:float,owner:String,attack:String="Ability hit",cau
 		if adventure.arcade:adventure.game._hurt(key.substr(2),amount,owner,"",credit)
 		else:adventure.game.take_player_damage(amount,"",credit)
 func apply_status(key:String,kind:String,duration:float,owner:String,value:float=0,cause:Dictionary={})->void:
-	if not adventure.arcade and key=="p:solo" and adventure.game.character_id.begins_with("custom_") and adventure.game.hero.get("studio_project",{}).get("hero",{}).get("passive","")=="resilience":duration*=.75
+	if not adventure.arcade and key=="p:solo" and adventure.game.hero.has("studio_project") and adventure.game.hero.get("studio_project",{}).get("hero",{}).get("passive","")=="resilience":duration*=.75
 	if key.begins_with("bgbase:") or key.begins_with("bgheart:"):return
 	if key.begins_with("p:mirror:") and bool(v59.copies.get(key.substr(9),{}).get("transferred",false)):key=player_key(key.substr(9))
 	if not adventure.authoritative() or actor(key).is_empty() or not bool(actor(key).get("alive",false)):return
@@ -340,6 +343,7 @@ func effective_stats(owner:String,kind:String,stats:Dictionary)->Dictionary:
 	if adventure.game.get("legacy")!=null:result=adventure.game.legacy.stats(owner,kind,result)
 	result=stance_heroes.effective(owner,kind,result)
 	if kind=="primary" and passive(owner,"primary_bleed"):result["bleed_duration"]=4;result["bleed_damage"]=2
+	if support_aura(owner,"telescope_aura") and float(result.get("range",0))>0:result["range"]=float(result.range)*1.15
 	return held_cast.effective(owner,kind,result)
 func melee_received(id:String,attacker:String)->void:
 	if effect_time(player_key(id),"silk_guard")>0:
@@ -433,7 +437,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 				var direction:=aim.rotated(n*PI*.5)
 				launch_projectile(owner,origin+direction*26,direction,stats,amount)
 		"waterfall_wave":add_ring(owner,origin,stats,amount)
-		"ricochet_projectile","homing","spiral_shot","split_lance":
+		"navigator_bolt","ricochet_projectile","homing","spiral_shot","split_lance":
 			var count:=2 if style=="homing" and passive(owner,"twin_orbs") else int(stats.get("count",1))
 			for n in count:
 				var direction:=aim.rotated((n-(count-1)*.5)*float(stats.get("spread",0)))
@@ -586,6 +590,7 @@ func step(delta:float)->void:
 	encounter_book.step(self,delta)
 	if not adventure.authoritative():
 		halloween.client_step(delta);return
+	starfield.step(delta)
 	v112.step(delta)
 	v110.step(delta)
 	halloween.step(delta)
@@ -796,6 +801,7 @@ func step_projectiles(delta:float)->void:
 					add_anchor(owner,center)
 				_:
 					if not impact.is_empty() and not blocked:
+						if bool(shot.get("stats",{}).get("star_mark",false)):starfield.mark_area(owner,center,float(shot.get("stats",{}).get("splash_radius",75)))
 						damage(impact,float(shot["damage"]),owner,"Projectile",shot.get("credit",{}));shot["hits"].append(impact)
 						v59.impact(shot,center)
 						var stats:Dictionary=shot.get("stats",{})
@@ -853,8 +859,9 @@ func indicators()->Array:
 			if effect_time(key,kind)>0:flags.append(kind)
 		if not flags.is_empty():result.append({"key":str(key),"pos":point_array(target["pos"]),"flags":flags})
 	return result
-func snapshot()->Dictionary:return {"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
+func snapshot()->Dictionary:return {"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
 func receive(data:Dictionary)->void:
+	starfield.marks=data.get("starfield",{})
 	v112.receive(data.get("v112",{}))
 	v110.receive(data.get("v110",{}))
 	halloween.receive(data.get("halloween",{}))
@@ -959,6 +966,7 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 			for n in 18:
 				var point:=center+Vector2.from_angle(TAU*n/18+clock*.4)*radius
 				canvas.draw_line(point+Vector2(0,-30),point,Color(.7,.95,1,.6),4,true)
+	starfield.draw_on(canvas,camera)
 	for shot in projectiles:draw_projectile(canvas,shot,camera)
 	for aura in auras:
 		if adventure.points().has(str(aura["owner"])):canvas.draw_circle(owner_pos(str(aura["owner"]))-camera,float(aura["radius"]),Color(.5,.8,1,.13));canvas.draw_arc(owner_pos(str(aura["owner"]))-camera,float(aura["radius"]),clock,clock+TAU*.9,48,Color(.6,.85,1,.6),3,true)
@@ -1115,6 +1123,8 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 			for n in 3:canvas.draw_circle(point+Vector2.from_angle(clock*3+TAU*n/3)*17,2,Color("#a9d479"))
 		elif str(shot["stats"].get("element",""))=="fire":canvas.draw_colored_polygon(PackedVector2Array([point-heading*10+heading.orthogonal()*6,point-heading*(28+sin(clock*15)*5),point-heading*10-heading.orthogonal()*6]),Color("#ff8741",.7))
 		return
+	if bool(shot.get("stats",{}).get("navigator_star",false)):
+		starfield.draw_shot(canvas,shot,point,clock);return
 	if str(shot["style"])=="silk_needle":
 		var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal()
 		canvas.draw_line(point-heading*30,point,Color(.84,.7,.95,.4),2,true)

@@ -40,6 +40,7 @@ var active_ms=0.0
 var previous_active=0
 var last_poll_ms=0
 func _ready()->void:
+ get_tree().root.get_node("FXCommunityHeroes").changed.connect(_community_changed)
  var arena_script:Script=load("res://network/arena.gd")
  if arena_script==null or not arena_script.can_instantiate():
   push_error("Arena cannot start. Check missing or outdated network dependencies in the server upload.");get_tree().quit(1);return
@@ -140,6 +141,7 @@ func drop_connection(key:int,reason:String="socket_closed")->void:
    g.server_inputs[id]=[];g.server_actions[id]=[]
    g.room_paused=rooms[code].members.keys().all(func(member):return int(identities[member].connection)<0)
    g.adventure.combat.held_cast.packet(id,{"phase":"cancel"})
+   if g.custom_party.runtimes.has(id):g.custom_party.runtimes[id].cancel_holds()
    g.adventure.combat.release_heroes.holding(id,false,Vector2.RIGHT);g.adventure.combat.classics.holding(id,false);g.adventure.combat.v79.holding(id,false,Vector2.RIGHT);g.adventure.combat.v56.holding(id,false,Vector2.RIGHT)
  entry.ws.close();peers.erase(key)
 func send(key:int,data:Dictionary)->void:
@@ -317,7 +319,7 @@ func receive(key:int,data:Dictionary)->void:
    dropped_inputs+=discard;queue=queue.slice(discard);g.server_inputs[id]=queue
   g.max_input_depth=maxi(g.max_input_depth,queue.size())
   identity.event_ack=maxi(int(identity.get("event_ack",0)),mini(int(room.event_seq),int(data.get("event_ack",0))))
- elif kind in ["attack","held_cast","dodge","consume","rift","bg_upgrade","purchase"]:
+ elif kind in ["attack","held_cast","community_input","dodge","consume","rift","bg_upgrade","purchase"]:
   if g.server_actions.get(id,[]).size()>=32:return
   var serial=int(data.get("seq",0))
   if serial<=int(identity.get("action_seq",0)):return
@@ -351,6 +353,10 @@ func valid_frame(value)->bool:
 func finite_number(v)->bool:return (v is float or v is int) and is_finite(float(v))
 func valid_action(data:Dictionary)->bool:
  var kind=str(data.get("type",""))
+ if kind=="community_input":
+  if str(data.get("kind","")) not in ["primary","secondary","special"] or not data.get("down") is bool:return false
+  var point=data.get("point",[])
+  return point is Array and point.size()==2 and finite_number(point[0]) and finite_number(point[1]) and Vector2(float(point[0]),float(point[1])).length()<60000 and int(data.get("input_seq",-1))>=0
  if kind=="bg_upgrade":
   var key=str(data.get("key",""))
   if key not in ["melee","ranged","healing","vitality","production"] and key not in ["unit:foot","unit:archer","unit:healer","unit:catapult","unit:mage","unit:berserker","unit:tank","unit:longbow"]:return false
@@ -392,7 +398,7 @@ func join(key:int,data:Dictionary)->void:
    var g=Arena.new();g.gateway=self;add_child(g)
    if chosen not in ["arena","defense","descent","coop","battlegrounds"]:g.queue_free();fail(key,"This mode is not integrated yet.");return
    if chosen=="coop" and special.is_empty() and realm not in preload("res://network/realms.gd").ids():g.queue_free();fail(key,"Choose an official co-op realm.");return
-   var unlocked=data.get("unlocked_realms",["grove","quarry"])
+   var unlocked=data.get("unlocked_realms",["grove"])
    if chosen=="coop" and special.is_empty() and (not unlocked is Array or realm not in unlocked):g.queue_free();fail(key,"The host must unlock this realm on their profile first.");return
    if chosen=="coop" and realm=="wayfarer" and data.get("quest_states",{}) is Dictionary:g.set_meta("fx_quest_seed",data.get("quest_states",{}))
    g.mode=chosen;g._set_mode(chosen);g.realm_id=realm;g.arena_party_rule="teams" if str(data.get("rule","ffa"))=="teams" else "ffa";g.arena_team_size=clampi(int(data.get("team_size",2)),2,4);g.set_meta("crown_competition",data.get("competition",false)==true)
@@ -471,6 +477,11 @@ func broadcast_game(g:Node,data:Dictionary)->void:
  for id in room.get("members",{}):send_actor(str(id),data)
 func execute_action(g:Node,id:String,data:Dictionary)->void:
  var began=Time.get_ticks_msec()
+ if str(data.get("type",""))=="community_input":
+  var hero=str(g.hero_ids.get(id,""))
+  if hero.begins_with("community_") and g.characters.get(hero,{}).has("studio_project"):
+   g.custom_party.input(id,str(data.kind),bool(data.down),Vector2(float(data.point[0]),float(data.point[1])))
+  return
  if str(data.get("type",""))=="rift":
   var handled=false
   if g.positions.has(id) and int(g.health.get(id,0))>0 and began>=int(g.get_meta("rift_ready_"+id,0)):
@@ -531,7 +542,7 @@ func snapshot(g:Node)->void:
  var began=Time.get_ticks_usec()
  var state=g._snapshot()
  # Arena-only envelope; hero combat state remains complete for all official heroes.
- for field in ["studio","dev_magic"]:state.erase(field)
+ for field in ["dev_magic"]:state.erase(field)
  if g.mode!="battlegrounds":state.erase("battlegrounds")
  if g.mode!="defense":state.erase("north_gate")
  if g.mode!="descent":state.erase("descent")
@@ -587,3 +598,15 @@ func send_state(key:int,g:Node,id:String)->void:
  identities[id].last_seq=0;g.input_ack[id]=0;g.server_input_credit[id]=0;snapshot(g)
 
 func send_state_snapshot(g:Node)->void:snapshot(g)
+
+func _community_changed()->void:
+ # New approvals become selectable without restarting the running service.
+ var service=get_tree().root.get_node("FXCommunityHeroes")
+ for code in rooms:
+  var room:Dictionary=rooms[code]
+  if room.game.started:continue
+  service.install(room.game)
+  for actor in room.game.lobby_heroes:
+   var hero=str(room.game.lobby_heroes[actor])
+   if hero.begins_with("community_") and not room.game.characters.has(hero):room.game.lobby_heroes[actor]="ram";room.game.hero_ids[actor]="ram"
+  lobby(str(code))

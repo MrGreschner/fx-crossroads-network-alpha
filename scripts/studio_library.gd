@@ -51,6 +51,8 @@ static func hero_id(p:Dictionary)->String:return "custom_"+str(p.project_id).sha
 static func add_hero(p:Dictionary)->String:
  var issue=Project.validate(p)
  if not issue.is_empty():return issue
+ issue=preload("res://scripts/community_validation.gd").art_issue(p)
+ if not issue.is_empty():return issue
  var data=load_data();var id=hero_id(p)
  if data.heroes.get(id)==p:return ""
  data.heroes[id]=p.duplicate(true);preload("res://scripts/studio_cycle.gd").record(data,"hero",p);return save_data(data)
@@ -59,6 +61,8 @@ static func add_ability(a:Dictionary)->String:
  if not issue.is_empty():return issue
  var data=load_data();data.abilities[str(a.name)]=a.duplicate(true);preload("res://scripts/studio_cycle.gd").record(data,"ability",a,true);return save_data(data)
 static func install(game:Node)->void:
+ var service=game.get_tree().root.get_node_or_null("FXCommunityHeroes")
+ if service!=null:service.install(game)
  var data=load_data()
  # A pre-update local draft is playable too; no re-import or manual publishing.
  var draft=preload("res://scripts/profile_store.gd").read(Project.PATH,func(v:Dictionary)->bool:return Project.validate(v).is_empty())
@@ -74,7 +78,9 @@ static func install(game:Node)->void:
     for pose in ["idle","walk1","walk2","attack"]:game.art.erase(str(id)+"_"+pose)
     var tokens:Dictionary=game.get_meta("studio_art_tokens",{});tokens.erase(id);game.set_meta("studio_art_tokens",tokens)
  for id in data.heroes:
-  var p:Dictionary=data.heroes[id];var h=p.hero.duplicate(true)
+  var p:Dictionary=data.heroes[id]
+  if not preload("res://scripts/community_validation.gd").art_issue(p).is_empty():continue
+  var h=p.hero.duplicate(true)
   h.id=id;h.sprite=id;h.cost=0;h.passive_effect="studio";h.studio_project=p;h.studio_checked=preload("res://scripts/studio_balance.gd").hero_checked(p);h.studio_token=Project.fingerprint(p)
   h.passive=Project.PASSIVES.get(p.hero.passive,"Custom passive")
   h.mastery={"technique":{"name":p.techniques[0].name,"ability":p.techniques[0].slot,"description":"Studio alternative • equip while testing."},"final_technique":{"name":p.techniques[1].name,"ability":p.techniques[1].slot,"description":"Studio alternative • equip while testing."}}

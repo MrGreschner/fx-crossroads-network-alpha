@@ -38,7 +38,7 @@ func begin(id:String,kind:String,aim:Vector2,target:Vector2)->void:
 func local_input(delta:float,active:bool)->void:
  var game:Node=combat.adventure.game
  var id:String=str(game.my_id) if combat.adventure.arcade else "solo"
- if combat.adventure.arcade and str(game.hero_ids.get(id,game.selected_hero)).begins_with("custom_"):return
+ if combat.adventure.arcade and game.characters.get(str(game.hero_ids.get(id,game.selected_hero)),{}).has("studio_project"):return
  var origin:Vector2=combat.owner_pos(id)
  var aim:Vector2=game.mobile.aim if game.mobile.enabled else (game.media_mouse_world()-origin).normalized()
  if aim.is_zero_approx():aim=Vector2.RIGHT
@@ -95,6 +95,7 @@ func effective(id:String,kind:String,s:Dictionary)->Dictionary:
  var q:Dictionary=context[id];var cfg:Dictionary=s.get("hold_charge",{});var t:float=power(q,s)
  s["released_hold"]=true;s["charge_power"]=t
  if t>=.999:
+  if float(cfg.get("full_stun",0))>0:s["stun_duration"]=float(cfg.full_stun)
   if str(s.get("style",""))=="grave_cleave":s["bleed_duration"]=3.0;s["bleed_damage"]=2.0
   if str(s.get("style",""))=="apiary_needle":s["stun_duration"]=1.25
   if str(s.get("style",""))=="oar_sweep":s["slow_duration"]=2.0;s["slow"]=.6

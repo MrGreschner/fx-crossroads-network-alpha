@@ -4,7 +4,7 @@ config_version=5
 boot_splash/show_image=false
 boot_splash/bg_color=Color(0.03137,0.10588,0.14902,1)
 config/name="Crossroads: Realms Beyond"
-config/version="190"
+config/version="193.2"
 config/icon="res://assets/crossroads_emblem.svg"
 ; Keep the established desktop save location for existing players.
 config/use_custom_user_dir=true
@@ -29,6 +29,8 @@ textures/canvas_textures/default_texture_filter=0
 pointing/emulate_mouse_from_touch=true
 
 [autoload]
+
+FXCommunityHeroes="*res://scripts/community_heroes.gd"
 FXAccount="*res://scripts/cloud_account.gd"
 FXActivity="*res://scripts/activity_analytics.gd"
 FXStudioPartner="*res://scripts/studio_partner.gd"
@@ -43,3 +45,6 @@ FXStability="*res://scripts/stability.gd"
 file_logging/enable_file_logging=true
 file_logging/max_log_files=3
 file_logging/log_path="user://logs/godot.log"
+
+[editor_plugins]
+enabled=PackedStringArray("res://addons/browser_files/plugin.cfg")

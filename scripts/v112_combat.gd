@@ -88,6 +88,7 @@ func step(delta:float)->void:
   var e:Dictionary=effects[i];var owner:String=str(e.owner)
   if not combat.adventure.alive(owner):effects.remove_at(i);continue
   var used:float=minf(delta,maxf(0,float(e.time)));e.time=float(e.time)-delta;e.age=float(e.age)+used;e.tick=float(e.tick)+used
+  if e.kind=="oar":e.pos=combat.point_array(combat.owner_pos(owner))
   var p:Vector2=combat.vec(e.pos)
   if e.kind=="oar":
    var aim:Vector2=combat.vec(e.aim);var angle:float=-.65+clampf(float(e.age)/.28,0,1)*1.3
