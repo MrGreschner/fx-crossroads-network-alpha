@@ -1,0 +1,19 @@
+{
+  "name": "Peatwater Guard",
+  "tier": 2,
+  "seconds": 150,
+  "needs": {
+    "willow": 3,
+    "mooncap": 1
+  },
+  "fish": "peatfin_minnow",
+  "effect": "lodge_guard",
+  "amount": 20,
+  "duration": 5,
+  "description": "Gain 20% damage reduction for 5 seconds. Uses one ordinary kept Peatfin Minnow. One use; guard does not stack.",
+  "id": "lodge_marsh",
+  "cost": 0,
+  "sprite": "lodges/lodge_marsh",
+  "shop": false,
+  "crafted": true
+}

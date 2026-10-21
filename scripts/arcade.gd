@@ -118,6 +118,9 @@ var item_list: Array[String] = []
 var inventory: Dictionary = {}
 var provisions=preload("res://scripts/provisions.gd").new()
 var food_slots:Dictionary={}
+var supply_loadouts:Dictionary={}
+var accepted_supplies:Dictionary={}
+var shop_discounts:Dictionary={}
 var food_loadouts:Dictionary={}
 var food_registered:Dictionary={}
 var control: CanvasLayer
@@ -407,8 +410,12 @@ func _ui() -> void:
 	status_label=_label(notice,375,658,850,15);status_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status_label.size.y=42
 	roster_label=_label("",900,612,326,15)
 	item_picker=OptionButton.new()
-	for id in item_list:
-		item_picker.add_icon_item(preload("res://scripts/item_icons.gd").texture(id),str(items[id].get("name",id))+" ("+str(items[id].get("cost",0))+"g)");item_picker.set_item_metadata(item_picker.item_count-1,id)
+	for bottle in [false,true]:
+		item_picker.add_separator("CONSUMABLES • 1 slot" if bottle else "EQUIPMENT • 3 slots")
+		for id in item_list:
+			if preload("res://scripts/supply_slots.gd").consumable(items[id])!=bottle:continue
+			item_picker.add_icon_item(preload("res://scripts/item_icons.gd").texture(id),str(items[id].get("name",id))+" ("+str(preload("res://scripts/supply_slots.gd").price(items[id],legacy))+" CC)");item_picker.set_item_metadata(item_picker.item_count-1,id)
+	item_picker.select(1)
 	item_picker.position=Vector2(28,684);item_picker.size=Vector2(210,30);control.add_child(item_picker)
 	_button("BUY ITEM",245,683,_buy_item,102)
 	for child in control.get_children():
@@ -667,7 +674,15 @@ func _start_match() -> void:
 		food_slots[player_id]="" if mode=="arena" and arena_no_items else food_loadouts.get(player_id,"")
 		health[player_id] = _max_hp(str(player_id));levels[player_id] = 10 if mode=="arena" and not arena_opening or str(player_id)==my_id and bool(legacy.data.teacher) else 1;xp[player_id] = 0;gold[player_id] = 100;kills[player_id] = 0
 		cooldown_at[player_id] = {"primary":0,"secondary":0,"special":0}
-		inventory[player_id] = [];health[player_id] = _max_hp(str(player_id));respawn_at[player_id] = 0;dodge_at[player_id] = 0;stealth_until[player_id] = 0;shield_until[player_id] = 0;haste_until[player_id] = 0;invincible_until[player_id] = 0;attack_branch[player_id] = "";mastery_choice[player_id] = ""
+		accepted_supplies.erase(player_id)
+		inventory[player_id] = []
+		if not (mode=="arena" and arena_no_items) and not arena_world.shatter.active():
+			var bottle=str(supply_loadouts.get(player_id,""))
+			if items.has(bottle) and preload("res://scripts/supply_slots.gd").consumable(items[bottle]):
+				inventory[player_id].append(bottle);accepted_supplies[player_id]=bottle
+				if str(player_id)==my_id:preload("res://scripts/prepared_supply.gd").commit(bottle)
+		supply_loadouts.erase(player_id)
+		health[player_id] = _max_hp(str(player_id));respawn_at[player_id] = 0;dodge_at[player_id] = 0;stealth_until[player_id] = 0;shield_until[player_id] = 0;haste_until[player_id] = 0;invincible_until[player_id] = 0;attack_branch[player_id] = "";mastery_choice[player_id] = ""
 	hit_flash.clear();floor_transition=0
 	started = true;wave = 0;floor_number = 1;run_time = 0.0;gate_hp = gate_max;wave_timer = 0.0 if mode=="defense" else 3.0;guard_timer = 0.0;floor_seed = randi() if role == "host" else floor_seed
 	if role == "host":
@@ -810,6 +825,7 @@ func _slot(id: String) -> int:
 func _add_player(id: String, slot: int) -> void:
 	if not arena_records.has(id):arena_records[id]={"kills":0,"npc_kills":0,"deaths":0,"kill_streak":0,"best_kill_streak":0}
 	if spectator_supported() and spectator_host and id==host_id:return
+	if id==my_id:supply_loadouts[id]=preload("res://scripts/prepared_supply.gd").ready(items);shop_discounts[id]=legacy.discount(10)<10
 	food_loadouts[id]=provisions.packed if id==my_id else "";food_slots[id]=food_loadouts[id]
 	if id==my_id:food_registered[id]=true
 	positions[id] = _spawn_player(slot);health[id] = int(characters.get(selected_hero,{}).get("max_health",120));gold[id] = 100;xp[id] = 0;levels[id] = 1;kills[id] = 0;teams[id] = -1
@@ -996,7 +1012,7 @@ func _process(delta: float) -> void:
 		var channel: WebRTCDataChannel = link["channel"]
 		
 		if role == "guest" and not started and not session_hero_sent and not selected_hero.begins_with("custom_") and channel.get_ready_state() == WebRTCDataChannel.STATE_OPEN:
-			_send_channel(host_id,{"type":"hero","hero":selected_hero,"build":legacy.payload(selected_hero),"random_builds":_random_build_payload() if mode=="arena" and arena_random else {},"food":provisions.packed,"cosmetic":local_cosmetic()});session_hero_sent = true
+			_send_channel(host_id,{"type":"hero","hero":selected_hero,"build":legacy.payload(selected_hero),"random_builds":_random_build_payload() if mode=="arena" and arena_random else {},"food":provisions.packed,"consumable":preload("res://scripts/prepared_supply.gd").ready(items),"shop_discount":legacy.discount(10)<10,"cosmetic":local_cosmetic()});session_hero_sent = true
 			if mode=="battlegrounds" or mode=="arena" and rule_picker.selected==1:_send_channel(host_id,{"type":"team","team":chosen_team})
 		var peer_budget:=8
 		for incoming in [channel,link.get("realtime")]:
@@ -1807,7 +1823,7 @@ func _snapshot() -> Dictionary:
 		var remaining := {}
 		for ability in ["primary","secondary","special"]:
 			remaining[ability] = maxf(0.0,float(int(timers.get(ability,0))-Time.get_ticks_msec())/1000.0)
-		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
+		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"consumable_entry":str(accepted_supplies.get(id,"")),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
 	var foes: Array = []
 	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"warning":float(enemy.get("warning",-1)),"melee_warning":float(enemy.get("melee_warning",0)),"melee_x":float(enemy.get("melee_x",0)),"melee_y":float(enemy.get("melee_y",1)),"v143_pose":float(enemy.get("v143_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false))})
 	var shots: Array = []
@@ -1880,6 +1896,9 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				lobby_heroes[remote_id]=str(data.get("hero","ram")) if characters.has(str(data.get("hero",""))) else "ram";lobby_builds[remote_id]=legacy.sanitize_build(data.get("build",{}));_send_arena_rules()
 			if role=="host" and not legacy.builds.has(remote_id):legacy.builds[remote_id]=legacy.sanitize_build(data.get("build",{}))
 			if role=="host" and positions.has(remote_id) and not food_registered.has(remote_id):
+				var offered=str(data.get("consumable",""))
+				if not started and items.has(offered) and preload("res://scripts/supply_slots.gd").consumable(items[offered]):supply_loadouts[remote_id]=offered
+				shop_discounts[remote_id]=data.get("shop_discount",false)==true
 				var piece:String=str(data.get("food",""));food_registered[remote_id]=true
 				food_loadouts[remote_id]=piece if provisions.defs.has(piece) else ""
 				food_slots[remote_id]="" if mode=="arena" and arena_no_items else food_loadouts[remote_id]
@@ -1960,6 +1979,8 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			var players: Dictionary = data.get("players",{})
 			for id in players:
 				var info: Dictionary = players[id]
+				if id==my_id:
+					preload("res://scripts/prepared_supply.gd").commit(str(info.get("consumable_entry","")))
 				if info.has("cosmetic"):player_cosmetics[id]=info.cosmetic
 				if info.has("defeat") and info.defeat is Dictionary:defeat_causes[id]=info.defeat
 				if info.has("food") and bool(info.get("food_ready",true)):
@@ -2036,16 +2057,18 @@ func foes_from_packet(value: Dictionary) -> void:
 func _consume(id: String, slot: int) -> void:
 	if arena_world.shatter.active():return
 	if mode=="arena" and arena_no_items:return
+	if int(health.get(id,0))<=0:return
 	if not inventory.has(id) or slot<0 or slot >= (inventory[id] as Array).size(): return
 	var item_id := str(inventory[id][slot])
 	var item: Dictionary = items.get(item_id,{})
 	var effect := str(item.get("effect",""))
 	if effect not in ["heal","shockwave","invulnerable","haste","cleanse","lodge_guard"]: return
+	if effect=="heal" and int(health.get(id,0))>=_max_hp(id):return
 	if effect == "shockwave":
 		for i in range(opponents.size()-1,-1,-1):
 			if positions[id].distance_to(opponents[i]["pos"])<float(item.get("radius",150)):_hit_enemy(i,float(item.get("amount",40)),id)
 	elif effect=="cleanse": adventure.combat.v90.cleanse(adventure.combat.player_key(id),["poison","burn","bleed"])
-	elif effect=="lodge_guard": adventure.combat.apply_status(adventure.combat.player_key(id),"guard",4.0,id,.15)
+	elif effect=="lodge_guard": adventure.combat.apply_status(adventure.combat.player_key(id),"guard",float(item.get("duration",4)),id,float(item.get("amount",15))/100.0)
 	elif effect=="heal": _heal(id,id,int(item.get("amount",35)),false)
 	elif effect=="invulnerable": invincible_until[id]=Time.get_ticks_msec()+int(1000.0*float(item.get("amount",3)))
 	elif effect=="haste": item_haste_scale[id]=1+float(item.get("amount",35))/100.0;haste_until[id]=Time.get_ticks_msec()+int(1000.0*float(item.get("duration",3)))
@@ -2091,12 +2114,12 @@ func _purchase(id: String, item_id: String) -> void:
 	if not items.has(item_id) or not bool(items[item_id].get("shop",true)) or not gold.has(id) or not _near_building(id,"Supplies"): return
 	var data: Dictionary = items[item_id]
 	var price := int(data.get("cost",0))
-	if int(gold[id])<price or (inventory.get(id,[]) as Array).size()>=3: return
+	if bool(shop_discounts.get(id,false)) and price>=10:price-=1
+	if int(gold[id])<price or not preload("res://scripts/supply_slots.gd").can_add(inventory.get(id,[]),item_id,items): return
 	gold[id]=int(gold[id])-price
 	(inventory[id] as Array).append(item_id)
 	match str(data.get("effect","")):
 		"bonus_health": health[id]=int(health[id])+int(data.get("amount",0))
-		"heal": health[id]=mini(_max_hp(id),int(health[id])+int(data.get("amount",0)))
 		"revive": health[id]=maxi(60,int(health[id]))
 		"bonus_damage": pass
 		"armor": pass
@@ -2188,9 +2211,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		else: _send_channel(host_id,{"type":"choice","value":selection})
 		return
 	var slot := int(key.keycode)-int(KEY_1)
-	if slot>=0 and slot<3 and inventory.has(my_id) and slot<(inventory[my_id] as Array).size():
+	slot=preload("res://scripts/supply_slots.gd").index(inventory.get(my_id,[]),slot,items)
+	if slot>=0 and inventory.has(my_id) and slot<(inventory[my_id] as Array).size():
 		var id := str(inventory[my_id][slot]);var item: Dictionary = items.get(id,{})
-		if str(item.get("effect","")) in ["heal","shockwave","invulnerable","haste"]:
+		if preload("res://scripts/supply_slots.gd").consumable(item):
 			if role=="host": _consume(my_id,slot)
 			else: _send_channel(host_id,{"type":"consume","slot":slot})
 
@@ -2518,7 +2542,7 @@ func _draw_shop(font: Font) -> void:
 		draw_string(font,Vector2(380,350),"Escape: keep playing",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color.WHITE)
 	elif shop_open == "Supplies":
 		draw_string(font,Vector2(380,310),"Choose an item below and press BUY ITEM.",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color.WHITE)
-		draw_string(font,Vector2(380,350),"CC: " + str(gold.get(my_id,0)) + "  |  Carry up to three items.",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color.WHITE)
+		draw_string(font,Vector2(380,350),"CC: " + str(gold.get(my_id,0)) + "  |  Carry 3 equipment + 1 consumable. Use key 4 for the bottle.",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color.WHITE)
 		if item_picker.selected >= 0:
 			var item: Dictionary = items.get(str(item_picker.get_item_metadata(item_picker.selected)),{})
 			var line := ""
@@ -3166,7 +3190,7 @@ func local_cosmetic()->Dictionary:
 	var session:Node=get_tree().root.get_node_or_null("FXDevSession")
 	var testing:bool=session!=null and bool(session.active)
 	var identity_flags=custom_party.flags(my_id);identity_flags.media=media.active;identity_flags.playtest=get_tree().root.get_node("FXResearch").active
-	var result={"crown_damage":legacy.crowns.payload().crown_damage,"crown_tier":legacy.crowns.payload().crown_tier,"crown_best":legacy.crowns.payload().crown_best,"crown_expiry":legacy.crowns.payload().crown_expiry,"custom":identity_flags.custom,"balanced":identity_flags.balanced,"media":identity_flags.media,"playtest":identity_flags.playtest,"colour":journey.ribbon().to_html(),"title":"GAME DEV" if testing else str(journey.data.get("title","Traveler")),"game_dev":testing,"daily_date":legacy.daily.cosmetic_date() if legacy.cosmetics.daily_visible() else "","extra_effect":legacy.cosmetics.effect(),"weekly_week":str(legacy.cosmetics.state().week)}
+	var result={"crown_damage":legacy.crowns.payload().crown_damage,"crown_tier":legacy.crowns.payload().crown_tier,"crown_best":legacy.crowns.payload().crown_best,"crown_expiry":legacy.crowns.payload().crown_expiry,"custom":identity_flags.custom,"balanced":identity_flags.balanced,"media":identity_flags.media,"playtest":identity_flags.playtest,"colour":journey.ribbon().to_html(),"title":"GAME DEV" if testing else str(journey.data.get("title","Traveler")),"game_dev":testing,"daily_date":legacy.daily.cosmetic_date() if legacy.cosmetics.daily_visible() else "","extra_effect":legacy.cosmetics.effect(),"weekly_week":legacy.cosmetics.effect_week(legacy.cosmetics.effect())}
 	result.merge(legacy.cosmetics.rankings.display_payload());return result
 func cosmetic_for(id:String)->Dictionary:
 	var value:Dictionary=(local_cosmetic() if id==my_id else player_cosmetics.get(id,{})).duplicate(true)

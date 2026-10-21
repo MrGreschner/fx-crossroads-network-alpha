@@ -95,6 +95,32 @@ func capacity()->int:
 func xp_gain(amount:int)->void:state().xp=mini(1000000000,int(state().xp)+amount)
 func message(value:String)->void:note=value;legacy.game.message=value;legacy.game.message_time=5
 func save()->void:legacy.save()
+func seed_count(id:String)->int:return int(state().seeds.get(id,0))
+func seed_summary()->Dictionary:
+ var total=0;var ready=0;var locked=0;var types=0
+ for id in crops():
+  var count=seed_count(id);total+=count
+  if count>0:
+   types+=1
+   if crops()[id].source!="seasonal" and level()>=int(crops()[id].level):ready+=count
+   elif crops()[id].source!="seasonal":locked+=count
+ return {"total":total,"ready":ready,"locked":locked,"types":types}
+func plantable_seeds()->Array:
+ var result=[]
+ for id in crops():
+  if seed_count(id)>0 and crops()[id].source!="seasonal" and level()>=int(crops()[id].level):result.append(id)
+ result.sort_custom(func(a,b):return str(crops()[a].name)<str(crops()[b].name));return result
+func seed_status(id:String)->String:
+ var spec=crops()[id]
+ if spec.source=="seasonal":return "Giant growers fair plot only"
+ if seed_count(id)<=0:return "No seeds owned"
+ if level()<int(spec.level):return "Owned • needs Gardening Lv %d (you are Lv %d)" % [int(spec.level),level()]
+ return "Ready to plant • %d owned" % seed_count(id)
+func seed_source(id:String)->String:
+ var spec=crops()[id]
+ if spec.source=="shop":return "Buy in the Seed shop tab"
+ if spec.source=="realm":return "Find in "+str(legacy.game.realms.get(spec.realm,{}).get("name",spec.realm))
+ return {"gather":"Gatherers' Lodge trips","fish":"Found while fishing","fishing":"Found while fishing","elite":"Overcharge Conclaves","seasonal":"Monthly Giant growers fair","mission":"Expedition missions"}.get(str(spec.source),str(spec.source).capitalize()+" discoveries")
 func buy_seed(id:String)->void:
  if not allowed() or not crops().has(id):return
  var spec=crops()[id]
@@ -178,6 +204,9 @@ func step(delta:float)->void:
  fair.step()
  for entry in labels:
   if is_instance_valid(entry.label):entry.label.text=bed_text(int(entry.index))
+  if entry.has("button") and is_instance_valid(entry.button):
+   var bed:Dictionary=state().beds[int(entry.index)];var ready=not bed.is_empty() and now()>=float(bed.end)
+   entry.button.disabled=not ready or not allowed();entry.button.text="Harvest now" if ready else "Still growing"
 func bed_text(index:int)->String:
  var b:Dictionary=state().beds[index]
  if b.is_empty():return "Empty • plant one owned seed" if index<capacity() else "Locked • grows with your Gardening level"

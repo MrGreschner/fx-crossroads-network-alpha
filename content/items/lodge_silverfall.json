@@ -1,0 +1,18 @@
+{
+  "name": "Silverfall Clearwater",
+  "tier": 1,
+  "seconds": 90,
+  "needs": {
+    "willow": 1,
+    "mint": 2
+  },
+  "fish": "sprayfin_shiner",
+  "effect": "cleanse",
+  "amount": 0,
+  "description": "Remove poison, burn and bleed. Uses one ordinary kept Sprayfin Shiner. One use.",
+  "id": "lodge_silverfall",
+  "cost": 0,
+  "sprite": "lodges/lodge_silverfall",
+  "shop": false,
+  "crafted": true
+}

@@ -1,0 +1,18 @@
+{
+  "name": "River Mint Remedy",
+  "tier": 1,
+  "seconds": 75,
+  "needs": {
+    "mint": 2,
+    "sunleaf": 1
+  },
+  "fish": "river_sprat",
+  "effect": "heal",
+  "amount": 35,
+  "description": "Restore 35 HP. Uses one ordinary kept River Sprat and gathered herbs. One use.",
+  "id": "lodge_river",
+  "cost": 0,
+  "sprite": "lodges/lodge_river",
+  "shop": false,
+  "crafted": true
+}

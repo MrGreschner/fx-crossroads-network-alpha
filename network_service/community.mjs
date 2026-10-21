@@ -1,3 +1,4 @@
+import {BUILD} from './release.mjs';
 import {brokenRecords} from './record-claims.mjs';
 import {namedSchema,submitNamed,namedSnapshot} from './named-records.mjs';
 import {createHmac} from 'node:crypto';
@@ -62,7 +63,7 @@ export function postgresStore(pool){return {
   for(const r of p.crops||[])await pool.query(`INSERT INTO crossroads_community_crops(profile,scope,crop,kg) VALUES($1,$2,$3,$4) ON CONFLICT(profile,scope,crop) DO UPDATE SET kg=GREATEST(crossroads_community_crops.kg,EXCLUDED.kg)`,[profile,r.scope,r.crop,r.kg]);
  },
  async snapshot(week,month){
-  const heroes=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='hero' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 5`);
+  const heroes=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='hero' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 10`);
   const realms=await pool.query(`SELECT key id,sum(value)::float8 value FROM crossroads_community_totals WHERE kind='realm' GROUP BY key ORDER BY sum(value) DESC,key LIMIT 5`);
   const between=await pool.query(`SELECT key id,max(value)::float8 value FROM crossroads_community_totals WHERE kind='between' GROUP BY key`);
   const all=await pool.query(`SELECT species,kg::float8 kg FROM crossroads_community_fish WHERE scope='all' ORDER BY kg DESC,reached_at,species LIMIT 1`);
@@ -90,7 +91,7 @@ export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||
   if(++rate.count>1000||pending>=4){send(res,429,{error:'Please retry later'});req.resume();return true;}pending++;
   try{
    if(path.endsWith('/sync')){let size=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),5000);timer.unref();let raw;try{for await(const chunk of req){size+=chunk.length;if(size>524288){send(res,413,{error:'Too large'});req.destroy();return true;}chunks.push(chunk);}raw=JSON.parse(Buffer.concat(chunks));}catch{send(res,400,{error:'Invalid record'});return true;}finally{clearTimeout(timer);}let p;try{p=clean(raw,now());}catch{send(res,400,{error:'Invalid record'});return true;}let claimant=null,before=null;const hasClaims=Array.isArray(raw.claims)&&raw.claims.length>0&&raw.claims.length<=12;if(req.headers.authorization&&accounts){const a=await accounts.authenticate(req);if(!a){send(res,401,{error:'Sign in again to submit named records'});return true;}claimant=a;if(hasClaims)before={...await store.snapshot(p.week,monthKey(now())),named:await namedSnapshot(pool,now())};await submitNamed(pool,a,p,raw,now());}await store.submit(hash('community:'+p.profile),p);cache=null;expires=0;const records_broken=before&&claimant?brokenRecords(raw.claims,before,{named:await namedSnapshot(pool,now())},claimant.username):[];send(res,200,{saved:true,week:p.week,records_broken});return true;}
-   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week||cache.month!==monthKey(now())){cache={version:1,month:monthKey(now()),week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week,monthKey(now())),...(accounts?{named:await namedSnapshot(pool,now())}:{})};expires=now()+30000;}
+   const w=rankWeek(now());if(!cache||now()>=expires||cache.week!==w.week||cache.month!==monthKey(now())){cache={version:1,records_schema:2,build:BUILD,limits:{heroes:10,damage:10},month:monthKey(now()),week:w.week,reset_at:Math.floor(w.end/1000),updated_at:Math.floor(now()/1000),...await store.snapshot(w.week,monthKey(now())),...(accounts?{named:await namedSnapshot(pool,now())}:{})};expires=now()+30000;}
    send(res,200,cache);return true;
   }catch{send(res,503,{error:'Community records unavailable'});return true;}finally{pending--;}
  }

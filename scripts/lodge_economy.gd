@@ -38,13 +38,24 @@ func can_pay(needs:Dictionary)->bool:
  return true
 func pay(needs:Dictionary)->void:
  for id in needs:state().ingredients[id]=int(state().ingredients.get(id,0))-int(needs[id])
+func fish_ingredient(recipe:Dictionary)->int:
+ if not recipe.has("fish"):return -2
+ var fishing=legacy.fishing_records.state()
+ for n in fishing.kept.size():
+  var catch:Dictionary=fishing.kept[n]
+  if str(catch.species)==str(recipe.fish) and not bool(catch.get("trophy",false)) and str(catch.id)!=str(fishing.favorite) and str(catch.id) not in fishing.display:return n
+ return -1
+func can_brew(recipe:Dictionary)->bool:return can_pay(recipe.needs) and fish_ingredient(recipe)!=-1
 func brew(id:String)->String:
  if id not in C.RECIPES:return "Unknown recipe."
  var s=state();var r:Dictionary=C.RECIPES[id]
  if not s.brew.is_empty():return "Collect the current batch first."
  if int(s.tier)<int(r.tier):return "Upgrade the apothecary for this recipe."
  if not can_pay(r.needs):return "Send gathering crews for the missing ingredients."
+ var fish_index=fish_ingredient(r)
+ if fish_index==-1:return "Keep an ordinary "+str(preload("res://scripts/fishing_catalog.gd").fish().get(str(r.get("fish","")),{}).get("name","fish"))+" first. Trophies, favourites and displayed fish are protected."
  if int(s.potions.get(id,0))>=99:return "You already have 99 bottles of this potion."
+ if fish_index>=0:legacy.fishing_records.state().kept.remove_at(fish_index)
  pay(r.needs);s.brew={"id":id,"start":now(),"end":now()+float(r.seconds)};save();return "Brewing "+str(r.name)+"."
 func claim_brew()->String:
  var s=state()
@@ -53,8 +64,8 @@ func claim_brew()->String:
 func pack(game:Node,id:String)->String:
  var s=state()
  if int(s.potions.get(id,0))<=0:return "Brew a bottle first."
- if game.loadout.size()>=3:return "Your three item slots are full."
- s.potions[id]-=1;game.loadout.append(id);save();game.save_profile();return "Packed "+str(C.RECIPES[id].name)+" in an item slot. It travels with your next run."
+ if not preload("res://scripts/supply_slots.gd").can_add(game.loadout,id,game.items):return "Your consumable slot is full. Unpack it at the Supply Vendor first."
+ s.potions[id]-=1;game.loadout.append(id);preload("res://scripts/prepared_supply.gd").set_ready(id,0);save();game.save_profile();return "Packed "+str(C.RECIPES[id].name)+" in your separate consumable slot. Key 4 or click the bottle during combat."
 func upgrade()->String:
  var s=state()
  if int(s.tier)>=3:return "Apothecary fully upgraded."

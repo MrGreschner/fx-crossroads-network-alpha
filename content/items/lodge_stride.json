@@ -1,12 +1,18 @@
 {
-  "id": "lodge_stride",
   "name": "Trailrunner Brew",
+  "tier": 2,
+  "seconds": 120,
+  "needs": {
+    "mint": 2,
+    "firefly": 1
+  },
   "effect": "haste",
   "amount": 15,
   "duration": 4,
+  "description": "Move 15% faster for 4 seconds. One use.",
+  "id": "lodge_stride",
   "cost": 0,
   "sprite": "lodges/lodge_stride",
   "shop": false,
-  "crafted": true,
-  "description": "Crafted single-use potion. Uses one item slot."
+  "crafted": true
 }

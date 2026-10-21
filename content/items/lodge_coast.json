@@ -1,0 +1,19 @@
+{
+  "name": "Seafoam Sprint",
+  "tier": 2,
+  "seconds": 135,
+  "needs": {
+    "sunleaf": 2,
+    "firefly": 1
+  },
+  "fish": "seafoam_anchovy",
+  "effect": "haste",
+  "amount": 20,
+  "duration": 5,
+  "description": "Move 20% faster for 5 seconds. Uses one ordinary kept Seafoam Anchovy. One use.",
+  "id": "lodge_coast",
+  "cost": 0,
+  "sprite": "lodges/lodge_coast",
+  "shop": false,
+  "crafted": true
+}

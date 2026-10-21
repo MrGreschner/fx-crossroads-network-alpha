@@ -1,7 +1,7 @@
 extends CanvasLayer
 ## Portable profiles, authored mastery techniques, town projects and Elder dialogue.
 const PATH="user://fx_legacy.json"
-const FILES=["crossroads_profile.json","fx_journey.json","fx_provisions.json","fx_quests_wayfarer_solo.json","fx_quests_wayfarer_party.json","fx_descent_best.json","fx_learning.json","fx_education_access.json","fx_teacher_classes.json"]
+const FILES=["crossroads_profile.json","fx_journey.json","fx_provisions.json","fx_prepared_supply.json","fx_quests_wayfarer_solo.json","fx_quests_wayfarer_party.json","fx_descent_best.json","fx_learning.json","fx_education_access.json","fx_teacher_classes.json"]
 const PROJECTS={
  "flowers":{"name":"Town Flowerbeds","need":{"talk":3,"water":3},"reward":"A planted public garden with benches and butterflies."},
  "bakery":{"name":"Pondside Bakery","need":{"food":1,"clears":1},"reward":"One free Berry Bun after each successful adventure. Food slot must be empty."},
@@ -52,6 +52,7 @@ var ELDER_TOPICS:Dictionary={}
 var mastery_tab:Button
 var profile_scroll:ScrollContainer
 var profile_tabs:Dictionary={}
+var community_navigation:VBoxContainer
 var points_glow:StyleBoxFlat
 var point_notice:=false
 var applied_glow:=false
@@ -97,6 +98,9 @@ func setup(owner:Node,multi:bool=false)->void:
   tab.add_theme_font_size_override("font_size",16);tab.custom_minimum_size.y=34
   tab.toggle_mode=true;profile_tabs[str(item[1])]=tab
   if item[1]=="mastery":mastery_tab=tab
+ var divider=HSeparator.new();divider.name="PlayerMenuDivider";divider.custom_minimum_size.y=9
+ var divider_style=StyleBoxLine.new();divider_style.color=Color("#678b91");divider_style.thickness=2;divider.add_theme_stylebox_override("separator",divider_style);col.add_child(divider)
+ community_navigation=VBoxContainer.new();community_navigation.name="PinnedRecordsNavigation";community_navigation.visible=false;col.add_child(community_navigation)
  var scroll:=ScrollContainer.new();profile_scroll=scroll;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
  body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",12);scroll.add_child(body)
  notice=Label.new();notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;col.add_child(notice)
@@ -297,7 +301,7 @@ func open_page(which:String)->void:
  if arcade or game.mode!="town":return
  if which=="mastery":acknowledge_mastery()
  refresh_point_notice()
- page=which;game.menu="legacy";root.visible=true;game.mobile.reset_controls();notice.text="";render();profile_scroll.set_deferred("scroll_vertical",0)
+ page=which;game.menu="legacy";root.visible=true;game.mobile.reset_controls();notice.text="";render();fit_profile_panel();profile_scroll.set_deferred("scroll_vertical",0)
 func open_hero(id:String)->void:
  journal_hero=id;open_page("mastery")
 func close()->void:
@@ -305,9 +309,12 @@ func close()->void:
 func render()->void:
  for child in body.get_children():body.remove_child(child);child.queue_free()
  heading.text="CROSSROADS • "+str(data.name)+(" • GAME DEV" if bool(data.teacher) else "")
+ for child in community_navigation.get_children():community_navigation.remove_child(child);child.queue_free()
+ community_navigation.visible=page=="community"
+ if page=="community":community.build_navigation(community_navigation)
  for key in profile_tabs:
-  var tab:Button=profile_tabs[key];tab.button_pressed=key==page
-  var skin=StyleBoxFlat.new();skin.bg_color=Color("#294d59") if key==page else Color("#132b34");skin.border_color=Color("#e9c985");skin.border_width_bottom=3 if key==page else 0;skin.set_corner_radius_all(5);skin.set_content_margin_all(9)
+  var tab:Button=profile_tabs[key];tab.button_pressed=key==page or key=="records" and page=="community"
+  var skin=StyleBoxFlat.new();skin.bg_color=Color("#294d59") if tab.button_pressed else Color("#132b34");skin.border_color=Color("#e9c985");skin.border_width_bottom=3 if tab.button_pressed else 0;skin.set_corner_radius_all(5);skin.set_content_margin_all(9)
   tab.add_theme_stylebox_override("normal",skin);tab.add_theme_stylebox_override("pressed",skin)
  match page:
   "profile":profile_ui()
@@ -514,10 +521,10 @@ func elder_ui()->void:
   "Gather your party":"Host a public or private room, share its code, or browse waiting Public Rooms. Change your hero without leaving. Tap Silver or Blue before starting team matches. Friends can request to join supported live adventures; new arrivals start at level 1. After a match, stay together in the lobby to play again.",
   "Gate Defence & Ram Descent":"Gate Defence has three paths, outposts, marching guards and opposing hero rivals. Upgrade at buildings and beat the wave-30 guardian to earn the stronger town wall. One to three heroes can defend. Ram Descent supports up to four: clear dungeon floors, watch your XP bar, and manage health carefully—new floors do not heal you automatically.",
   "Battlegrounds":"Beyond the north gate, two teams build armies from personal barracks. Choose 3v3 or 4v4; upgrade soldiers, archers, healers and stronger units, then break the enemy heart. The central item shop rewards control of the middle. The war-zone map also has dangerous falling air strikes.",
-  "Realms, quests & exploration":"The portal lists realms by difficulty; encounter enemies to reveal named portraits, with bosses shown separately. Ten clears earn a realm star. Follow the east bridge and forest trail to Wayfarer Wilds for a longer quest expedition, villagers, dungeons and the snowy summit. The Challenge Lodge offers five quick trial styles and three weekly featured trials. The Gatherers’ Lodge sends timed crews for herbs and rare seeds; Willowglass Apothecary brews these into potions for your three item slots.",
+  "Realms, quests & exploration":"The portal lists realms by difficulty; encounter enemies to reveal named portraits, with bosses shown separately. Ten clears earn a realm star. Follow the east bridge and forest trail to Wayfarer Wilds for a longer quest expedition, villagers, dungeons and the snowy summit. The Challenge Lodge offers five quick trial styles and three weekly featured trials. The Gatherers’ Lodge sends timed crews for herbs and rare seeds; Willowglass Apothecary brews these into potions for your separate consumable slot.",
   "Weekly activities":"Every Sunday starts eight appearance-only rewards: a species-and-size fishing target, a profitable market day, three player-only arena goals, Descent floor 10, two lodge trials and Gate Defence wave 10. Check Adventures, Records & style or Gleam Atelier. Equip one earned effect for the rest of the week. Game Dev, Playtest, continued practice and bot arena matches do not earn these rewards.",
   "Lodges, gathering & potions":"Daily Mission is a separate daily objective in the main menu and Adventures. Challenge Lodge offers five quick combat trials at level 10. Bronze, silver and gold medals unlock cosmetics; clear three featured weekly trials for a temporary lantern. No realm clears or mastery progress. Gatherers’ Lodge sends timed crews for herbs, mushrooms, bark, insects and petals. Claim returns and occasional rare seeds; brew consumable bottles at Willowglass Apothecary. Potions use ordinary item slots. Upgrade the apothecary with ingredients for new recipes.",
-  "Food, seeds & a growing town":"Carry three items and one automatically eaten food. Visit the Food Stand; healing food triggers at its health threshold and cleansing food removes matching effects. Grow plants and unlock more seeds at the Seed House. Clears, co-op accomplishments and helping townsfolk build projects. Death returns you to the healer house with your chosen hero.",
+  "Food, seeds & a growing town":"Carry three equipment items, one consumable and one automatically eaten food. Visit the Food Stand; healing food triggers at its health threshold and cleansing food removes matching effects. Grow plants and unlock more seeds at the Seed House. Clears, co-op accomplishments and helping townsfolk build projects. Death returns you to the healer house with your chosen hero.",
   "Player card, cosmetics & saving":"Profile holds lifetime statistics, arena trophies, difficult-realm badges and earned hero portraits. Journey cosmetics has buttons to equip ribbons and titles. Download your personal profile before changing computers; Upload replaces this device's progress. New/Clear removes local progress—download it first. Transfers are available in town.",
   "Student playtesting":"Options opens a Playtest Notebook: record what you tested, three issues, suggested fixes and a reflection. Copy or download the report; nothing is submitted automatically. Game Dev mode is for experiments and does not earn profile progress. Reports can be exported while testing.",
   "Performance, sound & help":"Options in the main menu controls the FPS cap, school performance mode and local crash reports. Sound has an easy mute button. Double-tap Escape for the pause menu; online matches keep running. A downloadable edition avoids browser graphics overhead and still connects to the same rooms. Report the hero, mode and action when something breaks."
@@ -774,6 +781,7 @@ func validate(value:Variant)->bool:
  for key in value.saves:
   if key not in save_names() or not value.saves[key] is Dictionary:return false
   var stored:Dictionary=value.saves[key]
+  if key=="fx_prepared_supply.json" and not preload("res://scripts/prepared_supply.gd").valid(stored,game.items):return false
   if key=="fx_education_access.json" and not preload("res://scripts/education_access.gd").valid(stored):return false
   if key=="fx_teacher_classes.json" and not load("res://scripts/teacher_store.gd").valid(stored):return false
   if key=="fx_learning.json" and not preload("res://scripts/learning_store.gd").valid(stored):return false
@@ -881,8 +889,7 @@ func _process(delta:float)->void:
  if point_notice and quick.visible:
   points_glow.bg_color=Color("#294653").lerp(Color("#69582d"),.22+.12*sin(Time.get_ticks_msec()*.004))
  quick.text="Mastery for this hero" if game.menu=="characters" else "Profile / Mastery / Town"
- var view=get_viewport().get_visible_rect().size
- root.size=Vector2(1060,640);root.scale=Vector2.ONE*minf(1,minf((view.x-24)/1060,(view.y-24)/640));root.position=(view-root.size*root.scale)*.5
+ fit_profile_panel()
  if game.menu=="elder" and last_menu!="elder":
   var guidance=game.presentation.elder_guide.pending()
   if not guidance.is_empty():game.presentation.elder_guide.begin(guidance)
@@ -962,3 +969,9 @@ func tuning_text(axis:int,value:int)->String:
  if axis==0:return "%+d%% damage / %+d%% cooldown" % [value*4,value*5]
  if axis==1:return "%+d%% health / %+d%% movement" % [value*5,-value*3]
  return "%+d%% damage taken / %+d%% attack" % [-value*4,-value*3]
+
+func fit_profile_panel()->void:
+ var view=get_viewport().get_visible_rect().size
+ var base=Vector2(1060,640)
+ if page in ["community","gardening"]:base=Vector2(clampf(view.x-40,400,1240),clampf(view.y-40,640,860))
+ root.size=base;root.scale=Vector2.ONE*minf(1,minf((view.x-24)/base.x,(view.y-24)/base.y));root.position=(view-root.size*root.scale)*.5

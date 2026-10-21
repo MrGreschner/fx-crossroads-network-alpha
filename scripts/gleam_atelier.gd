@@ -40,7 +40,8 @@ class Preview extends Control:
    if page.lobby_preview and id not in A.active(m.rankings.lobby_payload()):A.draw_single(self,Vector2.ZERO,page.clock,id)
   elif id=="daily" or id=="auto":
    if page.legacy.daily.earned():preload("res://scripts/daily_challenge.gd").draw_on(self,Vector2.ZERO,page.clock,page.legacy.daily.today)
-  else:C.draw_on(self,Vector2.ZERO,page.clock,id,str(m.state().week))
+   if id=="auto":C.draw_on(self,Vector2.ZERO,page.clock,m.effect(),m.effect_week(m.effect()))
+  else:C.draw_on(self,Vector2.ZERO,page.clock,id,m.effect_week(id))
   draw_set_transform(Vector2.ZERO)
 class Swatch extends Control:
  var id=""
@@ -51,7 +52,7 @@ class Swatch extends Control:
   elif id in R.IDS:A.draw_icon(self,Vector2(26,26),page.clock,id)
   elif id in ["none","auto","daily"]:draw_arc(Vector2(26,26),13,page.clock*.4,page.clock*.4+PI*1.7,24,Color("#e1c78c"),2,true)
   else:
-   draw_set_transform(Vector2(0,0),0,Vector2.ONE*.65);C.draw_on(self,Vector2(40,125),page.clock,id,str(page.manager.state().week));draw_set_transform(Vector2.ZERO)
+   draw_set_transform(Vector2(0,0),0,Vector2.ONE*.65);C.draw_on(self,Vector2(40,125),page.clock,id,page.manager.effect_week(id));draw_set_transform(Vector2.ZERO)
 func text(parent:Node,value:String,size:int=17)->Label:
  var l=Label.new();l.text=value;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.add_theme_font_size_override("font_size",size);parent.add_child(l);return l
 func button(parent:Node,value:String,call:Callable)->Button:
@@ -106,7 +107,7 @@ func catalogue()->Array:
  for n in 3:list.append({"id":C.LODGE_IDS[n],"name":["Bronze Laurel","Silver Laurel","Golden Laurel"][n],"need":"Earn %d Challenge Lodge medal points. Permanent unlock." % [15,30,50][n]})
  list.append({"id":"lodge_week","name":"Weekly Lantern","need":"Complete all three featured Challenge Lodge trials this week."})
  list.append({"id":"easter","name":"Echo of the Four Paths","need":"Earn all four Expert realm badges. Permanent unlock."})
- list.append({"id":R.IDS[0],"name":"Vanguard Comets","need":"Be in the current top 10 for damage since Monday. Compared across connected profiles; resets Monday 00:00. Lobby only."})
+ list.append({"id":R.IDS[0],"name":"Vanguard Comets","need":"Be in the current top 5 for damage since Monday. Compared across connected profiles; resets Monday 00:00. Lobby only."})
  list.append({"id":R.IDS[1],"name":"Leviathan’s Wake","need":"Be in the current top 10 for the heaviest single fish (kg) caught this week. Kept and released catches count. Resets Monday 00:00. Lobby only."})
  list.append({"id":R.IDS[2],"name":"Eternal Constellation","need":"Be in the current top 5 for lifetime damage across connected profiles. No weekly reset; stays visible while you hold a top-five place. Lobby only."})
  list.insert(2,{"id":"crown","name":"Damage Crown","need":"Your current rolling seven-day damage crown. Keep playing to maintain it; expired crowns cannot be worn. Hide or show it in town without changing crown power or lobby display."})

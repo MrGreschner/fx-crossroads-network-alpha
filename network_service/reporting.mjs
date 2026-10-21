@@ -29,6 +29,9 @@ export function cleanReport(raw,c){
 }
 export function createReporting({pool:provided,adminPassword=process.env.REPORT_ADMIN_PASSWORD||''}={}){
  const pool=provided||(process.env.DATABASE_URL?new pg.Pool({connectionString:process.env.DATABASE_URL,max:2,connectionTimeoutMillis:3000,idleTimeoutMillis:10000,statement_timeout:3000,query_timeout:4000}):null);
+ // Keep diagnostic reads off the short-timeout pool used by incoming diagnostics.
+ const reads=provided|| (pool?new pg.Pool({connectionString:process.env.DATABASE_URL,max:2,connectionTimeoutMillis:5000,idleTimeoutMillis:10000,statement_timeout:25000,query_timeout:30000}):null);
+ reads?.on?.('error',()=>console.error('Crossroads reports: idle read connection failed'));
  let ready=false,pending=0;const limits=new Map();
  pool?.on?.('error',()=>{console.error('Crossroads reports: idle database connection failed');});
  const initialized=pool?Promise.resolve().then(()=>pool.query(schema)).then(()=>{ready=true;}).catch(()=>console.error('Crossroads reports: database unavailable; combat remains available')):Promise.resolve();
@@ -72,21 +75,23 @@ export function createReporting({pool:provided,adminPassword=process.env.REPORT_
   if(!ready){reply(res,503,{error:'Database not connected. Set DATABASE_URL and redeploy.'});return true;}
   if(pending>=4){reply(res,429,{error:'Busy; retry shortly'});return true;}pending++;
   try{
-   if(url.pathname==='/reports/api/matches'){
-    reply(res,200,await insights.matches(pool,insights.filters(url)));
-   }else if(url.pathname==='/reports/api/overview'){reply(res,200,{build:BUILD,...await insights.overview(pool,insights.filters(url))});
-   }else if(url.pathname==='/reports/api/sessions'){reply(res,200,await insights.sessions(pool,insights.filters(url)));
-   }else if(url.pathname==='/reports/api/activity-export'){reply(res,200,{build:BUILD,...await insights.exportActivities(pool,insights.filters(url))},{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_activity.json"`});
+   if(url.pathname==='/reports/api/performance-pack'){
+    reply(res,200,{build:BUILD,...await insights.performancePack(reads,insights.filters(url))},{'Content-Disposition':`attachment; filename="Crossroads_performance_${new Date().toISOString().slice(0,10)}.json"`});
+   }else if(url.pathname==='/reports/api/matches'){
+    reply(res,200,await insights.matches(reads,insights.filters(url)));
+   }else if(url.pathname==='/reports/api/overview'){reply(res,200,{build:BUILD,...await insights.overview(reads,insights.filters(url))});
+   }else if(url.pathname==='/reports/api/sessions'){reply(res,200,await insights.sessions(reads,insights.filters(url)));
+   }else if(url.pathname==='/reports/api/activity-export'){reply(res,200,{build:BUILD,...await insights.exportActivities(reads,insights.filters(url))},{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_activity.json"`});
    }else if(url.pathname==='/reports/api/session'){
     const id=url.searchParams.get('id')||'',attempt=url.searchParams.get('attempt')||'';if(!/^[a-f0-9]{64}$/.test(id)||attempt&&!/^[a-f0-9]{32,64}$/.test(attempt)){reply(res,400,{error:'Invalid session'});return true;}
-    reply(res,200,{build:BUILD,...await insights.activityDetail(pool,id,attempt,insights.filters(url).category)},url.searchParams.has('download')?{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_session.json"`}:{});
+    reply(res,200,{build:BUILD,...await insights.activityDetail(reads,id,attempt,insights.filters(url).category)},url.searchParams.has('download')?{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_session.json"`}:{});
    }else if(url.pathname==='/reports/api/match'){
     const id=url.searchParams.get('id')||'';if(!/^[a-f0-9]{32}$/.test(id)){reply(res,400,{error:'Invalid match'});return true;}
-    const q=await pool.query('SELECT payload, created_at FROM fx_reports WHERE match_id=$1 ORDER BY created_at LIMIT 2001',[id]);
+    const q=await reads.query('SELECT payload, created_at FROM fx_reports WHERE match_id=$1 ORDER BY created_at LIMIT 2001',[id]);
     reply(res,200,{version:BUILD,report_schema:REPORT_SCHEMA,match_id:id,limited:q.rows.length>2000,reports:q.rows.slice(0,2000).map(r=>({...r.payload,received_at:r.created_at}))},url.searchParams.has('download')?{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_match_${id}.json"`}:{});
    }else reply(res,404,{error:'Not found'});
   }catch(error){reply(res,503,dashboardFailure(error,url.pathname));}finally{pending--;}
   return true;
  }
- return {pool,admin,handle,initialized,status:()=>({configured:!!pool,ready,admin_configured:adminPassword.length>=24,pending}),close:async()=>{clearInterval(retention);await pool?.end();}};
+ return {pool,admin,handle,initialized,status:()=>({configured:!!pool,ready,admin_configured:adminPassword.length>=24,pending}),close:async()=>{clearInterval(retention);if(reads!==pool)await reads?.end();await pool?.end();}};
 }

@@ -10,6 +10,7 @@ var status:Label
 var enter:Button
 var context:=""
 var refund_button:Button
+var category:OptionButton
 var route_picker:OptionButton
 var selected:=0
 var entries:Array=[]
@@ -25,6 +26,8 @@ func setup(owner:Node)->void:
  var head:=HBoxContainer.new();col.add_child(head);status=label(head,"",25);status.size_flags_horizontal=Control.SIZE_EXPAND_FILL;route_picker=OptionButton.new();head.add_child(route_picker)
  for name in game.town_upgrade.FILTERS:route_picker.add_item(name)
  route_picker.item_selected.connect(func(index:int):game.town_upgrade.route_filter=index;selected=0;game.list_preview[context]=0;render())
+ category=OptionButton.new();category.add_item("Equipment • 3 slots");category.add_item("Consumables • 1 slot");head.add_child(category)
+ category.item_selected.connect(func(index:int):game.supply_category="consumables" if index==1 else "equipment";game.list_preview[context]=0;render())
  button(head,"Close",close)
  var split:=HBoxContainer.new();split.add_theme_constant_override("separation",24);split.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(split)
  scroll=ScrollContainer.new();scroll.custom_minimum_size=Vector2(390,0);scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;split.add_child(scroll)
@@ -45,6 +48,7 @@ func clear(parent:Node)->void:
 func close()->void:game.menu="";game.mobile.reset_controls();context="";panel.hide()
 func data(id:String)->Dictionary:return game.realms.get(id,{}) if context in ["portal","wayfinder"] else game.provisions.defs.get(id,{}) if context=="food" else game.items.get(id,{})
 func render()->void:
+ category.visible=context in ["supplies","merchant"];category.select(1 if game.supply_category=="consumables" else 0)
  route_picker.visible=context=="wayfinder"
  refund_button.visible=context in ["food","supplies"]
  entries=game.list_entries();selected=clampi(int(game.list_preview.get(context,0)),0,maxi(0,entries.size()-1));clear(rows)
@@ -96,12 +100,12 @@ func render_detail()->void:
   enter.text="REALM LOCKED" if enter.disabled else "ENTER REALM • Enter key"
   if enter.disabled:label(detail,preload("res://scripts/realm_access.gd").hint(game.legacy,id),21).modulate=Color("#f4ca82")
  else:
-  var price:int=game.legacy.discount(maxi(10,int(spec.get("cost",0))/2) if context=="merchant" else int(spec.get("cost",0)))
+  var price:int=preload("res://scripts/supply_slots.gd").price(spec,game.legacy)
   label(detail,"Cost: "+str(price)+" CC",22).modulate=Color("#edd19b")
-  label(detail,"Packed food: "+game.provisions.name_of(game.provisions.packed) if context=="food" else "Your pack: "+str(game.inventory if context=="merchant" else game.loadout)+" • 3 item slots",18)
+  label(detail,"Packed food: "+game.provisions.name_of(game.provisions.packed) if context=="food" else "Your pack: "+str(game.inventory if context=="merchant" else game.loadout)+" • 3 equipment + 1 consumable",18)
   enter.text=("BUY FOOD" if context=="food" else "BUY ITEM")+" • Enter key"
   var packed:Array=game.inventory if context=="merchant" else game.loadout
-  enter.disabled=game.gold<price or (not game.provisions.packed.is_empty() if context=="food" else packed.size()>=3 or packed.has(id) and str(spec.get("effect","")) in ["bonus_damage","bonus_speed","lifesteal","armor","bonus_health","cooldown"])
+  enter.disabled=game.gold<price or (not game.provisions.packed.is_empty() if context=="food" else not preload("res://scripts/supply_slots.gd").can_add(packed,id,game.items))
  label(detail,"Select a row, then confirm using the button or Enter. Swipe anywhere on a list to scroll, or use the mouse wheel.",15).modulate=Color("#abc5cc")
  if game.message_time>0:label(detail,game.message,16).modulate=Color("#e8daaa")
 func confirm()->void:
@@ -115,8 +119,7 @@ func confirm()->void:
 func refund()->void:
  if context=="food":game.provisions.refund()
  elif context=="supplies":
-  for id in game.loadout:game.gold+=int(game.loadout_paid.get(id,game.items[id].get("cost",0)))
-  game.loadout.clear();game.loadout_paid.clear()
+  preload("res://scripts/supply_slots.gd").refund(game)
  render()
 func key(event:InputEvent)->void:
  if game.menu in MENUS and context!=game.menu:context=game.menu;render()

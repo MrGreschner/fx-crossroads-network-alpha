@@ -25,6 +25,17 @@ var last_mode=""
 var generation=0
 var reading_generation=0
 var synced_identity=""
+var board_refresh=0.0
+var stale=false
+var last_refresh=""
+func compatible(data:Dictionary)->bool:
+ var limits=data.get("limits",{});var named=data.get("named",{})
+ return named is Dictionary and named.get("damage_week") is Array and (not data.has("limits") or limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10)
+func board_notice()->String:
+ if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending the older five-place boards. Deploy the matching server ZIP; your saved records are safe."
+ if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
+ if reading:return "Refreshing community records…"
+ return "Updated "+last_refresh+" • refreshes every 30 seconds" if not last_refresh.is_empty() else status
 func setup(owner:Node)->void:
  legacy=owner;state();endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
  sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=4096;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
@@ -43,7 +54,10 @@ static func valid(v:Variant)->bool:
 func allowed()->bool:return not bool(legacy.data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").progression_blocked() and not legacy.get_tree().root.has_meta("fx_dedicated_server")
 func record_between(amount:int,route:String)->void:
  if not allowed() or route not in ["solo","coop"]:return
- state()[route]=maxi(int(state()[route]),clampi(amount,0,1000000));delay=1
+ var previous=int(state()[route]);var best=clampi(amount,0,1000000)
+ if best>previous or best==previous and best>0:
+  preload("res://scripts/named_records.gd").remember_hero(legacy,"between","all",route,best,best>previous)
+ state()[route]=maxi(previous,best);delay=1
 static func rarer(a:Dictionary,b:Dictionary)->bool:
  if a.is_empty() or not FISH.fish().has(a.get("species")):return false
  if b.is_empty() or not FISH.fish().has(b.get("species")):return true
@@ -96,7 +110,8 @@ func resync()->void:
  if manual_cooldown>0:return
  manual_cooldown=5;request_sync(true)
 func step(delta:float)->void:
- manual_cooldown=maxf(0,manual_cooldown-delta);read_delay=maxf(0,read_delay-delta)
+ manual_cooldown=maxf(0,manual_cooldown-delta);read_delay=maxf(0,read_delay-delta);board_refresh=maxf(0,board_refresh-delta)
+ if legacy.page=="community" and legacy.game.menu=="legacy" and board_refresh<=0 and not reading and not busy:fetch()
  if not allowed() or endpoint.is_empty():return
  var identity=cloud_identity();var mode=str(legacy.game.mode)
  if identity!=last_identity:
@@ -127,45 +142,55 @@ func synced(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)
   refresh_after_sync=false;read_delay=0;fetch()
  redraw()
 func open()->void:
- legacy.open_page("community");resync()
+ legacy.open_page("community");read_delay=0;fetch();resync()
 func fetch()->void:
  if reading or endpoint.is_empty() or read_delay>0:return
- status="Loading community records…";reading_generation=generation
- reading=read_request.request(endpoint+"/community/records")==OK;read_delay=5
- if not reading:status="Community records unavailable • try again when connected"
+ status="Loading community records…";reading_generation=generation;board_refresh=30
+ reading=read_request.request(endpoint+"/community/records?refresh="+str(Time.get_ticks_msec()))==OK;read_delay=5
+ if not reading:stale=true;board_refresh=15;status="Community records unavailable • retrying automatically"
+ redraw()
+func reject_response(message:String)->void:
+ stale=true;board_refresh=15;status=message;redraw()
 func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
  reading=false
  if reading_generation!=generation:
   read_delay=0;fetch();return
- var parsed=JSON.parse_string(body.get_string_from_utf8())
+ var parser=JSON.new();var parsed:Variant=parser.data if parser.parse(body.get_string_from_utf8())==OK else null
  if result!=HTTPRequest.RESULT_SUCCESS or code!=200 or not parsed is Dictionary or parsed.get("version")!=1:
-  status="Community records unavailable • deploy the matching server, then try again";redraw();return
+  stale=true;board_refresh=15;status="Community records unavailable • retrying automatically; saved records are safe";redraw();return
+ if not parsed.get("named",{}) is Dictionary:reject_response("Invalid named records response");return
  for key in ["heroes","realms","between"]:
-  if not parsed.get(key) is Array or parsed[key].size()>5:status="Invalid community response";return
+  if not parsed.get(key) is Array or parsed[key].size()>(10 if key=="heroes" else 5):reject_response("Invalid community response • keeping the last loaded records");return
  for key in ["fish_all","fish_week","rarest_all","rarest_week"]:
   var f=parsed.get(key)
-  if f!=null and (not f is Dictionary or not FISH.fish().has(f.get("species")) or not (f.get("kg") is float or f.get("kg") is int) or not is_finite(float(f.kg)) or float(f.kg)<=0 or float(f.kg)>10000):status="Invalid fish response";return
+  if f!=null and (not f is Dictionary or not FISH.fish().has(f.get("species")) or not (f.get("kg") is float or f.get("kg") is int) or not is_finite(float(f.kg)) or float(f.kg)<=0 or float(f.kg)>10000):reject_response("Invalid fish response • keeping the last loaded records");return
  for key in ["garden_all","garden_month"]:
-  if not parsed.get(key,[]) is Array or parsed.get(key,[]).size()>12:status="Invalid garden response";return
+  if not parsed.get(key,[]) is Array or parsed.get(key,[]).size()>12:reject_response("Invalid garden response • keeping the last loaded records");return
   for row in parsed.get(key,[]):
-   if not row is Dictionary or not preload("res://scripts/giant_garden.gd").record_valid(row,"all"):status="Invalid crop response";return
- snapshot=parsed;status="Connected community • weekly records reset Mondays";redraw()
+   if not row is Dictionary or not preload("res://scripts/giant_garden.gd").record_valid(row,"all"):reject_response("Invalid crop response • keeping the last loaded records");return
+ snapshot=parsed;stale=false;last_refresh=Time.get_time_string_from_system();status="Connected community • weekly records reset Mondays" if compatible(parsed) else "Older server connected • server update required";redraw()
 func redraw()->void:
- if legacy.page=="community" and legacy.game.menu=="legacy":legacy.render()
+ if legacy.page=="community" and legacy.game.menu=="legacy":
+  var position=legacy.profile_scroll.scroll_vertical;legacy.render();legacy.profile_scroll.set_deferred("scroll_vertical",position)
+func choose_category(value:String)->void:
+ category=value;redraw();legacy.profile_scroll.set_deferred("scroll_vertical",0)
+func build_navigation(parent:Node)->void:
+ var gui=preload("res://scripts/garden_ui.gd")
+ var panel=PanelContainer.new();panel.name="RecordsNavigation";panel.add_theme_stylebox_override("panel",UI.box("#173f49","#75afb1",8,10));parent.add_child(panel)
+ var col=VBoxContainer.new();col.add_theme_constant_override("separation",7);panel.add_child(col)
+ var heading=HBoxContainer.new();col.add_child(heading)
+ var title=gui.label(heading,"COMMUNITY RECORDS  /  CHOOSE A BOARD",17);title.add_theme_color_override("font_color",Color("#f2d494"))
+ var refresh=gui.button(heading,"Syncing…" if busy or reading else "Resync records",resync);refresh.name="ResyncRecords";refresh.custom_minimum_size=Vector2(155,34);refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.disabled=reading or busy
+ refresh.tooltip_text="Upload the active profile, then refresh the community boards."
+ var notice=gui.label(col,board_notice(),14);notice.name="RecordsSyncStatus";notice.modulate=Color("#f0ca87") if not snapshot.is_empty() and not compatible(snapshot) or stale else Color("#b7d4d7")
+ var tabs=HFlowContainer.new();tabs.name="RecordsCategoryTabs";tabs.add_theme_constant_override("h_separation",6);tabs.add_theme_constant_override("v_separation",5);col.add_child(tabs)
+ for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
+  var tab=gui.button(tabs,entry[0],choose_category.bind(str(entry[1])));tab.name="RecordsTab_"+str(entry[1]);tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size=Vector2(126,36);tab.add_theme_font_size_override("font_size",15)
+  var skin=UI.box("#32636c" if category==entry[1] else "#102b34","#f1cd82" if category==entry[1] else "#416b74",5,7)
+  tab.add_theme_stylebox_override("normal",skin);tab.add_theme_stylebox_override("pressed",skin)
 func build(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd")
- gui.label(parent,"COMMUNITY RECORDS",22);gui.label(parent,status,15)
- if not sync_status.is_empty():gui.label(parent,sync_status,15)
- var sync_row=HBoxContainer.new();sync_row.add_theme_constant_override("separation",18);parent.add_child(sync_row)
- var refresh=gui.button(sync_row,"Syncing records…" if busy or reading else "RESYNC MY RECORDS",resync);refresh.name="ResyncRecords";refresh.custom_minimum_size=Vector2(290,50);refresh.disabled=reading or busy
- refresh.tooltip_text="Upload this active profile’s records, then download the latest community board. Cloud names appear only after loading or adopting a cloud profile."
- var accent=StyleBoxFlat.new();accent.bg_color=Color("#245967");accent.border_color=Color("#f3cb75");accent.set_border_width_all(2);accent.set_corner_radius_all(7);accent.set_content_margin_all(12)
- refresh.add_theme_stylebox_override("normal",accent);var hover=accent.duplicate();hover.bg_color=Color("#337584");refresh.add_theme_stylebox_override("hover",hover);refresh.add_theme_stylebox_override("focus",hover);refresh.add_theme_color_override("font_color",Color("#ffe0a0"))
- var hint=gui.label(sync_row,"Upload your active profile, then refresh the board.",15);hint.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- var tabs=HFlowContainer.new();parent.add_child(tabs)
- for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
-  var tab=gui.button(tabs,entry[0],func():category=entry[1];redraw());tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size.x=160
-
+ gui.label(parent,status+(" • "+sync_status if not sync_status.is_empty() else ""),14)
  gui.label(parent,"Community play records • public game names for cloud accounts",14).tooltip_text="Combined portable-profile high-water records. Repeat uploads do not add totals again. Co-op clears count per profile. These are client-reported, not verified competition scores."
  if snapshot.is_empty():preload("res://scripts/garden_ui.gd").label(parent,"No community data loaded yet. An internet connection and the matching server update are needed.",19);return
  var clears_parent:Node=parent
@@ -176,10 +201,12 @@ func build(parent:Node)->void:
    var column=VBoxContainer.new();column.size_flags_horizontal=Control.SIZE_EXPAND_FILL;column.size_flags_stretch_ratio=1;columns.add_child(column)
    if n==0:clears_parent=column
    else:times_parent=column
- for entry in [["TOP 5 HEROES • CUMULATIVE DAMAGE","heroes"],["TOP 5 REALMS • RECORDED CLEARS","realms"]]:
+ for entry in [["TOP 10 HEROES • TOTAL DAMAGE","heroes"],["TOP 5 REALMS • RECORDED CLEARS","realms"]]:
   if category!=entry[1]:continue
-  var card=UI.card(clears_parent,entry[0],"Across connected profiles, all time")
+  var card=UI.card(clears_parent,entry[0],"Ranked by total damage across connected profiles • all time" if entry[1]=="heroes" else "Recorded clears across connected profiles • all time")
   if snapshot.get(entry[1],[]).is_empty():preload("res://scripts/garden_ui.gd").label(card,"No records submitted yet.")
+  if entry[1]=="heroes":
+   preload("res://scripts/records_hall_ui.gd").hero_leaders(card,legacy,snapshot.get("heroes",[]));continue
   var n=0
   for row in snapshot.get(entry[1],[]):
    n+=1;var id=str(row.get("id",""));var data=legacy.game.characters.get(id,{}) if entry[1]=="heroes" else legacy.game.realms.get(id,{})

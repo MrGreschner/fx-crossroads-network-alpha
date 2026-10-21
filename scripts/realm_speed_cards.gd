@@ -9,7 +9,7 @@ static func build(parent:Node,l:Node,realm:String)->void:
   var personal=float(state.routes[route].all.get(realm,0));ui.label(card,"Personal: "+(preload("res://scripts/named_records_ui.gd").clock(personal) if personal>0 else "No clear yet"),15)
   var found=false
   for r in public.get(route,{}).get("all",[]):
-   if r.get("key")==realm:ui.label(card,"Community: "+preload("res://scripts/named_records_ui.gd").clock(float(r.value))+" • "+str(r.username),15);found=true
+   if r.get("key")==realm:preload("res://scripts/records_hall_ui.gd").run_row(card,l,r,"Community best",preload("res://scripts/named_records_ui.gd").clock(float(r.value)));found=true
   if not found:ui.label(card,"Community: not recorded / refresh pending",14)
 
 static func summary(l:Node,realm:String)->String:

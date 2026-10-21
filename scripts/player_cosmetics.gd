@@ -3,7 +3,7 @@ extends RefCounted
 const W=preload("res://scripts/weekly_activities.gd")
 const IDS=["weekly_1","weekly_2","weekly_3"]
 const LODGE_IDS=["lodge_bronze","lodge_silver","lodge_gold","lodge_week"]
-const NAMES=["Wisp Skull","Silver Revenant","Astral Sovereign"]
+const NAMES=["Silver Revenant","Wisp Skull","Astral Sovereign"]
 const GOALS=[10000,20000,30000]
 var competitive=preload("res://scripts/competitive_progress.gd").new()
 var rankings=preload("res://scripts/cosmetic_rankings.gd").new()
@@ -63,7 +63,10 @@ func select(id:String)->void:
  state().selected=id;legacy.save();notify()
 func daily_visible()->bool:return str(state().get("selected","auto")) in ["auto","daily"]
 func effect()->String:
- refresh();var id=str(state().get("selected","auto"));return id if id not in preload("res://scripts/cosmetic_rankings.gd").IDS and id in IDS+LODGE_IDS+W.REWARDS.keys()+["easter"] and eligible(id) else ""
+ refresh();var id=str(state().get("selected","auto"))
+ if id=="auto" and eligible("weekly_1"):return "weekly_1"
+ return id if id not in preload("res://scripts/cosmetic_rankings.gd").IDS and id in IDS+LODGE_IDS+W.REWARDS.keys()+["easter"] and eligible(id) else ""
+func effect_week(id:String)->String:return rankings.week() if id=="weekly_1" else str(state().week)
 func notify()->void:
  if legacy.arcade:legacy.game.session_hero_sent=false
 func ui(parent:Node)->void:
@@ -96,8 +99,7 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="")->vo
   c.draw_arc(q,5,0,TAU,14,Color("#d8b9ef"),1.5,true);c.draw_circle(q+Vector2(-1,-1),1.3,Color("#f4dfa5"));c.draw_line(q+Vector2(3,6),q+Vector2(4,9),Color(.9,.8,1,.35),1,true);return
  if id not in IDS:return
  var q=p+Vector2(0,-90+sin(t*2)*1.5)
- if id=="weekly_1":
-  if week!=week_key(Time.get_date_string_from_system(false)):return
+ if id=="weekly_2":
   q=p+Vector2(sin(t*.75)*11,-99+cos(t*.75)*1.2)
   var ink=Color("#b9eadf")
   c.draw_arc(p+Vector2(0,-99),15,PI*.1,PI*.9,24,Color(.5,.85,.8,.22),1,true)
@@ -107,7 +109,8 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="")->vo
   c.draw_line(q+Vector2(0,0),q+Vector2(-.6,1.4),Color("#517d7c"),.8,true)
   for x in [-1,1]:c.draw_line(q+Vector2(x,3),q+Vector2(x,5),Color("#779f9e"),.7,true)
   for side in [-1,1]:c.draw_arc(q+Vector2(side*5,-2),4,-PI*.7,PI*.3,12,Color(ink,.5),.8,true)
- elif id=="weekly_2":
+ elif id=="weekly_1":
+  if week!=preload("res://scripts/cosmetic_rankings.gd").week_at(Time.get_unix_time_from_system()):return
   q=p+Vector2(-48,-73+sin(t*2)*1.5);var ink=Color("#bbdef5")
   for side in [-1,1]:
    var a=q+Vector2(side*5,0);c.draw_polyline(PackedVector2Array([a+Vector2(0,4),a+Vector2(-side*2,-2),a+Vector2(0,-6),a+Vector2(side*3,-1),a+Vector2(0,4)]),ink,1,true)
