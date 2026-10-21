@@ -46,14 +46,22 @@ func draw_menu(game:Node)->void:
  for line in text:
   y=game._draw_wrapped(line,Vector2(215,y),835,24 if y==160 else 20,Color("#f2deb2") if y==160 else Color.WHITE)+25
  if game.menu=="seedhouse" and game.message_time>0:game._draw_wrapped(game.message,Vector2(215,580),810,16,Color("#cde1b5"))
+const NPC_STYLES=[["#a07b56","ram"],["#9b7f64","cook"],["#779dac","healer"],["#59786c","human"],["#79915b","ram"],["#a1825d","human"],["#63879a","ram"]]
 func npc(c:Node2D,p:Vector2,coat:Color,kind:String)->void:
- if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(85).has_point(p):return
+ if not Rect2(Vector2.ZERO,c.VIEW).grow(85).has_point(p):return
+ var index=-1
+ for n in NPC_STYLES.size():
+  if coat==Color(NPC_STYLES[n][0]) and kind==NPC_STYLES[n][1]:index=n;break
+ if index<0:npc_source(c,p,coat,kind,clock*2);return
+ var phase=posmod(int(floorf(clock*2/TAU*16)),16)
+ c.draw_texture_rect_region(preload("res://scripts/town_sprite_cache.gd").texture("keepers"),Rect2(p-Vector2(24,68),Vector2(48,88)),Rect2(phase*48,index*88,48,88))
+func npc_source(c:Node2D,p:Vector2,coat:Color,kind:String,phase:float)->void:
  c.draw_circle(p+Vector2(0,4),13,Color(0,0,0,.22))
  c.draw_rect(Rect2(p+Vector2(-11,-26),Vector2(22,27)),Color("#314049"));c.draw_rect(Rect2(p+Vector2(-9,-25),Vector2(18,25)),coat)
  c.draw_rect(Rect2(p+Vector2(-9,-7),Vector2(18,3)),Color("#d7c79d"))
  for side in [-1,1]:
   c.draw_rect(Rect2(p+Vector2(side*7-3,0),Vector2(6,6)),Color("#343b42"))
-  c.draw_rect(Rect2(p+Vector2(side*12-2,-20+sin(clock*2)*1.5),Vector2(4,12)),Color("#dab993"))
+  c.draw_rect(Rect2(p+Vector2(side*12-2,-20+sin(phase)*1.5),Vector2(4,12)),Color("#dab993"))
  var skin:Color=Color("#dfc69e") if kind not in ["ram","healer"] else Color("#e6e1ce")
  c.draw_rect(Rect2(p+Vector2(-10,-43),Vector2(20,21)),Color("#3a3c43"));c.draw_rect(Rect2(p+Vector2(-9,-42),Vector2(18,19)),skin)
  for side in [-1,1]:c.draw_rect(Rect2(p+Vector2(side*4-1,-35),Vector2(2,3)),Color("#34323a"))
@@ -102,10 +110,11 @@ func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
   if not Rect2(camera,c.get_viewport_rect().size).grow(200).has_point(tree):continue
   var p=tree-camera
   c.draw_texture_rect(preload("res://assets/town_ancient_tree.svg"),Rect2(p-Vector2(95,181),Vector2(190,218)),false)
- var carpenter:Vector2=Vector2(1510,1710)-camera
- npc(c,carpenter,Color("#a1825d"),"human")
- var hammer:Vector2=carpenter+Vector2(17,-26-sin(clock*4)*8)
- c.draw_line(carpenter+Vector2(11,-18),hammer,Color("#d1b080"),3);c.draw_rect(Rect2(hammer+Vector2(-5,-3),Vector2(13,7)),Color("#788b91"))
+ if Rect2(camera,c.VIEW).grow(80).has_point(Vector2(1510,1710)):
+  var carpenter:Vector2=Vector2(1510,1710)-camera
+  npc(c,carpenter,Color("#a1825d"),"human")
+  var hammer:Vector2=carpenter+Vector2(17,-26-sin(clock*4)*8)
+  c.draw_line(carpenter+Vector2(11,-18),hammer,Color("#d1b080"),3);c.draw_rect(Rect2(hammer+Vector2(-5,-3),Vector2(13,7)),Color("#788b91"))
  if c.provisions.crop=="ready":
   var p:Vector2=POINTS.seedhouse-camera+Vector2(0,-67)
   c.draw_circle(p,12,Color("#cce2a2"));c.draw_string(font,p+Vector2(-6,5),"!",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#354f3c"))

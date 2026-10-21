@@ -2283,10 +2283,12 @@ func _draw() -> void:
 		if spectator_supported() and spectator_host and id==host_id:continue
 		if arena_world.shatter.active() and arena_world.shatter.eliminated.has(id):continue
 		if not adventure.combat.visible_owner(id):continue
-		var pos: Vector2 = _player_draw_position(id,_spawn_player(slot)) - camera
+		var pos: Vector2 = arena_world.shatter.draw_point(id,_player_draw_position(id,_spawn_player(slot))) - camera
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
 		var hero_id := str(hero_ids.get(id,"ram"))
-		if arena_world.shatter.active() and arena_world.shatter.airborne(id):pos.y-=sin(PI*clampf((float(arena_world.shatter.hops[id].until)-arena_world.shatter.clock)/.34,0,1))*35
+		if arena_world.shatter.active() and arena_world.shatter.airborne(id):pos.y-=sin(PI*clampf((float(arena_world.shatter.hops[id].until)-arena_world.shatter.visual_clock())/.34,0,1))*35
+		if arena_world.shatter.active() and arena_world.shatter.dropping.has(id):
+			arena_world.shatter.draw_falling_hero(id,pos,art.get(hero_id+"_idle"),Color.WHITE);continue
 		var walking := _actor_walking(id)
 		if hero_id=="caelum" and adventure.combat.v59.copies.has(id):walking=bool(adventure.combat.v59.copies[id].get("walking",false))
 		var pose := "attack" if Time.get_ticks_msec() < maxi(int(attack_pose_until.get(id,0)),predicted_pose_until if id==my_id else 0) else ("walk1" if int(visual_time*7)%2 == 0 else "walk2") if walking else "idle"

@@ -28,6 +28,7 @@ func draw_on(g:Node2D,camera:Vector2)->void:
  var visible=Rect2(camera-Vector2(160,180),g.VIEW+Vector2(320,360))
  if visible.intersects(FENCE):
   for x in range(-1420,6,24):
+   if x<camera.x-24 or x>camera.x+g.VIEW.x+24:continue
    var p=Vector2(x,190)-camera
    g.draw_rect(Rect2(p-Vector2(4,44),Vector2(8,52)),Color("#9e7953"));g.draw_colored_polygon(PackedVector2Array([p+Vector2(-4,-44),p+Vector2(0,-52),p+Vector2(4,-44)]),Color("#c2a078"))
    for y in [-30,-8]:g.draw_line(p+Vector2(-12,y),p+Vector2(12,y),Color("#c2a078"),4)
@@ -48,6 +49,7 @@ func crate(g:Node2D,p:Vector2,size:Vector2)->void:
  g.draw_line(p+Vector2(4,4),p+size-Vector2(4,4),Color("#d1ad74"),3)
  g.draw_line(p+Vector2(size.x-4,4),p+Vector2(4,size.y-4),Color("#d1ad74"),3)
 func ram_worker(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
+ if not Rect2(Vector2.ZERO,g.VIEW).grow(65).has_point(p):return
  var bob=sin(t*6)*1.5
  worker_body(g,p+Vector2(0,bob),t,carrying)
 func worker_body(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
@@ -63,6 +65,19 @@ func worker_body(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
  for side in [-1,1]:g.draw_line(p+Vector2(side*11,-26),p+Vector2(side*14,-17+sin(t*6+side)*3),Color("#c9c4ac"),5)
  if carrying:crate(g,p-Vector2(12,27),Vector2(24,19))
 func draw_market(g:Node2D,camera:Vector2)->void:
+ preload("res://scripts/town_sprite_cache.gd").draw(g,"market_night" if g.town_life.calendar.night_amount()>.1 else "market",Rect2(Vector2(-550,440)-camera,Vector2(800,380)))
+ var t=Time.get_ticks_msec()*.001
+ ram_worker(g,Vector2(-430+sin(t*.45)*25,715)-camera,t,true)
+ ram_worker(g,Vector2(33+sin(t*.35)*22,751)-camera,t+1,false)
+ ram_worker(g,Vector2(-275+sin(t*.3)*55,776)-camera,t+2,true)
+ # A loading cart follows a short safe loop; no simulation entities or particles.
+ var cart=Vector2(-485+fposmod(t*12,80),758)-camera
+ g.draw_rect(Rect2(cart-Vector2(10,21),Vector2(54,27)),Color("#796448"));crate(g,cart-Vector2(4,32),Vector2(28,24))
+ for x in [0,34]:g.draw_circle(cart+Vector2(x,8),7,Color("#465a5d"));g.draw_circle(cart+Vector2(x,8),3,Color("#b4a181"))
+ g.draw_arc(DOOR-camera,28,0,TAU,32,Color("#efc77b") if g.position_in_world.distance_to(DOOR)<85 else Color(.9,.8,.5,.35),2,true)
+ g.draw_string(font,DOOR-camera+Vector2(-105,36),"TRADE • STOCK • SHIPMENTS",HORIZONTAL_ALIGNMENT_CENTER,210,13,Color("#ecd39b"))
+
+func draw_market_structure(g:Node2D,camera:Vector2)->void:
  var p=WALL.position-camera;var yard=YARD.position-camera
  g.draw_rect(Rect2(yard,YARD.size),Color("#a99870"))
  for n in 18:
@@ -102,13 +117,3 @@ func draw_market(g:Node2D,camera:Vector2)->void:
   g.draw_colored_polygon(PackedVector2Array([q+Vector2(-6,0),q+Vector2(0,-12),q+Vector2(6,0),q+Vector2(0,7)]),Color("#aed5db") if n%2 else Color("#c3a7dd"))
  g.draw_string(font,stall+Vector2(9,111),"GEMS & ASSAY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#f0d8a4"))
  for n in 3:crate(g,Vector2(85+n*32,710)-camera,Vector2(28,25))
- var t=Time.get_ticks_msec()*.001
- ram_worker(g,Vector2(-430+sin(t*.45)*25,715)-camera,t,true)
- ram_worker(g,Vector2(33+sin(t*.35)*22,751)-camera,t+1,false)
- ram_worker(g,Vector2(-275+sin(t*.3)*55,776)-camera,t+2,true)
- # A loading cart follows a short safe loop; no simulation entities or particles.
- var cart=Vector2(-485+fposmod(t*12,80),758)-camera
- g.draw_rect(Rect2(cart-Vector2(10,21),Vector2(54,27)),Color("#796448"));crate(g,cart-Vector2(4,32),Vector2(28,24))
- for x in [0,34]:g.draw_circle(cart+Vector2(x,8),7,Color("#465a5d"));g.draw_circle(cart+Vector2(x,8),3,Color("#b4a181"))
- g.draw_arc(DOOR-camera,28,0,TAU,32,Color("#efc77b") if g.position_in_world.distance_to(DOOR)<85 else Color(.9,.8,.5,.35),2,true)
- g.draw_string(font,DOOR-camera+Vector2(-105,36),"TRADE • STOCK • SHIPMENTS",HORIZONTAL_ALIGNMENT_CENTER,210,13,Color("#ecd39b"))

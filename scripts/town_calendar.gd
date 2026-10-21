@@ -26,6 +26,10 @@ var frame_shade=Color(0,0,0,0)
 var mesh_key=""
 var mesh_origin=Vector2.ZERO
 var lighting_rebuilds=0
+var grid_extent=Vector2.ZERO
+var grid_vertices=PackedVector3Array()
+var grid_indices=PackedInt32Array()
+var lighting_distance_checks=0
 var puddle_cells:Dictionary={}
 var music:AudioStreamPlayer
 var game:Node
@@ -166,16 +170,31 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
   mesh_key=key;mesh_origin=origin;lighting_rebuilds+=1
   var extent=c.VIEW+Vector2(256,256)
   var columns=ceili(extent.x/32.0);var rows=ceili(extent.y/32.0)
-  var vertices=PackedVector3Array();var colours=PackedColorArray();var indices=PackedInt32Array()
-  for y in range(rows+1):
-   for x in range(columns+1):
-    var p=Vector2(minf(x*32,extent.x),minf(y*32,extent.y))
-    vertices.append(Vector3(p.x,p.y,0));colours.append(shade_at(p+origin-camera,night,twilight))
-  for y in rows:
-   for x in columns:
-    var a=y*(columns+1)+x;var b=a+1;var d=a+columns+1;var e=d+1
-    indices.append_array(PackedInt32Array([a,b,e,a,e,d]))
-  var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_COLOR]=colours;arrays[Mesh.ARRAY_INDEX]=indices
+  if grid_extent!=extent or grid_vertices.is_empty():
+   grid_extent=extent;grid_vertices=PackedVector3Array();grid_indices=PackedInt32Array()
+   for y in range(rows+1):
+    for x in range(columns+1):grid_vertices.append(Vector3(minf(x*32,extent.x),minf(y*32,extent.y),0))
+   for y in rows:
+    for x in columns:
+     var a=y*(columns+1)+x;var b=a+1;var d=a+columns+1;var e=d+1
+     grid_indices.append_array(PackedInt32Array([a,b,e,a,e,d]))
+  var strengths=PackedFloat32Array();strengths.resize(grid_vertices.size());lighting_distance_checks=0
+  # A lamp contributes only inside its radius. Visit that local grid square instead
+  # of testing every vertex against every lamp; keep the authored 32px gradient.
+  for lamp in lights:
+   var center:Vector2=lamp.pos+camera-origin;var radius=float(lamp.radius)
+   var left=clampi(floori((center.x-radius)/32),0,columns);var right=clampi(ceili((center.x+radius)/32),0,columns)
+   var top=clampi(floori((center.y-radius)/32),0,rows);var bottom=clampi(ceili((center.y+radius)/32),0,rows)
+   for y in range(top,bottom+1):
+    for x in range(left,right+1):
+     var index=y*(columns+1)+x;var vertex=grid_vertices[index];var distance=Vector2(vertex.x,vertex.y).distance_squared_to(center);lighting_distance_checks+=1
+     if distance>=radius*radius:continue
+     var strength=(1.0-smoothstep(0.0,radius,sqrt(distance)))*float(lamp.strength)
+     strengths[index]=maxf(strengths[index],strength)
+  var colours=PackedColorArray();colours.resize(grid_vertices.size())
+  for i in grid_vertices.size():
+   var shade=frame_shade;shade.a=frame_shade.a*(1.0-strengths[i]*.95);colours[i]=shade
+  var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=grid_vertices;arrays[Mesh.ARRAY_COLOR]=colours;arrays[Mesh.ARRAY_INDEX]=grid_indices
   mesh.clear_surfaces();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
  c.draw_mesh(mesh,null,Transform2D(0,mesh_origin-camera))
  for lamp in lights:
@@ -294,6 +313,8 @@ func draw_weather(c:Node2D,camera:Vector2)->void:
    c.draw_set_transform(Vector2.ZERO)
 
 static func draw_lantern(c:Node2D,p:Vector2,lit:float)->void:
+ preload("res://scripts/town_sprite_cache.gd").draw(c,"lantern_lit" if lit>.1 else "lantern",Rect2(p-Vector2(16,80),Vector2(32,96)))
+static func draw_lantern_source(c:Node2D,p:Vector2,lit:float)->void:
  c.draw_circle(p,8,Color(0,0,0,.18))
  c.draw_rect(Rect2(p-Vector2(6,5),Vector2(12,6)),Color("#344c50"))
  c.draw_line(p,p-Vector2(0,48),Color("#52665e"),4)

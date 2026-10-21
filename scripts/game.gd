@@ -1624,7 +1624,10 @@ func take_player_damage(amount: float, melee_attacker:String="", cause:Dictionar
 func add_float_text(world_pos: Vector2, label: String, shade: Color) -> void:
 	floating_text.append({"pos": world_pos, "label": label, "shade": shade, "time": 0.85})
 
+var render_work:Dictionary={}
+var town_perf=preload("res://network/performance_view.gd").new()
 func _draw() -> void:
+	var draw_began=Time.get_ticks_usec()
 	var aquarium_open:bool=fishing!=null and is_instance_valid(fishing.room)
 	if terrain_cache!=null:terrain_cache.visible=menu!="workshop" and not aquarium_open and not (session_menu!=null and session_menu.page in ["main","clear","options"])
 	if menu=="workshop" or aquarium_open:return
@@ -1633,7 +1636,9 @@ func _draw() -> void:
 		return
 	var screen=VIEW;var magnify=media.factor()
 	draw_set_transform(media.offset(),0,Vector2.ONE*magnify);VIEW=screen/magnify
+	var world_began=Time.get_ticks_usec()
 	draw_world()
+	render_work["world"]=Time.get_ticks_usec()-world_began
 	tutorial.draw_world(self,camera)
 	adventure.draw_on(self,camera)
 	if studio_live!=null:studio_live.draw_on(self,camera)
@@ -1642,7 +1647,9 @@ func _draw() -> void:
 	journey.draw_on(self,camera)
 	if waylight!=null:waylight.draw_fog(self,camera);waylight.draw_world(self,camera)
 	if mode=="town":
+		var light_began=Time.get_ticks_usec()
 		town_life.calendar.draw_lighting(self,camera)
+		render_work["lighting"]=Time.get_ticks_usec()-light_began
 		preload("res://scripts/town_afterglow.gd").draw_on(self,camera)
 	VIEW=screen;draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 	if (media.clean_view or media.capturing) and menu.is_empty():return
@@ -1655,6 +1662,10 @@ func _draw() -> void:
 		draw_set_transform((VIEW-Vector2(1280,720))*0.5)
 		draw_menu()
 		draw_set_transform(Vector2.ZERO)
+
+	render_work["draw"]=Time.get_ticks_usec()-draw_began
+	if mode=="town":
+		for key in ["draw","world","lighting"]:town_perf.work(key,int(render_work.get(key,0)))
 
 var ground_tile_cache:Dictionary={}
 var ground_index=preload("res://scripts/terrain_patch_index.gd").new()
@@ -1901,7 +1912,6 @@ func draw_world() -> void:
 		draw_string(font, notice["pos"] - camera, str(notice["label"]), HORIZONTAL_ALIGNMENT_LEFT, -1, 19, notice["shade"])
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
-
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
 	if art.has(name) and art[name] != null:
 		draw_texture_rect(art[name], Rect2(world_pos - camera, size), false, tint)

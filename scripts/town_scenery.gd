@@ -159,12 +159,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	for bed in [Vector2(330,620),Vector2(1470,600),Vector2(1900,975),Vector2(840,1250),Vector2(1900,1055)]:
 		if not visible.has_point(bed):continue
 		var b:Vector2=bed-camera
-		var half:float=30 if bed.x==1900 else 36
-		c.draw_rect(Rect2(b+Vector2(-half,-8),Vector2(half*2,23)),Color("#705a44"))
-		for n in (6 if bed.x==1900 else 7):
-			var flower:Vector2=b+Vector2(-half+7+n*9,sin(n*2)*5)
-			c.draw_line(flower+Vector2(0,11),flower,Color("#739666"),2)
-			c.draw_circle(flower,4,Color("#dcb3c9") if n%2==0 else Color("#ead29a"))
+		preload("res://scripts/town_sprite_cache.gd").draw(c,"flowers_small" if bed.x==1900 else "flowers",Rect2(b-Vector2(44,16),Vector2(88,40)))
 	for bench in [POND_BENCH,Vector2(1650,1120)]:
 		if not visible.has_point(bench):continue
 		var b:Vector2=bench-camera
@@ -225,3 +220,11 @@ func draw_patrols(c:Node2D,camera:Vector2)->void:
 		if index>=3:
 			var partner:Vector2=_guard_at_time(index,clock-.85)+Vector2(0,18)
 			if visible.has_point(partner):guard(c,partner-camera,true)
+
+func draw_flower_source(c:Node2D,b:Vector2,small:bool)->void:
+	var half:float=30 if small else 36
+	c.draw_rect(Rect2(b+Vector2(-half,-8),Vector2(half*2,23)),Color("#705a44"))
+	for n in (6 if small else 7):
+		var flower:Vector2=b+Vector2(-half+7+n*9,sin(n*2)*5)
+		c.draw_line(flower+Vector2(0,11),flower,Color("#739666"),2)
+		c.draw_circle(flower,4,Color("#dcb3c9") if n%2==0 else Color("#ead29a"))

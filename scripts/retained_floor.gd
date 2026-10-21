@@ -11,4 +11,4 @@ func _process(_delta:float)->void:
  if visible and not background:visible=source.visible(source.floor_bounds(floor),game.camera)
 func _draw()->void:
  if background:source.draw_water(self,Vector2.ZERO)
- else:source.draw_floor(self,floor)
+ else:source.draw_floor(self,floor,true)

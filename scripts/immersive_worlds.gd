@@ -27,6 +27,7 @@ var guide_target:=Vector2.ZERO
 var guide_step:=Vector2.ZERO
 var guide_label:=""
 var guide_distance:=0.0
+var floor_stamps:Dictionary={}
 var guide_angle:=0.0
 var guide_ready:=false
 const IDS=["honeyglass","sunfield","lantern_marsh","silverfall","petalbrook"]
@@ -40,7 +41,7 @@ func polygon(p:Array)->PackedVector2Array:
  return points
 func setup(id:String)->void:
  for layer in floor_layers:layer.queue_free()
- floor_layers.clear();floor_geometry.clear();solid_bins.clear()
+ floor_layers.clear();floor_geometry.clear();solid_bins.clear();floor_stamps.clear()
  arrow_route.clear();arrow_until=0;guide_uid=-1;guide_ready=false
  active=id in IDS;data={};initialized=false;stage=0;boss_live=false;done=false;clock=0;routes.clear();beams.clear();attacks.clear();used.clear();boat.clear();grid=null
  if not active:return
@@ -597,7 +598,7 @@ func advance_guide(origin:Vector2)->void:
   guide_step=p
   if origin.distance_to(p)>=150:break
 
-func draw_floor(canvas:Node2D,floor:Dictionary)->void:
+func draw_floor(canvas:Node2D,floor:Dictionary,batched:bool=false)->void:
  var camera:=Vector2.ZERO
  var font:=ThemeDB.fallback_font
  var bounds:Rect2=floor_bounds(floor)
@@ -632,11 +633,17 @@ func draw_floor(canvas:Node2D,floor:Dictionary)->void:
     for x in range(int(bounds.position.x),int(bounds.end.x),36):canvas.draw_line(Vector2(x,bounds.position.y)-camera,Vector2(x,bounds.end.y)-camera,Color("#685c4d"),2)
    canvas.draw_rect(Rect2(bounds.position-camera+Vector2(8,8),bounds.size-Vector2(16,16)),Color("#d7b388"),false,6)
  if kind in ["meadow","river","petal","marsh","trail"]:
-  var left:=maxi(int(bounds.position.x),floori(bounds.position.x/64)*64);var top:=maxi(int(bounds.position.y),floori(bounds.position.y/64)*64)
-  for x in range(left,mini(int(bounds.end.x),int(bounds.end.x)),128):
-   for y in range(top,mini(int(bounds.end.y),int(bounds.end.y)),128):
-    var clipped:=bounds.intersection(Rect2(x,y,128,128))
-    if clipped.has_area():canvas.draw_texture_rect_region(textures.floor,Rect2(clipped.position-camera,clipped.size),Rect2(Vector2.ZERO,Vector2(64,64)),Color(tint,.23))
+  if batched:
+   # Preserve the original 128px texture repeat with one tiled rectangle.
+   canvas.draw_set_transform(Vector2.ZERO,0,Vector2(2,2))
+   canvas.draw_texture_rect(textures.floor,Rect2(bounds.position*.5,bounds.size*.5),true,Color(tint,.23))
+   canvas.draw_set_transform(Vector2.ZERO)
+  else:
+   var left:=maxi(int(bounds.position.x),floori(bounds.position.x/64)*64);var top:=maxi(int(bounds.position.y),floori(bounds.position.y/64)*64)
+   for x in range(left,mini(int(bounds.end.x),int(bounds.end.x)),128):
+    for y in range(top,mini(int(bounds.end.y),int(bounds.end.y)),128):
+     var clipped:=bounds.intersection(Rect2(x,y,128,128))
+     if clipped.has_area():canvas.draw_texture_rect_region(textures.floor,Rect2(clipped.position-camera,clipped.size),Rect2(Vector2.ZERO,Vector2(64,64)),Color(tint,.23))
  if kind=="log":
   var p:=bounds.position-camera
   var wide:=bounds.size.x
@@ -658,10 +665,25 @@ func draw_floor(canvas:Node2D,floor:Dictionary)->void:
   canvas.draw_rect(Rect2(p+Vector2(200,55),Vector2(150,60)),Color("#b9e9da"));canvas.draw_rect(Rect2(p+Vector2(200,55),Vector2(150,60)),Color("#735f4a"),false,5)
  if not str(floor.name).is_empty():canvas.draw_string(font,bounds.position-camera+Vector2(28,40),str(floor.name),HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f8e8b8"))
  # Sparse ground detail gives rooms texture without hiding attack warnings.
- var x0:=maxi(int(bounds.position.x+35),floori(bounds.position.x/85)*85);var y0:=maxi(int(bounds.position.y+50),floori(bounds.position.y/85)*85)
- for x in range(x0,mini(int(bounds.end.x),int(bounds.end.x)),85):
-  for y in range(y0,mini(int(bounds.end.y),int(bounds.end.y)),85):
-   if not floor.has("poly") or Geometry2D.is_point_in_polygon(Vector2(x,y),polygon(floor.poly)):canvas.draw_circle(Vector2(x,y)-camera,2,Color(tint.lightened(.18),.6))
+ if batched:
+  var key=str(bounds)+str(floor.name)+kind
+  if not floor_stamps.has(key):
+   var points:PackedVector2Array=PackedVector2Array()
+   var x0=maxi(int(bounds.position.x+35),floori(bounds.position.x/85)*85);var y0=maxi(int(bounds.position.y+50),floori(bounds.position.y/85)*85)
+   var shape=polygon(floor.poly) if floor.has("poly") else PackedVector2Array()
+   for x in range(x0,int(bounds.end.x),85):
+    for y in range(y0,int(bounds.end.y),85):
+     if shape.is_empty() or Geometry2D.is_point_in_polygon(Vector2(x,y),shape):points.append(Vector2(x,y))
+   var stamp=MultiMesh.new();stamp.transform_format=MultiMesh.TRANSFORM_2D;stamp.use_colors=true
+   var quad=QuadMesh.new();quad.size=Vector2(8,8);stamp.mesh=quad;stamp.instance_count=points.size()
+   for i in points.size():stamp.set_instance_transform_2d(i,Transform2D(0,points[i]));stamp.set_instance_color(i,Color(tint.lightened(.18),.6))
+   floor_stamps[key]=stamp
+  canvas.draw_multimesh(floor_stamps[key],preload("res://scripts/town_sprite_cache.gd").texture("circle"))
+ else:
+  var x0:=maxi(int(bounds.position.x+35),floori(bounds.position.x/85)*85);var y0:=maxi(int(bounds.position.y+50),floori(bounds.position.y/85)*85)
+  for x in range(x0,mini(int(bounds.end.x),int(bounds.end.x)),85):
+   for y in range(y0,mini(int(bounds.end.y),int(bounds.end.y)),85):
+    if not floor.has("poly") or Geometry2D.is_point_in_polygon(Vector2(x,y),polygon(floor.poly)):canvas.draw_circle(Vector2(x,y)-camera,2,Color(tint.lightened(.18),.6))
 
 func draw_water(canvas:Node2D,camera:Vector2)->void:
  canvas.draw_rect(Rect2(-camera,v(data.size)),Color(data.background))

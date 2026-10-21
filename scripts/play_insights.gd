@@ -198,6 +198,11 @@ func sample(game:Node)->void:
  stats.draw_max=maxi(stats.draw_max,int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
  stats.video_max_bytes=maxi(stats.video_max_bytes,int(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED)))
  latest_metrics=world_metrics(game);collect_hardware()
+ var town_profile=game.get("town_perf")
+ if str(game.get("mode"))=="town" and town_profile!=null:
+  var work=town_profile.summary()
+  for pair in [["draw","town_draw_p95_ms"],["world","town_world_p95_ms"],["lighting","town_lighting_p95_ms"]]:
+   stats[pair[1]]=maxf(float(stats.get(pair[1],0)),float(work.get(pair[0],{}).get("p95_ms",0)))
  stats.process_max_ms=maxf(stats.process_max_ms,Performance.get_monitor(Performance.TIME_PROCESS)*1000)
  stats.physics_max_ms=maxf(stats.physics_max_ms,Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000)
  stats.memory_max_bytes=maxi(stats.memory_max_bytes,int(Performance.get_monitor(Performance.MEMORY_STATIC)))
@@ -218,7 +223,7 @@ func sample(game:Node)->void:
  stats.rtt_max_ms=maxf(stats.rtt_max_ms,rtt);stats.rtt_sum_ms+=rtt
 func packet(kind:String,result:String="",duration:float=0,metrics:Dictionary={})->Dictionary:
  var count=maxi(1,int(stats.count));var p={"version":1,"event":identifier(),"session":session,"profile":profile,"device":device,"build":BRAND.BUILD,"release":preload("res://network/release.gd").BUILD,"platform":"web" if OS.has_feature("web") else "mobile" if OS.get_name() in ["Android","iOS"] else "desktop","kind":kind,"result":result,"duration":clampf(duration,0,604800),"seconds":clampf(elapsed,0,90),"active":clampf(active_seconds,0,minf(elapsed,90)),"stats":{"samples":stats.count,"fps_mean":stats.fps_sum/count,"fps_min":stats.fps_min if int(stats.count)>0 else 0,"fps_max":stats.fps_max,"below_50":stats.below_50,"below_40":stats.below_40,"frame_max_ms":stats.frame_max_ms,"draw_max":stats.draw_max,"video_max_bytes":stats.video_max_bytes,"rtt_mean_ms":stats.rtt_sum_ms/count,"rtt_max_ms":stats.rtt_max_ms},"metrics":metrics}
- for key in ["frames","frames_over_33","frames_over_50","process_max_ms","physics_max_ms","memory_max_bytes","entities_max","projectiles_max","guards_max","server_work_max_ms","authority_hz_min","fps_firing_sum","firing_samples","fps_moving_sum","moving_samples","fps_idle_sum","idle_samples"]:
+ for key in ["town_draw_p95_ms","town_world_p95_ms","town_lighting_p95_ms","frames","frames_over_33","frames_over_50","process_max_ms","physics_max_ms","memory_max_bytes","entities_max","projectiles_max","guards_max","server_work_max_ms","authority_hz_min","fps_firing_sum","firing_samples","fps_moving_sum","moving_samples","fps_idle_sum","idle_samples"]:
   if stats.has(key):p.stats[key]=stats[key]
  p.stats.frame_p95_upper_ms=frame_p95();p.graphics=hardware.duplicate()
  var game=current_game();p.details={}

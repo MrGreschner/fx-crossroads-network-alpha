@@ -117,32 +117,10 @@ func draw_residents(c:CanvasItem,camera:Vector2)->void:
   if working and state.task=="music":bob=sin(clock*6+index)*2.5
   c.draw_circle(point+Vector2(0,3),12,Color(0,0,0,.18))
   point.y+=bob
-  var coat:Color=Color(state.colour)
-  c.draw_rect(Rect2(point+Vector2(-10,-23),Vector2(20,23)),Color("#34414a"))
-  c.draw_rect(Rect2(point+Vector2(-9,-22),Vector2(18,20)),coat)
-  c.draw_rect(Rect2(point+Vector2(-9,-8),Vector2(18,3)),Color("#c2b092"))
-  for arm in [-1,1]:
-   var swing:float=0 if working else sin(clock*9+index)*2*arm
-   c.draw_rect(Rect2(point+Vector2(arm*11-2,-20+swing),Vector2(4,10)),coat)
-   c.draw_rect(Rect2(point+Vector2(arm*11-2,-10+swing),Vector2(4,3)),Color("#dfc5a6"))
-  for side in [-1,1]:
-   var foot=0.0 if working else sin(clock*9+index+side*PI*.5)*2
-   c.draw_rect(Rect2(point+Vector2(side*5-3,-2+foot),Vector2(6,6)),Color("#343d45"))
+  var phase=0 if working else 1+posmod(int(floorf((clock*9+index)/TAU*16)),16)
+  var atlas=preload("res://scripts/town_sprite_cache.gd").texture("residents")
+  c.draw_texture_rect_region(atlas,Rect2(point-Vector2(24,56),Vector2(48,72)),Rect2(phase*48,index*72,48,72))
   var skin:Color=Color("#e7dac4") if state.kind!="human" else Color("#c99970")
-  c.draw_rect(Rect2(point+Vector2(-10,-41),Vector2(20,20)),Color("#4f4a46"))
-  c.draw_rect(Rect2(point+Vector2(-9,-40),Vector2(18,18)),skin)
-  c.draw_rect(Rect2(point+Vector2(-2,-28),Vector2(4,2)),Color("#b18275"))
-  if state.kind=="ram":
-   for side in [-1,1]:
-    c.draw_circle(point+Vector2(side*11,-32),6,Color("#806147"))
-    c.draw_circle(point+Vector2(side*11,-32),3,Color("#c7a47c"))
-  elif state.kind=="rabbit":
-   for side in [-1,1]:
-    c.draw_rect(Rect2(point+Vector2(side*5-2,-53),Vector2(5,15)),skin)
-    c.draw_rect(Rect2(point+Vector2(side*5-1,-50),Vector2(2,8)),Color("#dca2a4"))
-  else:
-   c.draw_rect(Rect2(point+Vector2(-10,-43),Vector2(20,7)),Color("#655045") if index==2 else Color("#b7a26a"))
-  for side in [-1,1]:c.draw_rect(Rect2(point+Vector2(side*4-1,-34),Vector2(2,3)),Color("#31333e"))
   if state.task in ["deliver","shop","read","guard","repair"] or working:
    var hand:Vector2=point+Vector2(14,-17+sin(clock*4)*3)
    c.draw_line(point+Vector2(8,-20),hand,skin,4)
@@ -200,3 +178,31 @@ func draw_recognition(c:Node2D,camera:Vector2,font:Font)->void:
  c.draw_string(font,p+Vector2(-width*.5+14,0),message,HORIZONTAL_ALIGNMENT_LEFT,width-28,15,Color("#e7e3c9"))
 func bubble_style()->StyleBoxFlat:
  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#223c3a");skin.border_color=Color("#a4b7a1");skin.set_border_width_all(1);skin.set_corner_radius_all(8);return skin
+
+func draw_resident_body(c:CanvasItem,point:Vector2,state:Dictionary,index:int,phase:float,working:bool)->void:
+ var coat:Color=Color(state.colour)
+ c.draw_rect(Rect2(point+Vector2(-10,-23),Vector2(20,23)),Color("#34414a"))
+ c.draw_rect(Rect2(point+Vector2(-9,-22),Vector2(18,20)),coat)
+ c.draw_rect(Rect2(point+Vector2(-9,-8),Vector2(18,3)),Color("#c2b092"))
+ for arm in [-1,1]:
+  var swing:float=0 if working else sin(phase)*2*arm
+  c.draw_rect(Rect2(point+Vector2(arm*11-2,-20+swing),Vector2(4,10)),coat)
+  c.draw_rect(Rect2(point+Vector2(arm*11-2,-10+swing),Vector2(4,3)),Color("#dfc5a6"))
+ for side in [-1,1]:
+  var foot=0.0 if working else sin(phase+side*PI*.5)*2
+  c.draw_rect(Rect2(point+Vector2(side*5-3,-2+foot),Vector2(6,6)),Color("#343d45"))
+ var skin:Color=Color("#e7dac4") if state.kind!="human" else Color("#c99970")
+ c.draw_rect(Rect2(point+Vector2(-10,-41),Vector2(20,20)),Color("#4f4a46"))
+ c.draw_rect(Rect2(point+Vector2(-9,-40),Vector2(18,18)),skin)
+ c.draw_rect(Rect2(point+Vector2(-2,-28),Vector2(4,2)),Color("#b18275"))
+ if state.kind=="ram":
+  for side in [-1,1]:
+   c.draw_circle(point+Vector2(side*11,-32),6,Color("#806147"))
+   c.draw_circle(point+Vector2(side*11,-32),3,Color("#c7a47c"))
+ elif state.kind=="rabbit":
+  for side in [-1,1]:
+   c.draw_rect(Rect2(point+Vector2(side*5-2,-53),Vector2(5,15)),skin)
+   c.draw_rect(Rect2(point+Vector2(side*5-1,-50),Vector2(2,8)),Color("#dca2a4"))
+ else:
+  c.draw_rect(Rect2(point+Vector2(-10,-43),Vector2(20,7)),Color("#655045") if index==2 else Color("#b7a26a"))
+ for side in [-1,1]:c.draw_rect(Rect2(point+Vector2(side*4-1,-34),Vector2(2,3)),Color("#31333e"))

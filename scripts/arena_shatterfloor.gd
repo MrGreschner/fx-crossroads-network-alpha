@@ -8,6 +8,8 @@ const BOARD=Vector2(1120,800)
 const ORIGIN=Vector2(80,120)
 const SPEED=260.0
 const ROUND_LIMIT=85.0
+const FALL_DURATION=.85
+const LAND_GRACE=.75
 var world_ref:WeakRef
 var world:RefCounted:
  get:return world_ref.get_ref() if world_ref!=null else null
@@ -24,6 +26,8 @@ var points:Dictionary={}
 var round_points:Dictionary={}
 var shoves:Dictionary={}
 var falls:Dictionary={}
+var dropping:Dictionary={}
+var received_at=0
 var clock=0.0
 var round_time=0.0
 var round_number=1
@@ -31,7 +35,7 @@ var intermission=0.0
 var banner=""
 var button:Button
 func active()->bool:return world!=null and world.game.mode=="arena" and world.map_id=="shatterfloor"
-func playable(id:String)->bool:return active() and world.game.started and world.game.start_countdown<=0 and intermission<=0 and layers.has(id) and not eliminated.has(id) and world.game.positions.has(id)
+func playable(id:String)->bool:return active() and world.game.started and world.game.start_countdown<=0 and intermission<=0 and layers.has(id) and not eliminated.has(id) and not dropping.has(id) and world.game.positions.has(id)
 func setup(w:RefCounted)->void:
  world=w;clock=0;round_number=1;intermission=0;points.clear();shoves.clear();falls.clear()
  if not active():return
@@ -50,7 +54,7 @@ func move_actor(id:String,p:Vector2)->void:
   g.positions[id]=p
   if id==g.my_id:g.local_pos=p;g.dodge_time=0
 func reset_round()->void:
- cells.clear();layers.clear();grace.clear();hops.clear();hop_ready.clear();shove_ready.clear();protected.clear();eliminated.clear();round_points.clear();round_time=0
+ dropping.clear();cells.clear();layers.clear();grace.clear();hops.clear();hop_ready.clear();shove_ready.clear();protected.clear();eliminated.clear();round_points.clear();round_time=0
  for floor_index in 3:
   var board=[];board.resize(COLS*ROWS);board.fill(-1.0);cells.append(board)
  var g=world.game;var n=0
@@ -98,14 +102,48 @@ func request(kind:String)->void:
  elif kind in ["primary","secondary"] and Time.get_ticks_msec()>=int(g.request_ready.get(kind,0)):
   g.request_ready[kind]=Time.get_ticks_msec()+250
   g._send_channel(g.host_id,{"type":"attack","style":kind,"angle":aim.angle(),"target":[g.local_pos.x+aim.x*100,g.local_pos.y+aim.y*100]})
+# A fall is an authoritative timed state, not a teleport event. Snapshots carry
+# both endpoints so clients joining mid-drop see the same part of the animation.
 func fall(id:String)->void:
- if eliminated.has(id):return
+ if eliminated.has(id) or dropping.has(id):return
  var g=world.game;falls[id]=int(falls.get(id,0))+1;hops.erase(id)
- if int(layers[id])>=2:
-  eliminated[id]=round_time;g.health[id]=0;g.respawn_at[id]=0;banner="%s fell through the final floor" % player_name(id)
+ var layer=int(layers[id]);var origin:Vector2=g.positions[id]
+ var q=local_point(id,origin).clamp(Vector2(20,20),BOARD-Vector2(20,20))
+ var target=ORIGIN+q+Vector2(0,(layer+1)*STRIDE) if layer<2 else origin+Vector2(0,430)
+ dropping[id]={"start":clock,"end":clock+FALL_DURATION,"from":[origin.x,origin.y],"to":[target.x,target.y],"layer":layer,"out_at":round_time}
+func land(id:String)->void:
+ var drop:Dictionary=dropping[id];dropping.erase(id)
+ var g=world.game
+ if int(drop.layer)>=2:
+  eliminated[id]=float(drop.out_at);g.health[id]=0;g.respawn_at[id]=0;banner="%s fell through the final floor" % player_name(id)
  else:
-  var q=local_point(id,g.positions[id]).clamp(Vector2(20,20),BOARD-Vector2(20,20));layers[id]=int(layers[id])+1;grace[id]=clock+.45
-  move_actor(id,ORIGIN+q+Vector2(0,int(layers[id])*STRIDE));banner="FLOOR %d • FIND A SAFE ROUTE" % (int(layers[id])+1)
+  layers[id]=int(drop.layer)+1;grace[id]=clock+LAND_GRACE;protected[id]=clock+LAND_GRACE
+  move_actor(id,Vector2(float(drop.to[0]),float(drop.to[1])));banner="FLOOR %d • KEEP MOVING" % (int(layers[id])+1)
+func visual_clock()->float:
+ # Extrapolate only the visuals between snapshots; never advance game rules.
+ return clock+minf(.15,maxf(0,(Time.get_ticks_msec()-received_at)/1000.0)) if world.game.role!="host" and received_at>0 else clock
+func fall_progress(id:String)->float:
+ return clampf((visual_clock()-float(dropping[id].start))/FALL_DURATION,0,1) if dropping.has(id) else 0.0
+func draw_point(id:String,fallback:Vector2)->Vector2:
+ if not active():return fallback
+ if not dropping.has(id):
+  # The ordinary remote render buffer may still hold the departure deck for
+  # a snapshot after landing. Never draw that stale position after the drop.
+  var accepted:Vector2=world.game.positions.get(id,fallback)
+  return accepted if accepted.distance_to(fallback)>STRIDE*.5 else fallback
+ var drop:Dictionary=dropping[id];var t=fall_progress(id)
+ var a=Vector2(float(drop.from[0]),float(drop.from[1]));var b=Vector2(float(drop.to[0]),float(drop.to[1]))
+ return a.lerp(b,t*t*(3-2*t))
+func draw_falling_hero(id:String,pos:Vector2,texture:Texture2D,tint:Color)->void:
+ var g=world.game;var t=fall_progress(id)
+ var size=Vector2(56,64)*(1-.42*sin(PI*t));var angle=sin(PI*t)*.22
+ for n in 4:
+  var offset=Vector2((n-1.5)*16,-35-fmod(t*190+n*27,100))
+  g.draw_line(pos+offset,pos+offset+Vector2(0,19),Color(.65,.85,.95,.55*sin(PI*t)),2)
+ g.world_transform(pos,angle)
+ if texture!=null:g.draw_texture_rect(texture,Rect2(-size*Vector2(.5,.66),size),false,tint)
+ g.world_transform()
+ g.draw_string(ThemeDB.fallback_font,pos+Vector2(-35,-55),"FALLING",HORIZONTAL_ALIGNMENT_LEFT,100,13,Color("#f6ce8b"))
 func group(id:String)->String:return "team:"+str(world.game.teams.get(id,0)) if world.game.pvp_rule=="teams" else id
 func player_name(id:String)->String:
  if id.begins_with("team:"):return "Blue team" if id=="team:0" else "Red team"
@@ -150,8 +188,11 @@ func step(dt:float)->void:
     var edge=mini(mini(index%COLS,COLS-1-index%COLS),mini(index/COLS,ROWS-1-index/COLS))
     if edge<=ring and float(cells[floor_index][index])<0:cells[floor_index][index]=clock+1.5+floor_index*.2
  for id in layers:
-  if not g.positions.has(id):eliminated[id]=round_time;continue
+  if not g.positions.has(id):eliminated[id]=round_time;dropping.erase(id);continue
   if eliminated.has(id):continue
+  if dropping.has(id):
+   if clock>=float(dropping[id].end):land(id)
+   continue
   if airborne(id):
    var h:Dictionary=hops[id];var direction=Vector2(float(h.direction[0]),float(h.direction[1]));g.positions[id]+=direction*390*dt
    if id==g.my_id:g.local_pos=g.positions[id]
@@ -166,7 +207,7 @@ func step(dt:float)->void:
  var initial_groups=[]
  for id in layers:
   if group(id) not in initial_groups:initial_groups.append(group(id))
- if alive_groups.is_empty() or initial_groups.size()>1 and alive_groups.size()<=1 or round_time>=ROUND_LIMIT:finish_round()
+ if dropping.is_empty() and (alive_groups.is_empty() or initial_groups.size()>1 and alive_groups.size()<=1 or round_time>=ROUND_LIMIT):finish_round()
 func bot_step(id:String,dt:float,state:Dictionary)->void:
  if not playable(id) or airborne(id):return
  var g=world.game;var p:Vector2=g.positions[id];var layer=int(layers[id]);var best=Vector2.ZERO;var weight=-INF
@@ -187,9 +228,9 @@ func bot_step(id:String,dt:float,state:Dictionary)->void:
  else:g.positions[id]=p+best*SPEED*dt
  for other in layers:
   if other!=id and playable(other) and int(layers[other])==layer and g._rival(id,other) and p.distance_to(g.positions[other])<110:action(id,"primary",(g.positions[other]-p).normalized());break
-func snapshot()->Dictionary:return {"clock":clock,"round_time":round_time,"round":round_number,"intermission":intermission,"cells":cells,"layers":layers,"grace":grace,"hops":hops,"hop_ready":hop_ready,"shove_ready":shove_ready,"eliminated":eliminated,"points":points,"round_points":round_points,"shoves":shoves,"falls":falls,"banner":banner}
+func snapshot()->Dictionary:return {"clock":clock,"round_time":round_time,"round":round_number,"intermission":intermission,"cells":cells,"layers":layers,"grace":grace,"hops":hops,"hop_ready":hop_ready,"shove_ready":shove_ready,"eliminated":eliminated,"points":points,"round_points":round_points,"shoves":shoves,"falls":falls,"dropping":dropping,"banner":banner}
 func receive(data:Dictionary)->void:
- clock=float(data.get("clock",clock));round_time=float(data.get("round_time",round_time));round_number=int(data.get("round",round_number));intermission=float(data.get("intermission",0));cells=data.get("cells",cells);layers=data.get("layers",layers);grace=data.get("grace",grace);hops=data.get("hops",hops);hop_ready=data.get("hop_ready",hop_ready);shove_ready=data.get("shove_ready",shove_ready);eliminated=data.get("eliminated",eliminated);points=data.get("points",points);round_points=data.get("round_points",round_points);shoves=data.get("shoves",shoves);falls=data.get("falls",falls);banner=str(data.get("banner",banner))
+ received_at=Time.get_ticks_msec();dropping=data.get("dropping",{});clock=float(data.get("clock",clock));round_time=float(data.get("round_time",round_time));round_number=int(data.get("round",round_number));intermission=float(data.get("intermission",0));cells=data.get("cells",cells);layers=data.get("layers",layers);grace=data.get("grace",grace);hops=data.get("hops",hops);hop_ready=data.get("hop_ready",hop_ready);shove_ready=data.get("shove_ready",shove_ready);eliminated=data.get("eliminated",eliminated);points=data.get("points",points);round_points=data.get("round_points",round_points);shoves=data.get("shoves",shoves);falls=data.get("falls",falls);banner=str(data.get("banner",banner))
 func header()->String:return "SHATTERFLOOR • ROUND %d / 3 • %ds • %s" % [round_number,maxi(0,ceili(ROUND_LIMIT-round_time)),"NEXT ROUND IN %d" % ceili(intermission) if intermission>0 else "FLOOR %d / 3" % (int(layers.get(world.game.my_id,0))+1)]
 func draw_ground()->void:
  if not active():return
@@ -201,19 +242,52 @@ func draw_ground()->void:
   g.draw_rect(Rect2(origin-g.camera-Vector2(12,12),BOARD+Vector2(24,24)),Color("#233953"),false,4)
   for index in COLS*ROWS:
    var p=origin+Vector2(index%COLS,index/COLS)*TILE-g.camera;var rect=Rect2(p+Vector2(3,3),Vector2(TILE-6,TILE-6));var time=remaining(layer,index)
+   if not Rect2(Vector2(-TILE,-TILE),g.VIEW+Vector2(TILE*2,TILE*2)).has_point(p):continue
+   if not is_inf(time):time=maxf(0,time-(visual_clock()-clock))
    if time<=0:
     g.draw_rect(rect,Color("#101b30"));g.draw_line(p+Vector2(24,26),p+Vector2(42,38),Color("#33415c"),2);continue
    var tint=colors[layer].darkened(.35) if is_inf(time) else Color("#edb36b").lerp(Color("#ee6b69"),1-clampf(time/.85,0,1))
    g.draw_rect(Rect2(rect.position+Vector2(0,6),rect.size),tint.darkened(.65));g.draw_rect(rect,tint);g.draw_rect(rect,tint.lightened(.25),false,1)
    if not is_inf(time):
-    g.draw_polyline(PackedVector2Array([p+Vector2(15,3),p+Vector2(34,28),p+Vector2(24,42),p+Vector2(48,60),p+Vector2(42,77)]),Color("#402d39"),3,true);g.draw_line(p+Vector2(34,28),p+Vector2(70,18),Color("#402d39"),2)
+    var progress=1-clampf(time/.85,0,1)
+    var crack=[Vector2(15,3),Vector2(34,28),Vector2(24,42),Vector2(48,60),Vector2(42,77)]
+    var segments=progress*4
+    for segment in 4:
+     var amount=clampf(segments-segment,0,1)
+     if amount>0:g.draw_line(p+crack[segment],p+crack[segment].lerp(crack[segment+1],amount),Color("#402d39"),3)
+    if progress>.45:g.draw_line(p+Vector2(34,28),p+Vector2(34,28).lerp(Vector2(70,18),clampf((progress-.45)*3,0,1)),Color("#402d39"),2)
+    g.draw_rect(Rect2(p+Vector2(8,68),Vector2(64,4)),Color("#402d39"))
+    g.draw_rect(Rect2(p+Vector2(8,68),Vector2(64*(1-progress),4)),Color("#fff2c1"))
   g.draw_string(ThemeDB.fallback_font,origin-g.camera+Vector2(5,-24),["01 • JADE DECK","02 • TWILIGHT DECK","03 • LAST CHANCE"][layer],HORIZONTAL_ALIGNMENT_LEFT,500,22,colors[layer])
+ draw_landings()
+func draw_landings()->void:
+ var g=world.game;var now=visual_clock()
+ for id in layers:
+  if eliminated.has(id):continue
+  if dropping.has(id):
+   var drop:Dictionary=dropping[id];var t=fall_progress(id);var source=Vector2(float(drop.from[0]),float(drop.from[1]))-g.camera
+   for n in 6:
+    var v=Vector2.from_angle(TAU*n/6);var shard=source+v*(14+45*t)+Vector2(0,170*t*t)
+    g.draw_colored_polygon(PackedVector2Array([shard+Vector2(-9,-4),shard+Vector2(8,-8),shard+Vector2(5,7)]),Color(.65,.72,.75,(1-t)*.8))
+  var p:Vector2=g.positions.get(id,Vector2.ZERO)-g.camera
+  var radius=29.0;var alpha=0.0
+  if dropping.has(id) and int(dropping[id].layer)<2:
+   var d:Dictionary=dropping[id];p=Vector2(float(d.to[0]),float(d.to[1]))-g.camera;radius=29+14*(1-fall_progress(id));alpha=.85
+   g.draw_string(ThemeDB.fallback_font,p+Vector2(-43,43),"LANDING F%d" % (int(d.layer)+2),HORIZONTAL_ALIGNMENT_LEFT,130,12,Color("#f7deac"))
+  elif now<float(grace.get(id,0)):
+   alpha=clampf((float(grace[id])-now)/LAND_GRACE,0,1);radius=29+16*(1-alpha)
+  if alpha>0:
+   g.draw_arc(p,radius,0,TAU,32,Color(1,.88,.6,alpha),2)
+   g.draw_line(p-Vector2(8,0),p+Vector2(8,0),Color(1,.88,.6,alpha),2)
+   g.draw_line(p-Vector2(0,8),p+Vector2(0,8),Color(1,.88,.6,alpha),2)
 func draw_hud()->void:
  if not active():return
  var g=world.game;var font=ThemeDB.fallback_font;var width=minf(650,g.VIEW.x-40);var y=100.0
  g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#11283b","#81cfc6",8,8),Rect2(20,y,width,82))
  var eliminated_local=eliminated.has(g.my_id)
  var text="OUT THIS ROUND • Watch the survivors below" if eliminated_local else "STEP • CRACK • FALL • Shove rivals • Hop across gaps"
+ if dropping.has(g.my_id):text="FALLING • " + ("FINAL FLOOR • Watch the survivors after landing" if int(dropping[g.my_id].layer)>=2 else "FLOOR %d → FLOOR %d • Look for your landing ring" % [int(dropping[g.my_id].layer)+1,int(dropping[g.my_id].layer)+2])
+ elif visual_clock()<float(grace.get(g.my_id,0)):text="LANDED • Brief shove protection • Keep moving to a safe tile"
  if intermission>0:text="ROUND COMPLETE • Next round in %ds" % ceili(intermission)
  g.draw_string(font,Vector2(31,y+23),text,HORIZONTAL_ALIGNMENT_LEFT,width-20,14,Color("#e5ecdf"))
  var x=31.0
@@ -230,11 +304,13 @@ func draw_minimap()->void:
  g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#11283b","#6f929e",7,7),Rect2(p,Vector2(180,151)))
  var n=0
  for id in points:
-  var state="OUT" if eliminated.has(id) else "F%d" % (int(layers.get(id,0))+1)
+  var state="FALL ↓" if dropping.has(id) else "OUT" if eliminated.has(id) else "F%d" % (int(layers.get(id,0))+1)
   g.draw_string(font,p+Vector2(9,19+n*16),player_name(id).left(12)+"  "+state+"  "+str(points[id]),HORIZONTAL_ALIGNMENT_LEFT,165,12,Color("#f3d795") if id==g.my_id else Color("#bbd2de"));n+=1
-func report()->Dictionary:return {"round":round_number,"round_time":round_time,"points":points,"layers":layers,"shoves":shoves,"falls":falls,"eliminated":eliminated.size()}
+func report()->Dictionary:return {"round":round_number,"round_time":round_time,"points":points,"layers":layers,"shoves":shoves,"falls":falls,"eliminated":eliminated.size(),"falling":dropping.size(),"fall_duration_ms":int(FALL_DURATION*1000)}
 func camera_point(fallback:Vector2)->Vector2:
- if not active() or not eliminated.has(world.game.my_id):return fallback
+ if not active():return fallback
+ if dropping.has(world.game.my_id):return draw_point(world.game.my_id,fallback)
+ if not eliminated.has(world.game.my_id):return draw_point(world.game.my_id,fallback)
  for id in layers:
   if not eliminated.has(id) and world.game.positions.has(id):return world.game._player_draw_position(id,world.game.positions[id])
  return fallback
