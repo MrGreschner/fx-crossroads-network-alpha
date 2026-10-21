@@ -195,7 +195,6 @@ func _ready() -> void:
 	art["training_dummy_1"] = art["training_dummy_0"]
 	respawn_clinic=bool(get_tree().root.get_meta("fx_clinic",false));get_tree().root.set_meta("fx_clinic",false)
 	legacy=preload("res://scripts/legacy.gd").new();add_child(legacy);legacy.setup(self)
-	preload("res://scripts/prepared_supply.gd").restore(self)
 	hero_workshop=preload("res://scripts/hero_workshop.gd").new();add_child(hero_workshop);hero_workshop.setup(self)
 	preload("res://scripts/studio_library.gd").install(self)
 	studio_live=preload("res://scripts/studio_live.gd").new();add_child(studio_live);studio_live.setup(self)
@@ -653,8 +652,6 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	inventory.clear()
 	if not trial:
 		inventory.assign(loadout)
-		if not practice and realm_id!="practice":
-			for id in inventory:preload("res://scripts/prepared_supply.gd").commit(str(id))
 	loadout.clear()
 	health=max_health()
 	adventure.combat.feedback.healing_numbers.clear()
@@ -1218,7 +1215,6 @@ func pulse() -> void:
 			damage_enemy(i, float(stats.get("damage", 50)))
 
 func use_item_slot(slot: int) -> void:
-	slot=preload("res://scripts/supply_slots.gd").index(inventory,slot,items)
 	if mode != "run" or menu != "" or slot < 0 or slot >= inventory.size():
 		return
 	var item: Dictionary = items.get(inventory[slot], {})
@@ -1233,7 +1229,7 @@ func use_item_slot(slot: int) -> void:
 	elif effect == "cleanse":
 		adventure.combat.v90.cleanse("p:solo",["poison","burn","bleed"])
 	elif effect == "lodge_guard":
-		adventure.combat.apply_status("p:solo","guard",float(item.get("duration",4)),"solo",float(item.get("amount",15))/100.0)
+		adventure.combat.apply_status("p:solo","guard",float(item.get("duration",4)),"solo",.15)
 	elif effect == "invulnerable":
 		invulnerable_time = float(item.get("amount", 0))
 	elif effect == "haste":
@@ -1971,9 +1967,7 @@ func draw_ability_cooldowns() -> void:
 var list_scroll: Dictionary = {}
 var list_preview: Dictionary = {}
 
-var supply_category="equipment"
 func list_entries() -> Array:
-	if menu in ["supplies","merchant"]:return manifest.get("items",[]).filter(func(id):return bool(items.get(id,{}).get("shop",true)) and preload("res://scripts/supply_slots.gd").consumable(items.get(id,{}))==(supply_category=="consumables"))
 	return provisions.defs.keys().filter(func(id):return bool(provisions.defs[id].get("shop",true))) if menu=="food" else town_upgrade.route_entries(self) if menu=="wayfinder" else manifest.get("regions",[]) if menu=="portal" else manifest.get("items",[]).filter(func(id):return bool(items.get(id,{}).get("shop",true)))
 
 func scroll_list(steps: int) -> void:
@@ -1991,16 +1985,13 @@ func confirm_list_entry() -> void:
 		start_run(false,id)
 		return
 	var item: Dictionary = items.get(id,{})
-	var price:int = preload("res://scripts/supply_slots.gd").price(item,legacy)
+	var price:int = legacy.discount(maxi(10,int(item.get("cost",0))/2) if menu == "merchant" else int(item.get("cost",0)))
 	var packed: Array = inventory if menu == "merchant" else loadout
-	if not preload("res://scripts/supply_slots.gd").can_add(packed,id,items) or gold < price: return
+	if packed.size() >= 3 or gold < price: return
 	if packed.has(id) and str(item.get("effect","")) in ["bonus_damage","bonus_speed","lifesteal","armor","bonus_health","cooldown"]: return
 	gold -= price
 	packed.append(id)
-	if menu=="supplies":
-		loadout_paid[id]=price
-		if preload("res://scripts/supply_slots.gd").consumable(item):preload("res://scripts/prepared_supply.gd").set_ready(id,price)
-		save_profile()
+	if menu=="supplies":loadout_paid[id]=price
 
 func draw_scroll_menu() -> void:
 	draw_rect(Rect2(80,105,1120,555),Color(.09,.16,.19,.97))
@@ -2025,9 +2016,9 @@ func draw_scroll_menu() -> void:
 		var y := _draw_wrapped(str(data.get("name",id)),Vector2(560,205),590,28,Color("#f5e7cc"))
 		y = _draw_wrapped(str(data.get("description","Explore this realm, defeat its enemies and challenge its boss.")),Vector2(560,y+25),570,21,Color.WHITE)
 		if menu not in ["portal","wayfinder"]:
-			var price:int = preload("res://scripts/supply_slots.gd").price(data,legacy)
+			var price:int = legacy.discount(maxi(10,int(data.get("cost",0))/2) if menu == "merchant" else int(data.get("cost",0)))
 			y = _draw_wrapped("Cost: "+str(price)+" CC. "+("Buy Food / Enter to pack one automatic provision." if menu=="food" else "Select an item to read its effects, then Buy Item / Enter to purchase."),Vector2(560,y+25),570,20,Color("#d4b879"))
-			_draw_wrapped("Food slot: "+provisions.name_of(provisions.packed)+" • separate from your three items. Refund before replacing." if menu=="food" else "Packed: "+str(inventory if menu == "merchant" else loadout)+" (3 equipment + 1 consumable)",Vector2(560,y+25),570,19,Color.WHITE)
+			_draw_wrapped("Food slot: "+provisions.name_of(provisions.packed)+" • separate from your three items. Refund before replacing." if menu=="food" else "Packed: "+str(inventory if menu == "merchant" else loadout)+" (3 slots maximum)",Vector2(560,y+25),570,19,Color.WHITE)
 		else:
 			y = _draw_wrapped(str(data.get("difficulty_label",""))+" • "+str(legacy.realm_clears(id))+" clears"+(" • Realm mastered" if legacy.realm_mastered(id) else " • Mastery star at 10 clears"),Vector2(560,y+25),570,21,Color("#d4b879"))
 			_draw_wrapped("Enter / Enter Realm to begin. Use Left / Right or Previous / Next to change route difficulty." if menu=="wayfinder" else "Enter / Enter Realm to begin. Co-op opens multiplayer rooms.",Vector2(560,y+25),570,20,Color.WHITE)
@@ -2208,7 +2199,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif code == KEY_ESCAPE: menu = ""
 		elif code==KEY_BACKSPACE and menu=="food":provisions.refund()
 		elif code == KEY_BACKSPACE and menu == "supplies":
-			preload("res://scripts/supply_slots.gd").refund(self)
+			for id in loadout: gold += int(loadout_paid.get(id,items.get(id,{}).get("cost",0)))
+			loadout.clear();loadout_paid.clear()
 		elif code == KEY_0 and menu == "portal":
 			get_tree().root.set_meta("fx_mode","coop")
 			get_tree().root.set_meta("fx_hero",selected_character)
@@ -2228,7 +2220,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if mode == "run":
 		var inventory_choice := int(code) - int(KEY_1)
-		if inventory_choice >= 0 and inventory_choice < 4:
+		if inventory_choice >= 0 and inventory_choice < 3:
 			use_item_slot(inventory_choice)
 	elif code == KEY_ESCAPE:
 		pass # Double Escape opens the session menu; a single Escape never quits.

@@ -1,2 +1,2 @@
-export const BUILD="V198.10.1-coast-boss";
+export const BUILD="V198.8-community-hall";
 export const REPORT_SCHEMA=3;

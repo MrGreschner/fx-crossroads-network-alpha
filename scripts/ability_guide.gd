@@ -79,13 +79,11 @@ func refresh()->void:
  if selected>=0:fill_details()
  layout()
 func layout()->void:
- var view:Vector2=game.get_viewport_rect().size;var _narrow:=view.x<720
- var width:=minf(300,view.x-24);strip.columns=2
- var bottom:=view.y-(330 if game.mobile.enabled else 86)
- strip.position=Vector2(maxf(12,view.x-width-12),maxf(100,bottom-93));strip.size=Vector2(width,93)
- var pw:=minf(520,view.x-24);var ph:=minf(264,view.y-24)
- var top:=maxf(12,strip.position.y-ph-8)
- panel.position=Vector2(clampf(strip.position.x+strip.size.x-pw,12,maxf(12,view.x-pw-12)),top);panel.size=Vector2(pw,ph)
+ var view:Vector2=game.get_viewport_rect().size;var narrow:=view.x<720
+ var width:=minf(620,view.x-24);strip.columns=2 if narrow else 4;strip.position=Vector2(12 if narrow else maxf(12,view.x-width-116),94);strip.size=Vector2(width,94 if narrow else 44)
+ var pw:=minf(520,view.x-24);var top:=strip.position.y+strip.size.y+8
+ if view.y-top<180:top=maxf(12,view.y-minf(220,view.y-24)-12)
+ panel.position=Vector2(clampf(strip.position.x+strip.size.x-pw,12,maxf(12,view.x-pw-12)),top);panel.size=Vector2(pw,maxf(80,minf(264,view.y-top-12)))
  title.position=Vector2(12,10);title.size=Vector2(pw-60,42)
  close_button.position=Vector2(pw-44,10);close_button.size=Vector2(32,30)
  subtitle.position=Vector2(12,54);subtitle.size=Vector2(pw-24,32)

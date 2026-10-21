@@ -1,18 +1,12 @@
 {
+  "id": "lodge_guard",
   "name": "Barkskin Phial",
-  "tier": 2,
-  "seconds": 150,
-  "needs": {
-    "willow": 3,
-    "sunleaf": 1
-  },
   "effect": "lodge_guard",
   "amount": 15,
   "duration": 4,
-  "description": "Gain 15% damage reduction for 4 seconds. Does not stack with another Barkskin.",
-  "id": "lodge_guard",
   "cost": 0,
   "sprite": "lodges/lodge_guard",
   "shop": false,
-  "crafted": true
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
 }

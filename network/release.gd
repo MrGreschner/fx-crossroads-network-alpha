@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V198.10.1-coast-boss"
+const BUILD="V198.8-community-hall"
 const REPORT_SCHEMA=3

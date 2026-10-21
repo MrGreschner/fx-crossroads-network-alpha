@@ -1,18 +1,12 @@
 {
+  "id": "lodge_restore",
   "name": "Mooncap Restorative",
-  "tier": 3,
-  "seconds": 180,
-  "needs": {
-    "mooncap": 3,
-    "petal": 2,
-    "firefly": 1
-  },
   "effect": "heal",
   "amount": 45,
-  "description": "Restore 45 HP. One use; cannot revive.",
-  "id": "lodge_restore",
+  "duration": 4,
   "cost": 0,
   "sprite": "lodges/lodge_restore",
   "shop": false,
-  "crafted": true
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
 }

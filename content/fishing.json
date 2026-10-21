@@ -141,7 +141,7 @@
       "min_kg": 0.15,
       "max_kg": 1.1,
       "max_length": 28,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#b5c9d8",
       "note": "Follows the ripples beside the reeds.",
       "group": "school",
@@ -163,7 +163,7 @@
       "min_kg": 0.05,
       "max_kg": 0.45,
       "max_length": 22,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#688ec5",
       "note": "A bright flash under quiet water.",
       "group": "surface",
@@ -179,7 +179,7 @@
       "min_kg": 0.3,
       "max_kg": 3,
       "max_length": 45,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#e19558",
       "note": "Patient anglers sometimes find unusually large specimens.",
       "group": "bottom",
@@ -200,7 +200,7 @@
       "min_kg": 0.08,
       "max_kg": 0.8,
       "max_length": 25,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#7eae7d",
       "note": "Look closely at its patterned fins.",
       "group": "predator",
@@ -216,7 +216,7 @@
       "min_kg": 0.6,
       "max_kg": 5,
       "max_length": 63,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#b5c9d8",
       "note": "Follows the ripples beside the reeds.",
       "group": "school",
@@ -237,7 +237,7 @@
       "min_kg": 0.45,
       "max_kg": 3.3,
       "max_length": 48,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#e47662",
       "note": "A bright flash under quiet water.",
       "group": "surface",
@@ -258,7 +258,7 @@
       "min_kg": 0.3,
       "max_kg": 2.7,
       "max_length": 42,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#7eae7d",
       "note": "Patient anglers sometimes find unusually large specimens.",
       "group": "bottom",
@@ -278,7 +278,7 @@
       "min_kg": 0.2,
       "max_kg": 1.5,
       "max_length": 32,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#64cccd",
       "note": "Look closely at its patterned fins.",
       "group": "predator",
@@ -299,7 +299,7 @@
       "min_kg": 1.2,
       "max_kg": 8,
       "max_length": 90,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#688ec5",
       "note": "Follows the ripples beside the reeds.",
       "group": "school",
@@ -317,7 +317,7 @@
       "min_kg": 0.8,
       "max_kg": 7,
       "max_length": 81,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#eba855",
       "note": "A bright flash under quiet water.",
       "group": "surface",
@@ -332,7 +332,7 @@
       "min_kg": 0.8,
       "max_kg": 6.5,
       "max_length": 76,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#b88dd4",
       "note": "Patient anglers sometimes find unusually large specimens.",
       "group": "bottom",
@@ -347,7 +347,7 @@
       "min_kg": 2,
       "max_kg": 14,
       "max_length": 144,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#7eae7d",
       "note": "Look closely at its patterned fins.",
       "group": "predator",
@@ -362,7 +362,7 @@
       "min_kg": 0.4,
       "max_kg": 4,
       "max_length": 54,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#688ec5",
       "note": "Follows the ripples beside the reeds.",
       "group": "school",
@@ -377,7 +377,7 @@
       "min_kg": 1,
       "max_kg": 7,
       "max_length": 81,
-      "habitat": "East Bridge River",
+      "habitat": "Crossroads River",
       "color": "#b88dd4",
       "note": "A bright flash under quiet water.",
       "group": "surface",
@@ -397,7 +397,7 @@
       "min_kg": 0.7,
       "max_kg": 5,
       "max_length": 63,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#eba855",
       "note": "Patient anglers sometimes find unusually large specimens.",
       "group": "bottom",
@@ -412,7 +412,7 @@
       "min_kg": 3,
       "max_kg": 20,
       "max_length": 198,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "Crossroads River",
       "color": "#64cccd",
       "note": "Look closely at its patterned fins.",
       "group": "predator",
@@ -427,7 +427,7 @@
       "min_kg": 0.15,
       "max_kg": 1.3,
       "max_length": 30,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
+      "habitat": "Exploration waters",
       "color": "#64cccd",
       "note": "Follows the ripples beside the reeds.",
       "group": "school",
@@ -442,7 +442,7 @@
       "min_kg": 0.2,
       "max_kg": 2,
       "max_length": 36,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
+      "habitat": "Exploration waters",
       "color": "#b5c9d8",
       "note": "A bright flash under quiet water.",
       "group": "surface",
@@ -457,7 +457,7 @@
       "min_kg": 1,
       "max_kg": 8,
       "max_length": 90,
-      "habitat": "Ferryman\u2019s Spring",
+      "habitat": "Exploration waters",
       "color": "#688ec5",
       "note": "Patient anglers sometimes find unusually large specimens.",
       "group": "bottom",
@@ -472,7 +472,7 @@
       "min_kg": 0.8,
       "max_kg": 6,
       "max_length": 72,
-      "habitat": "Moonwater Cascade",
+      "habitat": "Exploration waters",
       "color": "#b88dd4",
       "note": "Look closely at its patterned fins.",
       "group": "predator",
@@ -487,7 +487,7 @@
       "min_kg": 2,
       "max_kg": 18,
       "max_length": 180,
-      "habitat": "Moonwater Cascade",
+      "habitat": "Exploration waters",
       "color": "#eba855",
       "note": "Follows the ripples beside the reeds.",
       "group": "school",
@@ -502,7 +502,7 @@
       "min_kg": 0.3,
       "max_kg": 2.6,
       "max_length": 41,
-      "habitat": "Foldwater Inlet",
+      "habitat": "Exploration waters",
       "color": "#b88dd4",
       "note": "A bright flash under quiet water.",
       "group": "surface",
@@ -517,7 +517,7 @@
       "min_kg": 0.1,
       "max_kg": 1.3,
       "max_length": 30,
-      "habitat": "Foldwater Inlet",
+      "habitat": "Exploration waters",
       "color": "#b5c9d8",
       "note": "Patient anglers sometimes find unusually large specimens.",
       "group": "bottom",
@@ -532,7 +532,7 @@
       "min_kg": 0.4,
       "max_kg": 4,
       "max_length": 54,
-      "habitat": "Wispwater Pool",
+      "habitat": "Exploration waters",
       "color": "#7eae7d",
       "note": "Look closely at its patterned fins.",
       "group": "predator",
@@ -547,7 +547,7 @@
       "min_kg": 0.08,
       "max_kg": 0.7,
       "max_length": 24,
-      "habitat": "Floor 38 \u2022 Garnet Spring",
+      "habitat": "Buried Spring \u2022 Descent 38",
       "color": "#b5c9d8",
       "note": "Feels its way through the limestone with pale whiskers.",
       "group": "school",
@@ -562,7 +562,7 @@
       "min_kg": 0.25,
       "max_kg": 2.2,
       "max_length": 38,
-      "habitat": "Floor 38 \u2022 Garnet Spring",
+      "habitat": "Buried Spring \u2022 Descent 38",
       "color": "#e47662",
       "note": "Its ruby flecks reflect minerals carried by the spring.",
       "group": "surface",
@@ -577,7 +577,7 @@
       "min_kg": 1.2,
       "max_kg": 7.8,
       "max_length": 88,
-      "habitat": "Floor 38 \u2022 Garnet Spring",
+      "habitat": "Buried Spring \u2022 Descent 38",
       "color": "#b88dd4",
       "note": "An old cavern hunter whose amber fins resemble lanterns.",
       "group": "bottom",
@@ -592,7 +592,7 @@
       "min_kg": 0.4,
       "max_kg": 3.8,
       "max_length": 52,
-      "habitat": "North Gate \u2022 Watchwater Bank",
+      "habitat": "North Gate River",
       "color": "#7eae7d",
       "note": "Holds steady beneath the river\u2019s strong current.",
       "group": "predator",
@@ -607,7 +607,7 @@
       "min_kg": 0.3,
       "max_kg": 2.8,
       "max_length": 43,
-      "habitat": "North Gate \u2022 Watchwater Bank",
+      "habitat": "North Gate River",
       "color": "#eba855",
       "note": "Copper spots glow like the watch camp\u2019s lanterns.",
       "group": "school",
@@ -622,7 +622,7 @@
       "min_kg": 1.5,
       "max_kg": 9.2,
       "max_length": 101,
-      "habitat": "North Gate \u2022 Watchwater Bank",
+      "habitat": "North Gate River",
       "color": "#688ec5",
       "note": "A long silver hunter with pennant-shaped crimson fins.",
       "group": "surface",
@@ -637,7 +637,7 @@
       "min_kg": 0.04,
       "max_kg": 0.4,
       "max_length": 22,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#b5c9d8",
       "note": "Small schools trace moonlight along the stone embankment.",
       "group": "bottom",
@@ -652,7 +652,7 @@
       "min_kg": 0.15,
       "max_kg": 1.4,
       "max_length": 31,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#b88dd4",
       "note": "Its plum back is patterned like a festival cloak.",
       "group": "predator",
@@ -667,7 +667,7 @@
       "min_kg": 0.2,
       "max_kg": 2.1,
       "max_length": 37,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#e47662",
       "note": "Bright freckles resemble scattered festival confetti.",
       "group": "school",
@@ -682,7 +682,7 @@
       "min_kg": 0.5,
       "max_kg": 3.4,
       "max_length": 49,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#e19558",
       "note": "A dark eye band gives this shy fish its masquerade mask.",
       "group": "surface",
@@ -697,7 +697,7 @@
       "min_kg": 0.3,
       "max_kg": 2.5,
       "max_length": 40,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#64cccd",
       "note": "Fine ribbon fins trail behind it through the canal.",
       "group": "bottom",
@@ -712,7 +712,7 @@
       "min_kg": 0.6,
       "max_kg": 5.2,
       "max_length": 65,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#688ec5",
       "note": "Pale crystalline markings shimmer over a diamond body.",
       "group": "predator",
@@ -727,7 +727,7 @@
       "min_kg": 0.4,
       "max_kg": 4.1,
       "max_length": 55,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#b88dd4",
       "note": "Carries a cool moon-blue light above its head.",
       "group": "school",
@@ -742,7 +742,7 @@
       "min_kg": 1.8,
       "max_kg": 11,
       "max_length": 117,
-      "habitat": "Moonveil \u2022 Silver Canal",
+      "habitat": "Moonveil Silver Canal",
       "color": "#eba855",
       "note": "A silver crescent crowns a fish few anglers believe exists.",
       "group": "surface",
@@ -757,7 +757,7 @@
       "min_kg": 0.25,
       "max_kg": 2.8,
       "max_length": 43,
-      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am Edmonton",
       "color": "#82b5ac",
       "note": "A pale whiskered fish that feeds only at the northern dawn shoal, 4\u20136 am Edmonton time.",
       "group": "bottom",
@@ -772,7 +772,7 @@
       "min_kg": 0.5,
       "max_kg": 4.2,
       "max_length": 64,
-      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am Edmonton",
       "color": "#cf8db9",
       "note": "Its tall translucent fin catches the first pink light. Exclusive to the 4\u20136 am shoal.",
       "group": "predator",
@@ -787,7 +787,7 @@
       "min_kg": 2.0,
       "max_kg": 11,
       "max_length": 128,
-      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
+      "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am Edmonton",
       "color": "#ebc673",
       "note": "An ancient gold and midnight-blue river guardian. Only the dawn shoal reveals it, 4\u20136 am.",
       "group": "school",
@@ -802,7 +802,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "East Bridge River",
+      "habitat": "Crossroads River \u00b7 evening",
       "color": "#8ccabb",
       "note": "Duskscale Shiner belongs to these waters. Discover its habits by exploring.",
       "group": "surface",
@@ -824,7 +824,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "East Bridge River / Northern Dawn Shoal \u00b7 4\u20136 am",
+      "habitat": "River and Dawn Shoal \u00b7 early hours",
       "color": "#8ccabb",
       "note": "Reedlight Minnow belongs to these waters. Discover its habits by exploring.",
       "group": "school",
@@ -847,7 +847,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "East Bridge River",
+      "habitat": "Crossroads River \u00b7 night",
       "color": "#c996e8",
       "note": "Violet Whisker belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
@@ -874,7 +874,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "East Bridge River",
+      "habitat": "Crossroads River \u00b7 midnight hour",
       "color": "#efc768",
       "note": "Midnight Crown belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
@@ -896,7 +896,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "East Bridge River",
+      "habitat": "Crossroads River \u00b7 misty or rainy weekend nights",
       "color": "#8cf6ee",
       "note": "Veilfin Oracle belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
@@ -927,7 +927,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "Town Pond",
+      "habitat": "Town Pond \u00b7 after dusk",
       "color": "#8ccabb",
       "note": "Lullaby Tench belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
@@ -949,7 +949,7 @@
       "min_kg": 0.15,
       "max_kg": 3.8,
       "max_length": 64,
-      "habitat": "Town Pond",
+      "habitat": "Town Pond \u00b7 Tuesday and Saturday nights",
       "color": "#c996e8",
       "note": "Moonpetal Koi belongs to these waters. Discover its habits by exploring.",
       "group": "school",
@@ -1451,7 +1451,7 @@
       "min_kg": 0.15,
       "max_kg": 0.9,
       "max_length": 25,
-      "habitat": "Rootglass Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#8dcfbb",
       "note": "A moss-striped traveller of the far crossings.",
       "group": "school",
@@ -1467,7 +1467,7 @@
       "min_kg": 0.12,
       "max_kg": 0.8,
       "max_length": 22,
-      "habitat": "Cinderwell Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#e3a46c",
       "note": "Its warm freckled fins glow above cooled stone.",
       "group": "bottom",
@@ -1483,7 +1483,7 @@
       "min_kg": 0.03,
       "max_kg": 0.24,
       "max_length": 14,
-      "habitat": "Rootglass Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#b482d1",
       "note": "A tiny translucent swimmer found only beyond the stable portal.",
       "group": "surface",
@@ -1499,7 +1499,7 @@
       "min_kg": 0.3,
       "max_kg": 1.8,
       "max_length": 36,
-      "habitat": "Lanternmere Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#c4da8a",
       "note": "A ribbon of marsh light with soft lantern whiskers.",
       "group": "bottom",
@@ -1515,7 +1515,7 @@
       "min_kg": 0.9,
       "max_kg": 4.8,
       "max_length": 64,
-      "habitat": "Frostveil Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#9ddff1",
       "note": "Ice-blue sails leave luminous edges across the water.",
       "group": "predator",
@@ -1530,7 +1530,7 @@
       "min_kg": 1.2,
       "max_kg": 6.4,
       "max_length": 72,
-      "habitat": "Cinderwell Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#f0a970",
       "note": "Copper armour and a crown of ember-red fins.",
       "group": "school",
@@ -1545,7 +1545,7 @@
       "min_kg": 0.5,
       "max_kg": 3.6,
       "max_length": 95,
-      "habitat": "Lanternmere Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#b8a9e2",
       "note": "An elegant crescent swimmer of marsh and astral pools.",
       "group": "predator",
@@ -1566,7 +1566,7 @@
       "min_kg": 2.5,
       "max_kg": 13,
       "max_length": 140,
-      "habitat": "Starfall Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#e6cf88",
       "note": "Gold-edged wings carry a constellation over the darkest water.",
       "group": "bottom",
@@ -1581,7 +1581,7 @@
       "min_kg": 4,
       "max_kg": 20,
       "max_length": 185,
-      "habitat": "Starfall Pool",
+      "habitat": "The Between \u2022 remote crossings",
       "color": "#a9e4d8",
       "note": "A many-finned living compass at the edge of the known crossings.",
       "group": "predator",
@@ -1606,7 +1606,7 @@
       "min_kg": 0.08,
       "max_kg": 0.65,
       "max_length": 19,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#cb9361",
       "note": "Small copper fins flicker above gravel bars.",
       "group": "school",
@@ -1622,7 +1622,7 @@
       "min_kg": 0.12,
       "max_kg": 1.1,
       "max_length": 24,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#8ca86b",
       "note": "Its moss-green back hides it beside smooth river stones.",
       "group": "bottom",
@@ -1638,7 +1638,7 @@
       "min_kg": 0.05,
       "max_kg": 0.45,
       "max_length": 17,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#8cbacb",
       "note": "A slim blue ribbon that skims the river surface.",
       "group": "surface",
@@ -1654,7 +1654,7 @@
       "min_kg": 0.3,
       "max_kg": 2.6,
       "max_length": 39,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#b66d59",
       "note": "Round-bodied shoals gather beneath the east bridge.",
       "group": "school",
@@ -1670,7 +1670,7 @@
       "min_kg": 0.55,
       "max_kg": 4.2,
       "max_length": 57,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#a0b8df",
       "note": "Opal flecks flash across its flank in the fast riffles.",
       "group": "predator",
@@ -1685,7 +1685,7 @@
       "min_kg": 0.4,
       "max_kg": 3.4,
       "max_length": 49,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#d4af45",
       "note": "Its saffron sail fin catches the light above deep runs.",
       "group": "surface",
@@ -1700,7 +1700,7 @@
       "min_kg": 3.5,
       "max_kg": 19,
       "max_length": 156,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#a791c3",
       "note": "Ancient lilac armour traces the deepest river channel.",
       "group": "bottom",
@@ -1715,7 +1715,7 @@
       "min_kg": 2.2,
       "max_kg": 13,
       "max_length": 122,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#cf7848",
       "note": "A long copper hunter with bright ember markings.",
       "group": "predator",
@@ -1730,7 +1730,7 @@
       "min_kg": 1.1,
       "max_kg": 8.5,
       "max_length": 96,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#8cddd2",
       "note": "A pale moon-thread trails from its sweeping river fins.",
       "group": "surface",
@@ -1745,759 +1745,13 @@
       "min_kg": 1.8,
       "max_kg": 11.5,
       "max_length": 109,
-      "habitat": "Crossroads town and Wayfarer rivers",
+      "habitat": "East Bridge River \u2022 flowing river waters",
       "color": "#cba4dd",
       "note": "A violet freshwater ray carries star-like flecks on its broad wings.",
       "group": "bottom",
       "methods": [
         "rod"
       ]
-    },
-    "sprayfin_shiner": {
-      "name": "Sprayfin Shiner",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.08,
-      "max_kg": 0.7,
-      "max_length": 24,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
-      "color": "#76b6c6",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "smelt"
-    },
-    "slatewater_gudgeon": {
-      "name": "Slatewater Gudgeon",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.12,
-      "max_kg": 1.1,
-      "max_length": 26,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
-      "color": "#778e83",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "goby"
-    },
-    "silverfall_whitefish": {
-      "name": "Silverfall Whitefish",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.5,
-      "max_kg": 4,
-      "max_length": 38,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
-      "color": "#accbd0",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "whitefish"
-    },
-    "cataract_grayling": {
-      "name": "Cataract Grayling",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.4,
-      "max_kg": 3.5,
-      "max_length": 36,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
-      "color": "#758dbb",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "grayling"
-    },
-    "fallspeck_trout": {
-      "name": "Fallspeck Trout",
-      "rarity": "Rare",
-      "chance": 1.8,
-      "min_kg": 0.8,
-      "max_kg": 6,
-      "max_length": 46,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
-      "color": "#c2a47c",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "predator",
-      "methods": [
-        "rod"
-      ],
-      "form": "trout"
-    },
-    "longpool_sturgeon": {
-      "name": "Longpool Sturgeon",
-      "rarity": "Rare",
-      "chance": 1.8,
-      "min_kg": 1.5,
-      "max_kg": 13,
-      "max_length": 74,
-      "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
-      "color": "#7b9da2",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "sturgeon"
-    },
-    "saltglass_sprat": {
-      "name": "Saltglass Sprat",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.06,
-      "max_kg": 0.6,
-      "max_length": 24,
-      "habitat": "Foldwater Inlet",
-      "color": "#8bb5bf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "sardine"
-    },
-    "tidebar_mullet": {
-      "name": "Tidebar Mullet",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.4,
-      "max_kg": 4,
-      "max_length": 38,
-      "habitat": "Foldwater Inlet",
-      "color": "#a8aca0",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "mullet"
-    },
-    "kelpstripe_wrasse": {
-      "name": "Kelpstripe Wrasse",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.3,
-      "max_kg": 2.8,
-      "max_length": 33,
-      "habitat": "Foldwater Inlet",
-      "color": "#599d84",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "wrasse"
-    },
-    "brinewhisker_catshark": {
-      "name": "Brinewhisker Catshark",
-      "rarity": "Very rare",
-      "chance": 0.45,
-      "min_kg": 2,
-      "max_kg": 24,
-      "max_length": 118,
-      "habitat": "Foldwater Inlet",
-      "color": "#879394",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "predator",
-      "methods": [
-        "rod"
-      ],
-      "form": "shark"
-    },
-    "foldshore_lobster": {
-      "name": "Foldshore Lobster",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.4,
-      "max_kg": 3.5,
-      "max_length": 36,
-      "habitat": "Foldwater Inlet",
-      "color": "#b77558",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "pot"
-      ],
-      "form": "lobster"
-    },
-    "sailpaper_skate": {
-      "name": "Sailpaper Skate",
-      "rarity": "Rare",
-      "chance": 1.8,
-      "min_kg": 1.2,
-      "max_kg": 12,
-      "max_length": 70,
-      "habitat": "Foldwater Inlet",
-      "color": "#a89e85",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "skate"
-    },
-    "seafoam_anchovy": {
-      "name": "Seafoam Anchovy",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.03,
-      "max_kg": 0.3,
-      "max_length": 23,
-      "habitat": "Foldwater Inlet",
-      "color": "#a2c9c0",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "anchovy"
-    },
-    "peatfin_minnow": {
-      "name": "Peatfin Minnow",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.06,
-      "max_kg": 0.7,
-      "max_length": 24,
-      "habitat": "Wispwater Pool",
-      "color": "#ab9862",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "minnow"
-    },
-    "reednose_mudfish": {
-      "name": "Reednose Mudfish",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.25,
-      "max_kg": 2.5,
-      "max_length": 32,
-      "habitat": "Wispwater Pool",
-      "color": "#77764d",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "mudfish"
-    },
-    "lanternroot_tadpole": {
-      "name": "Lanternroot Tadpole",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.03,
-      "max_kg": 0.3,
-      "max_length": 23,
-      "habitat": "Wispwater Pool",
-      "color": "#a8ad66",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "tadpole"
-    },
-    "bogwhisker_catfish": {
-      "name": "Bogwhisker Catfish",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.5,
-      "max_kg": 6,
-      "max_length": 46,
-      "habitat": "Wispwater Pool",
-      "color": "#797e65",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod"
-      ],
-      "form": "catfish"
-    },
-    "amberfen_eel": {
-      "name": "Amberfen Eel",
-      "rarity": "Rare",
-      "chance": 1.8,
-      "min_kg": 0.4,
-      "max_kg": 5,
-      "max_length": 42,
-      "habitat": "Wispwater Pool",
-      "color": "#b79855",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod"
-      ],
-      "form": "eel"
-    },
-    "blindvault_loach": {
-      "name": "Blindvault Loach",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.08,
-      "max_kg": 0.9,
-      "max_length": 25,
-      "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#b4a9a3",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "loach"
-    },
-    "ironbelly_cavefish": {
-      "name": "Ironbelly Cavefish",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.2,
-      "max_kg": 1.8,
-      "max_length": 29,
-      "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#8c9099",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "cavefish"
-    },
-    "deepvent_char": {
-      "name": "Deepvent Char",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.5,
-      "max_kg": 4,
-      "max_length": 38,
-      "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#9a7c78",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "char"
-    },
-    "obsidian_jawfish": {
-      "name": "Obsidian Jawfish",
-      "rarity": "Rare",
-      "chance": 1.8,
-      "min_kg": 0.7,
-      "max_kg": 6,
-      "max_length": 46,
-      "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#6d788b",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "predator",
-      "methods": [
-        "rod"
-      ],
-      "form": "jawfish"
-    },
-    "pallid_cavern_eel": {
-      "name": "Pallid Cavern Eel",
-      "rarity": "Very rare",
-      "chance": 0.45,
-      "min_kg": 1,
-      "max_kg": 9,
-      "max_length": 58,
-      "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#c7bfc6",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod"
-      ],
-      "form": "eel"
-    },
-    "basaltback_sturgeon": {
-      "name": "Basaltback Sturgeon",
-      "rarity": "Legendary",
-      "chance": 0.1,
-      "min_kg": 3,
-      "max_kg": 26,
-      "max_length": 126,
-      "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#7f8793",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "sturgeon"
-    },
-    "chalknose_gudgeon": {
-      "name": "Chalknose Gudgeon",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.1,
-      "max_kg": 1.1,
-      "max_length": 26,
-      "habitat": "Floor 38 \u2022 Garnet Spring",
-      "color": "#c9bbb2",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "goby"
-    },
-    "garnet_dace": {
-      "name": "Garnet Dace",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.12,
-      "max_kg": 1.3,
-      "max_length": 27,
-      "habitat": "Floor 38 \u2022 Garnet Spring",
-      "color": "#af766e",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "dace"
-    },
-    "rampart_roach": {
-      "name": "Rampart Roach",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.2,
-      "max_kg": 2,
-      "max_length": 30,
-      "habitat": "North Gate \u2022 Watchwater Bank",
-      "color": "#98ad87",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "roach"
-    },
-    "moatglass_stickleback": {
-      "name": "Moatglass Stickleback",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.04,
-      "max_kg": 0.45,
-      "max_length": 23,
-      "habitat": "North Gate \u2022 Watchwater Bank",
-      "color": "#8aadaf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "stickleback"
-    },
-    "watchwater_carp": {
-      "name": "Watchwater Carp",
-      "rarity": "Rare",
-      "chance": 1.8,
-      "min_kg": 1,
-      "max_kg": 8,
-      "max_length": 54,
-      "habitat": "North Gate \u2022 Watchwater Bank",
-      "color": "#b7a063",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod"
-      ],
-      "form": "carp"
-    },
-    "silkfin_killifish": {
-      "name": "Silkfin Killifish",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.04,
-      "max_kg": 0.6,
-      "max_length": 24,
-      "habitat": "Moonveil \u2022 Silver Canal",
-      "color": "#9d9bcc",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "killifish"
-    },
-    "masklace_guppy": {
-      "name": "Masklace Guppy",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.03,
-      "max_kg": 0.4,
-      "max_length": 23,
-      "habitat": "Moonveil \u2022 Silver Canal",
-      "color": "#ba88b9",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "guppy"
-    },
-    "glassroot_crayfish": {
-      "name": "Glassroot Crayfish",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.1,
-      "max_kg": 1.2,
-      "max_length": 26,
-      "habitat": "Rootglass Pool",
-      "color": "#9bb687",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "crayfish"
-    },
-    "rootlace_loach": {
-      "name": "Rootlace Loach",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.1,
-      "max_kg": 1.5,
-      "max_length": 28,
-      "habitat": "Rootglass Pool",
-      "color": "#97a179",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "loach"
-    },
-    "coalchip_shrimp": {
-      "name": "Coalchip Shrimp",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.03,
-      "max_kg": 0.4,
-      "max_length": 23,
-      "habitat": "Cinderwell Pool",
-      "color": "#bf8e70",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "shrimp"
-    },
-    "cinderclaw_crab": {
-      "name": "Cinderclaw Crab",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.2,
-      "max_kg": 2,
-      "max_length": 30,
-      "habitat": "Cinderwell Pool",
-      "color": "#bd7761",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "pot"
-      ],
-      "form": "crab"
-    },
-    "sootfin_gudgeon": {
-      "name": "Sootfin Gudgeon",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.12,
-      "max_kg": 1.6,
-      "max_length": 28,
-      "habitat": "Cinderwell Pool",
-      "color": "#8b8072",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "goby"
-    },
-    "icegrain_shrimp": {
-      "name": "Icegrain Shrimp",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.03,
-      "max_kg": 0.4,
-      "max_length": 23,
-      "habitat": "Frostveil Pool",
-      "color": "#b7d9df",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "shrimp"
-    },
-    "frostburrow_crayfish": {
-      "name": "Frostburrow Crayfish",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.12,
-      "max_kg": 1.4,
-      "max_length": 27,
-      "habitat": "Frostveil Pool",
-      "color": "#a5bbd3",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "crayfish"
-    },
-    "rimeback_sculpin": {
-      "name": "Rimeback Sculpin",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.15,
-      "max_kg": 1.9,
-      "max_length": 29,
-      "habitat": "Frostveil Pool",
-      "color": "#879daf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "sculpin"
-    },
-    "lanternseed_shrimp": {
-      "name": "Lanternseed Shrimp",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.03,
-      "max_kg": 0.45,
-      "max_length": 23,
-      "habitat": "Lanternmere Pool",
-      "color": "#bfb486",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "shrimp"
-    },
-    "mireglass_crab": {
-      "name": "Mireglass Crab",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.15,
-      "max_kg": 2,
-      "max_length": 30,
-      "habitat": "Lanternmere Pool",
-      "color": "#a798ae",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "crab"
-    },
-    "mistreed_killifish": {
-      "name": "Mistreed Killifish",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.05,
-      "max_kg": 0.7,
-      "max_length": 24,
-      "habitat": "Lanternmere Pool",
-      "color": "#a0bfa9",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "killifish"
-    },
-    "starlace_shrimp": {
-      "name": "Starlace Shrimp",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.04,
-      "max_kg": 0.5,
-      "max_length": 24,
-      "habitat": "Starfall Pool",
-      "color": "#b4acd6",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "surface",
-      "methods": [
-        "net",
-        "pot"
-      ],
-      "form": "shrimp"
-    },
-    "cometclaw_crayfish": {
-      "name": "Cometclaw Crayfish",
-      "rarity": "Uncommon",
-      "chance": 7,
-      "min_kg": 0.15,
-      "max_kg": 1.8,
-      "max_length": 29,
-      "habitat": "Starfall Pool",
-      "color": "#8e9ebf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "bottom",
-      "methods": [
-        "pot"
-      ],
-      "form": "crayfish"
-    },
-    "silverorbit_smelt": {
-      "name": "Silverorbit Smelt",
-      "rarity": "Common",
-      "chance": 20,
-      "min_kg": 0.1,
-      "max_kg": 1.3,
-      "max_length": 27,
-      "habitat": "Starfall Pool",
-      "color": "#b8c8df",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
-      "group": "school",
-      "methods": [
-        "rod",
-        "net"
-      ],
-      "form": "smelt"
     }
   },
   "pools": {
@@ -2667,16 +1921,11 @@
       ],
       "fish": [
         "cascade_darter",
+        "swift_dace",
         "mist_pearl",
         "cascade_crown",
         "ferry_shrimp",
-        "ferry_claw",
-        "sprayfin_shiner",
-        "slatewater_gudgeon",
-        "silverfall_whitefish",
-        "cataract_grayling",
-        "fallspeck_trout",
-        "longpool_sturgeon"
+        "ferry_claw"
       ]
     },
     "silverfall_cascade": {
@@ -2692,17 +1941,22 @@
       ],
       "fish": [
         "cascade_darter",
+        "river_sprat",
+        "mint_grayling",
+        "silver_skimmer",
+        "storm_pike",
+        "thistle_sturgeon",
         "mist_pearl",
         "aurora_koifin",
         "torrent_wyrm",
         "cascade_shrimp",
         "cascade_claw",
-        "sprayfin_shiner",
-        "slatewater_gudgeon",
-        "silverfall_whitefish",
-        "cataract_grayling",
-        "fallspeck_trout",
-        "longpool_sturgeon"
+        "opal_riffle_trout",
+        "saffron_sail_grayling",
+        "crownwater_sturgeon",
+        "emberjaw_river_pike",
+        "moonthread_arowana",
+        "starveil_river_ray"
       ]
     },
     "coast_fold": {
@@ -2717,17 +1971,16 @@
         2450
       ],
       "fish": [
+        "river_sprat",
+        "ribbon_loach",
+        "lantern_catfish",
+        "cobalt_eel",
+        "gilded_brookray",
         "inkfold_flounder",
         "paper_nautilus",
+        "ancient_river_dragon",
         "fold_shrimp",
-        "fold_claw",
-        "saltglass_sprat",
-        "tidebar_mullet",
-        "kelpstripe_wrasse",
-        "brinewhisker_catshark",
-        "foldshore_lobster",
-        "sailpaper_skate",
-        "seafoam_anchovy"
+        "fold_claw"
       ]
     },
     "marsh_wisp": {
@@ -2742,14 +1995,13 @@
         4850
       ],
       "fish": [
+        "ribbon_loach",
+        "brook_barbel",
+        "lantern_catfish",
+        "inkfold_flounder",
         "wispfin_lurker",
         "wisp_shrimp",
-        "wisp_claw",
-        "peatfin_minnow",
-        "reednose_mudfish",
-        "lanternroot_tadpole",
-        "bogwhisker_catfish",
-        "amberfen_eel"
+        "wisp_claw"
       ]
     },
     "descent_seep": {
@@ -2764,14 +2016,13 @@
         460
       ],
       "fish": [
+        "royal_sailfin",
+        "gilded_brookray",
+        "ancient_river_dragon",
+        "torrent_wyrm",
+        "wispfin_lurker",
         "buried_shrimp",
-        "buried_claw",
-        "blindvault_loach",
-        "ironbelly_cavefish",
-        "deepvent_char",
-        "obsidian_jawfish",
-        "pallid_cavern_eel",
-        "basaltback_sturgeon"
+        "buried_claw"
       ]
     },
     "descent38_spring": {
@@ -2790,9 +2041,7 @@
         "garnet_char",
         "vaultjaw_wyrm",
         "garnet_shrimp",
-        "garnet_claw",
-        "chalknose_gudgeon",
-        "garnet_dace"
+        "garnet_claw"
       ],
       "spring": true
     },
@@ -2812,10 +2061,7 @@
         "watchlight_trout",
         "pennant_pike",
         "watch_shrimp",
-        "watch_claw",
-        "rampart_roach",
-        "moatglass_stickleback",
-        "watchwater_carp"
+        "watch_claw"
       ]
     },
     "moonveil_canal": {
@@ -2839,9 +2085,7 @@
         "midnight_lanternfin",
         "crescent_regent",
         "masque_shrimp",
-        "masque_claw",
-        "silkfin_killifish",
-        "masklace_guppy"
+        "masque_claw"
       ]
     },
     "town_dawn": {
@@ -2856,6 +2100,7 @@
         480
       ],
       "fish": [
+        "swift_dace",
         "river_sprat",
         "ribbon_loach",
         "mint_grayling",
@@ -2881,9 +2126,7 @@
       ],
       "fish": [
         "wayward_dace",
-        "rift_shrimp",
-        "glassroot_crayfish",
-        "rootlace_loach"
+        "rift_shrimp"
       ]
     },
     "between_ember": {
@@ -2899,10 +2142,8 @@
       ],
       "fish": [
         "cinder_goby",
-        "embercrest_koi",
-        "coalchip_shrimp",
-        "cinderclaw_crab",
-        "sootfin_gudgeon"
+        "rift_shrimp",
+        "embercrest_koi"
       ]
     },
     "between_frost": {
@@ -2917,10 +2158,9 @@
         0
       ],
       "fish": [
-        "frostveil_char",
-        "icegrain_shrimp",
-        "frostburrow_crayfish",
-        "rimeback_sculpin"
+        "cinder_goby",
+        "rift_shrimp",
+        "frostveil_char"
       ]
     },
     "between_mist": {
@@ -2935,11 +2175,10 @@
         0
       ],
       "fish": [
+        "wayward_dace",
+        "rift_shrimp",
         "lantern_loach",
-        "moonrift_eel",
-        "lanternseed_shrimp",
-        "mireglass_crab",
-        "mistreed_killifish"
+        "moonrift_eel"
       ]
     },
     "between_star": {
@@ -2954,70 +2193,12 @@
         0
       ],
       "fish": [
+        "wayward_dace",
+        "rift_shrimp",
+        "moonrift_eel",
         "starcrown_ray",
-        "waylight_leviathan",
-        "starlace_shrimp",
-        "cometclaw_crayfish",
-        "silverorbit_smelt"
+        "waylight_leviathan"
       ]
     }
-  },
-  "legacy_pool_fish": {
-    "silverfall_spring": [
-      "swift_dace"
-    ],
-    "silverfall_cascade": [
-      "crownwater_sturgeon",
-      "emberjaw_river_pike",
-      "mint_grayling",
-      "moonthread_arowana",
-      "opal_riffle_trout",
-      "river_sprat",
-      "saffron_sail_grayling",
-      "silver_skimmer",
-      "starveil_river_ray",
-      "storm_pike",
-      "thistle_sturgeon"
-    ],
-    "coast_fold": [
-      "ancient_river_dragon",
-      "cobalt_eel",
-      "gilded_brookray",
-      "lantern_catfish",
-      "ribbon_loach",
-      "river_sprat"
-    ],
-    "marsh_wisp": [
-      "brook_barbel",
-      "inkfold_flounder",
-      "lantern_catfish",
-      "ribbon_loach"
-    ],
-    "descent_seep": [
-      "ancient_river_dragon",
-      "gilded_brookray",
-      "royal_sailfin",
-      "torrent_wyrm",
-      "wispfin_lurker"
-    ],
-    "town_dawn": [
-      "swift_dace"
-    ],
-    "between_ember": [
-      "rift_shrimp"
-    ],
-    "between_frost": [
-      "cinder_goby",
-      "rift_shrimp"
-    ],
-    "between_mist": [
-      "rift_shrimp",
-      "wayward_dace"
-    ],
-    "between_star": [
-      "moonrift_eel",
-      "rift_shrimp",
-      "wayward_dace"
-    ]
   }
 }

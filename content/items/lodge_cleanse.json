@@ -1,17 +1,12 @@
 {
+  "id": "lodge_cleanse",
   "name": "Clearwater Draught",
-  "tier": 1,
-  "seconds": 90,
-  "needs": {
-    "mint": 2,
-    "willow": 1
-  },
   "effect": "cleanse",
   "amount": 0,
-  "description": "Remove poison, burn and bleed. No immunity afterwards.",
-  "id": "lodge_cleanse",
+  "duration": 4,
   "cost": 0,
   "sprite": "lodges/lodge_cleanse",
   "shop": false,
-  "crafted": true
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
 }

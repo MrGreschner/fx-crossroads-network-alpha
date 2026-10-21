@@ -25,17 +25,6 @@ var last_mode=""
 var generation=0
 var reading_generation=0
 var synced_identity=""
-var board_refresh=0.0
-var stale=false
-var last_refresh=""
-func compatible(data:Dictionary)->bool:
- var limits=data.get("limits",{});var named=data.get("named",{})
- return named is Dictionary and named.get("damage_week") is Array and (not data.has("limits") or limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10)
-func board_notice()->String:
- if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending the older five-place boards. Deploy the matching server ZIP; your saved records are safe."
- if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
- if reading:return "Refreshing community records…"
- return "Updated "+last_refresh+" • refreshes every 30 seconds" if not last_refresh.is_empty() else status
 func setup(owner:Node)->void:
  legacy=owner;state();endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
  sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=4096;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
@@ -110,8 +99,7 @@ func resync()->void:
  if manual_cooldown>0:return
  manual_cooldown=5;request_sync(true)
 func step(delta:float)->void:
- manual_cooldown=maxf(0,manual_cooldown-delta);read_delay=maxf(0,read_delay-delta);board_refresh=maxf(0,board_refresh-delta)
- if legacy.page=="community" and legacy.game.menu=="legacy" and board_refresh<=0 and not reading and not busy:fetch()
+ manual_cooldown=maxf(0,manual_cooldown-delta);read_delay=maxf(0,read_delay-delta)
  if not allowed() or endpoint.is_empty():return
  var identity=cloud_identity();var mode=str(legacy.game.mode)
  if identity!=last_identity:
@@ -142,36 +130,31 @@ func synced(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)
   refresh_after_sync=false;read_delay=0;fetch()
  redraw()
 func open()->void:
- legacy.open_page("community");read_delay=0;fetch();resync()
+ legacy.open_page("community");resync()
 func fetch()->void:
  if reading or endpoint.is_empty() or read_delay>0:return
- status="Loading community records…";reading_generation=generation;board_refresh=30
- reading=read_request.request(endpoint+"/community/records?refresh="+str(Time.get_ticks_msec()))==OK;read_delay=5
- if not reading:stale=true;board_refresh=15;status="Community records unavailable • retrying automatically"
- redraw()
-func reject_response(message:String)->void:
- stale=true;board_refresh=15;status=message;redraw()
+ status="Loading community records…";reading_generation=generation
+ reading=read_request.request(endpoint+"/community/records")==OK;read_delay=5
+ if not reading:status="Community records unavailable • try again when connected"
 func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
  reading=false
  if reading_generation!=generation:
   read_delay=0;fetch();return
- var parser=JSON.new();var parsed:Variant=parser.data if parser.parse(body.get_string_from_utf8())==OK else null
+ var parsed=JSON.parse_string(body.get_string_from_utf8())
  if result!=HTTPRequest.RESULT_SUCCESS or code!=200 or not parsed is Dictionary or parsed.get("version")!=1:
-  stale=true;board_refresh=15;status="Community records unavailable • retrying automatically; saved records are safe";redraw();return
- if not parsed.get("named",{}) is Dictionary:reject_response("Invalid named records response");return
+  status="Community records unavailable • deploy the matching server, then try again";redraw();return
  for key in ["heroes","realms","between"]:
-  if not parsed.get(key) is Array or parsed[key].size()>(10 if key=="heroes" else 5):reject_response("Invalid community response • keeping the last loaded records");return
+  if not parsed.get(key) is Array or parsed[key].size()>(10 if key=="heroes" else 5):status="Invalid community response";return
  for key in ["fish_all","fish_week","rarest_all","rarest_week"]:
   var f=parsed.get(key)
-  if f!=null and (not f is Dictionary or not FISH.fish().has(f.get("species")) or not (f.get("kg") is float or f.get("kg") is int) or not is_finite(float(f.kg)) or float(f.kg)<=0 or float(f.kg)>10000):reject_response("Invalid fish response • keeping the last loaded records");return
+  if f!=null and (not f is Dictionary or not FISH.fish().has(f.get("species")) or not (f.get("kg") is float or f.get("kg") is int) or not is_finite(float(f.kg)) or float(f.kg)<=0 or float(f.kg)>10000):status="Invalid fish response";return
  for key in ["garden_all","garden_month"]:
-  if not parsed.get(key,[]) is Array or parsed.get(key,[]).size()>12:reject_response("Invalid garden response • keeping the last loaded records");return
+  if not parsed.get(key,[]) is Array or parsed.get(key,[]).size()>12:status="Invalid garden response";return
   for row in parsed.get(key,[]):
-   if not row is Dictionary or not preload("res://scripts/giant_garden.gd").record_valid(row,"all"):reject_response("Invalid crop response • keeping the last loaded records");return
- snapshot=parsed;stale=false;last_refresh=Time.get_time_string_from_system();status="Connected community • weekly records reset Mondays" if compatible(parsed) else "Older server connected • server update required";redraw()
+   if not row is Dictionary or not preload("res://scripts/giant_garden.gd").record_valid(row,"all"):status="Invalid crop response";return
+ snapshot=parsed;status="Connected community • weekly records reset Mondays";redraw()
 func redraw()->void:
- if legacy.page=="community" and legacy.game.menu=="legacy":
-  var position=legacy.profile_scroll.scroll_vertical;legacy.render();legacy.profile_scroll.set_deferred("scroll_vertical",position)
+ if legacy.page=="community" and legacy.game.menu=="legacy":legacy.render()
 func choose_category(value:String)->void:
  category=value;redraw();legacy.profile_scroll.set_deferred("scroll_vertical",0)
 func build_navigation(parent:Node)->void:
@@ -182,7 +165,6 @@ func build_navigation(parent:Node)->void:
  var title=gui.label(heading,"COMMUNITY RECORDS  /  CHOOSE A BOARD",17);title.add_theme_color_override("font_color",Color("#f2d494"))
  var refresh=gui.button(heading,"Syncing…" if busy or reading else "Resync records",resync);refresh.name="ResyncRecords";refresh.custom_minimum_size=Vector2(155,34);refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.disabled=reading or busy
  refresh.tooltip_text="Upload the active profile, then refresh the community boards."
- var notice=gui.label(col,board_notice(),14);notice.name="RecordsSyncStatus";notice.modulate=Color("#f0ca87") if not snapshot.is_empty() and not compatible(snapshot) or stale else Color("#b7d4d7")
  var tabs=HFlowContainer.new();tabs.name="RecordsCategoryTabs";tabs.add_theme_constant_override("h_separation",6);tabs.add_theme_constant_override("v_separation",5);col.add_child(tabs)
  for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
   var tab=gui.button(tabs,entry[0],choose_category.bind(str(entry[1])));tab.name="RecordsTab_"+str(entry[1]);tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size=Vector2(126,36);tab.add_theme_font_size_override("font_size",15)

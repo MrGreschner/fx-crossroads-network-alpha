@@ -1,17 +1,12 @@
 {
+  "id": "lodge_tonic",
   "name": "Sunleaf Tonic",
-  "tier": 1,
-  "seconds": 60,
-  "needs": {
-    "sunleaf": 2,
-    "mooncap": 1
-  },
   "effect": "heal",
   "amount": 30,
-  "description": "Restore 30 HP. One use; uses the separate consumable slot.",
-  "id": "lodge_tonic",
+  "duration": 4,
   "cost": 0,
   "sprite": "lodges/lodge_tonic",
   "shop": false,
-  "crafted": true
+  "crafted": true,
+  "description": "Crafted single-use potion. Uses one item slot."
 }

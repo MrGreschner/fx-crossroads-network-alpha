@@ -59,21 +59,11 @@ func step(delta:float)->void:
    for offset in ([Vector2.ZERO,Vector2(110,0),Vector2(-110,0)] if kind=="cartographer" else [Vector2.ZERO]):
     if pending.size()<16:pending.append({"kind":"ink","pos":combat.point_array(target+offset),"time":1.0,"source":combat.npc_key(foe)})
   elif kind=="cartographer" and phase%3==2:
-   var destination:Vector2=fold_destination(foe["pos"],target,phase)
+   var destination:Vector2=[Vector2(4900,900),Vector2(5400,2000),Vector2(4800,2500)][(phase/3)%3]
    pending.append({"kind":"fold","pos":combat.point_array(destination),"time":1.2,"source":combat.npc_key(foe)})
   else:
    var aim:Vector2=(target-(foe["pos"] as Vector2)).normalized();var count:=5 if kind=="cartographer" else 3
    for n in count:combat.launch_projectile("enemy",foe["pos"],aim.rotated((n-(count-1)*.5)*.23),{"range":600,"speed":300,"color":"#e9dfc9"},12 if kind=="cartographer" else 9)
-func fold_destination(origin:Vector2,target:Vector2,phase:int)->Vector2:
- # Prefer a different landing within pursuit range, so a fold cannot strand the fight.
- var destinations=[Vector2(4900,900),Vector2(5400,2000),Vector2(4800,2500)]
- for n in 3:
-  var candidate:Vector2=destinations[(int(phase/3)+n)%3]
-  if candidate.distance_to(target)<1100 and candidate.distance_to(origin)>160:return candidate
- var nearest:Vector2=destinations[0]
- for candidate in destinations:
-  if candidate.distance_to(target)<nearest.distance_to(target):nearest=candidate
- return nearest
 func snapshot()->Dictionary:return {"active":active,"clock":clock,"pending":pending}
 func receive(data:Dictionary)->void:active=bool(data.get("active",false));clock=float(data.get("clock",0));pending=data.get("pending",[])
 func draw_world(canvas:Node2D,camera:Vector2)->void:

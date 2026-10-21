@@ -107,12 +107,7 @@
     "lodge_cleanse",
     "lodge_stride",
     "lodge_guard",
-    "lodge_restore",
-    "lodge_river",
-    "lodge_silverfall",
-    "lodge_coast",
-    "lodge_marsh",
-    "lodge_cavern"
+    "lodge_restore"
   ],
   "enemies": [
     "archer",

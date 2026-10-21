@@ -86,7 +86,7 @@ static func valid_catch(v:Variant)->bool:
  if not v is Dictionary:return false
  if not v.get("id",null) is String or v.id.is_empty() or v.id.length()>64:return false
  if not v.get("species",null) is String or not C.fish().has(v.species):return false
- if not v.get("pool",null) is String or not C.pools().has(v.pool) or (v.species not in C.pools()[v.pool].fish and v.species not in C.data().get("legacy_pool_fish",{}).get(v.pool,[])):return false
+ if not v.get("pool",null) is String or not C.pools().has(v.pool) or v.species not in C.pools()[v.pool].fish:return false
  if not v.get("date",null) is String or v.date.length()>32 or not v.get("trophy",null) is bool:return false
  if v.has("size_version"):
   if not number(v.size_version,2) or int(v.size_version)!=2 or float(v.size_version)!=2:return false
