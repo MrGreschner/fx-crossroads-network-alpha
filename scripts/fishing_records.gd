@@ -55,7 +55,7 @@ func complete(catch:Dictionary,keep:bool)->bool:
  if keep:s.kept.append(catch.duplicate(true))
  s.recent.append(str(catch.id))
  if s.recent.size()>100:s.recent.pop_front()
- if better:preload("res://scripts/record_toast.gd").show(legacy.game,"NEW PERSONAL BEST • "+str(C.fish()[catch.species].name)+" • %.2f kg" % float(catch.kg))
+ if better:preload("res://scripts/record_toast.gd").show(legacy.game,("NEW SPECIES • " if first else "NEW PERSONAL BEST • ")+str(C.fish()[catch.species].name)+" • %.2f kg" % float(catch.kg))
  progress.award(catch,first,better,keep)
  if legacy.game.has_method("add_float_text"):
   var point:Vector2=legacy.game.local_pos if legacy.arcade else legacy.game.position_in_world

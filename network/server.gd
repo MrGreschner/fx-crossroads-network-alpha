@@ -528,7 +528,7 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
   var shot:Dictionary=g.adventure.combat.projectiles[n]
   if str(shot.get("owner",""))==id:born.append(int(shot.get("shot_index",0)))
  var after=int(g.cooldown_at.get(id,{}).get(style,0))
- var accepted=after>previous or str(data.type)!="attack"
+ var accepted=after>previous or not born.is_empty() or str(data.type)!="attack"
  send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":style,"accepted":accepted,"born_indices":born,"tick":g.authority_tick,"reason":"" if accepted else "cooldown_or_state","remaining":maxi(0,after-began),"wait_ms":maxi(0,began-int(data.get("received_ms",began)))})
 func prune_idle(value:Variant)->Variant:
  # Preserve all active hero mechanics, while omitting dormant component containers.

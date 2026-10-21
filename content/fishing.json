@@ -976,7 +976,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Town Pond",
-      "color": "#8ccabb",
+      "color": "#b2a06f",
       "note": "Reedglass Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -993,7 +993,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Town Pond",
-      "color": "#83b4de",
+      "color": "#b2a06f",
       "note": "Copperclaw Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1010,7 +1010,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "East Bridge River",
-      "color": "#8ccabb",
+      "color": "#8a61c2",
       "note": "Current Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1027,7 +1027,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "East Bridge River",
-      "color": "#83b4de",
+      "color": "#8a61c2",
       "note": "Slatebank Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1044,7 +1044,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Quiet Reed Stream",
-      "color": "#8ccabb",
+      "color": "#82d18c",
       "note": "Reedseed Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1061,7 +1061,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Quiet Reed Stream",
-      "color": "#83b4de",
+      "color": "#82d18c",
       "note": "Mossback Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1078,7 +1078,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Wayfarer Brook",
-      "color": "#8ccabb",
+      "color": "#b25967",
       "note": "Amber Brook Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1095,7 +1095,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Wayfarer Brook",
-      "color": "#83b4de",
+      "color": "#b25967",
       "note": "Willowclaw Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1112,7 +1112,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Deep River Bend",
-      "color": "#8ccabb",
+      "color": "#7899c2",
       "note": "Duskribbon Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1129,7 +1129,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Deep River Bend",
-      "color": "#c996e8",
+      "color": "#b2a06f",
       "note": "Ironclaw River Crab belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1146,7 +1146,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Ferryman\u2019s Spring",
-      "color": "#8ccabb",
+      "color": "#b6d169",
       "note": "Mistbell Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1163,7 +1163,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Ferryman\u2019s Spring",
-      "color": "#83b4de",
+      "color": "#7899c2",
       "note": "Silverclaw Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1180,7 +1180,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Moonwater Cascade",
-      "color": "#8ccabb",
+      "color": "#b06fb2",
       "note": "Sprayglass Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1197,7 +1197,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Moonwater Cascade",
-      "color": "#c996e8",
+      "color": "#8a61c2",
       "note": "Cascade Blue Crab belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1214,7 +1214,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Foldwater Inlet",
-      "color": "#8ccabb",
+      "color": "#61c2a3",
       "note": "Paperfan Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1231,7 +1231,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Foldwater Inlet",
-      "color": "#c996e8",
+      "color": "#82d18c",
       "note": "Inkfold Crab belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1248,7 +1248,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Wispwater Pool",
-      "color": "#8ccabb",
+      "color": "#d1a082",
       "note": "Wispglow Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1265,7 +1265,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Wispwater Pool",
-      "color": "#c996e8",
+      "color": "#b25967",
       "note": "Lantern Marsh Crab belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1282,7 +1282,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#8ccabb",
+      "color": "#6259b2",
       "note": "Deepglass Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1299,7 +1299,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Floor 56 \u2022 Buried Spring",
-      "color": "#c996e8",
+      "color": "#7899c2",
       "note": "Vaultshell Crab belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1316,7 +1316,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Floor 38 \u2022 Garnet Spring",
-      "color": "#8ccabb",
+      "color": "#87c278",
       "note": "Rubyseed Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1333,7 +1333,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Floor 38 \u2022 Garnet Spring",
-      "color": "#83b4de",
+      "color": "#b6d169",
       "note": "Garnetclaw Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1350,7 +1350,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "North Gate \u2022 Watchwater Bank",
-      "color": "#8ccabb",
+      "color": "#d1699c",
       "note": "Pennant Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1367,7 +1367,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "North Gate \u2022 Watchwater Bank",
-      "color": "#83b4de",
+      "color": "#b06fb2",
       "note": "Bastionclaw Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1384,7 +1384,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Moonveil \u2022 Silver Canal",
-      "color": "#8ccabb",
+      "color": "#6fa4b2",
       "note": "Confetti Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1401,7 +1401,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Moonveil \u2022 Silver Canal",
-      "color": "#c996e8",
+      "color": "#b6d169",
       "note": "Masque Moon Crab belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1418,7 +1418,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
-      "color": "#8ccabb",
+      "color": "#c2bb61",
       "note": "Firstdew Shrimp belongs to these waters. Discover its habits by exploring.",
       "group": "bottom",
       "methods": [
@@ -1435,7 +1435,7 @@
       "max_kg": 0.6,
       "max_length": 22,
       "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
-      "color": "#83b4de",
+      "color": "#61c2a3",
       "note": "Roseclaw Crayfish belongs to these waters. Discover its habits by exploring.",
       "group": "predator",
       "methods": [
@@ -1484,7 +1484,7 @@
       "max_kg": 0.24,
       "max_length": 14,
       "habitat": "The Between \u2022 remote crossings",
-      "color": "#d2c2ed",
+      "color": "#b482d1",
       "note": "A tiny translucent swimmer found only beyond the stable portal.",
       "group": "surface",
       "methods": [
@@ -1598,6 +1598,160 @@
           24
         ]
       ]
+    },
+    "copperfin_shiner": {
+      "name": "Copperfin Shiner",
+      "rarity": "Common",
+      "chance": 24,
+      "min_kg": 0.08,
+      "max_kg": 0.65,
+      "max_length": 19,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#cb9361",
+      "note": "Small copper fins flicker above gravel bars.",
+      "group": "school",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "mossback_gudgeon": {
+      "name": "Mossback Gudgeon",
+      "rarity": "Common",
+      "chance": 22,
+      "min_kg": 0.12,
+      "max_kg": 1.1,
+      "max_length": 24,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#8ca86b",
+      "note": "Its moss-green back hides it beside smooth river stones.",
+      "group": "bottom",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "ribbon_bleak": {
+      "name": "Ribbon Bleak",
+      "rarity": "Common",
+      "chance": 26,
+      "min_kg": 0.05,
+      "max_kg": 0.45,
+      "max_length": 17,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#8cbacb",
+      "note": "A slim blue ribbon that skims the river surface.",
+      "group": "surface",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "russet_river_chub": {
+      "name": "Russet River Chub",
+      "rarity": "Common",
+      "chance": 20,
+      "min_kg": 0.3,
+      "max_kg": 2.6,
+      "max_length": 39,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#b66d59",
+      "note": "Round-bodied shoals gather beneath the east bridge.",
+      "group": "school",
+      "methods": [
+        "rod",
+        "net"
+      ]
+    },
+    "opal_riffle_trout": {
+      "name": "Opal Riffle Trout",
+      "rarity": "Rare",
+      "chance": 3.2,
+      "min_kg": 0.55,
+      "max_kg": 4.2,
+      "max_length": 57,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#a0b8df",
+      "note": "Opal flecks flash across its flank in the fast riffles.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "saffron_sail_grayling": {
+      "name": "Saffron Sail Grayling",
+      "rarity": "Rare",
+      "chance": 2.8,
+      "min_kg": 0.4,
+      "max_kg": 3.4,
+      "max_length": 49,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#d4af45",
+      "note": "Its saffron sail fin catches the light above deep runs.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "crownwater_sturgeon": {
+      "name": "Crownwater Sturgeon",
+      "rarity": "Legendary",
+      "chance": 0.35,
+      "min_kg": 3.5,
+      "max_kg": 19,
+      "max_length": 156,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#a791c3",
+      "note": "Ancient lilac armour traces the deepest river channel.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "emberjaw_river_pike": {
+      "name": "Emberjaw River Pike",
+      "rarity": "Legendary",
+      "chance": 0.3,
+      "min_kg": 2.2,
+      "max_kg": 13,
+      "max_length": 122,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#cf7848",
+      "note": "A long copper hunter with bright ember markings.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "moonthread_arowana": {
+      "name": "Moonthread Arowana",
+      "rarity": "Mystical",
+      "chance": 0.07,
+      "min_kg": 1.1,
+      "max_kg": 8.5,
+      "max_length": 96,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#8cddd2",
+      "note": "A pale moon-thread trails from its sweeping river fins.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "starveil_river_ray": {
+      "name": "Starveil River Ray",
+      "rarity": "Mystical",
+      "chance": 0.055,
+      "min_kg": 1.8,
+      "max_kg": 11.5,
+      "max_length": 109,
+      "habitat": "East Bridge River \u2022 flowing river waters",
+      "color": "#cba4dd",
+      "note": "A violet freshwater ray carries star-like flecks on its broad wings.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
     }
   },
   "pools": {
@@ -1661,7 +1815,17 @@
         "midnight_crown",
         "veilfin_oracle",
         "bridge_shrimp",
-        "bridge_claw"
+        "bridge_claw",
+        "copperfin_shiner",
+        "mossback_gudgeon",
+        "ribbon_bleak",
+        "russet_river_chub",
+        "opal_riffle_trout",
+        "saffron_sail_grayling",
+        "crownwater_sturgeon",
+        "emberjaw_river_pike",
+        "moonthread_arowana",
+        "starveil_river_ray"
       ]
     },
     "quest_reed": {
@@ -1702,7 +1866,11 @@
         "mirror_salmon",
         "gilded_brookray",
         "brook_shrimp",
-        "brook_claw"
+        "brook_claw",
+        "copperfin_shiner",
+        "mossback_gudgeon",
+        "ribbon_bleak",
+        "russet_river_chub"
       ]
     },
     "quest_deep": {
@@ -1727,7 +1895,17 @@
         "cobalt_eel",
         "ancient_river_dragon",
         "deep_shrimp",
-        "deep_claw"
+        "deep_claw",
+        "copperfin_shiner",
+        "mossback_gudgeon",
+        "ribbon_bleak",
+        "russet_river_chub",
+        "opal_riffle_trout",
+        "saffron_sail_grayling",
+        "crownwater_sturgeon",
+        "emberjaw_river_pike",
+        "moonthread_arowana",
+        "starveil_river_ray"
       ]
     },
     "silverfall_spring": {
@@ -1772,7 +1950,13 @@
         "aurora_koifin",
         "torrent_wyrm",
         "cascade_shrimp",
-        "cascade_claw"
+        "cascade_claw",
+        "opal_riffle_trout",
+        "saffron_sail_grayling",
+        "crownwater_sturgeon",
+        "emberjaw_river_pike",
+        "moonthread_arowana",
+        "starveil_river_ray"
       ]
     },
     "coast_fold": {

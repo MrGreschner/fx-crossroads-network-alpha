@@ -41,7 +41,10 @@
     "count": 3,
     "spread": 0.18,
     "color": "#f8e0b1",
-    "stun_duration": 2.5
+    "stun_duration": 2.5,
+    "self_speed_seconds": 3,
+    "self_speed_factor": 1.25,
+    "description": "Throw three stunning pitches. Gain 25% movement speed for 3 seconds after use."
   },
   "passive": "Batting Practice: Bat Sweep cooldown is reduced by 20%.",
   "passive_effect": "quick_secondary",
@@ -82,8 +85,10 @@
         "charge": 0.8,
         "duration": 1.5,
         "stun_duration": 1,
-        "description": "Charge a straight piercing bat-light line for 0.8s: 65 damage and 1s stun. Trades three stunned balls for one narrow lane.",
-        "visual_texture": "res://assets/mastery_baseball_v68.svg"
+        "description": "Charge a straight piercing bat-light line for 0.8s: 65 damage and 1s stun. Trades three stunned balls for one narrow lane. Gain 25% movement speed for 3 seconds after use.",
+        "visual_texture": "res://assets/mastery_baseball_v68.svg",
+        "self_speed_seconds": 3,
+        "self_speed_factor": 1.25
       }
     },
     "final_requirements": {

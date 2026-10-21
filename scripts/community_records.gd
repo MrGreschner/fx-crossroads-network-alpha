@@ -231,12 +231,20 @@ func species_records(parent:Node)->void:
  if rows.is_empty():gui.label(card,"No species trophies recorded yet. Load your cloud profile and press Resync to submit saved trophy catches. Ordinary catches do not qualify.",17)
  for f in rows:
   if not f is Dictionary or not FISH.fish().has(str(f.get("species",""))) or not FISH.is_trophy(f):continue
-  var row=preload("res://scripts/fish_collection_ui.gd").framed(card,preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(FISH.fish()[f.species].rarity)));row.add_theme_constant_override("separation",14)
-  var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(90,50);row.add_child(art)
-  var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
-  gui.label(details,str(FISH.fish()[f.species].name)+" • %.2f kg" % float(f.kg),18)
-  gui.label(details,str(f.get("username","")),17)
-  fish_size(details,f)
+  trophy_row(card,f)
+func trophy_row(parent:Node,f:Dictionary)->PanelContainer:
+ var spec:Dictionary=FISH.fish()[f.species]
+ var frame=PanelContainer.new();frame.name="TrophyRow";frame.add_theme_stylebox_override("panel",UI.box("#153440",preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(spec.rarity)).to_html(),8,8));parent.add_child(frame)
+ var row=HFlowContainer.new();row.add_theme_constant_override("h_separation",12);row.add_theme_constant_override("v_separation",4);frame.add_child(row)
+ var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(112,72);row.add_child(art)
+ var details=VBoxContainer.new();details.custom_minimum_size.x=210;details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
+ var gui=preload("res://scripts/fish_collection_ui.gd")
+ gui.text(details,str(spec.name)+" • %.2f kg" % float(f.kg),17)
+ gui.text(details,str(f.get("username","Earlier anonymous record")),15)
+ gui.text(details,str(spec.rarity)+" • TROPHY SIZE",13,preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(spec.rarity)))
+ var gauge=preload("res://scripts/fish_weight_gauge.gd").new();gauge.compact=true;gauge.species=str(f.species);gauge.kg=float(f.kg);row.add_child(gauge)
+ return frame
+
 func garden_records(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd");var id=legacy.gardening.fair.crop();var spec=legacy.gardening.crops()[id]
  gui.label(parent,"GIANT GROWERS FAIR • "+str(spec.name),22);gui.label(parent,"Monthly records follow the planting month; seven real days of growth. Cloud account usernames appear on new records; weights are client-reported.",15)

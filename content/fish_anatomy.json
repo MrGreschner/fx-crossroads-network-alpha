@@ -895,5 +895,111 @@
     "limb_spread": 2,
     "tail_fan_rays": 5,
     "outline": "M 62 99 Q 53 44.40 113 38.80 Q 161.40 35 192 61 L 218 54 L 207 68 L 195 71 Q 133 56 115 74 Q 107 103 82 107Z"
+  },
+  "copperfin_shiner": {
+    "name": "Copperfin Shiner",
+    "family": "dace",
+    "length": 166,
+    "depth": 23.5,
+    "snout": 5.6,
+    "dorsal": 23,
+    "tail_fork": 22,
+    "pelvic": 14,
+    "outline": "M 47.32 72 C 70.32 52.73 115.38 48.50 182.08 57.20 Q 198.68 61.19 206.68 70.60 L 204.68 77.00 Q 186.68 85.63 174.08 89.16 C 115.38 89.86 63.32 84.69 47.32 76 Z"
+  },
+  "mossback_gudgeon": {
+    "name": "Mossback Gudgeon",
+    "family": "goby",
+    "length": 144,
+    "depth": 32.0,
+    "snout": 16.2,
+    "dorsal": 31,
+    "tail_fork": 6,
+    "pelvic": 36,
+    "outline": "M 57.88 72 C 80.88 45.76 116.92 40.00 160.92 51.84 Q 188.12 57.28 196.12 71.20 L 194.12 77.00 Q 176.12 90.56 152.92 95.36 C 116.92 96.32 73.88 89.28 57.88 76 Z"
+  },
+  "ribbon_bleak": {
+    "name": "Ribbon Bleak",
+    "family": "sprat",
+    "length": 163,
+    "depth": 20.5,
+    "snout": 4.6,
+    "dorsal": 20,
+    "tail_fork": 26,
+    "pelvic": 15,
+    "outline": "M 48.76 72 C 71.76 55.19 115.59 51.50 181.64 59.09 Q 197.24 62.57 205.24 70.60 L 203.24 77.00 Q 185.24 83.89 173.64 86.97 C 115.59 87.58 64.76 83.07 48.76 76 Z"
+  },
+  "russet_river_chub": {
+    "name": "Russet River Chub",
+    "family": "chub",
+    "length": 148,
+    "depth": 38.5,
+    "snout": 11.8,
+    "dorsal": 28,
+    "tail_fork": 20,
+    "pelvic": 24,
+    "outline": "M 55.96 72 C 78.96 40.43 116.64 33.50 167.24 47.75 Q 190.04 54.29 198.04 71.80 L 196.04 77.00 Q 178.04 94.33 159.24 100.11 C 116.64 101.26 71.96 92.79 55.96 76 Z"
+  },
+  "opal_riffle_trout": {
+    "name": "Opal Riffle Trout",
+    "family": "trout",
+    "length": 159,
+    "depth": 34.0,
+    "snout": 9.2,
+    "dorsal": 28,
+    "tail_fork": 15,
+    "pelvic": 20,
+    "outline": "M 50.68 72 C 73.68 44.12 115.87 38.00 175.12 50.58 Q 195.32 56.36 203.32 71.20 L 201.32 77.00 Q 183.32 91.72 167.12 96.82 C 115.87 97.84 66.68 90.36 50.68 76 Z"
+  },
+  "saffron_sail_grayling": {
+    "name": "Saffron Sail Grayling",
+    "family": "grayling",
+    "length": 161,
+    "depth": 27.5,
+    "snout": 5.6,
+    "dorsal": 48,
+    "tail_fork": 19,
+    "pelvic": 19,
+    "outline": "M 49.72 72 C 72.72 49.45 115.73 44.50 179.68 54.67 Q 196.28 59.35 204.28 70.60 L 202.28 77.00 Q 184.28 87.95 171.68 92.08 C 115.73 92.90 65.72 86.85 49.72 76 Z"
+  },
+  "crownwater_sturgeon": {
+    "name": "Crownwater Sturgeon",
+    "family": "sturgeon",
+    "length": 179,
+    "depth": 26.5,
+    "snout": 26.6,
+    "dorsal": 22,
+    "tail_fork": 33,
+    "pelvic": 28,
+    "outline": "M 41.08 72 C 64.08 50.27 114.47 45.50 167.32 55.30 Q 204.92 59.81 212.92 70.60 L 210.92 77.00 Q 192.92 87.37 159.32 91.34 C 114.47 92.14 57.08 86.31 41.08 76 Z"
+  },
+  "emberjaw_river_pike": {
+    "name": "Emberjaw River Pike",
+    "family": "pike",
+    "length": 176,
+    "depth": 28.0,
+    "snout": 26.2,
+    "dorsal": 29,
+    "tail_fork": 16,
+    "pelvic": 21,
+    "outline": "M 42.52 72 C 65.52 49.04 114.68 44.00 166.28 54.36 Q 203.48 59.12 211.48 71.20 L 209.48 77.00 Q 191.48 88.24 158.28 92.44 C 114.68 93.28 58.52 87.12 42.52 76 Z"
+  },
+  "moonthread_arowana": {
+    "name": "Moonthread Arowana",
+    "family": "oracle",
+    "length": 153,
+    "depth": 28.5,
+    "snout": 11.6,
+    "dorsal": 49,
+    "tail_fork": 30,
+    "pelvic": 49,
+    "outline": "M 53.56 72 C 76.56 48.63 116.29 43.50 169.84 54.05 Q 192.44 58.89 200.44 70.60 L 198.44 77.00 Q 180.44 88.53 161.84 92.81 C 116.29 93.66 69.56 87.39 53.56 76 Z"
+  },
+  "starveil_river_ray": {
+    "name": "Starveil River Ray",
+    "family": "ray",
+    "wing_spread": 102,
+    "tail_fork": 0,
+    "outline": "M 206 69 Q 170 51 139 18 Q 88 23 47 60 Q 88 102 138 120 Q 165 88 206 75 Z"
   }
 }

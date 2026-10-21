@@ -157,6 +157,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
     c.draw_line(p+aim*12,end-aim*18,Color("#93764e"),4,true)
     c.draw_colored_polygon(PackedVector2Array([end-aim*24-side*6,end-side*8,end+side*8,end-aim*24+side*6]),Color("#d8bc89"))
     c.draw_arc(p,radius,aim.angle()-.16,aim.angle(),8,Color(.65,.94,.9,.35),3,true)
+    c.draw_line(end-aim*22,end-aim*3,Color("#9c794e"),1,true)
+    for drop in 4:c.draw_circle(p+aim.rotated(-.15-drop*.08)*(radius-9-drop*3),2,Color(.65,.94,.96,.6))
    "light":
     var aim:Vector2=combat.vec(e.aim);var sector:=PackedVector2Array([p]);var half:float=acos(.72)
     for n in 25:sector.append(p+aim.rotated(-half+n/24.0*half*2)*radius)

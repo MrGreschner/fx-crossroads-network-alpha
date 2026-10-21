@@ -3,7 +3,7 @@ extends RefCounted
 ## Delayed casts/channels retain their authored timing; they are never fast-forwarded.
 static func seeds(stats:Dictionary,aim:Vector2,origin:Vector2,combat:Node,owner:String)->Array:
  var style=str(stats.get("style",""));var s:Dictionary=stats.duplicate(true)
- var supported=["navigator_bolt","projectile","ranged","homing","apiary_needle","ricochet_projectile","spiral_shot","split_lance","cross_shot","rolling_snow","magnet_pin","corkscrew_key","latchline","echo_brand","facet_spear","lantern_comet","rune_hammer","tea_shot","threaded_needles","time_dart","v91_pistol","wick_fire","mirror_fan"]
+ var supported=["golf_drive","navigator_bolt","projectile","ranged","homing","apiary_needle","ricochet_projectile","spiral_shot","split_lance","cross_shot","rolling_snow","magnet_pin","corkscrew_key","latchline","echo_brand","facet_spear","lantern_comet","rune_hammer","tea_shot","threaded_needles","time_dart","v91_pistol","wick_fire","mirror_fan"]
  if style not in supported:return []
  var custom=style not in ["projectile","ranged"] or bool(s.get("released_hold",false))
  var count=clampi(int(s.get("count",1)),1,8)
@@ -15,10 +15,11 @@ static func seeds(stats:Dictionary,aim:Vector2,origin:Vector2,combat:Node,owner:
  if style=="facet_spear":s.mirror_shard=true;s.speed=480
  if style=="lantern_comet":s.lantern_comet=true;s.speed=300;s.range=1200
  if style=="rune_hammer":s.rune_hammer=true
+ if style=="v91_pistol":s.pistol=true;s.color="#ffd9a0"
  var result=[]
  for n in count:
   var direction=aim.rotated((n-(count-1)*.5)*float(s.get("spread",0)))
-  var p=origin+direction*26
+  var p=origin+direction*(20 if style=="v91_pistol" else 26)
   if style=="cross_shot":direction=aim.rotated(n*PI*.5);p=origin+direction*26
   if style=="tea_shot":direction=aim.rotated((n*2-1)*.13)
   if style=="threaded_needles":

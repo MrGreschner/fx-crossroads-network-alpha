@@ -1,5 +1,6 @@
 extends Node
 ## Shared effects and object hero mechanics. Only the host applies damage.
+var golf:Node
 var starfield:Node
 var feedback:Node
 var v112:Node
@@ -57,8 +58,9 @@ var shot_turn:Dictionary={}
 var mines:Array=[]
 var received_at:=0
 var coast:Node
-const STYLES=["navigator_bolt","meteor_shower","split_lance","manual_mines","ground_sequence","cross_shot","charged_beam","chill_aura","rolling_snow","pulse_wave","pulse_burst","magnet_pin","magnet_pull","magnet_wire","waterfall_wave","ricochet_projectile","burst_projectile","spiral_shot","orbit_shards","vortex_field"]
+const STYLES=["golf_drive","navigator_bolt","meteor_shower","split_lance","manual_mines","ground_sequence","cross_shot","charged_beam","chill_aura","rolling_snow","pulse_wave","pulse_burst","magnet_pin","magnet_pull","magnet_wire","waterfall_wave","ricochet_projectile","burst_projectile","spiral_shot","orbit_shards","vortex_field"]
 func _ready()->void:
+	golf=preload("res://scripts/golf_chain.gd").new();add_child(golf);golf.combat=self
 	starfield=preload("res://scripts/starfield.gd").new();add_child(starfield);starfield.combat=self
 	feedback=preload("res://scripts/combat_feedback.gd").new();add_child(feedback);feedback.combat=self
 	v112=preload("res://scripts/v112_combat.gd").new();add_child(v112);v112.combat=self
@@ -95,6 +97,7 @@ func _ready()->void:
 	variants=preload("res://scripts/hero_variants.gd").new();add_child(variants);variants.combat=self
 	coast=preload("res://scripts/folded_coast.gd").new();add_child(coast);coast.combat=self
 func setup(id:String)->void:
+	golf.balls.clear()
 	starfield.reset()
 	feedback.contacts.clear()
 	actor_index.clear();actor_frame=-1
@@ -274,6 +277,7 @@ func speed_factor(key:String)->float:
 	if stunned(key):return 0
 	var factor:=float(statuses.get(key,{}).get("slow",{}).get("value",.55)) if effect_time(key,"slow")>0 else 1.0
 	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.45
+	if effect_time(key,"scout_stride")>0:factor*=float(statuses[key].scout_stride.value)
 	if effect_time(key,"rune_stride")>0:factor*=1.3
 	if key.begins_with("p:") and robot.transformed(key.substr(2)):factor*=.42
 	if effect_time(key,"fern_stride")>0:factor*=1.2
@@ -292,6 +296,7 @@ func reduction(id:String)->float:
 	base=base+(1-base)*v112.defence(id)
 	base=base+(1-base)*v98.defence(id)
 	base=base+(1-base)*v48.defence(id)
+	base=base+(1-base)*v90.defence(id)
 	return base+(1-base)*robot.reduction(id)
 func display_reduction(id:String)->float:
 	var g:Node=adventure.game;var remain:=1.0-reduction(id)
@@ -354,6 +359,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 	if passive(owner,"needle_frost"):
 		stats=stats.duplicate(true);stats["slow_duration"]=1.0;stats["slow"]=.8
 	var style:=str(stats.get("style",""))
+	if float(stats.get("self_speed_seconds",0))>0 and adventure.authoritative() and adventure.alive(owner):apply_status(player_key(owner),"scout_stride",float(stats.self_speed_seconds),owner,float(stats.get("self_speed_factor",1.25)))
 	if held_cast.cast(owner,stats,aim,amount):return true
 	if v112.cast(owner,stats,aim,amount):return true
 	if v110.cast(owner,stats,aim,amount):return true
@@ -437,7 +443,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 				var direction:=aim.rotated(n*PI*.5)
 				launch_projectile(owner,origin+direction*26,direction,stats,amount)
 		"waterfall_wave":add_ring(owner,origin,stats,amount)
-		"navigator_bolt","ricochet_projectile","homing","spiral_shot","split_lance":
+		"golf_drive","navigator_bolt","ricochet_projectile","homing","spiral_shot","split_lance":
 			var count:=2 if style=="homing" and passive(owner,"twin_orbs") else int(stats.get("count",1))
 			for n in count:
 				var direction:=aim.rotated((n-(count-1)*.5)*float(stats.get("spread",0)))
@@ -488,7 +494,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 	return true
 func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,amount:float,style:String="pellet")->void:
 	if projectiles.size()>=96:return
-	projectiles.append({"credit":stats.get("credit",preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Projectile")))),"owner":owner,"pos":point_array(origin),"aim":point_array(aim.normalized()),"distance":0.0,"range":float(stats.get("range",480)),"speed":float(stats.get("speed",260)),"style":style,"damage":amount,"radius":float(stats.get("projectile_radius",12.0)),"color":str(stats.get("color","#edf7ff")),"stats":stats,"bounces":1 if style=="ricochet_projectile" and passive(owner,"stone_bounce") else 0,"wall_bounces":int(stats.get("wall_bounces",0)),"origin":point_array(origin),"base_aim":point_array(aim.normalized()),"hits":[],"curve":float(stats.get("curve",1.1))*(-1 if int(shot_turn.get(owner,0))%2 else 1)})
+	projectiles.append({"credit":stats.get("credit",preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Projectile")))),"owner":owner,"pos":point_array(origin),"aim":point_array(aim.normalized()),"distance":0.0,"range":float(stats.get("range",480)),"speed":float(stats.get("speed",260)),"style":style,"damage":amount,"radius":float(stats.get("projectile_radius",12.0)),"color":str(stats.get("color","#edf7ff")),"stats":stats,"bounces":int(stats.get("bounces",0))+(1 if passive(owner,"stone_bounce") else 0) if style=="ricochet_projectile" else 0,"wall_bounces":int(stats.get("wall_bounces",0)),"origin":point_array(origin),"base_aim":point_array(aim.normalized()),"hits":[],"curve":float(stats.get("curve",1.1))*(-1 if int(shot_turn.get(owner,0))%2 else 1)})
 	if adventure.game.get("dedicated")==true:
 		adventure.game.projectile_serial+=1
 		projectiles[-1].net_id=adventure.game.projectile_serial
@@ -591,6 +597,7 @@ func step(delta:float)->void:
 	if not adventure.authoritative():
 		halloween.client_step(delta);return
 	starfield.step(delta)
+	golf.step(delta)
 	v112.step(delta)
 	v110.step(delta)
 	halloween.step(delta)
@@ -873,8 +880,9 @@ func indicators()->Array:
 			if effect_time(key,kind)>0:flags.append(kind)
 		if not flags.is_empty():result.append({"key":str(key),"pos":point_array(target["pos"]),"flags":flags})
 	return result
-func snapshot()->Dictionary:return {"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
+func snapshot()->Dictionary:return {"golf":golf.balls,"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
 func receive(data:Dictionary)->void:
+	golf.balls=data.get("golf",[]).duplicate(true)
 	starfield.marks=data.get("starfield",{})
 	v112.receive(data.get("v112",{}))
 	v110.receive(data.get("v110",{}))
@@ -918,6 +926,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
 func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 	if not playing():return
 	feedback.draw_on(canvas,camera)
+	golf.draw_on(canvas,camera)
 	v112.draw_on(canvas,camera)
 	v110.draw_on(canvas,camera)
 	halloween.draw_on(canvas,camera)
@@ -979,8 +988,10 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 		if str(ring.get("style",""))=="waterfall_wave":
 			canvas.draw_arc(center,maxf(1,radius-12),0,TAU,48,Color(.65,.95,1,.45),9,true)
 			for n in 18:
-				var point:=center+Vector2.from_angle(TAU*n/18+clock*.4)*radius
-				canvas.draw_line(point+Vector2(0,-30),point,Color(.7,.95,1,.6),4,true)
+				var angle:=TAU*n/18+clock*.4
+				var point:=center+Vector2.from_angle(angle)*radius
+				canvas.draw_arc(point,8,angle-PI*.7,angle+PI*.3,10,Color(.7,.95,1,.7),3,true)
+				canvas.draw_circle(center+Vector2.from_angle(angle+.03)*(radius+11),2,Color(.85,1,1,.7))
 	starfield.draw_on(canvas,camera)
 	for shot in projectiles:draw_projectile(canvas,shot,camera)
 	for aura in auras:
@@ -1124,6 +1135,14 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
 	if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
 	if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):return
+	if bool(shot["stats"].get("golf_ball",false)):
+		preload("res://scripts/hero_visuals1984.gd").ball(canvas,point,vec(shot.aim));return
+	if bool(shot["stats"].get("river_stone",false)):
+		preload("res://scripts/hero_visuals1984.gd").stone(canvas,point,vec(shot.aim));return
+	if bool(shot["stats"].get("pistol",false)):
+		var heading:=vec(shot["aim"]);var side:=heading.orthogonal()
+		canvas.draw_line(point-heading*24,point-heading*6,Color("#e2af62",.6),3,true)
+		canvas.draw_colored_polygon(PackedVector2Array([point+heading*6,point+side*2,point-heading*5,point-side*2]),Color("#fff0bc"));return
 	if bool(shot["stats"].get("mirror_shard",false)):
 		var heading:Vector2=vec(shot["aim"]);var side:Vector2=heading.orthogonal();var size:float=radius/6 if bool(shot["stats"].get("released_hold",false)) else 1.0
 		canvas.draw_colored_polygon(PackedVector2Array([point+heading*16*size,point+side*7*size,point-heading*13*size,point-side*7*size]),Color("#c8edf2"))

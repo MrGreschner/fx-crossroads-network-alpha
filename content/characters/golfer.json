@@ -7,12 +7,14 @@
   "run_cost": 0,
   "primary": {
     "name": "Fairway Drive",
-    "style": "projectile",
+    "style": "golf_drive",
     "damage": 30,
     "cooldown": 1.0,
     "range": 720,
     "speed": 520,
-    "color": "#eff5de"
+    "color": "#eff5de",
+    "golf_ball": true,
+    "description": "Drive a small golf ball for 30 damage. Aim down the fairway; obstacles stop the ball."
   },
   "secondary": {
     "name": "Chip Shot",
@@ -43,7 +45,9 @@
     "range": 440,
     "jump_range": 180,
     "jumps": 5,
-    "color": "#cfe8a0"
+    "color": "#cfe8a0",
+    "visual": "golf_ricochet",
+    "description": "Strike one golf ball that ricochets between up to five different enemies, dealing 20% less damage with each hit."
   },
   "passive": "Calm Focus: recover 4 health after defeating an enemy.",
   "passive_effect": "heal_on_kill",

@@ -28,9 +28,10 @@
     "style": "block",
     "damage": 0,
     "cooldown": 5,
-    "duration": 1.2,
+    "duration": 2.2,
     "reduction": 0.65,
-    "reflect": true
+    "reflect": true,
+    "description": "Guard for 2.2 seconds, reducing incoming damage by 65% and reflecting hostile projectiles."
   },
   "special": {
     "name": "Dawn Circle",

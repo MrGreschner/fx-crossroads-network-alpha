@@ -590,7 +590,9 @@ func receive_net(data:Dictionary)->void:
     var rejected=int(data.seq);shots_view.reject(rejected);launch_trace.erase(rejected)
     local_strikes=local_strikes.filter(func(x):return int(x.action_seq)!=rejected)
     pending_bursts=pending_bursts.filter(func(x):return int(x.seq)!=rejected)
-   if data.has("style"):request_ready[str(data.style)]=Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(metrics.rtt_ms))
+   if data.has("style"):
+    var pistol:bool=str(data.style)=="primary" and str(characters.get(selected_hero,{}).get("primary",{}).get("style",""))=="v91_pistol"
+    request_ready[str(data.style)]=0 if pistol else Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(metrics.rtt_ms))
   "economy_ack":
    if str(data.get("match_id",""))!=match_id:return
    economy_pending=false;status_label.text=str(data.get("message","Order received."))
@@ -677,7 +679,7 @@ func _process(delta:float)->void:
   if str(shot.owner)!=my_id and not bool(shot.get("custom",false)):missiles.append({"pos":shot.draw_pos,"owner":shot.owner,"color":shot.color})
  adventure.combat.held_cast.local_input(delta,not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
  if net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
-  if (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):_attack_request("primary")
+  if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):_attack_request("primary")
   if Input.is_action_pressed("secondary"):_attack_request("secondary")
   if Input.is_action_just_pressed("special"):_attack_request("special")
  _refresh_draw_camera()

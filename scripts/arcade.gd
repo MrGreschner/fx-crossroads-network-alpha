@@ -970,7 +970,7 @@ func _process(delta: float) -> void:
 		fish_motion.step(str(actor_id),ground,delta,started and shop_open.is_empty() and str(hero_ids.get(actor_id,"ram"))=="ripplejaw" and int(health.get(actor_id,0))>0 and not adventure.immersive.aboard(str(actor_id)))
 		motion_v85.landing(str(actor_id),ground,fish_motion.phase(str(actor_id)))
 	var vacuum_aim:Vector2=mobile.aim if mobile.enabled else (media_mouse_world()-local_pos).normalized()
-	adventure.combat.v56.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)),vacuum_aim)
+	adventure.combat.v56.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)),vacuum_aim)
 	adventure.combat.release_heroes.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
 	adventure.combat.classics.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"))
 	adventure.combat.v79.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
@@ -1095,7 +1095,7 @@ func _process(delta: float) -> void:
 	if role == "host" and not spectating(): positions[my_id] = local_pos
 	media.refresh_arcade() if media.game!=null else assign_base_camera()
 	if not spectating() and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty():
-		if (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)): _attack_request("primary")
+		if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)): _attack_request("primary")
 		if Input.is_action_pressed("secondary"): _attack_request("secondary")
 		if Input.is_action_just_pressed("special"): _attack_request("special")
 	if role == "host":
@@ -1118,7 +1118,7 @@ func _process(delta: float) -> void:
 			movement_timer = MOVEMENT_INTERVAL
 			local_position_sequence+=1;position_history[local_position_sequence]=local_pos
 			while position_history.size()>64:position_history.erase(position_history.keys()[0])
-			_send_channel(host_id,{"type":"pos","seq":local_position_sequence,"revive":Input.is_action_pressed("interact"),"x":roundi(local_pos.x),"y":roundi(local_pos.y),"hero":selected_hero,"secondary_held":not fishing.busy() and Input.is_action_pressed("secondary") and shop_open.is_empty(),"primary_held":not fishing.busy() and (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and shop_open.is_empty(),"primary_angle":vacuum_aim.angle()})
+			_send_channel(host_id,{"type":"pos","seq":local_position_sequence,"revive":Input.is_action_pressed("interact"),"x":roundi(local_pos.x),"y":roundi(local_pos.y),"hero":selected_hero,"secondary_held":not fishing.busy() and Input.is_action_pressed("secondary") and shop_open.is_empty(),"primary_held":not fishing.busy() and adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and shop_open.is_empty(),"primary_angle":vacuum_aim.angle()})
 	for id in positions:
 		if id != my_id:
 			if role=="host" and bots.is_bot(str(id)):smoothing.push("p:"+str(id),positions[id],Time.get_ticks_msec()/1000.0)
@@ -1179,7 +1179,7 @@ func _attack_request(style: String) -> void:
 		var stamp:=Time.get_ticks_msec()
 		if stamp<int(request_ready.get(style,0)):return
 		stats=adventure.combat.effective_stats(my_id,style,stats)
-		request_ready[style]=stamp+1000 # Pending reliable acknowledgement; avoids frame-rate request floods.
+		request_ready[style]=stamp if str(stats.get("style",""))=="v91_pistol" else stamp+1000 # Six-shooter clicks may queue independently; authority enforces cylinder/reload.
 		predicted_pose_until=stamp+180
 		journey.cue(presentation.sound_for(str(stats.get("style","melee"))))
 		_send_channel(host_id,{"type":"attack","style":style,"angle":aim.angle(),"target":[position.x,position.y]})
@@ -1215,6 +1215,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 	var now := Time.get_ticks_msec()
 	var cd: Dictionary = cooldown_at.get(id,{})
 	if now < int(cd.get(kind,0)): return
+	if not adventure.combat.v90.pistol_ready(id,stats):return
 	var delay := float(stats.get("cooldown",0.5))
 	var passive := str(hero.get("passive_effect",""))
 	if int(levels.get(id,1)) >= 5:
@@ -1225,6 +1226,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 	for carried_id in inventory.get(id,[]):
 		if str(items.get(str(carried_id),{}).get("effect","")) == "cooldown": delay *= 1.0-float(items[str(carried_id)].get("amount",0))/100.0
 	if mode=="descent":delay*=descent.cooldown(id)
+	delay=adventure.combat.v90.pistol_delay(id,stats,delay)
 	cd[kind] = now + int(1000.0*delay);cooldown_at[id] = cd;attack_pose_until[id] = now+240
 	var style := str(stats.get("style","melee"))
 	var origin: Vector2 = positions[id]
@@ -1925,15 +1927,16 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				var kind:=str(data.get("style","primary"))
 				if kind not in ["primary","secondary","special"]:return
 				var previous:=int(cooldown_at.get(remote_id,{}).get(kind,0))
+				var rounds_before:=int(adventure.combat.v90.cylinders.get(remote_id,{"rounds":6}).rounds)
 				_attack(remote_id,kind,Vector2.from_angle(float(data.get("angle",0))),Vector2(float(data.get("target",[0,0])[0]),float(data.get("target",[0,0])[1])))
 				var deadline:=int(cooldown_at.get(remote_id,{}).get(kind,0))
-				_send_channel(remote_id,{"type":"attack_ack","match_id":match_id,"style":kind,"accepted":deadline>previous,"remaining":maxi(0,deadline-Time.get_ticks_msec())})
+				_send_channel(remote_id,{"type":"attack_ack","match_id":match_id,"style":kind,"accepted":deadline>previous or int(adventure.combat.v90.cylinders.get(remote_id,{"rounds":6}).rounds)<rounds_before,"remaining":maxi(0,deadline-Time.get_ticks_msec())})
 		"attack_ack":
 			if role=="guest" and remote_id==host_id and str(data.get("match_id",""))==match_id:
 				var kind:=str(data.get("style",""))
 				if kind in ["primary","secondary","special"]:
 					# Retry near the authoritative cooldown, including early rejected requests.
-					request_ready[kind]=Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(transport.ping_ms))
+					request_ready[kind]=0 if str(characters.get(selected_hero,{}).get(kind,{}).get("style",""))=="v91_pistol" else Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(transport.ping_ms))
 		"crown_throw":
 			if role=="host":arena_world.objective.throw_crown(remote_id,Vector2.from_angle(float(data.get("angle",0))))
 		"state":
@@ -2461,7 +2464,9 @@ func _draw_effect(effect: Dictionary) -> void:
 	if style in ["melee","punch","scratch","slash","kick"]:
 		var half_arc := float(effect.get("half_arc",0.6))
 		var visual := str(effect.get("visual",style))
-		if visual == "bounce":
+		if visual == "forge_hammer":
+			preload("res://scripts/hero_visuals1984.gd").hammer(self,_player_draw_position(str(effect.get("owner","")),effect.pos)-camera,aim,radius,1-float(effect.time)/.28)
+		elif visual == "bounce":
 			draw_arc(pos+aim*(radius-12),12,0,TAU,20,color,4,true)
 		elif visual == "medic_boot":
 			preload("res://scripts/medic_visuals.gd").boot(self,pos,aim,radius,1-float(effect.time)/.28)
@@ -2725,6 +2730,8 @@ func _simulate_charges(delta: float) -> void:
 		else: charges[id] = charge
 
 func _chain_attack(id: String, origin: Vector2, target: Vector2, stats: Dictionary, damage: float) -> void:
+	if stats.get("visual","")=="golf_ricochet":
+		adventure.combat.golf.launch(id,origin,target,stats,damage);return
 	if mode=="battlegrounds":
 		var struck:Array=[];var previous:=origin
 		for jump in int(stats.get("jumps",3)):

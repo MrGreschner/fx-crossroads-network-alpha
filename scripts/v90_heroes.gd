@@ -5,13 +5,16 @@ var effects:Array=[]
 var feathers:Dictionary={}
 var clock:=0.0
 var serial:=0
+var cylinders:Dictionary={}
+var grit:Dictionary={}
+var trigger_down:Dictionary={}
 var life_ready:Dictionary={}
 var rebirth:Dictionary={}
 var rebirth_ready:Dictionary={}
 const REED_TIME=.20
 const REED_IMPACT=.07
 const STYLES=["v90_wing","v90_ascent","v90_phoenix","v90_nest","v90_reed","v90_steps","v90_haven","v90_guides","v90_hook","v90_puppets","v90_curtain","v90_stage","v90_chop","v90_pot","v90_feast","v90_pepper","v90_rope","v90_lasso","v90_stampede","v90_posse","v91_scissors","v91_pistol"]
-func reset()->void:effects.clear();feathers.clear();serial=0;rebirth.clear();life_ready.clear()
+func reset()->void:effects.clear();feathers.clear();serial=0;rebirth.clear();life_ready.clear();cylinders.clear();grit.clear();trigger_down.clear()
 func moving(owner:String)->bool:return effects.any(func(e):return str(e.owner)==owner and str(e.style)=="travel")
 func effect(owner:String,style:String,time:float,p:Vector2,aim:Vector2,damage:float=0,reach:float=100)->Dictionary:
  if effects.size()>=80:effects.pop_front()
@@ -57,6 +60,14 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "v91_scissors":
    var e:=effect(owner,"scissors",.4,p,aim,amount,reach);e.radius=float(stats.get("blast_radius",42));e.center=combat.point_array(combat.v75.clip(p,aim,reach))
   "v91_pistol":
+   if not pistol_ready(owner,stats):return true
+   var cylinder:Dictionary=cylinders[owner];cylinder.rounds=int(cylinder.rounds)-1
+   if int(cylinder.rounds)==0:cylinder.reload=float(stats.get("reload_seconds",2))
+   if combat.passive(owner,"true_grit"):
+    combat.release_heroes.heal(owner,owner,3)
+    var stacks:Array=grit.get(owner,[])
+    if stacks.size()>=6:stacks.pop_front()
+    stacks.append(4.0);grit[owner]=stacks
    combat.launch_projectile(owner,p+aim*20,aim,dict_pistol(stats),amount);effect(owner,"muzzle",.16,p,aim)
   "v90_wing":effect(owner,"wing",.38,p,aim,amount,reach)
   "v90_reed","v90_hook","v90_chop","v90_rope":
@@ -88,6 +99,18 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 func step(delta:float)->void:
  if not combat.adventure.authoritative():return
  clock+=delta
+ for owner in cylinders.keys():
+  if not combat.adventure.alive(str(owner)) or combat.v78.hero(str(owner))!="dustmarshal":cylinders.erase(owner);grit.erase(owner);trigger_down.erase(owner);continue
+  var cylinder:Dictionary=cylinders[owner]
+  if float(cylinder.reload)>0:
+   cylinder.reload=maxf(0,float(cylinder.reload)-delta)
+   if float(cylinder.reload)<=.000001:cylinder.reload=0.0;cylinder.rounds=6
+ for owner in grit.keys():
+  var stacks:Array=grit[owner]
+  for i in range(stacks.size()-1,-1,-1):
+   stacks[i]=float(stacks[i])-delta
+   if float(stacks[i])<=.000001:stacks.remove_at(i)
+  if stacks.is_empty() or not combat.adventure.alive(str(owner)):grit.erase(owner)
  step_rebirth(delta)
  for owner in feathers.keys():
   if not combat.adventure.alive(str(owner)):feathers.erase(owner)
@@ -172,10 +195,18 @@ func step(delta:float)->void:
       combat.damage(str(e.target),float(e.damage),owner);combat.apply_status(str(e.target),"stun",2.0,owner);var tie:=effect(owner,"tied",2.0,f.pos,aim);tie.target=e.target;tie.used=false
       var pull:=effect(owner,"pull",.4,f.pos,aim);pull.target=e.target;pull.destination=combat.point_array(p+(f.pos-p).normalized()*48)
   if float(e.time)<=0:effects.remove_at(i)
-func snapshot()->Dictionary:return {"effects":effects,"feathers":feathers,"clock":clock,"rebirth":rebirth,"rebirth_ready":rebirth_ready}
-func receive(d:Dictionary)->void:effects=d.get("effects",[]);feathers=d.get("feathers",{});clock=float(d.get("clock",0));rebirth=d.get("rebirth",{});rebirth_ready=d.get("rebirth_ready",{})
+func snapshot()->Dictionary:return {"effects":effects,"feathers":feathers,"clock":clock,"rebirth":rebirth,"rebirth_ready":rebirth_ready,"cylinders":cylinders,"grit":grit}
+func receive(d:Dictionary)->void:effects=d.get("effects",[]);feathers=d.get("feathers",{});clock=float(d.get("clock",0));rebirth=d.get("rebirth",{});rebirth_ready=d.get("rebirth_ready",{});cylinders=d.get("cylinders",{});grit=d.get("grit",{})
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not combat.playing():return
+ for owner in combat.adventure.points():
+  if combat.v78.hero(str(owner))!="dustmarshal" or not combat.adventure.alive(str(owner)):continue
+  var p:Vector2=draw_position(str(owner))-camera-Vector2(0,76)
+  var cylinder:Dictionary=cylinders.get(owner,{"rounds":6,"reload":0.0})
+  for i in 6:
+   c.draw_circle(p+Vector2((i-2.5)*8,0),2.5,Color("#f8d48a") if i<int(cylinder.rounds) else Color("#596661"))
+  if float(cylinder.reload)>0:c.draw_string(ThemeDB.fallback_font,p+Vector2(-36,-10),"RELOAD %.1fs" % float(cylinder.reload),HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#ffe0a0"))
+  if defence(str(owner))>0:c.draw_arc(p+Vector2(0,45),31,PI*.1,PI*.9,16,Color("#e6b76f"),2,true)
  for owner in rebirth:
   var p:Vector2=combat.vec(rebirth[owner].pos)-camera
   c.draw_circle(p,24,Color(.7,.25,.12,.25));c.draw_arc(p,35,0,TAU,24,Color("#f4ba76"),2,true)
@@ -189,8 +220,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   if combat.adventure.alive(str(owner)) and combat.passive(str(owner),"waylight_life"):
    var center:Vector2=draw_position(str(owner))-camera
    c.draw_arc(center,160,0,TAU,40,Color(.65,.87,.57,.18),1,true)
- for e in effects:
-  var p:Vector2=combat.vec(e.pos)-camera;var owner:=str(e.owner);var aim:Vector2=combat.vec(e.aim);var t:=clampf(1-float(e.time)/float(e.duration),0,1);var r:=float(e.range);var side:=aim.orthogonal()
+ for e in combat.draw_effect_records("v90","effects",effects):
+  var p:Vector2=combat.draw_effect_position("v90",e,combat.vec(e.pos))-camera;var owner:=str(e.owner);var aim:Vector2=combat.vec(e.aim);var t:=clampf(1-float(e.time)/float(e.duration),0,1);var r:=float(e.range);var side:=aim.orthogonal()
   match str(e.style):
    "scissors":
     var center:Vector2=combat.vec(e.center)-camera;var spread:float=38*(1-t)
@@ -199,7 +230,9 @@ func draw_on(c:Node2D,camera:Vector2)->void:
      c.draw_line(center+side*n*spread-aim*22,center-side*n*spread+aim*22,Color("#f4d6ef"),4,true)
     c.draw_circle(center,5,Color("#ffecb3"))
    "muzzle":
-    c.draw_line(p+aim*22,p+aim*42,Color("#ffe09a"),5,true)
+    c.draw_colored_polygon(PackedVector2Array([p+aim*22,p+aim*34+side*9,p+aim*51,p+aim*34-side*9]),Color("#ffda85",1-t))
+    c.draw_line(p+aim*24,p+aim*44,Color("#fff4cd",1-t),3,true)
+    c.draw_circle(p+aim*20-side*(7+t*9)-Vector2(0,12*t),2,Color("#ba9151",1-t))
     for n in [-1,1]:c.draw_line(p+aim*25,p+aim*38+side*n*9,Color("#eca956"),3,true)
    "wing","phoenix":
     p=draw_position(owner)-camera
@@ -211,7 +244,15 @@ func draw_on(c:Node2D,camera:Vector2)->void:
      var texture:Texture2D=combat.adventure.game.art.get("cindervane_open")
      if texture!=null:c.draw_texture_rect(texture,Rect2(p-Vector2(45,62),Vector2(90,80)),false)
     else:
-     for n in 6:c.draw_circle(p-aim*n*12+side*sin(n+clock*8)*10,7-n*.6,Color(.8,.65,.43,.4-n*.04))
+     for n in 9:
+      var q:=p-aim*n*15+side*sin(n+clock*8)*12
+      c.draw_circle(q,12-n*.8,Color(.8,.65,.43,.38-n*.03))
+     for n in [-1,1]:
+      var hoof:Vector2=p+side*n*21-aim*18
+      c.draw_arc(hoof,10,aim.angle(),aim.angle()+PI,12,Color("#edc380",.8),3,true)
+     var crest:=p+aim*29
+     c.draw_line(crest-side*19,crest-side*25-aim*12,Color("#f3dfb1"),4,true)
+     c.draw_line(crest+side*19,crest+side*25-aim*12,Color("#f3dfb1"),4,true)
    "reed","hook","rope":
     var path:=PackedVector2Array()
     var reed_length:=1.0
@@ -258,10 +299,23 @@ func cleanse(key:String,kinds:Array)->void:
 
 func dict_pistol(stats:Dictionary)->Dictionary:
  var s:=stats.duplicate(true);s.color="#ffd9a0";s.pistol=true;return s
-func pistol_hit(owner:String,key:String)->void:
- if not combat.passive(owner,"true_grit"):return
- for e in effects:
-  if str(e.style)=="tied" and str(e.owner)==owner and str(e.get("target",""))==key and not bool(e.get("used",false)):e.used=true;combat.release_heroes.heal(owner,owner,3)
+func pistol_hit(_owner:String,_key:String)->void:
+ # True Grit is awarded once when a round is fired, including missed rounds.
+ pass
+func pistol_ready(owner:String,stats:Dictionary)->bool:
+ if str(stats.get("style",""))!="v91_pistol":return true
+ if not cylinders.has(owner):cylinders[owner]={"rounds":6,"reload":0.0}
+ return int(cylinders[owner].rounds)>0 and float(cylinders[owner].reload)<=0
+func pistol_delay(owner:String,stats:Dictionary,normal:float)->float:
+ if str(stats.get("style",""))!="v91_pistol":return normal
+ return float(stats.get("reload_seconds",2)) if int(cylinders.get(owner,{"rounds":6}).rounds)==1 else 0.0
+func primary_pressed(owner:String,held:bool)->bool:
+ if combat.adventure.arcade and combat.adventure.game.arena_world.shatter.active():return held
+ if combat.v78.hero(owner)!="dustmarshal":return held
+ var previous:bool=bool(trigger_down.get(owner,false));trigger_down[owner]=held
+ return held and not previous
+func defence(owner:String)->float:
+ return .04*grit.get(owner,[]).size() if combat.adventure.alive(owner) and combat.passive(owner,"true_grit") else 0.0
 func pending_rebirth(owner:String)->bool:return rebirth.has(owner)
 func intercept_defeat(owner:String)->bool:
  if not combat.adventure.authoritative() or not combat.passive(owner,"ash_rebirth") or clock<float(rebirth_ready.get(owner,0)) or rebirth.has(owner):return false

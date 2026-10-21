@@ -10,10 +10,12 @@
     "name": "Six-Shooter",
     "style": "v91_pistol",
     "damage": 22,
-    "cooldown": 0.85,
+    "cooldown": 0.0,
     "range": 430,
-    "description": "Fire one fast pistol round for 22 damage. The visible round stops at the first enemy or wall.",
-    "speed": 620
+    "description": "Click to fire one 22-damage round. Fire six rounds at your own pace, then reload for 2 seconds. Each round stops at the first enemy or wall.",
+    "speed": 620,
+    "cylinder_size": 6,
+    "reload_seconds": 2.0
   },
   "secondary": {
     "name": "Hogtie",
@@ -31,7 +33,7 @@
     "range": 290,
     "description": "Dash forward with a dust trail, hitting each enemy once for 38 and pushing them aside."
   },
-  "passive": "True Grit: shooting a tied enemy with Six-Shooter heals 3 HP (once per tie).",
+  "passive": "True Grit: every Six-Shooter shot heals 3 HP and adds 4% damage reduction for 4 seconds. Each stack expires separately; up to six stacks (24%).",
   "passive_effect": "true_grit",
   "mastery": {
     "title": "Marshal of the Crossroads",
@@ -42,12 +44,14 @@
         "name": "Long Barrel",
         "style": "v91_pistol",
         "damage": 28,
-        "cooldown": 1.2,
+        "cooldown": 0.0,
         "range": 560,
-        "description": "Fire one fast pistol round for 22 damage. The visible round stops at the first enemy or wall.",
-        "speed": 620
+        "description": "Click to fire one 28-damage long-barrel round. Six rounds per cylinder, then a 2.6-second reload. Range 560.",
+        "speed": 620,
+        "cylinder_size": 6,
+        "reload_seconds": 2.6
       },
-      "description": "Shoot farther and harder, with slower recovery."
+      "description": "Shoot farther and harder, with a longer cylinder reload."
     },
     "final_technique": {
       "name": "Posse Ride",

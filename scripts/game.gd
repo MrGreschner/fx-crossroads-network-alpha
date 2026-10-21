@@ -918,7 +918,7 @@ func handle_run(delta: float) -> void:
 				return
 		if studio_live.active() and not fishing.busy():studio_live.step(delta)
 		else:
-			if (mobile.attacking if mobile.enabled else Input.is_action_pressed("primary")): fire("primary")
+			if adventure.combat.v90.primary_pressed("solo",mobile.attacking if mobile.enabled else Input.is_action_pressed("primary")): fire("primary")
 			if Input.is_action_pressed("secondary"): fire("secondary")
 			if Input.is_action_just_pressed("special"): pulse()
 		update_enemy_shots(delta)
@@ -946,7 +946,7 @@ func handle_run(delta: float) -> void:
 			finish_run(true)
 			return
 	if studio_live.active() and not fishing.busy():studio_live.step(delta)
-	if not studio_live.active() and stun_time <= 0 and charge_time <= 0 and (mobile.attacking if mobile.enabled else Input.is_action_pressed("primary")):
+	if not studio_live.active() and stun_time <= 0 and charge_time <= 0 and adventure.combat.v90.primary_pressed("solo",mobile.attacking if mobile.enabled else Input.is_action_pressed("primary")):
 		fire("primary")
 	if not studio_live.active() and stun_time <= 0 and charge_time <= 0 and level >= 3 and Input.is_action_pressed("secondary"):
 		fire("secondary")
@@ -1005,6 +1005,7 @@ func fire(kind: String) -> void:
 		message="Choose a visible non-boss enemy for Change of Heart.";message_time=2;return
 	if not adventure.combat.agent.prepare("solo",stats,aim_direction(),aimed_point(float(stats.get("range",650)))):
 		message="Aim at an enemy for Ambush.";message_time=2;return
+	if not adventure.combat.v90.pistol_ready("solo",stats):return
 	var delay := float(stats.get("cooldown", 0.5))
 	if level >= 5 and str(hero.get("passive_effect", "")) == "quick_primary" and kind == "primary":
 		delay *= 0.7 if mastery == "passive" else 0.8
@@ -1014,6 +1015,7 @@ func fire(kind: String) -> void:
 	for carried_id in inventory:
 		var cooldown_item: Dictionary = items.get(carried_id, {})
 		if str(cooldown_item.get("effect", "")) == "cooldown": delay *= 1.0 - float(cooldown_item.get("amount", 0)) / 100.0
+	delay=adventure.combat.v90.pistol_delay("solo",stats,delay)
 	cooldowns[kind] = delay
 	var direction := aim_direction()
 	var damage := float(stats.get("damage", 15)) + bonus_damage
@@ -1081,6 +1083,8 @@ func fire(kind: String) -> void:
 		spawn_hero_projectiles(stats,damage,direction,false)
 
 func cast_chain(stats: Dictionary, damage: float, _direction: Vector2) -> void:
+	if stats.get("visual","")=="golf_ricochet":
+		adventure.combat.golf.launch("solo",position_in_world,aimed_point(float(stats.get("range",440))),stats,damage);return
 	if bool(stats.get("fork",false)):
 		cast_fork(stats,damage,_direction)
 		return
@@ -1822,7 +1826,9 @@ func draw_world() -> void:
 				var sweep := strike_direction.angle()
 				var reach := float(primary_stats.get("range", 82))
 				var visual := str(primary_stats.get("visual", strike_style))
-				if visual == "scratch":
+				if visual == "forge_hammer":
+					preload("res://scripts/hero_visuals1984.gd").hammer(self,position_in_world-camera,strike_direction,reach,1-clampf(strike_time/.18,0,1))
+				elif visual == "scratch":
 					for claw_index in 3:
 						var shift := (float(claw_index) - 1.0) * 9.0
 						var tangent := Vector2(-strike_direction.y, strike_direction.x) * shift
@@ -2302,6 +2308,7 @@ func ability_info(stats: Dictionary, kind: String) -> String:
 		"spin","stomp": effect = "Hit enemies around you for "+damage+" damage within "+reach+" distance."
 		"flame": effect = "Sweep a short flame cone for 0.9s: up to 5 hits of "+damage+" damage, "+reach+" reach. Aim while firing."
 		"beam": effect = "Aim a straight beam: "+damage+" damage, "+reach+" reach."
+		"golf_drive": effect = "Drive a small golf ball for "+damage+" damage, "+reach+" reach."
 		"projectile": effect = ("Fire "+str(stats.get("count",1))+" balls in a spread: "+damage+" damage each, "+reach+" reach." if int(stats.get("count",1))>1 else "Fire an aimed shot: "+damage+" damage, "+reach+" reach.")
 		"return_disc": effect = "Throw a returning star-disc: "+damage+" damage per pass, "+reach+" reach. Each enemy can be hit once outward and once on return."
 		"homing": effect = "Fire an orb that follows enemies: "+damage+" damage, "+reach+" reach."
@@ -2317,6 +2324,7 @@ func ability_info(stats: Dictionary, kind: String) -> String:
 		_: effect = str(stats.get("description",style.capitalize()+": "+damage+" damage."))
 	if style == "target_aoe" and float(stats.get("travel_speed",0)) > 0: effect += " A travelling projectile explodes on landing."
 	if float(stats.get("fragment_count",0))>0:effect+=" Releases "+str(stats.fragment_count)+" small fragment bombs for "+str(stats.fragment_damage)+" damage each after the first explosion."
+	if float(stats.get("self_speed_seconds",0))>0:effect+=" Gain 25% movement speed for "+str(stats.self_speed_seconds)+" seconds after use."
 	if float(stats.get("stun_duration",0))>0:effect+=" Stuns enemies hit for "+str(stats.stun_duration)+" seconds."
 	if stats.has("description"):effect=str(stats["description"])
 	if style=="flame":effect+=" Burns enemies for 2 damage per second for 10 seconds; repeated hits refresh the burn."
