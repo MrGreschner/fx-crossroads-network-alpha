@@ -1,5 +1,5 @@
-export const DEFAULT_GAME_BUILD = 165;
-export function releaseInfo(value = process.env.FX_GAME_VERSION) {
+export const DEFAULT_GAME_BUILD = 170;
+export function releaseInfo(value = process.env.CROSSROADS_GAME_VERSION ?? process.env.FX_GAME_VERSION) {
   const parsed = Number(value);
   const game_build = Number.isInteger(parsed) && parsed >= 1 && parsed <= 100000 ? parsed : DEFAULT_GAME_BUILD;
   return { game_build, version: `v${game_build}` };

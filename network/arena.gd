@@ -1266,7 +1266,8 @@ func network_effect_records(module:String,collection:String,live:Array)->Array:
   if str(record.get("owner",""))==my_id:
    var copy=_aged_draw_record(record,minf(.1,maxf(0,(Time.get_ticks_msec()-last_state_at)/1000.0)))
    if not copy.is_empty():result.append(copy)
- var buffered:Dictionary=world_view.data().get("adventure",{}).get("combat",{}).get(module,{})
+ var combat_view:Dictionary=world_view.data().get("adventure",{}).get("combat",{})
+ var buffered:Dictionary=combat_view if module=="root" else combat_view.get(module,{})
  for record in buffered.get(collection,[]):
   var kind=str(record.get("kind",record.get("style","")))
   if str(record.get("owner",""))==my_id or not policy.attached(module,kind):continue

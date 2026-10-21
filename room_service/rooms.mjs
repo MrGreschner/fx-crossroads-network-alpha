@@ -263,7 +263,7 @@ export class Rooms {
     if(data.type==='partner_leave'){this.partnerLeave(client);return;}
     if(data.type==='partner_host' || data.type==='partner_join'){
       if(client.partnerCode || client.room || client.classCode)return this.error(client,'Leave your current session first.');
-      if(![30,31].includes(data.version))return this.error(client,'Update FX Crossroads before partnering.');
+      if(![30,31].includes(data.version))return this.error(client,'Update Crossroads: Realms Beyond before partnering.');
       let room;
       if(data.type==='partner_host'){
         if(this.partners.size>=100)return this.error(client,'Studio service is busy.');
@@ -344,14 +344,14 @@ export class Rooms {
     }catch{return this.error(client,'Invalid or oversized live edit. Your local draft is retained.');}
   }
   classStatus(room) {
-    const roster=[...room.students].map(id=>({id,name:this.clients.get(id)?.name || 'Student'}));
+    const roster=[...room.students].map(id=>({id,name:this.clients.get(id)?.name || 'Viewer'}));
     const packet={type:'class_status',code:room.code,host:room.host,roster,started:room.started};
     for(const id of [room.host,...room.students]) this.clients.get(id)?.send(packet);
   }
   classLeave(client) {
     const room=this.classes.get(client.classCode);if(!room){client.classCode='';return;}
     if(room.host===client.id){
-      for(const id of room.students){const c=this.clients.get(id);if(c){c.classCode='';c.send({type:'class_closed',message:'The teacher ended the broadcast.'});}}
+      for(const id of room.students){const c=this.clients.get(id);if(c){c.classCode='';c.send({type:'class_closed',message:'The presenter ended the broadcast.'});}}
       this.classes.delete(room.code);
     } else {room.students.delete(client.id);this.classStatus(room);}
     client.classCode='';
@@ -361,7 +361,7 @@ export class Rooms {
     if(data.type==='class_host'){
       if(data.version!==30 || data.dev!==true)return this.error(client,'Game Dev mode and the current game version are required.');
       if(client.room || client.classCode)return this.error(client,'Leave your current room first.');
-      if(this.classes.size>=20)return this.error(client,'Classroom service is busy.');
+      if(this.classes.size>=20)return this.error(client,'Broadcast service is busy.');
       let code;do{code='CL'+this.code();}while(this.classes.has(code));
       client.name=this.name(data.name);client.classCode=code;
       const room={code,host:client.id,students:new Set(),started:false,frameAt:-1000,frame:null};this.classes.set(code,room);
@@ -370,14 +370,14 @@ export class Rooms {
     if(data.type==='class_join'){
       if(client.room || client.classCode)return this.error(client,'Leave your current room first.');
       const code=String(data.code||'').trim().toUpperCase(),room=this.classes.get(code);
-      if(data.version!==30 || !room)return this.error(client,'Classroom not found. Check the code and game version.');
-      if(room.students.size>=31)return this.error(client,'All 31 student seats are full.');
+      if(data.version!==30 || !room)return this.error(client,'Broadcast not found. Check the code and game version.');
+      if(room.students.size>=31)return this.error(client,'All 31 viewer seats are full.');
       client.name=this.name(data.name);client.classCode=code;room.students.add(client.id);
       client.send({type:'class_joined',id:client.id,host:false,code});this.classStatus(room);
       if(room.started){client.send({type:'class_start'});if(room.frame)client.send(room.frame);}return;
     }
-    const room=this.classes.get(client.classCode);if(!room)return this.error(client,'Join a classroom first.');
-    if(client.id!==room.host)return this.error(client,'Only the teacher can control the broadcast.');
+    const room=this.classes.get(client.classCode);if(!room)return this.error(client,'Join a broadcast first.');
+    if(client.id!==room.host)return this.error(client,'Only the presenter can control the broadcast.');
     if(data.type==='class_start'){
       room.started=true;for(const id of room.students)this.clients.get(id)?.send({type:'class_start'});this.classStatus(room);return;
     }

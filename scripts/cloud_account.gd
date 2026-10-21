@@ -31,6 +31,7 @@ var status_label:Label
 var guest:Dictionary={}
 var previous_menu="town"
 var previous_mode=""
+var card_popup:PanelContainer
 func _ready()->void:
  layer=110;endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
  request=HTTPRequest.new();request.timeout=25;request.body_size_limit=4500000;add_child(request);request.request_completed.connect(completed)
@@ -114,8 +115,11 @@ func notify(value:String)->void:
 func refresh()->void:
  if not is_instance_valid(col):return
  for c in col.get_children():col.remove_child(c);c.queue_free()
- label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17);status_label=col.get_child(col.get_child_count()-1)
  var l=legacy()
+ var signed_header=loaded and not token.is_empty() and mode not in ["password","recovery"] and l!=null and not l.recovery_required
+ if signed_header:build_signed_header(l)
+ else:
+  label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17);status_label=col.get_child(col.get_child_count()-1)
  if l!=null and l.recovery_required:
   label("LOCAL PROFILE RECOVERY",24);label("An existing profile could not be validated. It has been preserved and automatic local/cloud saving is paused. Download these files before importing a backup or loading a cloud profile.")
   button("Download preserved local save",download_recovery)
@@ -127,7 +131,7 @@ func refresh()->void:
   if mode=="register":
    confirmation=field("Confirm password",true);confirmation.max_length=128
    label("Recovery question: What is the made-up name of your imaginary portal guardian?",17)
-   label("Invent an answer. Use no real names or personal information. Remember it for teacher-assisted password resets.",15)
+   label("Invent an answer. Use no real names or personal information. Remember it for password resets and account verification.",15)
    recovery_answer=field("Made-up answer • 6–64 letters / numbers / spaces",true);recovery_answer.max_length=64
   button("Create account" if mode=="register" else "Sign in",func():
    var name=username.text.strip_edges();var pw=password.text
@@ -142,7 +146,7 @@ func refresh()->void:
     payload.answer=answer
    call_api("register" if mode=="register" else "login",payload,"auth"))
   button("Have an account? Sign in" if mode=="register" else "New here? Create an account",func():mode="login" if mode=="register" else "register";refresh())
-  label("Forgot your password? Ask your teacher or the game administrator. Signing in does not upload or replace this device’s profile automatically.",16)
+  label("For password resets and account verification, keep your recovery answer private. Signing in does not upload or replace this device’s profile automatically.",16)
   button("Continue without cloud account",guest_play)
  elif mode=="password":
   label("Change your password",23);username=field("Current password",true);password=field("New password • at least 9 characters",true);confirmation=field("Confirm new password",true)
@@ -152,7 +156,7 @@ func refresh()->void:
   button("Cancel",func():mode="login";refresh())
  elif mode=="recovery":
   label("Recovery question: What is the made-up name of your imaginary portal guardian?",21)
-  label("Invent an answer with no real names or personal information. Remember it for teacher-assisted password resets.",16)
+  label("Invent an answer with no real names or personal information. Remember it for password resets and account verification.",16)
   username=field("Current password",true);recovery_answer=field("Made-up answer • 6–64 letters / numbers / spaces",true);recovery_answer.max_length=64
   button("Save recovery answer",func():
    if username.text.length()<9:notify("Enter your current password.");return
@@ -161,7 +165,7 @@ func refresh()->void:
   button("Cancel",func():mode="login";refresh())
  elif not loaded:
   label("Signed in as "+str(user.username),23)
-  if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code)+" • keep this for your teacher",18)
+  if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code)+" • keep this for account verification",18)
   if user.get("has_save",false):
    button("Load my cloud profile",func():call_api("save",null,"load"))
    var owner_copy=STORE.read("user://fx_cloud_owner.json")
@@ -178,9 +182,7 @@ func refresh()->void:
   if not bool(user.get("has_recovery",false)):button("Add recovery answer",func():mode="recovery";refresh())
   button("Sign out",sign_out)
  else:
-  label(str(user.username)+" • "+str(user.role).capitalize(),24)
-  if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code),18)
-  label("Cloud revision "+str(revision)+" • "+("SAVING PAUSED — resolve conflict" if conflict else "automatic save every 60 seconds")+"\nDownloadable profiles still work as backups.")
+  if not signed_header:build_signed_header(l)
   button("Save now",func():save_cloud(true)).disabled=busy or conflict
   button("Download this device’s profile backup",func():close();legacy().export_profile())
   if conflict:button("Load cloud save instead (local backup kept)",func():call_api("save",null,"load"))
@@ -189,6 +191,32 @@ func refresh()->void:
   button("Sign out & restore guest profile",sign_out)
   if save_error or conflict:button("Sign out without uploading • download a backup first",confirm_offline_logout)
   button("Back to game",close)
+func build_signed_header(l:Node)->void:
+ var outer=col
+ var header=GridContainer.new();header.name="SignedInHeader";header.columns=2 if get_viewport().get_visible_rect().size.x>=900 else 1;header.add_theme_constant_override("h_separation",28);header.add_theme_constant_override("v_separation",12);col.add_child(header)
+ var details=VBoxContainer.new();details.name="AccountDetails";details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",12);header.add_child(details);col=details
+ label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17);status_label=col.get_child(col.get_child_count()-1)
+ label(str(user.username)+" • "+str(user.role).capitalize(),24)
+ if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code),18)
+ label("Cloud revision "+str(revision)+" • "+("SAVING PAUSED — resolve conflict" if conflict else "automatic save every 60 seconds")+"\nDownloadable profiles still work as backups.",17)
+ col=outer
+ var right=VBoxContainer.new();right.name="CardPreviewArea";right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;header.add_child(right)
+ var preview=Button.new();preview.name="EnlargePlayerCard";preview.custom_minimum_size=Vector2(0,240 if header.columns==2 else 190);preview.clip_contents=true;preview.tooltip_text="Open your full player card";preview.pressed.connect(enlarge_card);right.add_child(preview)
+ var card=preload("res://scripts/cloud_player_card.gd").new();card.name="CloudProfileCard";card.legacy=l;card.username=str(user.username);card.compact=true;preview.add_child(card);card.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);card.offset_left=8;card.offset_right=-8;card.offset_top=8;card.offset_bottom=-8
+ var caption=Label.new();caption.text="Click / tap your card to enlarge";caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;caption.add_theme_font_size_override("font_size",15);right.add_child(caption)
+func enlarge_card()->void:
+ if is_instance_valid(card_popup):return
+ var l=legacy()
+ if not loaded or l==null:return
+ card_popup=PanelContainer.new();card_popup.name="FullPlayerCard";card_popup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(card_popup)
+ var skin=StyleBoxFlat.new();skin.bg_color=Color("#10262e");skin.border_color=Color("#d9bc7d");skin.set_border_width_all(2);skin.set_content_margin_all(20);card_popup.add_theme_stylebox_override("panel",skin)
+ var layout=VBoxContainer.new();layout.name="CardDetailLayout";layout.add_theme_constant_override("separation",10);card_popup.add_child(layout)
+ var done=Button.new();done.name="CloseCard";done.text="Close player card";done.custom_minimum_size.y=44;done.pressed.connect(close_card);layout.add_child(done);done.grab_focus()
+ var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;layout.add_child(scroll)
+ var card=preload("res://scripts/cloud_player_card.gd").new();card.legacy=l;card.username=str(user.username);scroll.add_child(card)
+func close_card()->void:
+ if is_instance_valid(card_popup):card_popup.queue_free()
+ card_popup=null
 func download_recovery()->void:
  var l=legacy()
  for suffix in [".recovery",".bak.recovery",".bak"]:
@@ -196,16 +224,26 @@ func download_recovery()->void:
   if not FileAccess.file_exists(path):continue
   if OS.has_feature("web"):JavaScriptBridge.download_buffer(FileAccess.get_file_as_bytes(path),"crossroads-recovery"+suffix+".json","application/json")
  message="Preserved save files requested. Keep them for recovery; do not clear browser storage.";refresh()
+func sync_records()->void:
+ var current=legacy()
+ if loaded and not conflict and current!=null and current.community!=null:current.community.request_sync()
 func mark_owner()->void:STORE.write("user://fx_cloud_owner.json",{"id":user.id,"username":user.username,"revision":revision})
 func apply(p:Dictionary)->void:
  var l=legacy()
  if l==null or not l.validate(p):message="Cloud profile did not pass validation. Local progress unchanged.";loaded=false;refresh();return
  backup_local(make_bundle(l));p.progress.name=str(user.username) if loaded else str(p.progress.get("name","Traveler"));l.pending=p;applying=true
  close();l.game.mode="town";l.apply_import();applying=false
+ call_deferred("sync_records")
+static func public_error(value:String)->String:
+ # Older deployed services may still return school-specific wording.
+ if "Cloud accounts are not available yet" in value or "Cloud accounts unavailable" in value:
+  return "Cloud accounts are temporarily unavailable. You can keep playing on this device and download a profile backup. Please try again later."
+ return value.replace("unique school code", "unique private game ID")
 func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteArray)->void:
  busy=false;var p=JSON.parse_string(bytes.get_string_from_utf8());var op=operation
  if result!=HTTPRequest.RESULT_SUCCESS or not p is Dictionary or code<200 or code>=300:
   message=str(p.get("error","Connection failed. Local progress is safe.")) if p is Dictionary else "Connection failed. Local progress is safe."
+  message=public_error(message)
   if code==409 and op=="save":conflict=true
   if code==401 and op not in ["auth","password","recovery"]:loaded=false;token=""
   if op in ["save","save_logout"]:save_error=true
@@ -228,6 +266,7 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
   "save", "save_logout":
    save_error=false;revision=int(p.revision);mark_owner();var canonical=staged.duplicate(true);canonical.erase("exported");last_json=JSON.stringify(canonical);message="Cloud saved • revision "+str(revision);refresh()
    if op=="save_logout":call_api("logout",{},"logout")
+   else:call_deferred("sync_records")
   "logout":finish_logout()
 func sign_out()->void:
  if busy:return
@@ -246,6 +285,7 @@ func guest_play()->void:
   STORE.erase("user://fx_cloud_owner.json");STORE.erase("user://fx_cloud_guest.json");token="";user={};loaded=false;apply(restore);return
  close()
 func close()->void:
+ close_card()
  if is_instance_valid(panel):panel.queue_free()
  panel=null;col=null
  var l=legacy()

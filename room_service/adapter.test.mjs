@@ -9,7 +9,7 @@ async function connection(url){
  const socket=new WebSocket(url), inbox=[];
  socket.on('message', bytes=>inbox.push(JSON.parse(bytes.toString())));
  await once(socket,'open');
- return {socket,send:p=>socket.send(JSON.stringify({game_build:165,...p})),take:async type=>{
+ return {socket,send:p=>socket.send(JSON.stringify({game_build:166,...p})),take:async type=>{
   const end=Date.now()+3000;
   while(Date.now()<end){const index=inbox.findIndex(p=>p.type===type);if(index>=0)return inbox.splice(index,1)[0];await new Promise(r=>setTimeout(r,10));}
   throw Error('No '+type+' response');
@@ -22,7 +22,7 @@ test('real WebSocket adapter resumes an active room and routes signals with the 
  try{
   await Promise.race([once(service.stdout,'data'),new Promise((_,reject)=>setTimeout(()=>reject(Error('Service did not start')),3000))]);
   const url='ws://127.0.0.1:'+port;
-  const release=await fetch('http://127.0.0.1:'+port+'/release');assert.equal(release.status,200);assert.equal(release.headers.get('cache-control'),'no-store');assert.equal((await release.json()).game_build,165);
+  const release=await fetch('http://127.0.0.1:'+port+'/release');assert.equal(release.status,200);assert.equal(release.headers.get('cache-control'),'no-store');assert.equal((await release.json()).game_build,166);
   const old=await connection(url);sockets.push(old.socket);old.send({type:'host',version:32,game_build:146,mode:'descent'});assert.match((await old.take('error')).message,/Save\/download your player profile first/);
   const h=await connection(url);sockets.push(h.socket);assert.equal((await h.take('server_info')).version,30);
   h.send({type:'host',version:14,mode:'descent'});const room=await h.take('hosted');

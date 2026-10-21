@@ -16,7 +16,7 @@ const server = http.createServer(async (request, response) => {
     return;
   }
   response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-  response.end(JSON.stringify({ service: 'FX Crossroads rooms', version: 30, publicRooms: true }));
+  response.end(JSON.stringify({ service: 'Crossroads: Realms Beyond rooms', version: 30, publicRooms: true }));
 });
 const wss = new WebSocketServer({ server, maxPayload: 128 * 1024, perMessageDeflate: false });
 wss.on('connection', ws => {
@@ -29,7 +29,7 @@ wss.on('connection', ws => {
     try {
       const packet = JSON.parse(bytes.toString());
       if (outdatedGame(packet, publishedRelease)) {
-        send({ type: 'error', message: `Update to v${publishedRelease.game_build} before joining multiplayer. Save/download your player profile first, then get the latest game at fxcts.itch.io/fx-crossroads.` });
+        send({ type: 'error', message: `Update to v${publishedRelease.game_build} before joining multiplayer. Save/download your player profile first, then get the latest game at the current Crossroads: Realms Beyond game page on itch.io.` });
         return;
       }
       const result = rooms.message(client, packet); if (result?.id && rooms.clients.get(result.id) === result) client = result; }
@@ -46,7 +46,7 @@ const timer = setInterval(() => {
   }
 }, 15000);
 wss.on('close', () => clearInterval(timer));
-server.listen(Number(process.env.PORT || 3000), '0.0.0.0', () => console.log('FX Crossroads room service v30 ready'));
+server.listen(Number(process.env.PORT || 3000), '0.0.0.0', () => console.log('Crossroads: Realms Beyond room service v30 ready'));
 for (const signal of ['SIGTERM', 'SIGINT']) process.on(signal, () => {
   clearInterval(timer);
   for (const ws of wss.clients) ws.close(1001, 'Room service restarting');

@@ -79,7 +79,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "lumen_relay":field(owner,end,"relay",3,140)
   "lumen_sanctuary":field(owner,end,"sanctuary",4,140)
   "harbor_note":
-   combat.add_ring(owner,p,{"radius":115,"slow_duration":.8,"slow":.75,"color":"#8fdde5"},amount)
+   combat.add_ring(owner,p,{"style":"harbor_note","follow_owner":true,"radius":115,"slow_duration":.8,"slow":.75,"color":"#8fdde5"},amount)
    if combat.passive(owner,"harbor_watch"):
     for friend in friendly_near(owner,p,110):combat.apply_status(combat.player_key(friend),"guard",.8,owner,.1)
   "harbor_mend":field(owner,p,"mend",1,90)

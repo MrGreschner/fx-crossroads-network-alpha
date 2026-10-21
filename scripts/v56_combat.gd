@@ -96,7 +96,10 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "thunder_procession":
    if storms.size()<8:storms.append({"owner":owner,"start":combat.point_array(origin),"aim":combat.point_array(aim),"age":0.0,"damage":amount,"hits":[[],[],[]]})
   "fault_steps":
-   if faults.size()<24:faults.append({"owner":owner,"start":combat.point_array(origin),"aim":combat.point_array(aim),"age":0.0,"damage":amount,"hits":[],"next":0})
+   if faults.size()<24:
+    var entry={"owner":owner,"start":combat.point_array(origin),"aim":combat.point_array(aim),"age":0.0,"damage":amount,"hits":[],"next":0,"segments":[]}
+    faults.append(entry)
+    erupt_fault(entry)
   "stone_hoist":
    var key:String=combat.classics.nearest(owner,origin,220,[],aim)
    if not key.is_empty() and hoists.size()<24:
@@ -166,13 +169,8 @@ func step(delta:float)->void:
   if float(entry.age)>3.6:storms.remove_at(n)
  for n in range(faults.size()-1,-1,-1):
   var entry:Dictionary=faults[n];entry.age+=delta
-  while int(entry.next)<3 and float(entry.age)>=.12+int(entry.next)*.14:
-   var point:Vector2=combat.chain.clip(combat.vec(entry.start),combat.vec(entry.aim),65+int(entry.next)*50);entry.next+=1
-   for key in combat.hostile(entry.owner):
-    var actor:Dictionary=combat.actor(key)
-    if actor.is_empty() or key in entry.hits or point.distance_to(actor.pos)>42 or not combat.path_clear(combat.vec(entry.start),actor.pos):continue
-    entry.hits.append(key);combat.damage(key,float(entry.damage),entry.owner)
-   if combat.passive(entry.owner,"bedrock") and not entry.hits.is_empty():combat.apply_status(combat.player_key(entry.owner),"guard",3,entry.owner,minf(.2,entry.hits.size()*.05))
+  if combat.adventure.alive(str(entry.owner)):
+   while int(entry.next)<3 and float(entry.age)>=int(entry.next)*.14:erupt_fault(entry)
   if float(entry.age)>.7:faults.remove_at(n)
  for n in range(hoists.size()-1,-1,-1):
   var entry:Dictionary=hoists[n];entry.age+=delta
@@ -193,6 +191,17 @@ func step(delta:float)->void:
    if absf(offset.dot(aim))<28 and absf(offset.dot(aim.orthogonal()))<120 and combat.path_clear(closest,actor.pos):
     entry.hits.append(key);combat.damage(key,float(entry.damage),entry.owner);combat.knock(key,aim,80)
   if float(entry.distance)>=340:ramps.remove_at(n)
+func erupt_fault(entry:Dictionary)->void:
+ # Each NEW eruption starts from the moving badger; erupted ground stays planted.
+ var origin:Vector2=combat.owner_pos(str(entry.owner))
+ var point:Vector2=combat.chain.clip(origin,combat.vec(entry.aim),65+int(entry.next)*50)
+ entry.segments.append({"pos":combat.point_array(point),"born":float(entry.age)})
+ entry.next=int(entry.next)+1
+ for key in combat.hostile(str(entry.owner)):
+  var target:Dictionary=combat.actor(key)
+  if target.is_empty() or not bool(target.alive) or key in entry.hits or point.distance_to(target.pos)>42 or not combat.path_clear(origin,target.pos):continue
+  entry.hits.append(key);combat.damage(key,float(entry.damage),str(entry.owner))
+ if combat.passive(str(entry.owner),"bedrock") and not entry.hits.is_empty():combat.apply_status(combat.player_key(str(entry.owner)),"guard",3,str(entry.owner),minf(.2,entry.hits.size()*.05))
 func snapshot()->Dictionary:return {"intakes":intakes,"faults":faults,"hoists":hoists,"ramps":ramps,"clouds":clouds,"lanes":lanes,"storms":storms,"draws":draws,"clock":clock}
 func receive(data:Dictionary)->void:
  intakes=data.get("intakes",{});faults=data.get("faults",[]);hoists=data.get("hoists",[]);ramps=data.get("ramps",[]);clouds=data.get("clouds",[]);lanes=data.get("lanes",[]);storms=data.get("storms",[]);draws=data.get("draws",[]);clock=float(data.get("clock",0))
@@ -243,10 +252,10 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    var age:float=float(entry.age)-index*.45
    if age>=0 and age<=2.7:cloud_art(c,combat.chain.clip(combat.vec(entry.start),combat.vec(entry.aim),age*180)-camera-Vector2(0,55),true)
  for entry in faults:
-  for index in 3:
-   var age:float=float(entry.age)-(.12+index*.14)
-   if age<0:continue
-   var point:Vector2=combat.chain.clip(combat.vec(entry.start),combat.vec(entry.aim),65+index*50)-camera
+  for segment in entry.get("segments",[]):
+   var age:float=float(entry.age)-float(segment.born)
+   if age<0 or age>.45:continue
+   var point:Vector2=combat.vec(segment.pos)-camera
    var rise:float=sin(clampf(age/.45,0,1)*PI)*22
    c.draw_colored_polygon(PackedVector2Array([point+Vector2(-27,6),point+Vector2(-20,-rise),point+Vector2(10,-rise-8),point+Vector2(27,5)]),Color("#849a91"))
    c.draw_polyline(PackedVector2Array([point+Vector2(-20,-rise),point+Vector2(10,-rise-8),point+Vector2(27,5)]),Color("#c0ccb2"),3,true)

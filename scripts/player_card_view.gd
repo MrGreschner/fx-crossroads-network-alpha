@@ -1,5 +1,6 @@
 extends Control
 var legacy:Node
+var display_name_override=""
 var portrait:Texture2D
 var favorite_art:Texture2D
 var icon_id:=""
@@ -48,7 +49,7 @@ func _draw()->void:
  if portrait!=null:draw_texture_rect(portrait,Rect2(28,28,98,112),false)
  else:draw_circle(Vector2(77,68),20,Color("#819a98"));draw_rect(Rect2(50,92,54,35),Color("#819a98"));label(Vector2(34,171),"TRAVELER",15)
  if legacy.card.portrait_star(icon_id):star(Vector2(25,26),13,Color("#f5ce63"));star(Vector2(25,26),8,Color("#fff1af"))
- label(Vector2(157,43),str(legacy.data.name),27,Color("#f4db98"));label(Vector2(157,70),str(legacy.data.title),18,Color("#9ecfc6"))
+ label(Vector2(157,43),display_name_override if not display_name_override.is_empty() else str(legacy.data.name),27,Color("#f4db98"));label(Vector2(157,70),str(legacy.data.title),18,Color("#9ecfc6"))
  var crown_rank=preload("res://scripts/rolling_crowns.gd").tier_from(legacy.crowns.total())
  label(Vector2(w-275,43),"ROLLING CROWN • 7 DAYS",12,Color("#afc2be"))
  label(Vector2(w-275,70),preload("res://scripts/rolling_crowns.gd").rank_name(crown_rank),18,Color("#e8d49b"))

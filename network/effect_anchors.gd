@@ -1,6 +1,7 @@
 extends RefCounted
 ## Explicit attachment policy. Unlisted records retain their authored world point.
 const ATTACHED={
+ "root":["attached_ring"],
  "mantis":["parry","scissor_feint"],
  "v110":["jabs","saber","charge"],
  "v112":["oar","light","tap","kindle","march"],

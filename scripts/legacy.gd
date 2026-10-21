@@ -721,7 +721,7 @@ func validate(value:Variant)->bool:
  if value is Dictionary and value.has("studio_draft") and not preload("res://scripts/workshop_project.gd").validate(value.studio_draft).is_empty():return false
  if not value is Dictionary or str(value.get("format",""))!="fx-crossroads-profile" or int(value.get("version",0))!=1:return false
  if not value.get("progress") is Dictionary or not value.get("saves") is Dictionary:return false
- if value.progress.has("analytics_id") and (not value.progress.analytics_id is String or not get_tree().root.get_node("FXActivity").valid_id(value.progress.analytics_id)):return false
+ if value.progress.has("analytics_id") and (not value.progress.analytics_id is String or not preload("res://scripts/play_insights.gd").valid_id(value.progress.analytics_id)):return false
  var progress:Dictionary=value.progress
  if not progress.get("tasks",{}) is Dictionary:return false
  if not progress.get("tasks",{}).get("realms",[]) is Array:return false

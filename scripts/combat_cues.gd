@@ -3,8 +3,14 @@ extends RefCounted
 static func visible(c:Node2D,p:Vector2,radius:float=50)->bool:
  var view:Vector2=c.VIEW if c.has_method("spectating") and c.spectating() else c.get_viewport_rect().size
  return Rect2(Vector2.ZERO,view).grow(radius+20).has_point(p)
+static func danger_markers_enabled(c:Node2D)->bool:
+ var mode=c.get("mode")
+ if mode==null:
+  var game=c.get("game")
+  if is_instance_valid(game):mode=game.get("mode")
+ return str(mode)!="descent"
 static func danger(c:Node2D,p:Vector2,radius:float,left:float,total:float=1,colour:Color=Color("#ffc075"))->void:
- if not visible(c,p,radius):return
+ if not danger_markers_enabled(c) or not visible(c,p,radius):return
  radius=maxf(8,radius)
  c.draw_circle(p,radius,Color(colour,.065));c.draw_arc(p,radius,0,TAU,40,Color(colour,.75),2,true)
  var progress:=clampf(1-left/maxf(.01,total),0,1)
@@ -27,6 +33,7 @@ static func corridor(c:Node2D,a:Vector2,b:Vector2,width:float)->void:
  c.draw_line(b,b-d.rotated(.5)*18,Color("#ffe7ae"),3,true);c.draw_line(b,b-d.rotated(-.5)*18,Color("#ffe7ae"),3,true)
  badge(c,a.lerp(b,.5),"!",Color("#ffc075"))
 static func badge(c:Node2D,p:Vector2,text:String,colour:Color)->void:
+ if text=="!" and not danger_markers_enabled(c):return
  c.draw_circle(p,12,Color("#172e39"));c.draw_arc(p,12,0,TAU,16,colour,1.5,true)
  c.draw_string(ThemeDB.fallback_font,p+Vector2(-5,6),text,HORIZONTAL_ALIGNMENT_LEFT,-1,18,colour)
 static func healing(c:Node2D,p:Vector2,radius:float)->void:

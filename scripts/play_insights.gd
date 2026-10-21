@@ -31,7 +31,7 @@ var status="Waiting for play"
 var sent=0
 var dropped=0
 func identifier()->String:return Crypto.new().generate_random_bytes(16).hex_encode()
-func valid_id(value:String)->bool:
+static func valid_id(value:String)->bool:
  if value.length()!=32:return false
  for c in value:
   if not c in "0123456789abcdef":return false

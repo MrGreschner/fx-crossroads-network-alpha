@@ -499,7 +499,7 @@ func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,
 	shot_turn[owner]=int(shot_turn.get(owner,0))+1
 func add_ring(owner:String,origin:Vector2,stats:Dictionary,amount:float)->void:
 	if rings.size()>=32:return
-	rings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Sound wave"))),"tempo_id":str(stats.get("tempo_id","")),"style":str(stats.get("style","pulse_wave")),"owner":owner,"pos":point_array(origin),"radius":0.0,"max_radius":float(stats.get("radius",105)),"speed":float(stats.get("wave_speed",260)),"damage":amount,"slow":float(stats.get("slow_duration",0)),"slow_factor":float(stats.get("slow",.55)),"knockback":float(stats.get("knockback",0)),"stun":float(stats.get("stun",0)),"clear":bool(stats.get("clear_projectiles",false)),"hits":[],"color":str(stats.get("color","#eed395"))})
+	rings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Sound wave"))),"kind":"attached_ring" if bool(stats.get("follow_owner",false)) else "world_ring","follow_owner":bool(stats.get("follow_owner",false)),"tempo_id":str(stats.get("tempo_id","")),"style":str(stats.get("style","pulse_wave")),"owner":owner,"pos":point_array(origin),"radius":0.0,"max_radius":float(stats.get("radius",105)),"speed":float(stats.get("wave_speed",260)),"damage":amount,"slow":float(stats.get("slow_duration",0)),"slow_factor":float(stats.get("slow",.55)),"knockback":float(stats.get("knockback",0)),"stun":float(stats.get("stun",0)),"clear":bool(stats.get("clear_projectiles",false)),"hits":[],"color":str(stats.get("color","#eed395"))})
 func owner_anchors(owner:String)->Array:
 	var result:Array=[]
 	for pin in anchors:
@@ -687,13 +687,18 @@ func step(delta:float)->void:
 func step_rings(delta:float)->void:
 	for i in range(rings.size()-1,-1,-1):
 		var ring:Dictionary=rings[i];var previous:=float(ring["radius"]);ring["radius"]=minf(float(ring["max_radius"]),previous+float(ring["speed"])*delta)
-		var center:=vec(ring["pos"]);var owner:=str(ring["owner"])
+		var before:=vec(ring["pos"]);var owner:=str(ring["owner"])
+		if bool(ring.get("follow_owner",false)):
+			if not adventure.alive(owner):rings.remove_at(i);continue
+			ring.pos=point_array(owner_pos(owner))
+		var center:=vec(ring["pos"])
+		# Teleports relocate the wave; they cannot sweep damage across the map.
+		if before.distance_to(center)>128:before=center
 		for key in hostile(owner):
 			if ring["hits"].has(key):continue
 			var target:=actor(key)
 			if target.is_empty():continue
-			var distance:=center.distance_to(target["pos"])
-			if distance<=float(ring["radius"])+18 and distance>=previous-20 and path_clear(center,target["pos"]):
+			if ring_contact(target["pos"],before,center,previous,float(ring["radius"])) and path_clear(center,target["pos"]):
 				ring["hits"].append(key);damage(key,float(ring["damage"]),owner,"Sound wave",ring.get("credit",{}))
 				var token:String=str(ring.get("tempo_id",""))
 				if tempo_hits.has(token):
@@ -704,6 +709,14 @@ func step_rings(delta:float)->void:
 				if float(ring["stun"])>0:apply_status(key,"stun",float(ring["stun"]),owner)
 		if bool(ring["clear"]):clear_projectiles(owner,center,float(ring["radius"])+16)
 		if float(ring["radius"])>=float(ring["max_radius"]):rings.remove_at(i)
+func ring_contact(target:Vector2,start:Vector2,finish:Vector2,inner:float,outer:float)->bool:
+	# Sample the moving expanding shell so ordinary movement cannot skip a target.
+	var count:=clampi(int(ceil((start.distance_to(finish)+outer-inner)/8.0)),1,64)
+	for n in range(count+1):
+		var t:=float(n)/count
+		var gap:=start.lerp(finish,t).distance_to(target)-lerpf(inner,outer,t)
+		if gap>=-20 and gap<=18:return true
+	return false
 func clear_projectiles(owner:String,center:Vector2,radius:float)->void:
 	var shots:Array=adventure.game.missiles if adventure.arcade else adventure.game.enemy_shots
 	for i in range(shots.size()-1,-1,-1):
@@ -958,8 +971,9 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 			var kind:=str(indicator["flags"][n])
 			var point:=vec(indicator["pos"])-camera+Vector2(-12+n*16,-63)
 			preload("res://scripts/combat_cues.gd").status(canvas,point,kind,clock)
-	for ring in rings:
-		var center:=vec(ring["pos"])-camera;var radius:=maxf(1,float(ring["radius"]))
+	for ring in draw_effect_records("root","rings",rings):
+		var fallback:Vector2=owner_pos(str(ring.owner)) if bool(ring.get("follow_owner",false)) else vec(ring.pos)
+		var center:=draw_effect_position("root",ring,fallback)-camera;var radius:=maxf(1,float(ring["radius"]))
 		if not preload("res://scripts/combat_cues.gd").visible(canvas,center,radius+32):continue
 		canvas.draw_arc(center,radius,0,TAU,48,Color(str(ring["color"]),.6),4,true)
 		if str(ring.get("style",""))=="waterfall_wave":

@@ -65,14 +65,11 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
    if step==3:
     strike_stats.knockback=40
     if combat.passive(owner,"steadfast_forge"):combat.apply_status(combat.player_key(owner),"guard",2,owner,.15)
-   combat.v56.hit_cone(owner,aim,105 if step==3 else 85,120 if step==3 else 80,amount*(1.5 if step==3 else 1))
-   if step==3:
-    for key in combat.hostile(owner):
-     var target:Dictionary=combat.actor(key)
-     if not target.is_empty() and combat.v56.cone(origin,aim,target.pos,105,cos(deg_to_rad(60))):combat.knock(key,aim,40)
    combos[owner]={"step":0 if step==3 else step,"left":1.8}
-   var e:=add(owner,"hammer_arc",origin,aim,stats,0,.35)
-   if not e.is_empty():e["combo"]=step
+   var e:=add(owner,"hammer_arc",origin,aim,strike_stats,amount*(1.5 if step==3 else 1),.35)
+   if not e.is_empty():
+    e["combo"]=step
+    hammer_hit(e)
   "rally_banner":
    for i in range(effects.size()-1,-1,-1):
     if str(effects[i].owner)==owner and str(effects[i].style)==style:effects.remove_at(i)
@@ -93,6 +90,10 @@ func step(delta:float)->void:
   var old:float=float(e.age);e.age=old+delta
   var age:=float(e.age);var p:Vector2=combat.vec(e.pos);var aim:Vector2=combat.vec(e.aim);var stats:Dictionary=e.stats
   match str(e.style):
+   "hammer_arc":
+    e.pos=combat.point_array(combat.owner_pos(owner))
+    # Damage only during the short swing, once per target across the whole cast.
+    if age<=.18:hammer_hit(e)
    "water_jet":
     # Three short water pulses, total listed damage, stopped by the first target or wall.
     for pulse in 3:
@@ -144,6 +145,16 @@ func step(delta:float)->void:
      if age<1+n*.2 or (e.hits as Array).has(n):continue
      e.hits.append(n);area(owner,clip(p,aim,n*90),65,float(e.damage),stats)
   if age>=float(e.time):effects.remove_at(i)
+func hammer_hit(e:Dictionary)->void:
+ var owner:=str(e.owner);var origin:Vector2=combat.owner_pos(owner);var aim:Vector2=combat.vec(e.aim)
+ var third:=int(e.combo)==3;var reach:=105.0 if third else 85.0;var arc:=120.0 if third else 80.0
+ for key in combat.hostile(owner):
+  var target:Dictionary=combat.actor(key)
+  if target.is_empty() or not bool(target.alive) or key in e.hits:continue
+  if not combat.v56.cone(origin,aim,target.pos,reach,cos(deg_to_rad(arc*.5))) or not combat.path_clear(origin,target.pos):continue
+  e.hits.append(key)
+  if third:combat.knock(key,aim,40)
+  combat.damage(key,float(e.damage),owner)
 func friendly(owner:String,other:String)->bool:
  return not (combat.adventure.arcade and combat.adventure.game.mode in ["arena","battlegrounds"] and combat.adventure.game._rival(owner,other))
 func catch_shot(start:Vector2,finish:Vector2,source:String,amount:float,colour:String)->bool:
@@ -170,7 +181,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   if combat.passive(str(id),"steadfast_forge") and combat.effect_time(combat.player_key(str(id)),"guard")>0:
    c.draw_arc(combat.owner_pos(str(id))-camera,35,0,TAU,32,Color(.95,.72,.4,.4),2,true)
  for e in combat.draw_effect_records("v75","effects",effects):
-  var p:Vector2=combat.draw_effect_position("v75",e,combat.vec(e.pos))-camera;var origin:Vector2=combat.vec(e.origin)-camera;var aim:Vector2=combat.vec(e.aim);var age:=float(e.age);var stats:Dictionary=e.stats
+  var p:Vector2=combat.draw_effect_position("v75",e,combat.owner_pos(str(e.owner)) if str(e.style)=="hammer_arc" else combat.vec(e.pos))-camera;var origin:Vector2=combat.vec(e.origin)-camera;var aim:Vector2=combat.vec(e.aim);var age:=float(e.age);var stats:Dictionary=e.stats
   if not Rect2(Vector2(-650,-650),Vector2(2580,2020)).has_point(p):continue
   match str(e.style):
    "water_jet":

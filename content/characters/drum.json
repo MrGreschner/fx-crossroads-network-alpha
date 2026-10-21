@@ -15,7 +15,8 @@
     "wave_speed": 260,
     "description": "An expanding sound ring deals 14 damage once and slows enemies by 25% for 1.6 seconds.",
     "slow_duration": 1.6,
-    "slow": 0.75
+    "slow": 0.75,
+    "follow_owner": true
   },
   "secondary": {
     "name": "Triple Tempo",

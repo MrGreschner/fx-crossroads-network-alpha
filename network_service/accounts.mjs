@@ -58,7 +58,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
     if(fresh?.student_number)return fresh.student_number;
    }catch(e){if(e.code!=='23505')throw e;}
   }
-  fail(503,'Could not generate a unique school code. Please retry.');
+  fail(503,'Could not generate a unique private game ID. Please retry.');
  }
  async function body(req){let bytes=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),15000);timer.unref();try{for await(const chunk of req){bytes+=chunk.length;if(bytes>4194304)fail(413,'Cloud profile limit is 4 MB. Download a local backup; your previous cloud save is safe.');chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks));}finally{clearTimeout(timer);}}
  function send(res,status,data,extra={}){res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff',...extra});res.end(JSON.stringify(data));}
@@ -76,7 +76,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
   else{const origin=req.headers.origin||'';if(origin&&!/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)&&!(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)&&!(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin))){send(res,403,{error:'Origin rejected'});req.resume();return true;}if(origin){res.setHeader('access-control-allow-origin',origin);res.setHeader('vary','Origin');}if(req.method==='OPTIONS'){send(res,204,{}, {'access-control-allow-methods':'GET,POST','access-control-allow-headers':'content-type,authorization'});return true;}}
   // Temporary reduced release: the browser account console is not shipped.
   if(['/accounts','/accounts/control.js','/accounts/admin/recovery','/accounts/admin/password'].includes(path)){send(res,503,{error:'Browser account controls and administrator password recovery are temporarily unavailable in this profile-core release. Player login and cloud saves remain available.'});req.resume();return true;}
-  if(!ready&&pool&&encryption&&now()>retryAt)await initialize();if(!ready){send(res,503,{error:isAdmin?'Cloud accounts unavailable. Set CLOUD_SAVE_KEY (32 random bytes, base64) and DATABASE_URL, then redeploy.':'Cloud accounts are not available yet. Keep a downloaded profile backup and ask your teacher or game administrator.'});req.resume();return true;}
+  if(!ready&&pool&&encryption&&now()>retryAt)await initialize();if(!ready){send(res,503,{error:isAdmin?'Cloud accounts unavailable. Set CLOUD_SAVE_KEY (32 random bytes, base64) and DATABASE_URL, then redeploy.':'Cloud accounts are temporarily unavailable. You can keep playing on this device and download a profile backup. Please try again later.'});req.resume();return true;}
   const ip=req.socket.remoteAddress||'unknown';let rr=rate.get(ip);if(!rr||now()-rr.at>60000)rr={at:now(),auth:0,other:0};rate.set(ip,rr);if(rate.size>4096)rate.delete(rate.keys().next().value);
   const authRoute=['/accounts/register','/accounts/login'].includes(path);if((authRoute?++rr.auth>80:++rr.other>1200)||busy>=8){send(res,429,{error:'Please retry shortly.'});req.resume();return true;}
   busy++;
