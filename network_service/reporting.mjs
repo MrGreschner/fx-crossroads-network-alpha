@@ -25,7 +25,8 @@ export function cleanReport(raw,c){
  out[field]=action;
  }return out;});
  const g=raw.graphics||{};const graphics={};for(const key of ['renderer','version','maxTextureSize','width','height','vendor','webglVersion','webgl_version','hardwareConcurrency','deviceMemory','contextLosses'])if(Object.hasOwn(g,key))graphics[key]=typeof g[key]==='string'?safeString(g[key],160):numericTree(g[key]);
- return {id:raw.id,match_id:c.match,room:c.room,actor:c.actor,device_id:raw.device_id,build:safeString(raw.build,32),hero:safeString(raw.hero,64),reason:safeString(raw.reason,32),samples,graphics};
+ const observedBuild=samples.find(s=>/^V[0-9]+(?:\.[0-9]+)*-[a-z][a-z0-9-]*$/.test(s.build||''))?.build;
+ return {id:raw.id,match_id:c.match,room:c.room,actor:c.actor,device_id:raw.device_id,build:safeString(observedBuild||raw.build,64),hero:safeString(raw.hero,64),reason:safeString(raw.reason,32),samples,graphics};
 }
 export function createReporting({pool:provided,adminPassword=process.env.REPORT_ADMIN_PASSWORD||''}={}){
  const pool=provided||(process.env.DATABASE_URL?new pg.Pool({connectionString:process.env.DATABASE_URL,max:2,connectionTimeoutMillis:3000,idleTimeoutMillis:10000,statement_timeout:3000,query_timeout:4000}):null);
@@ -75,7 +76,9 @@ export function createReporting({pool:provided,adminPassword=process.env.REPORT_
   if(!ready){reply(res,503,{error:'Database not connected. Set DATABASE_URL and redeploy.'});return true;}
   if(pending>=4){reply(res,429,{error:'Busy; retry shortly'});return true;}pending++;
   try{
-   if(url.pathname==='/reports/api/performance-pack'){
+   if(url.pathname==='/reports/api/full-export'){
+    await insights.fullExport(reads,insights.filters(url),res,BUILD);
+   }else if(url.pathname==='/reports/api/performance-pack'){
     reply(res,200,{build:BUILD,...await insights.performancePack(reads,insights.filters(url))},{'Content-Disposition':`attachment; filename="Crossroads_performance_${new Date().toISOString().slice(0,10)}.json"`});
    }else if(url.pathname==='/reports/api/matches'){
     reply(res,200,await insights.matches(reads,insights.filters(url)));
@@ -90,7 +93,7 @@ export function createReporting({pool:provided,adminPassword=process.env.REPORT_
     const q=await reads.query('SELECT payload, created_at FROM fx_reports WHERE match_id=$1 ORDER BY created_at LIMIT 2001',[id]);
     reply(res,200,{version:BUILD,report_schema:REPORT_SCHEMA,match_id:id,limited:q.rows.length>2000,reports:q.rows.slice(0,2000).map(r=>({...r.payload,received_at:r.created_at}))},url.searchParams.has('download')?{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_match_${id}.json"`}:{});
    }else reply(res,404,{error:'Not found'});
-  }catch(error){reply(res,503,dashboardFailure(error,url.pathname));}finally{pending--;}
+  }catch(error){if(!res.headersSent)reply(res,503,dashboardFailure(error,url.pathname));else if(!res.destroyed)res.end();}finally{pending--;}
   return true;
  }
  return {pool,admin,handle,initialized,status:()=>({configured:!!pool,ready,admin_configured:adminPassword.length>=24,pending}),close:async()=>{clearInterval(retention);if(reads!==pool)await reads?.end();await pool?.end();}};

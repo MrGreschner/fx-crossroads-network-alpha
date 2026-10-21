@@ -25,7 +25,9 @@ static func session_name(g:Node)->String:
  return str(account.user.get("username","Guest")) if account!=null and not account.token.is_empty() else "Guest"
 static func heading(g:Node)->String:return "CROSSROADS: REALMS BEYOND  |  "+session_name(g)
 static func draw_heading(g:Node2D)->void:
- var available=maxf(180,g.VIEW.x-575-36);var text=heading(g);var font=g.font;var pixels=25
+ var account=g.get_node_or_null("/root/FXAccount");var teacher=account!=null and not account.token.is_empty() and str(account.user.get("role",""))=="teacher"
+ if teacher and g.VIEW.x<850:return
+ var available=maxf(180,g.VIEW.x-575-36-(150 if teacher else 0));var text=heading(g);var font=g.font;var pixels=25
  while pixels>17 and font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,pixels).x>available:pixels-=1
  if font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,pixels).x<=available:
   g.draw_string(font,Vector2(24,32),text,HORIZONTAL_ALIGNMENT_LEFT,available,pixels,Color.WHITE)

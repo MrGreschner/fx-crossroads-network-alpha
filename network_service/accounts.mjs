@@ -10,6 +10,8 @@ export function recoveryAnswer(value,{username='',password=''}={}){
  return answer;
 }
 export const accountSchema=`CREATE TABLE IF NOT EXISTS crossroads_accounts(id text PRIMARY KEY,username text NOT NULL,username_key text UNIQUE NOT NULL,password_hash text NOT NULL,role text NOT NULL DEFAULT 'player',identity text,disabled boolean NOT NULL DEFAULT false,revision integer NOT NULL DEFAULT 0,save text,profile text UNIQUE,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
+ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS school_id text;
+ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS username_warning boolean NOT NULL DEFAULT false;
 ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS student_number text;
 ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS recovery_hash text;
 ALTER TABLE crossroads_accounts ADD COLUMN IF NOT EXISTS identity_version integer NOT NULL DEFAULT 0;
@@ -45,7 +47,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
   try{const salt=saved?saved.split(':')[0]:randomBytes(16).toString('hex'),out=await scrypt(value,salt,64,{N:131072,r:8,p:1,maxmem:192*1024*1024});return saved?timingSafeEqual(out,Buffer.from(saved.split(':')[1],'hex')):salt+':'+out.toString('hex');}finally{hashing--;}
  }
  async function authenticate(req){const raw=(req.headers.authorization||'').replace(/^Bearer /,'');if(!/^[a-f0-9]{64}$/.test(raw))return null;const q=await pool.query(`SELECT a.*,s.token session_token FROM crossroads_sessions s JOIN crossroads_accounts a ON a.id=s.account WHERE s.token=$1 AND s.expires_at>to_timestamp($2) AND NOT a.disabled`,[digest(raw),now()/1000]);return q.rows[0]||null;}
- const publicUser=async a=>({id:a.id,username:a.username,role:a.role,needs_identity:false,school_code:await assignNumber(a),revision:a.revision,has_save:!!a.save,has_recovery:!!a.recovery_hash});
+ const publicUser=async a=>({id:a.id,username:a.username,role:a.role,school_id:a.school_id??null,username_warning:!!a.username_warning,needs_identity:false,school_code:await assignNumber(a),revision:a.revision,has_save:!!a.save,has_recovery:!!a.recovery_hash});
  async function assignNumber(a){
   if(a.student_number)return a.student_number;
   for(let retry=0;retry<12;retry++){
@@ -106,6 +108,11 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
    if(req.method==='GET'&&path==='/accounts/save'){send(res,200,{revision:a.revision,profile:a.save?unseal(a.save):null});return true;}
    if(req.method!=='POST')fail(405,'POST required');const p=await body(req);
    if(path==='/accounts/save'){const revision=await save(a,p.profile,p.revision);send(res,200,{saved:true,revision});}
+   else if(path==='/accounts/username'){
+    const name=checkUsername(p.username);if(name.key===a.username_key)fail(400,'Please choose a different username.');
+    try{await pool.query('UPDATE crossroads_accounts SET username=$1,username_key=$2,username_warning=false,updated_at=now() WHERE id=$3',[name.username,name.key,a.id]);}catch(e){if(e.code==='23505')fail(409,'That username is already taken. Choose another.');throw e;}
+    await pool.query('INSERT INTO crossroads_account_audit(account,action) VALUES($1,$2)',[a.id,'username-updated']);a.username=name.username;a.username_warning=false;send(res,200,{user:await publicUser(a)});
+   }
    else if(path==='/accounts/identity')fail(410,'Personal identification is no longer collected. Reload the updated game to see your automatic game ID.');
    else if(path==='/accounts/logout'){await pool.query('DELETE FROM crossroads_sessions WHERE token=$1',[a.session_token]);send(res,200,{signed_out:true});}
    else if(path==='/accounts/recovery'){if(!await password(p.current,a.password_hash))fail(401,'Current password is incorrect');const hashed=await answerHash(recoveryAnswer(p.answer,{username:a.username,password:p.current}));await pool.query('UPDATE crossroads_accounts SET recovery_hash=$1 WHERE id=$2',[hashed,a.id]);send(res,200,{saved:true});}
@@ -114,5 +121,5 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
   }catch(e){send(res,e.status||503,{error:e.status?e.message:'Account service unavailable. Your previous save is safe.'});req.resume();}finally{busy--;}
   return true;
  }
- return {handle,authenticate,initialized,status:()=>({configured:!!pool&&!!encryption,ready}),seal,unseal};
+ return {handle,authenticate,ensureNumber:assignNumber,initialized,status:()=>({configured:!!pool&&!!encryption,ready}),seal,unseal};
 }

@@ -93,6 +93,7 @@ func advance(delta:float)->void:
   var end:Vector2=start+aim*travel
   if not combat.path_clear(start,end):flash(start,aim,"catch");wheels.remove_at(n);continue
   var leg:int=int(shot.phase)
+  if combat.v56.catch_travelling(start,end,owner,float(shot.damage) if leg==0 else float(shot.return_damage),"#cfc8ee",{"stolen_visual":"windwheel"}):wheels.remove_at(n);continue
   for key in wheel_candidates(owner,start,end):
    if (shot.hits[leg] as Array).has(key):continue
    var target:Dictionary=combat.actor(key)
@@ -119,6 +120,7 @@ func advance(delta:float)->void:
    var before:Vector2=combat.vec(star.pos)
    var after:Vector2=center+Vector2.from_angle(float(star.angle)+TAU*progress)*float(star.radius)*(1-progress)
    if not combat.path_clear(before,after):star.active=false;continue
+   if combat.v56.catch_travelling(before,after,owner,float(eclipse.damage),"#cfc8ee",{"stolen_visual":"windwheel"}):star.active=false;continue
    for key in combat.hostile(owner):
     if int(eclipse.hits.get(key,0))>=3:continue
     var target:Dictionary=combat.actor(key)

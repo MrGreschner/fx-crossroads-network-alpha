@@ -128,7 +128,7 @@ func step(delta:float)->void:
   var s:Dictionary=shots[i];var owner:=str(s.owner)
   if not combat.adventure.alive(owner):shots.remove_at(i);continue
   var start:Vector2=combat.vec(s.pos);var aim:Vector2=combat.vec(s.aim);var travel:=minf(510*delta,float(s.left));var end:Vector2=combat.v75.clip(start,aim,travel)
-  if combat.v56.catch_shot(start,end,owner,float(s.damage),"#b9e8e1"):shots.remove_at(i);continue
+  if combat.v56.catch_shot(start,end,owner,float(s.damage),"#b9e8e1",true,{"stolen_visual":"dart"}):shots.remove_at(i);continue
   var blocked:=start.distance_to(end)<travel-.5;var nearest:=INF;var victim:=""
   for key in combat.hostile(owner):
    var target:Dictionary=combat.actor(key)

@@ -11,8 +11,8 @@
     "style": "vacuum_intake",
     "damage": 12,
     "cooldown": 0.7,
-    "description": "Hold primary for a close intake: 12 damage every 0.7 seconds and a 1-second slow. Within the first 0.4 seconds it can catch one hostile projectile. Release to fire it where you aim for 36\u201360 damage. Stored shots release automatically after 6 seconds.",
-    "range": 82
+    "description": "Hold primary for a 94-unit intake: 12 damage every 0.7 seconds and a 1-second slow. Within the first 0.4 seconds it can catch one hostile projectile. Release to fire it where you aim for 36\u201360 damage. Stored shots release automatically after 6 seconds.",
+    "range": 94
   },
   "secondary": {
     "name": "Brush Crush",

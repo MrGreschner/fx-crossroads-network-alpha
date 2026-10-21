@@ -86,7 +86,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
    for key in combat.hostile(owner):
     var f:Dictionary=combat.actor(key)
     if not f.is_empty() and bool(f.alive) and p.distance_to(f.pos)<best and combat.v56.cone(p,aim,f.pos,reach,cos(.45)) and combat.path_clear(p,f.pos):target=str(key);best=p.distance_to(f.pos)
-   var e:=effect(owner,"lasso",.4,p,aim,amount,reach);e.target=target
+   var e:=effect(owner,"lasso",.4,p,aim,amount,reach);e.target=target;e.last_pos=combat.point_array(combat.actor(target).pos if not target.is_empty() else combat.chain.clip(p,aim,reach))
  return true
 func step(delta:float)->void:
  if not combat.adventure.authoritative():return
@@ -118,6 +118,10 @@ func step(delta:float)->void:
   var e:Dictionary=effects[i];var owner:=str(e.owner);var active:=minf(delta,float(e.time));e.time=float(e.time)-delta;e.tick=float(e.tick)+active
   if not combat.adventure.alive(owner):effects.remove_at(i);continue
   var p:Vector2=combat.owner_pos(owner);var origin:Vector2=combat.vec(e.pos);var aim:Vector2=combat.vec(e.aim);var elapsed:=float(e.duration)-float(e.time)
+  if str(e.style) in ["lasso","tied","pull"] and not str(e.get("target","")).is_empty():
+   var tracked:Dictionary=combat.actor(str(e.target))
+   if tracked.is_empty() or not bool(tracked.alive):effects.remove_at(i);continue
+   e.last_pos=combat.point_array(tracked.pos)
   match str(e.style):
    "reed":
     if int(e.stage)==0 and elapsed>=REED_IMPACT:
@@ -184,8 +188,13 @@ func step(delta:float)->void:
     if elapsed>=.3 and int(e.stage)==0:
      e.stage=1;var f:Dictionary=combat.actor(str(e.target))
      if not f.is_empty() and bool(f.alive) and p.distance_to(f.pos)<=float(e.range) and combat.path_clear(p,f.pos):
-      combat.damage(str(e.target),float(e.damage),owner);combat.apply_status(str(e.target),"stun",2.0,owner);var tie:=effect(owner,"tied",2.0,f.pos,aim);tie.target=e.target;tie.used=false
-      var pull:=effect(owner,"pull",.4,f.pos,aim);pull.target=e.target;pull.destination=combat.point_array(p+(f.pos-p).normalized()*48)
+      var impact:Vector2=f.pos;e.last_pos=combat.point_array(impact)
+      combat.damage(str(e.target),float(e.damage),owner)
+      var survivor:Dictionary=combat.actor(str(e.target))
+      if not survivor.is_empty() and bool(survivor.alive):
+       combat.apply_status(str(e.target),"stun",2.0,owner)
+       var tie:=effect(owner,"tied",2.0,impact,aim);tie.target=e.target;tie.used=false;tie.last_pos=e.last_pos.duplicate()
+       var pull:=effect(owner,"pull",.4,impact,aim);pull.target=e.target;pull.last_pos=e.last_pos.duplicate();pull.destination=combat.point_array(p+(impact-p).normalized()*48)
   if float(e.time)<=0:effects.remove_at(i)
 func snapshot()->Dictionary:return {"effects":effects,"feathers":feathers,"clock":clock,"rebirth":rebirth,"rebirth_ready":rebirth_ready,"cylinders":cylinders,"grit":grit}
 func receive(d:Dictionary)->void:effects=d.get("effects",[]);feathers=d.get("feathers",{});clock=float(d.get("clock",0));rebirth=d.get("rebirth",{});rebirth_ready=d.get("rebirth_ready",{});cylinders=d.get("cylinders",{});grit=d.get("grit",{})
@@ -282,7 +291,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
      var q:=p+Vector2.from_angle(n*TAU/7+clock*.18)*r*.56
      c.draw_circle(q,16+sin(clock*2+n)*4,Color(.65,.69,.72,.13))
    "lasso","tied":
-    var f:Dictionary=combat.actor(str(e.get("target","")));var end:Vector2=f.pos-camera if not f.is_empty() else p+aim*r
+    if not rope_visible(e):continue
+    var end:Vector2=rope_endpoint(e)-camera
     c.draw_line(draw_position(owner)-camera,end,Color("#cdae78"),3,true);c.draw_arc(end,23,0,TAU,24,Color("#edcc8f"),3,true)
 
 func cleanse(key:String,kinds:Array)->void:
@@ -372,3 +382,14 @@ func on_hit(owner:String,amount:float)->void:
 func draw_position(owner:String)->Vector2:
  var p=combat.owner_pos(owner);var game=combat.adventure.game
  return game.melee_visual_position(owner,p) if game.has_method("melee_visual_position") else p
+
+func rope_visible(e:Dictionary)->bool:
+ var target:String=str(e.get("target",""))
+ if target.is_empty():return str(e.style)=="lasso"
+ var actor:Dictionary=combat.actor(target)
+ return not actor.is_empty() and bool(actor.alive)
+func rope_endpoint(e:Dictionary)->Vector2:
+ var target:Dictionary=combat.actor(str(e.get("target","")))
+ if not target.is_empty() and bool(target.alive):
+  return draw_position(str(target.player)) if target.has("player") else target.pos
+ return combat.vec(e.get("last_pos",e.pos))

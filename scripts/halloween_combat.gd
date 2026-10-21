@@ -105,6 +105,7 @@ func step(delta:float)->void:
     if float(e.tick)>=.75:e.tick=0.0;area(id,p,52,float(e.damage))
    "chain":
     var end:Vector2=combat.vec(e.end);var next:Vector2=p.move_toward(end,300*delta);var impact:bool=not combat.path_clear(p,next);var struck:bool=false
+    if combat.v56.catch_travelling(p,next,id,float(e.damage),"#cba5df",{"flame_orb":true}):effects.remove_at(i);continue
     for key in combat.hostile(id):
      var f:Dictionary=combat.actor(key)
      if f.is_empty() or not bool(f.alive):continue

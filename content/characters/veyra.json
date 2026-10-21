@@ -18,12 +18,12 @@
   "secondary": {
     "name": "Spell Snare",
     "style": "spell_snare",
-    "damage": 14,
+    "damage": 0,
     "cooldown": 9,
     "range": 240,
     "radius": 100,
     "duration": 2.5,
-    "description": "Place a snare at your aim. For 2.5 seconds it catches up to six moving enemy shots, then returns them as 14-damage friendly bolts toward nearby foes. It cannot stop floor attacks or lobbed explosions."
+    "description": "Place a snare at your aim. For 2.5 seconds it catches up to six moving enemy shots, then returns each with its incoming damage and original appearance where supported. It cannot stop floor attacks or lobbed explosions."
   },
   "special": {
     "name": "Soul Ledger",
@@ -34,7 +34,7 @@
     "duration": 5,
     "description": "Bind up to four nearby enemies for 5 seconds, dealing 10 damage each. Damage dealt to one spreads 25% to the other linked enemies, capped at 12 per shared hit. Shared damage never triggers another share."
   },
-  "passive": "Quick Study: returned Spell Snare bolts slow their target for one second.",
+  "passive": "Quick Study: returned Spell Snare bolts slow their target for 3 seconds.",
   "passive_effect": "stolen_slow",
   "mastery": {
     "title": "Master Spellthief",

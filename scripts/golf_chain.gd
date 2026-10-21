@@ -28,6 +28,7 @@ func step(delta:float)->void:
   var origin:Vector2=combat.vec(ball.pos);var destination:Vector2=body.pos
   var heading:Vector2=origin.direction_to(destination);var next:Vector2=origin.move_toward(destination,820*delta)
   if not combat.path_clear(origin,next):balls.erase(ball);continue
+  if combat.v56.catch_travelling(origin,next,str(ball.owner),float(ball.damage),"#f5f4df",{"golf_ball":true}):balls.erase(ball);continue
   ball.pos=combat.point_array(next);ball.aim=combat.point_array(heading)
   if next.distance_to(destination)>8:continue
   combat.damage(str(ball.target),float(ball.damage),str(ball.owner),"Course Ricochet")

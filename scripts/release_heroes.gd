@@ -220,7 +220,7 @@ func step(delta:float)->void:
   if str(s.style)=="blood_return" and (float(s.left)<=0 or bool(s.get("returning",false))):
    s.returning=true;next=old.move_toward(combat.owner_pos(owner),450*delta)
    if next.distance_to(combat.owner_pos(owner))<18:shots.remove_at(i);continue
-  if combat.v56.catch_shot(old,next,owner,float(s.damage),"#ddbd8a"):shots.remove_at(i);continue
+  if combat.v56.catch_shot(old,next,owner,float(s.damage),"#ddbd8a",true,{"stolen_visual":"dart"}):shots.remove_at(i);continue
   if not combat.path_clear(old,next):
    if str(s.style)=="blood_return" and not bool(s.get("returning",false)):s.returning=true;continue
    shots.remove_at(i);continue

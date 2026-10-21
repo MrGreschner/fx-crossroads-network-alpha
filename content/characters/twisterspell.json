@@ -27,13 +27,17 @@
     "duration": 3
   },
   "special": {
-    "name": "Hail, Please!",
-    "style": "twister_hail",
-    "damage": 16,
+    "name": "Galeforce",
+    "style": "twister_cyclone",
+    "damage": 7,
     "cooldown": 23,
-    "range": 210,
-    "description": "Stand still and channel for 2 seconds, then summon 12 hailstones over 3.6 seconds around the casting spot. Each warned landing deals 16 damage and stuns foes for 0.6s. Ice never hits allies.",
-    "charge_time": 2
+    "range": 250,
+    "radius": 250,
+    "duration": 5,
+    "windup": 0.35,
+    "slow": 0.7,
+    "orbit_speed": 90,
+    "description": "Raise a 250-radius hurricane around you after a brief 0.35-second warning. It follows you for 5 seconds. Enemies inside take 7 damage per second, move 30% slower and are swept clockwise. You and allies move freely. Walls block the wind; bosses resist the rotation. You can move and attack while it lasts."
   },
   "passive": "Storm Circuit: three or more primary funnels arc lightning between them every 1.25s. Enemies crossing a link take 8 damage and a 0.35s stun. A full-charge funnel can also zap a nearby foe for 10 damage every 1.5s. A foe can be shocked at most once per second per caster.",
   "passive_effect": "weather_circuit",
@@ -55,17 +59,21 @@
       }
     },
     "final_technique": {
-      "name": "Sleet Stitch",
+      "name": "Wide Eye",
       "ability": "special",
-      "description": "Trade random surrounding hail and brief stuns for a directed line of heavier ice and longer slows.",
+      "description": "Galeforce covers a wider area, trading some damage and rotation strength for reach and a longer cooldown.",
       "attack": {
-        "name": "Sleet Stitch",
-        "style": "twister_sleet",
-        "damage": 20,
-        "cooldown": 23,
-        "range": 310,
-        "description": "Channel in place for 1 second, then stitch 12 warned icy landings along the aimed corridor. Each deals 20 damage and slows 45% for 3 seconds; no stun.",
-        "charge_time": 1
+        "name": "Wide Eye",
+        "style": "twister_cyclone",
+        "damage": 6,
+        "cooldown": 25,
+        "range": 300,
+        "radius": 300,
+        "duration": 5,
+        "windup": 0.35,
+        "slow": 0.7,
+        "orbit_speed": 75,
+        "description": "Raise a wider 300-radius hurricane for 5 seconds after a 0.35-second warning. Enemies take 6 damage per second, move 30% slower and are swept clockwise at a gentler pace. Follows you; walls block wind and bosses resist rotation."
       }
     },
     "technique_requirements": {

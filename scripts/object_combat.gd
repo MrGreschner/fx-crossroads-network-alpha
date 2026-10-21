@@ -758,7 +758,7 @@ func step_projectiles(delta:float)->void:
 		if str(shot["style"]) in ["weaving","corkscrew_key"]:
 			var base:=vec(shot["base_aim"]);var side:=Vector2(-base.y,base.x)
 			end=vec(shot["origin"])+base*float(shot["distance"])+side*sin(float(shot["distance"])*TAU/float(shot["stats"].get("wavelength",170)))*float(shot["stats"].get("amplitude",20))
-		if v56.catch_shot(start,end,str(shot["owner"]),float(shot["damage"]),str(shot.get("color","#edb3a0"))):projectiles.remove_at(i);continue
+		if v56.catch_shot(start,end,str(shot["owner"]),float(shot["damage"]),str(shot.get("color","#edb3a0")),true,shot):projectiles.remove_at(i);continue
 		if bool(shot.get("stats",{}).get("ball_lightning",false)) and path_clear(start,end):
 			shot["shock_tick"]=float(shot.get("shock_tick",0))+delta
 			if float(shot.shock_tick)>=.25:
@@ -1131,6 +1131,22 @@ func draw_projectile(canvas:Node2D,shot:Dictionary,camera:Vector2)->void:
 	_draw_projectile_measured(canvas,shot,camera)
 	if adventure.game.has_method("profile_work"):adventure.game.profile_work("projectile_art",Time.get_ticks_usec()-began)
 func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->void:
+	var borrowed:Dictionary=shot.get("stats",{}).get("stolen_appearance",{})
+	if not borrowed.is_empty():
+		var replica:Dictionary=shot.duplicate();replica.stats=borrowed.get("stats",{});replica.style=str(borrowed.get("style","pellet"));replica.color=str(borrowed.get("color","#aeead9"));replica.radius=float(borrowed.get("radius",5))
+		var custom:String=str(borrowed.get("custom",""));var p:Vector2=vec(shot.pos)-camera;var aim:Vector2=vec(shot.aim);var t:float=Time.get_ticks_msec()/1000.0
+		if not custom.is_empty():
+			if adventure.arcade and adventure.game.has_method("object_projectile_display"):p=adventure.game.object_projectile_display(shot,p+camera)-camera
+			if not preload("res://scripts/combat_cues.gd").visible(canvas,p,maxf(float(replica.radius),48)):return
+		if custom=="windwheel":preload("res://scripts/hero_visuals1987.gd").windwheel(canvas,p,t*20,false);return
+		if custom=="rocket":
+			var side:Vector2=aim.orthogonal();canvas.draw_colored_polygon(PackedVector2Array([p+aim*15,p-aim*10+side*6,p-aim*7,p-aim*10-side*6]),Color("#c8dcdb"));canvas.draw_line(p-aim*6,p+aim*6,Color("#526a72"),4,true);return
+		if custom=="bubble":canvas.draw_circle(p,float(replica.radius),Color(Color(replica.color),.15));canvas.draw_arc(p,float(replica.radius),0,TAU,24,Color(replica.color),2,true);return
+		if custom in ["ribbon","dart"]:
+			canvas.draw_line(p-aim*22,p+aim*8,Color(replica.color),3,true)
+			if custom=="ribbon":canvas.draw_arc(p,6,t*5,t*5+PI,12,Color(replica.color),2,true)
+			return
+		_draw_projectile_measured(canvas,replica,camera);return
 	var clock:float=Time.get_ticks_msec()/1000.0
 	var point:=vec(shot["pos"])-camera;var radius:=float(shot["radius"])
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)

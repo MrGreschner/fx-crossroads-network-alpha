@@ -22,8 +22,8 @@
     "style": "v90_lasso",
     "damage": 18,
     "cooldown": 7,
-    "range": 230,
-    "description": "After a 0.3-second rope throw, pull the aimed enemy toward a spot 48 away from you over 0.4 seconds. Deal 18 damage and stun for 2 seconds. Walls stop the pull."
+    "range": 270,
+    "description": "Throw a rope up to 270 units. After 0.3 seconds, pull the aimed enemy toward a spot 48 away from you over 0.4 seconds. Deal 18 damage and stun for 2 seconds. Walls stop the pull."
   },
   "special": {
     "name": "High Noon Stampede",

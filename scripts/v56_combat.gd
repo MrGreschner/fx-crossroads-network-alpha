@@ -27,11 +27,12 @@ func release(owner:String)->void:
   var amount:float=clampf(float(entry.captured.damage)*2,36,60)+(8 if combat.passive(owner,"deep_filter") else 0)
   combat.launch_projectile(owner,combat.owner_pos(owner)+combat.vec(entry.aim)*35,combat.vec(entry.aim),{"range":500,"speed":570,"color":entry.captured.color},amount,"vacuum_return")
  intakes.erase(owner)
-func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colour:String,moving:bool=true)->bool:
+func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colour:String,moving:bool=true,appearance:Dictionary={})->bool:
  if combat.v112.catch_shot(start,finish,shot_owner):return true
  if combat.v98.catch_shot(start,finish,shot_owner):return true
  if combat.party_heroes.catch_shot(start,finish,shot_owner):return true
  if not combat.adventure.authoritative():return false
+ if moving and combat.adventure.expansion.catch_shot(start,finish,shot_owner,amount,colour,appearance):return true
  if combat.release_heroes.catch_shot(start,finish,shot_owner):return true
  if moving and combat.v75.catch_shot(start,finish,shot_owner,amount,colour):return true
  if moving and combat.chronicle.catch_shot(start,finish,shot_owner):return true
@@ -49,14 +50,31 @@ func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colo
   combat.launch_projectile(owner,p,(b-a).normalized(),{"range":450,"speed":500,"color":"#dbebff"},10,"homing")
   combat.visuals.append({"pos":combat.point_array(p),"radius":30,"time":.4,"color":"#d6edff"})
   return true
+ return catch_intake(start,finish,shot_owner,amount,colour)
+func catch_travelling(start:Vector2,finish:Vector2,source:String,amount:float,colour:String,appearance:Dictionary={}) -> bool:
+ if not combat.adventure.authoritative():return false
+ if combat.adventure.expansion.catch_shot(start,finish,source,amount,colour,appearance):return true
+ return catch_intake(start,finish,source,amount,colour)
+func catch_intake(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colour:String)->bool:
+ # Shared by bespoke travelling projectiles as well as the standard shot pool.
+ if not combat.adventure.authoritative():return false
  for owner in intakes.keys():
   var entry:Dictionary=intakes[owner]
   if entry.has("captured") or float(entry.age)>.4 or not combat.adventure.alive(str(owner)) or combat.stunned(combat.player_key(str(owner))):continue
-  if shot_owner!="enemy" and not (combat.adventure.arcade and combat.adventure.game.mode=="arena" and combat.adventure.game._rival(str(owner),shot_owner)):continue
+  if shot_owner!="enemy" and not (combat.adventure.arcade and combat.adventure.game.mode in ["arena","battlegrounds"] and combat.adventure.game._rival(str(owner),shot_owner)):continue
   var origin:Vector2=combat.owner_pos(str(owner))
-  var nozzle:Vector2=origin+combat.vec(entry.aim)*45
+  var aim:Vector2=combat.vec(entry.aim)
+  var nozzle:Vector2=origin+aim*45
+  var tip:Vector2=origin+aim*maxf(45,float(entry.get("range",94))-28)
   var closest:Vector2=Geometry2D.get_closest_point_to_segment(nozzle,start,finish)
-  if closest.distance_to(nozzle)>28 or not combat.path_clear(start,closest):continue
+  var distance:float=closest.distance_to(nozzle)
+  var crossing:Variant=Geometry2D.segment_intersects_segment(start,finish,nozzle,tip)
+  if crossing!=null:closest=crossing;distance=0
+  else:
+   for point in [start,finish,Geometry2D.get_closest_point_to_segment(tip,start,finish)]:
+    var d:float=point.distance_to(Geometry2D.get_closest_point_to_segment(point,nozzle,tip))
+    if d<distance:distance=d;closest=point
+  if distance>28 or not combat.path_clear(start,closest) or not combat.path_clear(origin,closest):continue
   entry.captured={"damage":amount,"color":colour}
   return true
  return false
@@ -80,7 +98,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
  match style:
   "vacuum_intake":
    if not intakes.has(owner):
-    intakes[owner]={"owner":owner,"aim":combat.point_array(aim),"age":0.0,"tick":.7,"damage":amount}
+    intakes[owner]={"owner":owner,"aim":combat.point_array(aim),"age":0.0,"tick":.7,"damage":amount,"range":float(stats.get("range",94))}
     held[owner]=.45
   "brush_crush":
    hit_cone(owner,aim,100,110,amount)
@@ -122,7 +140,7 @@ func step(delta:float)->void:
    entry.tick+=delta
    if float(entry.tick)>=.7:
     entry.tick=fposmod(float(entry.tick),.7)
-    hit_cone(str(owner),combat.vec(entry.aim),82,70,float(entry.damage),true)
+    hit_cone(str(owner),combat.vec(entry.aim),float(entry.get("range",94)),70,float(entry.damage),true)
  for n in range(draws.size()-1,-1,-1):
   var entry:Dictionary=draws[n]
   if not combat.adventure.alive(entry.owner):draws.remove_at(n);continue
@@ -148,7 +166,7 @@ func step(delta:float)->void:
   var start:Vector2=combat.vec(entry.start);var finish:Vector2=combat.vec(entry.end)
   for id in combat.adventure.points():
    var point:Vector2=combat.adventure.points()[id]
-   if not combat.adventure.alive(str(id)) or (combat.adventure.arcade and combat.adventure.game.mode=="arena" and combat.adventure.game._rival(entry.owner,str(id))):continue
+   if not combat.adventure.alive(str(id)) or (combat.adventure.arcade and combat.adventure.game.mode in ["arena","battlegrounds"] and combat.adventure.game._rival(entry.owner,str(id))):continue
    if Geometry2D.get_closest_point_to_segment(point,start,finish).distance_to(point)<40 and combat.path_clear(start,point):combat.apply_status(combat.player_key(str(id)),"rune_stride",.3,entry.owner,.3)
   while float(entry.tick)>=1:
    entry.tick-=1
@@ -225,11 +243,15 @@ func draw_cone(c:Node2D,origin:Vector2,aim:Vector2,reach:float,half_angle:float)
 func draw_on(c:Node2D,camera:Vector2)->void:
  for owner in intakes:
   var entry:Dictionary=intakes[owner];var origin:Vector2=combat.owner_pos(str(owner))-camera;var aim:Vector2=combat.vec(entry.aim)
-  draw_cone(c,origin,aim,82,.61)
+  draw_cone(c,origin,aim,float(entry.get("range",94)),.61)
   if entry.has("captured"):
    var nozzle:Vector2=origin+aim*45
    c.draw_circle(nozzle,10,Color(str(entry.captured.color)))
    c.draw_arc(nozzle,14,clock*4,clock*4+PI*1.7,24,Color("#fff0b6"),2,true)
+  elif float(entry.age)<=.4:
+   # A short bright ring shows when intake can still catch a shot.
+   var nozzle:Vector2=origin+aim*45
+   c.draw_arc(nozzle,17,-PI/2,-PI/2+TAU*maxf(.02,1-float(entry.age)/.4),24,Color("#b9fff0"),2.5,true)
  for entry in draws:
   draw_cone(c,combat.owner_pos(entry.owner)-camera,combat.vec(entry.aim),320,PI/3)
  for entry in clouds:

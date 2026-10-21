@@ -30,9 +30,9 @@ var stale=false
 var last_refresh=""
 func compatible(data:Dictionary)->bool:
  var limits=data.get("limits",{});var named=data.get("named",{})
- return named is Dictionary and named.get("damage_week") is Array and (not data.has("limits") or limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10)
+ return named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=5 and data.get("fish_boards") is Dictionary
 func board_notice()->String:
- if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending the older five-place boards. Deploy the matching server ZIP; your saved records are safe."
+ if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending older record lists. Deploy the matching server ZIP; your saved records are safe."
  if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
  if reading:return "Refreshing community records…"
  return "Updated "+last_refresh+" • refreshes every 30 seconds" if not last_refresh.is_empty() else status
@@ -164,6 +164,7 @@ func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArra
  for key in ["fish_all","fish_week","rarest_all","rarest_week"]:
   var f=parsed.get(key)
   if f!=null and (not f is Dictionary or not FISH.fish().has(f.get("species")) or not (f.get("kg") is float or f.get("kg") is int) or not is_finite(float(f.kg)) or float(f.kg)<=0 or float(f.kg)>10000):reject_response("Invalid fish response • keeping the last loaded records");return
+ if parsed.has("fish_boards") and not valid_fish_boards(parsed.fish_boards):reject_response("Invalid fish rankings • keeping the last loaded records");return
  for key in ["garden_all","garden_month"]:
   if not parsed.get(key,[]) is Array or parsed.get(key,[]).size()>12:reject_response("Invalid garden response • keeping the last loaded records");return
   for row in parsed.get(key,[]):
@@ -218,16 +219,7 @@ func build(parent:Node)->void:
  preload("res://scripts/named_records_ui.gd").build(times_parent if category=="realms" else parent,legacy,snapshot.get("named",{}),"times" if category=="realms" else category)
  if category in ["heroes","realms","times","streak","relic"]:return
  if category=="garden":garden_records(parent);return
- var fish_row=HFlowContainer.new();parent.add_child(fish_row)
- for entry in [["BIGGEST FISH • ALL TIME","fish_all"],["BIGGEST FISH • THIS WEEK","fish_week"],["RAREST FISH • ALL TIME","rarest_all"],["RAREST FISH • THIS WEEK","rarest_week"]]:
-  if category!="fish":continue
-  var card=UI.card(fish_row,entry[0],"");card.get_parent().custom_minimum_size.x=425;var f=snapshot.get(entry[1]);var named=snapshot.get("named",{}).get(entry[1])
-  f=preferred_fish(f,named,str(entry[1]).begins_with("rarest"))
-  if f==null:preload("res://scripts/garden_ui.gd").label(card,"No fish record submitted yet.");continue
-  var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(300,110);card.add_child(art)
-  preload("res://scripts/garden_ui.gd").label(card,str(FISH.fish()[f.species].name)+" • %.2f kg" % float(f.kg),22)
-  gui.label(card,str(f.get("username","Earlier anonymous record")),18)
-  fish_size(card,f)
+ if category=="fish":fish_leaderboards(parent)
  if category=="fish":species_records(parent)
  if category=="fish":gui.label(parent,"Rarest: species rarity first, then its base catalogue catch weight. Fish weight breaks ties within a species. Weekly records reset Monday.",15)
  if category!="between":return
@@ -311,3 +303,36 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
   for j in 4:g.draw_line(at+Vector2(5,23+j*7),at+Vector2(23-j%2*5,23+j*7),Color("#9e9476"),1)
  g.draw_colored_polygon(PackedVector2Array([c+Vector2(-77,-130),c+Vector2(0,-157),c+Vector2(77,-130)]),Color("#65766b"));g.draw_line(c+Vector2(-76,-130),c+Vector2(0,-158),Color("#b3b49a"),3)
  g.draw_rect(Rect2(c+Vector2(-76,-17),Vector2(152,23)),Color("#67533b"));g.draw_string(g.font,c+Vector2(-70,-1),"COMMUNITY RECORDS",HORIZONTAL_ALIGNMENT_CENTER,140,11,Color("#ede0b6"))
+
+const FISH_BOARD_KEYS=["fish_all","fish_week","rarest_all","rarest_week"]
+static func valid_fish_boards(boards:Variant)->bool:
+ if not boards is Dictionary:return false
+ for key in FISH_BOARD_KEYS:
+  if not boards.get(key) is Array or boards[key].size()>5:return false
+  for row in boards[key]:
+   if not row is Dictionary or not FISH.fish().has(row.get("species")) or not (row.get("kg") is float or row.get("kg") is int):return false
+   if not is_finite(float(row.kg)) or float(row.kg)<=0 or float(row.kg)>minf(10000,float(FISH.fish()[row.species].max_kg)*4+.01):return false
+   if row.has("username") and (not row.username is String or row.username.length()>96):return false
+ return true
+func fish_leaders(key:String)->Array:
+ if snapshot.get("fish_boards") is Dictionary and snapshot.fish_boards.get(key) is Array:return snapshot.fish_boards[key].slice(0,5)
+ var best=preferred_fish(snapshot.get(key),snapshot.get("named",{}).get(key),key.begins_with("rarest"))
+ return [best] if best is Dictionary and FISH.fish().has(best.get("species")) else []
+func fish_leaderboards(parent:Node)->void:
+ var flow=HFlowContainer.new();flow.name="FishLeaderboards";flow.add_theme_constant_override("h_separation",12);flow.add_theme_constant_override("v_separation",12);parent.add_child(flow)
+ for entry in [["LARGEST FISH • THIS WEEK","fish_week"],["LARGEST FISH • ALL TIME","fish_all"],["RAREST FISH • THIS WEEK","rarest_week"],["RAREST FISH • ALL TIME","rarest_all"]]:
+  var card=UI.card(flow,entry[0],"Top 5 anglers • best catch per angler");card.name="FishBoard_"+str(entry[1]);card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.get_parent().custom_minimum_size.x=clampf(legacy.game.get_viewport_rect().size.x-96,300,400)
+  var leaders:Array=fish_leaders(str(entry[1]))
+  if leaders.is_empty():preload("res://scripts/garden_ui.gd").label(card,"No catches recorded for this period yet.",16)
+  for i in leaders.size():fish_leader_row(card,leaders[i],i+1)
+func fish_leader_row(parent:Node,record:Dictionary,rank:int)->Control:
+ var spec:Dictionary=FISH.fish()[record.species]
+ var frame=PanelContainer.new();frame.name="FishLeader_"+str(rank);frame.add_theme_stylebox_override("panel",UI.box("#153440","#688e91" if rank==1 else "#284e59",6,7));parent.add_child(frame)
+ var row=HBoxContainer.new();row.add_theme_constant_override("separation",8);frame.add_child(row)
+ var number=Label.new();number.text=str(rank);number.custom_minimum_size.x=20;number.add_theme_font_size_override("font_size",22);number.modulate=Color("#efcd83" if rank==1 else "#bed7df");row.add_child(number)
+ var art=TextureRect.new();art.texture=FISH.texture(str(record.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(64,54);row.add_child(art)
+ var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.custom_minimum_size.x=150;details.add_theme_constant_override("separation",2);row.add_child(details)
+ var gui=preload("res://scripts/garden_ui.gd")
+ gui.label(details,str(record.get("username","Earlier anonymous catch")),17)
+ var weight=gui.label(details,"%s • %.2f kg • %s" % [str(spec.name),float(record.kg),str(spec.rarity)],15);weight.modulate=preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(spec.rarity))
+ return frame

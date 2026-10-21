@@ -1681,7 +1681,7 @@ func _simulate(delta: float) -> void:
 		bullet["distance"] = float(bullet["distance"])+origin.distance_to(next)
 		if not _clear_path(origin,next) or float(bullet["distance"])>float(bullet.get("range",650)): missiles.remove_at(i);continue
 		if adventure.combat.v59.catch_copy(origin,next,str(bullet["owner"]),float(bullet["damage"])):missiles.remove_at(i);continue
-		if adventure.combat.v56.catch_shot(origin,next,str(bullet["owner"]),float(bullet["damage"]),str(bullet.get("color","#ed9b82"))):missiles.remove_at(i);continue
+		if adventure.combat.v56.catch_shot(origin,next,str(bullet["owner"]),float(bullet["damage"]),str(bullet.get("color","#ed9b82")),true,bullet):missiles.remove_at(i);continue
 		bullet["pos"] = next
 		var hit := false
 		if str(bullet["owner"]) == "enemy":

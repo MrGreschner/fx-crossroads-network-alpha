@@ -113,6 +113,7 @@ func step(delta:float)->void:
    if not target.is_empty():aim=Vector2.from_angle(rotate_toward(aim.angle(),(target.pos-start).angle(),delta*3.0))
   var end:Vector2=start+aim*360*delta;shot.aim=combat.point_array(aim)
   if not combat.path_clear(start,end):impact(shot,combat.chain.clip(start,aim,start.distance_to(end)),"");rockets.remove_at(i);continue
+  if combat.v56.catch_travelling(start,end,str(shot.owner),float(shot.damage),"#e8c799",{"stolen_visual":"rocket"}):rockets.remove_at(i);continue
   var direct:="";var closest:=INF
   for key in combat.hostile(str(shot.owner)):
    var target:Dictionary=combat.actor(key)

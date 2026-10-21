@@ -112,6 +112,7 @@ func step(delta:float)->void:
    var start:=origin+Vector2.from_angle(a+old*4)*(25+(float(spiral.radius)-25)*old/float(spiral.duration))
    var end:=origin+Vector2.from_angle(a+float(spiral.elapsed)*4)*(25+(float(spiral.radius)-25)*float(spiral.elapsed)/float(spiral.duration))
    if not combat.path_clear(start,end):spiral.blocked[n]=true;continue
+   if combat.v56.catch_travelling(start,end,owner,float(spiral.damage),"#bcdfff",{"prism_glass":true}):spiral.blocked[n]=true;continue
    for key in combat.hostile(owner):
     if (spiral.hits[n] as Array).has(key):continue
     var target:Dictionary=combat.actor(key)

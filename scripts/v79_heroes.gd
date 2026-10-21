@@ -146,6 +146,7 @@ func step(delta:float)->void:
   var d:Dictionary=darts[i];var start:Vector2=combat.vec(d.pos);var end:Vector2=start+combat.vec(d.aim)*560*delta;var hit:=false
   var clipped:Vector2=combat.v75.clip(start,combat.vec(d.aim),560*delta)
   if clipped.distance_to(end)>1:hit=true;end=clipped
+  if combat.v56.catch_travelling(start,end,str(d.owner),float(d.damage),"#b8dce4",{"stolen_visual":"dart"}):darts.remove_at(i);continue
   var first:="";var nearest:=INF
   for key in combat.hostile(str(d.owner)):
    var target:Dictionary=combat.actor(key)

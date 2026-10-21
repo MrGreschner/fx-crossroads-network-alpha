@@ -8,7 +8,7 @@ var clock:=0.0
 var links:Array=[]
 var shock_ready:Dictionary={}
 var link_clock:float=0
-const STYLES=["twister_charge","twister_stride","twister_hail","twister_sleet"]
+const STYLES=["twister_charge","twister_stride","twister_hail","twister_sleet","twister_cyclone"]
 func reset()->void:effects.clear();charges.clear();held.clear();links.clear();shock_ready.clear();link_clock=0;clock=0
 func playing()->bool:return combat.playing()
 func transformed(id:String)->bool:return playing() and effects.any(func(e):return e.owner==id and e.kind=="stride")
@@ -40,6 +40,12 @@ func cast(id:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
  if not combat.adventure.authoritative() or not combat.adventure.alive(id):return true
  if style=="twister_charge":
   if not charges.has(id):charges[id]={"age":0.0,"aim":combat.point_array(aim),"damage":amount,"stats":stats.duplicate(true)}
+ elif style=="twister_cyclone":
+  for old in effects.duplicate():
+   if str(old.owner)==id and str(old.kind)=="cyclone":effects.erase(old)
+  var windup:float=float(stats.get("windup",.35));var duration:float=float(stats.get("duration",5))
+  var e:Dictionary=add(id,"cyclone",combat.owner_pos(id),windup+duration,amount)
+  e.radius=float(stats.get("radius",250));e.windup=windup;e.active_duration=duration;e.slow=float(stats.get("slow",.7));e.orbit_speed=float(stats.get("orbit_speed",90));e.damage_fraction=0.0
  elif style=="twister_stride":
   var e:Dictionary=add(id,"stride",combat.owner_pos(id),float(stats.get("duration",3)),amount);e.radius=48.0;e.tick=.5
  else:
@@ -93,6 +99,25 @@ func step(delta:float)->void:
      if f.is_empty() or not bool(f.alive) or p.distance_to(f.pos)>float(e.radius)+65 or not combat.path_clear(p,f.pos):continue
      var next_pos:Vector2=(f.pos as Vector2).move_toward(p,100*pull_step)
      if combat.adventure.can_stand(next_pos) and combat.path_clear(f.pos,next_pos):combat.knock(str(key),(p-f.pos).normalized(),minf(100*pull_step,p.distance_to(f.pos)))
+  elif e.kind=="cyclone":
+   p=combat.owner_pos(id);e.pos=combat.point_array(p)
+   var used:float=clampf(float(e.age)-float(e.windup),0,float(e.active_duration))-clampf(float(e.age)-delta-float(e.windup),0,float(e.active_duration))
+   if used>0:
+    e.tick=float(e.tick)+used
+    var pulses:int=int(floor((float(e.tick)+.000001)/.5));e.tick=maxf(0,float(e.tick)-pulses*.5)
+    var budget:float=float(e.get("damage_fraction",0))+float(e.damage)*.5*pulses
+    var pulse_damage:float=floor(budget+.000001);e.damage_fraction=maxf(0,budget-pulse_damage)
+    for key in combat.hostile(id,p,float(e.radius)+80):
+     var target:Dictionary=combat.actor(key)
+     if target.is_empty() or not bool(target.alive) or p.distance_to(target.pos)>float(e.radius) or not combat.path_clear(p,target.pos):continue
+     combat.apply_status(key,"slow",.2,id,float(e.slow))
+     var offset:Vector2=target.pos-p
+     if offset.length()>8:
+      var strength:float=.25 if bool(target.get("npc",{}).get("boss",false)) else 1.0
+      var angle:float=used*float(e.orbit_speed)*strength/maxf(60,offset.length())
+      var destination:Vector2=p+offset.rotated(angle);var shift:Vector2=destination-target.pos
+      combat.knock(key,shift.normalized(),shift.length())
+     if pulses>0:combat.damage(key,pulse_damage,id,"Galeforce")
   elif e.kind=="stride":
    p=combat.owner_pos(id);e.pos=combat.point_array(p)
    combat.clear_projectiles(id,p,52)
@@ -116,7 +141,7 @@ func step(delta:float)->void:
   if e.kind in ["funnel","stride"]:
    e.tick=float(e.tick)+delta
    if float(e.tick)>=.5:e.tick=float(e.tick)-.5;area(e,p)
-  if float(e.time)<=0:effects.remove_at(i)
+  if float(e.time)<=.000001:effects.remove_at(i)
  lightning(delta)
 func lightning(delta:float)->void:
  if not playing():links.clear();return
@@ -186,13 +211,15 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   c.draw_arc(pos-camera,34,-PI/2,-PI/2+TAU*maxf(.02,power),24,Color("#ffd488") if power>=.99 else Color("#b4ddfa"),3,true)
  for e in draw_effects:
   var world:Vector2=combat.vec(e.pos)
-  if e.kind=="stride" and game.has_method("melee_visual_position"):world=game.melee_visual_position(str(e.owner),world)
-  if not visible.has_point(world):continue
+  if e.kind in ["stride","cyclone"] and game.has_method("melee_visual_position"):world=game.melee_visual_position(str(e.owner),world)
+  if not visible.grow(maxf(0,float(e.get("radius",0))-260)).has_point(world):continue
   var p:Vector2=world-camera
   match str(e.kind):
    "funnel","stride":
     c.draw_circle(p,float(e.radius),Color(.55,.77,.94,.12));funnel(c,p,float(e.radius),draw_clock,Color(.67,.86,.96,.9))
     if e.kind=="funnel" and bool(e.pull):c.draw_arc(p,float(e.radius)+65,draw_clock,draw_clock+PI*1.5,24,Color(.8,.65,1,.5),1.5,true)
+   "cyclone":
+    cyclone_art(c,p,float(e.radius),float(e.age),float(e.time),float(e.windup),draw_clock)
    "chant":
     c.draw_arc(p,52,draw_clock,-draw_clock+TAU,32,Color("#b6dcf6"),3,true)
     for n in 6:c.draw_circle(p+Vector2.from_angle(draw_clock+n*TAU/6)*48,3,Color("#f0dbff"))
@@ -203,3 +230,25 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    "shatter":
     for n in 6:
      var a:float=n*TAU/6;var b:Vector2=p+Vector2.from_angle(a)*float(e.age)*90;c.draw_line(b,b+Vector2.from_angle(a)*7,Color(.67,.89,1,float(e.time)/.35),3,true)
+
+func cyclone_art(c:Node2D,p:Vector2,r:float,age:float,remaining:float,windup:float,animation:float)->void:
+ var opening:float=clampf(age/maxf(.01,windup),0,1)
+ var fade:float=minf(1,maxf(0,remaining)/.3)
+ var alpha:float=(.45 if age<windup else 1.0)*fade
+ c.draw_circle(p,r*opening,Color(.30,.67,.80,.065*alpha))
+ c.draw_arc(p,r,0,TAU,72,Color(.62,.90,.97,.55*alpha),2,true)
+ c.draw_arc(p,r+5,-PI/2,-PI/2+TAU*clampf(remaining/maxf(.01,5+windup),0,1),72,Color(.84,.97,1,.55*alpha),1.5,true)
+ for lane in 3:
+  var radius:float=r*(.34+lane*.27)*maxf(.2,opening)
+  for arm in 3:
+   var a:float=animation*(.65+lane*.14)+arm*TAU/3+lane*.55
+   var points:=PackedVector2Array()
+   for n in 15:
+    var angle:float=a+n*.055;var curl:float=radius+(n-7)*1.4
+    points.append(p+Vector2.from_angle(angle)*curl)
+   c.draw_polyline(points,Color(.72,.92,.95,(.22+lane*.1)*alpha),3 if lane==2 else 2,true)
+   var tip:Vector2=points[-1];var forward:Vector2=(tip-points[-2]).normalized()
+   c.draw_line(tip,tip-forward.rotated(.55)*9,Color(.88,.99,1,.65*alpha),2,true)
+ for n in 12:
+  var a:float=animation*1.3+n*TAU/12;var d:float=r*(.25+.65*fposmod(n*.37,1))
+  c.draw_circle(p+Vector2.from_angle(a)*d,1.7,Color(.85,.97,1,.45*alpha))

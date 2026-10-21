@@ -21,6 +21,10 @@ var grid:AStarGrid2D
 var nav_cache:Dictionary={}
 var prop_cells:Dictionary={}
 var textures:Dictionary={}
+var room_bins:Dictionary={}
+var room_geometry:Array=[]
+var floor_chunks:Array=[]
+var floor_tiles:Dictionary={}
 var rng:=RandomNumberGenerator.new()
 const TYPES=["lesson_warden","pencil_scrapper","paper_sprite","backpack_biter","hall_monitor","gravel_skater","chalkling","culture_blob","recess_ringleader","yellow_bus","lunchline_leviathan","bellwork_colossus","spotlight_sovereign","layercake_golem","iron_barbell","exam_math","exam_english","exam_history","exam_science"]
 const EXAMS=["exam_math","exam_english","exam_history","exam_science"]
@@ -30,11 +34,21 @@ func a(p:Vector2)->Array:return [p.x,p.y]
 func rect(values:Array)->Rect2:return Rect2(float(values[0]),float(values[1]),float(values[2]),float(values[3]))
 func definition(kind:String)->Dictionary:return (adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get(kind,{})
 func setup(id:String)->void:
+ for chunk in floor_chunks:chunk.queue_free()
+ floor_chunks.clear();floor_tiles.clear();room_bins.clear();room_geometry.clear()
  active=false;data={};region_id=id;stage=0;completed.clear();spawned.clear();boss_dead.clear();opened.clear();collected.clear();initialized=false;done=false;exam_choice="";clock=0;hazards.clear();flashes.clear();debounce.clear();nav_cache.clear();prop_cells.clear();grid=null;rng.randomize()
  var region:Dictionary=adventure.game.regions.get(id,{}) if adventure.arcade else adventure.game.region
  var path:=str(region.get("school_campaign",""))
  if path.is_empty():return
  data=JSON.parse_string(FileAccess.get_file_as_string(path));active=true
+ for room in data.rooms:
+  var geometry={"rect":rect(room.rect),"room":room};room_geometry.append(geometry)
+  var bounds:Rect2=geometry.rect
+  for x in range(floori(bounds.position.x/256),floori(bounds.end.x/256)+1):
+   for y in range(floori(bounds.position.y/256),floori(bounds.end.y/256)+1):
+    var key=Vector2i(x,y)
+    if not room_bins.has(key):room_bins[key]=[]
+    room_bins[key].append(geometry)
  for door in data.doors:opened[str(door.id)]=false
  for prop in data.props:
   if not prop.has("solid"):continue
@@ -52,15 +66,12 @@ func setup(id:String)->void:
 func prop_rect(prop:Dictionary)->Rect2:
  var size:=v(prop.solid);return Rect2(v(prop.pos)-size*.5,size)
 func room_at(point:Vector2)->Dictionary:
- for room in data.get("rooms",[]):
-  if rect(room.rect).has_point(point):return room
+ for geometry in room_bins.get(Vector2i(floori(point.x/256),floori(point.y/256)),[]):
+  if (geometry.rect as Rect2).has_point(point):return geometry.room
  return {}
 func terrain_speed(point:Vector2)->float:
  return .8 if str(room_at(point).get("theme",""))=="sand" else 1.0
-func raw_floor(point:Vector2)->bool:
- for room in data.get("rooms",[]):
-  if rect(room.rect).has_point(point):return true
- return false
+func raw_floor(point:Vector2)->bool:return not room_at(point).is_empty()
 func floor_at(point:Vector2)->bool:
  if not raw_floor(point):return false
  for offset in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
@@ -491,17 +502,11 @@ func receive(packet:Dictionary)->void:
   if bool(packet.get("opened",{}).get(str(door.id),false)) and not bool(opened.get(str(door.id),false)):open_door(door)
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
- var view:Vector2=adventure.game.VIEW;var bounds:=Rect2(camera-Vector2(280,280),view+Vector2(560,560));canvas.draw_rect(Rect2(Vector2.ZERO,view),Color("#304451"))
- for x in range(floori(camera.x/64),ceili((camera.x+view.x)/64)+1):
-  for y in range(floori(camera.y/64),ceili((camera.y+view.y)/64)+1):
-   var point:=Vector2(x*64+32,y*64+32);var room:=room_at(point)
-   if room.is_empty():continue
-   var top:=point-Vector2(32,32)-camera;var theme:=str(room.theme);var tile:="school_"+(theme if theme in ["wood","street","yard","carpet","sand"] else "tile")
-   var tint:=Color("#797a91") if theme=="stage" else Color("#a6b6c3") if theme=="roof" else Color("#dabba3") if theme=="exam" else Color.WHITE
-   canvas.draw_texture_rect(textures[tile],Rect2(top,Vector2(64,64)),false,tint)
-   if theme=="street" and absf(point.y-rect(room.rect).get_center().y)<32 and x%4<2:canvas.draw_rect(Rect2(top+Vector2(8,26),Vector2(47,7)),Color("#d3c792"))
-   for side in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
-    if not floor_at(point+side*64):canvas.draw_line(top+Vector2(32,32)+side*32-side.orthogonal()*32,top+Vector2(32,32)+side*32+side.orthogonal()*32,Color("#5d707e"),16);canvas.draw_line(top+Vector2(32,32)+side*27-side.orthogonal()*32,top+Vector2(32,32)+side*27+side.orthogonal()*32,Color("#aeb9ba"),3)
+ var view:Vector2=adventure.game.VIEW;var bounds:=Rect2(camera-Vector2(280,280),view+Vector2(560,560))
+ if floor_chunks.is_empty():build_floor_chunks(canvas)
+ for chunk in floor_chunks:
+  chunk.position=-camera
+  chunk.visible=chunk.world_bounds.intersects(Rect2(camera,view).grow(80))
  for room in data.rooms:
   var r:=rect(room.rect)
   if not bounds.intersects(r) or str(room.name).is_empty():continue
@@ -558,7 +563,7 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   for n in 5:canvas.draw_rect(Rect2(p+Vector2(-48,-45+n*17),Vector2(95,14)),Color("#c0bda8").darkened(n*.07))
   canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-95,-75),str(route.name),HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#e6d3a0"));canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-35,75),"INTERACT" if unlocked(str(route.requires)) else "SEALED",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#c4e5d7"))
  for gear in data.gears:
-  if collected.has(str(gear.id)):continue
+  if collected.has(str(gear.id)) or not bounds.has_point(v(gear.pos)):continue
   var p:=v(gear.pos)-camera
   canvas.draw_arc(p,24,clock,clock+TAU*.9,20,Color("#e5ca82"),5);canvas.draw_circle(p,8,Color("#b59764"));canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-45,-40),str(gear.name),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#eaddaa"))
  if done:
@@ -599,3 +604,23 @@ func draw_hud(canvas:Node2D)->void:
  canvas.draw_rect(Rect2(18,top,width+20,65),Color(.07,.14,.18,.9));canvas.draw_multiline_string(ThemeDB.fallback_font,Vector2(28,top+25),objective(),HORIZONTAL_ALIGNMENT_LEFT,width,18,2,Color("#f2dfb4"))
  var center:=Vector2(view.x-90,top+20);var aim:Vector2=(guidance(point)-point).normalized();canvas.draw_arc(center,24,0,TAU,32,Color("#c9e2d7"),2);canvas.draw_line(center,center+aim*20,Color("#c9e2d7"),5)
  canvas.draw_string(ThemeDB.fallback_font,center+Vector2(-33,45),"OBJECTIVE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e5e8d4"))
+
+func build_floor_chunks(canvas:Node2D)->void:
+ # Immutable floors are drawn once per chunk. Doors, actors and objectives stay live.
+ var chunks:Dictionary={}
+ var backdrop=preload("res://scripts/school_floor_chunk.gd").new();backdrop.source=self;backdrop.background=true;backdrop.world_bounds=Rect2(-Vector2.ONE*32768,Vector2.ONE*65536);canvas.add_child(backdrop);floor_chunks.append(backdrop)
+ for geometry in room_geometry:
+  var room:Dictionary=geometry.room;var bounds:Rect2=geometry.rect
+  for x in range(floori(bounds.position.x/64),ceili(bounds.end.x/64)):
+   for y in range(floori(bounds.position.y/64),ceili(bounds.end.y/64)):
+    var cell=Vector2i(x,y);var point=Vector2(x*64+32,y*64+32)
+    if floor_tiles.has(cell) or not bounds.has_point(point):continue
+    var edges=[]
+    for side in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
+     if not floor_at(point+side*64):edges.append(side)
+    var tile={"cell":cell,"room":room,"edges":edges};floor_tiles[cell]=tile
+    var key=Vector2i(floori(float(x)/8),floori(float(y)/8))
+    if not chunks.has(key):chunks[key]=[]
+    chunks[key].append(tile)
+ for key in chunks:
+  var chunk=preload("res://scripts/school_floor_chunk.gd").new();chunk.source=self;chunk.tiles=chunks[key];chunk.world_bounds=Rect2(Vector2(key)*512,Vector2(512,512));canvas.add_child(chunk);floor_chunks.append(chunk)

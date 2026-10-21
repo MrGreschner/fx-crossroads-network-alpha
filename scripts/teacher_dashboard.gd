@@ -16,7 +16,7 @@ static func open(owner:Node)->void:
 func setup(owner:Node)->void:
  add_to_group("fx_private_assessment")
  legacy=owner;previous_menu=legacy.game.menu;legacy.game.menu="teacher_dashboard";layer=107;panel=PanelContainer.new();panel.size=Vector2(1100,650);add_child(panel);UI.apply(panel)
- var col=VBoxContainer.new();panel.add_child(col);text(col,"TEACHER • CLASS VIEW",27)
+ var col=VBoxContainer.new();panel.add_child(col);text(col,"TEACHER • CLASS VIEW",27);UI.accent(button(col,"Manage Class Pro ↗ • students, assignments & grades",func():get_tree().root.get_node("FXClassPro").launch()))
  var row=HBoxContainer.new();col.add_child(row);button(row,"Submission room • 31 seats",func():var r=get_tree().root.get_node("FXEducationRoom");r.dashboard=self;r.open());button(row,"Broadcast lesson",func():get_tree().root.get_node("FXClassroom").host());button(row,"Spotlight",func():get_tree().root.get_node("FXEducationTools").spotlight=true);button(row,"Local portfolio",func():preload("res://scripts/teacher_review.gd").open(legacy));UI.accent(button(row,"Example",func():example_level=1;show_examples()));button(row,"Close",finish)
  var sc=ScrollContainer.new();sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(sc);sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;preload("res://scripts/touch_list_scroll.gd").attach(sc).form_controls=true
  content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.add_child(content);status=text(col,"Class records are local. Download your profile before leaving a shared computer.",16)

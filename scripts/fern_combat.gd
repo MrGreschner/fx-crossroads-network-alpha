@@ -91,6 +91,7 @@ func step(delta:float)->void:
   thread.distance+=delta*350
   var point:Vector2=combat.vec(thread.origin)+aim*float(thread.distance)+aim.orthogonal()*sin(float(thread.distance)*TAU/150)*22*int(thread.side)
   if not combat.path_clear(start,point) or float(thread.distance)>380:threads.remove_at(n);continue
+  if combat.v56.catch_travelling(start,point,str(thread.owner),float(thread.damage),"#b8e5c5",{"stolen_visual":"ribbon"}):threads.remove_at(n);continue
   thread.pos=combat.point_array(point);thread.trail.append(thread.pos.duplicate())
   if thread.trail.size()>12:thread.trail.remove_at(0)
   for key in combat.hostile(str(thread.owner)):

@@ -653,10 +653,27 @@ func draw_floor(canvas:Node2D,floor:Dictionary,batched:bool=false)->void:
    for n in 25:shape.append(p+Vector2(wide*.5,y+20)+Vector2(cos(n*TAU/24)*wide*.52,sin(n*TAU/24)*32))
    canvas.draw_colored_polygon(shape,Color("#61513c"));canvas.draw_polyline(shape,Color("#c2a16f"),7,true)
  if kind=="glass":
-  for x in range(maxi(int(bounds.position.x),floori(bounds.position.x/95)*95),mini(int(bounds.end.x),int(bounds.end.x)),95):
-   for y in range(maxi(int(bounds.position.y),floori(bounds.position.y/95)*95),mini(int(bounds.end.y),int(bounds.end.y)),95):
-    if (not floor.has("poly") or Geometry2D.is_point_in_polygon(Vector2(x,y),polygon(floor.poly))):
-     var p:=Vector2(x,y)-camera;canvas.draw_arc(p,17,0,TAU,6,Color(.87,.76,.51,.2),2)
+  if batched:
+   var cache_key="glass:"+str(floor.name)+str(bounds)
+   if not floor_stamps.has(cache_key):
+    var positions=PackedVector2Array();var shape=polygon(floor.poly) if floor.has("poly") else PackedVector2Array()
+    for x in range(maxi(int(bounds.position.x),floori(bounds.position.x/95)*95),int(bounds.end.x),95):
+     for y in range(maxi(int(bounds.position.y),floori(bounds.position.y/95)*95),int(bounds.end.y),95):
+      if shape.is_empty() or Geometry2D.is_point_in_polygon(Vector2(x,y),shape):positions.append(Vector2(x,y))
+    var vertices=PackedVector3Array()
+    for edge in 6:
+     var a=Vector2.from_angle(TAU*edge/6)*17;var b=Vector2.from_angle(TAU*(edge+1)/6)*17;var normal=(b-a).normalized().orthogonal()
+     for point in [a+normal,b+normal,b-normal,a+normal,b-normal,a-normal]:vertices.append(Vector3(point.x,point.y,0))
+    var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices
+    var mesh=ArrayMesh.new();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+    var batch=MultiMesh.new();batch.transform_format=MultiMesh.TRANSFORM_2D;batch.use_colors=true;batch.mesh=mesh;batch.instance_count=positions.size()
+    for i in positions.size():batch.set_instance_transform_2d(i,Transform2D(0,positions[i]));batch.set_instance_color(i,Color(.87,.76,.51,.2))
+    floor_stamps[cache_key]=batch
+   canvas.draw_multimesh(floor_stamps[cache_key],null)
+  else:
+   for x in range(maxi(int(bounds.position.x),floori(bounds.position.x/95)*95),int(bounds.end.x),95):
+    for y in range(maxi(int(bounds.position.y),floori(bounds.position.y/95)*95),int(bounds.end.y),95):
+     if not floor.has("poly") or Geometry2D.is_point_in_polygon(Vector2(x,y),polygon(floor.poly)):canvas.draw_arc(Vector2(x,y)-camera,17,0,TAU,6,Color(.87,.76,.51,.2),2)
  if kind=="house":
   var p:=bounds.position-camera
   canvas.draw_rect(Rect2(p+Vector2(160,160),bounds.size-Vector2(320,320)),Color("#7f8e73"));canvas.draw_rect(Rect2(p+Vector2(160,160),bounds.size-Vector2(320,320)),Color("#e4c2a1"),false,8)

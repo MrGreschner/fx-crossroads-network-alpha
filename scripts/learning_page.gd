@@ -202,6 +202,7 @@ func submit_page()->void:
  UI.accent(button(content,"Mark this module for teacher review",func():
   if not data.enabled:message.text="Student access is required.";return
   var issue=S.submit(data,module);message.text="Frozen submission saved. Raise your hand or share a review code." if issue.is_empty() else issue;render()))
+ button(content,"Submit to teacher • cloud assignments & feedback",func():get_tree().root.get_node("FXClassPro").open_student(module))
  button(content,"Share submitted work by review code",func():link.open(false))
  var s=latest()
  if not s.is_empty():

@@ -124,6 +124,10 @@ func refresh()->void:
   label("LOCAL PROFILE RECOVERY",24);label("An existing profile could not be validated. It has been preserved and automatic local/cloud saving is paused. Download these files before importing a backup or loading a cloud profile.")
   button("Download preserved local save",download_recovery)
   button("Import a downloaded profile backup",func():close();legacy().pick_import())
+ if not token.is_empty() and bool(user.get("username_warning",false)):
+  label("USERNAME CHANGE REQUEST",22);label("Your username has been flagged as inappropriate. Please kindly choose a different game username. Your private game ID, progress and records will stay the same.",17)
+  button("Choose a new username",func():mode="rename";refresh())
+ if not token.is_empty() and str(user.get("role",""))=="teacher":button("Teacher menu • Manage Class Pro",func():close();get_tree().root.get_node("FXClassPro").open_teacher())
  if token.is_empty():
   label("Choose a game username. Please do not use your real name. Keep names appropriate. Create a new unique password and do not share it.")
   username=field("Username • 3–20 letters / numbers / underscores");username.max_length=20
@@ -148,6 +152,11 @@ func refresh()->void:
   button("Have an account? Sign in" if mode=="register" else "New here? Create an account",func():mode="login" if mode=="register" else "register";refresh())
   label("For password resets and account verification, keep your recovery answer private. Signing in does not upload or replace this device’s profile automatically.",16)
   button("Continue without cloud account",guest_play)
+ elif mode=="rename":
+  label("Choose a new game username",23);label("Your private game ID, saved progress and community records stay the same.",16)
+  username=field("New username • 3–20 letters / numbers / underscores");username.max_length=20
+  button("Update username",func():call_api("username",{"username":username.text.strip_edges()},"rename"))
+  button("Back",func():mode="login";refresh())
  elif mode=="password":
   label("Change your password",23);username=field("Current password",true);password=field("New password • at least 9 characters",true);confirmation=field("Confirm new password",true)
   button("Update password",func():
@@ -254,6 +263,10 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
  match op:
   "auth":
    mode="login";token=p.token;user=p.user;revision=int(user.revision);loaded=false;message="Signed in. Choose your profile below.";refresh()
+  "rename":
+   user=p.user;mode="login";message="Username updated. Your account ID, progress and records are unchanged.";var l=legacy()
+   if loaded and l!=null:l.data.name=str(user.username);l.save();mark_owner();call_deferred("sync_records")
+   refresh()
   "recovery":user.has_recovery=true;mode="login";message="Recovery answer saved. Keep your made-up answer private.";refresh()
   "password":mode="login";message="Password updated. Other sessions have been signed out.";refresh()
 
@@ -266,7 +279,7 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
   "save", "save_logout":
    save_error=false;revision=int(p.revision);mark_owner();var canonical=staged.duplicate(true);canonical.erase("exported");last_json=JSON.stringify(canonical);message="Cloud saved • revision "+str(revision);refresh()
    if op=="save_logout":call_api("logout",{},"logout")
-   else:call_deferred("sync_records")
+   else:call_deferred("sync_records");get_tree().root.get_node("FXClassPro").sync_portfolio()
   "logout":finish_logout()
 func sign_out()->void:
  if busy:return

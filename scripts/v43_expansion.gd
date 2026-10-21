@@ -56,7 +56,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "spell_snare":
    for n in range(nets.size()-1,-1,-1):
     if str(nets[n].owner)==owner:nets.remove_at(n)
-   nets.append({"owner":owner,"pos":packed(location),"time":float(stats.get("duration",2.5)),"total":float(stats.get("duration",2.5)),"radius":float(stats.get("radius",100)),"count":0,"damage":amount,"aim":packed(aim)})
+   nets.append({"owner":owner,"pos":packed(location),"time":float(stats.get("duration",2.5)),"total":float(stats.get("duration",2.5)),"radius":float(stats.get("radius",100)),"count":0,"damage":amount,"shots":[],"aim":packed(aim)})
   "soul_ledger":
    var ordered:Array=[]
    for key in combat.hostile(owner):
@@ -100,21 +100,46 @@ func heal(owner:String,id:String,amount:float)->void:
   var actual:=minf(amount,adventure.game.max_health()-adventure.game.health);adventure.game.health+=actual
   if actual>0:adventure.game.add_float_text(adventure.game.position_in_world+Vector2(-15,-58),"+"+str(int(actual))+" HP",Color("#b4e4ac"))
 func hostile_shot(owner:String,source:String)->bool:
- return source=="enemy" or (adventure.arcade and adventure.game.mode=="arena" and source!=owner and adventure.game._rival(owner,source))
+ return source=="enemy" or (adventure.arcade and adventure.game.mode in ["arena","battlegrounds"] and source!=owner and adventure.game._rival(owner,source))
+func spell_record(amount:float,colour:String,appearance:Dictionary={}) -> Dictionary:
+ # Keep art separately: borrowed visuals must never copy splash damage, summons,
+ # brands, bleed, item procs or an enemy's ownership onto a returned bolt.
+ var original:Dictionary=appearance.get("stats",appearance)
+ var art_stats:Dictionary={}
+ for key in ["ice_visual","prism_glass","golf_ball","river_stone","pistol","mirror_shard","lantern_comet","navigator_star","thorn_arrow","tea_drop","rune_hammer","flying_page","chalk_shard","flame_orb","ball_lightning","released_hold","element","amplitude","wavelength"]:
+  if original.has(key):art_stats[key]=original[key]
+  elif appearance.has(key):art_stats[key]=appearance[key]
+ if bool(appearance.get("fireball",false)):art_stats["flame_orb"]=true
+ var style:String=str(appearance.get("style","pellet"))
+ if style=="rolling_snow":amount+=clampf(float(appearance.get("distance",0))/maxf(1,float(appearance.get("range",480))),0,1)*36
+ return {"damage":maxf(0,amount),"appearance":{"stats":art_stats,"style":style,"custom":str(appearance.get("stolen_visual",original.get("stolen_visual",""))),"radius":clampf(float(appearance.get("radius",original.get("projectile_radius",5))),3,46),"color":colour}}
+func store_spell(net:Dictionary,amount:float,colour:String,appearance:Dictionary={}) -> bool:
+ if int(net.count)>=6:return false
+ if not net.has("shots"):net.shots=[]
+ net.shots.append(spell_record(amount,colour,appearance));net.count=int(net.count)+1
+ return true
+func catch_shot(start:Vector2,finish:Vector2,source:String,amount:float,colour:String,appearance:Dictionary={}) -> bool:
+ if not adventure.authoritative():return false
+ for net in nets:
+  if float(net.time)<=0 or int(net.count)>=6 or not adventure.alive(str(net.owner)) or not hostile_shot(str(net.owner),source):continue
+  var center:Vector2=vec(net.pos);var point:Vector2=Geometry2D.get_closest_point_to_segment(center,start,finish)
+  if center.distance_to(point)>float(net.radius) or not adventure.combat.path_clear(start,point) or not adventure.combat.path_clear(center,point):continue
+  return store_spell(net,amount,colour,appearance)
+ return false
 func capture_projectiles(net:Dictionary)->void:
- if int(net.count)>=6:return
+ if int(net.count)>=6 or not adventure.alive(str(net.owner)):return
  var combat=adventure.combat
  for n in range(combat.projectiles.size()-1,-1,-1):
   var shot:Dictionary=combat.projectiles[n]
   if hostile_shot(str(net.owner),str(shot.owner)) and vec(shot.pos).distance_to(vec(net.pos))<float(net.radius) and combat.path_clear(vec(net.pos),vec(shot.pos)):
-   combat.projectiles.remove_at(n);net.count=int(net.count)+1
+   store_spell(net,float(shot.damage),str(shot.get("color","#aeead9")),shot);combat.projectiles.remove_at(n)
    if int(net.count)>=6:return
  var list:Array=adventure.game.missiles if adventure.arcade else adventure.game.enemy_shots
  for n in range(list.size()-1,-1,-1):
   var shot:Dictionary=list[n]
   if adventure.arcade and not hostile_shot(str(net.owner),str(shot.owner)):continue
   if (shot.pos as Vector2).distance_to(vec(net.pos))<float(net.radius) and combat.path_clear(vec(net.pos),shot.pos):
-   list.remove_at(n);net.count=int(net.count)+1
+   store_spell(net,float(shot.damage),str(shot.get("color","#aeead9")),shot);list.remove_at(n)
    if int(net.count)>=6:return
 func step(delta:float)->void:
  if not adventure.authoritative():return
@@ -154,10 +179,12 @@ func step(delta:float)->void:
   nets.remove_at(n)
   var key:=nearest(vec(net.pos),str(net.owner),700)
   var aim:Vector2=vec(net.get("aim",[1,0])) if key.is_empty() else (combat.actor(key).pos-vec(net.pos)).normalized()
-  for k in int(net.count):
-   var stats:Dictionary={"range":700,"speed":360,"color":"#aeead9"}
-   if combat.passive(str(net.owner),"stolen_slow"):stats["slow_duration"]=1;stats["slow_factor"]=.65
-   combat.launch_projectile(str(net.owner),vec(net.pos),aim.rotated((k-(int(net.count)-1)*.5)*.13),stats,float(net.damage))
+  var stored:Array=net.get("shots",[])
+  for k in stored.size():
+   var shot:Dictionary=stored[k]
+   var stats:Dictionary={"name":"Stolen Spell","range":700,"speed":360,"color":str(shot.appearance.color),"projectile_radius":float(shot.appearance.radius),"stolen_appearance":shot.appearance.duplicate(true)}
+   if combat.passive(str(net.owner),"stolen_slow"):stats["slow_duration"]=3;stats["slow_factor"]=.65
+   combat.launch_projectile(str(net.owner),vec(net.pos),aim.rotated((k-(stored.size()-1)*.5)*.13),stats,float(shot.damage))
  if active and not initialized:
   initialized=true
   for enemy in adventure.foes():

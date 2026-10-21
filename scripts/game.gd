@@ -1544,7 +1544,7 @@ func update_enemy_shots(delta: float) -> void:
 			enemy_shots.remove_at(shot_index)
 			continue
 		if adventure.combat.v59.catch_copy(shot["pos"],shot_next,"enemy",float(shot["damage"])):enemy_shots.remove_at(shot_index);continue
-		if adventure.combat.v56.catch_shot(shot["pos"],shot_next,"enemy",float(shot["damage"]),"#ed9b82"):enemy_shots.remove_at(shot_index);continue
+		if adventure.combat.v56.catch_shot(shot["pos"],shot_next,"enemy",float(shot["damage"]),str(shot.get("color","#ed9b82")),true,shot):enemy_shots.remove_at(shot_index);continue
 		shot["pos"] = shot_next
 		shot["distance"] += travel
 		if not bool(shot.get("flying", false)) and not clear_of_obstacles(shot["pos"], 5.0):

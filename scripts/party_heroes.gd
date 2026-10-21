@@ -175,7 +175,7 @@ func step(delta:float)->void:
     if f.is_empty() or not bool(f.alive):continue
     var at:=Geometry2D.get_closest_point_to_segment(f.pos,a,b)
     if f.pos.distance_to(at)<=float(s.radius)+combat.v110.target_radius(key,18) and a.distance_to(at)<best and combat.path_clear(a,at):best=a.distance_to(at);impact=key;b=at;pop=true
-   if combat.v56.catch_shot(a,b,owner,float(s.damage),"#a1e4ec"):shots.remove_at(i);continue
+   if combat.v56.catch_shot(a,b,owner,float(s.damage),"#a1e4ec",true,{"stolen_visual":"bubble","radius":float(s.radius)}):shots.remove_at(i);continue
    if pop:
     if not impact.is_empty():combat.damage(impact,float(s.damage),owner,"Bubble Bloom")
     field(owner,b if combat.path_clear(a,b) else a,"bubble_pool",3,38+float(s.radius)*.5);shots.remove_at(i)
@@ -184,7 +184,7 @@ func step(delta:float)->void:
   var owner:=str(s.owner);var a:Vector2=combat.vec(s.pos);var b:Vector2=a if bool(s.get("ground",false)) else a+combat.vec(s.aim)*minf(350*delta,float(s.left));s.life=float(s.get("life",1.5))-delta
   if float(s.life)<=0:shots.remove_at(i);continue
   var best:=INF;var target:="";var is_friend:=false
-  if combat.v56.catch_shot(a,b,owner,float(s.damage),"#94ead2"):shots.remove_at(i);continue
+  if combat.v56.catch_shot(a,b,owner,float(s.damage),"#94ead2",true,{"stolen_visual":"dart"}):shots.remove_at(i);continue
   if not combat.path_clear(a,b):s.ground=true;s.life=1.5;b=a
   for id in combat.adventure.points():
    if str(id)==owner or not combat.adventure.alive(str(id)) or not combat.v75.friendly(owner,str(id)):continue
