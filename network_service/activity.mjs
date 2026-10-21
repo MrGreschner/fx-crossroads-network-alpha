@@ -1,3 +1,4 @@
+import {dashboardFailure,reportNumberSQL} from './dashboard_errors.mjs';
 import {BUILD} from './release.mjs';
 import {createHmac} from 'node:crypto';
 import {readFileSync} from 'node:fs';
@@ -37,9 +38,10 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
  const retention=setInterval(()=>{if(ready&&pending<4)pool.query("DELETE FROM crossroads_activity WHERE created_at < now() - interval '30 days'").catch(()=>{});for(const [k,v]of limits)if(now()-v.at>120000)limits.delete(k);},3600000);retention.unref();
  function send(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...headers});res.end(JSON.stringify(data));}
  function days(url){return Math.max(1,Math.min(30,Number(url.searchParams.get('days'))||7));}
+ const stat=k=>reportNumberSQL(`payload->'stats'->'${k}'`);
  const aggregate=async n=>{
   const cutoff=new Date(now()-n*86400000).toISOString();
-  const activities=await pool.query(`SELECT category,mode,realm,route,count(DISTINCT profile)::int profiles,sum(active)::float active_seconds,sum(seconds)::float observed_seconds, min((payload->'stats'->>'fps_min')::float) FILTER (WHERE (payload->'stats'->>'samples')::float>0) fps_min, sum((payload->'stats'->>'fps_mean')::float*(payload->'stats'->>'samples')::float)/NULLIF(sum((payload->'stats'->>'samples')::float),0) fps_mean, sum(COALESCE((payload->'stats'->>'below_40')::int,0))::int low_fps_samples FROM crossroads_activity WHERE created_at >= $1 AND kind='interval' GROUP BY category,mode,realm,route ORDER BY sum(active) DESC LIMIT 100`,[cutoff]);
+  const activities=await pool.query(`SELECT category,mode,realm,route,count(DISTINCT profile)::int profiles,sum(active)::float active_seconds,sum(seconds)::float observed_seconds, min(${stat('fps_min')}) FILTER (WHERE ${stat('samples')}>0) fps_min, sum(${stat('fps_mean')}*${stat('samples')})/NULLIF(sum(CASE WHEN ${stat('fps_mean')} IS NOT NULL THEN ${stat('samples')} END),0) fps_mean, sum(COALESCE(${stat('below_40')},0))::float low_fps_samples FROM crossroads_activity WHERE created_at >= $1 AND kind='interval' GROUP BY category,mode,realm,route ORDER BY sum(active) DESC LIMIT 100`,[cutoff]);
   const completions=await pool.query(`SELECT kind,mode,realm,route,result,count(*)::int attempts,percentile_cont(0.5) WITHIN GROUP (ORDER BY duration) FILTER (WHERE duration>0) median_seconds,min(NULLIF(duration,0)) fastest_seconds,max(duration) longest_seconds FROM crossroads_activity WHERE created_at >= $1 AND kind!='interval' GROUP BY kind,mode,realm,route,result ORDER BY count(*) DESC LIMIT 100`,[cutoff]);
   const daily=await pool.query(`SELECT to_char(created_at AT TIME ZONE 'America/Edmonton','YYYY-MM-DD') AS "day",count(DISTINCT profile)::int profiles,count(DISTINCT device)::int devices,count(DISTINCT session)::int sessions,sum(active)::float active_seconds,count(*) FILTER (WHERE kind='graphics_loss')::int graphics_losses,0::int disconnects FROM crossroads_activity WHERE created_at >= $1 GROUP BY 1 ORDER BY 1`,[cutoff]);
   const totals=await pool.query(`SELECT count(*)::int batches,count(DISTINCT profile)::int profiles,count(DISTINCT device)::int devices,count(DISTINCT session)::int sessions,COALESCE(sum(active),0)::float active_seconds FROM crossroads_activity WHERE created_at >= $1`,[cutoff]);
@@ -88,7 +90,7 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
     const cutoff=new Date(now()-days(url)*86400000).toISOString();const rows=await pool.query('SELECT payload,created_at FROM crossroads_activity WHERE created_at >= $1 ORDER BY created_at DESC LIMIT 5000',[cutoff]);
     send(res,200,{version:BUILD,retention_days:30,limit:5000,reports:rows.rows.map(r=>({...r.payload,received_at:r.created_at}))},{'Content-Disposition':'attachment; filename="Crossroads_play_insights.json"'});
    }else send(res,404,{error:'Not found'});
-  }catch{send(res,503,{error:'Activity storage unavailable'});}finally{pending--;}
+  }catch(error){send(res,503,dashboardFailure(error,url.pathname));}finally{pending--;}
   return true;
  }
  return {handle,initialized,status:()=>({configured,ready,pending,retention_days:30}),close(){clearInterval(retention)}};

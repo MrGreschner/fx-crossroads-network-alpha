@@ -1,3 +1,4 @@
+import {dashboardFailure} from './dashboard_errors.mjs';
 import {createHmac,randomBytes,timingSafeEqual} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import pg from 'pg';
@@ -84,7 +85,7 @@ export function createReporting({pool:provided,adminPassword=process.env.REPORT_
     const q=await pool.query('SELECT payload, created_at FROM fx_reports WHERE match_id=$1 ORDER BY created_at LIMIT 2001',[id]);
     reply(res,200,{version:BUILD,report_schema:REPORT_SCHEMA,match_id:id,limited:q.rows.length>2000,reports:q.rows.slice(0,2000).map(r=>({...r.payload,received_at:r.created_at}))},url.searchParams.has('download')?{'Content-Disposition':`attachment; filename="Crossroads_${BUILD}_match_${id}.json"`}:{});
    }else reply(res,404,{error:'Not found'});
-  }catch{reply(res,503,{error:'Database unavailable'});}finally{pending--;}
+  }catch(error){reply(res,503,dashboardFailure(error,url.pathname));}finally{pending--;}
   return true;
  }
  return {pool,admin,handle,initialized,status:()=>({configured:!!pool,ready,admin_configured:adminPassword.length>=24,pending}),close:async()=>{clearInterval(retention);await pool?.end();}};
