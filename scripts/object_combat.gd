@@ -823,10 +823,10 @@ func step_projectiles(delta:float)->void:
 				_:
 					if not impact.is_empty() and not blocked:
 						if bool(shot.get("stats",{}).get("star_mark",false)):starfield.mark_area(owner,center,float(shot.get("stats",{}).get("splash_radius",75)))
+						if bool(shot.get("stats",{}).get("pistol",false)):v90.pistol_hit(owner,impact)
 						damage(impact,float(shot["damage"]),owner,"Projectile",shot.get("credit",{}));shot["hits"].append(impact)
 						v59.impact(shot,center)
 						var stats:Dictionary=shot.get("stats",{})
-						if bool(stats.get("pistol",false)):v90.pistol_hit(owner,impact)
 						if float(stats.get("echo_brand",0))>0:adventure.expansion.brand(owner,impact,float(stats.echo_brand))
 						apply_hit_status(impact,stats,owner,shot.get("credit",{}))
 						if float(stats.get("slow_duration",0))>0:apply_status(impact,"slow",float(stats["slow_duration"]),owner,float(stats.get("slow_factor",.75)))

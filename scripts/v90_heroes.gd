@@ -28,9 +28,6 @@ func hit(owner:String,p:Vector2,aim:Vector2,range_limit:float,amount:float,style
   combat.damage(key,amount,owner);struck.append(key)
   if style=="rope":
    combat.apply_status(key,"slow",float(stats.get("slow_duration",.6)),owner,.25)
-   if combat.passive(owner,"true_grit"):
-    for e in effects:
-     if str(e.style)=="tied" and str(e.owner)==owner and str(e.get("target",""))==str(key) and not bool(e.get("used",false)):e.used=true;combat.release_heroes.heal(owner,owner,3)
   if style=="hook":combat.knock(key,(p-f.pos).normalized(),float(stats.get("pull",18)))
  if struck.is_empty():return struck
  if style=="wing":bank(owner)
@@ -62,12 +59,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "v91_pistol":
    if not pistol_ready(owner,stats):return true
    var cylinder:Dictionary=cylinders[owner];cylinder.rounds=int(cylinder.rounds)-1
-   if int(cylinder.rounds)==0:cylinder.reload=float(stats.get("reload_seconds",2))
-   if combat.passive(owner,"true_grit"):
-    combat.release_heroes.heal(owner,owner,3)
-    var stacks:Array=grit.get(owner,[])
-    if stacks.size()>=6:stacks.pop_front()
-    stacks.append(4.0);grit[owner]=stacks
+   if int(cylinder.rounds)==0:cylinder.reload=float(stats.get("reload_seconds",3))
    combat.launch_projectile(owner,p+aim*20,aim,dict_pistol(stats),amount);effect(owner,"muzzle",.16,p,aim)
   "v90_wing":effect(owner,"wing",.38,p,aim,amount,reach)
   "v90_reed","v90_hook","v90_chop","v90_rope":
@@ -299,16 +291,25 @@ func cleanse(key:String,kinds:Array)->void:
 
 func dict_pistol(stats:Dictionary)->Dictionary:
  var s:=stats.duplicate(true);s.color="#ffd9a0";s.pistol=true;return s
-func pistol_hit(_owner:String,_key:String)->void:
- # True Grit is awarded once when a round is fired, including missed rounds.
- pass
+func hogtied(owner:String,key:String)->bool:
+ # A generic stun or another Marshal's rope does not qualify. Cleansing stun ends eligibility.
+ if combat.effect_time(key,"stun")<=0:return false
+ return effects.any(func(e):return str(e.style)=="tied" and str(e.owner)==owner and str(e.get("target",""))==key and float(e.time)>0)
+func pistol_hit(owner:String,key:String)->void:
+ if not combat.adventure.authoritative() or not combat.adventure.alive(owner) or not combat.passive(owner,"true_grit") or not hogtied(owner,key):return
+ var target:Dictionary=combat.actor(key)
+ if target.is_empty() or not bool(target.alive) or key not in combat.hostile(owner):return
+ combat.release_heroes.heal(owner,owner,3)
+ var stacks:Array=grit.get(owner,[])
+ if stacks.size()>=6:stacks.pop_front()
+ stacks.append(4.0);grit[owner]=stacks
 func pistol_ready(owner:String,stats:Dictionary)->bool:
  if str(stats.get("style",""))!="v91_pistol":return true
  if not cylinders.has(owner):cylinders[owner]={"rounds":6,"reload":0.0}
  return int(cylinders[owner].rounds)>0 and float(cylinders[owner].reload)<=0
 func pistol_delay(owner:String,stats:Dictionary,normal:float)->float:
  if str(stats.get("style",""))!="v91_pistol":return normal
- return float(stats.get("reload_seconds",2)) if int(cylinders.get(owner,{"rounds":6}).rounds)==1 else 0.0
+ return float(stats.get("reload_seconds",3)) if int(cylinders.get(owner,{"rounds":6}).rounds)==1 else 0.0
 func primary_pressed(owner:String,held:bool)->bool:
  var guide_game:Node=combat.adventure.game
  if (owner=="solo" or combat.adventure.arcade and owner==str(guide_game.my_id)) and preload("res://scripts/ability_guide.gd").blocks(guide_game):return false

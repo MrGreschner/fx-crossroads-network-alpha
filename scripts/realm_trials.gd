@@ -341,7 +341,7 @@ func step(delta: float) -> void:
 	step_healing_zones(delta)
 	step_discs(delta)
 	polish.bosses(delta)
-	if not active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id=="moonveil" if arcade else game.region_id=="moonveil"): return
+	if not active and not combat.coast.active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id=="moonveil" if arcade else game.region_id=="moonveil"): return
 	clock+=delta
 	for n in range(warnings.size()-1,-1,-1):
 		var warning: Dictionary = warnings[n]

@@ -114,7 +114,7 @@ func _process(_delta: float) -> void:
   layout_size = view
   menu_offset = (view-Vector2(1280,720))*0.5
   move_center = Vector2(160,view.y-135)
-  aim_center = Vector2(view.x-170,view.y-125)
+  aim_center = Vector2(view.x-170,view.y-(215 if state=="" else 125))
   reset_controls()
   menu_state = state
   for button in buttons:

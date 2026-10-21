@@ -9,13 +9,13 @@
   "primary": {
     "name": "Six-Shooter",
     "style": "v91_pistol",
-    "damage": 22,
+    "damage": 17,
     "cooldown": 0.0,
     "range": 430,
-    "description": "Click to fire one 22-damage round. Fire six rounds at your own pace, then reload for 2 seconds. Each round stops at the first enemy or wall.",
+    "description": "Click to fire one 17-damage round. Fire six rounds at your own pace, then reload for 3 seconds. Each round stops at the first enemy or wall.",
     "speed": 620,
     "cylinder_size": 6,
-    "reload_seconds": 2.0
+    "reload_seconds": 3.0
   },
   "secondary": {
     "name": "Hogtie",
@@ -33,7 +33,7 @@
     "range": 290,
     "description": "Dash forward with a dust trail, hitting each enemy once for 38 and pushing them aside."
   },
-  "passive": "True Grit: every Six-Shooter shot heals 3 HP and adds 4% damage reduction for 4 seconds. Each stack expires separately; up to six stacks (24%).",
+  "passive": "True Grit: Six-Shooter hits on enemies caught by your Hogtie heal 3 HP and add 4% damage reduction for 4 seconds. Misses and untied enemies grant nothing. Each stack expires separately; up to six stacks (24%).",
   "passive_effect": "true_grit",
   "mastery": {
     "title": "Marshal of the Crossroads",
@@ -43,13 +43,13 @@
       "attack": {
         "name": "Long Barrel",
         "style": "v91_pistol",
-        "damage": 28,
+        "damage": 23,
         "cooldown": 0.0,
         "range": 560,
-        "description": "Click to fire one 28-damage long-barrel round. Six rounds per cylinder, then a 2.6-second reload. Range 560.",
+        "description": "Click to fire one 23-damage long-barrel round. Six rounds per cylinder, then a 3.6-second reload. Range 560.",
         "speed": 620,
         "cylinder_size": 6,
-        "reload_seconds": 2.6
+        "reload_seconds": 3.6
       },
       "description": "Shoot farther and harder, with a longer cylinder reload."
     },

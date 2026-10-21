@@ -96,7 +96,7 @@ func pot_ui(body:Node)->void:
  fishing.label(body,p.basket_summary(now),18)
  for i in p.state().pots.size():
   var pot=p.state().pots[i];var ready=now>=float(pot.ready)
-  var box=UI.card(body,str(fishing.C.pools()[pot.pool].name),"Ready to collect" if ready else "%d real minutes remaining" % ceili((float(pot.ready)-now)/60))
+  var box=UI.card(body,fishing.basket_location(str(pot.pool)),"Ready to collect" if ready else "%d real minutes remaining" % ceili((float(pot.ready)-now)/60))
   var countdown=fishing.label(box,"",17)
   if ready:fishing.picture(box,str(pot.catch.species),Vector2(130,70));fishing.label(box,str(fishing.C.fish()[pot.catch.species].name)+" • %.2f kg" % float(pot.catch.kg),18)
   var row=HBoxContainer.new();box.add_child(row)

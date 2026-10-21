@@ -12,7 +12,7 @@ static func build(l:Node,body:Node)->void:
  label(wallet,"Prepare food, choose three CC items and equip two relics before your next adventure.")
  var food=UI.card(body,"FOOD • "+g.provisions.name_of(g.provisions.packed),g.provisions.summary(g.provisions.packed))
  l.button(food,"Visit Food Stand",func():l.close();g.menu="food";g.list_preview[g.menu]=0)
- var items=UI.card(body,"ADVENTURE ITEMS • THREE SLOTS","Purchased with CC. Item buttons 1, 2 and 3 activate your supplies during a run.")
+ var items=UI.card(body,"ADVENTURE ITEMS • THREE SLOTS","Purchased with CC. Three equipment slots plus a separate consumable slot. Use key 4 or click the consumable to use it during a run.")
  for n in 3:
   var spec=g.items.get(g.loadout[n],{}) if n<g.loadout.size() else {}
   var row=UI.card(items,"SLOT %d • %s" % [n+1,str(spec.get("name","Empty"))],str(spec.get("description","Choose an item at the Supply Vendor.")))

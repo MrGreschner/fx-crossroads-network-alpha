@@ -72,7 +72,7 @@ func setup(owner:Node,is_multi:bool=false)->void:
  odds_button=button(col,"Read this water • fish odds",open_odds);odds_button.visible=false
  meter=ProgressBar.new();meter.custom_minimum_size.y=10;meter.show_percentage=false;col.add_child(meter)
  cast_button=button(col,"F • Cast",activate);UI.accent(cast_button);panel.visible=false
- basket_note=button(hud,"",func():open_workshop();workshop.selected_tab=2;workshop.build());basket_note.visible=false
+ basket_note=button(hud,"",func():open_workshop();workshop.selected_tab=2;workshop.build());basket_note.visible=false;basket_note.clip_text=true;basket_note.custom_minimum_size.x=0
 func records():return game.legacy.fishing_records
 func local_pos()->Vector2:return game.local_pos if multi else game.position_in_world
 func local_hp()->float:return float(game.health.get(game.my_id,0)) if multi else float(game.health)
@@ -126,7 +126,12 @@ func _process(delta:float)->void:
  for i in E.BAITS.size():bait_picker.set_item_disabled(i,not prog.bait_unlocked(str(E.BAITS.keys()[i])))
  var baskets=prog.state().pots
  basket_note.visible=not baskets.is_empty() and playable() and not busy() and nearest().is_empty()
- basket_note.text=prog.basket_summary(E.context(game).utc);basket_note.position=Vector2((game.VIEW.x-360)*.5,164);basket_note.size=Vector2(340,44)
+ basket_note.text=prog.basket_summary(E.context(game).utc)
+ var notice=basket_notice_rect(game.get_viewport_rect().size,not multi and game.mode=="town")
+ basket_note.position=notice.position;basket_note.size=notice.size
+ var locations:Array[String]=[]
+ for pot in baskets:locations.append(basket_location(str(pot.get("pool",""))))
+ basket_note.tooltip_text="Basket locations:\n"+"\n".join(locations)+"\nClick to inspect baskets and collect ready catches."
  var region=region_key()
  if region!=cached_region:
   cancel("");cached_region=region;spots=C.spots(region)
@@ -426,3 +431,16 @@ func xp_popup(amount:int)->void:
 func open_mastery()->void:
  if is_instance_valid(mastery_window):return
  mastery_window=preload("res://scripts/fishing_mastery_view.gd").new();game.add_child(mastery_window);mastery_window.setup(self)
+
+static func basket_notice_rect(view:Vector2,in_town:bool)->Rect2:
+ var x=190.0 if in_town else 20.0
+ return Rect2(x,132 if in_town and view.x<1100 else 118 if in_town else 102,maxf(80,minf(340,view.x-x-12)),40)
+static func basket_location(pool:String)->String:
+ var water:Dictionary=C.pools().get(pool,{})
+ var region=str(water.get("region",""))
+ var realm={"town":"Crossroads Town","wayfarer":"Wayfarer Quest","between_remote":"The Between","descent38":"The Descent · Floor 38","descent56":"The Descent · Floor 56","defense":"North Gate Defense"}.get(region,region.replace("_"," ").capitalize())
+ var path="res://content/regions/"+region+".json"
+ if FileAccess.file_exists(path):
+  var data=JSON.parse_string(FileAccess.get_file_as_string(path))
+  if data is Dictionary:realm=str(data.get("name",realm))
+ return str(realm)+" · "+str(water.get("name","Unknown water"))

@@ -6,8 +6,9 @@ static func build(parent:Node,l:Node,n:Dictionary,category:String)->void:
  if category=="heroes":
   for e in [["ALL-TIME DAMAGE","damage_all","rank_all_damage"],["WEEKLY DAMAGE • VANGUARD COMETS","damage_week","rank_week_damage"]]:
    var card=UI.card(parent,e[0],"Top 10 connected accounts • Monday reset • top 5: Vanguard Comets" if e[1]=="damage_week" else "Top 10 connected accounts • top 5: Eternal Constellation")
-   if e[1]=="damage_week" and not n.has("damage_week"):G.label(card,"Deploy the matching server to load the Monday-reset weekly board.",15)
-   preload("res://scripts/records_hall_ui.gd").damage_leaders(card,n.get(e[1],[]),e[2])
+   if e[1]=="damage_week" and not n.has("damage_week"):
+    G.label(card,"Server update required • weekly damage is stored, but this older server cannot send the new board. Deploy the matching server ZIP.",16);continue
+   preload("res://scripts/records_hall_ui.gd").damage_leaders(card,n.get(e[1],[]),e[2],"Server update needed" if not l.community.snapshot.is_empty() and not l.community.compatible(l.community.snapshot) else "No named record yet")
  if category=="times":
   G.label(parent,"REALM TIMES • SPEED RECORDS",23);G.label(parent,"Fastest recorded completion • hero shown when recorded with the run. Weekly results reset Monday.",15)
   for id in l.game.manifest.regions:

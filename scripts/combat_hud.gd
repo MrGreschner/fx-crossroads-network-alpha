@@ -1,9 +1,14 @@
 extends RefCounted
 ## Shared combat geometry; town layout and gameplay state are independent.
 static func dock(g:Node)->Rect2:
- var width=minf(900,g.VIEW.x-40)
- if g.mobile.enabled:return Rect2(300,g.VIEW.y-100,clampf(g.VIEW.x-900,340,600),90)
- return Rect2((g.VIEW.x-width)*.5,g.VIEW.y-(70 if g.mobile.enabled else 42),width,32)
+ var view:Vector2=g.get_viewport_rect().size
+ if g.mobile.enabled:return Rect2(300,view.y-100,clampf(view.x-900,340,600),90)
+ var reserve=info_width(view)+20
+ var width=minf(900,maxf(160,view.x-reserve-24))
+ return Rect2(maxf(8,minf((view.x-width)*.5,view.x-reserve-width)),view.y-(70 if view.x<720 else 42),width,62 if view.x<720 else 32)
+static func info_width(view:Vector2)->float:return minf(250,maxf(160,view.x*.18))
+static func info_rect(view:Vector2)->Rect2:
+ return Rect2(view.x-info_width(view)-8,view.y-93-8,info_width(view),93)
 static func header(g:Node2D,title:String,coins:int,hp:float,max_hp:float)->void:
  var font:Font=ThemeDB.fallback_font
  g.draw_rect(Rect2(0,0,g.VIEW.x,90),Color(.035,.085,.12,.88))

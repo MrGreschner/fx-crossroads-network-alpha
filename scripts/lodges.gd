@@ -78,7 +78,7 @@ func open(which:String)->void:
  page=which;job_widgets.clear();ui_clock=null
  game.presentation.window({"challenge":"CHALLENGE LODGE","gather":"GATHERERS’ LODGE","apothecary":"WILLOWGLASS APOTHECARY"}[page],"lodge_"+page)
  var body=game.presentation.content;var header=HBoxContainer.new();body.add_child(header);image(header,page,Vector2(70,65) if page=="challenge" else Vector2(120,110))
- label(header,{"challenge":"Five challenge styles • 2–5 minutes • level 10, all skills ready. Choose a style above; earn medals and cosmetic rewards. No items, food or realm/mastery progress.","gather":"Send a crew, let it forage while you play, then claim its findings. Trips continue while this device is closed. Rare seeds are a chance, never guaranteed.","apothecary":"Turn gathered ingredients into single-use potions. Bottles use your existing three item slots, alongside equipment. No extra auto-use slot."}[page],19)
+ label(header,{"challenge":"Five challenge styles • 2–5 minutes • level 10, all skills ready. Choose a style above; earn medals and cosmetic rewards. No items, food or realm/mastery progress.","gather":"Send a crew, let it forage while you play, then claim its findings. Trips continue while this device is closed. Rare seeds are a chance, never guaranteed.","apothecary":"Turn gathered ingredients into single-use potions. Carry one potion in its own consumable slot, alongside three equipment items. Click the bottle or press 4 during combat."}[page],19)
  if not notice.is_empty():label(body,notice,18).modulate=Color("#eed18e")
  var nav=HBoxContainer.new();body.add_child(nav)
  if page!="challenge":
@@ -155,10 +155,11 @@ func brew_menu(body:Node)->void:
   var recipe:Dictionary=C.RECIPES[id];var box=card(body,str(recipe.name)+" • Tier "+str(recipe.tier),str(recipe.description));var row=HBoxContainer.new();box.add_child(row);image(row,id)
   var costs=[]
   for ingredient in recipe.needs:costs.append(str(recipe.needs[ingredient])+" "+str(C.INGREDIENTS[ingredient].name))
+  if recipe.has("fish"):costs.append("1 kept "+str(preload("res://scripts/fishing_catalog.gd").fish()[recipe.fish].name)+" (ordinary, not favourite/displayed)")
   label(row," + ".join(costs)+"\n"+str(int(recipe.seconds))+"s brew • "+str(int(state().potions.get(id,0)))+" bottles stored",16)
   var actions=HBoxContainer.new();box.add_child(actions)
-  var brew=button(actions,"Brew bottle",func():result(game.legacy.lodge_economy.brew(id)));brew.disabled=int(state().tier)<int(recipe.tier) or not state().brew.is_empty() or not game.legacy.lodge_economy.can_pay(recipe.needs)
-  var pack=button(actions,"Pack for next run",func():result(game.legacy.lodge_economy.pack(game,id)));pack.disabled=int(state().potions.get(id,0))==0 or game.loadout.size()>=3
+  var brew=button(actions,"Brew bottle",func():result(game.legacy.lodge_economy.brew(id)));brew.disabled=int(state().tier)<int(recipe.tier) or not state().brew.is_empty() or not game.legacy.lodge_economy.can_brew(recipe)
+  var pack=button(actions,"Pack for next run",func():result(game.legacy.lodge_economy.pack(game,id)));pack.disabled=int(state().potions.get(id,0))==0 or not preload("res://scripts/supply_slots.gd").can_add(game.loadout,id,game.items)
 func update_timers()->void:
  if is_instance_valid(ui_clock):ui_clock.text="Crew trips use real time on this device. Claim each trip once."
  for widget in job_widgets:

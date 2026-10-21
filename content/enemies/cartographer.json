@@ -3,7 +3,7 @@
   "name": "Cartographer",
   "sprite": "cartographer",
   "health": 780,
-  "speed": 0,
+  "speed": 100,
   "damage": 12,
   "behaviour": "chase",
   "aggro_range": 650,

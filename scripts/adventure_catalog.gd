@@ -10,6 +10,8 @@ var status:Label
 var enter:Button
 var context:=""
 var refund_button:Button
+var category:HBoxContainer
+var category_buttons:Array[Button]=[]
 var route_picker:OptionButton
 var selected:=0
 var entries:Array=[]
@@ -26,6 +28,16 @@ func setup(owner:Node)->void:
  for name in game.town_upgrade.FILTERS:route_picker.add_item(name)
  route_picker.item_selected.connect(func(index:int):game.town_upgrade.route_filter=index;selected=0;game.list_preview[context]=0;render())
  button(head,"Close",close)
+ category=HBoxContainer.new();category.name="ShopCategories";category.add_theme_constant_override("separation",12);col.add_child(category)
+ var group=ButtonGroup.new();group.allow_unpress=false
+ for index in 2:
+  var tab=button(category,"Equipment\n3 equipment slots" if index==0 else "Consumables\n1 potion / supply slot",choose_category.bind(index))
+  tab.name="EquipmentTab" if index==0 else "ConsumablesTab";tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.custom_minimum_size=Vector2(0,64);tab.clip_text=true;tab.toggle_mode=true;tab.button_group=group;tab.focus_mode=Control.FOCUS_NONE
+  tab.icon=preload("res://scripts/item_icons.gd").texture("hammer" if index==0 else "potion");tab.add_theme_constant_override("icon_max_width",36);tab.add_theme_constant_override("h_separation",12);tab.add_theme_font_size_override("font_size",20)
+  tab.add_theme_stylebox_override("normal",category_skin("#23434e","#6c939e",1));tab.add_theme_stylebox_override("hover",category_skin("#315966","#bedbdf",2));tab.add_theme_stylebox_override("pressed",category_skin("#41564d","#efd19b",3));tab.add_theme_stylebox_override("hover_pressed",category_skin("#4a6357","#ffe1aa",3))
+  tab.add_theme_color_override("font_color",Color("#dfedf0"));tab.add_theme_color_override("font_pressed_color",Color("#ffe4af"));tab.add_theme_color_override("font_hover_pressed_color",Color("#ffe4af"))
+  tab.tooltip_text="Browse equipment for your three equipment slots." if index==0 else "Browse potions and single-use supplies for your separate consumable slot."
+  category_buttons.append(tab)
  var split:=HBoxContainer.new();split.add_theme_constant_override("separation",24);split.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(split)
  scroll=ScrollContainer.new();scroll.custom_minimum_size=Vector2(390,0);scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;split.add_child(scroll)
  rows=VBoxContainer.new();rows.size_flags_horizontal=Control.SIZE_EXPAND_FILL;rows.add_theme_constant_override("separation",6);scroll.add_child(rows)
@@ -36,6 +48,11 @@ func setup(owner:Node)->void:
  refund_button=button(foot,"Refund food / items",refund)
  enter=button(foot,"ENTER",confirm);enter.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  button(foot,"Co-op realms",func():game.menu="";game.get_tree().root.set_meta("fx_mode","coop");game.get_tree().root.set_meta("fx_hero",game.selected_character);game.get_tree().change_scene_to_file("res://network/client.tscn")).name="Coop"
+static func category_skin(fill:String,edge:String,width:int)->StyleBoxFlat:
+ var skin=StyleBoxFlat.new();skin.bg_color=Color(fill);skin.border_color=Color(edge);skin.set_border_width_all(width);skin.set_corner_radius_all(8);skin.set_content_margin_all(8);return skin
+func choose_category(index:int)->void:
+ if context not in ["supplies","merchant"]:return
+ game.supply_category="consumables" if index==1 else "equipment";game.list_preview[context]=0;scroll.scroll_vertical=0;render()
 func label(parent:Node,t:String,size:int=18)->Label:
  var l:=Label.new();l.text=t;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.add_theme_font_size_override("font_size",size);parent.add_child(l);return l
 func button(parent:Node,t:String,action:Callable)->Button:
@@ -45,6 +62,8 @@ func clear(parent:Node)->void:
 func close()->void:game.menu="";game.mobile.reset_controls();context="";panel.hide()
 func data(id:String)->Dictionary:return game.realms.get(id,{}) if context in ["portal","wayfinder"] else game.provisions.defs.get(id,{}) if context=="food" else game.items.get(id,{})
 func render()->void:
+ category.visible=context in ["supplies","merchant"]
+ for n in category_buttons.size():category_buttons[n].set_pressed_no_signal(n==(1 if game.supply_category=="consumables" else 0))
  route_picker.visible=context=="wayfinder"
  refund_button.visible=context in ["food","supplies"]
  entries=game.list_entries();selected=clampi(int(game.list_preview.get(context,0)),0,maxi(0,entries.size()-1));clear(rows)
@@ -96,12 +115,12 @@ func render_detail()->void:
   enter.text="REALM LOCKED" if enter.disabled else "ENTER REALM • Enter key"
   if enter.disabled:label(detail,preload("res://scripts/realm_access.gd").hint(game.legacy,id),21).modulate=Color("#f4ca82")
  else:
-  var price:int=game.legacy.discount(maxi(10,int(spec.get("cost",0))/2) if context=="merchant" else int(spec.get("cost",0)))
+  var price:int=preload("res://scripts/supply_slots.gd").price(spec,game.legacy)
   label(detail,"Cost: "+str(price)+" CC",22).modulate=Color("#edd19b")
-  label(detail,"Packed food: "+game.provisions.name_of(game.provisions.packed) if context=="food" else "Your pack: "+str(game.inventory if context=="merchant" else game.loadout)+" • 3 item slots",18)
+  label(detail,"Packed food: "+game.provisions.name_of(game.provisions.packed) if context=="food" else "Your pack: "+str(game.inventory if context=="merchant" else game.loadout)+" • 3 equipment + 1 consumable",18)
   enter.text=("BUY FOOD" if context=="food" else "BUY ITEM")+" • Enter key"
   var packed:Array=game.inventory if context=="merchant" else game.loadout
-  enter.disabled=game.gold<price or (not game.provisions.packed.is_empty() if context=="food" else packed.size()>=3 or packed.has(id) and str(spec.get("effect","")) in ["bonus_damage","bonus_speed","lifesteal","armor","bonus_health","cooldown"])
+  enter.disabled=game.gold<price or (not game.provisions.packed.is_empty() if context=="food" else not preload("res://scripts/supply_slots.gd").can_add(packed,id,game.items))
  label(detail,"Select a row, then confirm using the button or Enter. Swipe anywhere on a list to scroll, or use the mouse wheel.",15).modulate=Color("#abc5cc")
  if game.message_time>0:label(detail,game.message,16).modulate=Color("#e8daaa")
 func confirm()->void:
@@ -115,8 +134,7 @@ func confirm()->void:
 func refund()->void:
  if context=="food":game.provisions.refund()
  elif context=="supplies":
-  for id in game.loadout:game.gold+=int(game.loadout_paid.get(id,game.items[id].get("cost",0)))
-  game.loadout.clear();game.loadout_paid.clear()
+  preload("res://scripts/supply_slots.gd").refund(game)
  render()
 func key(event:InputEvent)->void:
  if game.menu in MENUS and context!=game.menu:context=game.menu;render()

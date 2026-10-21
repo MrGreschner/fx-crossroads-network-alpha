@@ -32,16 +32,16 @@ static func hero_leaders(parent:Node,l:Node,rows:Array)->void:
  var cols=columns(parent)
  for i in 10:
   var row=rank_row(cols[i/5],i+1)
-  if i>=rows.size():label(row,"No record yet",16,Color("#7e9ca8"));continue
+  if i>=rows.size():label(row,"Server update needed" if not l.community.snapshot.is_empty() and not l.community.compatible(l.community.snapshot) else "No record yet",16,Color("#7e9ca8"));continue
   var record:Dictionary=rows[i];var id=str(record.get("id",""));portrait(row,l,id)
   var detail=VBoxContainer.new();detail.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(detail)
   label(detail,str(l.game.characters.get(id,{}).get("name",id)),19)
   label(detail,String.num(float(record.get("value",0)),0)+" total damage",15,Color("#b5d1d8"))
-static func damage_leaders(parent:Node,rows:Array,award:String)->void:
+static func damage_leaders(parent:Node,rows:Array,award:String,empty_text:String="No named record yet")->void:
  var cols=columns(parent)
  for i in 10:
   var row=rank_row(cols[i/5],i+1)
-  if i>=rows.size():label(row,"No named record yet",16,Color("#7e9ca8"));continue
+  if i>=rows.size():label(row,empty_text,16,Color("#7e9ca8"));continue
   var record:Dictionary=rows[i];var detail=VBoxContainer.new();detail.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(detail)
   var heading=HBoxContainer.new();detail.add_child(heading);label(heading,str(record.get("username","")),19)
   if i<5:

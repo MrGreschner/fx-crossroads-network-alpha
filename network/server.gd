@@ -124,7 +124,7 @@ func backlog_max()->int:
  return value
 func remove_actor(g:Node,id:String)->void:
  # Remove expired actors from every per-player map; no retained combat identities.
- for field in ["positions","health","hero_ids","server_inputs","server_actions","server_input_credit","input_ack","net_dash","net_velocity","pvp_scores","contributions","arena_records","arena_outcomes","teams","cooldown_at","inventory","levels","gold","kills","xp","invincible_until","shield_until","haste_until","stealth_until","respawn_at","dodge_at","aim_angles","attack_pose_until","defeat_causes","food_registered","food_slots","food_loadouts","attack_branch","mastery_choice","player_epochs"]:
+ for field in ["positions","health","hero_ids","server_inputs","server_actions","server_input_credit","input_ack","net_dash","net_velocity","pvp_scores","contributions","arena_records","arena_outcomes","teams","cooldown_at","inventory","levels","gold","kills","xp","invincible_until","shield_until","haste_until","stealth_until","respawn_at","dodge_at","aim_angles","attack_pose_until","defeat_causes","accepted_supplies","supply_loadouts","shop_discounts","food_registered","food_slots","food_loadouts","attack_branch","mastery_choice","player_epochs"]:
   var value=g.get(field)
   if value is Dictionary:value.erase(id)
 func drop_connection(key:int,reason:String="socket_closed")->void:
@@ -270,9 +270,12 @@ func receive(key:int,data:Dictionary)->void:
   for member in room.members:
    g.legacy.builds[member]=g.legacy.sanitize_build(room.members[member].get("build_choice",{}))
    g.player_cosmetics[member]=room.members[member].get("cosmetic",{})
+   g.supply_loadouts[member]=room.members[member].get("consumable","");g.shop_discounts[member]=room.members[member].get("shop_discount",false)
    g.food_registered[member]=true;g.food_loadouts[member]=room.members[member].get("food","")
   g._start_match()
   if not g.started:fail(key,"Realm could not start: "+g.status_label.text);return
+  for member in room.members:
+   if not str(g.accepted_supplies.get(member,"")).is_empty():room.members[member].consumable=""
   g.start_countdown=0;g.expedition.start()
   if g.mode=="arena" and g.arena_map=="crossroads":g.arena_world.test_enemies()
   g.server_inputs.clear();g.server_input_credit.clear();g.server_actions.clear();g.input_ack.clear();g.net_dash.clear();g.player_epochs.clear();g.authority_tick=0;g.position_samples.clear();g.max_input_depth=0
@@ -425,7 +428,7 @@ func join(key:int,data:Dictionary)->void:
   if not valid_hero(room.game,hero):fail(key,"Choose an official hero.");return
   id=Crypto.new().generate_random_bytes(8).hex_encode()
   identities[id]={"room":code,"token":Crypto.new().generate_random_bytes(24).hex_encode(),"connection":key,"left":0,"last_seq":0,"action_seq":0,"event_ack":0,"event_sent":0}
-  room.members[id]={"id":id,"name":str(data.get("name","Traveller")).left(24),"hero":hero,"build_choice":room.game.legacy.sanitize_build(data.get("build_choice",{})),"cosmetic":clean_cosmetic(data.get("cosmetic",{})),"food":str(data.get("food","")) if room.game.provisions.defs.has(str(data.get("food",""))) else ""}
+  room.members[id]={"consumable":str(data.get("consumable","")) if room.game.items.has(str(data.get("consumable",""))) and preload("res://scripts/supply_slots.gd").consumable(room.game.items[str(data.get("consumable",""))]) else "","shop_discount":data.get("shop_discount",false)==true,"id":id,"name":str(data.get("name","Traveller")).left(24),"hero":hero,"build_choice":room.game.legacy.sanitize_build(data.get("build_choice",{})),"cosmetic":clean_cosmetic(data.get("cosmetic",{})),"food":str(data.get("food","")) if room.game.provisions.defs.has(str(data.get("food",""))) else ""}
   if preload("res://network/party_rules.gd").teamed(room.game):
    var count=room.members.values().filter(func(m):return int(m.get("team",-1))==0).size()
    var other=room.members.values().filter(func(m):return int(m.get("team",-1))==1).size()

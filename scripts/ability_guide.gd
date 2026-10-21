@@ -75,15 +75,18 @@ func refresh()->void:
  if identity!=key:identity=key;close_info()
  for n in 4:
   var item:=model(n);var shortcut:String=(["AIM · PRIMARY","2ND · SECONDARY","SPC · SPECIAL","AUTO · PASSIVE"] if game.mobile.enabled else ["LMB · PRIMARY","RMB · SECONDARY","SPACE · SPECIAL","AUTO · PASSIVE"])[n]
-  buttons[n].text=shortcut+"\n"+str(item.name);buttons[n].tooltip_text=str(item.name)+" · Click for details";buttons[n].modulate=Color("#a7b1b8") if item.locked else Color.WHITE
+  buttons[n].text=KINDS[n].capitalize()+"\n"+str(item.name);buttons[n].tooltip_text=shortcut+" · "+str(item.name)+" · Click for details";buttons[n].modulate=Color("#a7b1b8") if item.locked else Color.WHITE
  if selected>=0:fill_details()
  layout()
 func layout()->void:
- var view:Vector2=game.get_viewport_rect().size;var narrow:=view.x<720
- var width:=minf(620,view.x-24);strip.columns=2 if narrow else 4;strip.position=Vector2(12 if narrow else maxf(12,view.x-width-116),94);strip.size=Vector2(width,94 if narrow else 44)
- var pw:=minf(520,view.x-24);var top:=strip.position.y+strip.size.y+8
- if view.y-top<180:top=maxf(12,view.y-minf(220,view.y-24)-12)
- panel.position=Vector2(clampf(strip.position.x+strip.size.x-pw,12,maxf(12,view.x-pw-12)),top);panel.size=Vector2(pw,maxf(80,minf(264,view.y-top-12)))
+ var view:Vector2=game.get_viewport_rect().size
+ strip.columns=2
+ var rect=preload("res://scripts/combat_hud.gd").info_rect(view)
+ # Touch controls retain their own clear area above the corner buttons.
+ strip.position=rect.position;strip.size=rect.size
+ var pw:=minf(520,view.x-24);var ph:=minf(264,view.y-24)
+ var top:=maxf(12,strip.position.y-ph-8)
+ panel.position=Vector2(clampf(strip.position.x+strip.size.x-pw,12,maxf(12,view.x-pw-12)),top);panel.size=Vector2(pw,ph)
  title.position=Vector2(12,10);title.size=Vector2(pw-60,42)
  close_button.position=Vector2(pw-44,10);close_button.size=Vector2(32,30)
  subtitle.position=Vector2(12,54);subtitle.size=Vector2(pw-24,32)
