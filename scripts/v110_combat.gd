@@ -128,10 +128,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   var p:Vector2=combat.draw_effect_position("v110",e,combat.vec(e.pos))-camera;var dir:Vector2=combat.vec(e.aim);var t:float=1-float(e.time)/float(e.duration)
   match str(e.kind):
    "saber","echo":
-    var tint:=Color(.63,.9,1,.7) if e.kind=="saber" or bool(e.done) else Color(.63,.9,1,.18)
-    var angle:float=dir.angle()-.65+t*1.3
-    c.draw_arc(p,float(e.radius),angle-.22,angle+.22,10,tint,4 if e.kind=="saber" else 2,true)
-    c.draw_line(p+Vector2.from_angle(angle)*25,p+Vector2.from_angle(angle)*float(e.radius),tint,3,true)
+    preload("res://scripts/hero_visuals1987.gd").ribbon(c,p,dir,float(e.radius),t,e.kind=="echo",bool(e.done))
    "jabs":
     var phase:float=fposmod(t*3,1);var point:Vector2=p+dir*(20+sin(phase*PI)*(float(e.radius)-20))
     c.draw_line(p+dir*18,point,Color(.94,.75,.68,.8),5,true);c.draw_circle(point,6,Color("#deb39a"))

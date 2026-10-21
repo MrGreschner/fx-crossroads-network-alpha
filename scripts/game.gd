@@ -211,6 +211,7 @@ func _ready() -> void:
 	session_menu=preload("res://scripts/session_menu.gd").new();add_child(session_menu);session_menu.setup(self,false)
 	version_check=preload("res://scripts/build_update.gd").new();add_child(version_check);version_check.setup(self)
 	var quick_slots=preload("res://scripts/loadout_hud.gd").new();add_child(quick_slots);quick_slots.setup(self)
+	var guide=preload("res://scripts/ability_guide.gd").new();add_child(guide);guide.setup(self)
 	level_cards=preload("res://scripts/level_cards.gd").new();add_child(level_cards);level_cards.setup(self,false)
 	if not get_tree().root.has_meta("fx_intro_seen"):
 		get_tree().root.set_meta("fx_intro_seen",true)
@@ -984,6 +985,7 @@ func aimed_point(max_range: float) -> Vector2:
 	return position_in_world + aim_direction() * minf(max_range, position_in_world.distance_to(mouse_world))
 
 func fire(kind: String) -> void:
+	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if fishing!=null and fishing.busy():return
 	if not dev_magic.aiming.is_empty() or Time.get_ticks_msec()<dev_magic.input_until:return
 	if studio_live.active():return
@@ -1146,6 +1148,7 @@ func activate_block(stats: Dictionary) -> void:
 	add_float_text(position_in_world + Vector2(-25, -65), "BLOCK", Color("#a9ddef"))
 
 func pulse() -> void:
+	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if fishing!=null and fishing.busy():return
 	if studio_live.active():return
 	if adventure.combat.held_cast.suppressed("solo","special"):return

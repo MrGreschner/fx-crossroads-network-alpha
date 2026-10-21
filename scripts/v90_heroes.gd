@@ -310,6 +310,8 @@ func pistol_delay(owner:String,stats:Dictionary,normal:float)->float:
  if str(stats.get("style",""))!="v91_pistol":return normal
  return float(stats.get("reload_seconds",2)) if int(cylinders.get(owner,{"rounds":6}).rounds)==1 else 0.0
 func primary_pressed(owner:String,held:bool)->bool:
+ var guide_game:Node=combat.adventure.game
+ if (owner=="solo" or combat.adventure.arcade and owner==str(guide_game.my_id)) and preload("res://scripts/ability_guide.gd").blocks(guide_game):return false
  if combat.adventure.arcade and combat.adventure.game.arena_world.shatter.active():return held
  if combat.v78.hero(owner)!="dustmarshal":return held
  var previous:bool=bool(trigger_down.get(owner,false));trigger_down[owner]=held

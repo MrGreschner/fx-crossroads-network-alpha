@@ -8,6 +8,15 @@ const FRAMES={
  "walk2":{"region":Rect2(220,664,372,437),"centre":385.0},
  "attack":{"region":Rect2(771,664,420,435),"centre":949.0}}
 static func texture(sprite:String,pose:String)->Texture2D:
+ if sprite in ["golfer","dawnblade","lumen","elara","echo_dancer","chronicle","hazel_hex"]:
+  var pixel_pose="idle" if pose=="0" else "walk1" if pose=="1" else pose
+  if pixel_pose in ["idle","walk1","walk2","attack","attack2","special"]:
+   var pixel_key="pixel:"+sprite+":"+pixel_pose
+   if not poses.has(pixel_key):
+    var image=Image.new()
+    if image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/pixel_198_7/"+sprite+"_"+pixel_pose+".png"))!=OK:return null
+    poses[pixel_key]=ImageTexture.create_from_image(image)
+   return poses[pixel_key]
  if sprite in ["golfer","welder","tempo","ferryman"]:
   var pixel_pose="idle" if pose=="0" else "walk1" if pose=="1" else pose
   if pixel_pose in ["idle","walk1","walk2","attack","attack2","special"]:

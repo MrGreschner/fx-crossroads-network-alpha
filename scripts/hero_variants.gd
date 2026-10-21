@@ -39,7 +39,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
    bombs.append({"owner":owner,"pos":combat.point_array(origin),"time":float(stats.get("fuse",1)),"damage":amount,"radius":float(stats.get("radius",115))})
    trails.append({"start":combat.point_array(origin),"end":combat.point_array(destination),"time":.4})
   "spiral_shards":
-   if spirals.size()<24:spirals.append({"owner":owner,"pos":combat.point_array(origin),"elapsed":0.0,"duration":float(stats.get("duration",2)),"radius":float(stats.get("radius",250))+(60 if combat.passive(owner,"far_refraction") else 0),"angle":aim.angle(),"damage":amount,"hits":[[],[],[]],"blocked":[false,false,false]})
+   if spirals.size()<24:spirals.append({"owner":owner,"pos":combat.point_array(origin),"elapsed":0.0,"prism_glass":bool(stats.get("prism_glass",false)),"duration":float(stats.get("duration",2)),"radius":float(stats.get("radius",250))+(60 if combat.passive(owner,"far_refraction") else 0),"angle":aim.angle(),"damage":amount,"hits":[[],[],[]],"blocked":[false,false,false]})
   "fire_breath":
    if breaths.size()<24:breaths.append({"owner":owner,"time":float(stats.get("duration",.4)),"tick":0.0,"left":4,"aim":combat.point_array(aim),"stats":stats,"damage":amount})
   "rune_slash":
@@ -154,7 +154,9 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   for n in 3:
    if bool(spiral.blocked[n]):continue
    var angle:=float(spiral.angle)+TAU*n/3+float(spiral.elapsed)*4;var point:=origin+Vector2.from_angle(angle)*radius
-   canvas.draw_colored_polygon(PackedVector2Array([point+Vector2(0,-11),point+Vector2(7,0),point+Vector2(0,11),point+Vector2(-7,0)]),Color("#d3eafa"));canvas.draw_arc(origin,radius,angle-.3,angle,12,Color(.7,.9,1,.5),3,true)
+   if bool(spiral.get("prism_glass",false)):preload("res://scripts/hero_visuals1987.gd").prism(canvas,point,Vector2.from_angle(angle+PI*.5),14)
+   else:canvas.draw_colored_polygon(PackedVector2Array([point+Vector2(0,-11),point+Vector2(7,0),point+Vector2(0,11),point+Vector2(-7,0)]),Color("#d3eafa"))
+   canvas.draw_arc(origin,radius,angle-.3,angle,12,Color(.7,.9,1,.5),3,true)
  for domain in domains:
   var polygon:=PackedVector2Array()
   for point in domain.points:polygon.append(combat.vec(point)-camera)

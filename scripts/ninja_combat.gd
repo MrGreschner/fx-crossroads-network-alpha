@@ -20,7 +20,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "twin_fang":
    if cuts.size()<24:cuts.append({"owner":owner,"aim":combat.point_array(aim),"time":0.0,"damage":amount,"reach":float(stats.get("range",95)),"strikes":0})
   "windwheel":
-   if wheels.size()<24:wheels.append({"owner":owner,"pos":combat.point_array(origin+aim*24),"aim":combat.point_array(aim),"distance":0.0,"range":float(stats.get("range",420)),"age":0.0,"phase":0,"damage":amount,"return_damage":float(stats.get("return_damage",16)),"hits":[[],[]]})
+   if wheels.size()<24:wheels.append({"owner":owner,"pos":combat.point_array(origin+aim*24),"aim":combat.point_array(aim),"distance":0.0,"range":float(stats.get("range",420)),"age":0.0,"phase":0,"damage":amount,"return_damage":float(stats.get("return_damage",18)),"bleed_duration":float(stats.get("bleed_duration",0)),"bleed_damage":float(stats.get("bleed_damage",0)),"hits":[[],[]]})
   "eightfold_eclipse":
    if eclipses.size()>=12:return true
    var center:Vector2=combat.chain.clip(origin,aim,float(stats.get("range",200)))
@@ -32,8 +32,8 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
     if point.distance_to(center)>35:stars.append({"angle":TAU*n/8,"radius":point.distance_to(center),"pos":combat.point_array(point),"active":true})
    eclipses.append({"owner":owner,"pos":combat.point_array(center),"age":0.0,"stars":stars,"hits":{},"damage":amount})
  return true
-func flash(point:Vector2,aim:Vector2,kind:String,owner:String="")->void:
- if flashes.size()<64:flashes.append({"owner":owner,"pos":combat.point_array(point),"aim":combat.point_array(aim),"kind":kind,"time":.22})
+func flash(point:Vector2,aim:Vector2,kind:String,owner:String="",reach:float=75)->void:
+ if flashes.size()<64:flashes.append({"owner":owner,"pos":combat.point_array(point),"aim":combat.point_array(aim),"kind":kind,"radius":reach,"time":.22})
 func hit_cut(cut:Dictionary,index:int)->void:
  var owner:String=str(cut.owner);var origin:Vector2=combat.owner_pos(owner);var aim:Vector2=combat.vec(cut.aim)
  for key in combat.hostile(owner):
@@ -45,7 +45,7 @@ func hit_cut(cut:Dictionary,index:int)->void:
   if combat.passive(owner,"moon_thread") and marks.get(owner,{}).has(key):
    extra=8;marks[owner].erase(key);flash(target.pos,aim,"thread")
   combat.damage(key,float(cut.damage)+extra,owner)
- flash(origin,aim,"cut_left" if index==0 else "cut_right",owner)
+ flash(origin,aim,"cut_left" if index==0 else "cut_right",owner,float(cut.reach))
 func step(delta:float)->void:
  if not combat.adventure.authoritative():return
  clock+=delta
@@ -101,6 +101,7 @@ func advance(delta:float)->void:
    if not combat.path_clear(start,target.pos):continue
    shot.hits[leg].append(key)
    combat.damage(key,float(shot.damage) if leg==0 else float(shot.return_damage),owner)
+   if leg==0 and float(shot.get("bleed_duration",0))>0:combat.apply_status(key,"bleed",float(shot.bleed_duration),owner,float(shot.bleed_damage))
    if leg==1 and combat.passive(owner,"moon_thread") and not combat.actor(key).is_empty() and combat.actor(key).alive:
     if not marks.has(owner):marks[owner]={}
     marks[owner][key]=3.0
@@ -143,7 +144,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for wheel in wheels:
   var point:Vector2=combat.vec(wheel.pos)-camera
   c.draw_line(point-combat.vec(wheel.aim)*27,point,Color(.68,.63,.92,.3),4,true)
-  draw_star(c,point,clock*20,17,Color("#d9e2f2") if int(wheel.phase)==0 else Color("#b5a4ee"))
+  preload("res://scripts/hero_visuals1987.gd").windwheel(c,point,clock*20,int(wheel.phase)==1)
  for eclipse in eclipses:
   var point:Vector2=combat.vec(eclipse.pos)-camera
   c.draw_circle(point,220,Color(.33,.28,.58,.08));c.draw_arc(point,220,0,TAU,64,Color(.75,.7,1,.3),2,true)
@@ -158,8 +159,6 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   var point:Vector2=combat.draw_effect_position("ninja",entry,combat.vec(entry.pos))-camera;var aim:Vector2=combat.vec(entry.aim);var fade:float=clampf(float(entry.time)/.22,0,1)
   if str(entry.kind).begins_with("cut"):
    var side:float=1 if entry.kind=="cut_left" else -1
-   var middle:float=aim.angle()+side*(1-fade)*.35
-   c.draw_arc(point,75,middle-.8,middle+.8,24,Color(.85,.84,1,fade),5,true)
-   c.draw_arc(point,64,middle-.7,middle+.6,24,Color(.57,.5,.8,fade*.6),2,true)
+   preload("res://scripts/hero_visuals1987.gd").katana(c,point,aim,float(entry.get("radius",95)),1-fade,side)
   elif entry.kind=="eclipse":c.draw_circle(point,90,Color(.73,.68,1,fade*.2));c.draw_arc(point,90*(1-fade),0,TAU,32,Color(.85,.8,1,fade),4,true)
   else:c.draw_arc(point,24*(1-fade),0,TAU,24,Color(.7,.9,1,fade),2,true)

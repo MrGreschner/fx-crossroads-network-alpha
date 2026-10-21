@@ -316,6 +316,7 @@ func return_to_network_menu()->void:
 func _add_combat_slots()->void:
 	if get("dedicated")==true:return
 	var quick=preload("res://scripts/loadout_hud.gd").new();add_child(quick);quick.setup(self)
+	var guide=preload("res://scripts/ability_guide.gd").new();add_child(guide);guide.setup(self)
 
 func _json(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path): return {}
@@ -1118,7 +1119,7 @@ func _process(delta: float) -> void:
 			movement_timer = MOVEMENT_INTERVAL
 			local_position_sequence+=1;position_history[local_position_sequence]=local_pos
 			while position_history.size()>64:position_history.erase(position_history.keys()[0])
-			_send_channel(host_id,{"type":"pos","seq":local_position_sequence,"revive":Input.is_action_pressed("interact"),"x":roundi(local_pos.x),"y":roundi(local_pos.y),"hero":selected_hero,"secondary_held":not fishing.busy() and Input.is_action_pressed("secondary") and shop_open.is_empty(),"primary_held":not fishing.busy() and adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and shop_open.is_empty(),"primary_angle":vacuum_aim.angle()})
+			_send_channel(host_id,{"type":"pos","seq":local_position_sequence,"revive":Input.is_action_pressed("interact"),"x":roundi(local_pos.x),"y":roundi(local_pos.y),"hero":selected_hero,"secondary_held":not preload("res://scripts/ability_guide.gd").blocks(self) and not fishing.busy() and Input.is_action_pressed("secondary") and shop_open.is_empty(),"primary_held":not fishing.busy() and adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and shop_open.is_empty(),"primary_angle":vacuum_aim.angle()})
 	for id in positions:
 		if id != my_id:
 			if role=="host" and bots.is_bot(str(id)):smoothing.push("p:"+str(id),positions[id],Time.get_ticks_msec()/1000.0)
@@ -1158,6 +1159,7 @@ func _clear_path(start: Vector2, finish: Vector2) -> bool:
 	return true
 
 func _attack_request(style: String) -> void:
+	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if arena_world.shatter.active():arena_world.shatter.request(style);return
 	if fishing!=null and fishing.busy():return
 	if characters.get(selected_hero,{}).has("studio_project"):return

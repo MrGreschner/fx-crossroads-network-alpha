@@ -37,6 +37,7 @@ func begin(id:String,kind:String,aim:Vector2,target:Vector2)->void:
  charges[id]={"kind":kind,"age":0.0,"aim":combat.point_array(aim.normalized()),"target":combat.point_array(target),"hero":str(hero(id).get("id","")),"heartbeat":0.0,"last_seen":0.0}
 func local_input(delta:float,active:bool)->void:
  var game:Node=combat.adventure.game
+ if preload("res://scripts/ability_guide.gd").blocks(game):active=false
  var id:String=str(game.my_id) if combat.adventure.arcade else "solo"
  if combat.adventure.arcade and game.characters.get(str(game.hero_ids.get(id,game.selected_hero)),{}).has("studio_project"):return
  var origin:Vector2=combat.owner_pos(id)

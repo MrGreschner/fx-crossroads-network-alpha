@@ -505,7 +505,7 @@ func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,
 	shot_turn[owner]=int(shot_turn.get(owner,0))+1
 func add_ring(owner:String,origin:Vector2,stats:Dictionary,amount:float)->void:
 	if rings.size()>=32:return
-	rings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Sound wave"))),"kind":"attached_ring" if bool(stats.get("follow_owner",false)) else "world_ring","follow_owner":bool(stats.get("follow_owner",false)),"tempo_id":str(stats.get("tempo_id","")),"style":str(stats.get("style","pulse_wave")),"owner":owner,"pos":point_array(origin),"radius":0.0,"max_radius":float(stats.get("radius",105)),"speed":float(stats.get("wave_speed",260)),"damage":amount,"slow":float(stats.get("slow_duration",0)),"slow_factor":float(stats.get("slow",.55)),"knockback":float(stats.get("knockback",0)),"stun":float(stats.get("stun",0)),"clear":bool(stats.get("clear_projectiles",false)),"hits":[],"color":str(stats.get("color","#eed395"))})
+	rings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Sound wave"))),"kind":"attached_ring" if bool(stats.get("follow_owner",false)) else "world_ring","follow_owner":bool(stats.get("follow_owner",false)),"tempo_id":str(stats.get("tempo_id","")),"style":str(stats.get("style","pulse_wave")),"prism_bloom":bool(stats.get("prism_bloom",false)),"owner":owner,"pos":point_array(origin),"radius":0.0,"max_radius":float(stats.get("radius",105)),"speed":float(stats.get("wave_speed",260)),"damage":amount,"slow":float(stats.get("slow_duration",0)),"slow_factor":float(stats.get("slow",.55)),"knockback":float(stats.get("knockback",0)),"stun":float(stats.get("stun",0)),"clear":bool(stats.get("clear_projectiles",false)),"hits":[],"color":str(stats.get("color","#eed395"))})
 func owner_anchors(owner:String)->Array:
 	var result:Array=[]
 	for pin in anchors:
@@ -985,6 +985,7 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 		var center:=draw_effect_position("root",ring,fallback)-camera;var radius:=maxf(1,float(ring["radius"]))
 		if not preload("res://scripts/combat_cues.gd").visible(canvas,center,radius+32):continue
 		canvas.draw_arc(center,radius,0,TAU,48,Color(str(ring["color"]),.6),4,true)
+		if bool(ring.get("prism_bloom",false)):preload("res://scripts/hero_visuals1987.gd").bloom(canvas,center,radius,clock)
 		if str(ring.get("style",""))=="waterfall_wave":
 			canvas.draw_arc(center,maxf(1,radius-12),0,TAU,48,Color(.65,.95,1,.45),9,true)
 			for n in 18:
@@ -1135,6 +1136,8 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
 	if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
 	if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):return
+	if bool(shot["stats"].get("prism_glass",false)):
+		preload("res://scripts/hero_visuals1987.gd").prism(canvas,point,vec(shot.aim));return
 	if bool(shot["stats"].get("golf_ball",false)):
 		preload("res://scripts/hero_visuals1984.gd").ball(canvas,point,vec(shot.aim));return
 	if bool(shot["stats"].get("river_stone",false)):

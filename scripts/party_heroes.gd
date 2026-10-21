@@ -55,7 +55,7 @@ func field(owner:String,p:Vector2,style:String,time:float,radius:float,damage:fl
  fields.append({"owner":owner,"pos":combat.point_array(p),"style":style,"time":time,"tick":0.0,"radius":radius,"damage":damage,"aim":combat.point_array(aim),"hits":[],"caught":0})
 func kindred(owner:String,p:Vector2,aim:Vector2,damage:float,healing:float,reach:float)->void:
  if shots.size()>=96:return
- shots.append({"owner":owner,"pos":combat.point_array(p+aim*20),"aim":combat.point_array(aim),"left":reach,"damage":damage,"heal":healing,"ground":false,"life":reach/350.0+1.5})
+ shots.append({"owner":owner,"pos":combat.point_array(p+aim*20),"aim":combat.point_array(aim),"left":reach,"damage":damage,"heal":healing,"kindred":true,"ground":false,"life":reach/350.0+1.5})
 func merge(owner:String,forced:bool=false)->void:
  var ids:=family_units(owner,"mosaic")
  if ids.size()<2:return
@@ -253,7 +253,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    var p:Vector2=combat.vec(s.pos)-camera;var r:float=float(s.radius)
    c.draw_circle(p,r,Color(.65,.88,.97,.18));c.draw_arc(p,r,0,TAU,24,Color(.68,.9,1,.8),2,true);c.draw_arc(p,r*.65,PI,PI*1.5,8,Color("#f5ebff"),2,true);continue
   var p:Vector2=combat.vec(s.pos)-camera;var aim:Vector2=combat.vec(s.aim);var alpha:=clampf(float(s.get("life",1.5))/1.5,0,1) if bool(s.get("ground",false)) else 1.0
-  c.draw_line(p-aim*16,p,Color(Color("#94ead2"),alpha),5,true);c.draw_circle(p,5,Color(Color("#f0ffe6"),alpha))
+  if bool(s.get("kindred",false)):preload("res://scripts/hero_visuals1987.gd").kindred(c,p,aim)
+  else:c.draw_line(p-aim*16,p,Color(Color("#94ead2"),alpha),5,true);c.draw_circle(p,5,Color(Color("#f0ffe6"),alpha))
   if bool(s.get("ground",false)):c.draw_arc(p,18,0,TAU,20,Color(.6,.92,.8,.4*alpha),1,true)
  for f in fields:
   var p:Vector2=combat.vec(f.pos)-camera;var r:=float(f.radius);var tint:=Color("#d6a7f2") if str(f.style) in ["order","inward","court"] else Color("#f4cb72") if str(f.style)=="honey" else Color("#94ead2")
@@ -269,6 +270,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
      var x:float=(j/24.0-.5)*r*2
      crest.append(p+side*x+aim*(sin(x*.04+t*3)*6-n*13))
     c.draw_polyline(crest,Color(.55,.9,1,.8-n*.2),5-n,true)
+  elif str(f.style) in ["relay","sanctuary"]:
+   preload("res://scripts/hero_visuals1987.gd").lantern(c,p,clock)
   elif str(f.style) in ["buoy","hush"]:
    # Floating life-ring, rope spokes and small waves, distinct from a lantern.
    var bob:=sin(Time.get_ticks_msec()/300.0)*3

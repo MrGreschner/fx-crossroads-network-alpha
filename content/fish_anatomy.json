@@ -67,14 +67,10 @@
   },
   "aurora_koifin": {
     "name": "Aurora Koifin",
-    "family": "koi",
-    "length": 153,
-    "depth": 33.5,
-    "snout": 7.6,
-    "dorsal": 23,
-    "tail_fork": 15,
-    "pelvic": 30,
-    "outline": "M 53.56 72 C 76.56 44.53 116.29 38.50 173.84 50.89 Q 192.44 56.59 200.44 70.60 L 198.44 77.00 Q 180.44 91.43 165.84 96.45 C 116.29 97.46 69.56 90.09 53.56 76 Z"
+    "family": "fantasy_aurora_koifin",
+    "outline": "M82 71 Q103 42 142 47 Q187 41 217 69 L226 77 Q194 96 153 96 Q104 101 82 80 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "moonpetal_koi": {
     "name": "Moonpetal Koi",
@@ -155,25 +151,17 @@
   },
   "crown_of_the_pond": {
     "name": "Crown of the Pond",
-    "family": "crown",
-    "length": 146,
-    "depth": 36.0,
-    "snout": 7.0,
-    "dorsal": 44,
-    "tail_fork": 18,
-    "pelvic": 33,
-    "outline": "M 56.92 72 C 79.92 42.48 116.78 36.00 171.08 49.32 Q 189.08 55.44 197.08 70.00 L 195.08 77.00 Q 177.08 92.88 163.08 98.28 C 116.78 109.80 72.92 91.44 56.92 76 Z"
+    "family": "fantasy_crown_of_the_pond",
+    "outline": "M75 75 Q82 44 124 48 Q164 40 204 65 L218 75 Q201 94 160 100 Q100 113 75 83 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "midnight_crown": {
     "name": "Midnight Crown",
-    "family": "crown",
-    "length": 140,
-    "depth": 40.5,
-    "snout": 8.6,
-    "dorsal": 47,
-    "tail_fork": 20,
-    "pelvic": 36,
-    "outline": "M 59.80 72 C 82.80 38.79 117.20 31.50 166.60 46.48 Q 186.20 53.37 194.20 70.60 L 192.20 77.00 Q 174.20 95.49 158.60 101.56 C 117.20 114.53 75.80 93.87 59.80 76 Z"
+    "family": "fantasy_midnight_crown",
+    "outline": "M75 78 Q84 43 134 47 Q174 39 213 66 L229 78 L213 94 Q167 114 120 103 Q87 103 75 85 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "swift_dace": {
     "name": "Swift Dace",
@@ -504,26 +492,24 @@
   },
   "starcrown_ray": {
     "name": "Starcrown Ray",
-    "family": "ray",
-    "disc_width": 134,
-    "wing_sweep": 43,
-    "outline": "M 201 65 Q 177 32 149 32 L 74 16 Q 106 53 31 83 Q 108 89 90 120 L 156 100 Q 181 99 199 78 L 219 75 Q 222 68 201 65 Z"
+    "family": "fantasy_starcrown_ray",
+    "outline": "M213 67 Q182 57 159 28 Q145 15 124 29 Q92 28 45 63 Q34 75 48 83 Q88 99 123 105 Q144 129 158 112 Q184 89 214 82 L228 75 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "ancient_river_dragon": {
     "name": "Ancient River Dragon",
-    "family": "dragon",
-    "body_curve": 0,
-    "fin_ridge": 29,
-    "thickness": 16.0,
-    "outline": "M 24 90 C 39 115 69 100 65 76 C 55 33 99 30 129 63 C 155 96 178 39 216 53 Q 236 54 235 67 L 223 74 Q 199 64 176 88 C 155 116.00 130 102.00 112 76.40 C 91 51 76 52 80 77 C 90 111 44 132 24 90 Z"
+    "family": "fantasy_ancient_river_dragon",
+    "outline": "M20 111 C84 138 122 84 86 66 C50 52 53 100 107 96 C142 94 131 41 174 42 L202 57 L230 62 L226 73 L200 78 C171 68 168 101 137 116 C83 146 44 131 20 111 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "torrent_wyrm": {
     "name": "Torrent Wyrm",
-    "family": "dragon",
-    "body_curve": 1,
-    "fin_ridge": 26,
-    "thickness": 17.4,
-    "outline": "M 24 91 C 39 115 69 100 65 76 C 55 33 99 30 129 63 C 155 96 178 39 216 53 Q 236 54 235 67 L 223 74 Q 199 64 176 88 C 155 117.40 130 102.70 112 76.96 C 91 51 76 52 80 77 C 90 111 44 132 24 91 Z"
+    "family": "fantasy_torrent_wyrm",
+    "outline": "M22 117 C84 146 166 125 151 82 C140 56 101 56 88 78 C65 122 134 123 168 85 C186 61 163 28 194 26 L216 40 L237 47 L225 61 L201 58 C199 100 153 136 102 137 C58 142 29 128 22 117 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "vaultjaw_wyrm": {
     "name": "Vaultjaw Wyrm",
@@ -535,11 +521,10 @@
   },
   "waylight_leviathan": {
     "name": "Waylight Leviathan",
-    "family": "dragon",
-    "body_curve": 3,
-    "fin_ridge": 20,
-    "thickness": 20.2,
-    "outline": "M 24 93 C 39 115 69 100 65 76 C 55 33 99 30 129 63 C 155 96 178 39 216 53 Q 236 54 235 67 L 223 74 Q 199 64 176 88 C 155 120.20 130 104.10 112 78.08 C 91 51 76 52 80 77 C 90 111 44 132 24 93 Z"
+    "family": "fantasy_waylight_leviathan",
+    "outline": "M28 106 C55 116 68 98 81 65 C96 24 148 18 186 44 L208 53 L235 70 L222 84 L197 81 C177 55 143 58 125 84 C99 121 63 135 28 106 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "cascade_darter": {
     "name": "Cascade Darter",
@@ -565,14 +550,10 @@
   },
   "cascade_crown": {
     "name": "Cascade Crown",
-    "family": "cascade",
-    "length": 155,
-    "depth": 25.0,
-    "snout": 10.0,
-    "dorsal": 43,
-    "tail_fork": 29,
-    "pelvic": 37,
-    "outline": "M 52.60 72 C 75.60 51.50 116.15 47.00 172.40 56.25 Q 193.40 60.50 201.40 70.00 L 199.40 77.00 Q 181.40 86.50 164.40 90.25 C 116.15 91.00 68.60 85.50 52.60 76 Z"
+    "family": "fantasy_cascade_crown",
+    "outline": "M81 81 Q89 49 133 55 Q174 48 210 70 L222 78 Q192 104 148 99 Q104 113 81 88 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "inkfold_flounder": {
     "name": "Inkfold Flounder",
@@ -633,36 +614,24 @@
   },
   "crescent_regent": {
     "name": "Crescent Regent",
-    "family": "regent",
-    "length": 154,
-    "depth": 34.0,
-    "snout": 8.0,
-    "dorsal": 47,
-    "tail_fork": 22,
-    "pelvic": 40,
-    "outline": "M 53.08 72 C 76.08 44.12 116.22 38.00 173.92 50.58 Q 192.92 56.36 200.92 70.00 L 198.92 77.00 Q 180.92 91.72 165.92 96.82 C 116.22 97.84 69.08 90.36 53.08 76 Z"
+    "family": "fantasy_crescent_regent",
+    "outline": "M78 79 Q98 56 137 58 Q177 46 211 70 L227 78 Q202 105 157 101 Q101 115 78 87 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "firstlight_regent": {
     "name": "Firstlight Regent",
-    "family": "regent",
-    "length": 148,
-    "depth": 38.5,
-    "snout": 9.6,
-    "dorsal": 50,
-    "tail_fork": 24,
-    "pelvic": 43,
-    "outline": "M 55.96 72 C 78.96 40.43 116.64 33.50 169.44 47.75 Q 190.04 54.29 198.04 70.60 L 196.04 77.00 Q 178.04 94.33 161.44 100.11 C 116.64 101.26 71.96 92.79 55.96 76 Z"
+    "family": "fantasy_firstlight_regent",
+    "outline": "M78 79 Q98 46 141 49 Q189 41 217 70 L232 77 Q211 103 159 102 Q104 119 78 87 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "veilfin_oracle": {
     "name": "Veilfin Oracle",
-    "family": "oracle",
-    "length": 159,
-    "depth": 24.0,
-    "snout": 10.0,
-    "dorsal": 46,
-    "tail_fork": 28,
-    "pelvic": 46,
-    "outline": "M 50.68 72 C 73.68 52.32 115.87 48.00 174.32 56.88 Q 195.32 60.96 203.32 70.00 L 201.32 77.00 Q 183.32 85.92 166.32 89.52 C 115.87 90.24 66.68 84.96 50.68 76 Z"
+    "family": "fantasy_veilfin_oracle",
+    "outline": "M89 73 Q114 57 148 58 Q182 48 217 68 L233 77 Q204 96 158 94 Q116 96 89 79 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "reed_shrimp": {
     "name": "Reedglass Shrimp",
@@ -964,42 +933,30 @@
   },
   "crownwater_sturgeon": {
     "name": "Crownwater Sturgeon",
-    "family": "sturgeon",
-    "length": 179,
-    "depth": 26.5,
-    "snout": 26.6,
-    "dorsal": 22,
-    "tail_fork": 33,
-    "pelvic": 28,
-    "outline": "M 41.08 72 C 64.08 50.27 114.47 45.50 167.32 55.30 Q 204.92 59.81 212.92 70.60 L 210.92 77.00 Q 192.92 87.37 159.32 91.34 C 114.47 92.14 57.08 86.31 41.08 76 Z"
+    "family": "fantasy_crownwater_sturgeon",
+    "outline": "M68 78 Q106 55 157 59 Q189 56 215 68 L244 75 L222 82 Q191 96 147 96 Q100 107 68 85 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "emberjaw_river_pike": {
     "name": "Emberjaw River Pike",
-    "family": "pike",
-    "length": 176,
-    "depth": 28.0,
-    "snout": 26.2,
-    "dorsal": 29,
-    "tail_fork": 16,
-    "pelvic": 21,
-    "outline": "M 42.52 72 C 65.52 49.04 114.68 44.00 166.28 54.36 Q 203.48 59.12 211.48 71.20 L 209.48 77.00 Q 191.48 88.24 158.28 92.44 C 114.68 93.28 58.52 87.12 42.52 76 Z"
+    "family": "fantasy_emberjaw_river_pike",
+    "outline": "M68 78 Q99 55 152 60 Q185 57 208 65 L241 61 L229 76 L243 85 L214 94 L197 87 Q141 106 68 87 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "moonthread_arowana": {
     "name": "Moonthread Arowana",
-    "family": "oracle",
-    "length": 153,
-    "depth": 28.5,
-    "snout": 11.6,
-    "dorsal": 49,
-    "tail_fork": 30,
-    "pelvic": 49,
-    "outline": "M 53.56 72 C 76.56 48.63 116.29 43.50 169.84 54.05 Q 192.44 58.89 200.44 70.60 L 198.44 77.00 Q 180.44 88.53 161.84 92.81 C 116.29 93.66 69.56 87.39 53.56 76 Z"
+    "family": "fantasy_moonthread_arowana",
+    "outline": "M73 76 Q100 58 144 57 Q186 48 215 67 L239 73 L230 82 Q189 95 145 94 Q96 99 73 83 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   },
   "starveil_river_ray": {
     "name": "Starveil River Ray",
-    "family": "ray",
-    "wing_spread": 102,
-    "tail_fork": 0,
-    "outline": "M 206 69 Q 170 51 139 18 Q 88 23 47 60 Q 88 102 138 120 Q 165 88 206 75 Z"
+    "family": "fantasy_starveil_river_ray",
+    "outline": "M213 67 Q182 58 157 30 Q140 16 117 36 Q72 32 39 60 Q62 68 83 78 Q53 94 72 104 Q112 101 145 124 Q160 101 184 92 L215 81 L230 74 Z",
+    "art_version": "198.6",
+    "silhouette": "individually authored aquatic fins, scutes, barbels and markings"
   }
 }

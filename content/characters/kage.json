@@ -9,19 +9,21 @@
   "primary": {
     "name": "Twin Fang",
     "style": "twin_fang",
-    "damage": 12,
+    "damage": 15,
     "cooldown": 0.8,
     "range": 95,
-    "description": "Two quick directional katana cuts, 0.14 seconds apart. Each deals 12 damage within 95 reach; aim both cuts when you start the attack."
+    "description": "Two quick directional katana cuts, 0.14 seconds apart. Each deals 15 damage within 95 reach; aim both cuts when you start the attack."
   },
   "secondary": {
     "name": "Windwheel",
     "style": "windwheel",
-    "damage": 24,
-    "return_damage": 16,
+    "damage": 26,
+    "return_damage": 18,
     "cooldown": 7,
     "range": 420,
-    "description": "Throw a spinning shuriken that deals 24 damage on the outward leg, then curves back to you for 16 return damage. Each enemy can be hit once per leg. Walls stop it."
+    "description": "Throw a spinning shuriken for 26 outward damage, then 18 return damage. Outward hits cause bleeding for 3 damage per second for 4 seconds; return hits do not apply or refresh bleeding. Each enemy can be hit once per leg. Walls stop it.",
+    "bleed_duration": 4,
+    "bleed_damage": 3
   },
   "special": {
     "name": "Eightfold Eclipse",

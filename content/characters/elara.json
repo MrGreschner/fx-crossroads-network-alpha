@@ -15,7 +15,8 @@
     "speed": 410,
     "split_distance": 150,
     "color": "#b9dfff",
-    "description": "Fire a 20-damage lance. After 150 units it splits into two diverging 13-damage bolts."
+    "description": "Fire a 20-damage lance. After 150 units it splits into two diverging 13-damage bolts.",
+    "prism_glass": true
   },
   "secondary": {
     "name": "Prism Unfurl",
@@ -25,7 +26,8 @@
     "duration": 2,
     "radius": 250,
     "color": "#c7ddf4",
-    "description": "Three glass shards spiral outward from your casting spot for 2 seconds, reaching 250 units. Each shard can hit each enemy once for 14 damage; walls stop shards."
+    "description": "Three glass shards spiral outward from your casting spot for 2 seconds, reaching 250 units. Each shard can hit each enemy once for 14 damage; walls stop shards.",
+    "prism_glass": true
   },
   "special": {
     "name": "Moonlit Procession",
@@ -38,7 +40,8 @@
     "radius": 75,
     "slow_duration": 2,
     "color": "#c5b2f4",
-    "description": "Five moonlight blooms advance along your aim, each dealing 22 damage and slowing enemies for 2 seconds."
+    "description": "Five moonlight blooms advance along your aim, each dealing 22 damage and slowing enemies for 2 seconds.",
+    "prism_bloom": true
   },
   "passive": "Far Refraction: outward spirals reach 60 units farther.",
   "passive_effect": "far_refraction",
