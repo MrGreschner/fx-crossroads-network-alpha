@@ -1,0 +1,26 @@
+{
+  "build": "V198-shatterfloor",
+  "passed": true,
+  "results": [
+    {
+      "map": "shatterfloor",
+      "rule": "ffa",
+      "players": 8,
+      "hop": true,
+      "duplicates": true,
+      "heroSpecialRejected": true,
+      "falls": true,
+      "threeRounds": true
+    },
+    {
+      "map": "shatterfloor",
+      "rule": "teams",
+      "players": 8,
+      "hop": true,
+      "duplicates": true,
+      "heroSpecialRejected": true,
+      "falls": true,
+      "threeRounds": true
+    }
+  ]
+}

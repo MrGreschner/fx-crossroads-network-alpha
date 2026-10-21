@@ -2,14 +2,16 @@ extends RefCounted
 ## Host-authoritative armies. Bounded population and 10 Hz strategic simulation.
 const SIZE=Vector2(6800,4400)
 const MAPS={"woodland":"Verdant Front","warzone":"Iron Rain"}
-const FACTIONS=["Ram Alliance","Ironhollow Legion"]
-const TYPES=["foot","archer","healer","catapult","mage","berserker","tank","longbow"]
-const LABELS=["Foot soldiers","Archers","Healers","Catapults","Mages","Berserkers","Shield tanks","Long-range scouts"]
-const COSTS=[90,130,160,240,220,200,230,240]
-const HP=[115,75,90,150,85,155,300,70]
-const DAMAGE=[14,12,0,30,21,24,10,22]
-const REACH=[55,340,310,510,290,60,58,630]
-const SPEED=[115,110,105,80,110,135,80,95]
+const FACTIONS=["Wildwood Alliance","Ironhollow Legion"]
+const COMMANDS=["order:base","order:capital","order:center","order:open","order:enemy_base","order:enemy_capital","order:recall"]
+var command=preload("res://scripts/battleground_command.gd").new()
+const TYPES=["foot","archer","healer","catapult","mage","berserker","tank","longbow","lancer","standard","mossbinder"]
+const LABELS=["Foot soldiers","Archers","Healers","Catapults","Mages","Berserkers","Shield tanks","Long-range scouts","Lancers","Wildwood Standardbearer","Ironhollow Mossbinder"]
+const COSTS=[90,130,160,240,220,200,230,240,210,300,300]
+const HP=[115,75,90,150,85,155,300,70,140,230,110]
+const DAMAGE=[14,12,0,30,21,24,10,22,19,12,14]
+const REACH=[55,340,310,510,290,60,58,630,110,65,350]
+const SPEED=[115,110,105,80,110,135,80,95,120,95,100]
 const UPGRADES=["melee","ranged","healing","vitality","production"]
 var game:Node
 var map_id:="woodland"
@@ -39,7 +41,7 @@ func setup(g:Node)->void:
  for member in game.fighters():
   var id:=str(member.id);var team:=int(game.teams.get(id,0));var lane:=int(slots[team]);slots[team]+=1
   owners[id]=str(team)+":"+str(lane)
-  bases[owners[id]]={"owner":id,"team":team,"lane":lane,"pos":barrack_pos(team,lane),"hp":950.0,"max_hp":950.0,"timer":1.0,"counts":[2,0,0,0,0,0,0,0],"queue":[],"recruit_cursor":0,"recruit_timer":0.0,"upgrades":{"melee":0,"ranged":0,"healing":0,"vitality":0,"production":0}}
+  bases[owners[id]]={"owner":id,"team":team,"lane":lane,"pos":barrack_pos(team,lane),"hp":950.0,"max_hp":950.0,"timer":4.0,"order":"open","counts":[2,0,0,0,0,0,0,0,0,0,0],"queue":[],"recruit_cursor":0,"recruit_timer":0.0,"upgrades":{"melee":0,"ranged":0,"healing":0,"vitality":0,"production":0}}
  game.world_buildings.append({"name":"Supplies","pos":SIZE*.5,"kind":"shop"})
  # Tree/sandbag islands leave continuous march lanes and cross-lane routes.
  for lane in range(lanes-1):
@@ -50,12 +52,14 @@ func setup(g:Node)->void:
   for x in [1250,2150,4650,5550]:
    for side in [-1,1]:
     for n in 3:game.field_obstacles.append({"pos":Vector2(x+(n-1)*65,lane_y(lane)+side*(240+abs(n-1)*25)),"radius":30.0,"kind":"tree" if map_id=="woodland" else "rock"})
+ command.setup(self)
 func lane_y(lane:int)->float:return 700.0+float(lane)*3000.0/maxi(1,lanes-1)
 func barrack_pos(team:int,lane:int)->Vector2:return Vector2(550 if team==0 else 6250,lane_y(lane))
-func heart_pos(team:int)->Vector2:return Vector2(180 if team==0 else 6620,2200)
+func heart_pos(team:int)->Vector2:return Vector2(950 if team==0 else 5850,2200)
 func spawn(id:String)->Vector2:
- var b:Dictionary=bases.get(owners.get(id,""),{})
- return (b.get("pos",Vector2(550,700)) as Vector2)+Vector2(90 if int(b.get("team",0))==0 else -90,90)
+ if game==null:return Vector2(950,2350)
+ var base:Dictionary=bases.get(owners.get(id,""),{})
+ return heart_pos(side_of(id))+Vector2((int(base.get("lane",0))-float(lanes-1)*.5)*100,145)
 func actor(key:String)->Dictionary:
  if units.has(key):return {"pos":units[key].pos,"alive":float(units[key].hp)>0,"bg":key}
  if key.begins_with("bgbase:"):
@@ -76,13 +80,10 @@ func hostile(owner:String)->Array[String]:
  for key in bases:
   if int(bases[key].team)!=side and float(bases[key].hp)>0:result.append("bgbase:"+str(key))
  var other:=1-side
- # Enemy heart is shielded until every barracks on that side is destroyed.
+ # Capitals are always vulnerable; destroying barracks stops their recruits.
  if not shielded(other):result.append("bgheart:"+str(other))
  return result
-func shielded(side:int)->bool:
- for b in bases.values():
-  if int(b.team)==side and float(b.hp)>0:return true
- return false
+func shielded(_side:int)->bool:return false
 func damage(key:String,amount:float,source:String)->void:
  if game.role!="host" or winner>=0 or amount<=0 or not is_finite(amount):return
  var side:=side_of(source)
@@ -112,9 +113,9 @@ func damage(key:String,amount:float,source:String)->void:
    game._emit_effect({"pos":b.pos,"radius":140.0,"time":1.0,"color":"#ffb95d"})
  elif key.begins_with("bgheart:"):
   var team:=int(key.trim_prefix("bgheart:"))
-  if side==team or shielded(team):return
+  if side==team:return
   heart_hp[team]=maxf(0,float(heart_hp[team])-amount)
-  if heart_hp[team]<=0:winner=1-team;game.end_match(FACTIONS[winner]+" wins • Enemy heart destroyed")
+  if heart_hp[team]<=0:winner=1-team;game.end_match(FACTIONS[winner]+" wins • Enemy capital destroyed")
 func reward(owner:String,money:int,experience:int)->void:
  if not game.gold.has(owner):return
  game.gold[owner]=int(game.gold[owner])+money
@@ -124,6 +125,7 @@ func knock(key:String,direction:Vector2,distance:float)->void:
  if units.has(key):units[key].pos=game._move_actor(units[key].pos,direction*minf(distance,150));unit_grid_dirty=true
 func step(delta:float)->void:
  clock+=delta;army_time=clock;accumulator+=delta
+ command.step(delta)
  var strategic=accumulator>=.1
  var dt:=minf(accumulator,.2) if strategic else 0.0
  if strategic:
@@ -136,13 +138,13 @@ func step(delta:float)->void:
    if float(b.hp)<=0:continue
    b.timer=float(b.timer)-dt
    if float(b.timer)<=0 and b.get("queue",[]).is_empty():
-    b.timer=18.0-int(b.upgrades.production)*1.5;enqueue_wave(b)
+    b.timer=30.0-int(b.upgrades.production)*2.0;enqueue_wave(b)
    b.recruit_timer=float(b.get("recruit_timer",0))-dt
    if float(b.recruit_timer)<=0 and not b.get("queue",[]).is_empty():
     var kind=int(b.queue[0])
-    if spawn_unit(b,kind,0):b.queue.pop_front();b.recruit_cursor=(kind+1)%TYPES.size();b.recruit_timer=.18
- # Spread 10 Hz soldier decisions over six authority frames. A full 192-unit
- # army schedules at most 32 ordinary decisions per 60 Hz frame, not one burst.
+    if spawn_unit(b,kind,0):b.queue.pop_front();b.recruit_cursor=(kind+1)%TYPES.size();b.recruit_timer=.65
+ # Spread 10 Hz soldier decisions over six authority frames. A full 256-unit
+ # army schedules at most 43 ordinary decisions per 60 Hz frame, not one burst.
  var work_begin=Time.get_ticks_usec()
  if delta>=.08:tick_units(minf(delta,.2)) # Coarse deterministic fixtures / legacy stalls.
  else:
@@ -156,12 +158,15 @@ func step(delta:float)->void:
    if id==game.my_id:game.local_pos=game.positions[id]
    elif not game.has_method("network_relocate"):game._send_channel(str(id),{"type":"teleport","point":[game.positions[id].x,game.positions[id].y]})
 func enqueue_wave(b:Dictionary)->void:
- var counts:Array=b.counts.duplicate();var queue=[];var start=int(b.get("recruit_cursor",0))
+ var counts:Array=b.counts.duplicate();counts.resize(TYPES.size());
+ for n in counts.size():
+  if counts[n]==null:counts[n]=0
+ var queue=[];var start=int(b.get("recruit_cursor",0))
  # Interleave types. A full army retains the unspawned tail, so scouts and berserkers cannot starve.
  for round_index in 6:
   for offset in TYPES.size():
    var kind=(start+offset)%TYPES.size()
-   if round_index<int(counts[kind]):queue.append(kind)
+   if round_index<int(counts[kind]) and available(kind,int(b.team)):queue.append(kind)
  b.queue=queue
 func owner_count(owner:String)->int:
  var count=0
@@ -169,15 +174,15 @@ func owner_count(owner:String)->int:
   if str(unit.owner)==owner:count+=1
  return count
 func spawn_unit(b:Dictionary,kind:int,n:int)->bool:
- # 24 soldiers per owner; replacements resume when existing troops fall.
+ # 32 soldiers per owner; replacements resume when existing troops fall.
  var owned:=0;var phases=[0,0,0,0,0,0]
  for u in units.values():
   phases[int(u.get("phase",0))]+=1
   if str(u.owner)==str(b.owner):owned+=1
- if kind<0 or kind>=TYPES.size() or owned>=24 or units.size()>=lanes*2*24:return false
+ if kind<0 or kind>=TYPES.size() or not available(kind,int(b.team)) or owned>=32 or units.size()>=lanes*2*32:return false
  uid+=1;unit_grid_dirty=true
  var key:="bgunit:"+str(uid);var hp:float=HP[kind]*(1+.12*int(b.upgrades.vitality))
- units[key]={"owner":str(b.owner),"team":int(b.team),"lane":int(b.lane),"kind":kind,"pos":b.pos+Vector2((95+n*12)*(1 if int(b.team)==0 else -1),float((uid%5)-2)*26),"hp":hp,"max_hp":hp,"cooldown":float(uid%5)*.12,"sample_time":clock,"last_step":clock,"phase":phases.find(phases.min()),"last_x":b.pos.x+(95+n*12)*(1 if int(b.team)==0 else -1),"last_y":b.pos.y+float((uid%5)-2)*26,"walk":0.0,"moving":false,"facing":1 if int(b.team)==0 else -1,"attack_at":-10.0}
+ units[key]={"owner":str(b.owner),"team":int(b.team),"lane":int(b.lane),"order":str(b.get("order","open")),"kind":kind,"pos":b.pos+Vector2((95+n*12)*(1 if int(b.team)==0 else -1),float((uid%5)-2)*26),"hp":hp,"max_hp":hp,"cooldown":float(uid%5)*.12,"sample_time":clock,"last_step":clock,"phase":phases.find(phases.min()),"last_x":b.pos.x+(95+n*12)*(1 if int(b.team)==0 else -1),"last_y":b.pos.y+float((uid%5)-2)*26,"walk":0.0,"moving":false,"facing":1 if int(b.team)==0 else -1,"attack_at":-10.0}
  return true
 func hostile_near(owner:String,point:Vector2,radius:float)->Array[String]:
  var result:Array[String]=[];var side:=side_of(owner)
@@ -226,16 +231,21 @@ func tick_units(dt:float,phase:int=-1)->void:
    u.expires=float(u.get("expires",0))-unit_dt
    if float(u.expires)<=0:units.erase(key);game.adventure.combat.statuses.erase(key);continue
   if game.adventure.combat.stunned(str(key)):continue
-  var target:=nearest(u);var a:Dictionary=game.adventure.combat.actor(target)
-  if a.is_empty():continue
+  var target:=command.target(u);var a:Dictionary=game.adventure.combat.actor(target)
+  var goal:Vector2=command.goal(u)
+  if a.is_empty():a={"pos":goal}
+  var combat_target=not target.is_empty()
   var reach:float=REACH[kind];var delta_pos:Vector2=a.pos-u.pos;var distance:=delta_pos.length()
   if kind==2:
    if float(u.cooldown)<=0:
     heal_near(u);u.cooldown=1.4
    reach=230
+  u.winding=combat_target and kind!=2 and distance<=reach+15 and float(u.cooldown)>0 and float(u.cooldown)<.25
+  if combat_target and absf(delta_pos.x)>1:u.facing=1 if delta_pos.x>0 else -1
   var desired:=Vector2.ZERO
-  if distance>reach:desired=delta_pos.normalized()
-  elif kind in [1,2,3,4,7] and distance<reach*.55:desired=-delta_pos.normalized()
+  if distance>(reach if combat_target else 60.0):desired=command.direction(str(key),u.pos,a.pos)
+  elif combat_target and kind in [1,2,3,4,7,10] and distance<reach*.55:desired=-delta_pos.normalized()
+  if not combat_target:desired*=clampf((distance-60)/120.0,0,1)
   # Separation prevents a lane from collapsing into one overlapping sprite.
   var separation:=Vector2.ZERO
   for other_key in nearby_units(u.pos,30):
@@ -244,18 +254,19 @@ func tick_units(dt:float,phase:int=-1)->void:
    if v.length_squared()<900 and v.length_squared()>1:separation+=v.normalized()*.35
   var speed:float=SPEED[kind]*game.adventure.combat.speed_factor(str(key))
   var before:Vector2=u.pos;u.last_x=before.x;u.last_y=before.y;u.last_walk=float(u.get("walk",0))
-  u.pos=game._move_actor(before,(desired+separation).limit_length(1)*speed*unit_dt)
-  var moved:Vector2=u.pos-before;u.moving=moved.length_squared()>.04;u.walk=float(u.get("walk",0))+moved.length()*.13
-  if absf(moved.x)>.1:u.facing=1 if moved.x>0 else -1
-  if kind!=2 and distance<=reach+15 and float(u.cooldown)<=0 and game._clear_path(u.pos,a.pos):
+  u.pos=command.move_unit(before,(desired+separation).limit_length(1)*speed*unit_dt)
+  var moved:Vector2=u.pos-before;u.moving=moved.length_squared()>.36;u.walk=float(u.get("walk",0))+moved.length()*.13
+  if not combat_target and absf(moved.x)>.1:u.facing=1 if moved.x>0 else -1
+  if combat_target and kind!=2 and distance<=reach+15 and float(u.cooldown)<=0 and command.clear_path(u.pos,a.pos):
    var b:Dictionary=bases.get(owners.get(str(u.owner),""),{});var upgrades:Dictionary=b.get("upgrades",{})
-   var amount:float=DAMAGE[kind]*(1+.12*int(upgrades.get("melee" if kind in [0,5,6] else "ranged",0)))
+   var amount:float=DAMAGE[kind]*(1+.12*int(upgrades.get("melee" if kind in [0,5,6,8,9] else "ranged",0)))
+   amount*=command.banner_bonus(u)
    u.attack_at=clock
    u.cooldown=1.0 if kind==5 else 2.7 if kind==3 else 1.6
-   if kind in [0,5,6]:hit(target,amount,str(key));game._emit_effect({"pos":a.pos,"radius":24.0,"time":.15,"color":"#fbd290"})
+   if kind in [0,5,6,8,9]:hit(target,amount,str(key));game._emit_effect({"pos":a.pos,"radius":24.0,"time":.15,"color":"#fbd290"})
    elif kind==3:
     uid+=1;shots.append({"uid":uid,"pos":u.pos,"target":target,"end":a.pos,"owner":"bgarmy:"+str(u.owner),"team":int(u.team),"damage":amount,"speed":340.0 if kind==3 else 500.0,"radius":100.0 if kind==3 else 65.0 if kind==4 else 0.0,"life":3.0})
-   else:game.adventure.combat.launch_projectile("bgarmy:"+str(u.owner),u.pos,delta_pos.normalized(),{"range":reach+90,"speed":450,"splash_radius":65 if kind==4 else 0,"splash_damage":amount*.45,"color":"#a4e6ed" if int(u.team)==0 else "#f8a181"},amount)
+   else:game.adventure.combat.launch_projectile("bgarmy:"+str(u.owner),u.pos,delta_pos.normalized(),{"range":reach+90,"speed":450,"splash_radius":65 if kind==4 else 0,"splash_damage":amount*.45,"homing_target":target,"slow_duration":2.0 if kind==10 else 0,"slow_factor":.75,"slow":.75,"thorn_arrow":kind in [1,7],"color":"#a4e6ed" if int(u.team)==0 else "#c1a5e8"},amount,"homing" if kind==10 else "weaving" if kind==4 else "pellet")
  unit_grid_dirty=true
 func heal_near(u:Dictionary)->void:
  var upgrades:Dictionary=bases.get(owners.get(str(u.owner),""),{}).get("upgrades",{})
@@ -291,6 +302,12 @@ func blast(pos:Vector2,radius:float,amount:float,source:String,side:int,cause:Di
   if int(game.teams.get(id,-1))!=side and int(game.health.get(id,0))>0 and pos.distance_to(game.positions[id])<radius:game._hurt(str(id),amount,source,"",cause)
  for key in units.keys():
   if int(units[key].team)!=side and pos.distance_to(units[key].pos)<radius:damage(str(key),amount,source)
+ if side in [0,1]:
+  for key in bases:
+   var base:Dictionary=bases[key]
+   if int(base.team)!=side and float(base.hp)>0 and pos.distance_to(base.pos)<radius+70:damage("bgbase:"+str(key),amount,source)
+  var other=1-side
+  if heart_hp[other]>0 and pos.distance_to(heart_pos(other))<radius+90:damage("bgheart:"+str(other),amount,source)
  game._emit_effect({"pos":pos,"radius":radius,"time":.4,"color":"#ffae65"})
 func tick_bombs(dt:float)->void:
  if map_id!="warzone":return
@@ -309,10 +326,12 @@ func price(b:Dictionary,key:String)->int:
   return COSTS[k]*(1+int(b.counts[k])) if k>=0 else 0
  return 100+int(b.upgrades.get(key,0))*70
 func buy(id:String,key:String)->bool:
+ if key in COMMANDS:return command.execute(id,key)
  if game.role!="host" or not game.started or game.start_countdown>0 or int(game.health.get(id,0))<=0:return false
  var b:Dictionary=bases.get(owners.get(id,""),{})
  if b.is_empty() or float(b.hp)<=0 or (game.positions[id] as Vector2).distance_to(b.pos)>240:return false
  var kind:=TYPES.find(key.trim_prefix("unit:")) if key.begins_with("unit:") else -1
+ if kind>=0 and not available(kind,int(b.team)):return false
  if kind<0 and key not in UPGRADES:return false
  if kind>=0 and int(b.counts[kind])>= (6 if kind==0 else 3):return false
  if kind<0 and int(b.upgrades[key])>=4:return false
@@ -331,13 +350,14 @@ func open_shop(notice:String="")->void:
  var b:Dictionary=bases.get(owners.get(game.my_id,""),{})
  if b.is_empty():return
  game.presentation.window("MY BARRACKS • "+FACTIONS[int(b.team)],"battlegrounds")
- game.presentation.label(game.presentation.content,"CC: "+str(game.gold.get(game.my_id,0))+" • Next march in %ds • %d / 24 active • %d queued" % [ceili(maxf(0,float(b.timer))),owner_count(game.my_id),b.get("queue",[]).size()],18)
+ game.presentation.label(game.presentation.content,"CC: "+str(game.gold.get(game.my_id,0))+" • Next march in %ds • %d / 32 active • %d queued" % [ceili(maxf(0,float(b.timer))),owner_count(game.my_id),b.get("queue",[]).size()],18)
  if not notice.is_empty():game.presentation.label(game.presentation.content,notice,19)
  var grid:=GridContainer.new();grid.columns=2;game.presentation.content.add_child(grid)
  for k in TYPES.size():
+  if not available(k,int(b.team)):continue
   var key:String="unit:"+str(TYPES[k]);var label:String=LABELS[k]+" ×"+str(int(b.counts[k]))+" • +1 / "+str(price(b,key))+" CC"
-  var button=game.presentation.button(grid,label,request_buy.bind(key));button.custom_minimum_size=Vector2(370,44)
-  button.tooltip_text="Heals nearby allies" if k==2 else "Splash siege damage" if k==3 else "Long reach, fragile" if k==7 else "Recruits march automatically and fight the opposing army."
+  var button=game.presentation.button(grid,label,request_buy.bind(key));button.custom_minimum_size=Vector2(370,44);button.icon=preload("res://scripts/source_art.gd").texture("res://assets/battlegrounds/%d_%d_4.svg" % [int(b.team),k]);button.expand_icon=true;button.add_theme_constant_override("icon_max_width",36)
+  button.tooltip_text="Heals nearby allies" if k==2 else "Splash siege damage" if k==3 else "Long reach, fragile" if k==7 else "Follows your army order. Lancers strike from farther away." if k==8 else "Nearby allied troops deal 10% more damage; does not stack." if k==9 else "Seeking spores slow enemies by 25% for two seconds." if k==10 else "Follows your army orders and fights the opposing army."
  game.presentation.label(game.presentation.content,"ARMY UPGRADES • apply to future troops",19)
  for key in UPGRADES:
   var text:=str(key).capitalize()+" "+str(int(b.upgrades[key]))+"/4 • "+str(price(b,str(key)))+" CC"
@@ -349,7 +369,7 @@ func request_buy(key:String)->void:
  elif game.has_method("request_battleground_order"):game.request_battleground_order(key)
  else:game._send_channel(game.host_id,{"type":"bg_upgrade","key":key});game.presentation.close();game.status_label.text="Barracks order sent. Press E to view your updated army."
 func snapshot()->Dictionary:
- var payload:Dictionary={"map":map_id,"lanes":lanes,"clock":clock,"army_time":army_time,"work":work,"owners":owners,"hearts":heart_hp,"winner":winner,"units":{},"bases":{},"shots":[],"bombs":[]}
+ var payload:Dictionary={"map":map_id,"lanes":lanes,"clock":clock,"army_time":army_time,"work":work,"owners":owners,"hearts":heart_hp,"winner":winner,"recall":command.recall_ready,"units":{},"bases":{},"shots":[],"bombs":[]}
  for key in units:payload.units[key]=units[key].duplicate();payload.units[key].pos=[snappedf(units[key].pos.x,.01),snappedf(units[key].pos.y,.01)];payload.units[key].erase("last_step");payload.units[key].erase("phase")
  for key in bases:payload.bases[key]=bases[key].duplicate(true);payload.bases[key].pos=[bases[key].pos.x,bases[key].pos.y]
  for key in ["shots","bombs"]:
@@ -360,7 +380,7 @@ func snapshot()->Dictionary:
  return payload
 func receive(data:Dictionary)->void:
  if data.is_empty():return
- data=data.duplicate(true);work=data.get("work",work)
+ data=data.duplicate(true);work=data.get("work",work);command.recall_ready=data.get("recall",{})
  map_id=str(data.get("map","woodland"));lanes=clampi(int(data.get("lanes",4)),3,4);clock=float(data.get("clock",clock));owners=data.get("owners",{});heart_hp=data.get("hearts",[2600,2600]);winner=int(data.get("winner",-1));units=data.get("units",{});bases=data.get("bases",{});shots=data.get("shots",[]);bombs=data.get("bombs",[])
  for collection in [units,bases]:
   for key in collection:collection[key].pos=Vector2(float(collection[key].pos[0]),float(collection[key].pos[1]))
@@ -371,6 +391,8 @@ func receive(data:Dictionary)->void:
 func draw_world(canvas:Node2D)->void:
  var view:Dictionary=game._battleground_view() if game.has_method("_battleground_view") else {}
  var draw_units:Dictionary=view.get("units",units);var draw_shots:Array=view.get("shots",shots);var draw_bombs:Array=view.get("bombs",bombs);var draw_clock:float=float(view.get("clock",clock))
+ var ground=preload("res://scripts/source_art.gd").texture("res://assets/battlegrounds/ground_"+map_id+".svg")
+ if ground!=null:canvas.draw_texture_rect(ground,Rect2(-game.camera.posmodv(Vector2(256,256)),game.VIEW+Vector2(256,256)),true)
  var cam:Vector2=game.camera;var visible:=Rect2(cam-Vector2(120,120),game.VIEW+Vector2(240,240));var font:=ThemeDB.fallback_font
  for lane in lanes:
   var y:=lane_y(lane)
@@ -413,9 +435,9 @@ func draw_world(canvas:Node2D)->void:
  for side in 2:
   canvas.draw_line(Vector2(550 if side==0 else 6250,400)-cam,Vector2(550 if side==0 else 6250,4000)-cam,Color("#a59675"),200)
   var p:=heart_pos(side)-cam;var tint:=Color("#78cce8") if side==0 else Color("#ef9876")
-  canvas.draw_circle(p,85,Color("#253e4b"));canvas.draw_arc(p,90,0,TAU,40,tint,5);canvas.draw_rect(Rect2(p-Vector2(30,60),Vector2(60,110)),tint)
-  canvas.draw_string(font,p-Vector2(100,108),FACTIONS[side],HORIZONTAL_ALIGNMENT_CENTER,200,19,Color.WHITE)
-  canvas.draw_string(font,p+Vector2(-90,125),"SHIELDED" if shielded(side) else "HEART "+str(int(heart_hp[side])),HORIZONTAL_ALIGNMENT_CENTER,180,18,tint)
+  if visible.grow(100).has_point(heart_pos(side)):
+   preload("res://scripts/battleground_art.gd").capital(canvas,p,side,float(heart_hp[side]))
+   canvas.draw_string(font,p-Vector2(150,195),FACTIONS[side],HORIZONTAL_ALIGNMENT_CENTER,300,19,Color.WHITE)
  for key in bases:
   var b:Dictionary=bases[key];var p:Vector2=b.pos-cam
   if not visible.has_point(b.pos):continue
@@ -433,12 +455,12 @@ func draw_world(canvas:Node2D)->void:
   canvas.draw_rect(Rect2(p+Vector2(-65,63),Vector2(130,8)),Color("#302a25"));canvas.draw_rect(Rect2(p+Vector2(-65,63),Vector2(130*maxf(0,float(b.hp))/950.0,8)),tint)
   if str(b.owner)==game.my_id and float(b.hp)>0:
    canvas.draw_string(font,p+Vector2(-100,98),"E • My army",HORIZONTAL_ALIGNMENT_CENTER,200,18,Color("#ffe29a"))
-   var queue:Array=b.get("queue",[]);var count=owner_count(str(b.owner));var cycle=18.0-int(b.upgrades.production)*1.5
+   var queue:Array=b.get("queue",[]);var count=owner_count(str(b.owner));var cycle=30.0-int(b.upgrades.production)*2.0
    canvas.draw_rect(Rect2(p+Vector2(-100,109),Vector2(200,5)),Color("#283d48"));canvas.draw_rect(Rect2(p+Vector2(-100,109),Vector2(200*clampf(1-float(b.timer)/cycle,0,1),5)),Color("#8ccbd8"))
    var pending="Next march: %ds" % ceili(maxf(0,float(b.timer)))
-   if not queue.is_empty():pending=("Army full • waiting: " if count>=24 else "Recruiting: ")+str(LABELS[int(queue[0])])
+   if not queue.is_empty():pending=("Army full • waiting: " if count>=32 else "Recruiting: ")+str(LABELS[int(queue[0])])
    canvas.draw_string(font,p+Vector2(-150,133),pending,HORIZONTAL_ALIGNMENT_CENTER,300,14,Color("#e3d9b4"))
-   canvas.draw_string(font,p+Vector2(-150,151),"%d / 24 active • %d queued" % [count,queue.size()],HORIZONTAL_ALIGNMENT_CENTER,300,13,Color("#b4d0d1"))
+   canvas.draw_string(font,p+Vector2(-150,151),"%d / 32 active • %d queued" % [count,queue.size()],HORIZONTAL_ALIGNMENT_CENTER,300,13,Color("#b4d0d1"))
  var middle:=SIZE*.5-cam
  canvas.draw_circle(middle,150,Color(.2,.42,.46,.2))
  canvas.draw_rect(Rect2(middle-Vector2(90,20),Vector2(180,65)),Color("#8c714b"))
@@ -469,11 +491,13 @@ func player_name(id:String)->String:
 func draw_unit(c:Node2D,u:Dictionary,p:Vector2,draw_clock:float=-1)->void:
  preload("res://scripts/battleground_art.gd").draw_unit(c,u,p,clock if draw_clock<0 else draw_clock)
 func draw_hud(c:Node2D)->void:
+ command.ui_step()
  var font:=ThemeDB.fallback_font
  c.draw_rect(Rect2(20,100,860,38),Color(.04,.1,.14,.9))
- c.draw_string(font,Vector2(32,126),"BATTLEGROUNDS • "+MAPS.get(map_id,"Front")+" • Hearts "+str(int(heart_hp[0]))+" : "+str(int(heart_hp[1]))+" • "+str(units.size())+" troops",HORIZONTAL_ALIGNMENT_LEFT,880,21,Color("#ffe2a3"))
- c.draw_string(font,Vector2(24,game.VIEW.y-120),"Destroy barracks, then the heart. E at your barracks: recruit / upgrade. E in the middle: items.",HORIZONTAL_ALIGNMENT_LEFT,1100,14,Color("#efdfb7"))
+ c.draw_string(font,Vector2(32,126),"BATTLEGROUNDS • "+MAPS.get(map_id,"Front")+" • Capitals "+str(int(heart_hp[0]))+" : "+str(int(heart_hp[1]))+" • "+str(units.size())+" troops",HORIZONTAL_ALIGNMENT_LEFT,880,21,Color("#ffe2a3"))
+ c.draw_string(font,Vector2(24,game.VIEW.y-120),"Destroy the enemy capital to win. Barracks recruit troops. Friendly capital / own base: +4 HP/s.",HORIZONTAL_ALIGNMENT_LEFT,1100,14,Color("#efdfb7"))
  var area:=Rect2(game.VIEW.x-225,145,200,130);c.draw_rect(area,Color(.03,.1,.14,.85))
+ for side in 2:c.draw_circle(Vector2(game.VIEW.x-225,145)+(heart_pos(side)/SIZE)*Vector2(200,130),5,Color("#75cced") if side==0 else Color("#ef9270"))
  for b in bases.values():c.draw_rect(Rect2(area.position+(b.pos/SIZE)*area.size-Vector2(3,3),Vector2(6,6)),Color("#75cced") if int(b.team)==0 else Color("#ef9270"))
  for u in units.values():c.draw_circle(area.position+(u.pos/SIZE)*area.size,1.5,Color("#75cced") if int(u.team)==0 else Color("#ef9270"))
  for id in game.positions:
@@ -495,11 +519,12 @@ func convert(owner:String,key:String)->void:
  u.owner=owner;u.team=side_of(owner);u.converted=true;u.expires=8.0;u.hp=minf(float(u.hp),90);u.max_hp=minf(float(u.max_hp),90)
  game._emit_effect({"pos":u.pos,"radius":55.0,"time":.6,"color":"#aaedbe"})
 
+func available(kind:int,side:int)->bool:return kind>=0 and kind<TYPES.size() and (kind!=9 or side==0) and (kind!=10 or side==1)
 func help()->void:
  game.presentation.window("BATTLEGROUNDS • Build an army together","battlegrounds_help")
- for line in ["1 • Host a 3v3 or 4v4 room. Tap a team side; both teams must be full before Start.","2 • You own one barracks. It sends two foot soldiers every 18 seconds. Visit it with E to add recruits or upgrade the army.","3 • CC arrives steadily; kills earn extra CC and hero XP. Build more troops, improve their stats, or buy hero items.","4 • Healers support your frontline. Archers and scouts keep their distance; catapults and mages deal splash damage. Mix roles with teammates.","5 • The only item market is at the map's centre. Fight for access. Your hero respawns after seven seconds.","6 • Destroy every opposing barracks to remove the heart's shield, then destroy the heart to win.","IRON RAIN • Orange floor circles warn of incoming bombs. They hit both armies and both teams. Move out before impact."]:
+ for line in ["1 • Host a 3v3 or 4v4 room. Tap a team side; both teams must be full before Start.","2 • You own one barracks. It sends two foot soldiers every 30 seconds. Visit it with E to add recruits or upgrade the army.","3 • CC arrives steadily; enemy hero kills earn 350 CC and hero XP. Build more troops, improve their stats, or buy hero items.","4 • Healers support your frontline. Archers and scouts keep their distance; catapults and mages deal splash damage. Mix roles with teammates.","5 • The only item market is at the map's centre. Fight for access. Your hero respawns at your capital after seven seconds. Recall to your own barracks once every two minutes. Friendly capital and your own base restore 4 HP/s.","6 • Destroy the enemy capital to win. Enemy barracks can be destroyed to stop that player’s reinforcements.","IRON RAIN • Orange floor circles warn of incoming bombs. They hit both armies and both teams. Move out before impact."]:
   game.presentation.label(game.presentation.content,line,20)
- game.presentation.label(game.presentation.content,"Army limit: 24 active troops per player. All eight unit types can be recruited together. Upgrades last for this match; hero mastery is retained.",17)
+ game.presentation.label(game.presentation.content,"Army limit: 32 active troops per player. Nine shared roles and one faction-exclusive role. Use Army Orders to gather, defend or attack together. Upgrades last for this match; hero mastery is retained.",17)
 
 func rebuild_unit_grid()->void:
  unit_grid_dirty=false;unit_grid.clear()

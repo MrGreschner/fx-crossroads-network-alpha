@@ -1,0 +1,21 @@
+{
+  "checks": 4,
+  "failures": [],
+  "passed": true,
+  "results": [
+    {
+      "bots": 7,
+      "map": "colour_clash",
+      "moved": 7,
+      "objective_score": 532.0,
+      "simulated_seconds": 30
+    },
+    {
+      "bots": 7,
+      "map": "crown_chase",
+      "moved": 7,
+      "objective_score": 24.5833333333332,
+      "simulated_seconds": 30
+    }
+  ]
+}

@@ -57,7 +57,7 @@ static func build(legacy:Node,parent:Node)->void:
   ["Mastery tree","tree","Six branches • choose your style",f.open_mastery],
   ["Gear & fish bait","rod","Rod, net & basket equipment",func():open_tab(f,0)],
   ["Basket watch","pot","%d placed • check & collect" % prog.state().pots.size(),func():open_tab(f,2)],
-  ["Trade catches","coins","Sell goods for Glimmers",func():open_tab(f,4)],
+  ["Trade catches","coins","Visit Ripple & Reel Sales",f.open_sales],
   ["Weekly catch","bait","A new fishing challenge",legacy.weekly.open_board]]
  for entry in entries:
   var card=SKIN.card(tiles,"","");card.get_parent().custom_minimum_size.x=275;var line=HBoxContainer.new();card.add_child(line);icon(line,entry[1]);var words=VBoxContainer.new();words.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(words);UI.label(words,entry[0],18);UI.label(words,entry[2],13);UI.button(card,"Open",entry[3]).custom_minimum_size.y=30

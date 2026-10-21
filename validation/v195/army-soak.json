@@ -1,0 +1,14 @@
+{
+  "initial_troops": 256,
+  "passed": true,
+  "peak_troops": 256,
+  "projectiles": 18,
+  "simulated_seconds": 10,
+  "strategy_work": {
+    "max_units_ms": 23.919,
+    "step_ms": 2.994,
+    "units_ms": 2.925
+  },
+  "surviving_troops": 123,
+  "wall_simulation_ms": 10738.092
+}

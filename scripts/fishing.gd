@@ -40,6 +40,10 @@ var journal_panel:PanelContainer
 var room_layer:CanvasLayer
 var room:Control
 var journal_page=0
+var kept_query=""
+var kept_sort=0
+var sales:CanvasLayer
+var sales_focus_id=""
 var collection_tab=0
 var journal_rarity="all"
 var journal_pool="all"
@@ -132,7 +136,7 @@ func _process(delta:float)->void:
  if is_instance_valid(journal_panel):fit_panel(journal_panel,Vector2(1000,610))
  if is_instance_valid(catch_frame):fit_catch_frame()
  if is_instance_valid(room):panel.visible=false;return
- if busy() and not spot_available(cast_spot):cancel("The dawn shoal has vanished. Return between 4 and 6 am Edmonton time.")
+ if busy() and not spot_available(cast_spot):cancel("The dawn shoal has vanished. Return between 4 and 6 am.")
  if busy() and (not playable() or local_pos().distance_to(cast_pos)>18 or local_hp()<cast_hp or region!=cast_region):cancel("Cast cancelled — moving, damage or a menu interrupted it.")
  var spot=nearest()
  if playable() and not spot.is_empty():records().discover_pool(str(spot.id))
@@ -162,10 +166,10 @@ func _process(delta:float)->void:
   cast_button.disabled=not unlocked;cast_button.modulate=Color.WHITE;meter.visible=false
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and not event.echo:
-  if (event.keycode==KEY_R or event.physical_keycode==KEY_R) and phase=="landed" and not pending.is_empty():
+  if (event.keycode in [KEY_R,KEY_F] or event.physical_keycode in [KEY_R,KEY_F]) and phase=="landed" and not pending.is_empty():
    var focus=get_viewport().gui_get_focus_owner()
    if not (focus is LineEdit or focus is TextEdit):
-    finish_catch(false);get_viewport().set_input_as_handled();return
+    finish_catch(event.keycode==KEY_F or event.physical_keycode==KEY_F);get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(inspector):inspector.close();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(journal):close_journal();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and busy():cancel("Cast cancelled.");get_viewport().set_input_as_handled();return
@@ -234,8 +238,8 @@ func land()->void:
  label(col,record_text,16).modulate=Color("#ade0cd")
  if not previous.is_empty():
   label(col,"NEW WEIGHT RECORD! +%.2f kg" % (float(pending.kg)-float(previous.kg)) if float(pending.kg)>float(previous.kg) else "%.2f kg below your best" % (float(previous.kg)-float(pending.kg)),17).modulate=Color("#ffe19c")
- catch_text=label(col,"Keep it for your aquarium, or release it. Both record a discovery. Combat is still live!",15)
- var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"Keep catch",finish_catch.bind(true)));button(row,"R • Release",finish_catch.bind(false))
+ catch_text=label(col,"Keep it for your aquarium, or release it. Keep: normal fishing XP and a fish to sell. Release: +25% fishing XP. Both record discoveries!",15)
+ var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"F • Keep catch",finish_catch.bind(true)));button(row,"R • Release",finish_catch.bind(false))
  call_deferred("fit_catch_frame")
 func fit_catch_frame()->void:
  if not is_instance_valid(catch_frame):return
@@ -289,12 +293,22 @@ func open_odds()->void:
 func open_workshop()->void:
  if is_instance_valid(workshop):return
  cancel("");workshop=preload("res://scripts/fishing_workshop.gd").new();game.add_child(workshop);workshop.setup(self)
+func open_sales(id:String="")->void:
+ if multi or game.mode!="town":status="Visit Ripple & Reel in town to sell fish.";return
+ sales_focus_id=id
+ if not id.is_empty():kept_query=""
+ close_journal()
+ if is_instance_valid(workshop):workshop.close()
+ if not is_instance_valid(room):open_shop()
+ if is_instance_valid(sales):sales.refresh();return
+ sales=preload("res://scripts/fishing_sales.gd").new();game.add_child(sales);sales.setup(self)
 func open_shop()->void:
  if multi or game.mode!="town" or is_instance_valid(room):return
  cancel("");game.menu="fishing_shop";game.mobile.reset_controls()
  room_layer=CanvasLayer.new();room_layer.layer=65;game.add_child(room_layer)
  room=preload("res://scripts/fishing_room.gd").new();room_layer.add_child(room);room.setup(self)
 func close_shop()->void:
+ if is_instance_valid(sales):sales.close()
  close_journal()
  if is_instance_valid(room_layer):room_layer.queue_free()
  room=null;room_layer=null;game.menu="";game.mobile.reset_controls()

@@ -192,26 +192,28 @@ func select_network_mode(value:String)->void:
  var picker=net_panel.find_child("NetworkModes",true,false)
  if picker!=null:picker.select(maxi(0,["defense","arena","coop","descent","battlegrounds"].find(mode)))
  net_panel.find_child("NetworkRealms",true,false).visible=mode=="coop"
- test_arena.visible=mode=="arena";_sync_network_mode_controls()
+ test_arena.hide();_sync_network_mode_controls()
  for id in ["defense","arena","coop","descent","battlegrounds"]:
   var button=net_panel.find_child("Mode_"+id,true,false)
   if button!=null:button.modulate=Color("#f2d49c") if id==mode and not (id=="coop" and realm_id in ["between","overcharge","wayfarer"]) else Color.WHITE
 func play_solo()->void:
  if net_ready:net_status.text="Leave the online room before starting solo.";return
+ if get_tree().root.has_meta("fx_scene_handoff"):return
+ _leave_room_connection()
  var root=get_tree().root
  root.set_meta("fx_hero",selected_hero);root.set_meta("fx_mode",mode)
  if mode=="coop":
   var reason=ExpeditionProfile.progress(self).entry_issue(realm_id) if realm_id in ["between","overcharge","attunement"] else preload("res://scripts/realm_access.gd").reason(legacy,realm_id)
   if not reason.is_empty():net_status.text=reason;return
   if realm_id in ["between","overcharge","attunement"]:
-   root.set_meta("fx_solo_expedition",{"kind":realm_id,"tier":expedition_tier.get_selected_id()});get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn");return
-  root.set_meta("fx_retry_realm",realm_id);get_tree().call_deferred("change_scene_to_file","res://scenes/main.tscn");return
+   root.set_meta("fx_solo_expedition",{"kind":realm_id,"tier":expedition_tier.get_selected_id()});preload("res://network/town_return.gd").begin(self,"res://scenes/main.tscn");return
+  root.set_meta("fx_retry_realm",realm_id);preload("res://network/town_return.gd").begin(self,"res://scenes/main.tscn");return
  var plan=bot_plan.duplicate(true) if preload("res://network/party_rules.gd").allows_ai(mode) else []
  if preload("res://network/party_rules.gd").teamed(self):plan=filled_ai_plan(1,1 if local_lobby_team==0 else 0)
  var limit=8 if mode in ["arena","battlegrounds"] else 2 if mode=="coop" else 4
  if plan.size()+1>limit:net_status.text="Choose at most %d AI companions for this mode." % (limit-1);return
- root.set_meta("fx_solo_party",{"mode":mode,"hero":selected_hero,"realm":realm_id,"bg_map":bg_map,"bg_size":bg_team_size,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"arena_map":"crossroads" if test_arena.selected==1 else "sand","bots":plan,"rivals":gate_rival_plan,"difficulty":ai_difficulty})
- get_tree().call_deferred("change_scene_to_file","res://scenes/arcade.tscn")
+ root.set_meta("fx_solo_party",{"mode":mode,"hero":selected_hero,"realm":realm_id,"bg_map":bg_map,"bg_size":bg_team_size,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"arena_map":str(test_arena.get_item_metadata(test_arena.selected)),"bots":plan,"rivals":gate_rival_plan,"difficulty":ai_difficulty})
+ preload("res://network/town_return.gd").begin(self,"res://scenes/arcade.tscn")
 func filled_ai_plan(humans:int,team_zero:int)->Array:
  var result=[];var counts=[team_zero,humans-team_zero];var kits=preload("res://scripts/arena_bots.gd").IDS;var used=0
  for side in 2:
@@ -255,6 +257,8 @@ func _poll_browser()->void:
  if browser_peer.get_ready_state()==WebSocketPeer.STATE_CLOSED or Time.get_ticks_msec()-browser_started>7000:
   browser_peer.close();browser_peer=null;_show_public_rooms([],"Public-room browser unavailable. Host or join by room code; check the matching server update.")
 func _sync_network_mode_controls()->void:
+ var gallery=net_panel.find_child("ArenaGallery",true,false)
+ if gallery!=null:gallery.visible=mode=="arena";gallery.refresh()
  var solo=net_panel.find_child("PlaySolo",true,false)
  if solo!=null:solo.disabled=net_ready;solo.text="▶  PLAY SOLO vs AI" if mode=="battlegrounds" else "▶  PLAY SOLO"
  var ai=net_panel.find_child("AIRoster",true,false)
@@ -309,7 +313,10 @@ func choose_arena_format(index:int)->void:
  if arena_party_rule=="teams":capacity.select(capacity.get_item_index(arena_team_size*2))
  _sync_network_mode_controls()
 func _test_arena_changed(_index:int)->void:
- if net_ready and net_host and not started:send_net({"type":"arena_choice","arena_map":"crossroads" if test_arena.selected==1 else "sand"})
+ arena_map=str(test_arena.get_item_metadata(test_arena.selected))
+ var gallery=net_panel.find_child("ArenaGallery",true,false)
+ if gallery!=null:gallery.refresh()
+ if net_ready and net_host and not started:send_net({"type":"arena_choice","arena_map":str(test_arena.get_item_metadata(test_arena.selected))})
 func _capacity_changed(_index:int)->void:
  if mode=="battlegrounds" and not net_ready:bg_team_size=capacity.get_selected_id()/2;_sync_network_mode_controls()
  if not net_ready or not net_host or started:return
@@ -322,6 +329,8 @@ func net_select(id:String)->bool:
  return true
 func net_permission(id:String)->String:return "Official heroes only during networking validation." if id.begins_with("custom_") else ""
 func _leave_room_connection()->void:
+ if browser_peer!=null:
+  var browse_drain=preload("res://network/leave_link.gd").new();get_tree().root.add_child(browse_drain);browse_drain.setup(browser_peer,false);browser_peer=null
  if net_peer==null:return
  var run:Dictionary=ExpeditionProfile.progress(self).state().run
  if str(run.get("coop",{}).get("room",""))==net_room:ExpeditionProfile.forfeit(self)
@@ -351,7 +360,7 @@ func return_to_town()->void:
  _leave_room_connection();set_process(false);set_physics_process(false)
  get_tree().root.set_meta("fx_hero",selected_hero)
  if is_instance_valid(net_panel):net_panel.hide()
- get_tree().root.call_deferred("add_child",preload("res://network/town_return.gd").new())
+ preload("res://network/town_return.gd").begin(self,"res://scenes/main.tscn",true)
 func _town()->void:
  # Post-match return keeps Host / Join available.
  return_to_network_menu()
@@ -388,7 +397,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":"crossroads" if test_arena.selected==1 else "sand","token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":str(test_arena.get_item_metadata(test_arena.selected)),"token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
@@ -483,9 +492,9 @@ func receive_net(data:Dictionary)->void:
    var realm_control=net_panel.find_child("NetworkRealms",true,false)
    if mode_control!=null:mode_control.select(maxi(0,["defense","arena","coop","descent","battlegrounds"].find(mode)))
    if realm_control!=null:realm_control.select(maxi(0,RealmCatalogue.lobby_ids().find(realm_id)));realm_control.visible=mode=="coop"
-   test_arena.visible=mode=="arena"
+   test_arena.hide()
    capacity.select(capacity.get_item_index(int(data.seats)))
-   test_arena.disabled=not net_host;test_arena.select(1 if str(data.get("arena_map","sand"))=="crossroads" else 0)
+   test_arena.disabled=not net_host;arena_map=str(data.get("arena_map","sand"));test_arena.select(maxi(0,arena_world.MAPS.keys().find(arena_map)));_sync_network_mode_controls()
    net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+("COMPETITION • crown bonuses off" if bool(get_meta("crown_competition",false)) else str(data.get("message","")))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show();_sync_network_mode_controls()
   "start":
@@ -666,7 +675,7 @@ func _process(delta:float)->void:
  missiles.assign(shots_view.samples(Time.get_ticks_msec()/1000.0))
  for shot in render_shots:
   if str(shot.owner)!=my_id and not bool(shot.get("custom",false)):missiles.append({"pos":shot.draw_pos,"owner":shot.owner,"color":shot.color})
- adventure.combat.held_cast.local_input(delta,net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
+ adventure.combat.held_cast.local_input(delta,not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
  if net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
   if (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):_attack_request("primary")
   if Input.is_action_pressed("secondary"):_attack_request("secondary")
@@ -707,10 +716,12 @@ func _physics_process(_delta:float)->void:
     positions[id]=Move.advance(self,str(id),positions[id],direction)
     revive_held[id]=bool(f.get("revive",false))
     var aim=Vector2.from_angle(float(f.a));aim_angles[id]=float(f.a)
-    adventure.combat.release_heroes.holding(str(id),bool(f.sh),aim);adventure.combat.classics.holding(str(id),bool(f.sh));adventure.combat.v79.holding(str(id),bool(f.sh),aim);adventure.combat.v56.holding(str(id),bool(f.ph),aim)
+    if not arena_world.shatter.active():adventure.combat.release_heroes.holding(str(id),bool(f.sh),aim);adventure.combat.classics.holding(str(id),bool(f.sh));adventure.combat.v79.holding(str(id),bool(f.sh),aim);adventure.combat.v56.holding(str(id),bool(f.ph),aim)
     _execute_due_actions(str(id))
    _execute_due_actions(str(id))
-  bots.step(Move.DT);run_time+=Move.DT;visual_time+=Move.DT;arena_world.step(Move.DT);adventure.step(Move.DT);_update_flames(Move.DT);_simulate_charges(Move.DT);_simulate(Move.DT)
+  bots.step(Move.DT);run_time+=Move.DT;visual_time+=Move.DT;arena_world.step(Move.DT);
+  if not arena_world.shatter.active():adventure.step(Move.DT)
+  _update_flames(Move.DT);_simulate_charges(Move.DT);_simulate(Move.DT)
   expedition.step(Move.DT)
   _update_fountains(Move.DT);_update_revives(Move.DT);_track_card_progress()
   for actor in positions:net_velocity[actor]=(positions[actor]-before_positions.get(actor,positions[actor]))/Move.DT
@@ -731,7 +742,8 @@ func _physics_process(_delta:float)->void:
  var direction:Vector2=mobile.movement if mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
  if not presentation.page.is_empty() or not shop_open.is_empty() or fishing.busy():direction=Vector2.ZERO
  var aim:Vector2=mobile.aim if mobile.enabled else (media_mouse_world()-local_pos).normalized()
- if Input.is_action_just_pressed("dodge") and Move.movable(self,my_id) and Time.get_ticks_msec()>=int(dodge_at.get(my_id,0)):
+ if arena_world.shatter.active() and Input.is_action_just_pressed("dodge"):arena_world.shatter.request("secondary")
+ if not arena_world.shatter.active() and Input.is_action_just_pressed("dodge") and Move.movable(self,my_id) and Time.get_ticks_msec()>=int(dodge_at.get(my_id,0)):
   var dash_direction=direction.normalized() if not direction.is_zero_approx() else aim
   net_dash[my_id]={"time":.26,"direction":dash_direction};dodge_at[my_id]=Time.get_ticks_msec()+2500
   _send_channel(host_id,{"type":"dodge","direction":[dash_direction.x,dash_direction.y]})
@@ -806,7 +818,7 @@ func _send_channel(_id:String,data:Dictionary)->void:
   if gateway!=null:gateway.send_actor(_id,data)
   return
  # Critical actions must not wait for the next 30 Hz movement batch.
- if str(data.get("type","")) in ["attack","community_input","dodge","consume","rift","bg_upgrade","purchase"] or str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
+ if str(data.get("type","")) in ["attack","community_input","dodge","consume","rift","bg_upgrade","purchase","crown_throw"] or str(data.get("type",""))=="held_cast" and str(data.get("phase",""))=="release":
   _flush_action_inputs()
  action_serial+=1
  if str(data.get("type",""))=="dodge":
@@ -929,6 +941,7 @@ func melee_visual_position(owner:String,fallback:Vector2)->Vector2:
  return _local_draw_position() if owner==my_id else remote_draw_pos.get(owner,positions[owner])
 
 func _preview_attack(kind:String,data:Dictionary,seq:int,override_stats:Dictionary={})->void:
+ if arena_world.shatter.active():return
  var stats:Dictionary=override_stats if not override_stats.is_empty() else adventure.combat.effective_stats(my_id,kind,characters.get(selected_hero,{}).get(kind,{}))
  var style=str(stats.get("style",""));var aim=Vector2.from_angle(float(data.get("angle",0)))
  var now=Time.get_ticks_msec()/1000.0
@@ -1190,7 +1203,7 @@ func _report_network()->void:
  for wall in ice_walls:sample.oldest_wall_remaining=maxf(sample.oldest_wall_remaining,float(wall.time))
  sample.client_profile.ground_effects=ground_art.counters()
  sample.mode=mode;sample.realm=realm_id
- sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
+ sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.arena_objective=arena_world.shatter.report() if arena_world.shatter.active() else arena_world.objective.report() if arena_world.objective.active() else {};sample.arena_variant={"closed_gates":arena_world.extra.doors.filter(func(d):return d.closed).size(),"cliffs":arena_world.extra.cliffs.size(),"torches_ready":arena_world.extra.torches.filter(func(t):return arena_world.clock>=float(t.ready)).size(),"light_radius":arena_world.extra.radius(my_id) if arena_map=="lanternfall" else 0};sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
  JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'V179-preview',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
  JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
@@ -1222,7 +1235,7 @@ func _refresh_draw_camera()->void:
  var factor=media.factor() if media.game!=null else 1.0
  var framing=media.framing if media.game!=null else Vector2.ZERO
  var size=VIEW/factor
- camera=(_local_draw_position()+framing-size*.5).clamp(Vector2.ZERO,(FIELD.size-size).max(Vector2.ZERO))
+ camera=(arena_world.shatter.camera_point(_local_draw_position())+framing-size*.5).clamp(Vector2.ZERO,(FIELD.size-size).max(Vector2.ZERO))
 
 func network_twister_view()->Dictionary:
  var twister=adventure.combat.twister
@@ -1326,7 +1339,7 @@ func _charge_view_speed()->float:
 func _exit_tree()->void:
  if dedicated:return
  _track_card_progress();legacy.save()
- get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+ if is_inside_tree():get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
  super._exit_tree()
  Engine.max_fps=60
  if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('leave');",true)

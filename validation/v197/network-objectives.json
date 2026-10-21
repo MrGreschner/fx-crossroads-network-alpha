@@ -1,0 +1,34 @@
+{
+  "build": "V197-objective-arenas",
+  "passed": true,
+  "results": [
+    {
+      "map": "colour_clash",
+      "rule": "ffa",
+      "players": 8,
+      "started": true,
+      "replicated": true
+    },
+    {
+      "map": "colour_clash",
+      "rule": "teams",
+      "players": 8,
+      "started": true,
+      "replicated": true
+    },
+    {
+      "map": "crown_chase",
+      "rule": "ffa",
+      "players": 8,
+      "started": true,
+      "replicated": true
+    },
+    {
+      "map": "crown_chase",
+      "rule": "teams",
+      "players": 8,
+      "started": true,
+      "replicated": true
+    }
+  ]
+}

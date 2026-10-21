@@ -24,6 +24,8 @@ var lights:Array[Dictionary]=[]
 var mesh=ArrayMesh.new()
 var frame_shade=Color(0,0,0,0)
 var mesh_key=""
+var mesh_origin=Vector2.ZERO
+var lighting_rebuilds=0
 var puddle_cells:Dictionary={}
 var music:AudioStreamPlayer
 var game:Node
@@ -158,22 +160,24 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
  collect_lights(c,camera)
  frame_shade=ambient_shade()
  # One gradient mesh dims the world and opens soft pools of light; HUD is drawn afterwards.
- var key=str(camera)+str(c.VIEW)+str(floori(now*2))+weather()
+ var origin=Vector2(floorf(camera.x/128)*128-64,floorf(camera.y/128)*128-64)
+ var key=str(origin)+str(c.VIEW)+str(floori(now*2))+weather()
  if mesh_key!=key:
-  mesh_key=key
-  var columns=ceili(c.VIEW.x/32.0);var rows=ceili(c.VIEW.y/32.0)
+  mesh_key=key;mesh_origin=origin;lighting_rebuilds+=1
+  var extent=c.VIEW+Vector2(256,256)
+  var columns=ceili(extent.x/32.0);var rows=ceili(extent.y/32.0)
   var vertices=PackedVector3Array();var colours=PackedColorArray();var indices=PackedInt32Array()
   for y in range(rows+1):
    for x in range(columns+1):
-    var p=Vector2(minf(x*32,c.VIEW.x),minf(y*32,c.VIEW.y))
-    vertices.append(Vector3(p.x,p.y,0));colours.append(shade_at(p,night,twilight))
+    var p=Vector2(minf(x*32,extent.x),minf(y*32,extent.y))
+    vertices.append(Vector3(p.x,p.y,0));colours.append(shade_at(p+origin-camera,night,twilight))
   for y in rows:
    for x in columns:
     var a=y*(columns+1)+x;var b=a+1;var d=a+columns+1;var e=d+1
     indices.append_array(PackedInt32Array([a,b,e,a,e,d]))
   var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_COLOR]=colours;arrays[Mesh.ARRAY_INDEX]=indices
   mesh.clear_surfaces();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
- c.draw_mesh(mesh,null)
+ c.draw_mesh(mesh,null,Transform2D(0,mesh_origin-camera))
  for lamp in lights:
   if float(lamp.strength)<.1:continue
   var p:Vector2=lamp.pos

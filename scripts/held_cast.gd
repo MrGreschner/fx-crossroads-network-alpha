@@ -98,7 +98,7 @@ func effective(id:String,kind:String,s:Dictionary)->Dictionary:
   if float(cfg.get("full_stun",0))>0:s["stun_duration"]=float(cfg.full_stun)
   if str(s.get("style",""))=="grave_cleave":s["bleed_duration"]=3.0;s["bleed_damage"]=2.0
   if str(s.get("style",""))=="apiary_needle":s["stun_duration"]=1.25
-  if str(s.get("style",""))=="oar_sweep":s["slow_duration"]=2.0;s["slow"]=.6
+  if str(s.get("style",""))=="oar_sweep":s["slow_duration"]=2.0;s["slow"]=.6;s["knockback"]=110.0
   if str(hero(id).get("id",""))=="stormscribe" and str(s.get("style",""))=="projectile":s["ball_lightning"]=true
  for prop in ["damage","speed"]:
   if cfg.has(prop):s[prop]=float(s.get(prop,0))*lerpf(1,float(cfg[prop]),t)

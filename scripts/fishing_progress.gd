@@ -84,11 +84,12 @@ func catch_scale(method:String)->float:
  if method=="rod":return (1.25 if has("rod_master") else 1.0)+perk_bonus("rod_xp")
  if method=="net":return (.65 if has("net_master") else .5 if has("weaver") else .35)+perk_bonus("net_xp")
  return (.35 if has("pot_study") else .2)+perk_bonus("pot_xp")
-func award(catch:Dictionary,first:bool,record:bool)->void:
+func award(catch:Dictionary,first:bool,record:bool,kept:bool=true)->void:
  var rarity=str(C.fish()[catch.species].rarity)
  var base=int({"Common":10,"Uncommon":15,"Rare":30,"Very rare":40,"Legendary":60,"Mystical":100}.get(rarity,10))
  var method=str(catch.get("method","rod"));var scale_factor=catch_scale(method)
  last_xp=maxi(1,int(round(base*scale_factor*((1.5+perk_bonus("trophy_xp")) if C.is_trophy(catch) else 1.0)*(1+perk_bonus("all_xp")))))+(25+(15 if has("scholar") else 0)+int(perk_bonus("discovery_xp")) if first else 5+int(perk_bonus("record_xp")) if record else 0)
+ if not kept:last_xp=ceili(last_xp*1.25)
  state().xp=mini(1000000000,int(state().xp)+last_xp)
 const BAIT_LEVELS={"basic":1,"worms":1,"dough":1,"insects":8,"scraps":12}
 const GEAR={"net":{"level":5,"cost":60,"name":"River net"},"pot":{"level":10,"cost":90,"name":"Baited basket"}}

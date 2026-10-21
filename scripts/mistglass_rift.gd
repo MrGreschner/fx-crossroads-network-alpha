@@ -143,6 +143,8 @@ func step(delta:float)->void:
     if not active or not game.menu.is_empty():return
  if game.enemies.is_empty() and not (game.lodges!=null and game.lodges.active):finish(true)
 func projectile(foe:Dictionary,direction:Vector2,amount:float,speed:float)->void:
+ if preload("res://scripts/ice_projectiles.gd").matches(str(foe.get("type",""))):
+  preload("res://scripts/ice_projectiles.gd").fire(game,foe,direction,foe.rift_definition);return
  if game.enemy_shots.size()>=80:return
  game.enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(game,game.adventure.combat.npc_key(foe),"Rift echo • projectile"),"pos":foe.pos,"direction":direction,"damage":amount,"speed":speed,"distance":0.0,"homing":str(foe.rift_definition.get("behaviour",""))=="homing"})
 func lob(foe:Dictionary,target:Vector2)->void:

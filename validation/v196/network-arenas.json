@@ -1,0 +1,48 @@
+{
+  "build": "V196-arena-lights",
+  "passed": true,
+  "results": [
+    {
+      "map": "sand",
+      "players": 2,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "map": "crossroads",
+      "players": 2,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "map": "storm",
+      "players": 2,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "map": "forest",
+      "players": 2,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "map": "clock",
+      "players": 2,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "map": "maze",
+      "players": 8,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "map": "lanternfall",
+      "players": 8,
+      "started": true,
+      "snapshots": true
+    }
+  ]
+}

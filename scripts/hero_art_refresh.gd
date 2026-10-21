@@ -8,6 +8,11 @@ const FRAMES={
  "walk2":{"region":Rect2(220,664,372,437),"centre":385.0},
  "attack":{"region":Rect2(771,664,420,435),"centre":949.0}}
 static func texture(sprite:String,pose:String)->Texture2D:
+ var revised=["golfer", "baseball", "stormscribe", "veyra", "nera", "cloudloom", "cairnheart", "caelum", "wanderlight", "votary", "hearthwarden", "tova"]
+ if sprite in revised:
+  var mapped="idle" if pose=="0" else "walk1" if pose=="1" else pose
+  var path="res://assets/v194_"+sprite+"_"+mapped+".svg"
+  if FileAccess.file_exists(path):return preload("res://scripts/source_art.gd").texture(path)
  if sprite!="twisterspell":return null
  var key="idle" if pose=="0" else "walk1" if pose=="1" else pose
  if not FRAMES.has(key):return null

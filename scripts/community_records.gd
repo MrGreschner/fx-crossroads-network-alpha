@@ -14,6 +14,17 @@ var read_delay:float=0
 var busy=false
 var reading=false
 var endpoint=""
+var sync_status=""
+var claims:Array=[]
+var sent_claims:Array=[]
+var refresh_after_sync=false
+var pending_sync=false
+var manual_cooldown=0.0
+var last_identity=""
+var last_mode=""
+var generation=0
+var reading_generation=0
+var synced_identity=""
 func setup(owner:Node)->void:
  legacy=owner;state();endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
  sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=4096;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
@@ -43,8 +54,11 @@ static func rarer(a:Dictionary,b:Dictionary)->bool:
  return float(a.kg)>float(b.kg)
 func note_fish(catch:Dictionary)->void:
  if not allowed():return
+ claims.append({"kind":"fish","species":catch.species,"kg":catch.kg})
+ if claims.size()>12:claims.pop_front()
  var week=legacy.cosmetics.rankings.week();var r:Dictionary=state().get("rare_week",{})
- if r.get("week","")!=week or rarer(catch,r):state().rare_week={"week":week,"species":catch.species,"kg":catch.kg};delay=1
+ if r.get("week","")!=week or rarer(catch,r):state().rare_week={"week":week,"species":catch.species,"kg":catch.kg}
+ delay=minf(delay,2)
 func payload()->Dictionary:
  var scores=legacy.cosmetics.rankings.scores();var hero_damage={};var realm_clears={};var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
  for id in legacy.data.heroes:
@@ -58,23 +72,71 @@ func payload()->Dictionary:
   if FISH.is_trophy(entry):trophies.append(entry)
   if weight>0 and rarer(entry,rare):rare=entry
   if weight>float(best.kg):best={"species":id,"kg":weight}
- return {"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
+ return {"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
+func cloud_identity()->String:
+ var account=legacy.get_node("/root/FXAccount")
+ return str(account.user.get("id","")) if account.loaded and not account.conflict else ""
+func request_sync(refresh_board=false)->void:
+ if not allowed() or endpoint.is_empty():
+  sync_status="Record uploads are paused in preview / developer mode."
+  if refresh_board:read_delay=0;fetch()
+  return
+ refresh_after_sync=refresh_after_sync or refresh_board
+ if busy:pending_sync=true;return
+ var account=legacy.get_node("/root/FXAccount")
+ sent_claims=claims.duplicate(true)
+ synced_identity=cloud_identity();busy=true;pending_sync=false;delay=120+randf()*15
+ sync_status="Syncing your records"+(" as "+str(account.user.username) if not synced_identity.is_empty() else " anonymously")+"…"
+ var error=sync_request.request(endpoint+"/community/sync",account.record_headers(),HTTPClient.METHOD_POST,JSON.stringify(payload()))
+ if error!=OK:
+  busy=false;delay=30;sync_status="Could not upload records. Your saved progress is safe."
+  if refresh_after_sync:refresh_after_sync=false;read_delay=0;fetch()
+ redraw()
+func resync()->void:
+ if manual_cooldown>0:return
+ manual_cooldown=5;request_sync(true)
 func step(delta:float)->void:
- if not allowed() or endpoint.is_empty() or not legacy.get_tree().root.get_node("FXActivity").enabled:return
- delay-=delta;read_delay=maxf(0,read_delay-delta)
- if delay<=0 and not busy:
-  delay=120+randf()*15;busy=sync_request.request(endpoint+"/community/sync",legacy.get_node("/root/FXAccount").record_headers(),HTTPClient.METHOD_POST,JSON.stringify(payload()))==OK
-  if not busy:delay=30
-func synced(result:int,code:int,_headers:PackedStringArray,_body:PackedByteArray)->void:
+ manual_cooldown=maxf(0,manual_cooldown-delta);read_delay=maxf(0,read_delay-delta)
+ if not allowed() or endpoint.is_empty():return
+ var identity=cloud_identity();var mode=str(legacy.game.mode)
+ if identity!=last_identity:
+  last_identity=identity
+  if not identity.is_empty():delay=0
+ if mode!=last_mode:
+  last_mode=mode
+  if mode=="town":delay=minf(delay,2)
+ if identity.is_empty() and not legacy.get_tree().root.get_node("FXActivity").enabled:return
+ delay-=delta
+ if delay<=0 and not busy:request_sync(legacy.page=="community")
+func synced(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
  busy=false
- if result!=HTTPRequest.RESULT_SUCCESS or code!=200:delay=45
-func open()->void:legacy.open_page("community");fetch()
+ var success=result==HTTPRequest.RESULT_SUCCESS and code==200
+ if not success:
+  delay=45;sync_status="Records upload failed (%d). Your saved progress is safe; retry Resync." % code
+ else:
+  for claim in sent_claims:claims.erase(claim)
+  var response=JSON.parse_string(body.get_string_from_utf8())
+  if response is Dictionary:
+   for text in response.get("records_broken",[]):
+    if text is String and text.length()<200:preload("res://scripts/record_toast.gd").show(legacy.game,text)
+  generation+=1;read_delay=0
+  sync_status="Records synced"+(" to your cloud username." if not synced_identity.is_empty() else " anonymously. Load a cloud profile to show your username.")
+ if pending_sync:
+  pending_sync=false;request_sync(refresh_after_sync);return
+ if refresh_after_sync or legacy.page=="community":
+  refresh_after_sync=false;read_delay=0;fetch()
+ redraw()
+func open()->void:
+ legacy.open_page("community");resync()
 func fetch()->void:
  if reading or endpoint.is_empty() or read_delay>0:return
- status="Loading community records…";reading=read_request.request(endpoint+"/community/records")==OK;read_delay=30
+ status="Loading community records…";reading_generation=generation
+ reading=read_request.request(endpoint+"/community/records")==OK;read_delay=5
  if not reading:status="Community records unavailable • try again when connected"
 func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
  reading=false
+ if reading_generation!=generation:
+  read_delay=0;fetch();return
  var parsed=JSON.parse_string(body.get_string_from_utf8())
  if result!=HTTPRequest.RESULT_SUCCESS or code!=200 or not parsed is Dictionary or parsed.get("version")!=1:
   status="Community records unavailable • deploy the matching server, then try again";redraw();return
@@ -87,16 +149,23 @@ func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArra
   if not parsed.get(key,[]) is Array or parsed.get(key,[]).size()>12:status="Invalid garden response";return
   for row in parsed.get(key,[]):
    if not row is Dictionary or not preload("res://scripts/giant_garden.gd").record_valid(row,"all"):status="Invalid crop response";return
- snapshot=parsed;status="Connected community • weekly records reset Mondays (Edmonton time)";redraw()
+ snapshot=parsed;status="Connected community • weekly records reset Mondays";redraw()
 func redraw()->void:
  if legacy.page=="community" and legacy.game.menu=="legacy":legacy.render()
 func build(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd")
  gui.label(parent,"COMMUNITY RECORDS",22);gui.label(parent,status,15)
+ if not sync_status.is_empty():gui.label(parent,sync_status,15)
+ var sync_row=HBoxContainer.new();sync_row.add_theme_constant_override("separation",18);parent.add_child(sync_row)
+ var refresh=gui.button(sync_row,"Syncing records…" if busy or reading else "RESYNC MY RECORDS",resync);refresh.name="ResyncRecords";refresh.custom_minimum_size=Vector2(290,50);refresh.disabled=reading or busy
+ refresh.tooltip_text="Upload this active profile’s records, then download the latest community board. Cloud names appear only after loading or adopting a cloud profile."
+ var accent=StyleBoxFlat.new();accent.bg_color=Color("#245967");accent.border_color=Color("#f3cb75");accent.set_border_width_all(2);accent.set_corner_radius_all(7);accent.set_content_margin_all(12)
+ refresh.add_theme_stylebox_override("normal",accent);var hover=accent.duplicate();hover.bg_color=Color("#337584");refresh.add_theme_stylebox_override("hover",hover);refresh.add_theme_stylebox_override("focus",hover);refresh.add_theme_color_override("font_color",Color("#ffe0a0"))
+ var hint=gui.label(sync_row,"Upload your active profile, then refresh the board.",15);hint.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var tabs=HFlowContainer.new();parent.add_child(tabs)
  for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
   var tab=gui.button(tabs,entry[0],func():category=entry[1];redraw());tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size.x=160
- var refresh=gui.button(tabs,"Refresh",func():read_delay=0;fetch());refresh.disabled=reading
+
  gui.label(parent,"Community play records • public game names for cloud accounts",14).tooltip_text="Combined portable-profile high-water records. Repeat uploads do not add totals again. Co-op clears count per profile. These are client-reported, not verified competition scores."
  if snapshot.is_empty():preload("res://scripts/garden_ui.gd").label(parent,"No community data loaded yet. An internet connection and the matching server update are needed.",19);return
  var clears_parent:Node=parent
@@ -126,11 +195,12 @@ func build(parent:Node)->void:
  for entry in [["BIGGEST FISH • ALL TIME","fish_all"],["BIGGEST FISH • THIS WEEK","fish_week"],["RAREST FISH • ALL TIME","rarest_all"],["RAREST FISH • THIS WEEK","rarest_week"]]:
   if category!="fish":continue
   var card=UI.card(fish_row,entry[0],"");card.get_parent().custom_minimum_size.x=425;var f=snapshot.get(entry[1]);var named=snapshot.get("named",{}).get(entry[1])
-  if named is Dictionary and (f==null or (rarer(named,f) if str(entry[1]).begins_with("rarest") else float(named.kg)>=float(f.kg))):f=named
+  f=preferred_fish(f,named,str(entry[1]).begins_with("rarest"))
   if f==null:preload("res://scripts/garden_ui.gd").label(card,"No fish record submitted yet.");continue
   var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(300,110);card.add_child(art)
   preload("res://scripts/garden_ui.gd").label(card,str(FISH.fish()[f.species].name)+" • %.2f kg" % float(f.kg),22)
   gui.label(card,str(f.get("username","Earlier anonymous record")),18)
+  fish_size(card,f)
  if category=="fish":species_records(parent)
  if category=="fish":gui.label(parent,"Rarest: species rarity first, then its base catalogue catch weight. Fish weight breaks ties within a species. Weekly records reset Monday.",15)
  if category!="between":return
@@ -140,17 +210,33 @@ func build(parent:Node)->void:
   for row in snapshot.get("between",[]):
    if row.get("id")==route:value=int(row.get("value",0))
   preload("res://scripts/garden_ui.gd").label(expeditions,("Solo" if route=="solo" else "Co-op")+" • "+(str(value)+" Waylight Shards" if value>0 else "No successful extraction recorded yet"),20)
+static func preferred_fish(anonymous:Variant,named:Variant,rarest:bool)->Variant:
+ if not named is Dictionary:return anonymous
+ if anonymous==null:return named
+ if rarest:
+  return named if rarer(named,anonymous) or (str(named.species)==str(anonymous.species) and float(named.kg)>=float(anonymous.kg)) else anonymous
+ return named if float(named.kg)>=float(anonymous.kg) else anonymous
+func fish_size(parent:Node,record:Dictionary)->void:
+ var gui=preload("res://scripts/garden_ui.gd");var spec=FISH.fish()[record.species]
+ var rarity=gui.label(parent,str(spec.rarity)+(" • TROPHY SIZE" if FISH.is_trophy(record) else " • "+size_word(record)),18)
+ rarity.modulate=preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(spec.rarity))
+ var gauge=preload("res://scripts/fish_weight_gauge.gd").new();gauge.species=str(record.species);gauge.kg=float(record.kg);parent.add_child(gauge)
+static func size_word(record:Dictionary)->String:
+ var ratio=float(record.kg)/maxf(.001,FISH.mean_kg(str(record.species)))
+ return "Small size" if ratio<.75 else "Typical size" if ratio<1.25 else "Large size"
 func species_records(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd")
- var card=UI.card(parent,"SPECIES TROPHY HOLDERS • ALL TIME","Heaviest trophy of each species • discovered through connected cloud catches. Equal weights keep a stable holder.")
+ var card=UI.card(parent,"SPECIES TROPHY HOLDERS • ALL TIME","Heaviest trophy of each species • your saved journal’s trophy catches sync when you load a cloud profile or press Resync.")
  var rows=snapshot.get("named",{}).get("species_trophies",[])
- if rows.is_empty():gui.label(card,"No species trophies recorded yet. Catch a trophy while using a cloud profile to reveal one.",17)
+ if rows.is_empty():gui.label(card,"No species trophies recorded yet. Load your cloud profile and press Resync to submit saved trophy catches. Ordinary catches do not qualify.",17)
  for f in rows:
   if not f is Dictionary or not FISH.fish().has(str(f.get("species",""))) or not FISH.is_trophy(f):continue
-  var row=HBoxContainer.new();row.add_theme_constant_override("separation",14);card.add_child(row)
+  var row=preload("res://scripts/fish_collection_ui.gd").framed(card,preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(FISH.fish()[f.species].rarity)));row.add_theme_constant_override("separation",14)
   var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(90,50);row.add_child(art)
-  var name=gui.label(row,str(FISH.fish()[f.species].name),18);name.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  gui.label(row,"★ %.2f kg   •   %s" % [float(f.kg),str(f.get("username",""))],18)
+  var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
+  gui.label(details,str(FISH.fish()[f.species].name)+" • %.2f kg" % float(f.kg),18)
+  gui.label(details,str(f.get("username","")),17)
+  fish_size(details,f)
 func garden_records(parent:Node)->void:
  var gui=preload("res://scripts/garden_ui.gd");var id=legacy.gardening.fair.crop();var spec=legacy.gardening.crops()[id]
  gui.label(parent,"GIANT GROWERS FAIR • "+str(spec.name),22);gui.label(parent,"Monthly records follow the planting month; seven real days of growth. Cloud account usernames appear on new records; weights are client-reported.",15)

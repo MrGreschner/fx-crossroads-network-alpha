@@ -16,7 +16,7 @@ func _process(delta:float)->void:
 func update()->void:
  if game==null or not is_instance_valid(game.presentation):return
  var active=game.started and game.shop_open.is_empty() and not game.spectating() if arcade else game.menu.is_empty() and game.mode in ["town","run"]
- row.visible=active and game.presentation.page.is_empty() and game.session_menu.page.is_empty() and not game.media.clean_view and not game.media.capturing and not game.has_node("FXIntro")
+ row.visible=active and not (arcade and game.arena_world.shatter.active()) and game.presentation.page.is_empty() and game.session_menu.page.is_empty() and not game.media.clean_view and not game.media.capturing and not game.has_node("FXIntro")
  var combat=arcade or game.mode=="run"
  var rect=preload("res://scripts/combat_hud.gd").dock(game) if combat else Rect2(20,48,game.VIEW.x-40,28)
  var order=[0,4,5,1,2,3] if combat and game.mobile.enabled else [0,1,2,3,4,5]

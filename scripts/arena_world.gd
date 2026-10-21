@@ -1,6 +1,9 @@
 extends RefCounted
 ## Host-owned hazards, replicated compactly. All arenas are neutral to both teams.
-const MAPS={"crossroads":"Crossroads Coliseum","sand":"Sinking Sands","storm":"Stormcoil Pit","forest":"Wildbloom Glade","clock":"Clockwork Crucible"}
+const MAPS={"crossroads":"Crossroads Coliseum","sand":"Sinking Sands","storm":"Stormcoil Pit","forest":"Wildbloom Glade","clock":"Clockwork Crucible","maze":"Shifting Labyrinth","lanternfall":"Lanternfall","colour_clash":"Colour Clash","crown_chase":"Crown Chase","shatterfloor":"Shatterfloor"}
+var extra=preload("res://scripts/arena_variants.gd").new()
+var shatter=preload("res://scripts/arena_shatterfloor.gd").new()
+var objective=preload("res://scripts/arena_objectives.gd").new()
 var game:Node
 var map_id="sand"
 var clock=0.0
@@ -14,7 +17,10 @@ func setup(owner:Node,id:String)->void:
  owner.world_tile_cache.clear()
  if owner.terrain_cache!=null:owner.terrain_cache.reset()
  game=owner;map_id=id if MAPS.has(id) else "sand";clock=0;tick=0;spawn_timer=0;drones.clear();flowers.clear();bolts.clear();warnings.clear()
- if map_id=="crossroads":return
+ extra.setup(self)
+ objective.setup(self)
+ shatter.setup(self)
+ if map_id in ["maze","lanternfall","crossroads","colour_clash","crown_chase","shatterfloor"]:return
  game.FIELD=Rect2(Vector2.ZERO,Vector2(3200,2300) if map_id=="forest" else Vector2(2400,1800));game.field_obstacles.clear();game.world_buildings.clear();game.world_patches.clear();game.world_decorations.clear();game.world_fountains.clear();game.world_spawns.clear()
  game.world_terrain="school_sand" if map_id=="sand" else "forest" if map_id=="forest" else "storm_floor" if map_id=="storm" else "clock_floor"
  game.art[game.world_terrain]=load("res://assets/"+game.world_terrain+".png")
@@ -64,6 +70,9 @@ func harm(p:Vector2,radius:float,damage:float)->void:
 func step(delta:float)->void:
  if not is_instance_valid(game) or game.mode!="arena" or game.role!="host":return
  clock+=delta;tick+=delta;spawn_timer-=delta
+ extra.step(delta)
+ objective.step(delta)
+ shatter.step(delta)
  if map_id=="crossroads" and game.get("dedicated")==true and spawn_timer<=0:
   spawn_timer=15
   if game.opponents.size()<2:test_enemies(false)
@@ -104,11 +113,17 @@ func step(delta:float)->void:
    if int(game.health.get(id,0))>0 and game._segment_near(start,end,game.positions[id],25):game._hurt(str(id),9,"environment","",preload("res://scripts/defeat_credit.gd").hazard("Forest fireball"));hit=true;break
   if hit or bolt.time<=0:bolts.remove_at(n)
  if tick>=.2:tick=fposmod(tick,.2)
-func snapshot()->Dictionary:return {"map":map_id,"clock":clock,"drones":drones,"flowers":flowers,"bolts":bolts,"warnings":warnings}
+func snapshot()->Dictionary:return {"map":map_id,"clock":clock,"drones":drones,"flowers":flowers,"bolts":bolts,"warnings":warnings,"variant":extra.snapshot() if extra.active() else {},"shatter":shatter.snapshot() if shatter.active() else {},"objective":objective.snapshot() if objective.active() else {}}
 func receive(data:Dictionary)->void:
  map_id=str(data.get("map",map_id));clock=float(data.get("clock",clock));drones=data.get("drones",[]);flowers=data.get("flowers",[]);bolts=data.get("bolts",[]);warnings=data.get("warnings",[])
+ if extra.active():extra.receive(data.get("variant",{}))
+ if shatter.active():shatter.receive(data.get("shatter",{}))
+ if objective.active():objective.receive(data.get("objective",{}))
 func draw()->void:
  if not is_instance_valid(game) or game.mode!="arena":return
+ extra.draw_ground()
+ objective.draw_ground()
+ shatter.draw_ground()
  var camera:Vector2=game.camera;var font:Font=ThemeDB.fallback_font
  if map_id=="sand":
   for p in pits():

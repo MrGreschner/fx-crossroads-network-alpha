@@ -32,7 +32,7 @@ func build()->void:
   fishing.label(col,notice if not notice.is_empty() else "All rod fish are possible from level one. Unlock more methods and fish bait as you grow. Keep or release: both earn XP.",15)
  elif not notice.is_empty():fishing.label(col,notice,15)
  var tabs=TabContainer.new();tabs.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(tabs)
- for name in ["Gear & fish bait","Mastery tree","Baskets","Cosmetics","Sell goods"]:
+ for name in ["Gear & fish bait","Mastery tree","Baskets","Cosmetics"]:
   var margin=MarginContainer.new();margin.name=name;tabs.add_child(margin)
   margin.add_theme_constant_override("margin_top",16);margin.add_theme_constant_override("margin_bottom",8)
   var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO if name=="Mastery tree" else ScrollContainer.SCROLL_MODE_DISABLED;margin.add_child(scroll)
@@ -44,7 +44,6 @@ func build()->void:
    "Mastery tree":tree_ui(body)
    "Baskets":pot_ui(body)
    "Cosmetics":cosmetic_ui(body)
-   "Sell goods":preload("res://scripts/glimmer_exchange.gd").build(body,fishing,feedback)
  tabs.current_tab=selected_tab;tabs.tab_changed.connect(func(i:int):
   selected_tab=i;call_deferred("build")
   if i==1:fishing.open_mastery())
@@ -85,7 +84,7 @@ func gear_ui(body:Node)->void:
     if fishing.records().specimen(catch_id).is_empty():dialog.queue_free();return
     fishing.records().release(catch_id);p.state().bait.scraps=int(p.state().bait.scraps)+6;fishing.records().save();dialog.queue_free();feedback("Made six River Scraps."))
    dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(460,190)))
- fishing.label(body,"Gatherers' Lodge → worms, herbs and insects. Seed House harvests → two herb/petal ingredients in addition to food. Sell catches and gathered/grown ingredients in Sell goods → buy consumable fish bait here. Profitable Market days earn a daily Glimmer reward. Special fish bait shifts species groups; it never unlocks a level-gated fish.",16)
+ fishing.label(body,"Gatherers' Lodge → worms, herbs and insects. Seed House harvests → two herb/petal ingredients in addition to food. Sell catches at the Sales counter inside Ripple & Reel → buy consumable fish bait here. Profitable Market days earn a daily Glimmer reward. Special fish bait shifts species groups; it never unlocks a level-gated fish.",16)
 func tree_ui(body:Node)->void:
  var prog=fishing.records().progress
  fishing.label(body,"%d points available • 60 perks across six connected branches" % prog.available_points(),20)

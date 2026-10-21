@@ -280,7 +280,7 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
-	for pose in ["idle", "walk1", "walk2", "attack", "open", "spin", "shell", "0", "1"]:
+	for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin", "shell", "0", "1"]:
 		var key: String = prefix + "_" + str(pose)
 		var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(prefix,str(pose))
 		if refreshed!=null:art[key]=refreshed
@@ -1440,6 +1440,7 @@ func update_enemies(delta: float) -> void:
 					take_player_damage((16.0 if str(enemy.type)=="fragment" else 22.0) if region_id=="quarry" else 25.0,adventure.combat.npc_key(enemy))
 				continue
 		if enemy["boss"]:
+			preload("res://scripts/ice_projectiles.gd").step_boss(self,enemy,delta)
 			enemy["secondary_timer"] = maxf(0.0, float(enemy.get("secondary_timer", 3.0)) - delta)
 			if float(enemy.get("windup", 0.0)) > 0.0:
 				enemy["windup"] = float(enemy["windup"]) - delta
@@ -1452,7 +1453,7 @@ func update_enemies(delta: float) -> void:
 					elif str(region.get("boss_secondary", "stomp")) in ["sunburst", "frostburst", "seekerstorm", "sporeburst"]:
 						for ray in 10:
 							var angle := TAU * float(ray) / 10.0 + visual_clock * 0.35
-							enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos": enemy["pos"], "direction": Vector2.RIGHT.rotated(angle), "damage": 15.0, "speed": 280.0, "distance": 0.0, "fireball": true, "homing": str(region.get("boss_secondary", "")) == "seekerstorm"})
+							enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos": enemy["pos"], "direction": Vector2.RIGHT.rotated(angle), "damage": 15.0, "speed": 280.0, "distance": 0.0, "fireball": str(region.get("boss_secondary", ""))!="frostburst", "ice_visual":"orb" if str(region.get("boss_secondary", ""))=="frostburst" else "", "homing": str(region.get("boss_secondary", "")) == "seekerstorm"})
 					elif enemy["pos"].distance_to(position_in_world) < 175 and stealth_time <= 0:
 						stun_time = maxf(stun_time, 1.0)
 						take_player_damage(12.0,"",preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),str(region.get("boss_secondary","stomp")).capitalize()))
@@ -1486,7 +1487,9 @@ func update_enemies(delta: float) -> void:
 			if diff.length() < float(definition.get("aggro_range",490)):
 				move_enemy_around_obstacles(enemy, adventure.combat.ranged_direction(enemy,target_point)*float(definition.get("speed",95))*delta, bool(definition.get("flying",false)))
 			if diff.length() < float(definition.get("aggro_range", 490)) and float(enemy["attack_timer"]) <= 0 and diff.length() > 0:
-				if str(enemy["type"]) == "lantern_moth":
+				if preload("res://scripts/ice_projectiles.gd").matches(str(enemy["type"])):
+					preload("res://scripts/ice_projectiles.gd").fire(self,enemy,diff.normalized(),definition)
+				elif str(enemy["type"]) == "lantern_moth":
 					adventure.combat.launch_projectile("enemy",enemy["pos"],diff.normalized(),{"range":700,"speed":float(definition.get("shot_speed",275)),"amplitude":32,"wavelength":170,"color":"#e6b7fa"},float(definition.get("damage",9)),"weaving")
 				elif str(definition.get("behaviour", "")) == "burst_ranged":
 					for angle in [-0.22, 0.0, 0.22]:
@@ -1789,6 +1792,7 @@ func draw_world() -> void:
 		for bullet in bullets:
 			draw_circle(bullet["pos"] - camera, 9, Color.html(str(bullet["stats"].get("color", "#ffffff"))))
 		for enemy_shot in enemy_shots:
+			if not str(enemy_shot.get("ice_visual","")).is_empty():preload("res://scripts/ice_projectiles.gd").draw(self,enemy_shot.pos-camera,enemy_shot.direction,str(enemy_shot.ice_visual),visual_clock);continue
 			draw_circle(enemy_shot["pos"] - camera, 13 if enemy_shot.get("fireball", false) else 8, Color("#fc6735") if enemy_shot.get("fireball", false) else Color("#ef8978"))
 			draw_circle(enemy_shot["pos"] - camera, 3, Color("#fff0b7"))
 		for wall in ice_walls:
@@ -1850,6 +1854,7 @@ func draw_world() -> void:
 	elif sprite=="snail" and adventure.combat.v79.moving("solo"):pose="shell"
 	if adventure.combat.classics.channeling("solo"):pose="open"
 	elif adventure.combat.classics.spinning("solo"):pose="spin"
+	if pose=="attack" and art.has(sprite+"_attack2") and int(visual_clock*12)%2==1:pose="attack2"
 	var hero_art := sprite + "_" + pose if art.has(sprite + "_" + pose) else sprite + "_" + str(frame)
 	if sprite=="goalie":skating_motion.draw_skates(self,"solo",position_in_world-camera)
 	adventure.combat.halloween.draw_mount(self,"solo",camera)
@@ -1894,7 +1899,7 @@ func draw_world_label(world_pos: Vector2, label: String) -> void:
 func draw_hud() -> void:
 	draw_rect(Rect2(0, 0, VIEW.x, preload("res://scripts/town_hud.gd").height(self) if mode=="town" else 90), Color(0.06, 0.11, 0.14, 0.9))
 	if mode == "town":
-		draw_string(font, Vector2(24, 34), "CROSSROADS" if VIEW.x<1100 else "CROSSROADS  |  REALMS BEYOND", HORIZONTAL_ALIGNMENT_LEFT, -1, 20 if VIEW.x<1100 else 25, Color.WHITE)
+		preload("res://scripts/town_hud.gd").draw_heading(self)
 		preload("res://scripts/town_hud.gd").draw_on(self)
 
 	else:
@@ -2303,7 +2308,7 @@ func ability_info(stats: Dictionary, kind: String) -> String:
 		"chain": effect = ("Fire up to three simultaneous lightning bolts at different enemies in front of you. "+damage+" damage each; "+reach+" reach. Obstacles block the bolts." if bool(stats.get("fork",false)) else "Bounce between up to "+str(stats.get("jumps",3))+" targets, starting at "+damage+" damage; later hits deal less. Aim within "+reach+" distance.")
 		"stealth": effect = "Become semi-transparent for "+str(stats.get("duration",3))+"s, move 45% faster, heal "+str(stats.get("heal",30))+" HP. Your next attack deals double damage."
 		"block": effect = "Block for "+str(stats.get("duration",2))+"s, reducing incoming damage by "+str(roundi(float(stats.get("reduction",0.7))*100))+"%."+(" Reflect enemy projectiles." if bool(stats.get("reflect",false)) else "")
-		"heal_zone": effect = "Create a healing field for 5 seconds: 6 HP each second for you and nearby allies. Never heals enemies."
+		"heal_zone": effect = "Create a healing field for %s seconds: %s HP each second for you and nearby allies. Never heals enemies." % [str(stats.get("duration",5)),str(stats.get("heal_per_tick",6))]
 		"heal_wave": effect = "Restore "+str(stats.get("heal",35 if kind == "special" else 25))+" HP; also heals nearby allies in multiplayer."
 		"summon": effect = "Summon "+str(stats.get("count",1))+" teammate for "+str(stats.get("duration",12))+"s. It pursues enemies and deals "+damage+" damage per hit."
 		"ice_wall": effect = "Launch an ice orb at your aim. On landing, deal "+damage+" area damage and create an ice barrier for "+str(stats.get("duration",4))+"s."

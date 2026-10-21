@@ -32,14 +32,16 @@
   },
   "special": {
     "name": "Healing Beacon",
-    "style": "heal_wave",
+    "style": "heal_zone",
     "damage": 1,
     "cooldown": 12.0,
     "radius": 155,
-    "duration": 4,
+    "duration": 5,
     "color": "#9ee8b4",
     "heal": 40,
-    "visual": "medic_pulse"
+    "visual": "medic_pulse",
+    "heal_per_tick": 8,
+    "description": "Place a healing beacon for five seconds. It restores 8 HP each second to you and nearby allies who stay within its circle."
   },
   "passive": "Triage: heal on kill",
   "passive_effect": "heal_on_kill",

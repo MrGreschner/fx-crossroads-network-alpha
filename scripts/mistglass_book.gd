@@ -11,25 +11,32 @@ func known_entries()->Array:
   for realm in game.manifest.regions:
    if realm in ["town","practice","first_steps"]:continue
    for kind in game.catalog_ui.roster(str(realm)):
-    var key=str(kind)
+    var key=canonical_kind(str(kind))
     if not merged.has(key):merged[key]={"kind":key,"realm":str(realm),"places":[]}
     var place=str(game.realms.get(realm,{}).get("name",realm))
     if place not in merged[key].places:merged[key].places.append(place)
  for realm in game.legacy.data.get("encounters",{}):
   for kind in game.legacy.data.encounters[realm]:
-   var key:=str(kind)
+   var key:=canonical_kind(str(kind))
    if not merged.has(key):merged[key]={"kind":key,"realm":str(realm),"places":[]}
-   merged[key].places.append(str(game.realms.get(realm,{}).get("name",realm)))
+   var place=str(game.realms.get(realm,{}).get("name",realm))
+   if place not in merged[key].places:merged[key].places.append(place)
  var result:Array=merged.values()
  result.sort_custom(func(a,b):return enemy_name(a).naturalnocasecmp_to(enemy_name(b))<0)
  return result
+func canonical_kind(kind:String)->String:
+ if kind.begins_with("boss:") and game.enemy_types.has(kind.substr(5)):return kind.substr(5)
+ return kind
 func enemy_name(entry:Dictionary)->String:
  var kind:=str(entry.kind)
  if kind.begins_with("boss:"):return str(game.realms.get(entry.realm,{}).get("boss_name",kind.substr(5).replace("_"," ").capitalize()))
  return str(game.enemy_types.get(kind,{}).get("name",kind.replace("_"," ").capitalize()))
 func stats(entry:Dictionary)->Dictionary:
  var kind:=str(entry.kind)
- if not kind.begins_with("boss:"):return game.enemy_types.get(kind,{}).duplicate(true)
+ if not kind.begins_with("boss:"):
+  var d:Dictionary=game.enemy_types.get(kind,{}).duplicate(true);var realm:Dictionary=game.realms.get(entry.realm,{})
+  if kind==str(realm.get("boss_type","")) or kind==str(realm.get("boss_sprite","")):d.health=float(realm.get("boss_health",d.get("health",250)))
+  return d
  var r:Dictionary=game.realms.get(entry.realm,{})
  var d:Dictionary={"health":r.get("boss_health",0),"behaviour":"boss","name":enemy_name(entry)}
  for key in ["boss_damage","boss_speed","boss_secondary"]:

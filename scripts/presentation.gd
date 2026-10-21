@@ -334,7 +334,11 @@ func team_results()->void:
  label(content,"ARENA SCOREBOARD" if game.mode=="arena" else "PARTY CONTRIBUTIONS",18).modulate=Color("#9ecfc8")
  var grid:=GridContainer.new();grid.columns=6;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",18);content.add_child(grid)
  var widths:Array=[220,112,145,103,145,105]
+ var objective=game.arena_world.objective if arcade else null
+ var objective_mode=objective!=null and objective.active()
  var headings:Array=["PLAYER","KOs","DEATHS","DAMAGE","ABILITY HEAL","BEST STREAK"] if game.mode=="arena" else ["PLAYER","DAMAGE","ABILITY HEAL","REVIVES","DEFENCE KILLS","UPGRADES"]
+ if objective_mode:headings=["PLAYER","TEAM FLOOR %" if game.pvp_rule=="teams" else "FLOOR %","KOs","DEATHS","DAMAGE","TILES CLAIMED"] if game.arena_map=="colour_clash" else ["PLAYER","CARRY TIME","KOs","DEATHS","DAMAGE","THROWS"]
+ if arcade and game.arena_world.shatter.active():headings=["PLAYER","POINTS","LAST ROUND","SHOVES","FALLS","STATUS"]
  for n in 6:
   var l:=label(grid,str(headings[n]),14);l.custom_minimum_size.x=float(widths[n]);l.autowrap_mode=TextServer.AUTOWRAP_OFF
  for member in game.fighters():
@@ -342,8 +346,11 @@ func team_results()->void:
   var l:=label(grid,str(member.get("name","Player")).left(18),17);l.custom_minimum_size.x=220;l.autowrap_mode=TextServer.AUTOWRAP_OFF
   var record:Dictionary=game.arena_records.get(owner,{})
   var values:Array=[game.pvp_scores.get(owner,0),record.get("deaths",0),stats.get("damage",0),stats.get("healing",0),record.get("best_kill_streak",0)] if game.mode=="arena" else [stats.get("damage",0),stats.get("healing",0),stats.get("revives",0),stats.get("defence",0),stats.get("upgrades",0)]
+  if objective_mode:values=[objective.score_label(owner) if game.arena_map=="colour_clash" else "%.1fs" % float(objective.held.get(owner,0)),record.get("kills",0),record.get("deaths",0),stats.get("damage",0),objective.painted.get(owner,0) if game.arena_map=="colour_clash" else objective.passes.get(owner,0)]
+  if arcade and game.arena_world.shatter.active():
+   var shatter=game.arena_world.shatter;values=[shatter.points.get(owner,0),shatter.round_points.get(owner,0),shatter.shoves.get(owner,0),shatter.falls.get(owner,0),"OUT" if shatter.eliminated.has(owner) else "SURVIVED"]
   for n in 5:
-   var value:=label(grid,str(int(values[n])),17);value.custom_minimum_size.x=float(widths[n+1]);value.autowrap_mode=TextServer.AUTOWRAP_OFF
+   var value:=label(grid,str(values[n]) if objective_mode or arcade and game.arena_world.shatter.active() else str(int(values[n])),17);value.custom_minimum_size.x=float(widths[n+1]);value.autowrap_mode=TextServer.AUTOWRAP_OFF
 func mastery_progress(id:String)->void:
  var rec:Dictionary=game.legacy.record(id)
  var spec:Dictionary=game.characters.get(id,{}).get("mastery",{})

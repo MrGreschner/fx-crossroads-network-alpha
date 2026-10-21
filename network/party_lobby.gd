@@ -64,7 +64,10 @@ static func build(g:Node)->void:
   if g.net_ready and g.net_host:g.send_net({"type":"visibility","public":value}))
  g.competition_toggle=CheckButton.new();g.competition_toggle.name="CompetitionRules";g.competition_toggle.text="Competition • crown bonuses OFF for everyone";right.add_child(g.competition_toggle);g.competition_toggle.toggled.connect(func(value:bool):
   if g.net_ready and g.net_host:g.send_net({"type":"competition","enabled":value}))
- g.test_arena=OptionButton.new();g.test_arena.add_item("Arena • players only",0);g.test_arena.add_item("Gladiator • players + enemies",1);right.add_child(g.test_arena);g.test_arena.item_selected.connect(g._test_arena_changed)
+ g.test_arena=OptionButton.new();right.add_child(g.test_arena);g.test_arena.hide()
+ for id in g.arena_world.MAPS:g.test_arena.add_item(str(g.arena_world.MAPS[id]));g.test_arena.set_item_metadata(g.test_arena.item_count-1,id)
+ g.test_arena.select(g.arena_world.MAPS.keys().find(g.arena_map));g.test_arena.item_selected.connect(g._test_arena_changed)
+ var gallery=preload("res://scripts/arena_gallery.gd").new();gallery.game=g;gallery.name="ArenaGallery";right.add_child(gallery);right.move_child(gallery,0)
  var realms=OptionButton.new();realms.name="NetworkRealms";right.add_child(realms)
  for id in g.RealmCatalogue.lobby_ids():
   realms.add_item({"between":"The Between • shared expedition","overcharge":"Today’s overcharged realm"}.get(id,str(g.regions.get(id,{}).get("name",id))));realms.set_item_metadata(realms.item_count-1,id)
@@ -106,4 +109,5 @@ static func build(g:Node)->void:
  g.url_field=LineEdit.new();g.url_field.name="NetworkEndpoint";g.url_field.text=g.DEFAULT_SERVER;body.add_child(g.url_field);g.url_field.hide()
  for edit in [g.net_name,g.room_field]:
   var typing=preload("res://scripts/mobile_text_entry.gd").new();edit.add_child(typing);typing.setup(edit,"done")
+ right.move_child(identity,0)
  g.net_select(g.selected_hero);g.select_network_mode(g.mode);g.call_deferred("browse_rooms")

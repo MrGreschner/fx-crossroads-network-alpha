@@ -4,7 +4,7 @@
   let enabled = window.fxDiagnosticsEnabled !== false;
   let previous = null;
   try { previous = JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) {}
-  const report = {version:'v193.1', started:new Date().toISOString(), browser:navigator.userAgent,
+  const report = {version:'v197', started:new Date().toISOString(), browser:navigator.userAgent,
     previous: previous ? {started:previous.started, latest:previous.latest, events:Array.isArray(previous.events)?previous.events.slice(-12):[]} : null,
     latest:{}, graphics:{}, device:{cores:navigator.hardwareConcurrency || null, memoryGB:navigator.deviceMemory || null}, events:[]};
   function graphics() {

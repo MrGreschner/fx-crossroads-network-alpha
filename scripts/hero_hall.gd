@@ -1,6 +1,7 @@
 extends CanvasLayer
 ## Native, touch-scrollable roster with independent selection and portable favourites.
 var grid_view_button:Button
+var daily_hero_button:Button
 var portrait_grid:Node
 var game:Node
 var library=preload("res://scripts/hero_library.gd").new()
@@ -32,6 +33,7 @@ func setup(owner:Node)->void:
  var col:=VBoxContainer.new();col.add_theme_constant_override("separation",8);panel.add_child(col)
  var top:=HBoxContainer.new();col.add_child(top);label(top,"CHARACTER HALL",27).size_flags_horizontal=Control.SIZE_EXPAND_FILL
  grid_view_button=button(panel,"Grid view",open_grid)
+ daily_hero_button=button(panel,"Hero of the day",func():preload("res://scripts/daily_hero.gd").open(self))
  for state in ["normal","hover","pressed","focus"]:
   var outline=preload("res://scripts/studio_ui.gd").box("#31525d" if state=="normal" else "#446974","#efd395",8,9);outline.set_border_width_all(2);grid_view_button.add_theme_stylebox_override(state,outline)
  grid_view_button.add_theme_color_override("font_color",Color("#fff0c6"))
@@ -85,7 +87,9 @@ func favourite(id:String)->void:
  else:values.append(id)
  game.legacy.data.favourites=values;game.legacy.save();refresh()
 func select(id:String)->void:
- game.hero_preview=id;game.selected_character=id;game.mark_welcome("hero");game.save_profile();game.queue_redraw();refresh(false)
+ game.hero_preview=id;game.selected_character=id;game.hero=game.characters[id].duplicate(true);game.character_id=id;
+ if game.studio_live!=null:game.studio_live.last_hero="";game.studio_live.hide()
+ game.mark_welcome("hero");game.save_profile();game.queue_redraw();refresh(false)
 func refresh(reset_scroll:bool=true)->void:
  preload("res://scripts/studio_library.gd").install(game)
  var old:int=scroller.scroll_vertical
@@ -169,6 +173,7 @@ func _process(_delta:float)->void:
  panel.scale=Vector2.ONE*maxf(.35,factor);panel.position=(view-panel.size*panel.scale)*.5
  grid_view_button.position=Vector2((panel.get_global_transform().affine_inverse()*role_buttons["Summoner"].get_global_transform().origin).x,18)
  grid_view_button.size=Vector2(role_buttons["Summoner"].size.x,40)
+ daily_hero_button.position=grid_view_button.position+Vector2(grid_view_button.size.x+10,0);daily_hero_button.size=Vector2(155,40)
 func handle_key(event:InputEvent)->bool:
  if is_instance_valid(portrait_grid):return true
  if not panel.visible or not event is InputEventKey or not event.pressed:return false

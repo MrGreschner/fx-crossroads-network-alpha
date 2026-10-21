@@ -11,6 +11,7 @@ var countdown:Label
 var rendered_day=-1
 var selected_realm="grove"
 var realm_scroll=0
+var records_fingerprint=0
 class RelicIcon extends Control:
  var type="stormglass"
  func _draw()->void:
@@ -67,7 +68,7 @@ func text(parent:Node,value:String,size:int=17)->Label:
 func button(parent:Node,value:String,call:Callable)->Button:
  var b=Button.new();b.text=value;b.custom_minimum_size.y=44;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(b);b.pressed.connect(call);return b
 func setup(owner:Node,selected:int)->void:
- manager=owner;tab=selected;layer=93;previous=manager.game.menu;manager.game.menu="waylight";manager.game.mobile.reset_controls();build()
+ manager=owner;tab=selected;layer=93;previous=manager.game.menu;manager.game.menu="waylight";manager.game.mobile.reset_controls();manager.game.legacy.community.read_delay=0;manager.game.legacy.community.fetch();build()
 func open_lobby()->void:
  var g=manager.game
  close();g.legacy.close()
@@ -84,7 +85,7 @@ func confirm(title:String,description:String,call:Callable)->void:
  var d=ConfirmationDialog.new();d.title=title;d.dialog_text=description;add_child(d);d.confirmed.connect(func():d.queue_free();call.call());d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(490,220))
 func build()->void:
  for child in get_children():remove_child(child);child.queue_free()
- rendered_day=manager.today();countdown=null
+ rendered_day=manager.today();countdown=null;records_fingerprint=hash(manager.game.legacy.community.snapshot)
  var shade=ColorRect.new();shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);shade.color=Color(.02,.05,.08,.97);add_child(shade)
  panel=PanelContainer.new();UI.apply(panel);panel.add_theme_stylebox_override("panel",UI.box("#102c38","#bba777",12,14));add_child(panel)
  var body=VBoxContainer.new();body.add_theme_constant_override("separation",7);panel.add_child(body)
@@ -140,7 +141,8 @@ func standard(area:Node)->void:
   var data=manager.game.realms.get(id,{})
   if data.is_empty():continue
   var unlocked=preload("res://scripts/realm_access.gd").unlocked(manager.game.legacy,str(id))
-  var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():realm_scroll=scroll.scroll_vertical;selected_realm=str(id);rebuild());entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=37
+  var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():realm_scroll=scroll.scroll_vertical;selected_realm=str(id);rebuild());entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=57
+  entry.text+="\n"+preload("res://scripts/realm_speed_cards.gd").summary(manager.game.legacy,str(id));entry.add_theme_font_size_override("font_size",13)
   if not unlocked:entry.modulate=Color("#9cacaf")
   if selected_realm==str(id):active_index=index;UI.accent(entry)
   index+=1
@@ -152,6 +154,7 @@ func standard(area:Node)->void:
  text(col,str(data.get("difficulty_label","Explore"))+" • Solo or 2-player co-op",16).modulate=Color("#e3cc95")
  var unlocked=preload("res://scripts/realm_access.gd").unlocked(manager.game.legacy,selected_realm)
  text(col,str(data.get("description","Discover its creatures and defeat its guardian.")) if unlocked else preload("res://scripts/realm_access.gd").reason(manager.game.legacy,selected_realm),16)
+ preload("res://scripts/realm_speed_cards.gd").build(col,manager.game.legacy,selected_realm)
  var actions=HBoxContainer.new();col.add_child(actions)
  var solo=button(actions,"Enter solo",func():close();manager.game.legacy.close();manager.game.start_run(false,selected_realm));UI.accent(solo)
  var co=button(actions,"Co-op • 2 players",func():feedback(manager.launch_coop(selected_realm)))
@@ -215,7 +218,10 @@ func fit()->void:
  var view=manager.game.get_viewport_rect().size;panel.size=Vector2(minf(1150,view.x-24),minf(690,view.y-24));panel.position=(view-panel.size)*.5
 func _process(_delta:float)->void:
  fit();update_countdown()
- if rendered_day!=manager.today():build()
+ if rendered_day!=manager.today() or records_fingerprint!=hash(manager.game.legacy.community.snapshot):
+  var list_scroll=panel.find_child("RealmListScroll",true,false)
+  if list_scroll!=null:realm_scroll=list_scroll.scroll_vertical
+  build()
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:close();get_viewport().set_input_as_handled()
 

@@ -95,7 +95,7 @@ func render()->void:
  elif tabs.current_tab==3:grow()
  else:classroom()
 func floor_view()->void:
- button(page,"Glimmer exchange • sell fish & gathered goods",func():close();market.legacy.game.fishing.open_workshop();var w=market.legacy.game.fishing.workshop;w.selected_tab=4;w.build())
+ button(page,"Glimmer exchange • sell fish & gathered goods",func():close();market.legacy.game.fishing.open_sales())
  var a=market.state()
  var reward=market.supply_reward()
  var dividend=UI.card(page,"SUPPLY DIVIDEND • "+str(int(reward.pending))+" CC ready","A profitable trading day with at least one sale earns 20 CC, once per real day. Bank up to 60 CC. Collect in town to help buy supplies; combat stats and multiplayer starting money stay the same.")

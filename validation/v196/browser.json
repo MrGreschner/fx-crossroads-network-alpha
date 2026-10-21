@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "errors": [],
+  "views": [
+    "arena map gallery",
+    "uncharted preview",
+    "stone labyrinth",
+    "fog and beacon",
+    "landscape viewport"
+  ],
+  "external_requests": "mocked or blocked; expected HTTP 503 logs excluded"
+}

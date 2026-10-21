@@ -1,0 +1,4 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+BATTLE195 INIT battlegrounds role=host roster=6 owners={ "p0": "0:0", "p1": "0:1", "p2": "0:2", "p3": "1:0", "p4": "1:1", "p5": "1:2" } started=true
+V195 BATTLEGROUNDS {"checks":271,"failures":[],"passed":true}

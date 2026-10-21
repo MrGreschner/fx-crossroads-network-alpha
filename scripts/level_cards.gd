@@ -53,6 +53,7 @@ func choose(key:int)->void:
   var event:=InputEventKey.new();event.pressed=true;event.keycode=key;game._unhandled_input(event)
  panel.visible=false;game.mobile.reset_controls()
 func _process(_delta:float)->void:
+ if arcade and game.arena_world.shatter.active():panel.hide();toast.hide();return
  if game==null:return
  var visible_now:bool=false
  if arcade:

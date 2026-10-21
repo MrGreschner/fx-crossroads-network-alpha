@@ -258,7 +258,7 @@ func _ready() -> void:
 	for entry in manifest.get("characters", []):
 		var data := _json("res://content/characters/" + str(entry) + ".json")
 		characters[str(entry)] = data
-		for pose in ["idle", "walk1", "walk2", "attack", "open", "spin", "shell"]:
+		for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin", "shell"]:
 			var path: String = "res://assets/" + str(data.get("sprite", entry)) + "_" + str(pose) + ".png"
 			var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(str(data.get("sprite",entry)),str(pose))
 			if refreshed!=null:art[str(entry)+"_"+pose]=refreshed
@@ -270,7 +270,7 @@ func _ready() -> void:
 	for entry in manifest.get("enemies", []):
 		var data := _json("res://content/enemies/" + str(entry) + ".json")
 		enemy_defs[str(entry)] = data
-		for pose in ["idle", "walk1", "walk2", "attack", "open", "spin"]:
+		for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin"]:
 			var path: String = "res://assets/" + str(data.get("sprite", entry)) + "_" + str(pose) + ".png"
 			var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(str(data.get("sprite",entry)),str(pose))
 			if refreshed!=null:art[str(entry)+"_"+pose]=refreshed
@@ -767,6 +767,8 @@ func _make_floor() -> void:
 		else: _spawn_wave(12 * maxi(1,roster.size()) + wave * 5)
 
 func _spawn_player(slot: int) -> Vector2:
+	if arena_world.shatter.active():return arena_world.shatter.spawn(slot)
+	if mode=="arena" and arena_map=="maze" and arena_world.extra.active():return arena_world.extra.spawn_point(slot)
 	if mode=="battlegrounds":
 		var members=fighters()
 		return battlegrounds.spawn(str(members[clampi(slot,0,members.size()-1)].id)) if not members.is_empty() else Vector2(640,790)
@@ -783,7 +785,7 @@ func _safe_arena_spawn(preferred:Vector2,slot:int)->Vector2:
 		for spoke in (1 if ring==0 else 24):
 			var candidate:=preferred+Vector2.from_angle(TAU*spoke/24.0+slot*.17)*ring*32.0
 			if not FIELD.grow(-40).has_point(candidate):continue
-			var clear:=_clear_path(candidate,candidate)
+			var clear:bool=_clear_path(candidate,candidate) and arena_world.extra.movement_clear(candidate,candidate)
 			for direction in [Vector2.LEFT,Vector2.RIGHT,Vector2.UP,Vector2.DOWN]:
 				if not _clear_path(candidate,candidate+direction*24):clear=false;break
 			if not clear:continue
@@ -968,11 +970,11 @@ func _process(delta: float) -> void:
 		fish_motion.step(str(actor_id),ground,delta,started and shop_open.is_empty() and str(hero_ids.get(actor_id,"ram"))=="ripplejaw" and int(health.get(actor_id,0))>0 and not adventure.immersive.aboard(str(actor_id)))
 		motion_v85.landing(str(actor_id),ground,fish_motion.phase(str(actor_id)))
 	var vacuum_aim:Vector2=mobile.aim if mobile.enabled else (media_mouse_world()-local_pos).normalized()
-	adventure.combat.v56.holding(my_id,started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)),vacuum_aim)
-	adventure.combat.release_heroes.holding(my_id,started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
-	adventure.combat.classics.holding(my_id,started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"))
-	adventure.combat.v79.holding(my_id,started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
-	adventure.combat.held_cast.local_input(delta,started and start_countdown<=0 and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty() and not spectating() and not recovery.frozen)
+	adventure.combat.v56.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and (mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)),vacuum_aim)
+	adventure.combat.release_heroes.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
+	adventure.combat.classics.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"))
+	adventure.combat.v79.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
+	adventure.combat.held_cast.local_input(delta,not arena_world.shatter.active() and started and start_countdown<=0 and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty() and not spectating() and not recovery.frozen)
 	VIEW = get_viewport_rect().size
 	_poll_socket()
 	if search_remaining > 0:
@@ -1060,7 +1062,8 @@ func _process(delta: float) -> void:
 	movement=adventure.combat.twister.sway(my_id,movement)
 	if not presentation.page.is_empty():movement=Vector2.ZERO
 	var alive := int(health.get(my_id,0)) > 0
-	if Input.is_action_just_pressed("dodge") and alive and not adventure.combat.stunned(adventure.combat.player_key(my_id)) and shop_open.is_empty() and not adventure.combat.classics.locked(my_id) and not adventure.combat.v48.moving(my_id) and not adventure.immersive.aboard(my_id) and not adventure.combat.robot.transformed(my_id) and not adventure.combat.v78.locked(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.release_heroes.locked(my_id) and Time.get_ticks_msec() >= int(dodge_at.get(my_id,0)):
+	if arena_world.shatter.active() and Input.is_action_just_pressed("dodge"):arena_world.shatter.request("secondary")
+	if not arena_world.shatter.active() and Input.is_action_just_pressed("dodge") and alive and not adventure.combat.stunned(adventure.combat.player_key(my_id)) and shop_open.is_empty() and not adventure.combat.classics.locked(my_id) and not adventure.combat.v48.moving(my_id) and not adventure.immersive.aboard(my_id) and not adventure.combat.robot.transformed(my_id) and not adventure.combat.v78.locked(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.release_heroes.locked(my_id) and Time.get_ticks_msec() >= int(dodge_at.get(my_id,0)):
 		dodge_at[my_id] = Time.get_ticks_msec() + 2500
 		dodge_direction = movement.normalized() if movement.length_squared() > 0 else last_aim
 		dodge_time = 0.26
@@ -1068,7 +1071,7 @@ func _process(delta: float) -> void:
 		else: _send_channel(host_id,{"type":"dodge"})
 	var displacement := Vector2.ZERO
 	if alive and shop_open.is_empty() and not charges.has(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.v78.locked(my_id):
-		var speed:float = float(characters.get(selected_hero,{}).get("speed",230))*adventure.combat.speed_factor(adventure.combat.player_key(my_id))*legacy.speed_factor(my_id)*arena_world.slow(local_pos)
+		var speed:float = float(characters.get(selected_hero,{}).get("speed",230))*adventure.combat.speed_factor(adventure.combat.player_key(my_id))*legacy.speed_factor(my_id)*arena_world.slow(local_pos)*arena_world.objective.carrier_factor(my_id)
 		if adventure.combat.classics.channeling(my_id):speed*=legacy.channel_speed(my_id)
 		for carried_id in inventory.get(my_id,[]):
 			if str(items.get(str(carried_id),{}).get("effect","")) == "bonus_speed": speed += float(items[str(carried_id)].get("amount",0))
@@ -1084,6 +1087,8 @@ func _process(delta: float) -> void:
 		else: displacement = adventure.combat.v79.displacement(my_id,movement,speed,delta) if selected_hero=="kite" else motion_v85.displacement(my_id,selected_hero,movement,speed,delta) if selected_hero in ["spindle","snowman","quill"] else (adventure.combat.v78.dig_vector(my_id,movement) if selected_hero=="gopher" else movement) * speed * (skating_motion.travel_time if selected_hero=="goalie" else delta)
 		if dodge_time<=0:displacement=adventure.polish.motion(my_id,local_pos,displacement,delta)
 		local_pos = _move_actor(local_pos,displacement*dev_magic.scale_for(my_id))
+	if arena_world.shatter.active():
+		local_pos=positions.get(my_id,local_pos) if not arena_world.shatter.playable(my_id) or arena_world.shatter.airborne(my_id) else _move_actor(positions.get(my_id,local_pos),movement.limit_length(1)*arena_world.shatter.SPEED*delta)
 	adventure.combat.release_heroes.follow_local()
 	adventure.combat.v79.follow_local(delta*dev_magic.scale_for(my_id))
 	if role == "guest" and charges.has(my_id): local_pos = local_pos.lerp(network_charge_target,minf(1.0,delta*18.0))
@@ -1097,7 +1102,7 @@ func _process(delta: float) -> void:
 		arena_world.step(delta*dev_magic.world_scale())
 		_update_fountains(delta*dev_magic.world_scale())
 		_update_revives(delta*dev_magic.world_scale())
-		adventure.step(delta*dev_magic.world_scale())
+		if not arena_world.shatter.active():adventure.step(delta*dev_magic.world_scale())
 		_update_flames(delta*dev_magic.world_scale())
 		bots.step(delta*dev_magic.world_scale())
 		_simulate_charges(delta*dev_magic.world_scale())
@@ -1136,6 +1141,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _clear_path(start: Vector2, finish: Vector2) -> bool:
+	if not arena_world.extra.shot_clear(start,finish):return false
 	if not adventure.can_stand(finish): return false
 	var count := maxi(1,int(ceil(start.distance_to(finish)/9.0)))
 	for n in range(1,count+1):
@@ -1152,6 +1158,7 @@ func _clear_path(start: Vector2, finish: Vector2) -> bool:
 	return true
 
 func _attack_request(style: String) -> void:
+	if arena_world.shatter.active():arena_world.shatter.request(style);return
 	if fishing!=null and fishing.busy():return
 	if characters.get(selected_hero,{}).has("studio_project"):return
 	if not dev_magic.aiming.is_empty() or Time.get_ticks_msec()<dev_magic.input_until:return
@@ -1178,6 +1185,7 @@ func _attack_request(style: String) -> void:
 		_send_channel(host_id,{"type":"attack","style":style,"angle":aim.angle(),"target":[position.x,position.y]})
 
 func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.ZERO) -> void:
+	if arena_world.shatter.active():arena_world.shatter.action(id,kind,aim);return
 	if characters.get(str(hero_ids.get(id,"")),{}).has("studio_project"):return
 	if adventure.combat.held_cast.charges.has(id) and not adventure.combat.held_cast.context.has(id):return
 	if start_countdown>0:return
@@ -1353,6 +1361,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 			status_label.text = "LEVEL " + str(new_level) + ": press J for primary/special or K for secondary/passive."
 
 func _hurt(id: String, amount: float, source: String = "", melee_attacker:String="", cause:Dictionary={}) -> void:
+	if arena_world.shatter.active():return
 	if id.begins_with("c|"):
 		adventure.combat.damage(id,amount,source);return
 	if id.begins_with("summon:"):adventure.combat.summon_hurt(id,amount,source);return
@@ -1405,6 +1414,7 @@ func _hurt(id: String, amount: float, source: String = "", melee_attacker:String
 	if int(health[id])==0 and (inventory.get(id,[]) as Array).has("last_stand"):
 		(inventory[id] as Array).erase("last_stand");health[id]=45
 	if int(health[id]) == 0:
+		arena_world.objective.elimination(id,source)
 		defeat_causes[id]=cause.duplicate(true) if not cause.is_empty() else preload("res://scripts/defeat_credit.gd").resolve(self,source,"Melee strike" if not melee_attacker.is_empty() else "Ability hit",melee_attacker)
 		var ash_pending:bool=adventure.combat.v90.intercept_defeat(id)
 		adventure.combat.morrow.fallen({"pos":positions[id],"corpse_sprite":characters.get(str(hero_ids.get(id,"ram")),{}).get("sprite","ram"),"type":"hero"})
@@ -1413,7 +1423,7 @@ func _hurt(id: String, amount: float, source: String = "", melee_attacker:String
 		if mode in ["arena","battlegrounds"]:
 			adventure.combat.robot.on_kill(source)
 			respawn_at[id] = 9223372036854775807 if ash_pending else Time.get_ticks_msec()+(7000 if mode=="battlegrounds" else 2500)
-			if mode=="battlegrounds" and positions.has(source):battlegrounds.reward(source,45,30)
+			if mode=="battlegrounds":battlegrounds.command.hero_bounty(id,source)
 			if positions.has(source) and source != id and (pvp_rule=="ffa" or int(teams.get(source,0))!=int(teams.get(id,0))):
 				if arena_records.has(source):
 					arena_records[source].kills+=1;arena_records[source].kill_streak+=1;arena_records[source].best_kill_streak=maxi(int(arena_records[source].best_kill_streak),int(arena_records[source].kill_streak))
@@ -1476,6 +1486,7 @@ func _spawn_wave(amount: int) -> void:
 		for n in range(prior_size,opponents.size()):opponents[n]["defense_wave"]=wave
 
 func _simulate(delta: float) -> void:
+	if arena_world.shatter.active():return
 	descent.step(delta)
 	if mode=="battlegrounds":
 		battlegrounds.step(delta)
@@ -1497,7 +1508,7 @@ func _simulate(delta: float) -> void:
 			var score := int(pvp_scores.get(id,0))
 			team_scores[int(teams.get(id,0))]+=score
 			if score>high:high=score;winner=str(id)
-		if (pvp_rule=="ffa" and high>=10) or (pvp_rule=="teams" and maxi(int(team_scores[0]),int(team_scores[1]))>=15) or run_time>=300:
+		if not arena_world.objective.active() and ((pvp_rule=="ffa" and high>=10) or (pvp_rule=="teams" and maxi(int(team_scores[0]),int(team_scores[1]))>=15) or run_time>=300):
 			var name := "Draw"
 			if pvp_rule=="teams":
 				name="Silver Team" if int(team_scores[0])>int(team_scores[1]) else "Blue Team" if int(team_scores[1])>int(team_scores[0]) else "Draw"
@@ -1597,6 +1608,7 @@ func _simulate(delta: float) -> void:
 			if mode == "defense": sidestep = _guard_blocked_move(enemy["pos"],sidestep,-1,44.0)-(enemy["pos"] as Vector2)
 			if _clear_path(enemy["pos"],enemy["pos"]+sidestep): enemy["pos"] += sidestep
 		if mode=="defense" and north_gate.hold_at_outpost(enemy,delta):continue
+		preload("res://scripts/ice_projectiles.gd").step_boss(self,enemy,delta)
 		if not starter_boss:enemy["attack_timer"] = maxf(0.0,float(enemy.get("attack_timer",0.0))-delta)
 		if mode == "defense" and (enemy["pos"] as Vector2).distance_to(GATE) < 85:
 			gate_hp -= 8.0 if not bool(enemy["boss"]) else 65.0
@@ -1604,7 +1616,8 @@ func _simulate(delta: float) -> void:
 			if gate_hp <= 0: end_match("Gate lost on wave " + str(wave))
 			continue
 		if mode=="defense" and guard_target>=0 and adventure.combat.ranged_enemy(enemy,definition) and float(enemy["attack_timer"])<=0 and diff.length()<360:
-			north_gate.fire(enemy.pos,diff.normalized(),float(definition.get("damage",10)),"enemy",0,preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"))
+			if preload("res://scripts/ice_projectiles.gd").matches(str(enemy.type)):preload("res://scripts/ice_projectiles.gd").fire(self,enemy,diff.normalized(),definition)
+			else:north_gate.fire(enemy.pos,diff.normalized(),float(definition.get("damage",10)),"enemy",0,preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"))
 			enemy.attack_timer=float(definition.get("shot_cooldown",2.2))
 		elif float(enemy["attack_timer"]) <= 0 and guard_target >= 0 and diff.length() < 56:
 			guards[guard_target]["hp"] = float(guards[guard_target]["hp"])-maxf(1.0,float(definition.get("damage",10))-float(upgrade_level["armor"])*2.0)
@@ -1621,7 +1634,9 @@ func _simulate(delta: float) -> void:
 			enemy["warning"]=-1.0
 			var style := str(definition.get("behaviour","chase"))
 			if style in ["ranged","burst_ranged","dual_ranged","homing"] and nearest < 340:
-				if str(enemy["type"]) == "lantern_moth":
+				if preload("res://scripts/ice_projectiles.gd").matches(str(enemy["type"])):
+					preload("res://scripts/ice_projectiles.gd").fire(self,enemy,diff.normalized(),definition)
+				elif str(enemy["type"]) == "lantern_moth":
 					adventure.combat.launch_projectile("enemy",enemy["pos"],diff.normalized(),{"range":700,"speed":float(definition.get("shot_speed",260)),"amplitude":32,"wavelength":170,"color":"#e6b7fa"},float(definition.get("damage",10)),"weaving")
 				elif str(enemy["type"])=="archer":adventure.combat.launch_projectile("enemy",enemy["pos"],diff.normalized(),{"range":700,"speed":float(definition.get("shot_speed",275)),"thorn_arrow":true,"color":"#9ecb75"},float(definition.get("damage",9)))
 				else: missiles.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos":enemy["pos"],"direction":diff.normalized(),"speed":float(definition.get("shot_speed",260)),"damage":float(definition.get("damage",10)),"owner":"enemy","homing":style=="homing","distance":0.0})
@@ -1871,6 +1886,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				party_tools.late_pending.erase(remote_id);match_party_size=positions.size();levels[remote_id]=1;xp[remote_id]=0;invincible_until[remote_id]=Time.get_ticks_msec()+3000
 				var config:=match_config();config.type="late_start";_send_channel(remote_id,config);_send_channel(remote_id,_snapshot())
 		"dodge":
+			if arena_world.shatter.active():arena_world.shatter.action(remote_id,"secondary",Vector2.from_angle(float(aim_angles.get(remote_id,0))));return
 			if role == "host" and started and int(health.get(remote_id,0)) > 0 and not adventure.combat.stunned(adventure.combat.player_key(remote_id)) and not adventure.combat.robot.transformed(remote_id) and not adventure.immersive.aboard(remote_id) and not adventure.combat.v48.moving(remote_id) and not adventure.combat.classics.locked(remote_id) and not adventure.combat.v78.locked(remote_id) and not adventure.combat.v79.moving(remote_id) and not adventure.combat.v110.charging(remote_id) and not adventure.combat.halloween.moving(remote_id) and Time.get_ticks_msec() >= int(dodge_at.get(remote_id,0)):
 				dodge_at[remote_id] = Time.get_ticks_msec()+2500;invincible_until[remote_id] = Time.get_ticks_msec()+220
 		"late_start":
@@ -1918,6 +1934,8 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				if kind in ["primary","secondary","special"]:
 					# Retry near the authoritative cooldown, including early rejected requests.
 					request_ready[kind]=Time.get_ticks_msec()+maxi(80,int(data.get("remaining",0))-int(transport.ping_ms))
+		"crown_throw":
+			if role=="host":arena_world.objective.throw_crown(remote_id,Vector2.from_angle(float(data.get("angle",0))))
 		"state":
 			if role != "guest" or remote_id != host_id: return
 			if not match_id.is_empty() and not str(data.get("match_id",match_id)).is_empty() and str(data.get("match_id",match_id))!=match_id:return
@@ -2011,6 +2029,7 @@ func foes_from_packet(value: Dictionary) -> void:
 	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"melee_warning":float(value.get("melee_warning",0)),"melee_x":float(value.get("melee_x",0)),"melee_y":float(value.get("melee_y",1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false))})
 
 func _consume(id: String, slot: int) -> void:
+	if arena_world.shatter.active():return
 	if mode=="arena" and arena_no_items:return
 	if not inventory.has(id) or slot<0 or slot >= (inventory[id] as Array).size(): return
 	var item_id := str(inventory[id][slot])
@@ -2062,6 +2081,7 @@ func _buy_item() -> void:
 	else: _send_channel(host_id,{"type":"purchase","id":id})
 
 func _purchase(id: String, item_id: String) -> void:
+	if arena_world.shatter.active():return
 	if mode=="arena" and arena_no_items:status_label.text="Host rule: items and food are disabled for this arena match.";return
 	if not items.has(item_id) or not bool(items[item_id].get("shop",true)) or not gold.has(id) or not _near_building(id,"Supplies"): return
 	var data: Dictionary = items[item_id]
@@ -2126,6 +2146,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if presentation!=null and not presentation.page.is_empty():return
 	if not event is InputEventKey or not event.pressed or event.echo or not started: return
 	var key: InputEventKey = event
+	if key.keycode==KEY_E and arena_world.objective.active() and arena_map=="crown_chase" and str(arena_world.objective.crown.get("holder",""))==my_id:
+		arena_world.objective.request_throw();get_viewport().set_input_as_handled();return
 	if key.keycode==KEY_F:return
 	if adventure.quests.journal_key(key.keycode):return
 	if key.keycode == KEY_ESCAPE:
@@ -2230,10 +2252,12 @@ func _draw() -> void:
 	for slot in roster.size():
 		var player: Dictionary = roster[slot];var id := str(player.get("id",""))
 		if spectator_supported() and spectator_host and id==host_id:continue
+		if arena_world.shatter.active() and arena_world.shatter.eliminated.has(id):continue
 		if not adventure.combat.visible_owner(id):continue
 		var pos: Vector2 = _player_draw_position(id,_spawn_player(slot)) - camera
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
 		var hero_id := str(hero_ids.get(id,"ram"))
+		if arena_world.shatter.active() and arena_world.shatter.airborne(id):pos.y-=sin(PI*clampf((float(arena_world.shatter.hops[id].until)-arena_world.shatter.clock)/.34,0,1))*35
 		var walking := _actor_walking(id)
 		if hero_id=="caelum" and adventure.combat.v59.copies.has(id):walking=bool(adventure.combat.v59.copies[id].get("walking",false))
 		var pose := "attack" if Time.get_ticks_msec() < maxi(int(attack_pose_until.get(id,0)),predicted_pose_until if id==my_id else 0) else ("walk1" if int(visual_time*7)%2 == 0 else "walk2") if walking else "idle"
@@ -2241,6 +2265,7 @@ func _draw() -> void:
 		elif adventure.combat.classics.spinning(id):pose="spin"
 		if adventure.combat.v90.pending_rebirth(str(id)):pass
 		elif hero_id=="snail" and adventure.combat.v79.moving(str(id)):pose="shell"
+		if pose=="attack" and art.has(hero_id+"_attack2") and int(visual_time*12)%2==1:pose="attack2"
 		var texture: Texture2D = art.get(hero_id+"_"+pose)
 		var tint := Color.WHITE if int(health.get(id,0)) > 0 else Color(0.5,0.5,0.5,0.45)
 		if Time.get_ticks_msec() < int(stealth_until.get(id,0)): tint.a = 0.43
@@ -2276,8 +2301,8 @@ func _draw() -> void:
 			draw_rect(Rect2(pos+Vector2(-40,65),Vector2(80*float(downed[id].get("progress",0))/2.0,6)),Color("#9addb4"))
 		if mode in ["arena","battlegrounds"] and pvp_rule=="teams":draw_arc(pos+Vector2(0,14),23,0,TAU,24,Color("#c5d6df") if int(teams.get(id,0))==0 else Color("#69b4f0"),2)
 		elif id == my_id: draw_arc(pos+Vector2(0,14),21,0,TAU,24,Color(1,0.92,0.65,0.5),2)
-		if not (media.clean_view or media.capturing):draw_string(font,pos+Vector2(-28,-50),str(player.get("name","Player"))+" L"+str(levels.get(id,1)),HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color.WHITE)
-		if not (media.clean_view or media.capturing):draw_rect(Rect2(pos+Vector2(-24,26),Vector2(48*clampf(float(health.get(id,0))/maxf(1.0,float(_max_hp(id))),0,1),4)),Color("#83dda0"))
+		if not (media.clean_view or media.capturing):draw_string(font,pos+Vector2(-28,-50),str(player.get("name","Player"))+("" if arena_world.shatter.active() else " L"+str(levels.get(id,1))),HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color.WHITE)
+		if not arena_world.shatter.active() and not (media.clean_view or media.capturing):draw_rect(Rect2(pos+Vector2(-24,26),Vector2(48*clampf(float(health.get(id,0))/maxf(1.0,float(_max_hp(id))),0,1),4)),Color("#83dda0"))
 		if Time.get_ticks_msec() < int(shield_until.get(id,0)): draw_arc(pos,38,0,TAU,32,Color("#91dcff"),4)
 	for wall in ice_walls:
 		_sprite("ice_pillar",wall["pos"]-Vector2(32,48),Vector2(64,84))
@@ -2291,6 +2316,8 @@ func _draw() -> void:
 	custom_party.draw_on(self,camera)
 	if get("expedition")!=null and get("expedition").special():get("expedition").draw_world()
 	if mode=="defense":north_gate.draw_attacks(self,camera)
+	arena_world.objective.draw_crown()
+	arena_world.extra.draw_fog()
 	_profile_section("adventure_draw",section_began)
 	section_began=Time.get_ticks_usec()
 	if media.clean_view or media.capturing:
@@ -2306,8 +2333,12 @@ func _draw() -> void:
 	adventure.tech.draw_hud(self);adventure.immersive.draw_hud(self)
 	if mode=="battlegrounds":battlegrounds.draw_hud(self)
 	if get("expedition")!=null and get("expedition").special():get("expedition").draw_hud()
+	if arena_world.shatter.active():
+		arena_world.shatter.draw_overlay();_profile_section("hud_draw",section_began);return
 	var title := ("PRACTICE CONTINUE • " if continuation!=null and continuation.active else "") + ("Battlegrounds • "+str(battlegrounds.MAPS.get(bg_map,"Front")) if mode=="battlegrounds" else "Wave " + str(wave) + "  |  Town gate " + str(int(gate_hp)) + "/" + str(int(gate_max)) if mode == "defense" else "Floor " + str(floor_number) + "  |  Best " + str(best_floor) if mode == "descent" else "PvP " + pvp_rule.to_upper() + "  |  Score " + str(pvp_scores.get(my_id,0)) + "  |  " + str(maxi(0,300-int(run_time))) + "s left" if mode == "arena" else str(regions.get(realm_id,{}).get("name",realm_id)) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Stage " + str(wave) + "/3"))
 	if get("expedition")!=null and get("expedition").special():title=("Portal attunement" if get("expedition").kind=="attunement" else "The Between" if get("expedition").between() else "Overcharged "+str(regions.get(realm_id,{}).get("name",realm_id)))+" • 2-player expedition"
+	if arena_world.shatter.active():title=arena_world.shatter.header()
+	elif arena_world.objective.active():title=arena_world.objective.header()
 	preload("res://scripts/combat_hud.gd").header(self,title,int(gold.get(my_id,0)),float(health.get(my_id,0)),float(_max_hp(my_id)))
 	preload("res://scripts/boss_health.gd").draw_on(self)
 	_draw_hero_cooldowns(font)
@@ -2316,12 +2347,15 @@ func _draw() -> void:
 	if continuation!=null and continuation.active:
 		draw_rect(Rect2(24,94,245,24),Color("#18475d"));draw_string(font,Vector2(29,111),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
 	if mode not in ["arena","battlegrounds"]:draw_string(font,Vector2(24,VIEW.y-115),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,VIEW.x-50,14,Color("#d9d1ae"))
-	elif arena_notice_left>0:
+	elif arena_notice_left>0 and not arena_world.objective.active():
 		var opacity:=minf(1,arena_notice_left)
 		draw_rect(Rect2(20,110,600,53),Color(.03,.08,.11,.65*opacity))
 		draw_string(font,Vector2(34,132),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,572,15,Color(.85,.82,.68,opacity))
 		draw_string(font,Vector2(34,152),str(arena_world.MAPS.get(arena_map,"Arena")),HORIZONTAL_ALIGNMENT_LEFT,572,14,Color(.91,.81,.6,opacity))
 	_draw_minimap()
+	arena_world.extra.draw_hud()
+	arena_world.objective.draw_hud()
+	arena_world.shatter.draw_hud()
 	if mode=="defense":north_gate.draw_hud(self)
 	if shop_open.is_empty():adventure.quests.draw_hud(self)
 	for building in world_buildings:
@@ -2445,6 +2479,9 @@ func _draw_effect(effect: Dictionary) -> void:
 	else: draw_arc(pos,radius,0,TAU,40,color,4,true)
 
 func _draw_minimap() -> void:
+	if arena_world.shatter.active():arena_world.shatter.draw_minimap();return
+	if arena_world.objective.active():arena_world.objective.draw_minimap();return
+	if mode=="arena" and arena_map=="lanternfall":return
 	if mode=="battlegrounds":return
 	if adventure.quests.active:return
 	var rect := Rect2(VIEW.x-220,100,200,145)
@@ -2586,9 +2623,9 @@ func _move_actor(origin: Vector2, displacement: Vector2) -> Vector2:
 	var point := origin
 	for n in steps:
 		var horizontal := (point+Vector2(step.x,0)).clamp(FIELD.position+Vector2(30,30),FIELD.end-Vector2(30,30))
-		if _clear_path(point,horizontal): point = horizontal
+		if _clear_path(point,horizontal) and arena_world.extra.movement_clear(point,horizontal): point = horizontal
 		var vertical := (point+Vector2(0,step.y)).clamp(FIELD.position+Vector2(30,30),FIELD.end-Vector2(30,30))
-		if _clear_path(point,vertical): point = vertical
+		if _clear_path(point,vertical) and arena_world.extra.movement_clear(point,vertical): point = vertical
 	return point
 
 func _max_hp(id: String) -> int:
@@ -2666,7 +2703,7 @@ func _simulate_charges(delta: float) -> void:
 	for id in charges.keys():
 		if int(health.get(id,0)) <= 0: charges.erase(id);continue
 		var charge: Dictionary = charges[id]
-		var travel := minf(float(charge["remaining"]),float(charge["speed"])*delta/maxf(.3,dev_magic.world_scale())*dev_magic.scale_for(str(id)))
+		var travel := minf(float(charge["remaining"]),float(charge["speed"])*arena_world.objective.carrier_factor(str(id))*delta/maxf(.3,dev_magic.world_scale())*dev_magic.scale_for(str(id)))
 		var origin: Vector2 = positions[id]
 		positions[id] = _move_actor(origin,(charge["direction"] as Vector2)*travel)
 		if id == my_id: local_pos = positions[id]
@@ -2937,6 +2974,8 @@ func _send_arena_rules()->void:
 	_send_ws({"type":"room_update","settings":_room_command("settings")})
 	for id in links:_send_channel(str(id),{"type":"arena_rules","no_items":arena_no_items,"random_heroes":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"opening":arena_opening,"arena_map":arena_map,"allow_custom":allow_custom})
 func _arena_outcome(id:String)->String:
+	if arena_world.shatter.active():return arena_world.shatter.outcome(id)
+	if arena_world.objective.active():return arena_world.objective.outcome(id)
 	if pvp_rule=="teams":
 		var scores:Dictionary={0:0,1:0}
 		for player in positions:scores[int(teams.get(player,0))]+=int(pvp_scores.get(player,0))
@@ -3063,10 +3102,13 @@ func _draw_broadcast(font:Font)->void:
 	if shop_open=="Travel":draw_string(font,Vector2(22,80),"Enter: return to town / Esc: keep watching",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ffcc88"))
 	draw_string(font,Vector2(22,30),"CROSSROADS: REALMS BEYOND  •  LIVE "+("BATTLEGROUNDS" if mode=="battlegrounds" else "DESCENT" if mode=="descent" else "ARENA"),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color("#ffe0a1"))
 	var subtitle:String="Floor "+str(floor_number)+" • CO-OP SURVIVAL" if mode=="descent" else str(battlegrounds.MAPS.get(bg_map,bg_map))+" • TEAM BATTLE" if mode=="battlegrounds" else str(arena_world.MAPS.get(arena_map,"Arena"))+" • "+("TEAM BATTLE" if pvp_rule=="teams" else "FREE FOR ALL")+" • %d:%02d remaining" % [int(maxf(0,300-run_time))/60,int(maxf(0,300-run_time))%60]
+	if arena_world.shatter.active():subtitle=arena_world.shatter.header()
 	draw_string(font,Vector2(22,58),subtitle,HORIZONTAL_ALIGNMENT_LEFT,VIEW.x-350,17,Color("#bdd5df"))
 	if mode=="arena" and pvp_rule=="teams":
 		var tally:Dictionary={0:0,1:0}
 		for id in positions:tally[int(teams.get(id,0))]+=int(pvp_scores.get(id,0))
+		if arena_world.shatter.active():
+			var score=arena_world.shatter.totals();tally={0:int(score.get("team:0",0)),1:int(score.get("team:1",0))}
 		draw_string(font,Vector2(720,30),"SILVER %d   :   %d BLUE" % [tally[0],tally[1]],HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("#b4d8f5"))
 	var active:=fighters();var width:float=(VIEW.x-24)/maxi(1,active.size())
 	for n in active.size():
@@ -3074,7 +3116,9 @@ func _draw_broadcast(font:Font)->void:
 		var tint:=Color("#74c8ff") if int(teams.get(id,0))==1 and pvp_rule=="teams" else Color("#e4d2a4")
 		draw_rect(Rect2(x,y,width-5,78),Color("#1c3340"))
 		draw_string(font,Vector2(x+7,y+20),str(n+1)+" "+str(member.name).left(14),HORIZONTAL_ALIGNMENT_LEFT,width-14,15,tint)
-		draw_string(font,Vector2(x+7,y+42),(str(int(pvp_scores.get(id,0)))+" KOs" if mode=="arena" else str(int(contributions.get(id,{}).get("damage",0)))+" DMG")+" • "+str(int(health.get(id,0)))+" HP",HORIZONTAL_ALIGNMENT_LEFT,width-14,14,Color.WHITE)
+		var player_summary=(str(int(pvp_scores.get(id,0)))+" KOs" if mode=="arena" else str(int(contributions.get(id,{}).get("damage",0)))+" DMG")+" • "+str(int(health.get(id,0)))+" HP"
+		if arena_world.shatter.active():player_summary="%d PTS • %s" % [int(arena_world.shatter.points.get(id,0)),"OUT" if arena_world.shatter.eliminated.has(id) else "FLOOR %d" % (int(arena_world.shatter.layers.get(id,0))+1)]
+		draw_string(font,Vector2(x+7,y+42),player_summary,HORIZONTAL_ALIGNMENT_LEFT,width-14,14,Color.WHITE)
 		draw_rect(Rect2(x+7,y+55,(width-19)*clampf(float(health.get(id,0))/maxf(1,_max_hp(id)),0,1),7),Color("#85dcb0"))
 		if positions.has(id):
 			var p:Vector2=broadcast_offset+((remote_draw_pos.get(id,positions[id]) as Vector2)-camera)*broadcast_scale
@@ -3121,7 +3165,7 @@ func cosmetic_for(id:String)->Dictionary:
 	return value
 
 func assign_base_camera()->void:
-	camera=(local_pos-VIEW*.5).clamp(Vector2.ZERO,(FIELD.size-VIEW).max(Vector2.ZERO))
+	camera=(arena_world.shatter.camera_point(local_pos)-VIEW*.5).clamp(Vector2.ZERO,(FIELD.size-VIEW).max(Vector2.ZERO))
 
 func _open_hero_grid()->void:
 	if started or spectating() or is_instance_valid(hero_grid):return

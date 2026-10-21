@@ -221,7 +221,7 @@ func receive(key:int,data:Dictionary)->void:
  if kind=="arena_choice":
   if room.host!=id or g.started:return
   var chosen=str(data.get("arena_map",""))
-  if chosen not in ["sand","crossroads"]:return
+  if g.mode!="arena" or chosen not in g.arena_world.MAPS:return
   g.arena_map=chosen;g._sync_arena_pickers();lobby(str(identity.room));return
  if kind=="capacity":
   if room.host!=id:fail(key,"Only the host can change room capacity.");return
@@ -319,7 +319,7 @@ func receive(key:int,data:Dictionary)->void:
    dropped_inputs+=discard;queue=queue.slice(discard);g.server_inputs[id]=queue
   g.max_input_depth=maxi(g.max_input_depth,queue.size())
   identity.event_ack=maxi(int(identity.get("event_ack",0)),mini(int(room.event_seq),int(data.get("event_ack",0))))
- elif kind in ["attack","held_cast","community_input","dodge","consume","rift","bg_upgrade","purchase"]:
+ elif kind in ["attack","held_cast","community_input","dodge","consume","rift","bg_upgrade","purchase","crown_throw"]:
   if g.server_actions.get(id,[]).size()>=32:return
   var serial=int(data.get("seq",0))
   if serial<=int(identity.get("action_seq",0)):return
@@ -353,13 +353,14 @@ func valid_frame(value)->bool:
 func finite_number(v)->bool:return (v is float or v is int) and is_finite(float(v))
 func valid_action(data:Dictionary)->bool:
  var kind=str(data.get("type",""))
+ if kind=="crown_throw" and (not finite_number(data.get("angle",null)) or absf(float(data.get("angle",0)))>TAU*2):return false
  if kind=="community_input":
   if str(data.get("kind","")) not in ["primary","secondary","special"] or not data.get("down") is bool:return false
   var point=data.get("point",[])
   return point is Array and point.size()==2 and finite_number(point[0]) and finite_number(point[1]) and Vector2(float(point[0]),float(point[1])).length()<60000 and int(data.get("input_seq",-1))>=0
  if kind=="bg_upgrade":
   var key=str(data.get("key",""))
-  if key not in ["melee","ranged","healing","vitality","production"] and key not in ["unit:foot","unit:archer","unit:healer","unit:catapult","unit:mage","unit:berserker","unit:tank","unit:longbow"]:return false
+  if key not in ["melee","ranged","healing","vitality","production"] and key not in ["unit:foot","unit:archer","unit:healer","unit:catapult","unit:mage","unit:berserker","unit:tank","unit:longbow","unit:lancer","unit:standard","unit:mossbinder","order:base","order:capital","order:center","order:open","order:enemy_base","order:enemy_capital","order:recall"]:return false
  if kind=="purchase" and not data.get("id") is String:return false
  if kind=="held_cast" and str(data.get("phase",""))=="cancel":return true
  if kind in ["attack","held_cast"]:
@@ -413,7 +414,7 @@ func join(key:int,data:Dictionary)->void:
     var map_id=str(data.get("bg_map","woodland"))
     if map_id not in ["woodland","warzone"]:g.queue_free();fail(key,"Choose an official Battlegrounds map.");return
     g.bg_map=map_id;g.bg_team_size=seats/2;g._sync_bg_pickers()
-   g.arena_map="crossroads" if str(data.get("arena_map","sand"))=="crossroads" else "sand";g._sync_arena_pickers()
+   g.arena_map=str(data.get("arena_map","sand"));g.arena_map=g.arena_map if g.arena_map in g.arena_world.MAPS else "sand";g._sync_arena_pickers()
    rooms[code]={"expedition_choice":special,"preparation":{},"game":g,"members":{},"host":"","public":data.get("public",false)==true,"seats":seats,"events":[],"event_seq":0}
   if not rooms.has(code):fail(key,"Room not found.");return
   var room:Dictionary=rooms[code]
@@ -477,11 +478,20 @@ func broadcast_game(g:Node,data:Dictionary)->void:
  for id in room.get("members",{}):send_actor(str(id),data)
 func execute_action(g:Node,id:String,data:Dictionary)->void:
  var began=Time.get_ticks_msec()
+ if g.arena_world.shatter.active():
+  var kind=str(data.get("type",""));var accepted=false
+  if kind=="attack":accepted=g.arena_world.shatter.action(id,str(data.get("style","")),Vector2.from_angle(float(data.get("angle",0))))
+  elif kind=="dodge":
+   var d=data.get("direction",[1,0]);accepted=g.arena_world.shatter.action(id,"secondary",Vector2(float(d[0]),float(d[1])))
+  send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":str(data.get("style","primary")),"accepted":accepted,"born_indices":[],"remaining":750 if str(data.get("style",""))=="primary" else 2500,"tick":g.authority_tick});return
  if str(data.get("type",""))=="community_input":
   var hero=str(g.hero_ids.get(id,""))
   if hero.begins_with("community_") and g.characters.get(hero,{}).has("studio_project"):
    g.custom_party.input(id,str(data.kind),bool(data.down),Vector2(float(data.point[0]),float(data.point[1])))
   return
+ if str(data.get("type",""))=="crown_throw":
+  var accepted=g.arena_world.objective.throw_crown(id,Vector2.from_angle(float(data.get("angle",0))))
+  send_actor(id,{"type":"interaction_ack","seq":int(data.seq),"accepted":accepted,"notice":"Crown thrown." if accepted else "You cannot throw the crown right now.","match_id":g.match_id});return
  if str(data.get("type",""))=="rift":
   var handled=false
   if g.positions.has(id) and int(g.health.get(id,0))>0 and began>=int(g.get_meta("rift_ready_"+id,0)):
@@ -497,7 +507,7 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
     g._purchase(id,str(data.id));accepted=int(g.gold.get(id,0))<before_money or g.inventory.get(id,[]).size()>before_items
   var base:Dictionary=g.battlegrounds.bases.get(g.battlegrounds.owners.get(id,""),{}) if g.mode=="battlegrounds" else {}
   var order={"gold":int(g.gold.get(id,0)),"counts":base.get("counts",[]),"upgrades":base.get("upgrades",{})}
-  send_actor(id,{"type":"economy_ack","order":order,"seq":int(data.seq),"accepted":accepted,"kind":kind,"match_id":g.match_id,"message":"Army upgraded!" if accepted and kind=="bg_upgrade" else "Item purchased!" if accepted else "Order not completed. Check CC, capacity and distance from your shop."});return
+  send_actor(id,{"type":"economy_ack","order":order,"seq":int(data.seq),"accepted":accepted,"kind":kind,"match_id":g.match_id,"message":"Army order accepted." if accepted and str(data.get("key","")).begins_with("order:") else "Army upgraded!" if accepted and kind=="bg_upgrade" else "Item purchased!" if accepted else "Order not completed. Check CC, capacity and distance from your shop."});return
  var custom_before=g.adventure.combat.projectiles.size()
  var born:Array=[]
  var before=g.missiles.size();var style=str(data.get("style","primary"));var previous=int(g.cooldown_at.get(id,{}).get(style,0))

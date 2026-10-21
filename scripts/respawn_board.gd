@@ -57,6 +57,7 @@ func refresh()->void:
   label(grid,str(index+1)+". "+str(row.name).left(21),15).modulate=tint
   for key in ["damage","kills","hero_kills","deaths"]:label(grid,str(row[key]),15).modulate=tint
 func _process(delta:float)->void:
+ if game!=null and game.arena_world.shatter.active():panel.hide();toggle.hide();return
  if game==null:return
  var available:bool=game.started and game.mode=="arena" and game.results_reason.is_empty() and game.presentation.page.is_empty() and game.session_menu.page.is_empty() and game.shop_open.is_empty()
  toggle.visible=available;toggle.position=Vector2(get_viewport().get_visible_rect().size.x-170,get_viewport().get_visible_rect().size.y-140) if game.spectating() else Vector2(20,get_viewport().get_visible_rect().size.y-54)

@@ -45,7 +45,7 @@ func show_status(parent:Node)->void:
  if request.request(endpoint()+"/heroes/mine",account.headers())!=OK:fetching=false;callback.call("Could not load submissions. Your draft is safe.")
 func completed(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)->void:
  fetching=false
- var parsed=JSON.parse_string(body.get_string_from_utf8());var data:Dictionary=parsed if parsed is Dictionary else {}
+ var raw=body.get_string_from_utf8().strip_edges();var parsed=JSON.parse_string(raw) if raw.begins_with("{") else null;var data:Dictionary=parsed if parsed is Dictionary else {}
  var success=result==HTTPRequest.RESULT_SUCCESS and code>=200 and code<300
  if operation=="catalog":
   if not success:status="Community heroes unavailable. Try Refresh community.";timer=15;changed.emit();return

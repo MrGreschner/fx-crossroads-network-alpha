@@ -37,17 +37,38 @@ static func build(f:Node,parent:Node)->void:
 static func kept(f:Node,body:Node)->void:
  var state=f.records().state();var catches:Array=state.kept
  if catches.is_empty():text(body,"Your collection starts here. Keep a catch at any fishing hole to see its size, records and aquarium options.",18);return
- f.journal_page=clampi(f.journal_page,0,maxi(0,(catches.size()-1)/10))
- if catches.size()>10:
-  var nav=HBoxContainer.new();body.add_child(nav)
-  action(nav,"Previous 10",func():f.journal_page-=1;f.refresh_journal(0)).disabled=f.journal_page==0
-  text(nav,"Page %d / %d" % [f.journal_page+1,ceili(catches.size()/10.0)])
-  action(nav,"Next 10",func():f.journal_page+=1;f.refresh_journal(0)).disabled=(f.journal_page+1)*10>=catches.size()
- for catch in catches.slice(f.journal_page*10,f.journal_page*10+10):catch_card(f,body,catch)
+ var list=VBoxContainer.new();kept_filters(f,body,func():fill_kept(f,list));list.size_flags_horizontal=Control.SIZE_EXPAND_FILL;list.add_theme_constant_override("separation",9);body.add_child(list)
+ fill_kept(f,list)
  if not state.favorite.is_empty():action(body,"Clear player-card favourite",func():f.records().set_favorite("");f.refresh_journal())
-static func catch_card(f:Node,body:Node,catch:Dictionary)->void:
+static func kept_filters(f:Node,parent:Node,changed:Callable=Callable())->void:
+ var row=HBoxContainer.new();parent.add_child(row)
+ var search=LineEdit.new();search.placeholder_text="Search kept fish by name…";search.text=f.kept_query;search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search.custom_minimum_size.y=36;row.add_child(search)
+ var sort=OptionButton.new();row.add_child(sort)
+ for title in ["Name A–Z","Weight: heaviest","Relative size: largest","Rarity: highest"]:sort.add_item(title)
+ sort.select(f.kept_sort)
+ var update=func():
+  if changed.is_valid():changed.call()
+  else:fill_kept(f,parent.get_child(parent.get_child_count()-1))
+ search.text_changed.connect(func(value):f.kept_query=value;update.call())
+ sort.item_selected.connect(func(index):f.kept_sort=index;update.call())
+static func selected_catches(f:Node)->Array:
+ var catches=f.records().state().kept.filter(func(c):return f.kept_query.strip_edges().is_empty() or str(C.fish()[c.species].name).to_lower().contains(f.kept_query.to_lower().strip_edges()))
+ catches.sort_custom(func(a,b):
+  var va=0.0;var vb=0.0
+  if f.kept_sort==1:va=float(a.kg);vb=float(b.kg)
+  elif f.kept_sort==2:va=float(a.kg)/C.mean_kg(a.species);vb=float(b.kg)/C.mean_kg(b.species)
+  elif f.kept_sort==3:va=PALETTE.keys().find(str(C.fish()[a.species].rarity));vb=PALETTE.keys().find(str(C.fish()[b.species].rarity))
+  if va!=vb:return va>vb
+  return (str(C.fish()[a.species].name)+str(a.id)).naturalnocasecmp_to(str(C.fish()[b.species].name)+str(b.id))<0)
+ return catches
+static func fill_kept(f:Node,list:Node,selling=false)->void:
+ for child in list.get_children():list.remove_child(child);child.queue_free()
+ var catches=selected_catches(f)
+ if catches.is_empty():text(list,"No kept catches match this search.",17)
+ for catch in catches:catch_card(f,list,catch,selling)
+static func catch_card(f:Node,body:Node,catch:Dictionary,selling:bool=false)->void:
  var spec:Dictionary=C.fish()[catch.species];var id=str(catch.id);var trophy=C.is_trophy(catch);var color=Color(PALETTE.get(spec.rarity,"#93cdd4"));var state=f.records().state()
- var row=framed(body,Color("#edc66c") if trophy else color)
+ var row=framed(body,Color("#edc66c") if trophy else color);row.get_parent().set_meta("catch_id",id)
  var portrait=VBoxContainer.new();portrait.custom_minimum_size.x=145;row.add_child(portrait);f.picture(portrait,str(catch.species),Vector2(145,90))
  text(portrait,("TROPHY" if trophy else str(spec.rarity)).to_upper(),13,Color("#f7d881") if trophy else color).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  var info=VBoxContainer.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;info.add_theme_constant_override("separation",5);row.add_child(info)
@@ -61,6 +82,12 @@ static func catch_card(f:Node,body:Node,catch:Dictionary)->void:
  text(info,("Your species weight record" if float(catch.kg)+.005>=best else "%.0f%% of your species best (%.2f kg)" % [float(catch.kg)/maxf(.001,best)*100,best])+" • Estimated size rank ~%.0f%%" % percentile,13)
  var actions=VBoxContainer.new();actions.custom_minimum_size.x=180;actions.add_theme_constant_override("separation",5);row.add_child(actions)
  action(actions,"Fish details",f.show_catch_details.bind(id),180)
+ if selling:
+  text(actions,"%d Glimmers" % f.game.legacy.glimmers.fish_price(catch),20,Color("#ffe0a0"))
+  action(actions,"Sell fish…" if C.is_trophy(catch) or PALETTE.keys().find(str(spec.rarity))>=3 else "Sell fish",func():f.sales.sell(id),180)
+  if C.is_trophy(catch) or PALETTE.keys().find(str(spec.rarity))>=3:text(actions,"Protected catch • confirmation required",12,Color("#f6d587"))
+  return
+ action(actions,"Sell at Ripple & Reel",f.open_sales.bind(id),180).disabled=f.game.mode!="town"
  action(actions,"Featured on card" if state.favorite==id else "Feature on card",func():f.records().set_favorite(id);f.refresh_journal(),180)
  var tank=OptionButton.new();tank.custom_minimum_size=Vector2(180,32);tank.add_theme_font_size_override("font_size",14);tank.add_item("Display in tank…")
  for n in 5:tank.add_item("Tank "+str(n+1)+(" • this fish" if state.display[n]==id else ""))

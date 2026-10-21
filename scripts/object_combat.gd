@@ -727,9 +727,10 @@ func step_projectiles(delta:float)->void:
 			var intended:Dictionary=actor(chosen) if not chosen.is_empty() else {}
 			if not intended.is_empty() and bool(intended.get("alive",false)) and hostile(str(shot["owner"])).has(chosen) and path_clear(start,intended.pos):focus=intended.pos;nearest=start.distance_to(focus)
 			else:
-				for key in hostile(str(shot["owner"])):
+				var seek_radius=maxf(80,float(shot["range"])-float(shot["distance"])+80) if str(shot["owner"]).begins_with("bgarmy:") else -1.0
+				for key in hostile(str(shot["owner"]),start,seek_radius):
 					var candidate:=actor(key)
-					if not candidate.is_empty() and bool(candidate.get("alive",false)) and path_clear(start,candidate.pos) and start.distance_to(candidate["pos"])<nearest:focus=candidate["pos"];nearest=start.distance_to(focus)
+					if not candidate.is_empty() and bool(candidate.get("alive",false)) and start.distance_to(candidate["pos"])<nearest and path_clear(start,candidate.pos):focus=candidate["pos"];nearest=start.distance_to(focus)
 			if nearest<INF:direction=direction.lerp((focus-start).normalized(),minf(1,delta*5)).normalized()
 		shot["aim"]=point_array(direction)
 		var travel:=minf(float(shot["speed"])*clock_delta(str(shot["owner"]),delta),float(shot["range"])-float(shot["distance"]))
@@ -1130,6 +1131,8 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 		canvas.draw_line(point-heading*30,point,Color(.84,.7,.95,.4),2,true)
 		canvas.draw_colored_polygon(PackedVector2Array([point+heading*14,point+side*4,point-heading*11,point-side*4]),Color("#ead9f7"))
 		canvas.draw_line(point-heading*8,point+heading*9,Color("#fff2cf"),1,true);return
+	if not str(shot["stats"].get("ice_visual","")).is_empty():
+		preload("res://scripts/ice_projectiles.gd").draw(canvas,point,vec(shot["aim"]),str(shot["stats"].ice_visual),clock);return
 	if bool(shot["stats"].get("thorn_arrow",false)):
 		var heading:=vec(shot["aim"]);var side:=heading.orthogonal()
 		canvas.draw_line(point-heading*15,point+heading*8,Color("#9eae72"),2,true)

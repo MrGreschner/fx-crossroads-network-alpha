@@ -15,7 +15,7 @@ func setup(owner:Node)->void:
  fishing=owner;set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);mouse_filter=Control.MOUSE_FILTER_STOP
  hud=PanelContainer.new();UI.apply(hud);add_child(hud)
  var col=VBoxContainer.new();hud.add_child(col);fishing.label(col,"RIPPLE & REEL • THE TOWN AQUARIUM",24)
- var row=HBoxContainer.new();col.add_child(row);UI.accent(fishing.button(row,"Talk to Bramble",talk));fishing.button(row,"Catches & display tanks",fishing.open_journal);fishing.button(row,"Fishing profile & mastery",open_profile);fishing.button(row,"Return to town",fishing.close_shop)
+ var row=HBoxContainer.new();col.add_child(row);UI.accent(fishing.button(row,"Talk to Bramble",talk));fishing.button(row,"Catches & display tanks",fishing.open_journal);fishing.button(row,"Fishing profile & mastery",open_profile);fishing.button(row,"Sales",fishing.open_sales);fishing.button(row,"Return to town",fishing.close_shop)
 func open_profile()->void:
  fishing.close_shop();fishing.game.legacy.open_page("fishing")
 func talk_near()->void:
@@ -32,7 +32,7 @@ func talk()->void:
  var has_rod=bool(fishing.records().state().rod)
  fishing.label(body,"Every little ripple has a story. Here's a fishing rod for yours!" if not has_rod else "Welcome back, angler! Your rod and bare hook are ready. Sell catches for Glimmers, unlock the net at level 5 and baskets at level 10.",20)
  fishing.label(body,"Find bubbling water and stand at its shore marker. Press F or Cast. When the float dips and flashes, press F / Hook within the gold window. A full wait bar does not guarantee a fish. Moving or taking damage cancels a cast; combat keeps going in realms.",18)
- fishing.label(body,"Keep a fish for your collection or release it: both earn fishing XP. Select any occupied tank to inspect its fish. Visit Fishing profile & mastery for your gear, fish bait, baskets and progression.",18)
+ fishing.label(body,"Keep a fish for your collection or release it: both earn fishing XP, and immediate release grants 25% extra. Use Sales to sell kept catches for Glimmers. Select any occupied tank to inspect its fish. Visit Fishing profile & mastery for your gear, fish bait, baskets and progression.",18)
  fishing.label(body,"Explore the town pond and river, realm waters, North Gate, and deep Descent springs. Hours, weekdays and weather change what bites. Rarity and weight are separate: even a familiar species can become a trophy.",17)
  if not has_rod:
   UI.accent(fishing.button(col,"Discover my fishing rod",func():fishing.records().unlock();dialogue.queue_free();dialogue=null))

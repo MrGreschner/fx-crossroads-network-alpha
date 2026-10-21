@@ -122,9 +122,13 @@ func _process(_delta: float) -> void:
   buttons.clear()
   round_actions.clear()
   if state == "":
-   action_button("Secondary",Vector2(905,405),"secondary")
-   action_button("Special",Vector2(1050,355),"special")
-   action_button("Dodge",Vector2(870,570),"dodge")
+   var shatter=arcade and game.arena_world.shatter.active()
+   if shatter:
+    action_button("Hop",Vector2(905,405),"secondary")
+   else:
+    action_button("Secondary",Vector2(905,405),"secondary")
+    action_button("Special",Vector2(1050,355),"special")
+    action_button("Dodge",Vector2(870,570),"dodge")
    if arcade:
     action_button("Interact",Vector2(730,610),"interact")
     buttons[-1].button_down.connect(key.bind(KEY_E))

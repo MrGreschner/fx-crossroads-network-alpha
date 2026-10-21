@@ -94,7 +94,7 @@ func reduction()->float:
  if not active():return 0
  return maxf(float(hero.get("defence",0)),maxf(maxf(.6 if protection>0 else .1 if hero.get("passive","") in ["defence","shelter"] else 0.0,passive.reduction()),buff_reduction(player)))
 func draw_on(canvas:Node2D,camera:Vector2)->void:
- if not active() or last_hero.is_empty():return
+ if not active() or last_hero.is_empty() or last_hero!=game.character_id:return
  for f in fields:
   var p:Vector2=f.pos-camera;var color=Color(f.ability.color);canvas.draw_circle(p,float(f.ability.radius),Color(color,.18));canvas.draw_arc(p,float(f.ability.radius),0,TAU,28,color,2)
  for shot in shots:

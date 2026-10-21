@@ -1,0 +1,36 @@
+{
+  "build": "V195",
+  "passed": true,
+  "results": [
+    {
+      "mode": "arena",
+      "players": 8,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "mode": "defense",
+      "players": 4,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "mode": "descent",
+      "players": 4,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "mode": "coop",
+      "players": 2,
+      "started": true,
+      "snapshots": true
+    },
+    {
+      "mode": "battlegrounds",
+      "players": 8,
+      "started": true,
+      "snapshots": true
+    }
+  ]
+}

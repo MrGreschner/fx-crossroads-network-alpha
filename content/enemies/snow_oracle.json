@@ -9,5 +9,7 @@
   "behaviour": "homing",
   "shot_speed": 225,
   "shot_cooldown": 3.0,
-  "secondary_cooldown": 4.5
+  "secondary_cooldown": 4.5,
+  "shot_name": "Seeking Ice Orb",
+  "shot_style": "seeking_ice_orb"
 }

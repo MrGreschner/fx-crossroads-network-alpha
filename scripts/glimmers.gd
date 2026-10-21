@@ -16,7 +16,7 @@ func crown_basis_points()->int:
  legacy.crowns.refresh()
  return preload("res://scripts/rolling_crowns.gd").glimmer_basis_points(preload("res://scripts/rolling_crowns.gd").tier_from(legacy.crowns.total()))
 func award_quote(amount:int)->Dictionary:
- var units=maxi(0,amount)*crown_basis_points()+int(state().get("crown_remainder",0))
+ var units=maxi(0,amount)*(crown_basis_points()+(1000 if preload("res://scripts/daily_hero.gd").active(legacy) else 0))+int(state().get("crown_remainder",0))
  var extra=int(units/10000)
  return {"total":amount+extra,"bonus":extra,"remainder":units%10000}
 func credit(amount:int)->bool:
@@ -36,6 +36,7 @@ func fish_price(catch:Dictionary)->int:
  return maxi(1,int(round(price*(1+legacy.fishing_records.progress.perk_bonus("sale")))))
 func sell_fish(id:String)->String:
  if legacy.game.mode!="town" or not allowed():return "Return to a normal town profile to trade."
+ if not is_instance_valid(legacy.game.fishing.sales) or not is_instance_valid(legacy.game.fishing.room):return "Sell fish at the Sales counter inside Ripple & Reel."
  var records=legacy.fishing_records;var catch=records.specimen(id);var price=fish_price(catch)
  if price<=0:return "This catch has already been sold or released."
  if not credit(price):return "Your Glimmer wallet is full."

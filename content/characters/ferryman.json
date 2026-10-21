@@ -18,8 +18,8 @@
       "seconds": 1.1,
       "damage": 1.6
     },
-    "description": "Tap for a quick 25-damage oar sweep. Hold up to 1.1s for 40 damage; full charge slows struck enemies by 40% for 2s. The moving oar marks the damaging sweep.",
-    "ui_brief": "Charged oar sweep \u2022 25\u201340 damage \u2022 full charge slows"
+    "description": "Tap for a quick 25-damage oar sweep. Hold up to 1.1s for 40 damage; full charge knocks enemies back and slows struck enemies by 40% for 2s. The moving oar marks the damaging sweep.",
+    "ui_brief": "Charged oar sweep \u2022 25\u201340 damage \u2022 full charge slows + knockback"
   },
   "secondary": {
     "name": "Skipping Stones",

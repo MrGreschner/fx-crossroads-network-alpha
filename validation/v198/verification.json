@@ -1,0 +1,26 @@
+{
+  "build": "V198-shatterfloor",
+  "focused_shatterfloor_checks": 32,
+  "practice_bots": 7,
+  "practice_rounds_completed": 3,
+  "shatterfloor_network_rooms": [
+    {
+      "players": 8,
+      "rule": "ffa"
+    },
+    {
+      "players": 8,
+      "rule": "teams"
+    }
+  ],
+  "existing_objective_checks": 44,
+  "existing_objective_network_rooms": 4,
+  "existing_objective_network_players_per_room": 8,
+  "combat_protocol": "passed",
+  "focused_battlegrounds_checks": 271,
+  "browser_review": "desktop and smaller landscape viewport; external services isolated",
+  "physical_touchscreen_tested": false,
+  "live_render_tested": false,
+  "deployed": false,
+  "database_migration_required": false
+}

@@ -56,6 +56,9 @@ func step(delta:float)->void:
  for n in game.bot_count:
   var id="bot:"+str(n)
   if not game.positions.has(id) or int(game.health.get(id,0))<=0:states.erase(id);continue
+  if game.arena_world.shatter.active():
+   var shatter_state:Dictionary=states.get(id,{})
+   states[id]=shatter_state;game.arena_world.shatter.bot_step(id,delta,shatter_state);continue
   var combat:Node=game.adventure.combat
   if combat.stunned("p:"+id):continue
   var state:Dictionary=states.get(id,{"think":.1+n*.045,"wish":Vector2.ZERO,"side":1.0 if n%2 else -1.0,"dash_cd":2.0,"dash":0.0,"shop":0.0})
@@ -68,7 +71,7 @@ func step(delta:float)->void:
    var options=[]
    if game.mode in ["arena","battlegrounds"]:
     for other in game.positions:
-     if game._rival(id,str(other)) and Time.get_ticks_msec()>=int(game.stealth_until.get(other,0)):options.append({"id":str(other),"pos":game.positions[other]})
+     if game._rival(id,str(other)) and game.arena_world.extra.can_see(id,game.positions[other]) and Time.get_ticks_msec()>=int(game.stealth_until.get(other,0)):options.append({"id":str(other),"pos":game.positions[other]})
    else:
     for enemy in game.opponents:
      if float(enemy.hp)>0:options.append({"id":"enemy:"+str(enemy.get("uid",0)),"pos":enemy.pos})
@@ -100,6 +103,9 @@ func step(delta:float)->void:
      if offset.length()<500:
       wish=offset.normalized() if offset.length()>90 else Vector2.ZERO;game.revive_held[id]=offset.length()<130;break
    if game.mode=="battlegrounds":wish=strategy(id,origin,wish,state)
+   if game.arena_world.objective.active():
+    var goal=game.arena_world.objective.bot_goal(id,origin,near,state)
+    wish=(goal-origin).normalized() if origin.distance_to(goal)>35 else Vector2.ZERO
    var danger=false
    for shot in game.missiles:
     if str(shot.owner)==id or game.positions.has(shot.owner) and (game.mode not in ["arena","battlegrounds"] or not game._rival(id,str(shot.owner))):continue
@@ -108,6 +114,7 @@ func step(delta:float)->void:
    if danger and state.dash_cd<=0:
     state.dash=.18;state.dash_cd=8.0 if easy else 4.0;wish=(near-origin).normalized().orthogonal()*float(state.side);game.invincible_until[id]=Time.get_ticks_msec()+160
    state.wish=Brain.steer(origin,wish,game._clear_path,neighbours,state.side)
+   if game.mode=="arena" and game.arena_world.extra.active():state.wish=game.arena_world.extra.bot_wish(id,origin,state.wish,near)
    var aim=(near-origin).normalized().rotated(sin(game.run_time+n)*(.15 if easy else .04))
    game.aim_angles[id]=aim.angle()
    if target!="" and game._clear_path(origin,near):
@@ -122,15 +129,15 @@ func step(delta:float)->void:
     elif distance<float(kit.special.get("range",450)) and (str(kit.special.style)!="charge" or distance>100):game._attack(id,"special",aim,near)
    elif str(kit.get("ai_role",""))=="healer" and (wounded or float(game.health[id])/game._max_hp(id)<.65):game._attack(id,"special",Vector2.RIGHT,ally_goal)
   if game.charges.has(id):continue
-  var speed=float(kit.speed)*combat.speed_factor("p:"+id)*game.arena_world.slow(origin)*(.9 if easy else 1.0)
-  if state.dash>0:speed=520;state.dash=maxf(0,state.dash-delta)
+  var speed=float(kit.speed)*combat.speed_factor("p:"+id)*game.arena_world.slow(origin)*game.arena_world.objective.carrier_factor(id)*(.9 if easy else 1.0)
+  if state.dash>0:speed=520*game.arena_world.objective.carrier_factor(id);state.dash=maxf(0,state.dash-delta)
   game.positions[id]=game._move_actor(origin,(state.wish as Vector2)*speed*delta)
 func strategy(id:String,origin:Vector2,wish:Vector2,state:Dictionary)->Vector2:
  var bg=game.battlegrounds;var base:Dictionary=bg.bases.get(bg.owners.get(id,""),{})
  if base.is_empty():return wish
  var low=float(game.health[id])/game._max_hp(id)<.3
  var budget=int(game.gold.get(id,0));var at_base=origin.distance_to(base.pos)<220
- var choices=["unit:archer","unit:healer","production","unit:catapult","unit:tank","vitality","ranged","melee"]
+ var choices=["unit:archer","unit:healer","production","unit:catapult","unit:tank","vitality","ranged","melee","unit:lancer","unit:standard" if int(base.team)==0 else "unit:mossbinder"]
  var affordable=false
  for key in choices:
   var k=bg.TYPES.find(str(key).trim_prefix("unit:"))
@@ -140,9 +147,21 @@ func strategy(id:String,origin:Vector2,wish:Vector2,state:Dictionary)->Vector2:
   var start=int(state.get("order",0))
   for i in choices.size():
    var next=(start+i)%choices.size()
-   if bg.buy(id,choices[next]):state.order=(next+1)%choices.size();state.shop=1.5;break
- if low or (affordable and state.shop<=0 and float(base.hp)>0 and not at_base):return (base.pos-origin).normalized()
+   if bg.buy(id,choices[next]):state.order=(next+1)%choices.size();state.shop=15.0;break
+ var capital:Vector2=bg.heart_pos(int(base.team));var threat=false
+ for enemy in bg.units.values():
+  if int(enemy.team)!=int(base.team) and (enemy.pos as Vector2).distance_to(capital)<650:threat=true;break
+ var order="capital" if threat else "base" if bg.owner_count(id)<6 else "enemy_base" if int(state.get("order",0))%2==0 else "enemy_capital"
+ if bg.clock>float(state.get("command_at",0)):
+  bg.command.execute(id,"order:"+order);state.command_at=bg.clock+8
+ if low:
+  if float(base.hp)>0:bg.command.execute(id,"order:recall")
+  return bg.command.direction("hero:"+id,origin,capital)
+ if affordable and budget>=400 and state.shop<=0 and float(base.hp)>0 and not at_base:return bg.command.direction("hero:"+id,origin,base.pos)
+ if threat:return bg.command.direction("hero:"+id,origin,capital)
  # Defend threatened home barracks before chasing far-away heroes.
  for unit in bg.units.values():
-  if int(unit.team)!=int(base.team) and (unit.pos as Vector2).distance_to(base.pos)<500:return (unit.pos-origin).normalized()
+  if int(unit.team)!=int(base.team) and (unit.pos as Vector2).distance_to(base.pos)<500:return bg.command.direction("hero:"+id,origin,unit.pos)
+ var destination=bg.heart_pos(1-int(base.team)) if order=="enemy_capital" else bg.command.goal({"owner":id,"team":int(base.team),"lane":int(base.lane),"order":"enemy_base"})
+ if origin.distance_to(destination)>450:return bg.command.direction("hero:"+id,origin,destination)
  return wish

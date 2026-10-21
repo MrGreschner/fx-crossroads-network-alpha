@@ -9,5 +9,7 @@
   "behaviour": "ranged",
   "shot_speed": 315,
   "shot_cooldown": 2.2,
-  "secondary_cooldown": 4.5
+  "secondary_cooldown": 4.5,
+  "shot_name": "Ice Spear",
+  "shot_style": "ice_spear"
 }
