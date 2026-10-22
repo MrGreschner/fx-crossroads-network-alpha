@@ -43,6 +43,7 @@ func _init()->void:
 	for y in range(250,2250,190):trees.append(Vector2(-1360,y))
 	trees=trees.filter(func(p:Vector2):return not Rect2(300,520,130,125).has_point(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_plan.gd").reserved(p))
+	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/marina_life.gd").reserved(p))
 	for tree in trees:
 		var cell:=Vector2i(floori(tree.x/128),floori(tree.y/128))
 		if not tree_cells.has(cell):tree_cells[cell]=[]
@@ -86,6 +87,7 @@ func guard(c:CanvasItem,point:Vector2,moving:bool)->void:
 	c.draw_texture_rect(guard_texture,Rect2(point+Vector2(-20,-42+bob),Vector2(40,48)),false)
 func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	var visible:Rect2=Rect2(camera,c.get_viewport_rect().size).grow(210)
+	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/marina_life.gd").reserved(p))
 	for tree in trees:
 		if visible.has_point(tree):c.draw_sprite("tree",tree-Vector2(55,115),Vector2(110,145))
 	# A planned pond garden sits north of the cliff, with a separate waterside walk.

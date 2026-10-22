@@ -636,7 +636,11 @@ func enable_teacher()->void:
  save()
  if not arcade:game.save_profile()
  game.journey.save();game.provisions.save()
- session.begin();data.teacher=true;fishing_records.state();mine.preview();flash=1.5
+ session.begin();data.teacher=true;fishing_records.dev_ready=false;fishing_records.state();mine.preview();flash=1.5
+ if not arcade and game.waylight!=null:game.waylight.dev_kit()
+ var wallet=glimmers.state();var test_funds=maxi(0,50000-int(wallet.balance));wallet.balance+=test_funds;wallet.earned+=test_funds
+ var garden=gardening.state();garden.xp=maxi(int(garden.xp),gardening.threshold(100))
+ for seed in gardening.crops():garden.seeds[seed]=maxi(100,int(garden.seeds.get(seed,0)))
  for id in game.manifest.characters:
   var rec:=record(str(id));rec.clears=12;rec.damage=85000;rec.realms=game.manifest.regions.duplicate();rec.points=6
  for id in PROJECTS:data.town[id]=true

@@ -800,3 +800,7 @@ metadata/enemy_id = "spore_orderly"
 [node name="V143_quarantine_warden_0" type="Node2D" parent="Enemies"]
 position = Vector2(4100, 725)
 metadata/enemy_id = "quarantine_warden"
+
+[node name="LockdownAmbush" type="Node2D" parent="Enemies"]
+position = Vector2(5250, 1040)
+metadata/enemy_id = "lockdown_aberration"

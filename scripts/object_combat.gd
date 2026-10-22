@@ -1152,6 +1152,9 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
 	if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
 	if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):return
+	if shot["stats"].has("cinder_visual"):
+		var aim=vec(shot.aim);var side=aim.orthogonal();var tail=point-aim*(21+sin(clock*15)*5)
+		canvas.draw_colored_polygon(PackedVector2Array([point+aim*11,point+side*8,tail+side*4,tail-aim*8,point-side*8]),Color("#e56c37"));canvas.draw_circle(point,6,Color("#ffe2a0"));canvas.draw_line(tail,point,Color("#ffb95f"),3,true);return
 	if bool(shot["stats"].get("prism_glass",false)):
 		preload("res://scripts/hero_visuals1987.gd").prism(canvas,point,vec(shot.aim));return
 	if bool(shot["stats"].get("golf_ball",false)):

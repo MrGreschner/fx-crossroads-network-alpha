@@ -187,6 +187,8 @@ func enemy_name(id:String,kind:String)->String:
  return str(game.enemy_types.get(kind,{}).get("name",kind.replace("_"," ").capitalize()))
 func portrait(id:String,kind:String)->Texture2D:
  var prefix:String=kind.substr(5) if kind.begins_with("boss:") else str(game.enemy_types.get(kind,{}).get("sprite",kind))
+ if prefix in preload("res://scripts/cinderheart.gd").TYPES:
+  return preload("res://scripts/source_art.gd").texture("res://assets/"+prefix+"_idle.svg")
  if portraits.has(prefix):return portraits[prefix]
  for suffix in ["_idle","_0",""]:
   for ext in [".png",".svg"]:

@@ -1,0 +1,801 @@
+{
+  "name": "Cinderheart Citadel",
+  "size": [
+    9000,
+    6200
+  ],
+  "rooms": [
+    {
+      "name": "GATEHOUSE",
+      "rect": [
+        200,
+        4300,
+        1800,
+        1500
+      ],
+      "sector": 0
+    },
+    {
+      "name": "EMBER ARCHIVE",
+      "rect": [
+        1750,
+        4550,
+        1400,
+        900
+      ],
+      "sector": 0
+    },
+    {
+      "name": "ALCHEMICAL LABORATORY",
+      "rect": [
+        200,
+        2100,
+        2200,
+        1700
+      ],
+      "sector": 1
+    },
+    {
+      "name": "GLASS CONSERVATORY",
+      "rect": [
+        500,
+        650,
+        1700,
+        1550
+      ],
+      "sector": 1
+    },
+    {
+      "name": "CRUCIBLE HALL",
+      "rect": [
+        2850,
+        2100,
+        2300,
+        1900
+      ],
+      "sector": 2
+    },
+    {
+      "name": "CHAINWORKS",
+      "rect": [
+        3300,
+        3800,
+        1500,
+        1600
+      ],
+      "sector": 2
+    },
+    {
+      "name": "THE CROWN CHAMBER",
+      "rect": [
+        5600,
+        1900,
+        2800,
+        1900
+      ],
+      "sector": 3
+    },
+    {
+      "name": "LAVA CASCADES",
+      "rect": [
+        5900,
+        650,
+        2200,
+        1400
+      ],
+      "sector": 3
+    },
+    {
+      "name": "SOUTH BRIDGE",
+      "rect": [
+        1050,
+        3650,
+        420,
+        1000
+      ],
+      "sector": 0
+    },
+    {
+      "name": "LABORATORY CAUSEWAY",
+      "rect": [
+        2250,
+        2700,
+        750,
+        450
+      ],
+      "sector": 1
+    },
+    {
+      "name": "THRONE BRIDGE",
+      "rect": [
+        5000,
+        2700,
+        800,
+        420
+      ],
+      "sector": 2
+    }
+  ],
+  "spawn": [
+    480,
+    5360
+  ],
+  "exit": [
+    7700,
+    2520
+  ],
+  "rivers": [
+    [
+      650,
+      4250,
+      950,
+      180
+    ],
+    [
+      2350,
+      2500,
+      200,
+      850
+    ],
+    [
+      5200,
+      2300,
+      220,
+      1500
+    ]
+  ],
+  "bridges": [
+    [
+      1110,
+      4210,
+      300,
+      260
+    ],
+    [
+      2300,
+      2790,
+      310,
+      260
+    ],
+    [
+      5150,
+      2780,
+      320,
+      260
+    ]
+  ],
+  "pools": [
+    [
+      600,
+      2700,
+      350,
+      320
+    ],
+    [
+      1900,
+      2750,
+      270,
+      550
+    ],
+    [
+      3350,
+      2300,
+      500,
+      400
+    ],
+    [
+      3650,
+      4300,
+      700,
+      350
+    ],
+    [
+      6000,
+      2200,
+      330,
+      480
+    ],
+    [
+      7900,
+      3000,
+      300,
+      420
+    ],
+    [
+      850,
+      950,
+      450,
+      500
+    ]
+  ],
+  "gates": [
+    {
+      "rect": [
+        1050,
+        3920,
+        420,
+        90
+      ],
+      "opens": 1
+    },
+    {
+      "rect": [
+        2650,
+        2700,
+        90,
+        450
+      ],
+      "opens": 2
+    },
+    {
+      "rect": [
+        5500,
+        2700,
+        90,
+        420
+      ],
+      "opens": 3
+    }
+  ],
+  "falls": [
+    [
+      650,
+      2590,
+      230,
+      150
+    ],
+    [
+      3420,
+      2150,
+      170,
+      200
+    ],
+    [
+      7900,
+      2800,
+      180,
+      260
+    ]
+  ],
+  "spawns": [
+    {
+      "type": "cinder_page",
+      "pos": [
+        690,
+        5010
+      ],
+      "sector": 0
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        990,
+        5200
+      ],
+      "sector": 0
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        1250,
+        5480
+      ],
+      "sector": 0
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        1750,
+        5100
+      ],
+      "sector": 0
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        2040,
+        4800
+      ],
+      "sector": 0
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        2390,
+        4960
+      ],
+      "sector": 0
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        2750,
+        5040
+      ],
+      "sector": 0
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        1210,
+        4600
+      ],
+      "sector": 0
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        520,
+        2410
+      ],
+      "sector": 1
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        1000,
+        2380
+      ],
+      "sector": 1
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        1650,
+        2400
+      ],
+      "sector": 1
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        1700,
+        3260
+      ],
+      "sector": 1
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        650,
+        3350
+      ],
+      "sector": 1
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        1800,
+        1460
+      ],
+      "sector": 1
+    },
+    {
+      "type": "cinder_page",
+      "pos": [
+        1540,
+        1840
+      ],
+      "sector": 1
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        610,
+        1770
+      ],
+      "sector": 1
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        2050,
+        3510
+      ],
+      "sector": 1
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        1710,
+        900
+      ],
+      "sector": 1
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        3140,
+        3200
+      ],
+      "sector": 2
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        3460,
+        2900
+      ],
+      "sector": 2
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        4020,
+        2810
+      ],
+      "sector": 2
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        4640,
+        3300
+      ],
+      "sector": 2
+    },
+    {
+      "type": "cinder_page",
+      "pos": [
+        4440,
+        3660
+      ],
+      "sector": 2
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        3480,
+        3980
+      ],
+      "sector": 2
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        3530,
+        4750
+      ],
+      "sector": 2
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        4470,
+        4810
+      ],
+      "sector": 2
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        3970,
+        5140
+      ],
+      "sector": 2
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        4850,
+        2400
+      ],
+      "sector": 2
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        5790,
+        2660
+      ],
+      "sector": 3
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        6500,
+        2520
+      ],
+      "sector": 3
+    },
+    {
+      "type": "cinder_page",
+      "pos": [
+        6600,
+        3320
+      ],
+      "sector": 3
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        7460,
+        3450
+      ],
+      "sector": 3
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        8070,
+        2550
+      ],
+      "sector": 3
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        7750,
+        1500
+      ],
+      "sector": 3
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        6420,
+        1400
+      ],
+      "sector": 3
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        7000,
+        930
+      ],
+      "sector": 3
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        7750,
+        3350
+      ],
+      "sector": 3
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        5950,
+        3330
+      ],
+      "sector": 3
+    },
+    {
+      "type": "cinder_page",
+      "pos": [
+        6940,
+        2070
+      ],
+      "sector": 3
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        8110,
+        3550
+      ],
+      "sector": 3
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        734.0,
+        4929.4
+      ],
+      "sector": 0
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        1418.7,
+        5332.3
+      ],
+      "sector": 0
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        2236.0,
+        4807.7
+      ],
+      "sector": 0
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        2741.3,
+        5203.1
+      ],
+      "sector": 0
+    },
+    {
+      "type": "brandbound_chain",
+      "pos": [
+        469.4,
+        2618.6
+      ],
+      "sector": 1
+    },
+    {
+      "type": "kiln_slug",
+      "pos": [
+        1487.3,
+        2473.2
+      ],
+      "sector": 1
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        749.4,
+        3308.4
+      ],
+      "sector": 1
+    },
+    {
+      "type": "cinder_page",
+      "pos": [
+        1365.3,
+        1799.6
+      ],
+      "sector": 1
+    },
+    {
+      "type": "cinderbell_wisp",
+      "pos": [
+        3253.2,
+        3069.3
+      ],
+      "sector": 2
+    },
+    {
+      "type": "cinder_page",
+      "pos": [
+        3930.8,
+        2832.1
+      ],
+      "sector": 2
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        4624.9,
+        3746.5
+      ],
+      "sector": 2
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        3613.0,
+        4830.8
+      ],
+      "sector": 2
+    },
+    {
+      "type": "crucible_scuttler",
+      "pos": [
+        5780.0,
+        2864.7
+      ],
+      "sector": 3
+    },
+    {
+      "type": "furnace_sentinel",
+      "pos": [
+        6679.3,
+        3433.2
+      ],
+      "sector": 3
+    },
+    {
+      "type": "ashglass_alchemist",
+      "pos": [
+        8268.0,
+        2498.4
+      ],
+      "sector": 3
+    },
+    {
+      "type": "coalwing_gargoyle",
+      "pos": [
+        6611.7,
+        1512.3
+      ],
+      "sector": 3
+    }
+  ],
+  "bodies": [
+    {
+      "type": "gatebreaker_korr",
+      "name": "Gatebreaker Korr",
+      "hp": 650,
+      "pos": [
+        1480,
+        4750
+      ]
+    },
+    {
+      "type": "glass_matron",
+      "name": "The Glass Matron",
+      "hp": 820,
+      "pos": [
+        1330,
+        2470
+      ]
+    },
+    {
+      "type": "pyrewing_bellkeeper",
+      "name": "Pyrewing Bellkeeper",
+      "hp": 1000,
+      "pos": [
+        4450,
+        2660
+      ]
+    },
+    {
+      "type": "castellan_varr",
+      "name": "Castellan Varr",
+      "hp": 1500,
+      "pos": [
+        7120,
+        2760
+      ]
+    },
+    {
+      "type": "calderax",
+      "name": "Calderax, the Living Caldera",
+      "hp": 2600,
+      "pos": [
+        7240,
+        2540
+      ]
+    }
+  ],
+  "solids": [
+    [
+      350,
+      2190,
+      350,
+      110
+    ],
+    [
+      1450,
+      2190,
+      400,
+      110
+    ],
+    [
+      1450,
+      720,
+      360,
+      120
+    ],
+    [
+      4400,
+      2170,
+      400,
+      110
+    ],
+    [
+      7400,
+      1970,
+      300,
+      90
+    ],
+    [
+      500,
+      5680,
+      400,
+      80
+    ],
+    [
+      2140,
+      4590,
+      420,
+      80
+    ]
+  ]
+}

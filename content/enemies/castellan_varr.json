@@ -1,0 +1,13 @@
+{
+  "id": "castellan_varr",
+  "name": "Castellan Varr",
+  "sprite": "castellan_varr",
+  "health": 1350,
+  "speed": 88,
+  "damage": 25,
+  "behaviour": "boss",
+  "custom_attack": "regent",
+  "aggro_range": 1300,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

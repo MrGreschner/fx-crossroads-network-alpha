@@ -29,6 +29,7 @@ func setup(g:Node2D)->void:
  game=g;expedition.manager=self;relics.game=g
  game.realm_picker.add_item("The Between");game.realm_picker.set_item_metadata(game.realm_picker.item_count-1,"between")
  preload("res://scripts/between_actors.gd").install(game,true)
+ preload("res://scripts/veilbound_pursuers.gd").install(game,true)
  game.regions.between=JSON.parse_string(FileAccess.get_file_as_string("res://content/regions/between.json"))
  for pair in [["waylight_reed","reed_stalker"],["waylight_crab","sluice_crab"]]:
   var def:Dictionary=game.enemy_defs.get(pair[1],{}).duplicate(true);def.id=pair[0];game.enemy_defs[pair[0]]=def
@@ -85,6 +86,7 @@ func stream(authority:bool)->void:
  if not authority:return
  for n in range(game.opponents.size()-1,-1,-1):
   var foe:Dictionary=game.opponents[n]
+  if bool(foe.get("veilbound",false)):continue
   if not active.has(expedition.key(expedition.cell_at(foe.pos))):
    if foe.has("between_id"):expedition.sleeping[str(foe.between_id)]=foe.duplicate(true)
    game.opponents.remove_at(n)
@@ -253,4 +255,4 @@ func draw_hud()->void:
  if kind=="overcharge" and conclave.state.get("members",[]).size()==4:text="OVERCHARGE T%d • %d events • %s" % [int(config.tier),completed_events(),"CONCLAVE CACHE SECURED • finish realm" if conclave.completed() else "CONCLAVE %d/4 defeated" % conclave.state.get("dead",[]).size()]
  var y=preload("res://scripts/hud_layout.gd").objective_top(game,true)+(60 if kind=="overcharge" and game.adventure.immersive.active else 0)
  game.draw_rect(Rect2(20,y,minf(900,game.VIEW.x-40),31),Color(.03,.08,.12,.94));game.draw_string(game.font,Vector2(30,y+21),text,HORIZONTAL_ALIGNMENT_LEFT,game.VIEW.x-60,16,Color("#d8e9c7"))
- if between():expedition.draw_map(game)
+ if between():expedition.draw_map(game);game.adventure.pursuers.draw_hud(game)

@@ -1,0 +1,13 @@
+{
+  "id": "coalwing_gargoyle",
+  "name": "Coalwing Gargoyle",
+  "sprite": "coalwing_gargoyle",
+  "health": 105,
+  "speed": 120,
+  "damage": 18,
+  "behaviour": "melee",
+  "custom_attack": "dive",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

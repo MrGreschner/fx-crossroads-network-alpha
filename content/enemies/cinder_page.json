@@ -1,0 +1,13 @@
+{
+  "id": "cinder_page",
+  "name": "Cinder Page",
+  "sprite": "cinder_page",
+  "health": 70,
+  "speed": 100,
+  "damage": 18,
+  "behaviour": "ranged",
+  "custom_attack": "fan",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

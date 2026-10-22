@@ -52,3 +52,207 @@ metadata/enemy_id = "moonlit_puppeteer"
 [node name="Enemy12" type="Marker2D" parent="Enemies"]
 position = Vector2(6530,3100)
 metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany0" type="Marker2D" parent="Enemies"]
+position = Vector2(1485.0,2923.7)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany1" type="Marker2D" parent="Enemies"]
+position = Vector2(1818.9,1995.0)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany2" type="Marker2D" parent="Enemies"]
+position = Vector2(3043.5,2636.1)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany3" type="Marker2D" parent="Enemies"]
+position = Vector2(2538.6,1308.2)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany4" type="Marker2D" parent="Enemies"]
+position = Vector2(2927.6,997.0)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany5" type="Marker2D" parent="Enemies"]
+position = Vector2(2345.2,3939.9)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany6" type="Marker2D" parent="Enemies"]
+position = Vector2(2901.7,4536.4)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany7" type="Marker2D" parent="Enemies"]
+position = Vector2(3509.6,3883.0)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany8" type="Marker2D" parent="Enemies"]
+position = Vector2(4279.4,3189.7)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany9" type="Marker2D" parent="Enemies"]
+position = Vector2(5196.5,2058.4)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany10" type="Marker2D" parent="Enemies"]
+position = Vector2(6428.8,1672.7)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany11" type="Marker2D" parent="Enemies"]
+position = Vector2(5587.4,917.7)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany12" type="Marker2D" parent="Enemies"]
+position = Vector2(6547.6,3225.1)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany13" type="Marker2D" parent="Enemies"]
+position = Vector2(1192.3,2438.1)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany14" type="Marker2D" parent="Enemies"]
+position = Vector2(2048.5,2105.5)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany15" type="Marker2D" parent="Enemies"]
+position = Vector2(2924.2,2880.0)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany16" type="Marker2D" parent="Enemies"]
+position = Vector2(2258.3,1447.8)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany17" type="Marker2D" parent="Enemies"]
+position = Vector2(2795.7,941.4)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany18" type="Marker2D" parent="Enemies"]
+position = Vector2(2755.7,3839.1)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany19" type="Marker2D" parent="Enemies"]
+position = Vector2(3174.2,4291.5)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany20" type="Marker2D" parent="Enemies"]
+position = Vector2(3929.4,4066.1)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany21" type="Marker2D" parent="Enemies"]
+position = Vector2(4413.9,3222.1)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany22" type="Marker2D" parent="Enemies"]
+position = Vector2(5451.8,2061.1)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany23" type="Marker2D" parent="Enemies"]
+position = Vector2(6362.2,1733.1)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany24" type="Marker2D" parent="Enemies"]
+position = Vector2(5560.6,793.4)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany25" type="Marker2D" parent="Enemies"]
+position = Vector2(6396.1,3033.0)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany26" type="Marker2D" parent="Enemies"]
+position = Vector2(1719.0,2594.0)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany27" type="Marker2D" parent="Enemies"]
+position = Vector2(1736.3,2218.6)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany28" type="Marker2D" parent="Enemies"]
+position = Vector2(3291.9,2813.0)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany29" type="Marker2D" parent="Enemies"]
+position = Vector2(2439.8,1116.7)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany30" type="Marker2D" parent="Enemies"]
+position = Vector2(3142.5,652.5)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany31" type="Marker2D" parent="Enemies"]
+position = Vector2(2418.0,3576.5)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany32" type="Marker2D" parent="Enemies"]
+position = Vector2(2997.2,4556.6)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany33" type="Marker2D" parent="Enemies"]
+position = Vector2(3871.6,3919.8)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany34" type="Marker2D" parent="Enemies"]
+position = Vector2(4366.2,3127.6)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany35" type="Marker2D" parent="Enemies"]
+position = Vector2(4966.4,2461.8)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany36" type="Marker2D" parent="Enemies"]
+position = Vector2(6253.6,2056.9)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany37" type="Marker2D" parent="Enemies"]
+position = Vector2(5708.8,852.3)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany38" type="Marker2D" parent="Enemies"]
+position = Vector2(6415.6,3391.4)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany39" type="Marker2D" parent="Enemies"]
+position = Vector2(1145.4,2789.1)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany40" type="Marker2D" parent="Enemies"]
+position = Vector2(1838.1,2381.7)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany41" type="Marker2D" parent="Enemies"]
+position = Vector2(3039.3,2910.3)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany42" type="Marker2D" parent="Enemies"]
+position = Vector2(2192.9,1162.4)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany43" type="Marker2D" parent="Enemies"]
+position = Vector2(2931.2,631.7)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany44" type="Marker2D" parent="Enemies"]
+position = Vector2(2682.6,3684.2)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany45" type="Marker2D" parent="Enemies"]
+position = Vector2(3227.6,4658.3)
+metadata/enemy_id = "mask_duelist"
+
+[node name="MasqueradeCompany46" type="Marker2D" parent="Enemies"]
+position = Vector2(3774.6,4339.7)
+metadata/enemy_id = "prism_acolyte"
+
+[node name="MasqueradeCompany47" type="Marker2D" parent="Enemies"]
+position = Vector2(3977.8,3148.4)
+metadata/enemy_id = "lunar_usher"
+
+[node name="MasqueradeCompany48" type="Marker2D" parent="Enemies"]
+position = Vector2(5179.0,2405.9)
+metadata/enemy_id = "velvet_dancer"
+
+[node name="MasqueradeCompany49" type="Marker2D" parent="Enemies"]
+position = Vector2(6043.6,1796.6)
+metadata/enemy_id = "moonlit_puppeteer"
+
+[node name="MasqueradeCompany50" type="Marker2D" parent="Enemies"]
+position = Vector2(5657.0,784.3)
+metadata/enemy_id = "mask_duelist"

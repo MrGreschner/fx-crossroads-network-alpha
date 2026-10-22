@@ -190,6 +190,7 @@ func restore_realm_scroll(scroll:ScrollContainer)->void:
  await get_tree().process_frame
  if is_instance_valid(scroll):scroll.scroll_vertical=realm_scroll
 func between_ui(col:Node)->void:
+ text(col,"Veilbound Pursuers arrive after 3 minutes. Force a retreat at half health; they return after 2 minutes with growing reinforcements. Elites stalk the outer two rings and expeditions lasting 15 minutes. Watch their marked attacks, and bank your haul at the crossing.",15)
  var reach=preload("res://scripts/between_access.gd").depth(manager.game.legacy)
  text(col,"PORTAL STRENGTH • ring %d • co-op follows the host" % reach,18)
  text(col,preload("res://scripts/between_access.gd").next(manager.game.legacy),15)

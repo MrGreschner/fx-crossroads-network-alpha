@@ -29,7 +29,10 @@ func level()->int:
  while lv<100 and int(state().xp)>=threshold(lv+1):lv+=1
  return lv
 func now()->float:return time_for_test if time_for_test>=0 else Time.get_unix_time_from_system()
-func allowed()->bool:return not bool(legacy.data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").progression_blocked() and not legacy.get_tree().root.has_meta("fx_dedicated_server")
+func allowed()->bool:
+ var dev=preload("res://scripts/profile_store.gd").dev_session()
+ if dev!=null and dev.active and bool(legacy.data.get("teacher",false)):return not legacy.get_tree().root.has_meta("fx_dedicated_server")
+ return not bool(legacy.data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").progression_blocked() and not legacy.get_tree().root.has_meta("fx_dedicated_server")
 func setup(owner:Node)->void:
  legacy=owner;world_region="";caches.clear()
  var migrate=not legacy.data.has("gardening") and not legacy.arcade and legacy.game.provisions.crop in ["growing","ready"]

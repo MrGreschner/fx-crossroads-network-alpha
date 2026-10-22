@@ -123,6 +123,7 @@ func stream()->void:
   if not wanted.has(k):chunks.erase(k)
  for i in range(g.enemies.size()-1,-1,-1):
   var foe=g.enemies[i]
+  if bool(foe.get("veilbound",false)):continue
   if not foe.has("between_id"):
    if foe.pos.distance_to(g.position_in_world)>1300:g.enemies.remove_at(i)
    continue
@@ -193,9 +194,9 @@ func defeated(foe:Dictionary)->void:
   var cell_id=str(foe.between_id).trim_suffix(":seal");seal_drops[cell_id]=foe.pos
   manager.game.message="%s defeated • collect the glowing Crossing Seal" % str(foe.get("warden_name","Warden"));manager.game.message_time=6
  manager.game.kills+=1;manager.game.grant_enemy_xp(50 if foe.boss else 10)
-func snapshot()->Dictionary:return {"dead":dead,"collected":collected,"explored":explored,"sleeping":sleeping,"carried":carried,"farthest":farthest,"guardian":guardian,"trial_seconds":trial_seconds,"seal_drops":seal_drops}
+func snapshot()->Dictionary:return {"pursuers":manager.game.adventure.pursuers.snapshot(),"dead":dead,"collected":collected,"explored":explored,"sleeping":sleeping,"carried":carried,"farthest":farthest,"guardian":guardian,"trial_seconds":trial_seconds,"seal_drops":seal_drops}
 func restore(v:Dictionary)->void:
- trial_seconds=float(v.get("trial_seconds",0));seal_drops=v.get("seal_drops",{});dead=v.get("dead",{});collected=v.get("collected",{});explored=v.get("explored",{});sleeping=v.get("sleeping",{});carried=clampi(int(v.get("carried",0)),0,100000);farthest=clampi(int(v.get("farthest",0)),0,14);guardian=bool(v.get("guardian",false));current=Vector2i(999,999);stream();reveal_map()
+ manager.game.adventure.pursuers.receive(v.get("pursuers",{}));trial_seconds=float(v.get("trial_seconds",0));seal_drops=v.get("seal_drops",{});dead=v.get("dead",{});collected=v.get("collected",{});explored=v.get("explored",{});sleeping=v.get("sleeping",{});carried=clampi(int(v.get("carried",0)),0,100000);farthest=clampi(int(v.get("farthest",0)),0,14);guardian=bool(v.get("guardian",false));current=Vector2i(999,999);stream();reveal_map()
 func draw_ground(g:Node2D,camera:Vector2)->void:
  var view=Rect2(camera,g.VIEW).grow(100)
  for k in chunks:

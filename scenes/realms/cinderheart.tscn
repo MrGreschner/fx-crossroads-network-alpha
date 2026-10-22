@@ -1,0 +1,15 @@
+[gd_scene format=3]
+[node name="Cinderheart" type="Node2D"]
+[node name="Points" type="Node2D" parent="."]
+[node name="Spawn" type="Marker2D" parent="Points"]
+position = Vector2(480,5360)
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+position = Vector2(480,5360)
+[node name="Merchant" type="Marker2D" parent="Points"]
+position = Vector2(480,5360)
+[node name="Boss" type="Marker2D" parent="Points"]
+position = Vector2(7700,2520)
+[node name="GroundPaint" type="Node2D" parent="."]
+[node name="Obstacles" type="Node2D" parent="."]
+[node name="Decorations" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="."]

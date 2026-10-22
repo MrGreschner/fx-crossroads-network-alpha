@@ -18,6 +18,8 @@ var hollow:Node
 var quests:Node
 var expansion:Node
 var immersive:Node
+var cinder:Node
+var pursuers:Node
 var tech:Node
 var foundry:Node
 var school:Node
@@ -58,6 +60,8 @@ func _ready() -> void:
 	expansion=preload("res://scripts/v43_expansion.gd").new();add_child(expansion);expansion.adventure=self
 
 	immersive=preload("res://scripts/immersive_worlds.gd").new();add_child(immersive);immersive.adventure=self
+	pursuers=preload("res://scripts/veilbound_pursuers.gd").new();add_child(pursuers);pursuers.adventure=self
+	cinder=preload("res://scripts/cinderheart.gd").new();add_child(cinder);cinder.adventure=self
 	tech=preload("res://scripts/neon_crucible.gd").new();add_child(tech);tech.adventure=self
 	foundry=preload("res://scripts/confluence_world.gd").new();add_child(foundry);foundry.adventure=self
 	school=preload("res://scripts/school_world.gd").new();add_child(school);school.adventure=self
@@ -66,6 +70,8 @@ func setup(id: String) -> void:
 	newcomers.setup()
 	additions.setup()
 	immersive.setup(id)
+	cinder.setup(id)
+	pursuers.reset()
 	tech.setup(id)
 	foundry.setup(id)
 	school.setup(id)
@@ -115,6 +121,7 @@ func alive(id: String) -> bool:
 func authoritative() -> bool:
 	return not arcade or game.role == "host"
 func can_stand(point: Vector2) -> bool:
+	if cinder.active:return cinder.can_stand(point)
 	if str(game.realm_id if arcade else game.region_id)=="moonveil":return preload("res://scripts/moon_castle.gd").open(point)
 	if not arcade and game.get("voyage")!=null and game.voyage.active:return game.voyage.land_at(point)
 	if arcade and game.get("expedition")!=null and game.expedition.between():return game.expedition.expedition.open(point)
@@ -173,6 +180,7 @@ func portals() -> Array:
 
 func interact(id: String) -> bool:
 	if immersive.active:return immersive.interact(id)
+	if cinder.active:return cinder.interact(id)
 	if foundry.active:return foundry.interact(id)
 	if tech.active:return tech.interact(id)
 	if school.active:return school.interact(id)
@@ -218,6 +226,7 @@ func on_defeat(enemy: Dictionary) -> bool:
 	if newcomers.on_defeat(enemy):return true
 	if immersive.active and immersive.on_defeat(enemy):return true
 	if foundry.active and foundry.on_defeat(enemy):return true
+	if cinder.active and cinder.on_defeat(enemy):return true
 	if tech.active and tech.on_defeat(enemy):return true
 	if school.active and school.on_defeat(enemy):return true
 	if vault != null and vault.active: return vault.on_defeat(enemy)
@@ -329,6 +338,8 @@ func step(delta: float) -> void:
 	newcomers.step(delta)
 	additions.step(delta)
 	immersive.step(delta)
+	cinder.step(delta)
+	pursuers.step(delta)
 	tech.step(delta)
 	foundry.step(delta)
 	school.step(delta)
@@ -343,7 +354,7 @@ func step(delta: float) -> void:
 	step_healing_zones(delta)
 	step_discs(delta)
 	polish.bosses(delta)
-	if not active and not combat.coast.active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id=="moonveil" if arcade else game.region_id=="moonveil"): return
+	if not active and not combat.coast.active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id in ["moonveil","zombie"] if arcade else game.region_id in ["moonveil","zombie"]): return
 	clock+=delta
 	for n in range(warnings.size()-1,-1,-1):
 		var warning: Dictionary = warnings[n]
@@ -375,7 +386,7 @@ func step(delta: float) -> void:
 				hit_player(str(id),18 if active else 12,"",preload("res://scripts/defeat_credit.gd").hazard("Realm trap"));last_trap_hit[id]=clock
 	for enemy in foes().duplicate():
 		if bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in newcomers.TYPES:continue
-		if str(enemy.get("type","")) in foundry.TYPES or str(enemy.get("type","")) in tech.TYPES or str(enemy.get("type","")) in school.TYPES or str(enemy.get("type","")) in expansion.TYPES or str(enemy.get("type","")) in hollow.TYPES or str(enemy.get("type","")) in city.TYPES or bool(enemy.get("vault_actor",false)) or combat.stunned(combat.npc_key(enemy)):continue
+		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in cinder.TYPES or str(enemy.get("type","")) in foundry.TYPES or str(enemy.get("type","")) in tech.TYPES or str(enemy.get("type","")) in school.TYPES or str(enemy.get("type","")) in expansion.TYPES or str(enemy.get("type","")) in hollow.TYPES or str(enemy.get("type","")) in city.TYPES or bool(enemy.get("vault_actor",false)) or combat.stunned(combat.npc_key(enemy)):continue
 		var definitions: Dictionary = game.enemy_defs if arcade else game.enemy_types
 		var custom := str(definitions.get(str(enemy["type"]),{}).get("custom_attack",""))
 		if not bool(enemy.get("expansion_boss",false)) and custom.is_empty():continue
@@ -446,6 +457,14 @@ func step(delta: float) -> void:
 		var turn := int(enemy.get("skill_step",0));enemy["skill_step"]=turn+1
 		var warning_start := warnings.size()
 		match kind:
+			"plague_director":
+				if float(enemy.hp)<float(enemy.max_hp)*.5:enemy.skill_timer=2.4
+				var aim:Vector2=(target-point).normalized()
+				if turn%3==0:
+					for n in 5:combat.launch_projectile("enemy",point,aim.rotated((n-2)*.24),{"credit":warning_credit.duplicate(true),"range":850,"speed":285,"color":"#c7db8c"},18)
+				elif turn%3==1:
+					for n in 3:launch_lob("enemy",point,target+Vector2.from_angle(TAU*n/3)*80,{"travel_speed":260,"blast_radius":75,"color":"#b0c985"},19)
+				else:warn(point,210,25,1.1)
 			"mirror_marquis":
 				var aim:Vector2=(target-point).normalized()
 				if turn%3==0:
@@ -548,11 +567,13 @@ func step(delta: float) -> void:
 	warning_credit.clear()
 
 func snapshot() -> Dictionary:
-	return {"newcomers":newcomers.snapshot(),"additions":additions.snapshot(),"foundry":foundry.snapshot(),"immersive":immersive.snapshot(),"tech":tech.snapshot(),"school":school.snapshot(),"expansion":expansion.snapshot(),"quests":quests.snapshot(),"hollow":hollow.snapshot(),"city":city.snapshot(),"combat":combat.snapshot() if combat != null else {},"waves":waves,"vault":vault.snapshot() if vault != null else {},"lob_shots":lob_shots,"lob_blasts":lob_blasts,"healing_zones":healing_zones,"discs":discs,"active":active,"visited":visited,"cleared":cleared,"final":final_started,"complete":complete,"clock":clock,"warnings":warnings,"stolen":stolen}
+	return {"pursuers":pursuers.snapshot(),"cinder":cinder.snapshot(),"newcomers":newcomers.snapshot(),"additions":additions.snapshot(),"foundry":foundry.snapshot(),"immersive":immersive.snapshot(),"tech":tech.snapshot(),"school":school.snapshot(),"expansion":expansion.snapshot(),"quests":quests.snapshot(),"hollow":hollow.snapshot(),"city":city.snapshot(),"combat":combat.snapshot() if combat != null else {},"waves":waves,"vault":vault.snapshot() if vault != null else {},"lob_shots":lob_shots,"lob_blasts":lob_blasts,"healing_zones":healing_zones,"discs":discs,"active":active,"visited":visited,"cleared":cleared,"final":final_started,"complete":complete,"clock":clock,"warnings":warnings,"stolen":stolen}
 func receive(data: Dictionary) -> void:
 	newcomers.receive(data.get("newcomers",{}))
 	additions.receive(data.get("additions",{}))
 	immersive.receive(data.get("immersive",{}))
+	cinder.receive(data.get("cinder",{}))
+	pursuers.receive(data.get("pursuers",{}))
 	tech.receive(data.get("tech",{}))
 	foundry.receive(data.get("foundry",{}))
 	school.receive(data.get("school",{}))
@@ -577,6 +598,8 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 	newcomers.draw_on(canvas,camera)
 	additions.draw_on(canvas,camera)
 	immersive.draw_on(canvas,camera)
+	cinder.draw_on(canvas,camera)
+	pursuers.draw_on(canvas,camera)
 	tech.draw_on(canvas,camera)
 	foundry.draw_on(canvas,camera)
 	school.draw_on(canvas,camera)

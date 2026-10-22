@@ -1,0 +1,13 @@
+{
+  "id": "cinderbell_wisp",
+  "name": "Cinderbell Wisp",
+  "sprite": "cinderbell_wisp",
+  "health": 65,
+  "speed": 110,
+  "damage": 18,
+  "behaviour": "ranged",
+  "custom_attack": "ring",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

@@ -22,6 +22,7 @@ func setup(owner:Node2D)->void:
   definition["id"]=pair[0];definition["name"]=str(definition.get("name",pair[1]))+" echo";definition["expansion_only"]=false
   game.enemy_types[pair[0]]=definition;game.load_sprite_pair(str(definition.get("sprite",pair[1])))
  preload("res://scripts/between_actors.gd").install(game,false)
+ preload("res://scripts/veilbound_pursuers.gd").install(game,false)
  game.realms["between"]=JSON.parse_string(FileAccess.get_file_as_string("res://content/regions/between.json"))
 func now()->float:return utc_for_test if utc_for_test>=0 else Time.get_unix_time_from_system()
 func today()->int:return C.day_number(now())
@@ -170,7 +171,7 @@ func draw_hud(g:Node2D)->void:
   g.draw_string(g.font,box.position+Vector2(12,23),"WAYLIGHT %d carried • %d banked" % [expedition.carried,progress.state().shards],HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e8dfa8"))
   g.draw_string(g.font,box.position+Vector2(12,46),"Ring %d • %s" % [maxi(absi(cell.x),absi(cell.y)),expedition.THEMES[expedition.chunks[expedition.key(cell)].theme].name],HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#a8d1ca"))
   g.draw_string(g.font,box.position+Vector2(12,66),"Seals %d/6 • %02d:%02d • return to extract" % [expedition.seals(),int(expedition.trial_seconds)/60,int(expedition.trial_seconds)%60] if expedition.trial() else "Entrance: %dm • extraction keeps all; defeat banks half" % int(home.length()/32),HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#c1d3d8"))
-  expedition.draw_map(g)
+  expedition.draw_map(g);game.adventure.pursuers.draw_hud(g)
   var p=Vector2(g.VIEW.x-104,150);g.draw_line(p,p+home.normalized()*22,Color("#f2dfa4"),4,true);g.draw_string(g.font,p+Vector2(-35,35),"HOME",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#f2dfa4"))
  else:
   g.draw_string(g.font,box.position+Vector2(12,23),"OVERCHARGE TIER %d • %d / %d optional events" % [ticket().tier,overcharge.completed(),overcharge.events.size()],HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#e8d2a9"))

@@ -1,0 +1,12 @@
+{
+  "id": "plague_director",
+  "name": "Plague Director",
+  "sprite": "plague_director",
+  "health": 1500,
+  "speed": 100,
+  "damage": 23,
+  "behaviour": "chase",
+  "custom_attack": "director_protocol",
+  "aggro_range": 850,
+  "expansion_only": true
+}

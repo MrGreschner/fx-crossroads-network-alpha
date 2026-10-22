@@ -1,16 +1,19 @@
 extends Node
 ## Nine original actors, shared host/solo authority and bounded warning effects.
-const TYPES=["rift_skitter","gearhorn_runner","brass_bailiff","velvet_dancer","moonlit_puppeteer","quarantine_hound","antiseptic_drone","spore_orderly","quarantine_warden"]
+const TYPES=["rift_skitter","gearhorn_runner","brass_bailiff","velvet_dancer","moonlit_puppeteer","quarantine_hound","antiseptic_drone","spore_orderly","quarantine_warden","lockdown_aberration"]
 var adventure:Node
 var warnings:Array=[]
 var pools:Array=[]
 var clock:=0.0
-func setup()->void:warnings.clear();pools.clear();clock=0
+func setup()->void:
+ warnings.clear();pools.clear();clock=0
+ for pose in ["idle","walk1","walk2","attack","0","1"]:adventure.game.art["lockdown_aberration_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/lockdown_aberration_"+pose+".svg")
 func vec(a:Array)->Vector2:return Vector2(a[0],a[1])
 func packed(p:Vector2)->Array:return [p.x,p.y]
 func on_defeat(e:Dictionary)->bool:
- if str(e.get("type",""))!="quarantine_warden":return false
- adventure.announce("Isolation ward cleared! Continue east to confront the Plague Director.")
+ if str(e.get("type","")) not in ["quarantine_warden","lockdown_aberration"]:return false
+ if not adventure.arcade:adventure.game.kills+=1
+ adventure.announce("Ambush contained! Clear the remaining quarantine defenders, then confront the Plague Director at the eastern checkpoint." if str(e.type)=="lockdown_aberration" else "Isolation ward cleared! Continue east: the Plague Director is still ahead.")
  return true
 func move(e:Dictionary,direction:Vector2,speed:float,delta:float)->void:
  if direction.is_zero_approx():return
@@ -30,7 +33,14 @@ func step(delta:float)->void:
  for e in adventure.foes():
   var kind:String=str(e.type)
   if kind not in TYPES or bool(e.get("converted",false)):continue
-  if kind=="quarantine_warden":e.boss=true;e.expansion_boss=true;e.hit_radius=30.0
+  if kind in ["quarantine_warden","lockdown_aberration"]:e.boss=true;e.expansion_boss=true;e.hit_radius=30.0
+  if kind=="lockdown_aberration" and not bool(e.get("ambush_awake",false)):
+   var close=false
+   for id in adventure.points():
+    if adventure.alive(str(id)) and (adventure.points()[id] as Vector2).distance_to(e.pos)<440:close=true
+   e.buried=not close
+   if not close:continue
+   e.ambush_awake=true;e.v143_timer=1.5;adventure.announce("SURPRISE ENCOUNTER • Lockdown Aberration breaks out of containment! This is a miniboss: the Director waits farther east.")
   var key:String=combat.npc_key(e)
   if combat.stunned(key):continue
   var target:=Vector2.ZERO;var distance:=INF
@@ -47,7 +57,7 @@ func step(delta:float)->void:
    if int(warning.uid)==int(e.uid):winding=true;break
   if not winding:
    if kind in ["antiseptic_drone","moonlit_puppeteer"]:move(e,combat.ranged_direction(e,target),speed,delta)
-   elif kind in ["velvet_dancer","quarantine_warden"]:
+   elif kind in ["velvet_dancer","quarantine_warden","lockdown_aberration"]:
     var orbit:Vector2=target+Vector2.from_angle(clock*(1.3 if kind=="velvet_dancer" else .8)+int(e.uid)%7)*165
     move(e,orbit-e.pos,speed,delta)
    elif distance>70:move(e,away,speed,delta)
@@ -72,7 +82,7 @@ func step(delta:float)->void:
    "antiseptic_drone":warn(e,target,78,amount,1.15,"disinfectant")
    "spore_orderly":
     for n in 3:warn(e,target+Vector2.from_angle(n*TAU/3)*85,53,amount,1+n*.25,"spore")
-   "quarantine_warden":
+   "quarantine_warden","lockdown_aberration":
     var turn:int=e.get("v143_turn",0);e.v143_turn=turn+1
     match turn%4:
      0:

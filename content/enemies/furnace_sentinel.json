@@ -1,0 +1,13 @@
+{
+  "id": "furnace_sentinel",
+  "name": "Furnace Sentinel",
+  "sprite": "furnace_sentinel",
+  "health": 155,
+  "speed": 72,
+  "damage": 18,
+  "behaviour": "melee",
+  "custom_attack": "cleave",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

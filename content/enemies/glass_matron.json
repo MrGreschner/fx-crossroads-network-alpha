@@ -1,0 +1,13 @@
+{
+  "id": "glass_matron",
+  "name": "The Glass Matron",
+  "sprite": "glass_matron",
+  "health": 760,
+  "speed": 68,
+  "damage": 25,
+  "behaviour": "boss",
+  "custom_attack": "cross",
+  "aggro_range": 1300,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

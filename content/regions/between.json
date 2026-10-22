@@ -1,1 +1,39 @@
-{"id":"between","name":"The Between","size":[32768,32768],"spawn":[16512,16512],"gate":{"position":[16512,16512]},"boss":[16512,16512],"enemies":[],"background":"#15252e","accent":"#75cabb","terrain":"forest","xp_per_level":3,"description":"Explore unstable fragments of official realms. Collect Waylight, then return to the stable crossing to bank it."}
+{
+  "id": "between",
+  "name": "The Between",
+  "size": [
+    32768,
+    32768
+  ],
+  "spawn": [
+    16512,
+    16512
+  ],
+  "gate": {
+    "position": [
+      16512,
+      16512
+    ]
+  },
+  "boss": [
+    16512,
+    16512
+  ],
+  "enemies": [],
+  "background": "#15252e",
+  "accent": "#75cabb",
+  "terrain": "forest",
+  "xp_per_level": 3,
+  "description": "Explore unstable fragments of official realms. Collect Waylight, then return to the stable crossing to bank it. After three minutes, Veilbound Pursuers begin hunting. Drive them to half health to force a retreat; they return after two minutes, then bring reinforcements. Elites appear in the outer two rings or after fifteen minutes. Extract before the pursuit overwhelms you.",
+  "pursuer_roster": [
+    "veil_shear",
+    "veil_spindle",
+    "veil_mourner",
+    "veil_prism",
+    "veil_hound",
+    "veil_scribe",
+    "veil_maw",
+    "veil_null",
+    "veil_warden"
+  ]
+}

@@ -163,6 +163,7 @@ func setup_media()->void:
 	add_child(media);media.setup(self)
 func media_mouse_world()->Vector2:
 	return media.world_mouse() if media.game!=null else get_global_mouse_position()+camera
+var marina_life:Node
 var voyage:Node
 func _ready() -> void:
 	var travel=preload("res://scripts/travel_polish.gd").new();travel.name="TravelPolish";add_child(travel);travel.play("town")
@@ -215,6 +216,7 @@ func _ready() -> void:
 	var quick_slots=preload("res://scripts/loadout_hud.gd").new();add_child(quick_slots);quick_slots.setup(self)
 	var guide=preload("res://scripts/ability_guide.gd").new();add_child(guide);guide.setup(self)
 	voyage=preload("res://scripts/water_voyage.gd").new();add_child(voyage);voyage.setup(self)
+	marina_life=preload("res://scripts/marina_life.gd").new();add_child(marina_life);marina_life.setup(self)
 	level_cards=preload("res://scripts/level_cards.gd").new();add_child(level_cards);level_cards.setup(self,false)
 	if not get_tree().root.has_meta("fx_intro_seen"):
 		get_tree().root.set_meta("fx_intro_seen",true)
@@ -284,6 +286,9 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
+	if prefix=="lockdown_aberration" or prefix.begins_with("veil_") or prefix in preload("res://scripts/cinderheart.gd").TYPES:
+		for pose in ["idle","walk1","walk2","attack","0","1"]:art[prefix+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+prefix+"_"+pose+".svg")
+		return
 	for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin", "shell", "0", "1"]:
 		var key: String = prefix + "_" + str(pose)
 		var refreshed=preload("res://scripts/hero_art_refresh.gd").texture(prefix,str(pose))
@@ -345,7 +350,7 @@ func build_scenery() -> void:
 
 func can_stand_at(point: Vector2) -> bool:
 	if voyage!=null and voyage.active:return voyage.land_at(point)
-	if mode=="town" and Rect2(2120,2400,310,150).has_point(point):return true
+	if mode=="town" and preload("res://scripts/town_marina.gd").on_deck(point):return true
 	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if mistglass_rift!=null and mistglass_rift.active and not Rect2(55,220,VIEW.x-110,VIEW.y-275).has_point(point):return false
 	if mode=="town" and (preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
@@ -746,6 +751,7 @@ func _process(delta: float) -> void:
 	tutorial.step(delta)
 	if mode=="town":
 		town_life.step(delta)
+		if marina_life!=null:marina_life.step(delta)
 		town_scenery.step(delta)
 		town_upgrade.step(delta)
 		town_polish.step(delta)
@@ -865,6 +871,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func handle_town_interactions() -> void:
+	if marina_life!=null and marina_life.interact():return
 	if voyage!=null and voyage.pier_interact():return
 	if fishing!=null and fishing.interact():return
 	if town_life.events.interact(self):return
@@ -911,7 +918,7 @@ func handle_run(delta: float) -> void:
 	var epoch := combat_epoch
 	if waylight!=null:waylight.step(delta)
 	if not combat_frame_active(epoch): return
-	if adventure.active or adventure.vault.active or adventure.combat.coast.active or adventure.city.active or adventure.hollow.active or adventure.quests.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active:
+	if adventure.active or adventure.vault.active or adventure.combat.coast.active or adventure.city.active or adventure.hollow.active or adventure.quests.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active or adventure.cinder.active:
 		if Input.is_action_just_pressed("interact") and adventure.interact("solo"): return
 	adventure.step(delta*dev_magic.world_scale())
 	if not combat_frame_active(epoch): return
@@ -1318,8 +1325,9 @@ func update_allies(delta: float) -> void:
 func maybe_spawn_boss() -> void:
 	if waylight!=null and waylight.between():return
 	if tutorial.active:return
-	if adventure.active or adventure.vault.active or adventure.quests.active or adventure.expansion.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active: return
-	if mode != "run" or boss_spawned or kills < region.get("enemies", []).size():
+	if adventure.active or adventure.vault.active or adventure.quests.active or adventure.expansion.active or adventure.school.active or adventure.tech.active or adventure.immersive.active or adventure.foundry.active or adventure.cinder.active: return
+	var waiting_for_defenders=not enemies.filter(func(e):return not bool(e.get("summoned",false)) and not bool(e.get("converted",false))).is_empty() if region_id=="zombie" else kills < region.get("enemies", []).size()
+	if mode != "run" or boss_spawned or waiting_for_defenders:
 		return
 	boss_spawned = true
 	if waylight!=null and waylight.kind=="overcharge":
@@ -1334,6 +1342,7 @@ func maybe_spawn_boss() -> void:
 
 func damage_enemy(index: int, amount: float) -> void:
 	if index<0 or index>=enemies.size():return
+	amount*=adventure.pursuers.outgoing("solo")
 	if waylight!=null:amount=waylight.combat.damage(amount)
 	if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.damage(index,amount);return
 	if tutorial.active:tutorial.damage(index,amount);return
@@ -1369,6 +1378,7 @@ func damage_enemy(index: int, amount: float) -> void:
 		var carried: Dictionary = items.get(carried_id, {})
 		if str(carried.get("effect", "")) == "lifesteal":
 			steal += float(carried.get("amount", 0)) / 100.0
+	if adventure.pursuers.leech_blocked("solo"):steal=0
 	if steal > 0:
 		health = minf(max_health(), health + actual_damage * steal*adventure.combat.v98.heal_factor("solo"))
 	add_float_text(enemy["pos"] + Vector2(-18, -42), "ALLY" if bool(enemy.get("converted",false)) else "-" + str(int(amount)), Color("#ffe28f"))
@@ -1447,7 +1457,7 @@ func update_enemies(delta: float) -> void:
 		var enemy: Dictionary = enemies[i]
 		enemy["strike_flash"]=maxf(0,float(enemy.get("strike_flash",0))-delta)
 		if bool(enemy.get("roaming_actor",false)) or bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
-		if str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
+		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		if enemy.get("expansion_boss",false): continue
 		if tutorial.active and tutorial.update_melee(enemy,delta):continue
 		var definition: Dictionary = enemy_types.get(enemy.get("type", ""), {}).duplicate()
@@ -1671,7 +1681,7 @@ func _draw() -> void:
 	if waylight!=null:waylight.draw_hud(self)
 	journey.draw_hud(self)
 	tutorial.draw_on(self)
-	if menu.is_empty():adventure.quests.draw_hud(self);adventure.school.draw_hud(self);adventure.tech.draw_hud(self);adventure.immersive.draw_hud(self)
+	if menu.is_empty():adventure.quests.draw_hud(self);adventure.school.draw_hud(self);adventure.cinder.draw_hud(self);adventure.tech.draw_hud(self);adventure.immersive.draw_hud(self)
 	if menu != "":
 		draw_set_transform((VIEW-Vector2(1280,720))*0.5)
 		draw_menu()
@@ -1713,6 +1723,7 @@ func draw_world() -> void:
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
 	if adventure.foundry.active:adventure.foundry.draw_world(self,camera)
+	if adventure.cinder.active:adventure.cinder.draw_world(self,camera)
 	if adventure.tech.active:adventure.tech.draw_world(self,camera)
 	if adventure.school.active:adventure.school.draw_world(self,camera)
 	if adventure.expansion.active:adventure.expansion.draw_world(self,camera)
@@ -1749,6 +1760,7 @@ func draw_world() -> void:
 		town_chapter.draw_forest(self,camera)
 		town_scenery.draw_on(self,camera,font)
 		town_life.draw_world(self,camera,font)
+		if marina_life!=null:marina_life.draw_on(self,camera)
 		for landmark in town_art:
 			if landmark.sprite in ["arena_stadium","town_lamp"]:continue
 			var landmark_size: Vector2 = landmark["size"]
@@ -1805,13 +1817,17 @@ func draw_world() -> void:
 			var sprite_prefix := str(definition.get("sprite", "bramble"))
 			var boss_size := Vector2(72, 72) if str(enemy["type"]) == "fragment" else Vector2(100, 100)
 			if str(enemy["type"]) in ["gongbreaker","silence_regent"]: boss_size=Vector2(120,120)
-			var enemy_pose := "attack" if (float(enemy.get("melee_warning",0))>0 or float(enemy.get("strike_flash",0))>0 or float(enemy.get("v143_pose",0))>adventure.newcomers.clock) else ("walk1" if int(visual_clock * 3.0) % 2 == 0 else "walk2")
+			var enemy_pose := "attack" if (float(enemy.get("melee_warning",0))>0 or float(enemy.get("strike_flash",0))>0 or float(enemy.get("v143_pose",0))>adventure.newcomers.clock or float(enemy.get("veil_pose",0))>adventure.pursuers.clock or float(enemy.get("cinder_pose",0))>adventure.cinder.clock) else ("walk1" if int(visual_clock * 3.0) % 2 == 0 else "walk2")
 			var enemy_sprite := sprite_prefix + "_" + enemy_pose if art.has(sprite_prefix + "_" + enemy_pose) else sprite_prefix + "_" + str(int(visual_clock * 3.0) % 2)
 			if is_boss:
 				var boss_prefix := "bramble_boss" if str(enemy["type"]) == "fragment" else str(enemy.get("type")) if enemy.get("expansion_boss",false) else str(enemy.get("sprite",region.get("boss_sprite", "bramble_boss")))
 				enemy_sprite = boss_prefix + "_attack" if float(enemy.get("windup",0.0)) > 0 and art.has(boss_prefix+"_attack") else boss_prefix + "_" + enemy_pose if art.has(boss_prefix+"_"+enemy_pose) else boss_prefix
 			if enemy.get("expansion_boss",false): boss_size *= (1.0 if int(enemy.get("generation",0)) == 0 else .78 if int(enemy.get("generation",0)) == 1 else .56)
-			if str(enemy.type) in adventure.tech.TYPES:
+			if bool(enemy.get("veilbound",false)):
+				var veil_size:Vector2=adventure.pursuers.body_size(enemy);draw_sprite(enemy_sprite,enemy.pos-veil_size*Vector2(.5,.7),veil_size)
+			elif str(enemy.type) in adventure.cinder.TYPES:
+				var body:Vector2=adventure.cinder.body_size(str(enemy.type));draw_sprite(enemy_sprite,enemy.pos-body*Vector2(.5,.7),body)
+			elif str(enemy.type) in adventure.tech.TYPES:
 				var tech_size:Vector2=adventure.tech.body_size(str(enemy.type));draw_sprite(enemy_sprite,enemy.pos-tech_size*Vector2(.5,.7),tech_size)
 			elif str(enemy.type) in adventure.school.TYPES:
 				var school_size:Vector2=adventure.school.body_size(str(enemy.type));draw_sprite(enemy_sprite,enemy.pos-school_size*Vector2(.5,.7),school_size)
@@ -1830,7 +1846,7 @@ func draw_world() -> void:
 				else:
 					preload("res://scripts/combat_cues.gd").corridor(self,ep,position_in_world-camera,14)
 			preload("res://scripts/starter_boss.gd").draw_warning(self,enemy,ep)
-			var hp_y:float=-adventure.tech.body_size(str(enemy.type)).y*.7-8 if str(enemy.type) in adventure.tech.TYPES else -47 if is_boss else -32
+			var hp_y:float=-adventure.pursuers.body_size(enemy).y*.7-8 if bool(enemy.get("veilbound",false)) else -adventure.cinder.body_size(str(enemy.type)).y*.7-8 if str(enemy.type) in adventure.cinder.TYPES else -adventure.tech.body_size(str(enemy.type)).y*.7-8 if str(enemy.type) in adventure.tech.TYPES else -47 if is_boss else -32
 			if not (adventure.school.active and is_boss) and not (media.clean_view or media.capturing):draw_rect(Rect2(ep + Vector2(-27,hp_y), Vector2(54 * float(enemy["hp"]) / float(enemy["max_hp"]), 5)), Color("#e8d586"))
 		for bullet in bullets:
 			draw_circle(bullet["pos"] - camera, 9, Color.html(str(bullet["stats"].get("color", "#ffffff"))))
@@ -1958,7 +1974,7 @@ func draw_hud() -> void:
 		var label="First steps • wave %d/3" % mini(3,1+int(tutorial.defeated)/3) if tutorial.active else "Lv %d • XP %s" % [level,"MAX" if level>=10 else str(experience)+" / "+str(level*span)]
 		layout.experience(self,label,1.0 if level>=10 else fraction)
 		draw_string(font,Vector2(24,78),"PRACTICE • discoveries only" if continuation!=null and continuation.active else "%02d:%02d" % [int(run_time)/60,int(run_time)%60],HORIZONTAL_ALIGNMENT_LEFT,240,13,Color("#b7cbd6"))
-		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and (voyage==null or not voyage.active or voyage.ashore):
+		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and not adventure.cinder.active and (voyage==null or not voyage.active or voyage.ashore):
 			var closest_enemy: Dictionary = enemies[0]
 			for candidate in enemies:
 				if position_in_world.distance_squared_to(candidate["pos"]) < position_in_world.distance_squared_to(closest_enemy["pos"]):

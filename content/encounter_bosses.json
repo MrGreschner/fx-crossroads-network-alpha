@@ -50,7 +50,9 @@
     "flintroot"
   ],
   "zombie": [
-    "boss:plague_director"
+    "quarantine_warden",
+    "lockdown_aberration",
+    "plague_director"
   ],
   "town": [],
   "neon_crucible": [
@@ -96,5 +98,12 @@
   ],
   "moonveil": [
     "mirror_marquis"
+  ],
+  "cinderheart": [
+    "gatebreaker_korr",
+    "glass_matron",
+    "pyrewing_bellkeeper",
+    "castellan_varr",
+    "calderax"
   ]
 }

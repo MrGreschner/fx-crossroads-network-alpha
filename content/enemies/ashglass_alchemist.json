@@ -1,0 +1,13 @@
+{
+  "id": "ashglass_alchemist",
+  "name": "Ashglass Alchemist",
+  "sprite": "ashglass_alchemist",
+  "health": 90,
+  "speed": 80,
+  "damage": 18,
+  "behaviour": "ranged",
+  "custom_attack": "puddle",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

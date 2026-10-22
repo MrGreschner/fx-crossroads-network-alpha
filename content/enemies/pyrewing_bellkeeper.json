@@ -1,0 +1,13 @@
+{
+  "id": "pyrewing_bellkeeper",
+  "name": "Pyrewing Bellkeeper",
+  "sprite": "pyrewing_bellkeeper",
+  "health": 920,
+  "speed": 88,
+  "damage": 25,
+  "behaviour": "boss",
+  "custom_attack": "spiral",
+  "aggro_range": 1300,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

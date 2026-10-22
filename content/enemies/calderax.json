@@ -1,0 +1,13 @@
+{
+  "id": "calderax",
+  "name": "Calderax, the Living Caldera",
+  "sprite": "calderax",
+  "health": 2600,
+  "speed": 62,
+  "damage": 25,
+  "behaviour": "boss",
+  "custom_attack": "caldera",
+  "aggro_range": 1300,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

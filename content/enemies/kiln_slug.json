@@ -1,0 +1,13 @@
+{
+  "id": "kiln_slug",
+  "name": "Kiln Slug",
+  "sprite": "kiln_slug",
+  "health": 135,
+  "speed": 58,
+  "damage": 18,
+  "behaviour": "melee",
+  "custom_attack": "trail",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "crucible_scuttler",
+  "name": "Crucible Scuttler",
+  "sprite": "crucible_scuttler",
+  "health": 95,
+  "speed": 135,
+  "damage": 18,
+  "behaviour": "melee",
+  "custom_attack": "dash",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

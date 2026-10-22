@@ -32,7 +32,7 @@ func state()->Dictionary:
  var dev=preload("res://scripts/profile_store.gd").dev_session()
  if bool(legacy.data.get("teacher",false)) and dev!=null and dev.active and not dev_ready:
   dev_ready=true
-  var s=legacy.data.fishing;s.rod=true;s.xp=maxi(int(s.xp),progress.threshold(progress.MAX_LEVEL));s.gear={"net":true,"pot":true}
+  var s=legacy.data.fishing;s.rod=true;s.deep_sea_rod=true;s.xp=maxi(int(s.xp),progress.threshold(progress.MAX_LEVEL));s.gear={"net":true,"pot":true}
   for id in s.bait:s.bait[id]=1000
   for id in C.fish():
    if not s.journal.has(id):s.journal[id]={"count":0,"kg":0.0,"cm":0.0}

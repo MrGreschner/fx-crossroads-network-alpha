@@ -12,6 +12,7 @@ const THEMES={
  "zombie":["quarantine","#263c38","#5b6c54","#bbcf70"],"lantern_marsh":["marsh","#223f45","#4c7563","#edcf82"],
  "silverfall":["waterfall","#547d8d","#69a1aa","#cbf0e8"],"confluence":["foundry","#273d52","#526875","#efb475"],
  "brasslock":["borough","#445465","#917e61","#daba72"],"clockwork_orchard":["orchard","#53615c","#82946a","#d2b069"],
+ "cinderheart":["lava_castle","#2e2031","#69505a","#f4b063"],
  "high_school":["school","#425263","#717d89","#c8ac81"],"neon_crucible":["neon","#201d39","#493c6a","#72ebda"],
  "astral_rift":["astral","#181b3e","#4f4276","#bea7ef"],"chimevault":["vault","#273f59","#5b7f91","#d2e8dc"],
  "ebonwake":["ship","#1b344c","#365975","#acced9"],"shattered_oath":["ruins","#292a45","#5e5673","#c1a6d2"],
@@ -39,6 +40,14 @@ func _draw()->void:
  polygon([Vector2(0,h),Vector2(0,h*.68),Vector2(w*.19,h*.31),Vector2(w*.40,h*.69),Vector2(w*.67,h*.32),Vector2(w,h*.71),Vector2(w,h)],land.darkened(.25))
  polygon([Vector2(0,h*.84),Vector2(w*.3,h*.62),Vector2(w*.6,h*.81),Vector2(w,h*.64),Vector2(w,h),Vector2(0,h)],land)
  match style:
+  "lava_castle":
+   polygon([Vector2(w*.1,h),Vector2(w*.24,h*.66),Vector2(w*.4,h*.75),Vector2(w*.57,h*.64),Vector2(w*.75,h),Vector2(w*.38,h)],Color("#eb7b36"))
+   for n in 5:
+    var x=w*(.19+n*.14);var top=h*(.22 if n%2==0 else .35)
+    draw_rect(Rect2(x,top,w*.11,h*.54),Color("#68515f"));draw_rect(Rect2(x+w*.035,top+h*.16,w*.045,h*.09),accent)
+    for j in 3:draw_rect(Rect2(x+j*w*.04,top-8,w*.025,12),Color("#a48582"))
+   draw_rect(Rect2(w*.25,h*.55,w*.5,h*.25),Color("#504052"));draw_arc(Vector2(w*.5,h*.76),h*.16,PI,TAU,20,accent,6)
+   draw_line(Vector2(w*.72,h*.4),Vector2(w*.72,h*.96),Color("#ed8c3e"),8)
   "forest","trail":
    for n in 9:tree(Vector2(21+n*w/9,h*.88+sin(n*2)*9),accent.darkened(.25 if n%2 else .1),n%3==0)
    polygon([Vector2(w*.19,h),Vector2(w*.29,h*.68),Vector2(w*.37,h*.60),Vector2(w*.39,h*.66),Vector2(w*.34,h*.72),Vector2(w*.29,h)],Color("#c6ac7b"))

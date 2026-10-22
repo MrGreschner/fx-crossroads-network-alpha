@@ -1,0 +1,13 @@
+{
+  "id": "gatebreaker_korr",
+  "name": "Gatebreaker Korr",
+  "sprite": "gatebreaker_korr",
+  "health": 590,
+  "speed": 82,
+  "damage": 25,
+  "behaviour": "boss",
+  "custom_attack": "quake",
+  "aggro_range": 1300,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

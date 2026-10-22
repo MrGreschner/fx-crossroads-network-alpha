@@ -1,0 +1,13 @@
+{
+  "id": "brandbound_chain",
+  "name": "Brandbound Chain",
+  "sprite": "brandbound_chain",
+  "health": 110,
+  "speed": 80,
+  "damage": 18,
+  "behaviour": "ranged",
+  "custom_attack": "chain",
+  "aggro_range": 850,
+  "expansion_only": true,
+  "realm": "cinderheart"
+}

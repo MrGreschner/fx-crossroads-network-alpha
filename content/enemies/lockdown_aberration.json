@@ -1,0 +1,15 @@
+{
+  "id": "lockdown_aberration",
+  "name": "Lockdown Aberration",
+  "sprite": "lockdown_aberration",
+  "health": 620,
+  "speed": 120,
+  "damage": 16,
+  "aggro_range": 760,
+  "behaviour": "custom",
+  "custom_attack": "v143_warden",
+  "description": "An escaped living containment tank. A surprise miniboss with lunges, spore volleys, mortar and shockwaves. The Plague Director remains the final encounter.",
+  "secondary_boss": true,
+  "boss": true,
+  "expansion_only": true
+}

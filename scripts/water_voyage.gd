@@ -2,7 +2,7 @@ extends Node
 ## Voyage cargo is deliberately separate from awarded catches until a safe landing.
 const C=preload("res://scripts/fishing_catalog.gd")
 const UI=preload("res://scripts/studio_ui.gd")
-const PIER=Vector2(2300,2490)
+const PIER=Vector2(1860,2300)
 const HOME=Vector2(1100,5650)
 const WORLD=Vector2(9000,6800)
 const OCEAN_WORLD=Vector2(14000,10000)
@@ -43,6 +43,10 @@ var panel:PanelContainer
 var chart=false
 var last_checkpoint=0.0
 var last_night=false
+var darkness_image:Image
+var darkness_texture:ImageTexture
+var darkness_key=""
+var darkness_builds=0
 var is_banking=false
 func setup(g:Node)->void:
  game=g;rng.randomize();hud=CanvasLayer.new();hud.layer=57;add_child(hud)
@@ -132,8 +136,8 @@ func fishing_spot()->Dictionary:
  var spot:Dictionary=C.pools()[id].duplicate(true);spot.id=id;spot.region="night_crater" if id=="voyage_night_crater" else spot.region;spot.bank=[bank.x,bank.y];spot.water=[water.x,water.y]
  return spot
 func pier_interact()->bool:
- if game.position_in_world.distance_to(PIER)>150:return false
- game.hint="E • River pier • Lake & coastal voyages"
+ if game.position_in_world.distance_to(PIER)>150 and not preload("res://scripts/town_marina.gd").on_deck(game.position_in_world):return false
+ game.hint="E • Ripple & Reel marina • Lake & coastal voyages"
  if Input.is_action_just_pressed("interact"):open_menu("pier")
  return true
 func purchase()->void:
@@ -291,6 +295,7 @@ func step(delta:float)->bool:
   if route=="coast" and night() and boat.distance_to(night_center())<1050:island_found_night=night_number()
  if elapsed-last_checkpoint>=8:checkpoint()
  status.text=("COAST" if route=="coast" else "UPSTREAM LAKE")+"  •  Hull %d%%  •  Cargo %d/%d  •  %02d:%02d  •  %s" % [ceili(hull),cargo.size(),LIMIT,int(context().hour),int(fmod(float(context().hour)*60,60)),str(context().weather).capitalize()]
+ if night():status.text+=" • NIGHT: lantern visibility"
  if not ashore and current_at(boat).length()>120:status.text+=" • STRONG CURRENT"
  anchor_button.text="Ashore" if ashore else "Raise anchor" if anchored else "Drop anchor to fish"
  anchor_button.disabled=ashore
@@ -328,7 +333,7 @@ func open_menu(kind:String)->void:
  var scroll=ScrollContainer.new();panel.add_child(scroll);scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_theme_constant_override("separation",12);scroll.add_child(col)
  var f=game.fishing
- var row=HBoxContainer.new();col.add_child(row);f.label(row,"RIPPLE & REEL • "+("RIVER PIER" if kind=="pier" else "SAFE HARBOUR" if kind=="landing" else "EXPEDITION CHART & CARGO"),22);f.button(row,"Close",close_menu)
+ var row=HBoxContainer.new();col.add_child(row);f.label(row,"RIPPLE & REEL • "+("MARINA" if kind=="pier" else "SAFE HARBOUR" if kind=="landing" else "EXPEDITION CHART & CARGO"),22);f.button(row,"Close",close_menu)
  if kind=="pier":
   f.label(col,"Take the helm. Move with WASD / arrows or the touch stick. Drop anchor to fish. E or Land boards islands and returns at the harbour. Bring every voyage catch home alive before it earns XP or records. You can suspend and resume a voyage without banking it.",17)
   var saved:Dictionary=records().state().get("voyage",{})
@@ -497,26 +502,34 @@ func draw_boat(c:Node2D,cam:Vector2)->void:
   if tex!=null:c.draw_texture_rect(tex,Rect2(p-dir*8-Vector2(14,27),Vector2(28,33)),false)
   else:c.draw_circle(p-dir*7,11,Color('#584c62'));c.draw_circle(p-dir*7-Vector2(0,8),7,Color('#e5c29a'))
  if anchored:c.draw_string(ThemeDB.fallback_font,p+Vector2(-30,65),'ANCHORED',HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color('#e4dfc7'))
+func lighting_state()->Dictionary:
+ var hour=float(context().hour);var dark=hour>=20 or hour<6
+ # Dawn fades gradually after 06:00; dusk gathers before 20:00. Anchor state is irrelevant.
+ var dusk=clampf((hour-19)/1.0,0,1) if hour>=12 else clampf((7-hour)/1.0,0,1)
+ var weather=str(context().weather);var alpha=maxf(.88 if dark else .88*dusk,.32 if weather=="Storm" else .18 if weather=="Mist" else 0)
+ return {"night":dark,"alpha":alpha,"radius":190.0 if dark or dusk>0 else 420.0}
 func draw_lighting(c:Node2D,cam:Vector2)->void:
- var dark=night();var weather=str(context().weather);var alpha=(.72 if ashore else .88) if dark else .32 if weather=="Storm" else .18 if weather=="Mist" else .0
+ var state=lighting_state();var dark=bool(state.night);var weather=str(context().weather);var alpha=float(state.alpha)
  if alpha>0:
-  var center=boat-cam;var radius=190.0 if dark else 420.0;var view=Rect2(Vector2.ZERO,game.VIEW)
-  var outside=maxf(game.VIEW.x,game.VIEW.y)*3
-  for j in 64:
-   var a=j*TAU/64;var b=(j+1)*TAU/64
-   c.draw_colored_polygon(PackedVector2Array([center+Vector2.from_angle(a)*radius*1.3,center+Vector2.from_angle(b)*radius*1.3,center+Vector2.from_angle(b)*outside,center+Vector2.from_angle(a)*outside]),Color(.01,.025,.06,alpha))
-   for band in 10:
-    var inner=radius*(.65+band*.065);var outer=radius*(.65+(band+1)*.065)
-    c.draw_colored_polygon(PackedVector2Array([center+Vector2.from_angle(a)*inner,center+Vector2.from_angle(b)*inner,center+Vector2.from_angle(b)*outer,center+Vector2.from_angle(a)*outer]),Color(.01,.025,.06,alpha*(band+1)/10.0))
+  var center=boat-cam;var radius=float(state.radius)
+  # One complete screen texture avoids holes between radial polygons at camera/zoom changes.
+  var key=str(c.VIEW)+str(Vector2(roundf(center.x/4)*4,roundf(center.y/4)*4))+str(snappedf(alpha,.02))+str(radius)
+  if darkness_image==null:darkness_image=Image.create(64,36,false,Image.FORMAT_RGBA8)
+  if key!=darkness_key:
+   darkness_key=key;darkness_builds+=1
+   for y in 36:
+    for x in 64:
+     var point=Vector2((x+.5)/64*c.VIEW.x,(y+.5)/36*c.VIEW.y)
+     var shade=alpha*smoothstep(radius*.65,radius*1.3,point.distance_to(center))
+     darkness_image.set_pixel(x,y,Color(.01,.025,.06,shade))
+   var softened=darkness_image.duplicate();softened.resize(512,288,Image.INTERPOLATE_BILINEAR)
+   if darkness_texture==null:darkness_texture=ImageTexture.create_from_image(softened)
+   else:darkness_texture.update(softened)
+  c.draw_texture_rect(darkness_texture,Rect2(Vector2.ZERO,c.VIEW),false)
   if dark:c.draw_circle(center,68,Color(1,.78,.32,.035))
  if weather in ["Rain","Storm"]:
   for i in 45:
    var p=Vector2(fposmod(i*173+elapsed*180,game.VIEW.x),fposmod(i*241+elapsed*440,game.VIEW.y));c.draw_line(p,p+Vector2(-8,23),Color('#b5d8e0',.35),1.5)
 func draw_pier(c:Node2D,cam:Vector2)->void:
- var rect=Rect2(Vector2(2130,2410)-cam,Vector2(290,130));c.draw_rect(rect,Color('#a18360'));c.draw_rect(rect,Color('#4d453e'),false,5)
- for i in 20:c.draw_line(rect.position+Vector2(i*15,0),rect.position+Vector2(i*15,130),Color('#695642'),2)
- for j in 3:
-  var p=Vector2(2310+j*50,2570)-cam;c.draw_colored_polygon(PackedVector2Array([p+Vector2(0,-47),p+Vector2(19,-20),p+Vector2(24,20),p+Vector2(13,36),p+Vector2(-13,36),p+Vector2(-24,20),p+Vector2(-19,-20)]),Color('#c39d70'));c.draw_line(p-Vector2(20,0),p+Vector2(20,0),Color('#69513e'),7);c.draw_line(p-Vector2(16,-22),p+Vector2(16,22),Color('#e2bc8c'),3)
- c.draw_arc(Vector2(2410,2570)-cam,39,0,TAU,30,Color('#edd398'),2)
- c.draw_string(ThemeDB.fallback_font,Vector2(2110,2385)-cam,'RIPPLE & REEL • RIVER PIER',HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color('#f3dfb7'))
+ preload("res://scripts/town_marina.gd").draw(c,cam)
 static func valid_state(v:Variant)->bool:return preload("res://scripts/fishing_records.gd").valid_voyage(v)

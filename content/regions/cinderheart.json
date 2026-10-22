@@ -1,0 +1,18 @@
+{
+  "id": "cinderheart",
+  "name": "Cinderheart Citadel",
+  "size": [
+    9000,
+    6200
+  ],
+  "terrain": "ash",
+  "scene": "res://scenes/realms/cinderheart.tscn",
+  "boss_enemy": "calderax",
+  "boss_sprite": "calderax",
+  "boss_health": 2600,
+  "xp_per_level": 3,
+  "unlock_cost": 0,
+  "difficulty_tier": "hard",
+  "difficulty_label": "Hard \u2022 lava castle, three minibosses and an awakening below the throne",
+  "description": "Cross the heat-scarred bridges of a volcanic castle and its alchemical laboratories. Heat fields scorch nearby explorers; shallow pools ignite you and deep lava rivers are fatal. Break three wardens, dethrone Castellan Varr, then survive what wakes beneath his throne."
+}

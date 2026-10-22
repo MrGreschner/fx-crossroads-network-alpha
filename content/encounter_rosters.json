@@ -121,7 +121,9 @@
     "antiseptic_drone",
     "spore_orderly",
     "quarantine_warden",
-    "boss:plague_director"
+    "boss:plague_director",
+    "lockdown_aberration",
+    "plague_director"
   ],
   "town": [],
   "neon_crucible": [
@@ -216,5 +218,20 @@
     "lunar_usher",
     "velvet_dancer",
     "moonlit_puppeteer"
+  ],
+  "cinderheart": [
+    "cinder_page",
+    "crucible_scuttler",
+    "furnace_sentinel",
+    "ashglass_alchemist",
+    "coalwing_gargoyle",
+    "brandbound_chain",
+    "kiln_slug",
+    "cinderbell_wisp",
+    "gatebreaker_korr",
+    "glass_matron",
+    "pyrewing_bellkeeper",
+    "castellan_varr",
+    "calderax"
   ]
 }

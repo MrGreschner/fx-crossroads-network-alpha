@@ -18,6 +18,8 @@ func _init()->void:
    forest_trees.append(point)
  forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115 and not preload("res://scripts/town_neighborhood.gd").reserved(p))
 func blocked(p:Vector2)->bool:
+ if preload("res://scripts/marina_life.gd").blocked(p):return true
+ if preload("res://scripts/town_marina.gd").blocked(p):return true
  for row in 3:
   for col in 2:
    if Rect2(Vector2(805 if col==0 else 962,1840+row*85),Vector2(50 if col==0 else 90,42)).grow(5).has_point(p):return true

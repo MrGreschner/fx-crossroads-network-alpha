@@ -7,7 +7,7 @@
   ],
   "background": "#2f3930",
   "accent": "#788e4d",
-  "boss_health": 1220,
+  "boss_health": 1500,
   "xp_per_level": 6,
   "terrain": "quarantine",
   "boss_secondary": "sporeburst",
@@ -15,5 +15,7 @@
   "boss_sprite": "plague_director",
   "difficulty": "hard",
   "difficulty_label": "Challenging",
-  "difficulty_tier": "challenging"
+  "difficulty_tier": "challenging",
+  "description": "Challenging: a long quarantine cordon, the Isolation Warden, a concealed Lockdown Aberration, and the Plague Director at the eastern checkpoint. Clear all defenders to open the final encounter.",
+  "boss_enemy": "plague_director"
 }
