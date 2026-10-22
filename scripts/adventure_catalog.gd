@@ -70,9 +70,10 @@ func render()->void:
  status.text={"portal":"CHOOSE A REALM","wayfinder":"WAYFINDER ROUTES","supplies":"SUPPLY VENDOR","merchant":"REALM MERCHANT","food":"FOOD STAND"}[context]+"  •  "+str(game.gold)+" CC"
  panel.find_child("Coop",true,false).visible=context in ["portal","wayfinder"]
  for n in entries.size():
-  var id:=str(entries[n]);var spec:=data(id);var b:=button(rows,("LOCKED • " if context in ["portal","wayfinder"] and not preload("res://scripts/realm_access.gd").unlocked(game.legacy,id) else "")+str(spec.get("name",id)),select.bind(n));b.toggle_mode=true;b.set_pressed_no_signal(n==selected);b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.tooltip_text=str(spec.get("name",id))
+  var id:=str(entries[n]);var spec:=data(id);var b:=button(rows,("LOCKED • " if context in ["portal","wayfinder"] and not preload("res://scripts/realm_access.gd").unlocked(game.legacy,id) else "")+str(spec.get("name",id))+("  • Fishing" if context in ["portal","wayfinder"] and game.legacy.fishing_records.caught_in_realm(id) else ""),select.bind(n));b.toggle_mode=true;b.set_pressed_no_signal(n==selected);b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.tooltip_text=str(spec.get("name",id))
   if context in ["supplies","merchant","food"]:b.icon=preload("res://scripts/item_icons.gd").texture(id);b.add_theme_constant_override("icon_max_width",42)
-  if context in ["portal","wayfinder"] and game.legacy.realm_mastered(id):b.icon=preload("res://scripts/ui_reward_icons.gd").texture();b.add_theme_constant_override("icon_max_width",22)
+  if context in ["portal","wayfinder"] and game.legacy.fishing_records.caught_in_realm(id):b.icon=preload("res://scripts/realm_fishing_icon.gd").texture();b.add_theme_constant_override("icon_max_width",22)
+  elif context in ["portal","wayfinder"] and game.legacy.realm_mastered(id):b.icon=preload("res://scripts/ui_reward_icons.gd").texture();b.add_theme_constant_override("icon_max_width",22)
  render_detail()
 func select(index:int)->void:
  selected=index;game.list_preview[context]=index
@@ -88,29 +89,8 @@ func render_detail()->void:
  if context in ["portal","wayfinder"]:
   var difficulty:=label(detail,str(spec.get("difficulty_label",""))+" • "+str(game.legacy.realm_clears(id))+" clears",20)
   difficulty.modulate=difficulty_color(str(spec.get("difficulty_label","")))
-  label(detail,"Encounter journal • meet an enemy here to reveal its portrait",16).modulate=Color("#b4cbd1")
-  var grid:=GridContainer.new();grid.columns=5;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",8);detail.add_child(grid)
-  var boss_grid:GridContainer
-  for kind in roster(id):
-   var target_grid:=grid
-   if is_boss(id,str(kind)):
-    if boss_grid==null:
-     label(detail,"BOSSES",16).modulate=Color("#efd09c")
-     boss_grid=GridContainer.new();boss_grid.columns=5;boss_grid.add_theme_constant_override("h_separation",8);boss_grid.add_theme_constant_override("v_separation",8);detail.add_child(boss_grid)
-    target_grid=boss_grid
-   var known:bool=str(kind) in game.legacy.data.get("encounters",{}).get(id,[])
-   var box:=PanelContainer.new();box.custom_minimum_size=Vector2(102,102);target_grid.add_child(box)
-   var skin:=StyleBoxFlat.new();skin.bg_color=Color("#493f37") if is_boss(id,str(kind)) else Color("#24434a");skin.set_corner_radius_all(6);
-   if is_boss(id,str(kind)):skin.border_color=Color("#c5a169");skin.set_border_width_all(1)
-   box.add_theme_stylebox_override("panel",skin)
-   box.tooltip_text=enemy_name(id,str(kind)) if known else "Not encountered in this realm yet"
-   var column:=VBoxContainer.new();column.custom_minimum_size.x=102;box.add_child(column)
-   var texture:Texture2D=portrait(id,str(kind)) if known else null
-   if texture!=null:
-    var image:=TextureRect.new();image.texture=texture;image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size=Vector2(96,64);column.add_child(image)
-   else:
-    var l:=label(column,"?" if not known else "Seen",24);l.custom_minimum_size.y=64;l.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;l.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
-   var caption:=label(column,enemy_name(id,str(kind)) if known else "Unknown",13);caption.custom_minimum_size.x=102;caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+  if game.legacy.fishing_records.caught_in_realm(id):fishing_badge(detail)
+  build_encounters(detail,id)
   enter.disabled=not preload("res://scripts/realm_access.gd").unlocked(game.legacy,id)
   enter.text="REALM LOCKED" if enter.disabled else "ENTER REALM • Enter key"
   if enter.disabled:label(detail,preload("res://scripts/realm_access.gd").hint(game.legacy,id),21).modulate=Color("#f4ca82")
@@ -123,6 +103,41 @@ func render_detail()->void:
   enter.disabled=game.gold<price or (not game.provisions.packed.is_empty() if context=="food" else not preload("res://scripts/supply_slots.gd").can_add(packed,id,game.items))
  label(detail,"Select a row, then confirm using the button or Enter. Swipe anywhere on a list to scroll, or use the mouse wheel.",15).modulate=Color("#abc5cc")
  if game.message_time>0:label(detail,game.message,16).modulate=Color("#e8daaa")
+func fishing_badge(parent:Node)->void:
+ var row=HBoxContainer.new();row.name="DiscoveredFishing";parent.add_child(row)
+ var icon=TextureRect.new();icon.texture=preload("res://scripts/realm_fishing_icon.gd").texture();icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;icon.custom_minimum_size=Vector2(28,28);row.add_child(icon)
+ label(row,"Fishing discovered • you have caught a fish in this realm",14)
+func build_encounters(parent:Node,id:String)->void:
+ var kinds=roster(id);var seen:Array=game.legacy.data.get("encounters",{}).get(id,[])
+ var regular=kinds.filter(func(kind):return not is_boss(id,str(kind)))
+ var guardians=kinds.filter(func(kind):return is_boss(id,str(kind)))
+ var known_regular=regular.filter(func(kind):return kind in seen).size()
+ var known_bosses=guardians.filter(func(kind):return kind in seen).size()
+ var summary=label(parent,"ENCOUNTER JOURNAL",18);summary.name="EncounterJournal";summary.modulate=Color("#edd19b")
+ label(parent,"Enemies: %d / %d discovered • %d missing   |   Bosses: %d / %d discovered • %d missing" % [known_regular,regular.size(),regular.size()-known_regular,known_bosses,guardians.size(),guardians.size()-known_bosses],14)
+ label(parent,"Encounter journal • meet an enemy here to reveal its portrait",16).modulate=Color("#b4cbd1")
+ var grid:=HFlowContainer.new();grid.name="EnemyPortraits";grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",8);parent.add_child(grid)
+ var boss_grid:HFlowContainer
+ for kind in kinds:
+  var target_grid:=grid
+  if is_boss(id,str(kind)):
+   if boss_grid==null:
+    label(parent,"BOSSES",16).modulate=Color("#efd09c")
+    boss_grid=HFlowContainer.new();boss_grid.name="BossPortraits";boss_grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;boss_grid.add_theme_constant_override("h_separation",8);boss_grid.add_theme_constant_override("v_separation",8);parent.add_child(boss_grid)
+   target_grid=boss_grid
+  var known:bool=str(kind) in game.legacy.data.get("encounters",{}).get(id,[])
+  var box:=PanelContainer.new();box.name="Encounter_"+str(kind).replace(":","_");box.custom_minimum_size=Vector2(102,102);target_grid.add_child(box)
+  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#493f37") if is_boss(id,str(kind)) else Color("#24434a");skin.set_corner_radius_all(6);
+  if is_boss(id,str(kind)):skin.border_color=Color("#c5a169");skin.set_border_width_all(1)
+  box.add_theme_stylebox_override("panel",skin)
+  box.tooltip_text=enemy_name(id,str(kind)) if known else "Not encountered in this realm yet"
+  var column:=VBoxContainer.new();column.custom_minimum_size.x=102;box.add_child(column)
+  var texture:Texture2D=portrait(id,str(kind)) if known else null
+  if texture!=null:
+   var image:=TextureRect.new();image.texture=texture;image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size=Vector2(96,64);column.add_child(image)
+  else:
+   var l:=label(column,"?" if not known else "Seen",24);l.custom_minimum_size.y=64;l.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;l.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
+  var caption:=label(column,enemy_name(id,str(kind)) if known else "Unknown",13);caption.custom_minimum_size.x=102;caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 func confirm()->void:
  if enter.disabled:return
  game.list_preview[context]=selected
@@ -164,8 +179,6 @@ func roster(id:String)->Array:
   if FileAccess.file_exists(path):collect(JSON.parse_string(FileAccess.get_file_as_string(path)),result)
  var boss:=str(game.realms.get(id,{}).get("boss_sprite",""))
  if not boss.is_empty() and boss not in result and "boss:"+boss not in result:result.append("boss:"+boss)
- for kind in game.legacy.data.get("encounters",{}).get(id,[]):
-  if kind not in result:result.append(kind)
  return result.filter(func(kind):return not is_boss(id,str(kind)))+result.filter(func(kind):return is_boss(id,str(kind)))
 func enemy_name(id:String,kind:String)->String:
  if kind.begins_with("boss:"):

@@ -2,7 +2,7 @@ extends RefCounted
 const C=preload("res://scripts/fishing_catalog.gd")
 const E=preload("res://scripts/fishing_ecology.gd")
 const UI=preload("res://scripts/studio_ui.gd")
-const PALETTE={"Common":"#9ec8bc","Uncommon":"#80d5a2","Rare":"#7cbced","Very rare":"#b49afa","Legendary":"#edc66c","Mystical":"#ed99cf"}
+const PALETTE={"Common":"#9ec8bc","Uncommon":"#80d5a2","Rare":"#7cbced","Very rare":"#b49afa","Legendary":"#edc66c","Mystical":"#ed99cf","Fabled":"#f4d28a"}
 static func text(parent:Node,value:String,font:int=15,color:Color=Color("#d6e7e9"))->Label:
  var l=Label.new();l.text=value;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.add_theme_font_size_override("font_size",font);l.add_theme_color_override("font_color",color);l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
 static func action(parent:Node,title:String,callback:Callable,width:float=0)->Button:
@@ -19,6 +19,7 @@ static func build(f:Node,parent:Node)->void:
  text(col,"%d / %d species • %d catches • %d / %d kept    |    Fishing level %d • %s" % [state.journal.size(),C.fish().size(),int(state.total),state.kept.size(),f.records().capacity(),f.records().progress.level(),f.records().progress.title()],14)
  var shortcuts=HBoxContainer.new();shortcuts.add_theme_constant_override("separation",8);col.add_child(shortcuts)
  action(shortcuts,"Gear, fish bait & mastery",f.open_workshop)
+ if is_instance_valid(f.room):action(shortcuts,"Aquarium income",f.open_aquarium_income)
  action(shortcuts,"Weekly challenge",f.game.legacy.weekly.open_board)
  var task=f.game.legacy.weekly.fishing_task();var target=C.fish()[task.species]
  text(shortcuts,"Weekly: %s • %.2f+ kg" % [target.name,float(task.kg)],14)
@@ -89,6 +90,7 @@ static func catch_card(f:Node,body:Node,catch:Dictionary,selling:bool=false)->vo
   return
  action(actions,"Sell at Ripple & Reel",f.open_sales.bind(id),180).disabled=f.game.mode!="town"
  action(actions,"Featured on card" if state.favorite==id else "Feature on card",func():f.records().set_favorite(id);f.refresh_journal(),180)
+ text(info,"Aquarium appeal: %d Glimmers / real hour on display" % f.records().income.rate(catch),14,Color("#f0d18c"))
  var tank=OptionButton.new();tank.custom_minimum_size=Vector2(180,32);tank.add_theme_font_size_override("font_size",14);tank.add_item("Display in tank…")
  for n in 5:tank.add_item("Tank "+str(n+1)+(" • this fish" if state.display[n]==id else ""))
  actions.add_child(tank);tank.item_selected.connect(func(index):

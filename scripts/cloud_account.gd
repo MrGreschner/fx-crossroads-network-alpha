@@ -58,7 +58,7 @@ func _process(delta:float)->void:
   last_legacy=l
   if not launched and not STORE.testing():
    launched=true
-   if FileAccess.file_exists("user://fx_cloud_owner.json") or l.recovery_required:call_deferred("open")
+   # Sign-in is chosen from the main menu; protected local/cloud ownership is unchanged.
  if loaded and str(l.game.mode)!=previous_mode:
   previous_mode=str(l.game.mode)
   if previous_mode=="town":timer=minf(timer,2)

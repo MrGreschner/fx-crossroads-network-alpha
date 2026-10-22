@@ -1,0 +1,522 @@
+extends Node
+## Voyage cargo is deliberately separate from awarded catches until a safe landing.
+const C=preload("res://scripts/fishing_catalog.gd")
+const UI=preload("res://scripts/studio_ui.gd")
+const PIER=Vector2(2300,2490)
+const HOME=Vector2(1100,5650)
+const WORLD=Vector2(9000,6800)
+const OCEAN_WORLD=Vector2(14000,10000)
+const NIGHT_SITES=[Vector2(11800,1700),Vector2(12800,4200),Vector2(11000,7700),Vector2(10800,2000),Vector2(12400,6500),Vector2(10500,4600)]
+var night_seed=0
+var island_found_night=-1
+var cached_night=-999999
+var cached_night_center=Vector2.ZERO
+var cached_rock_key=""
+var cached_rocks:Array=[]
+const PRICE=1200
+const LIMIT=60
+var game:Node
+var active=false
+var route="lake"
+var boat=HOME
+var velocity=Vector2.ZERO
+var facing=-PI/2
+var hull=100.0
+var anchored=false
+var ashore=false
+var elapsed=0.0
+var start_hour=12.0
+var impact=0.0
+var weather_timer=0.0
+var cargo:Array=[]
+var cages:Array=[]
+var repairs:Array=[]
+var seen:Array=[]
+var rng=RandomNumberGenerator.new()
+var hud:CanvasLayer
+var strip:HBoxContainer
+var status:Label
+var anchor_button:Button
+var dock_button:Button
+var overlay:CanvasLayer
+var panel:PanelContainer
+var chart=false
+var last_checkpoint=0.0
+var last_night=false
+var is_banking=false
+func setup(g:Node)->void:
+ game=g;rng.randomize();hud=CanvasLayer.new();hud.layer=57;add_child(hud)
+ var back=PanelContainer.new();UI.apply(back);hud.add_child(back);back.name="VoyageBar"
+ var col=VBoxContainer.new();back.add_child(col);status=Label.new();status.add_theme_font_size_override("font_size",15);col.add_child(status)
+ strip=HBoxContainer.new();col.add_child(strip)
+ anchor_button=game.fishing.button(strip,"Anchor",toggle_anchor)
+ game.fishing.button(strip,"Chart & cargo",func():open_menu("voyage"))
+ dock_button=game.fishing.button(strip,"Land / Return",interact)
+ hud.hide()
+func records():return game.legacy.fishing_records
+func context()->Dictionary:
+ var ctx=preload("res://scripts/town_weather.gd").context(game.town_life.calendar.now)
+ ctx.weather=game.town_life.calendar.weather()
+ ctx.region="night_crater" if route=="coast" and ashore else "voyage_"+route
+ ctx.hour=fposmod(start_hour+elapsed/30.0,24)
+ if elapsed>=300:ctx.weather=["Clear","Rain","Mist","Storm"][int(elapsed/300)%4]
+ return ctx
+func night()->bool:
+ var hour=float(context().hour);return hour>=20 or hour<6
+func world_size()->Vector2:return OCEAN_WORLD if route=="coast" else WORLD
+func night_number()->int:return night_seed+floori((start_hour+elapsed/30.0-20.0)/24.0)
+func night_center()->Vector2:
+ var number=night_number()
+ if number==cached_night:return cached_night_center
+ var random=RandomNumberGenerator.new();random.seed=number*7919+37
+ cached_night=number;cached_night_center=NIGHT_SITES[posmod(number*5,6)]+Vector2(random.randf_range(-230,230),random.randf_range(-180,180))
+ return cached_night_center
+func safe_water_near(center:Vector2)->Vector2:
+ for i in 16:
+  var candidate=(center+Vector2.from_angle(i*TAU/16)*900).clamp(Vector2(100,100),world_size()-Vector2(100,100))
+  var clear=true
+  for rock in rocks():
+   if candidate.distance_to(rock.p)<float(rock.r)+60:clear=false
+  for isle in islands():
+   if candidate.distance_to(isle.p)<float(isle.r)+60:clear=false
+  if clear:return candidate
+ return (center+Vector2(0,1100)).clamp(Vector2(100,100),world_size()-Vector2(100,100))
+func current_at(point:Vector2)->Vector2:
+ var flow=Vector2(sin(point.y/850+elapsed*.05),cos(point.x/1100-elapsed*.04))*(55 if route=="coast" else 38)
+ if route=="coast":
+  for band in [3400.0,6100.0,8400.0]:
+   var strength=maxf(0,1-absf(point.x-band)/650.0)
+   flow+=Vector2(sin(point.y/680+band*.001)*70,(-150 if band==6100 else 150))*strength
+  var eddy=point-Vector2(10600,3400)
+  if eddy.length()<1250 and eddy.length()>20:flow+=eddy.normalized().orthogonal()*90*(1-eddy.length()/1250)
+ if str(context().weather)=="Storm":flow*=1.5
+ return flow.limit_length(260)
+func islands()->Array:
+ if route=="lake":return [{"p":Vector2(2650,4350),"r":470.0,"name":"Birch Landing"},{"p":Vector2(5100,3050),"r":580.0,"name":"Oldwater Isle"},{"p":Vector2(2800,1500),"r":430.0,"name":"Reedwatch Island"}]
+ var result:Array=[{"p":Vector2(2300,4400),"r":330.0,"name":"Shore Refuge"},{"p":Vector2(5450,4300),"r":340.0,"name":"Kelp Rest"}]
+ if night():result.append({"p":night_center(),"r":610.0,"name":"Night Island"})
+ return result
+func rocks()->Array:
+ var key=route+":"+str(night_number())+":"+str(night())
+ if cached_rock_key==key:return cached_rocks
+ var result:Array=[]
+ for i in (78 if route=="coast" else 48):
+  var p=Vector2(1650+fposmod(i*977,world_size().x-2400),650+fposmod(i*1327,world_size().y-1500))
+  var near_island=false
+  for isle in islands():
+   if p.distance_to(isle.p)<float(isle.r)+140:near_island=true
+  if not near_island and p.distance_to(HOME)>650:result.append({"p":p,"r":34.0+(i%4)*13})
+ cached_rock_key=key;cached_rocks=result
+ return result
+func land_at(p:Vector2)->bool:
+ if not active:return true
+ for isle in islands():
+  if p.distance_to(isle.p)<float(isle.r)-28:
+   if route=="coast" and str(isle.name)=="Night Island" and p.distance_to(night_center())<210:return false
+   return true
+ return false
+func nearby_island()->Dictionary:
+ for isle in islands():
+  if boat.distance_to(isle.p)<float(isle.r)+145:return isle
+ return {}
+func habitat()->String:
+ if route=="lake":return "voyage_lake_"+("reeds" if boat.x<3300 else "islands" if boat.y>2700 else "deep")
+ return "voyage_coast_"+("channel" if boat.x>6500 or boat.y<1900 else "kelp" if boat.x>4100 and boat.y>3000 else "reef" if boat.y<3800 else "shoals")
+func fishing_spot()->Dictionary:
+ if not active:return {}
+ var id=habitat();var bank=game.position_in_world;var water=boat+Vector2.from_angle(facing)*100
+ if ashore:
+  if route!="coast" or not night() or bank.distance_to(night_center()+Vector2(-240,-20))>140:return {}
+  id="voyage_night_crater";water=night_center()+Vector2(-120,-20)
+ elif not anchored:return {}
+ var spot:Dictionary=C.pools()[id].duplicate(true);spot.id=id;spot.region="night_crater" if id=="voyage_night_crater" else spot.region;spot.bank=[bank.x,bank.y];spot.water=[water.x,water.y]
+ return spot
+func pier_interact()->bool:
+ if game.position_in_world.distance_to(PIER)>150:return false
+ game.hint="E • River pier • Lake & coastal voyages"
+ if Input.is_action_just_pressed("interact"):open_menu("pier")
+ return true
+func purchase()->void:
+ if game.mode!="town" or records().state().get("deep_sea_rod",false):return
+ if not game.legacy.glimmers.debit(PRICE):game.message="You need 1,200 Glimmers for the permanent Deep Sea Rod.";game.message_time=5;return
+ records().state().deep_sea_rod=true;records().save();game.message="Deep Sea Rod owned • Coastal voyages unlocked."
+ if is_instance_valid(overlay):open_menu("pier")
+func checkpoint()->void:
+ if not active or is_banking:return
+ records().state().voyage={"version":1,"night_seed":night_seed,"island_found_night":island_found_night,"route":route,"boat":[boat.x,boat.y],"hull":hull,"elapsed":elapsed,"start_hour":start_hour,"cargo":cargo.duplicate(true),"cages":cages.duplicate(true),"seen":seen.duplicate(),"repairs":repairs.duplicate(),"banking":false,"hero_hp":game.health,"camp_hp":camp_state()}
+ records().save();last_checkpoint=elapsed
+func camp_state()->Dictionary:
+ var result:Dictionary={}
+ for i in game.region.get("enemies",[]).size():result[str(i)]=0.0
+ for entry in game.enemies:result[str(entry.uid)]=maxf(0,float(entry.hp))
+ return result
+func launch(destination:String,resume:bool=false)->void:
+ if destination=="coast" and not records().state().get("deep_sea_rod",false):return
+ var previous:Dictionary=records().state().get("voyage",{}).duplicate(true)
+ if not resume and not previous.is_empty():return
+ close_menu();night_seed=int(game.town_life.calendar.day_number);island_found_night=-1;route=destination;boat=HOME;hull=100;elapsed=0;velocity=Vector2.ZERO;anchored=false;ashore=false;cargo=[];cages=[];seen=[];repairs=[];start_hour=float(preload("res://scripts/fishing_ecology.gd").context(game).hour)
+ if resume:
+  if not valid_state(previous):return
+  night_seed=int(previous.get("night_seed",night_seed));island_found_night=int(previous.get("island_found_night",-1))
+  route=str(previous.route);boat=Vector2(previous.boat[0],previous.boat[1]);hull=float(previous.hull);elapsed=float(previous.elapsed);start_hour=float(previous.start_hour);cargo=previous.cargo.duplicate(true);cages=previous.cages.duplicate(true);seen=previous.seen.duplicate();repairs=previous.repairs.duplicate()
+ game.start_run(false,"voyage_"+route)
+ if game.region_id!="voyage_"+route:return
+ active=true;last_night=night();game.level=6;game.position_in_world=boat;game.update_camera();game.enemies=game.enemies.filter(func(e):return land_at(e.pos))
+ if resume:
+  game.health=minf(game.max_health(),maxf(1,float(previous.get("hero_hp",game.health))))
+  var camp_hp:Dictionary=previous.get("camp_hp",{})
+  for entry in game.enemies:
+   if camp_hp.has(str(entry.uid)):entry.hp=minf(entry.max_hp,float(camp_hp[str(entry.uid)]))
+  game.enemies=game.enemies.filter(func(e):return e.hp>0)
+ game.message="Boat voyage • Anchor to fish, explore islands, and bring your catches home alive.";game.message_time=7
+ last_night=night()
+ checkpoint()
+ if resume and bool(previous.get("banking",false)):bank()
+func suspend()->void:
+ if not active:return
+ if ashore:ashore=false
+ checkpoint();active=false;hud.hide();close_menu();game.fishing.cancel("")
+func stow(catch:Dictionary,keep:bool)->bool:
+ if not active or not preload("res://scripts/fishing_records.gd").valid_catch(catch) or cargo.size()>=LIMIT:return false
+ for item in cargo:
+  if item.catch.id==catch.id:return false
+ cargo.append({"catch":catch.duplicate(true),"keep":keep});checkpoint();return true
+func toggle_anchor()->void:
+ if ashore:return
+ if game.fishing.busy():game.fishing.cancel("Cast cancelled before moving the boat.")
+ anchored=not anchored;velocity=Vector2.ZERO
+func interact()->void:
+ if not active:return
+ if game.fishing.busy():return
+ if not ashore and boat.distance_to(HOME)<260:
+  anchored=true;open_menu("landing");return
+ if ashore:
+  if game.position_in_world.distance_to(boat)>230:game.message="Return to your boat's lantern to board.";game.message_time=4;return
+  ashore=false;game.position_in_world=boat;anchored=true;checkpoint();return
+ var isle=nearby_island()
+ if isle.is_empty():game.message="Approach a sandy island landing, or the harbour to return.";game.message_time=4;return
+ var dir=(boat-isle.p).normalized();var target:Vector2=isle.p+dir*(float(isle.r)-70)
+ if not land_at(target):return
+ ashore=true;anchored=true;game.position_in_world=target;game.update_camera();game.message="Island landing • your normal hero attacks work here. Return to the lantern to board.";game.message_time=6
+func cage_action()->void:
+ if not active or ashore or not anchored:return
+ if not records().progress.method_unlocked("pot"):return
+ for i in range(cages.size()-1,-1,-1):
+  var cage:Dictionary=cages[i];var pos=Vector2(cage.pos[0],cage.pos[1])
+  if boat.distance_to(pos)<150 and elapsed>=float(cage.ready):
+   var specimens:Array=cage.fish
+   if cargo.size()+specimens.size()>LIMIT:game.fishing.status="Make cargo room before recovering this cage.";return
+   cages.remove_at(i)
+   for catch in specimens:cargo.append({"catch":catch,"keep":true})
+   checkpoint();game.fishing.status="Cage recovered • %d catches aboard, unbanked." % specimens.size();return
+ if records().progress.bait()=="basic":game.fishing.status="A voyage cage needs consumable fish bait. Choose worms, dough or specialist fish bait.";return
+ if cages.size()>=3:game.fishing.status="Three cages already deployed. Recover them at their chart markers.";return
+ var pool=habitat();var specimens:Array=[];var progress=records().progress
+ for i in progress.basket_capacity():
+  var catch=C.roll(pool,rng,context(),"pot",progress.bait(),progress.level(),progress.trophy_bonus(),progress.rarity_bonus("pot"))
+  if not catch.is_empty():specimens.append(catch)
+ if specimens.is_empty():game.fishing.status="No cage catches feed here in these conditions. Try another habitat.";return
+ progress.spend_bait(rng,"pot")
+ cages.append({"pos":[boat.x,boat.y],"pool":pool,"ready":elapsed+120.0*progress.basket_minutes()/20.0,"fish":specimens})
+ checkpoint();game.fishing.status="Cage lowered • fills in two active voyage minutes. Marker added to chart. Recover before returning."
+func fail(reason:String)->void:
+ if not active:return
+ var lost=cargo.size();cargo.clear();cages.clear();records().state().erase("voyage");records().save();active=false;hud.hide();game.fishing.cancel("");close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=PIER-Vector2(80,0);game.update_camera();game.message=reason+" • %d unbanked catches lost. Your existing collection is safe." % lost;game.message_time=9
+func abandon()->void:
+ var dialog=ConfirmationDialog.new();dialog.title="Abandon this voyage?";dialog.dialog_text="All unbanked catches and deployed voyage cages will be lost. Your existing collection stays safe.";game.add_child(dialog)
+ dialog.confirmed.connect(func():
+  if active:fail("Voyage abandoned")
+  else:records().state().erase("voyage");records().save();open_menu("pier")
+  dialog.queue_free())
+ dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(480,180))
+func bank()->void:
+ if not active or boat.distance_to(HOME)>260:return
+ var keep_count=0
+ for item in cargo:
+  if item.keep:keep_count+=1
+ if records().state().kept.size()+keep_count>records().capacity():game.fishing.status="Not enough collection space. Choose Release for some cargo, or suspend and sell kept fish in town, then resume at this harbour.";open_menu("landing");return
+ is_banking=true
+ # Pop first, then complete() saves both reward and remaining queue together.
+ var s=records().state();s.voyage={"version":1,"night_seed":night_seed,"island_found_night":island_found_night,"route":route,"boat":[boat.x,boat.y],"hull":hull,"elapsed":elapsed,"start_hour":start_hour,"cargo":cargo,"cages":[],"seen":seen,"repairs":repairs,"banking":true};records().save()
+ var total=0
+ while not cargo.is_empty():
+  var item:Dictionary=cargo.pop_front();s.voyage.cargo=cargo
+  if item.catch.id in s.recent:continue
+  if not records().complete(item.catch,bool(item.keep)):
+   cargo.push_front(item);s.voyage.cargo=cargo;records().save();is_banking=false;game.fishing.status="Landing paused. No catches were discarded. Resume landing from the manifest.";return
+  total+=1
+  var activity=game.get_tree().root.get_node_or_null("FXActivity")
+  if activity!=null:activity.event(game,"fish_catch","completed",0,{"species_id":str(item.catch.species),"fish_level":records().progress.level(),"fish_weight":float(item.catch.kg),"fish_xp_gain":records().progress.last_xp,"fish_trophy":1 if C.is_trophy(item.catch) else 0,"fish_kept":1 if item.keep else 0})
+ s.erase("voyage");records().save();is_banking=false;active=false;cages.clear();hud.hide();close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=PIER-Vector2(80,0);game.update_camera();game.message="SAFE RETURN • %d catches recorded • fishing XP, discoveries and community records updated." % total;game.message_time=8
+func step(delta:float)->bool:
+ hud.visible=active and game.menu.is_empty() and game.session_menu.page.is_empty() and game.presentation.page.is_empty()
+ if not active:return false
+ var back=hud.get_node("VoyageBar");var v=game.get_viewport_rect().size;back.position=Vector2(16,118);back.size=Vector2(minf(590,v.x-32),90);back.scale=Vector2.ONE*minf(1,(v.x-32)/590)
+ if not game.menu.is_empty() or not game.session_menu.page.is_empty() or not game.presentation.page.is_empty():return not ashore
+ if not ashore:
+  game.VIEW=game.get_viewport_rect().size;game.visual_clock+=delta;game.run_time+=delta;game.message_time=maxf(0,game.message_time-delta);game.hint="Anchor to fish • E near islands to land • bring catches home alive"
+ elapsed+=minf(delta,.1);impact=maxf(0,impact-delta)
+ var now_night=night()
+ if last_night and not now_night and route=="coast" and boat.distance_to(night_center())<1000:
+  ashore=false;boat=safe_water_near(night_center());game.position_in_world=boat;game.fishing.cancel("Dawn • Night Island slips beneath the mist. You are back aboard.")
+ last_night=now_night
+ if Input.is_action_just_pressed("interact"):interact()
+ 
+ if ashore:
+  game.hint="Island expedition • E near the boat to board"
+  if game.health<=0:fail("You fell on the island");return true
+ else:
+  var move:Vector2=game.mobile.movement if game.mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
+  if not anchored:
+   var current=current_at(boat)
+   velocity=velocity.lerp(move*280+current,1-exp(-delta*3))
+   var next=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100));var blocked=next.x<520
+   for rock in rocks():
+    if next.distance_to(rock.p)<float(rock.r)+25:blocked=true
+   for isle in islands():
+    if next.distance_to(isle.p)<float(isle.r)+40:blocked=true
+   if blocked:
+    if impact<=0:hull-=12;impact=1.2;game.message="Hull struck a hazard! Approach shore slowly.";game.message_time=3
+    velocity=-velocity*.4
+   else:boat=next
+   if move.length()>.1:facing=lerp_angle(facing,velocity.angle(),minf(1,delta*6))
+  else:velocity=Vector2.ZERO
+  game.position_in_world=boat;game.update_camera()
+  if str(context().weather)=="Storm":
+   weather_timer+=delta
+   if weather_timer>=8:weather_timer=0;hull-=1
+  if hull<=0:fail("Your boat was wrecked");return true
+  var id=habitat()
+  if id not in seen:seen.append(id)
+  if route=="coast" and night() and boat.distance_to(night_center())<1050:island_found_night=night_number()
+ if elapsed-last_checkpoint>=8:checkpoint()
+ status.text=("COAST" if route=="coast" else "UPSTREAM LAKE")+"  •  Hull %d%%  •  Cargo %d/%d  •  %02d:%02d  •  %s" % [ceili(hull),cargo.size(),LIMIT,int(context().hour),int(fmod(float(context().hour)*60,60)),str(context().weather).capitalize()]
+ if not ashore and current_at(boat).length()>120:status.text+=" • STRONG CURRENT"
+ anchor_button.text="Ashore" if ashore else "Raise anchor" if anchored else "Drop anchor to fish"
+ anchor_button.disabled=ashore
+ dock_button.text="Board boat" if ashore else "Return safely" if boat.distance_to(HOME)<260 else "Land on island"
+ game.queue_redraw();return not ashore
+func combat(delta:float)->void:
+ if game.stun_time<=0 and not game.fishing.busy():
+  if game.adventure.combat.v90.primary_pressed("solo",game.mobile.attacking if game.mobile.enabled else Input.is_action_pressed("primary")):game.fire("primary")
+  if Input.is_action_pressed("secondary"):game.fire("secondary")
+  if Input.is_action_just_pressed("special"):game.pulse()
+ var epoch=game.combat_epoch
+ game.update_bullets(delta)
+ if not active or not game.combat_frame_active(epoch):return
+ game.update_allies(delta);game.update_enemies(delta)
+ if not active or not game.combat_frame_active(epoch):return
+ game.update_enemy_shots(delta)
+func repair()->void:
+ var isle=nearby_island()
+ if isle.is_empty() or not ashore or str(isle.name) in repairs:return
+ for enemy in game.enemies:
+  if enemy.hp>0 and enemy.pos.distance_to(isle.p)<float(isle.r)+100:game.fishing.status="Clear this island's enemies before repairing.";return
+ hull=minf(100,hull+35);repairs.append(str(isle.name));checkpoint();open_menu("voyage")
+func _input(event:InputEvent)->void:
+ if is_instance_valid(overlay) and event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_ESCAPE:
+  close_menu();get_viewport().set_input_as_handled()
+func close_menu()->void:
+ if is_instance_valid(overlay):overlay.queue_free()
+ overlay=null;chart=false
+ if game.menu=="voyage":game.menu=""
+func open_menu(kind:String)->void:
+ close_menu();game.fishing.cancel("");game.menu="voyage";game.mobile.reset_controls()
+ overlay=CanvasLayer.new();overlay.layer=95;add_child(overlay)
+ var shade=ColorRect.new();shade.color=Color(.015,.035,.06,.96);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);overlay.add_child(shade)
+ panel=PanelContainer.new();UI.apply(panel);overlay.add_child(panel)
+ var scroll=ScrollContainer.new();panel.add_child(scroll);scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+ var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_theme_constant_override("separation",12);scroll.add_child(col)
+ var f=game.fishing
+ var row=HBoxContainer.new();col.add_child(row);f.label(row,"RIPPLE & REEL • "+("RIVER PIER" if kind=="pier" else "SAFE HARBOUR" if kind=="landing" else "EXPEDITION CHART & CARGO"),22);f.button(row,"Close",close_menu)
+ if kind=="pier":
+  f.label(col,"Take the helm. Move with WASD / arrows or the touch stick. Drop anchor to fish. E or Land boards islands and returns at the harbour. Bring every voyage catch home alive before it earns XP or records. You can suspend and resume a voyage without banking it.",17)
+  var saved:Dictionary=records().state().get("voyage",{})
+  if not saved.is_empty():
+   f.label(col,"VOYAGE IN PROGRESS • %s • %d catches aboard • Hull %d%%" % [str(saved.route).capitalize(),saved.cargo.size(),int(saved.hull)],19)
+   f.button(col,"Resume voyage",func():launch(str(saved.route),true));f.button(col,"Abandon cargo…",abandon)
+  else:
+   var lake=UI.card(col,"UPSTREAM • OLDWATER LAKE","Open from the start • 16 fish and 4 creatures, island landings and enemy camps. Reedbanks shelter the boat; deep water rewards night fishing. Oldwater Crownback requires Scented Worms in Rain.");f.button(lake,"Launch lake voyage",func():launch("lake"))
+   var coast=UI.card(col,"DOWNSTREAM • COASTAL WATERS","33 rod fish • 10 net creatures • 10 cage creatures. Strong currents, reefs and squalls. A hidden island emerges from 20:00–06:00 in a different offshore position each night. Cross three current belts and search beyond the deep channel for 13 Rare+ crater-lake species. Its chart marker is revealed only when you find it that night.")
+   if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
+   else:f.label(coast,"LOCKED • Buy the Deep Sea Rod at Ripple & Reel • 1,200 Glimmers. This is permanent fishing equipment.",18)
+  f.label(col,"Day and night pass during the voyage (one hour per 30 seconds). The starting hour and weather follow town. Nights are dark: your boat carries one lantern. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
+ else:
+  f.label(col,"Unbanked cargo • %d/%d • Collection space %d • %s" % [cargo.size(),LIMIT,records().capacity()-records().state().kept.size(),game.fishing.status],17)
+  var map=Control.new();map.custom_minimum_size=Vector2(700,300);col.add_child(map);map.draw.connect(func():draw_chart(map))
+  f.label(col,"Chart: gold = harbour • cream = island • cyan = fishing habitat • orange = cage • arrows = currents. Night Island is shown only while it is above the water.",15)
+  if kind=="landing":
+   f.label(col,"Choose Keep or Release below. Both choices earn fishing XP only on safe landing. Unrecovered cages are left behind. Your existing collection is never at risk.",17)
+   f.button(col,"Land safely • record catches & earn XP",bank)
+  else:
+   f.button(col,"Suspend voyage • return to town, cargo remains aboard",func():checkpoint();close_menu();game.enter_region("town"))
+   if ashore:f.button(col,"Use island repair timber • +35 hull, once per island",repair)
+   if anchored and not ashore:f.button(col,"Deploy / recover nearby voyage cage",func():cage_action();open_menu("voyage"))
+   f.button(col,"Abandon voyage & cargo…",abandon)
+  for i in cargo.size():
+   var item:Dictionary=cargo[i];var r=HBoxContainer.new();col.add_child(r);f.picture(r,str(item.catch.species),Vector2(76,48));f.label(r,str(C.fish()[item.catch.species].name)+" • %.2f kg • " % float(item.catch.kg)+str(C.fish()[item.catch.species].rarity),16)
+   var index=i;f.button(r,"Keep ✓" if item.keep else "Release • bonus XP",func():cargo[index].keep=not cargo[index].keep;checkpoint();open_menu(kind))
+ game.fishing.fit_panel(panel,Vector2(900,640))
+ preload("res://scripts/touch_list_scroll.gd").attach(scroll)
+func draw_chart(c:Control)->void:
+ var size=Vector2(minf(800,c.size.x),300);c.draw_rect(Rect2(Vector2.ZERO,size),Color('#13384d'));var scale_xy=size/world_size()
+ if route=="coast":
+  for band in [3400.0,6100.0,8400.0]:c.draw_rect(Rect2(Vector2(band-500,0)*scale_xy,Vector2(1000,world_size().y)*scale_xy),Color('#64b4bd',.13))
+ for x in range(0,int(world_size().x),1000):
+  for y in range(0,int(world_size().y),1000):
+   var world_point=Vector2(x+500,y+500);var p=world_point*scale_xy;var direction=current_at(world_point).normalized()*11
+   c.draw_line(p,p+direction,Color('#547e8f'),1);c.draw_line(p+direction,p+direction*.6+direction.orthogonal()*.3,Color('#547e8f'),1)
+ for isle in islands():
+  if str(isle.name)=="Night Island" and island_found_night!=night_number():continue
+  c.draw_circle(isle.p*scale_xy,float(isle.r)*scale_xy.y,Color('#b5b894'));c.draw_string(ThemeDB.fallback_font,isle.p*scale_xy+Vector2(8,-9),isle.name,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#f5e5c4'))
+ for rock in rocks():c.draw_circle(rock.p*scale_xy,2,Color('#8b9f9b'))
+ for cage in cages:
+  var p=Vector2(cage.pos[0],cage.pos[1])*scale_xy;c.draw_circle(p,5,Color('#edb378'))
+ c.draw_circle(HOME*scale_xy,6,Color('#f4ce76'));c.draw_circle(boat*scale_xy,5,Color('#ffffff'))
+ for id in seen:
+  var names={"voyage_lake_reeds":[Vector2(1500,4000),"Reedbanks"],"voyage_lake_islands":[Vector2(6000,4900),"Island narrows"],"voyage_lake_deep":[Vector2(5400,1300),"Deep basin"],"voyage_coast_shoals":[Vector2(2200,5700),"Shoals"],"voyage_coast_kelp":[Vector2(5800,5400),"Kelp"],"voyage_coast_reef":[Vector2(3200,2500),"Reef"],"voyage_coast_channel":[Vector2(7700,3700),"Deep channel"]}
+  if names.has(id):c.draw_string(ThemeDB.fallback_font,names[id][0]*scale_xy,names[id][1],HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#84d5d2'))
+func draw_ground(c:Node2D,cam:Vector2)->void:
+ var view=Rect2(cam,c.get_viewport_rect().size/game.media.factor()).grow(150)
+ c.draw_rect(Rect2(-cam,world_size()),Color('#235065') if route=="lake" else Color('#183b53'))
+ # Submerged sandbars and darker channels show depth without revealing every species.
+ if route=="coast":
+  c.draw_rect(Rect2(Vector2(6500,0)-cam,Vector2(world_size().x-6500,world_size().y)),Color('#102e47'))
+  c.draw_rect(Rect2(Vector2(0,0)-cam,Vector2(world_size().x,1700)),Color('#122f48'))
+ for x in range(int(view.position.x/120)*120,int(view.end.x),120):
+  for y in range(int(view.position.y/120)*120,int(view.end.y),120):
+   var seed_value=absi(int(x/120)*73856093 ^ int(y/120)*19349663)
+   var p=Vector2(x+posmod(seed_value,71)-35,y+posmod(seed_value/3,77)-38)
+   var phase=sin(elapsed*1.2+x*.01+y*.008)*8
+   if seed_value%5!=0:c.draw_arc(p-cam+Vector2(phase,0),17+seed_value%23,.12,PI*.7,10,Color('#58828e',.45),1.3)
+   if (x/120+y/120)%7==0:
+    var flow=current_at(p);var direction=flow.normalized()*(18+flow.length()*.13)
+    c.draw_line(p-cam,p+direction-cam,Color('#77a0ac',.3),2);c.draw_line(p+direction-cam,p+direction*.65+direction.orthogonal()*.25-cam,Color('#77a0ac',.3),2)
+   if route=="coast" and p.x>4100 and p.x<6500 and p.y>3000 and seed_value%4==0:
+    for frond in 3:
+     var points=PackedVector2Array()
+     for k in 8:points.append(p+Vector2(frond*12+sin(k*.8+elapsed*.4+frond)*9,-k*9)-cam)
+     c.draw_polyline(points,Color('#578b75',.5),3)
+   elif route=="coast" and p.y>1900 and p.y<3800 and p.x<6500 and seed_value%4==0:
+    c.draw_circle(p-cam,28+seed_value%17,Color('#768b80',.28))
+    c.draw_arc(p-cam,22,PI,TAU,12,Color('#9c9c81',.3),4)
+   elif (route=="lake" and p.x<3300 or route=="coast" and p.y>3800 and p.x<4100) and seed_value%4==0:c.draw_circle(p-cam,45+seed_value%35,Color('#a2ab80',.1))
+   if (x/120*7+y/120*3)%19==0:
+    for i in 4:c.draw_line(p+Vector2(i*13,i%2*9)-cam,p+Vector2(i*13+10,i%2*9+3)-cam,Color('#9bbcae',.28),4)
+   if route=="lake" and seed_value%6==0:
+    if p.x<3300:
+     for stalk in 5:
+      var at=p+Vector2(stalk*9,stalk%2*7)-cam
+      c.draw_line(at,at+Vector2(sin(elapsed*.5+stalk)*5,-42-stalk%3*7),Color('#779b6f',.6),2)
+      c.draw_line(at+Vector2(1,-30),at+Vector2(1,-44),Color('#b7a979',.7),4)
+    else:
+     c.draw_circle(p-cam,14,Color('#78a18c',.3));c.draw_arc(p-cam,10,.3,5.8,12,Color('#a2bb98',.4),2)
+ # A visible mainland shore keeps the destination recognisably coastal.
+ var shore=PackedVector2Array([Vector2(-cam.x,-cam.y),Vector2(460-cam.x,-cam.y)])
+ for y in range(0,int(world_size().y)+201,160):shore.append(Vector2(430+sin(y*.003)*75,y)-cam)
+ shore.append(Vector2(0,world_size().y)-cam);c.draw_colored_polygon(shore,Color('#b8b185'));c.draw_polyline(shore,Color('#6f9a98'),14)
+ var inland=PackedVector2Array([Vector2(-cam.x,-cam.y),Vector2(280-cam.x,-cam.y)])
+ for y in range(0,int(world_size().y)+201,220):inland.append(Vector2(250+sin(y*.003)*65,y)-cam)
+ inland.append(Vector2(0,world_size().y)-cam);c.draw_colored_polygon(inland,Color('#4b705b'))
+ for rock in rocks():
+  if not view.has_point(rock.p):continue
+  c.draw_circle(rock.p-cam,float(rock.r)+12,Color('#50747c'));c.draw_circle(rock.p-cam,float(rock.r),Color('#69797c'));c.draw_arc(rock.p-cam,float(rock.r)+20,0,TAU,22,Color('#b3c6c3'),3)
+ for isle in islands():
+  if not view.intersects(Rect2(isle.p-Vector2.ONE*(float(isle.r)+40),Vector2.ONE*float(isle.r)*2+Vector2(80,80))):continue
+  var p:Vector2=isle.p-cam;c.draw_circle(p,float(isle.r)+22,Color('#63918e'));c.draw_circle(p,float(isle.r),Color('#c8bc8b'));c.draw_circle(p,float(isle.r)-55,Color('#5c7862'))
+  for j in 9:
+   var q=p+Vector2.from_angle(j*2.4)*(float(isle.r)*.65);c.draw_circle(q,40,Color('#3c5d51'));c.draw_circle(q-Vector2(0,14),32,Color('#6b8767'))
+  c.draw_string(ThemeDB.fallback_font,p-Vector2(95,float(isle.r)+35),str(isle.name),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color('#f3e5bf'))
+  for j in 22:
+   var angle=j*2.399;var at=p+Vector2.from_angle(angle)*(float(isle.r)-29-j%3*13)
+   c.draw_circle(at,4+j%4*2,Color('#a19f84'))
+   if j%4==0:c.draw_arc(at,11,.2,PI,8,Color('#ede0af'),2)
+  for j in 6:
+   var at=p+Vector2.from_angle(j*2.1+1)*float(isle.r)*.54
+   c.draw_line(at+Vector2(0,13),at-Vector2(0,35),Color('#766a4e'),7)
+   for crown in 4:c.draw_circle(at+Vector2.from_angle(crown*1.8)*24-Vector2(0,33),19,Color('#719062') if j%2 else Color('#597b5d'))
+  c.draw_arc(p,float(isle.r)-105,.3,2.2,35,Color('#b7b080',.6),14)
+  if str(isle.name)=="Night Island":c.draw_circle(p,210,Color('#305a70'));c.draw_arc(p,216,0,TAU,70,Color('#a0bac1'),8)
+ var hp=HOME-cam
+ c.draw_rect(Rect2(hp-Vector2(230,95),Vector2(150,190)),Color('#9d8059'))
+ for j in 13:c.draw_line(hp+Vector2(-230+j*12,-95),hp+Vector2(-230+j*12,95),Color('#5b5043'),2)
+ c.draw_string(ThemeDB.fallback_font,hp-Vector2(270,120),'HOME HARBOUR • RETURN HERE',HORIZONTAL_ALIGNMENT_LEFT,-1,22,Color('#f2d296'))
+ for cage in cages:
+  var p=Vector2(cage.pos[0],cage.pos[1])-cam
+  if not view.has_point(p+cam):continue
+  c.draw_circle(p,12,Color('#edb378'));c.draw_line(p,p-Vector2(0,25),Color('#c9d5c5'),2);c.draw_string(ThemeDB.fallback_font,p+Vector2(16,0),'READY' if elapsed>=float(cage.ready) else '%ds' % ceili(float(cage.ready)-elapsed),HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color('#f7d4a2'))
+ draw_landmarks(c,cam,view)
+ draw_boat(c,cam)
+func draw_landmarks(c:Node2D,cam:Vector2,view:Rect2)->void:
+ var sites=[Vector2(1750,3200),Vector2(3850,2100),Vector2(6500,4400),Vector2(5700,1900)] if route=="lake" else [Vector2(3900,5200),Vector2(6000,2100),Vector2(8650,6100),Vector2(11300,5500),Vector2(12600,8500)]
+ for i in sites.size():
+  var world:Vector2=sites[i]
+  if not view.grow(260).has_point(world):continue
+  var q=world-cam
+  c.draw_circle(q,170,Color('#b0ba89',.10))
+  if i%3==0:
+   # A submerged ferry/wreck: ribs, broken mast and deck planking.
+   var hull_points=PackedVector2Array([q+Vector2(-130,-35),q+Vector2(90,-45),q+Vector2(147,4),q+Vector2(95,40),q+Vector2(-130,32)])
+   c.draw_colored_polygon(hull_points,Color('#6f7770',.55))
+   for j in 9:c.draw_line(q+Vector2(-110+j*27,-36),q+Vector2(-110+j*27,32),Color('#b1a583',.55),4)
+   c.draw_line(q+Vector2(-25,10),q+Vector2(35,-110),Color('#b6ad8b',.6),7)
+   c.draw_line(q+Vector2(35,-110),q+Vector2(94,-58),Color('#b6ad8b',.4),3)
+   c.draw_polyline(PackedVector2Array([q+Vector2(-132,-35),q+Vector2(90,-45),q+Vector2(147,4),q+Vector2(95,40),q+Vector2(-132,32)]),Color('#a4a88c',.7),5)
+   for plank in 7:
+    var at=q+Vector2(-104+plank*30,60+plank%3*17)
+    c.draw_line(at,at+Vector2(25,-8),Color('#a0a58a',.45),5)
+   c.draw_circle(q+Vector2(48,3),13,Color('#273e4b',.55))
+   var anchor=q+Vector2(-178,44)
+   c.draw_line(anchor,anchor+Vector2(10,-45),Color('#96aaa2',.7),4)
+   c.draw_arc(anchor,22,0,PI,12,Color('#96aaa2',.7),4)
+  elif i%3==1:
+   # Coral/reed beds with layered branching silhouettes and stone shelves.
+   for j in 12:
+    var at=q+Vector2.from_angle(j*2.4)*float(40+j*9)
+    c.draw_circle(at,19+j%4*7,Color('#829784',.4))
+    c.draw_line(at,at+Vector2(0,-44-j%3*14),Color('#90b19a',.7),4)
+    c.draw_line(at+Vector2(0,-25),at+Vector2(-19,-39),Color('#90b19a',.7),3)
+    c.draw_line(at+Vector2(0,-34),at+Vector2(20,-52),Color('#90b19a',.7),3)
+  else:
+   for j in 7:
+    var at=q+Vector2((j-3)*43,sin(j)*35)
+    c.draw_circle(at,24,Color('#536b73',.7));c.draw_arc(at,24,PI,TAU,12,Color('#b5b89c',.5),3)
+   c.draw_arc(q-Vector2(0,15),122,PI,TAU,28,Color('#8a9d94',.55),13)
+func draw_boat(c:Node2D,cam:Vector2)->void:
+ var p=boat-cam;var dir=Vector2.from_angle(facing);var side=dir.orthogonal()
+ var outline=PackedVector2Array([p+dir*62,p+dir*29+side*24,p-dir*31+side*29,p-dir*47+side*16,p-dir*51-side*16,p-dir*31-side*29,p+dir*29-side*24])
+ c.draw_colored_polygon(outline,Color('#cda578') if impact<=0 else Color('#e69c7a'));outline.append(outline[0]);c.draw_polyline(outline,Color('#4b3e34'),4)
+ c.draw_line(p+dir*40,p-dir*39,Color('#e0bf8d'),3)
+ for offset in [-25,12]:c.draw_line(p+side*22+dir*offset,p-side*22+dir*offset,Color('#80634b'),7)
+ if not anchored:
+  c.draw_line(p-dir*30+side*32,p-dir*65+side*49,Color('#b2aa89'),4);c.draw_line(p-dir*30-side*32,p-dir*65-side*49,Color('#b2aa89'),4)
+  c.draw_arc(p-dir*61,28,facing+1.9,facing+4.4,12,Color('#a8c6cb',.4),2)
+ var lantern=p+dir*30;c.draw_circle(lantern,7,Color('#ffe2a0'));c.draw_line(lantern,lantern-Vector2(0,20),Color('#433f38'),3)
+ if not ashore:
+  var sprite=str(game.hero.get("sprite",game.selected_character));var tex=game.art.get(sprite+"_idle",game.art.get(sprite+"_0"))
+  if tex!=null:c.draw_texture_rect(tex,Rect2(p-dir*8-Vector2(14,27),Vector2(28,33)),false)
+  else:c.draw_circle(p-dir*7,11,Color('#584c62'));c.draw_circle(p-dir*7-Vector2(0,8),7,Color('#e5c29a'))
+ if anchored:c.draw_string(ThemeDB.fallback_font,p+Vector2(-30,65),'ANCHORED',HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color('#e4dfc7'))
+func draw_lighting(c:Node2D,cam:Vector2)->void:
+ var dark=night();var weather=str(context().weather);var alpha=(.72 if ashore else .88) if dark else .32 if weather=="Storm" else .18 if weather=="Mist" else .0
+ if alpha>0:
+  var center=boat-cam;var radius=190.0 if dark else 420.0;var view=Rect2(Vector2.ZERO,game.VIEW)
+  var outside=maxf(game.VIEW.x,game.VIEW.y)*3
+  for j in 64:
+   var a=j*TAU/64;var b=(j+1)*TAU/64
+   c.draw_colored_polygon(PackedVector2Array([center+Vector2.from_angle(a)*radius*1.3,center+Vector2.from_angle(b)*radius*1.3,center+Vector2.from_angle(b)*outside,center+Vector2.from_angle(a)*outside]),Color(.01,.025,.06,alpha))
+   for band in 10:
+    var inner=radius*(.65+band*.065);var outer=radius*(.65+(band+1)*.065)
+    c.draw_colored_polygon(PackedVector2Array([center+Vector2.from_angle(a)*inner,center+Vector2.from_angle(b)*inner,center+Vector2.from_angle(b)*outer,center+Vector2.from_angle(a)*outer]),Color(.01,.025,.06,alpha*(band+1)/10.0))
+  if dark:c.draw_circle(center,68,Color(1,.78,.32,.035))
+ if weather in ["Rain","Storm"]:
+  for i in 45:
+   var p=Vector2(fposmod(i*173+elapsed*180,game.VIEW.x),fposmod(i*241+elapsed*440,game.VIEW.y));c.draw_line(p,p+Vector2(-8,23),Color('#b5d8e0',.35),1.5)
+func draw_pier(c:Node2D,cam:Vector2)->void:
+ var rect=Rect2(Vector2(2130,2410)-cam,Vector2(290,130));c.draw_rect(rect,Color('#a18360'));c.draw_rect(rect,Color('#4d453e'),false,5)
+ for i in 20:c.draw_line(rect.position+Vector2(i*15,0),rect.position+Vector2(i*15,130),Color('#695642'),2)
+ for j in 3:
+  var p=Vector2(2310+j*50,2570)-cam;c.draw_colored_polygon(PackedVector2Array([p+Vector2(0,-47),p+Vector2(19,-20),p+Vector2(24,20),p+Vector2(13,36),p+Vector2(-13,36),p+Vector2(-24,20),p+Vector2(-19,-20)]),Color('#c39d70'));c.draw_line(p-Vector2(20,0),p+Vector2(20,0),Color('#69513e'),7);c.draw_line(p-Vector2(16,-22),p+Vector2(16,22),Color('#e2bc8c'),3)
+ c.draw_arc(Vector2(2410,2570)-cam,39,0,TAU,30,Color('#edd398'),2)
+ c.draw_string(ThemeDB.fallback_font,Vector2(2110,2385)-cam,'RIPPLE & REEL • RIVER PIER',HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color('#f3dfb7'))
+static func valid_state(v:Variant)->bool:return preload("res://scripts/fishing_records.gd").valid_voyage(v)

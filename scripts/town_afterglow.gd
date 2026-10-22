@@ -72,15 +72,18 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
  for at in TORCHES:
   if view.has_point(at):flame(g,at-camera,t+at.x,night)
  # Eyes open, blink, fade away, then reappear elsewhere INSIDE the dark tunnel.
- var center=Vector2(-1080,1170)-camera
- if view.has_point(Vector2(-1080,1170)):
+ var center=Vector2(-1080,1186)-camera
+ if view.has_point(Vector2(-1080,1186)):
   for n in 2:
    var cycle:float=floor((t+n*5.9)/9.7);var phase:float=fposmod(t+n*5.9,9.7)
    if phase>6.2:continue
-   var angle=sin(cycle*2.37+n*3.1);var pos=center+Vector2(angle*22,-14+sin(cycle*4.17+n)*11)
+   var pos=cave_eye_point(cycle,n)-camera
    var blink=1.0-smoothstep(.05,.14,absf(fposmod(phase,2.8)-1.4))
    var height:float=lerpf(2.0,.25,blink);var alpha:float=(.18+night*.78)*smoothstep(0,.7,phase)*(1-smoothstep(5.2,6.2,phase))
    for side in [-1,1]:
     var outline=PackedVector2Array();var eye=pos+Vector2(side*4.5,0)
     for k in 12:outline.append(eye+Vector2(cos(float(k)*TAU/12)*2,sin(float(k)*TAU/12)*height*2))
     g.draw_colored_polygon(outline,Color(.95,.76,.31,alpha))
+
+static func cave_eye_point(cycle:float,index:int)->Vector2:
+ return Vector2(-1080,1186)+Vector2(sin(cycle*2.37+index*3.1)*18,-3+sin(cycle*4.17+index)*6)

@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import {rankWeek} from './cosmetic-rankings.mjs';
 const relics=JSON.parse(readFileSync(new URL('../content/relic_records.json',import.meta.url)));
 const fish=JSON.parse(readFileSync(new URL('../content/fishing.json',import.meta.url))).fish;
-const grades=['Common','Uncommon','Rare','Very rare','Legendary','Mystical'];
+const grades=['Common','Uncommon','Rare','Very rare','Legendary','Mystical',"Fabled"];
 const rareOrder=(a,b)=>{const fa=fish[a.extra.species],fb=fish[b.extra.species];return grades.indexOf(fb.rarity)-grades.indexOf(fa.rarity)||fa.chance-fb.chance||a.extra.species.localeCompare(b.extra.species)||Number(b.extra.kg)-Number(a.extra.kg)||a.username.localeCompare(b.username);};
 const manifest=JSON.parse(readFileSync(new URL('../content/manifest.json',import.meta.url))),realms=new Set(manifest.regions),heroes=new Set(manifest.characters);
 export const namedSchema=`CREATE TABLE IF NOT EXISTS crossroads_named_records(account text NOT NULL REFERENCES crossroads_accounts(id),scope text NOT NULL,kind text NOT NULL,key text NOT NULL,value double precision NOT NULL,extra jsonb NOT NULL DEFAULT '{}',PRIMARY KEY(account,scope,kind,key));

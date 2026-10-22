@@ -5,6 +5,8 @@ const UI=preload("res://scripts/studio_ui.gd")
 const SHOP=Vector2(2000,2020)
 const SHOP_SOLID=Rect2(1850,1760,300,215)
 const E=preload("res://scripts/fishing_ecology.gd")
+var aquarium_panel:CanvasLayer
+var aquarium_save_clock=0.0
 var workshop:CanvasLayer
 var method_picker:OptionButton
 var bait_picker:OptionButton
@@ -111,6 +113,7 @@ func spot_available(spot:Dictionary)->bool:
  if str(spot.get("id",""))!="town_dawn":return true
  return not multi and game.mode=="town" and game.town_life.calendar.dawn_fishing_open()
 func nearest()->Dictionary:
+ if not multi and game.get("voyage")!=null and game.voyage.active:return game.voyage.fishing_spot()
  for spot in spots:
   if not spot_available(spot):continue
   var bank=Vector2(float(spot.bank[0]),float(spot.bank[1]))
@@ -119,6 +122,10 @@ func nearest()->Dictionary:
 func _process(delta:float)->void:
  if game==null:return
  clock+=delta
+ aquarium_save_clock+=delta
+ if aquarium_save_clock>=60:
+  aquarium_save_clock=0
+  if records().income.allowed() and records().income.hourly()>0:records().income.advance();records().save()
  var prog=records().progress
  odds_button.visible=prog.has("fieldguide")
  if not prog.method_unlocked(str(prog.state().method)):prog.state().method="rod"
@@ -144,7 +151,7 @@ func _process(delta:float)->void:
  if busy() and not spot_available(cast_spot):cancel("The dawn shoal has vanished. Return between 4 and 6 am.")
  if busy() and (not playable() or local_pos().distance_to(cast_pos)>18 or local_hp()<cast_hp or region!=cast_region):cancel("Cast cancelled — moving, damage or a menu interrupted it.")
  var spot=nearest()
- if playable() and not spot.is_empty():records().discover_pool(str(spot.id))
+ if playable() and not spot.is_empty() and not (not multi and game.get("voyage")!=null and game.voyage.active):records().discover_pool(str(spot.id))
  panel.visible=playable() and (not spot.is_empty() or busy()) and not is_instance_valid(journal)
  var view=game.get_viewport_rect().size;var dims=panel.get_combined_minimum_size().max(Vector2(360,0));var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)));panel.size=dims;panel.scale=Vector2.ONE*fit;panel.position=Vector2((view.x-dims.x*fit)*.5,view.y-dims.y*fit-12)
  if not panel.visible:return
@@ -176,11 +183,13 @@ func _unhandled_input(event:InputEvent)->void:
    if not (focus is LineEdit or focus is TextEdit):
     finish_catch(event.keycode==KEY_F or event.physical_keycode==KEY_F);get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(inspector):inspector.close();get_viewport().set_input_as_handled();return
+  if event.keycode==KEY_ESCAPE and is_instance_valid(aquarium_panel):aquarium_panel.close();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(journal):close_journal();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and busy():cancel("Cast cancelled.");get_viewport().set_input_as_handled();return
   if event.keycode==KEY_F and playable() and not is_instance_valid(room):
    if busy() or not nearest().is_empty():activate();get_viewport().set_input_as_handled()
 func open_basket(index:int)->void:
+ if not multi and game.get("voyage")!=null and game.voyage.active:status="Recover voyage cages at their water markers. Town baskets wait safely in town.";return
  if index<0 or index>=records().state().pots.size():return
  var pot=records().state().pots[index]
  if E.context(game).utc<float(pot.ready):return
@@ -208,6 +217,7 @@ func activate()->void:
  var prog=records().progress;var method=str(records().state().method)
  if not prog.method_unlocked(method):status="This equipment is not unlocked. Visit the workshop.";return
  if method=="pot" and region_key()=="between":status="These waters are unstable. Use a rod or net; set baskets in permanent realm waters.";return
+ if method=="pot" and not multi and game.get("voyage")!=null and game.voyage.active:game.voyage.cage_action();return
  if method=="pot":
   var now=E.context(game).utc
   for i in prog.state().pots.size():
@@ -215,9 +225,11 @@ func activate()->void:
    if now<float(prog.state().pots[i].ready):status=prog.basket_summary(now);return
    basket_index=i;pending=prog.state().pots[i].catch;cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();phase="bite";land();return
   status=prog.place(str(spot.id),now,rng);game.message=status;game.message_time=5;return
+ if not E.bait_usable(prog.bait(),method,str(spot.region)):status="This bait is for "+("cages/baskets only." if prog.bait()=="roe" else "ocean water only.");return
  pending=C.roll(str(spot.id),rng,E.context(game),method,prog.bait(),prog.level(),prog.trophy_bonus(),prog.rarity_bonus(method))
  if pending.is_empty():status="No suitable catches for this method and conditions. Try a different method, water or time.";return
  cast_spot=spot.duplicate();cast_spot.wait=(rng.randf_range(.7,1.4) if method=="net" else rng.randf_range(8.0,14.0))*prog.wait_scale(method)
+ if not multi and game.get("voyage")!=null and game.voyage.active:cast_spot.wait*=float(spot.get("wait",3))/3.5
  timer=float(cast_spot.wait);bite_at=rng.randf_range(.3 if method=="net" else .6,maxf(.61,timer-.2)) if rng.randf()<prog.bite_chance(method) else -1.0
  bite_window=BITE_WINDOW+prog.hook_bonus(method);cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();phase="waiting";status="";cast_button.disabled=false
  if not multi:game.mobile.reset_controls()
@@ -228,7 +240,7 @@ func cancel(message:String)->void:
 func land()->void:
  if not spot_available(cast_spot):cancel("The dawn fishing window has closed.");return
  if phase!="bite" or pending.is_empty():return
- if basket_index<0 and not E.open(C.fish()[pending.species],E.context(game),str(pending.get("method","rod"))):cancel("This species stopped feeding as the conditions changed.");return
+ if basket_index<0 and not E.open(C.fish()[pending.species],E.context(game),str(pending.get("method","rod")),str(pending.get("bait","basic"))):cancel("This species stopped feeding as the conditions changed.");return
  phase="landed";catch_frame=PanelContainer.new();UI.apply(catch_frame);hud.add_child(catch_frame)
  catch_frame.position=Vector2(game.get_viewport_rect().size.x-365,205);catch_frame.custom_minimum_size=Vector2(340,0)
  var col=VBoxContainer.new();catch_frame.add_child(col);var spec:Dictionary=C.fish()[pending.species]
@@ -243,7 +255,8 @@ func land()->void:
  label(col,record_text,16).modulate=Color("#ade0cd")
  if not previous.is_empty():
   label(col,"NEW WEIGHT RECORD! +%.2f kg" % (float(pending.kg)-float(previous.kg)) if float(pending.kg)>float(previous.kg) else "%.2f kg below your best" % (float(previous.kg)-float(pending.kg)),17).modulate=Color("#ffe19c")
- catch_text=label(col,"Keep it for your aquarium, or release it. Keep: normal fishing XP and a fish to sell. Release: +25% fishing XP. Both record discoveries!",15)
+ if basket_index>=0:label(col,"BASKET • %d fish remaining" % records().progress.basket_count(records().state().pots[basket_index]),17)
+ catch_text=label(col,"Keep it for your aquarium, or release it. Keep: normal XP and a fish to sell for %d%% of its base Glimmer price. Release: +%d%% fishing XP. Both record discoveries!" % [roundi((1+records().progress.perk_bonus("sale"))*100),roundi(records().progress.release_bonus()*100)],15)
  var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"F • Keep catch",finish_catch.bind(true)));button(row,"R • Release",finish_catch.bind(false))
  call_deferred("fit_catch_frame")
 func fit_catch_frame()->void:
@@ -252,19 +265,27 @@ func fit_catch_frame()->void:
  var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)))
  catch_frame.size=dims;catch_frame.scale=Vector2.ONE*fit;catch_frame.position=Vector2(view.x-dims.x*fit-12,(view.y-dims.y*fit)*.5)
 func finish_catch(keep:bool)->void:
+ if not multi and game.get("voyage")!=null and game.voyage.active:
+  if phase!="landed" or pending.is_empty():return
+  if game.voyage.stow(pending,keep):records().progress.spend_bait(rng);cancel("Catch logged aboard • return alive to earn XP and records.")
+  else:catch_text.text="Voyage cargo full (60). Return to harbour to land these catches."
+  return
  if phase!="landed" or pending.is_empty():return
  if keep and records().state().kept.size()>=records().capacity():catch_text.text="Fish bag full (%d / %d). Release this catch for XP, or sell/release kept fish to make room." % [records().state().kept.size(),records().capacity()];return
  var name=str(C.fish()[pending.species].name)
  var reward_before=game.legacy.weekly.earned("week_fish")
- var saved=false
+ var saved=false;var next_pool=""
  if basket_index>=0:
-  var count=records().state().pots.size();records().progress.claim(basket_index,E.context(game).utc,keep);saved=records().state().pots.size()<count
+  next_pool=str(records().state().pots[basket_index].pool);records().progress.claim(basket_index,E.context(game).utc,keep);saved=records().state().recent.has(str(pending.id))
  else:
   saved=records().complete(pending,keep)
   if saved:records().progress.spend_bait(rng)
- if saved:game.get_tree().root.get_node("FXActivity").event(game,"fish_catch","completed",0,{"species_id":str(pending.species),"fish_level":records().progress.level(),"fish_weight":float(pending.kg),"fish_xp_gain":records().progress.last_xp,"fish_trophy":1 if C.is_trophy(pending) else 0,"fish_kept":1 if keep else 0})
+ if saved and basket_index<0:game.get_tree().root.get_node("FXActivity").event(game,"fish_catch","completed",0,{"species_id":str(pending.species),"fish_level":records().progress.level(),"fish_weight":float(pending.kg),"fish_xp_gain":records().progress.last_xp,"fish_trophy":1 if C.is_trophy(pending) else 0,"fish_kept":1 if keep else 0})
  var weekly_reward=" • Moonlit Minnow earned! Equip it in Cosmetics." if saved and not reward_before and game.legacy.weekly.earned("week_fish") else ""
  cancel(("Kept " if keep else "Released ")+name+(" • temporary Game Dev collection; saved profile unchanged." if bool(game.legacy.data.get("teacher",false)) else " • journal updated." if saved else " • practice/test catch; no profile progress.")+(" • +%d fishing XP" % records().progress.last_xp if saved else "")+weekly_reward)
+ if saved and not next_pool.is_empty():
+  for index in records().state().pots.size():
+   if str(records().state().pots[index].pool)==next_pool:call_deferred("open_basket",index);break
 func label(parent:Node,text:String,font_size:int=17)->Label:
  var l=Label.new();l.text=text;l.add_theme_font_size_override("font_size",font_size);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
 func button(parent:Node,text:String,action:Callable)->Button:
@@ -313,6 +334,7 @@ func open_shop()->void:
  room_layer=CanvasLayer.new();room_layer.layer=65;game.add_child(room_layer)
  room=preload("res://scripts/fishing_room.gd").new();room_layer.add_child(room);room.setup(self)
 func close_shop()->void:
+ if is_instance_valid(aquarium_panel):aquarium_panel.close()
  if is_instance_valid(sales):sales.close()
  close_journal()
  if is_instance_valid(room_layer):room_layer.queue_free()
@@ -352,6 +374,10 @@ func species_ui(body:Node)->void:preload("res://scripts/fish_collection_ui.gd").
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  draw_baskets(canvas,camera)
  var region=region_key();var active_spots=spots if region==cached_region else C.spots(region)
+ if not multi and game.get("voyage")!=null and game.voyage.active:
+  active_spots=[]
+  var spot=game.voyage.fishing_spot()
+  if not spot.is_empty() and game.voyage.ashore:active_spots=[spot]
  var bounds=Rect2(camera,game.VIEW).grow(160)
  if region=="town" and bounds.intersects(SHOP_SOLID.grow(80)):
   canvas.draw_texture_rect(C.texture("shop"),Rect2(SHOP-Vector2(180,288)-camera,Vector2(360,288)),false)
@@ -444,3 +470,8 @@ static func basket_location(pool:String)->String:
   var data=JSON.parse_string(FileAccess.get_file_as_string(path))
   if data is Dictionary:realm=str(data.get("name",realm))
  return str(realm)+" · "+str(water.get("name","Unknown water"))
+
+func open_aquarium_income()->void:
+ if not is_instance_valid(room):return
+ if is_instance_valid(aquarium_panel):return
+ aquarium_panel=preload("res://scripts/aquarium_income_ui.gd").new();game.add_child(aquarium_panel);aquarium_panel.setup(self)

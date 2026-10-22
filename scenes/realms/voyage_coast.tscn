@@ -1,0 +1,15 @@
+[gd_scene format=3]
+[node name="Voyagecoast" type="Node2D"]
+[node name="Points" type="Node2D" parent="."]
+[node name="Spawn" type="Marker2D" parent="Points"]
+position = Vector2(1100,5650)
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+position = Vector2(1100,5650)
+[node name="Merchant" type="Marker2D" parent="Points"]
+position = Vector2(1100,5650)
+[node name="Boss" type="Marker2D" parent="Points"]
+position = Vector2(8500,6500)
+[node name="GroundPaint" type="Node2D" parent="."]
+[node name="Obstacles" type="Node2D" parent="."]
+[node name="Decorations" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="."]

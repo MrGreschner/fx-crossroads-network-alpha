@@ -2270,7 +2270,7 @@ func _draw() -> void:
 		if str(foe["type"]) in ["gongbreaker","silence_regent","rootbound_keeper"]: size=Vector2(120,128)
 		if str(foe["type"])=="gilded_usurper":size*=1.0 if int(foe.get("generation",0))==0 else .78 if int(foe.get("generation",0))==1 else .56
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
-		if float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
+		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
 		if texture != null: draw_texture_rect(texture,Rect2(pos-size*Vector2(0.5,0.7),size),false)
 		else: draw_circle(pos,19,Color("#ffad7a"))
 		var hp_y:float=-size.y*.7-8 if str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
@@ -2424,7 +2424,10 @@ func cached_world_tile(tx:int,ty:int,tile_size:int)->String:
 func _draw_world() -> void:
 	var tile_size:int=128 if spectating() else 64
 	var bounds := Rect2(camera-Vector2(160,160),VIEW+Vector2(320,320))
-	if spectating() or terrain_cache==null:
+	if realm_id=="moonveil" and mode=="coop":
+		if terrain_cache!=null:terrain_cache.hide()
+		preload("res://scripts/moon_castle.gd").draw(self,camera)
+	elif spectating() or terrain_cache==null:
 		for tx in range(int(camera.x/tile_size),int((camera.x+VIEW.x)/tile_size)+1):
 			for ty in range(int(camera.y/tile_size),int((camera.y+VIEW.y)/tile_size)+1):
 				var point := Vector2(tx*tile_size+tile_size/2,ty*tile_size+tile_size/2)

@@ -3,7 +3,7 @@
   "name": "Moonveil Masquerade",
   "size": [
     7600,
-    3600
+    5600
   ],
   "terrain": "moonveil_court",
   "scene": "res://scenes/realms/moonveil.tscn",
@@ -13,6 +13,6 @@
   "xp_per_level": 4,
   "unlock_cost": 0,
   "difficulty_label": "Medium \u2014 moving mirrors and split lances",
-  "description": "A moonlit festival city with silver canals, glass gardens and mirror courts. The Mirror Marquis circles and dashes while prism lances split in flight.",
+  "description": "Enter an eccentric moon castle through grand ballrooms, fountain gardens and side courtyards. The southern moonwater garden opens onto a real lakeshore.",
   "difficulty_tier": "medium"
 }

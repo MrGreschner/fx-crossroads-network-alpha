@@ -1,0 +1,19 @@
+{
+  "name": "Saltwind Elixir",
+  "tier": 2,
+  "seconds": 160,
+  "needs": {
+    "mint": 2,
+    "firefly": 1
+  },
+  "fish": "v20_copperback_mackerel",
+  "effect": "haste",
+  "amount": 22,
+  "duration": 5,
+  "description": "Move 22% faster for 5 seconds. Uses one ordinary kept Copperback Mackerel. One use.",
+  "id": "lodge_saltwind",
+  "cost": 0,
+  "sprite": "lodges/lodge_saltwind",
+  "shop": false,
+  "crafted": true
+}

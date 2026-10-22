@@ -107,7 +107,7 @@ func _process(_delta:float)->void:
 func draw_hud(canvas:Node2D)->void:
 	if welcome_remaining<=0 or not welcome_visible():return
 	var font:Font=ThemeDB.fallback_font
-	var top:float=preload("res://scripts/town_hud.gd").height(game)+9
+	var top:float=preload("res://scripts/town_hud.gd").height(game)+85
 	var width:float=minf(680,game.VIEW.x-48)
 	canvas.draw_rect(Rect2(24,top,width,48),Color(.04,.1,.14,.9))
 	canvas.draw_line(Vector2(24,top),Vector2(24+width*welcome_remaining/8,top),Color("#86bdb7"),2)

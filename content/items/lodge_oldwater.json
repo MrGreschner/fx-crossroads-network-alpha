@@ -1,0 +1,18 @@
+{
+  "name": "Oldwater Recovery Broth",
+  "tier": 1,
+  "seconds": 100,
+  "needs": {
+    "sunleaf": 2,
+    "mint": 1
+  },
+  "fish": "v20_olive_lake_perch",
+  "effect": "heal",
+  "amount": 38,
+  "description": "Restore 38 HP. Uses one ordinary kept Olive Lake Perch. One use; cannot revive.",
+  "id": "lodge_oldwater",
+  "cost": 0,
+  "sprite": "lodges/lodge_oldwater",
+  "shop": false,
+  "crafted": true
+}

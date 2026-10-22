@@ -43,7 +43,7 @@ func fish_ingredient(recipe:Dictionary)->int:
  var fishing=legacy.fishing_records.state()
  for n in fishing.kept.size():
   var catch:Dictionary=fishing.kept[n]
-  if str(catch.species)==str(recipe.fish) and not bool(catch.get("trophy",false)) and str(catch.id)!=str(fishing.favorite) and str(catch.id) not in fishing.display:return n
+  if str(catch.species)==str(recipe.fish) and not preload("res://scripts/fishing_catalog.gd").is_trophy(catch) and str(catch.id)!=str(fishing.favorite) and str(catch.id) not in fishing.display:return n
  return -1
 func can_brew(recipe:Dictionary)->bool:return can_pay(recipe.needs) and fish_ingredient(recipe)!=-1
 func brew(id:String)->String:

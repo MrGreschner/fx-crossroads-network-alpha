@@ -1,0 +1,27 @@
+{
+  "shared": [
+    "bridge_shrimp",
+    "bridge_claw"
+  ],
+  "exclusive": [
+    "v22_oldwater_mussel",
+    "v22_birchbank_crayfish"
+  ],
+  "habitats": {
+    "voyage_lake_reeds": [
+      "bridge_shrimp",
+      "bridge_claw",
+      "v22_oldwater_mussel"
+    ],
+    "voyage_lake_islands": [
+      "bridge_shrimp",
+      "bridge_claw",
+      "v22_oldwater_mussel",
+      "v22_birchbank_crayfish"
+    ],
+    "voyage_lake_deep": [
+      "v22_oldwater_mussel",
+      "v22_birchbank_crayfish"
+    ]
+  }
+}

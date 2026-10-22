@@ -14,12 +14,15 @@ func setup(owner:RefCounted)->void:
  for side in ["left","right","top","bottom"]:margin.add_theme_constant_override("margin_"+side,16)
  panel.add_child(margin);var col=VBoxContainer.new();margin.add_child(col)
  var top=HBoxContainer.new();col.add_child(top);tally=UI.label(top,"GARDENING • THE LIVING TREE",22);UI.button(top,"Close",close).size_flags_horizontal=Control.SIZE_SHRINK_END
+ top.get_child(top.get_child_count()-1).custom_minimum_size.x=100
  var controls=HBoxContainer.new();col.add_child(controls)
  UI.button(controls,"−",func():map.zoom_at(.8,map.size*.5)).size_flags_horizontal=Control.SIZE_SHRINK_END
  UI.button(controls,"+",func():map.zoom_at(1.25,map.size*.5)).size_flags_horizontal=Control.SIZE_SHRINK_END
  UI.button(controls,"Overview",func():map.overview()).size_flags_horizontal=Control.SIZE_SHRINK_END
  UI.label(controls,"Mouse wheel / pinch: zoom • drag: explore • click a symbol",15)
  UI.button(controls,"Reset mastery",confirm_reset).size_flags_horizontal=Control.SIZE_SHRINK_END
+ for child in controls.get_children():
+  if child is Button:child.custom_minimum_size.x=40 if child.text in ["−","+"] else 100 if child.text=="Overview" else 150
  var row=HBoxContainer.new();row.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(row)
  map=preload("res://scripts/garden_map.gd").new();map.size_flags_horizontal=Control.SIZE_EXPAND_FILL;map.size_flags_vertical=Control.SIZE_EXPAND_FILL;row.add_child(map);map.setup(gardening);map.picked.connect(select)
  var detail=VBoxContainer.new();detail.custom_minimum_size.x=250;row.add_child(detail);UI.label(detail,"PERK DETAILS",20)

@@ -9,13 +9,13 @@ const P=preload("res://scripts/fishing_progress.gd")
 var dragging=false
 var moved=false
 var down=Vector2.ZERO
-const WORLD=Vector2(3900,2600)
+const WORLD=Vector2(3500,2670)
 func setup(owner:RefCounted)->void:
  progress=owner
  for bi in P.BRANCHES.size():
-  var branch=P.BRANCHES[bi];var x=400+bi*620;var positions=[Vector2(x,2240),Vector2(x-130,2020),Vector2(x+130,2020),Vector2(x,1780),Vector2(x,1540),Vector2(x-130,1300),Vector2(x+130,1300),Vector2(x,1060),Vector2(x-130,800),Vector2(x+130,800)]
+  var branch=P.BRANCHES[bi]
   for n in branch.nodes.size():
-   var id=branch.nodes[n];var p=P.TALENTS[id].duplicate(true);p.position=[positions[n].x,positions[n].y];p.icon=0 if bi==0 else 2 if bi==1 else 5 if bi==2 else 3 if bi==3 else 6 if bi==4 else 4;p.rune=bi*10+n;catalogue[id]=p
+   var id=branch.nodes[n];var p=P.TALENTS[id].duplicate(true);p.icon=0 if bi==0 else 2 if bi==1 else 5 if bi==2 else 3 if bi==3 else 6 if bi==4 else 4;p.rune=bi*10+n;catalogue[id]=p
  clip_contents=true;mouse_filter=Control.MOUSE_FILTER_STOP
  resized.connect(overview);call_deferred("overview")
 func perks()->Dictionary:return catalogue
@@ -50,23 +50,26 @@ func _draw()->void:
  if progress==null:return
  var font=ThemeDB.fallback_font
  # A shared root joins the six styles without costing a point.
- var root=Vector2(1950,2520)*zoom+pan
- for bi in P.BRANCHES.size():draw_line(root,Vector2(400+bi*620,2300)*zoom+pan,Color("#3f6a68"),maxf(1,5*zoom),true)
+ var root=Vector2(1750,2570)*zoom+pan
+ for bi in P.BRANCHES.size():draw_line(root,Vector2(P.TALENTS[P.BRANCHES[bi].nodes[0]].position[0],P.TALENTS[P.BRANCHES[bi].nodes[0]].position[1])*zoom+pan,Color("#3f6a68"),maxf(1,5*zoom),true)
  draw_circle(root,36*zoom,Color("#b7a776"));draw_arc(root,42*zoom,0,TAU,24,Color("#e3cf91"),1.5,true)
  for id in perks():
   var p=perks()[id];var b=point(id)
   for parent in p.requires:
    var a=point(parent);var curve=Curve2D.new();curve.add_point(a,Vector2.ZERO,Vector2(0,(b.y-a.y)*.5));curve.add_point(b,Vector2(0,(a.y-b.y)*.5));draw_polyline(curve.tessellate(),Color("#b6a779") if progress.has(id) else Color("#4b7566"),maxf(1.5,9*zoom),true)
  for id in perks():
-  var p=perks()[id];var at=point(id);var owned=progress.has(id);var radius=48*zoom;var color=Color("#e4c27c") if owned else Color("#91c799") if progress.learn_reason(id).is_empty() else Color("#698a91")
+  var p=perks()[id];var at=point(id);var owned=progress.has(id);var radius=48*zoom;var color=Color("#e4c27c") if owned else Color("#91c799") if progress.learn_reason(id).is_empty() else Color("#596d76") if progress.excluded(id) else Color("#698a91")
   draw_circle(at,radius,Color("#254849"));draw_arc(at,radius,0,TAU,24,color,maxf(1.5,4*zoom),true)
   draw_badge(at,radius,p,color)
+  if progress.excluded(id):draw_line(at-Vector2(radius*.65,radius*.65),at+Vector2(radius*.65,radius*.65),Color("#a47c78"),maxf(1.5,3*zoom),true)
   if id==selected:draw_arc(at,radius+5,0,TAU,24,Color("#fff0b2"),2,true)
   if zoom>=.38:
    var label_size=clampi(int(22*zoom),12,22);var text=str(p.name);var width=font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,label_size).x+12;var box=Rect2(at+Vector2(-width*.5,radius+5),Vector2(width,label_size+9));draw_rect(box,Color("#102b31"));draw_string(font,box.position+Vector2(6,label_size+2),text,HORIZONTAL_ALIGNMENT_LEFT,-1,label_size,color)
  for bi in P.BRANCHES.size():
-  var at=Vector2(400+bi*620,600)*zoom+pan;var width=clampf(550*zoom,80,140);var fs=clampi(int(75*zoom),10,14)
+  var at=Vector2((400+bi*800)*.7,160)*zoom+pan;var width=clampf(550*zoom,80,140);var fs=clampi(int(75*zoom),10,14)
   draw_rect(Rect2(at-Vector2(width*.5+2,fs+2),Vector2(width+4,fs+7)),Color("#102b31"));draw_string(font,at-Vector2(width*.5,0),str(P.BRANCHES[bi].name).to_upper(),HORIZONTAL_ALIGNMENT_CENTER,width,fs,Color(P.BRANCHES[bi].color))
+  var hint=["Choose 1 of 2","Choose 1 of 3","Choose 1 of 4","Discover & craft","Pack & trade","Release OR sell"][bi]
+  draw_string(font,at+Vector2(-width*.5,fs+6),hint,HORIZONTAL_ALIGNMENT_CENTER,width,clampi(fs-2,10,12),Color("#afc6c8"))
 func draw_badge(at:Vector2,radius:float,p:Dictionary,ink:Color)->void:
  var r=radius*.54;var kind=int(p.icon)
  match kind:

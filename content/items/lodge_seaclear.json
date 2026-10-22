@@ -1,0 +1,18 @@
+{
+  "name": "Seaglass Purifier",
+  "tier": 1,
+  "seconds": 110,
+  "needs": {
+    "mint": 2,
+    "willow": 1
+  },
+  "fish": "v20_blue_shore_squid",
+  "effect": "cleanse",
+  "amount": 0,
+  "description": "Remove poison, burn and bleed. Uses one ordinary kept Blue Shore Squid. One use; no lasting immunity.",
+  "id": "lodge_seaclear",
+  "cost": 0,
+  "sprite": "lodges/lodge_seaclear",
+  "shop": false,
+  "crafted": true
+}

@@ -44,7 +44,7 @@ func sell(id:String)->void:
  var catch=fishing.records().specimen(id)
  if catch.is_empty():refresh();return
  var rarity=str(fishing.C.fish()[catch.species].rarity)
- if fishing.C.is_trophy(catch) or rarity in ["Very rare","Legendary","Mystical"]:
+ if fishing.C.is_trophy(catch) or rarity in ["Very rare","Legendary","Mystical","Fabled"]:
   var dialog=ConfirmationDialog.new();dialog.title="Sell this special catch?";dialog.dialog_text="%s • %s • %.2f kg%s\nSell for %d Glimmers? This removes the specimen from your bag, tanks and favourite. Journal records remain." % [fishing.C.fish()[catch.species].name,rarity,float(catch.kg)," • TROPHY" if fishing.C.is_trophy(catch) else "",fishing.game.legacy.glimmers.fish_price(catch)];add_child(dialog)
   dialog.confirmed.connect(func():complete_sale(id);dialog.queue_free());dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(540,230))
  else:complete_sale(id)

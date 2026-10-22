@@ -1,5 +1,5 @@
 extends RefCounted
-const RIVER=Rect2(2280,-560,160,3160)
+const RIVER=Rect2(2280,-560,160,3460)
 const BRIDGE=Rect2(2250,1090,220,130)
 const HOME_BRIDGE=Rect2(2250,2025,220,110)
 const POST=Vector2(550,1490)

@@ -26,6 +26,7 @@ static func hits(enemy:Dictionary,target:Vector2)->bool:
  var aim=Vector2(float(enemy.get("melee_x",0)),float(enemy.get("melee_y",1)))
  return diff.length()<=REACH and (diff.length()<1 or diff.normalized().dot(aim)>=cos(HALF_ANGLE))
 static func draw_warning(c:Node2D,enemy:Dictionary,at:Vector2)->void:
+ if str(c.get("mode"))=="descent":return
  var remaining:float=float(enemy.get("melee_warning",0))
  if remaining<=0:return
  var angle=Vector2(float(enemy.get("melee_x",0)),float(enemy.get("melee_y",1))).angle()

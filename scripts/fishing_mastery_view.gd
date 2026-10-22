@@ -16,26 +16,33 @@ func setup(owner:Node)->void:
  var margin=MarginContainer.new()
  for side in ["left","right","top","bottom"]:margin.add_theme_constant_override("margin_"+side,16)
  panel.add_child(margin);var col=VBoxContainer.new();margin.add_child(col)
- var top=HBoxContainer.new();col.add_child(top);tally=UI.label(top,"FISHING • THE ANGLER’S TREE",22);UI.button(top,"Close",close).size_flags_horizontal=Control.SIZE_SHRINK_END
+ var top=HBoxContainer.new();col.add_child(top);tally=UI.label(top,"FISHING • THE ANGLER’S TREE",22);UI.button(top,"Exit",close).size_flags_horizontal=Control.SIZE_SHRINK_END
+ top.get_child(top.get_child_count()-1).custom_minimum_size.x=100
  var controls=HBoxContainer.new();col.add_child(controls)
  UI.button(controls,"−",func():map.zoom_at(.8,map.size*.5)).size_flags_horizontal=Control.SIZE_SHRINK_END
  UI.button(controls,"+",func():map.zoom_at(1.25,map.size*.5)).size_flags_horizontal=Control.SIZE_SHRINK_END
  UI.button(controls,"Overview",func():map.overview()).size_flags_horizontal=Control.SIZE_SHRINK_END
  UI.label(controls,"Mouse wheel / pinch: zoom • drag: explore • click a symbol",15)
  UI.button(controls,"Reset mastery",confirm_reset).size_flags_horizontal=Control.SIZE_SHRINK_END
+ for child in controls.get_children():
+  if child is Button:child.custom_minimum_size.x=40 if child.text in ["−","+"] else 100 if child.text=="Overview" else 150
  var row=HBoxContainer.new();row.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(row)
  map=preload("res://scripts/fishing_mastery_map.gd").new();map.size_flags_horizontal=Control.SIZE_EXPAND_FILL;map.size_flags_vertical=Control.SIZE_EXPAND_FILL;row.add_child(map);map.setup(progress);map.picked.connect(select)
- var detail=VBoxContainer.new();detail.custom_minimum_size.x=250;row.add_child(detail);UI.label(detail,"PERK DETAILS",20)
- info=UI.label(detail,"Follow the trunk into Rodcraft, Netcraft, Basketcraft, Watersense, Trailcraft and Riverkeeping.\n\nClick any symbol to inspect a perk.\n\nGold: learned\nGreen: level & path ready\nSlate: locked\n\nOne point every three levels through level 78. Learn both forks for a branch crown.",17)
+ var detail=VBoxContainer.new();detail.custom_minimum_size.x=270;row.add_child(detail);UI.label(detail,"PERK DETAILS",20)
+ var detail_scroll=ScrollContainer.new();detail_scroll.name="PerkDetailsScroll";detail_scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;detail_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;detail_scroll.custom_minimum_size.y=100;detail.add_child(detail_scroll)
+ var descriptions=VBoxContainer.new();descriptions.size_flags_horizontal=Control.SIZE_EXPAND_FILL;detail_scroll.add_child(descriptions)
+ info=UI.label(descriptions,"Follow six different paths: Rodcraft (2 choices), Netcraft (3), Basketcraft (4), Watersense, Trailcraft and Stewardship.\n\nClick any symbol to inspect a perk.\n\nGold: learned\nGreen: level & path ready\nSlate: locked\n\nOne point every three levels through level 78. Specialization forks are exclusive; reset to switch. Other connected paths can be combined.",17)
+ if bool(progress.state().get("mastery_refunded",false)):info.text="Your previous fishing mastery points were refunded for these new paths. XP, equipment and catches are unchanged.\n\n"+info.text
  learn=UI.button(detail,"Learn selected perk",func():progress.choose(map.selected);select(map.selected));learn.disabled=true
- UI.label(detail,"60 perks • 26 points maximum\nEquipment, XP and catches survive a mastery reset. Collect baskets first.",15)
+ UI.label(descriptions,"60 perks • 26 points maximum\nEquipment, XP and catches survive a mastery reset. Collect baskets first. New baskets start with 5 fish; Deep Baskets and Woven Chambers raise this to 10.",15)
+ var exit_button=UI.button(detail,"EXIT • Back to fishing",close);exit_button.name="ExitFishingMastery"
  refresh_tally();layout()
 func refresh_tally()->void:tally.text="FISHING TREE • %d points available • level %d" % [progress.available_points(),progress.level()]
 func select(id:String)->void:
  if not map.perks().has(id):return
  var p=map.perks()[id];var requirements=[]
  for key in p.requires:requirements.append(str(map.perks()[key].name))
- info.text=str(p.name)+"\nLevel %d • 1 point\n\n" % int(p.level)+str(p.text)+("\n\nPath: "+(" or " if p.get("any",false) else " + ").join(requirements) if not requirements.is_empty() else "\n\nStart of the trunk.")+"\n\n"+("LEARNED" if progress.has(id) else "Inspect the level and connected path, then choose Learn.")
+ info.text=str(p.name)+"\nLevel %d • 1 point\n\n" % int(p.level)+str(p.text)+("\n\nChoose ONE specialization in this fork. Reset mastery to change it." if p.has("exclusive") else "")+("\n\nPath: "+(" or " if p.get("any",false) else " + ").join(requirements) if not requirements.is_empty() else "\n\nStart of the trunk.")+"\n\n"+("LEARNED" if progress.has(id) else progress.learn_reason(id) if not progress.learn_reason(id).is_empty() else "Available • choose Learn.")
  learn.disabled=not progress.learn_reason(id).is_empty()
  refresh_tally();map.queue_redraw()
 func confirm_reset()->void:

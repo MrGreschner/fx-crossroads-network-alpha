@@ -12,6 +12,8 @@ var rendered_day=-1
 var selected_realm="grove"
 var realm_scroll=0
 var records_fingerprint=0
+var build_generation=0
+var detail_scroll=0
 class RelicIcon extends Control:
  var type="stormglass"
  func _draw()->void:
@@ -68,7 +70,9 @@ func text(parent:Node,value:String,size:int=17)->Label:
 func button(parent:Node,value:String,call:Callable)->Button:
  var b=Button.new();b.text=value;b.custom_minimum_size.y=44;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(b);b.pressed.connect(call);return b
 func setup(owner:Node,selected:int)->void:
- manager=owner;tab=selected;layer=93;previous=manager.game.menu;manager.game.menu="waylight";manager.game.mobile.reset_controls();manager.game.legacy.community.read_delay=0;manager.game.legacy.community.fetch();build()
+ manager=owner;tab=selected;layer=93;previous=manager.game.menu;manager.game.menu="waylight";manager.game.mobile.reset_controls();
+ if manager.game.legacy.community.snapshot.is_empty() or manager.game.legacy.community.board_refresh<=0:manager.game.legacy.community.fetch()
+ build()
 func open_lobby()->void:
  var g=manager.game
  close();g.legacy.close()
@@ -84,10 +88,13 @@ func feedback(value:String)->void:
 func confirm(title:String,description:String,call:Callable)->void:
  var d=ConfirmationDialog.new();d.title=title;d.dialog_text=description;add_child(d);d.confirmed.connect(func():d.queue_free();call.call());d.canceled.connect(d.queue_free);d.popup_centered(Vector2i(490,220))
 func build()->void:
- for child in get_children():remove_child(child);child.queue_free()
- rendered_day=manager.today();countdown=null;records_fingerprint=hash(manager.game.legacy.community.snapshot)
- var shade=ColorRect.new();shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);shade.color=Color(.02,.05,.08,.97);add_child(shade)
- panel=PanelContainer.new();UI.apply(panel);panel.add_theme_stylebox_override("panel",UI.box("#102c38","#bba777",12,14));add_child(panel)
+ build_generation+=1;var generation=build_generation;var retired=get_children().filter(func(child):return child.name!="PortalShade")
+ var old_details=panel.find_child("RealmDetailsScroll",true,false) if is_instance_valid(panel) else null
+ if old_details!=null:detail_scroll=old_details.scroll_vertical
+ rendered_day=manager.today();countdown=null;records_fingerprint=hash(manager.game.legacy.community.snapshot.get("named",{}).get("route_times",{}))
+ if get_node_or_null("PortalShade")==null:
+  var shade=ColorRect.new();shade.name="PortalShade";shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);shade.color=Color(.02,.05,.08,.97);add_child(shade);move_child(shade,0)
+ panel=PanelContainer.new();panel.modulate.a=1 if retired.is_empty() else 0;UI.apply(panel);panel.add_theme_stylebox_override("panel",UI.box("#102c38","#bba777",12,14));add_child(panel)
  var body=VBoxContainer.new();body.add_theme_constant_override("separation",7);panel.add_child(body)
  var header=HBoxContainer.new();body.add_child(header);text(header,"THE CROSSING • PORTAL EXPEDITIONS",22)
  var lobby_button=button(header,"Multiplayer lobby",open_lobby);lobby_button.name="MultiplayerLobby";lobby_button.size_flags_horizontal=0;lobby_button.custom_minimum_size=Vector2(155,34)
@@ -130,6 +137,14 @@ func build()->void:
   if tab==1:between_ui(col)
   else:overcharge_ui(col)
  fit()
+ await get_tree().process_frame
+ await get_tree().process_frame
+ if generation==build_generation:
+  var details=panel.find_child("RealmDetailsScroll",true,false)
+  if details!=null:details.scroll_vertical=detail_scroll
+  panel.modulate.a=1
+ for child in retired:
+  if is_instance_valid(child):remove_child(child);child.queue_free()
 func standard(area:Node)->void:
  var left=VBoxContainer.new();left.custom_minimum_size.x=200 if manager.game.VIEW.x<950 else 250;area.add_child(left)
  text(left,"REALMS • scroll to browse",15)
@@ -141,7 +156,8 @@ func standard(area:Node)->void:
   var data=manager.game.realms.get(id,{})
   if data.is_empty():continue
   var unlocked=preload("res://scripts/realm_access.gd").unlocked(manager.game.legacy,str(id))
-  var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():realm_scroll=scroll.scroll_vertical;selected_realm=str(id);rebuild());entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=57
+  var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():realm_scroll=scroll.scroll_vertical;select_realm(str(id)));entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=57
+  if manager.game.legacy.fishing_records.caught_in_realm(str(id)):entry.icon=preload("res://scripts/realm_fishing_icon.gd").texture();entry.add_theme_constant_override("icon_max_width",22)
   entry.text+="\n"+preload("res://scripts/realm_speed_cards.gd").summary(manager.game.legacy,str(id));entry.add_theme_font_size_override("font_size",13)
   if not unlocked:entry.modulate=Color("#9cacaf")
   if selected_realm==str(id):active_index=index;UI.accent(entry)
@@ -161,7 +177,14 @@ func standard(area:Node)->void:
  solo.disabled=not unlocked or not manager.progress.state().run.is_empty();co.disabled=solo.disabled
  var art=preload("res://scripts/realm_landscape.gd").new();art.realm=selected_realm;art.game=manager.game;art.name="RealmLandscape";art.custom_minimum_size=Vector2(0,125);col.add_child(art)
  var fair=CheckButton.new();fair.text="Competition rules • relics disabled";fair.button_pressed=bool(manager.progress.state().fair);col.add_child(fair);fair.toggled.connect(func(on:bool):manager.progress.state().fair=on;manager.progress.save())
+ if manager.game.legacy.fishing_records.caught_in_realm(selected_realm):manager.game.catalog_ui.fishing_badge(col)
+ manager.game.catalog_ui.build_encounters(col,selected_realm)
  text(col,"First visit? Start with Whispering Grove. Select any realm on the left to see its route and unlock requirements.",15)
+func select_realm(id:String)->void:
+ selected_realm=id;detail_scroll=0
+ var details=panel.find_child("RealmDetailsScroll",true,false)
+ if details!=null:details.scroll_vertical=0
+ rebuild()
 func restore_realm_scroll(scroll:ScrollContainer)->void:
  await get_tree().process_frame
  await get_tree().process_frame
@@ -215,10 +238,10 @@ func update_countdown()->void:
  var utc=manager.now();var offset=preload("res://scripts/town_clock_math.gd").edmonton_offset(utc);var left=maxi(0,int((manager.today()+1)*86400-offset-utc))
  countdown.text="Rotation changes in %02d:%02d:%02d • shared town clock" % [left/3600,(left%3600)/60,left%60]
 func fit()->void:
- var view=manager.game.get_viewport_rect().size;panel.size=Vector2(minf(1150,view.x-24),minf(690,view.y-24));panel.position=(view-panel.size)*.5
+ var view=manager.game.get_viewport_rect().size;var width=minf(1150,maxf(900,view.x-24));var factor=minf(1,(view.x-24)/width);panel.scale=Vector2.ONE*factor;panel.size=Vector2(width,minf(690,(view.y-24)/factor));panel.position=(view-panel.size*factor)*.5
 func _process(_delta:float)->void:
  fit();update_countdown()
- if rendered_day!=manager.today() or records_fingerprint!=hash(manager.game.legacy.community.snapshot):
+ if rendered_day!=manager.today() or records_fingerprint!=hash(manager.game.legacy.community.snapshot.get("named",{}).get("route_times",{})):
   var list_scroll=panel.find_child("RealmListScroll",true,false)
   if list_scroll!=null:realm_scroll=list_scroll.scroll_vertical
   build()

@@ -1,0 +1,18 @@
+{
+  "name": "Bluebar Restorative",
+  "tier": 2,
+  "seconds": 175,
+  "needs": {
+    "mooncap": 2,
+    "petal": 1
+  },
+  "fish": "v20_bluebar_trout",
+  "effect": "heal",
+  "amount": 48,
+  "description": "Restore 48 HP. Uses one ordinary kept Bluebar Trout. One use; cannot revive.",
+  "id": "lodge_bluebar",
+  "cost": 0,
+  "sprite": "lodges/lodge_bluebar",
+  "shop": false,
+  "crafted": true
+}

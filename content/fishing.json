@@ -170,6 +170,9 @@
       "methods": [
         "rod",
         "net"
+      ],
+      "favoured_bait": [
+        "honeygrain"
       ]
     },
     "rustfin_chub": {
@@ -429,11 +432,14 @@
       "max_length": 30,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#64cccd",
-      "note": "Follows the ripples beside the reeds.",
+      "note": "Follows the ripples beside the reeds. A darting rivulet with a visible pebble heart and a forked spray tail.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "A darting rivulet with a visible pebble heart and a forked spray tail."
     },
     "mist_pearl": {
       "name": "Mist Pearl",
@@ -444,11 +450,14 @@
       "max_length": 36,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#b5c9d8",
-      "note": "A bright flash under quiet water.",
+      "note": "A bright flash under quiet water. A pearl held in the body of a translucent living water droplet.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "A pearl held in the body of a translucent living water droplet."
     },
     "cascade_crown": {
       "name": "Cascade Crown",
@@ -459,11 +468,14 @@
       "max_length": 90,
       "habitat": "Ferryman\u2019s Spring",
       "color": "#688ec5",
-      "note": "Patient anglers sometimes find unusually large specimens.",
+      "note": "Patient anglers sometimes find unusually large specimens. A living wave whose crown is a crest of falling water.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "A living wave whose crown is a crest of falling water."
     },
     "aurora_koifin": {
       "name": "Aurora Koifin",
@@ -474,11 +486,14 @@
       "max_length": 72,
       "habitat": "Moonwater Cascade",
       "color": "#b88dd4",
-      "note": "Look closely at its patterned fins.",
+      "note": "Look closely at its patterned fins. A long koi with flowing aurora-water fins and pearl-bright scales.",
       "group": "predator",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "A long koi with flowing aurora-water fins and pearl-bright scales."
     },
     "torrent_wyrm": {
       "name": "Torrent Wyrm",
@@ -489,11 +504,14 @@
       "max_length": 180,
       "habitat": "Moonwater Cascade",
       "color": "#eba855",
-      "note": "Follows the ripples beside the reeds.",
+      "note": "Follows the ripples beside the reeds. A serpentine water dragon with cataract fins, stone horns and a river-current spine.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "A serpentine water dragon with cataract fins, stone horns and a river-current spine."
     },
     "inkfold_flounder": {
       "name": "Inkfold Flounder",
@@ -504,11 +522,14 @@
       "max_length": 41,
       "habitat": "Foldwater Inlet",
       "color": "#b88dd4",
-      "note": "A bright flash under quiet water.",
+      "note": "A bright flash under quiet water. An asymmetric folded-envelope flatfish, with an inky living eye on one flap.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "An asymmetric folded-envelope flatfish, with an inky living eye on one flap."
     },
     "paper_nautilus": {
       "name": "Paper Nautilus",
@@ -519,11 +540,14 @@
       "max_length": 30,
       "habitat": "Foldwater Inlet",
       "color": "#b5c9d8",
-      "note": "Patient anglers sometimes find unusually large specimens.",
+      "note": "Patient anglers sometimes find unusually large specimens. A coiled map-scroll shell with folded paper tentacles and ink-written chambers.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A coiled map-scroll shell with folded paper tentacles and ink-written chambers."
     },
     "wispfin_lurker": {
       "name": "Wispfin Lurker",
@@ -534,11 +558,14 @@
       "max_length": 54,
       "habitat": "Wispwater Pool",
       "color": "#7eae7d",
-      "note": "Look closely at its patterned fins.",
+      "note": "Look closely at its patterned fins. A hollow reed lantern creature, lit by its own green marsh wisp.",
       "group": "predator",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "A hollow reed lantern creature, lit by its own green marsh wisp."
     },
     "chalkblind_loach": {
       "name": "Chalkblind Loach",
@@ -549,11 +576,14 @@
       "max_length": 24,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#b5c9d8",
-      "note": "Feels its way through the limestone with pale whiskers.",
+      "note": "Feels its way through the limestone with pale whiskers. Descent \u2022 Garnet Spring loach: Chalk-white cave life and growing garnet crystals.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "Descent \u2022 Garnet Spring loach: Chalk-white cave life and growing garnet crystals."
     },
     "garnet_char": {
       "name": "Garnet Char",
@@ -564,11 +594,14 @@
       "max_length": 38,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#e47662",
-      "note": "Its ruby flecks reflect minerals carried by the spring.",
+      "note": "Its ruby flecks reflect minerals carried by the spring. Descent \u2022 Garnet Spring gar: Chalk-white cave life and growing garnet crystals. Descent \u2022 Garnet Spring trout: Chalk-white cave life and growing garnet crystals.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "Descent \u2022 Garnet Spring trout: Chalk-white cave life and growing garnet crystals."
     },
     "vaultjaw_wyrm": {
       "name": "Vaultjaw Wyrm",
@@ -579,11 +612,14 @@
       "max_length": 88,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#b88dd4",
-      "note": "An old cavern hunter whose amber fins resemble lanterns.",
+      "note": "An old cavern hunter whose amber fins resemble lanterns. A long garnet-veined cave wyrm with a mineral jaw and eyeless stone brow.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "A long garnet-veined cave wyrm with a mineral jaw and eyeless stone brow."
     },
     "bastion_barbel": {
       "name": "Bastion Barbel",
@@ -594,11 +630,14 @@
       "max_length": 52,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#7eae7d",
-      "note": "Holds steady beneath the river\u2019s strong current.",
+      "note": "Holds steady beneath the river\u2019s strong current. A rampart-backed barbel whose stone plates form a small aquatic bastion.",
       "group": "predator",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "A rampart-backed barbel whose stone plates form a small aquatic bastion."
     },
     "watchlight_trout": {
       "name": "Watchlight Trout",
@@ -609,11 +648,14 @@
       "max_length": 43,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#eba855",
-      "note": "Copper spots glow like the watch camp\u2019s lanterns.",
+      "note": "Copper spots glow like the watch camp\u2019s lanterns. North Gate \u2022 Watchwater trout: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "North Gate \u2022 Watchwater trout: Bastion stone, heraldic fins, shield shells and watch-lamp markings."
     },
     "pennant_pike": {
       "name": "Pennant Pike",
@@ -624,11 +666,14 @@
       "max_length": 101,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#688ec5",
-      "note": "A long silver hunter with pennant-shaped crimson fins.",
+      "note": "A long silver hunter with pennant-shaped crimson fins. A spear-snouted watchwater hunter with a pennant dorsal and masonry scale plates.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "A spear-snouted watchwater hunter with a pennant dorsal and masonry scale plates."
     },
     "moonveil_minnow": {
       "name": "Moonveil Minnow",
@@ -639,11 +684,14 @@
       "max_length": 22,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#b5c9d8",
-      "note": "Small schools trace moonlight along the stone embankment.",
+      "note": "Small schools trace moonlight along the stone embankment. A little silver half-mask face with short silk streamers.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A little silver half-mask face with short silk streamers."
     },
     "velvet_dace": {
       "name": "Velvet Dace",
@@ -654,11 +702,14 @@
       "max_length": 31,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#b88dd4",
-      "note": "Its plum back is patterned like a festival cloak.",
+      "note": "Its plum back is patterned like a festival cloak. A midnight-blue velvet fish with long theatrical cape-like fins.",
       "group": "predator",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A midnight-blue velvet fish with long theatrical cape-like fins."
     },
     "confetti_perch": {
       "name": "Confetti Perch",
@@ -669,11 +720,14 @@
       "max_length": 37,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#e47662",
-      "note": "Bright freckles resemble scattered festival confetti.",
+      "note": "Bright freckles resemble scattered festival confetti. A spiny party fish with cut-paper confetti scales and a scalloped fan tail.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A spiny party fish with cut-paper confetti scales and a scalloped fan tail."
     },
     "masque_bream": {
       "name": "Masque Bream",
@@ -684,11 +738,14 @@
       "max_length": 49,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#e19558",
-      "note": "A dark eye band gives this shy fish its masquerade mask.",
+      "note": "A dark eye band gives this shy fish its masquerade mask. A broad ballroom fish wearing a two-tone masquerade mask.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A broad ballroom fish wearing a two-tone masquerade mask."
     },
     "ribbon_sailfin": {
       "name": "Ribbon Sailfin",
@@ -699,11 +756,14 @@
       "max_length": 40,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#64cccd",
-      "note": "Fine ribbon fins trail behind it through the canal.",
+      "note": "Fine ribbon fins trail behind it through the canal. A fish formed from several sweeping satin ribbons and a high folded sail.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A fish formed from several sweeping satin ribbons and a high folded sail."
     },
     "prism_glassray": {
       "name": "Prism Glassray",
@@ -714,11 +774,14 @@
       "max_length": 65,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#688ec5",
-      "note": "Pale crystalline markings shimmer over a diamond body.",
+      "note": "Pale crystalline markings shimmer over a diamond body. An asymmetric stained-mirror ray with floating prism segments.",
       "group": "predator",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "An asymmetric stained-mirror ray with floating prism segments."
     },
     "midnight_lanternfin": {
       "name": "Midnight Lanternfin",
@@ -729,11 +792,14 @@
       "max_length": 55,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#b88dd4",
-      "note": "Carries a cool moon-blue light above its head.",
+      "note": "Carries a cool moon-blue light above its head. A deep velvet lantern fish carrying tiny ballroom lights in its fin.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A deep velvet lantern fish carrying tiny ballroom lights in its fin."
     },
     "crescent_regent": {
       "name": "Crescent Regent",
@@ -744,11 +810,14 @@
       "max_length": 117,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#eba855",
-      "note": "A silver crescent crowns a fish few anglers believe exists.",
+      "note": "A silver crescent crowns a fish few anglers believe exists. A sweeping crescent-bodied regent with a silver mask and crescent tail.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A sweeping crescent-bodied regent with a silver mask and crescent tail."
     },
     "dawn_whisker": {
       "name": "Dawn Whisker",
@@ -898,7 +967,7 @@
       "max_length": 64,
       "habitat": "East Bridge River",
       "color": "#8cf6ee",
-      "note": "Veilfin Oracle belongs to these waters. Discover its habits by exploring.",
+      "note": "Veilfin Oracle belongs to these waters. Discover its habits by exploring. An oracle fish with enormous drifting translucent veil fins and a pale opal sight-stone.",
       "group": "predator",
       "methods": [
         "rod"
@@ -918,7 +987,10 @@
       "weather": [
         "Mist",
         "Rain"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "An oracle fish with enormous drifting translucent veil fins and a pale opal sight-stone."
     },
     "lullaby_tench": {
       "name": "Lullaby Tench",
@@ -1009,9 +1081,9 @@
       "min_kg": 0.04,
       "max_kg": 0.6,
       "max_length": 22,
-      "habitat": "East Bridge River",
+      "habitat": "East Bridge River / Upstream lake \u2022 reedbanks and island narrows",
       "color": "#8a61c2",
-      "note": "Current Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Current Shrimp belongs to these waters. Discover its habits by exploring. The same species also follows the continuous river upstream into Oldwater Lake.",
       "group": "bottom",
       "methods": [
         "net",
@@ -1026,15 +1098,18 @@
       "min_kg": 0.04,
       "max_kg": 0.6,
       "max_length": 22,
-      "habitat": "East Bridge River",
+      "habitat": "East Bridge River / Upstream lake \u2022 reedbanks and island narrows",
       "color": "#8a61c2",
-      "note": "Slatebank Crayfish belongs to these waters. Discover its habits by exploring.",
+      "note": "Slatebank Crayfish belongs to these waters. Discover its habits by exploring. The same species also follows the continuous river upstream into Oldwater Lake.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "favoured_bait": [
+        "roe"
+      ]
     },
     "quiet_shrimp": {
       "name": "Reedseed Shrimp",
@@ -1045,13 +1120,16 @@
       "max_length": 22,
       "habitat": "Quiet Reed Stream",
       "color": "#82d18c",
-      "note": "Reedseed Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Reedseed Shrimp belongs to these waters. Discover its habits by exploring. Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "wayfarer",
+      "art_note": "Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones."
     },
     "quiet_claw": {
       "name": "Mossback Crayfish",
@@ -1062,13 +1140,16 @@
       "max_length": 22,
       "habitat": "Quiet Reed Stream",
       "color": "#82d18c",
-      "note": "Mossback Crayfish belongs to these waters. Discover its habits by exploring.",
+      "note": "Mossback Crayfish belongs to these waters. Discover its habits by exploring. Wayfarer Waters lobster: Fern fans, stream-polished wood and faintly enchanted brook stones.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "wayfarer",
+      "art_note": "Wayfarer Waters lobster: Fern fans, stream-polished wood and faintly enchanted brook stones."
     },
     "brook_shrimp": {
       "name": "Amber Brook Shrimp",
@@ -1079,13 +1160,16 @@
       "max_length": 22,
       "habitat": "Wayfarer Brook",
       "color": "#b25967",
-      "note": "Amber Brook Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Amber Brook Shrimp belongs to these waters. Discover its habits by exploring. Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "wayfarer",
+      "art_note": "Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones."
     },
     "brook_claw": {
       "name": "Willowclaw Crayfish",
@@ -1096,13 +1180,16 @@
       "max_length": 22,
       "habitat": "Wayfarer Brook",
       "color": "#b25967",
-      "note": "Willowclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "note": "Willowclaw Crayfish belongs to these waters. Discover its habits by exploring. Wayfarer Waters lobster: Fern fans, stream-polished wood and faintly enchanted brook stones.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "wayfarer",
+      "art_note": "Wayfarer Waters lobster: Fern fans, stream-polished wood and faintly enchanted brook stones."
     },
     "deep_shrimp": {
       "name": "Duskribbon Shrimp",
@@ -1113,13 +1200,16 @@
       "max_length": 22,
       "habitat": "Deep River Bend",
       "color": "#7899c2",
-      "note": "Duskribbon Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Duskribbon Shrimp belongs to these waters. Discover its habits by exploring. Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "wayfarer",
+      "art_note": "Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones."
     },
     "deep_claw": {
       "name": "Ironclaw River Crab",
@@ -1130,13 +1220,16 @@
       "max_length": 22,
       "habitat": "Deep River Bend",
       "color": "#b2a06f",
-      "note": "Ironclaw River Crab belongs to these waters. Discover its habits by exploring.",
+      "note": "Ironclaw River Crab belongs to these waters. Discover its habits by exploring. Wayfarer Waters crab: Fern fans, stream-polished wood and faintly enchanted brook stones.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "wayfarer",
+      "art_note": "Wayfarer Waters crab: Fern fans, stream-polished wood and faintly enchanted brook stones."
     },
     "ferry_shrimp": {
       "name": "Mistbell Shrimp",
@@ -1147,13 +1240,16 @@
       "max_length": 22,
       "habitat": "Ferryman\u2019s Spring",
       "color": "#b6d169",
-      "note": "Mistbell Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Mistbell Shrimp belongs to these waters. Discover its habits by exploring. Silverfall Reach shrimp: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach shrimp: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "ferry_claw": {
       "name": "Silverclaw Crayfish",
@@ -1164,13 +1260,16 @@
       "max_length": 22,
       "habitat": "Ferryman\u2019s Spring",
       "color": "#7899c2",
-      "note": "Silverclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "note": "Silverclaw Crayfish belongs to these waters. Discover its habits by exploring. Silverfall Reach lobster: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach lobster: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "cascade_shrimp": {
       "name": "Sprayglass Shrimp",
@@ -1181,13 +1280,16 @@
       "max_length": 22,
       "habitat": "Moonwater Cascade",
       "color": "#b06fb2",
-      "note": "Sprayglass Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Sprayglass Shrimp belongs to these waters. Discover its habits by exploring. Silverfall Reach shrimp: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach shrimp: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "cascade_claw": {
       "name": "Cascade Blue Crab",
@@ -1198,13 +1300,16 @@
       "max_length": 22,
       "habitat": "Moonwater Cascade",
       "color": "#8a61c2",
-      "note": "Cascade Blue Crab belongs to these waters. Discover its habits by exploring.",
+      "note": "Cascade Blue Crab belongs to these waters. Discover its habits by exploring. Silverfall Reach crab: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach crab: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "fold_shrimp": {
       "name": "Paperfan Shrimp",
@@ -1215,13 +1320,16 @@
       "max_length": 22,
       "habitat": "Foldwater Inlet",
       "color": "#61c2a3",
-      "note": "Paperfan Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Paperfan Shrimp belongs to these waters. Discover its habits by exploring. An accordion paper shrimp with angular ink antennae and pleated parchment legs.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "An accordion paper shrimp with angular ink antennae and pleated parchment legs."
     },
     "fold_claw": {
       "name": "Inkfold Crab",
@@ -1232,13 +1340,16 @@
       "max_length": 22,
       "habitat": "Foldwater Inlet",
       "color": "#82d18c",
-      "note": "Inkfold Crab belongs to these waters. Discover its habits by exploring.",
+      "note": "Inkfold Crab belongs to these waters. Discover its habits by exploring. A paper-box crab whose claws open like folded envelopes.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A paper-box crab whose claws open like folded envelopes."
     },
     "wisp_shrimp": {
       "name": "Wispglow Shrimp",
@@ -1249,13 +1360,16 @@
       "max_length": 22,
       "habitat": "Wispwater Pool",
       "color": "#d1a082",
-      "note": "Wispglow Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Wispglow Shrimp belongs to these waters. Discover its habits by exploring. Lantern Marsh shrimp: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "Lantern Marsh shrimp: Peat-black water, reed lanterns, wandering wisps and marsh roots."
     },
     "wisp_claw": {
       "name": "Lantern Marsh Crab",
@@ -1266,13 +1380,16 @@
       "max_length": 22,
       "habitat": "Wispwater Pool",
       "color": "#b25967",
-      "note": "Lantern Marsh Crab belongs to these waters. Discover its habits by exploring.",
+      "note": "Lantern Marsh Crab belongs to these waters. Discover its habits by exploring. Lantern Marsh crab: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "Lantern Marsh crab: Peat-black water, reed lanterns, wandering wisps and marsh roots."
     },
     "buried_shrimp": {
       "name": "Deepglass Shrimp",
@@ -1283,13 +1400,16 @@
       "max_length": 22,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#6259b2",
-      "note": "Deepglass Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Deepglass Shrimp belongs to these waters. Discover its habits by exploring. Descent \u2022 Buried Spring shrimp: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring shrimp: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "buried_claw": {
       "name": "Vaultshell Crab",
@@ -1300,13 +1420,16 @@
       "max_length": 22,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#7899c2",
-      "note": "Vaultshell Crab belongs to these waters. Discover its habits by exploring.",
+      "note": "Vaultshell Crab belongs to these waters. Discover its habits by exploring. Descent \u2022 Buried Spring crab: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring crab: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "garnet_shrimp": {
       "name": "Rubyseed Shrimp",
@@ -1317,13 +1440,16 @@
       "max_length": 22,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#87c278",
-      "note": "Rubyseed Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Rubyseed Shrimp belongs to these waters. Discover its habits by exploring. Descent \u2022 Garnet Spring shrimp: Chalk-white cave life and growing garnet crystals.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "Descent \u2022 Garnet Spring shrimp: Chalk-white cave life and growing garnet crystals."
     },
     "garnet_claw": {
       "name": "Garnetclaw Crayfish",
@@ -1334,13 +1460,16 @@
       "max_length": 22,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#b6d169",
-      "note": "Garnetclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "note": "Garnetclaw Crayfish belongs to these waters. Discover its habits by exploring. Descent \u2022 Garnet Spring lobster: Chalk-white cave life and growing garnet crystals.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "Descent \u2022 Garnet Spring lobster: Chalk-white cave life and growing garnet crystals."
     },
     "watch_shrimp": {
       "name": "Pennant Shrimp",
@@ -1351,13 +1480,16 @@
       "max_length": 22,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#d1699c",
-      "note": "Pennant Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Pennant Shrimp belongs to these waters. Discover its habits by exploring. North Gate \u2022 Watchwater shrimp: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "North Gate \u2022 Watchwater shrimp: Bastion stone, heraldic fins, shield shells and watch-lamp markings."
     },
     "watch_claw": {
       "name": "Bastionclaw Crayfish",
@@ -1368,13 +1500,16 @@
       "max_length": 22,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#b06fb2",
-      "note": "Bastionclaw Crayfish belongs to these waters. Discover its habits by exploring.",
+      "note": "Bastionclaw Crayfish belongs to these waters. Discover its habits by exploring. North Gate \u2022 Watchwater lobster: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "North Gate \u2022 Watchwater lobster: Bastion stone, heraldic fins, shield shells and watch-lamp markings."
     },
     "masque_shrimp": {
       "name": "Confetti Shrimp",
@@ -1385,13 +1520,16 @@
       "max_length": 22,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#6fa4b2",
-      "note": "Confetti Shrimp belongs to these waters. Discover its habits by exploring.",
+      "note": "Confetti Shrimp belongs to these waters. Discover its habits by exploring. Moonveil Masquerade shrimp: Moonlit silk, carnival masks, mirror glass and ballroom ribbons.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "Moonveil Masquerade shrimp: Moonlit silk, carnival masks, mirror glass and ballroom ribbons."
     },
     "masque_claw": {
       "name": "Masque Moon Crab",
@@ -1402,13 +1540,16 @@
       "max_length": 22,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#b6d169",
-      "note": "Masque Moon Crab belongs to these waters. Discover its habits by exploring.",
+      "note": "Masque Moon Crab belongs to these waters. Discover its habits by exploring. Moonveil Masquerade crab: Moonlit silk, carnival masks, mirror glass and ballroom ribbons.",
       "group": "predator",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "Moonveil Masquerade crab: Moonlit silk, carnival masks, mirror glass and ballroom ribbons."
     },
     "dawn_shrimp": {
       "name": "Firstdew Shrimp",
@@ -1453,12 +1594,15 @@
       "max_length": 25,
       "habitat": "Rootglass Pool",
       "color": "#8dcfbb",
-      "note": "A moss-striped traveller of the far crossings.",
+      "note": "A moss-striped traveller of the far crossings. The Between \u2022 Rootglass dace: Hollow glass, roots and fragments of a lost woodland.",
       "group": "school",
       "methods": [
         "rod",
         "net"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_root",
+      "art_note": "The Between \u2022 Rootglass dace: Hollow glass, roots and fragments of a lost woodland."
     },
     "cinder_goby": {
       "name": "Cinder Goby",
@@ -1469,12 +1613,15 @@
       "max_length": 22,
       "habitat": "Cinderwell Pool",
       "color": "#e3a46c",
-      "note": "Its warm freckled fins glow above cooled stone.",
+      "note": "Its warm freckled fins glow above cooled stone. The Between \u2022 Cinderwell goby: Charcoal shells, molten seams and ember fins.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_ember",
+      "art_note": "The Between \u2022 Cinderwell goby: Charcoal shells, molten seams and ember fins."
     },
     "rift_shrimp": {
       "name": "Riftglass Shrimp",
@@ -1485,12 +1632,15 @@
       "max_length": 14,
       "habitat": "Rootglass Pool",
       "color": "#b482d1",
-      "note": "A tiny translucent swimmer found only beyond the stable portal.",
+      "note": "A tiny translucent swimmer found only beyond the stable portal. The Between \u2022 Rootglass shrimp: Hollow glass, roots and fragments of a lost woodland.",
       "group": "surface",
       "methods": [
         "rod",
         "net"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_root",
+      "art_note": "The Between \u2022 Rootglass shrimp: Hollow glass, roots and fragments of a lost woodland."
     },
     "lantern_loach": {
       "name": "Lantern Loach",
@@ -1501,12 +1651,15 @@
       "max_length": 36,
       "habitat": "Lanternmere Pool",
       "color": "#c4da8a",
-      "note": "A ribbon of marsh light with soft lantern whiskers.",
+      "note": "A ribbon of marsh light with soft lantern whiskers. The Between \u2022 Lanternmere loach: Hollow reed lanterns and silver mist drifting through their bodies.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_mist",
+      "art_note": "The Between \u2022 Lanternmere loach: Hollow reed lanterns and silver mist drifting through their bodies."
     },
     "frostveil_char": {
       "name": "Frostveil Char",
@@ -1517,11 +1670,14 @@
       "max_length": 64,
       "habitat": "Frostveil Pool",
       "color": "#9ddff1",
-      "note": "Ice-blue sails leave luminous edges across the water.",
+      "note": "Ice-blue sails leave luminous edges across the water. The Between \u2022 Frostveil trout: Fractured ice, snow crystals and translucent rime.",
       "group": "predator",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_frost",
+      "art_note": "The Between \u2022 Frostveil trout: Fractured ice, snow crystals and translucent rime."
     },
     "embercrest_koi": {
       "name": "Embercrest Koi",
@@ -1532,11 +1688,14 @@
       "max_length": 72,
       "habitat": "Cinderwell Pool",
       "color": "#f0a970",
-      "note": "Copper armour and a crown of ember-red fins.",
+      "note": "Copper armour and a crown of ember-red fins. A charcoal koi with an ember crest and flowing tongues of molten glass.",
       "group": "school",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_ember",
+      "art_note": "A charcoal koi with an ember crest and flowing tongues of molten glass."
     },
     "moonrift_eel": {
       "name": "Moonrift Eel",
@@ -1547,7 +1706,7 @@
       "max_length": 95,
       "habitat": "Lanternmere Pool",
       "color": "#b8a9e2",
-      "note": "An elegant crescent swimmer of marsh and astral pools.",
+      "note": "An elegant crescent swimmer of marsh and astral pools. A ribbon of moonlit fog around a hollow, lantern-lined eel spine.",
       "group": "predator",
       "methods": [
         "rod"
@@ -1557,7 +1716,10 @@
           19,
           6
         ]
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_mist",
+      "art_note": "A ribbon of moonlit fog around a hollow, lantern-lined eel spine."
     },
     "starcrown_ray": {
       "name": "Starcrown Ray",
@@ -1568,11 +1730,14 @@
       "max_length": 140,
       "habitat": "Starfall Pool",
       "color": "#e6cf88",
-      "note": "Gold-edged wings carry a constellation over the darkest water.",
+      "note": "Gold-edged wings carry a constellation over the darkest water. An open star-map ray with broken orbital fins and a comet-thread tail.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_star",
+      "art_note": "An open star-map ray with broken orbital fins and a comet-thread tail."
     },
     "waylight_leviathan": {
       "name": "Waylight Leviathan",
@@ -1583,7 +1748,7 @@
       "max_length": 185,
       "habitat": "Starfall Pool",
       "color": "#a9e4d8",
-      "note": "A many-finned living compass at the edge of the known crossings.",
+      "note": "A many-finned living compass at the edge of the known crossings. An immense hollow constellation serpent, carrying a bright Waylight core in its ribs.",
       "group": "predator",
       "methods": [
         "rod"
@@ -1597,7 +1762,10 @@
           20,
           24
         ]
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "between_star",
+      "art_note": "An immense hollow constellation serpent, carrying a bright Waylight core in its ribs."
     },
     "copperfin_shiner": {
       "name": "Copperfin Shiner",
@@ -1661,6 +1829,9 @@
       "methods": [
         "rod",
         "net"
+      ],
+      "favoured_bait": [
+        "honeygrain"
       ]
     },
     "opal_riffle_trout": {
@@ -1732,11 +1903,14 @@
       "max_length": 96,
       "habitat": "Crossroads town and Wayfarer rivers",
       "color": "#8cddd2",
-      "note": "A pale moon-thread trails from its sweeping river fins.",
+      "note": "A pale moon-thread trails from its sweeping river fins. A long arowana with moon-phase plates and thin moon-thread whiskers trailing from its face.",
       "group": "surface",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "A long arowana with moon-phase plates and thin moon-thread whiskers trailing from its face."
     },
     "starveil_river_ray": {
       "name": "Starveil River Ray",
@@ -1747,11 +1921,14 @@
       "max_length": 109,
       "habitat": "Crossroads town and Wayfarer rivers",
       "color": "#cba4dd",
-      "note": "A violet freshwater ray carries star-like flecks on its broad wings.",
+      "note": "A violet freshwater ray carries star-like flecks on its broad wings. A wide night-sky ray whose translucent veil holds a precise tiny constellation.",
       "group": "bottom",
       "methods": [
         "rod"
-      ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "A wide night-sky ray whose translucent veil holds a precise tiny constellation."
     },
     "sprayfin_shiner": {
       "name": "Sprayfin Shiner",
@@ -1762,13 +1939,16 @@
       "max_length": 24,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#76b6c6",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Silverfall Reach ray: Living cascades, river pearls, water ribbons and polished river stones. Silverfall Reach sprat: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "smelt"
+      "form": "smelt",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach sprat: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "slatewater_gudgeon": {
       "name": "Slatewater Gudgeon",
@@ -1779,13 +1959,16 @@
       "max_length": 26,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#778e83",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Silverfall Reach goby: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "goby"
+      "form": "goby",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach goby: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "silverfall_whitefish": {
       "name": "Silverfall Whitefish",
@@ -1796,12 +1979,15 @@
       "max_length": 38,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#accbd0",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Silverfall Reach whitefish: Living cascades, river pearls, water ribbons and polished river stones. Silverfall Reach salmon: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "whitefish"
+      "form": "whitefish",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach salmon: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "cataract_grayling": {
       "name": "Cataract Grayling",
@@ -1812,12 +1998,15 @@
       "max_length": 36,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#758dbb",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Silverfall Reach ray: Living cascades, river pearls, water ribbons and polished river stones. Silverfall Reach grayling: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "grayling"
+      "form": "grayling",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach grayling: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "fallspeck_trout": {
       "name": "Fallspeck Trout",
@@ -1828,12 +2017,15 @@
       "max_length": 46,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#c2a47c",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Silverfall Reach trout: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "predator",
       "methods": [
         "rod"
       ],
-      "form": "trout"
+      "form": "trout",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach trout: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "longpool_sturgeon": {
       "name": "Longpool Sturgeon",
@@ -1844,12 +2036,15 @@
       "max_length": 74,
       "habitat": "Ferryman\u2019s Spring / Moonwater Cascade",
       "color": "#7b9da2",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Silverfall Reach sturgeon: Living cascades, river pearls, water ribbons and polished river stones.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "sturgeon"
+      "form": "sturgeon",
+      "art_version": "198.21",
+      "art_realm": "silverfall",
+      "art_note": "Silverfall Reach sturgeon: Living cascades, river pearls, water ribbons and polished river stones."
     },
     "saltglass_sprat": {
       "name": "Saltglass Sprat",
@@ -1860,13 +2055,16 @@
       "max_length": 24,
       "habitat": "Foldwater Inlet",
       "color": "#8bb5bf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A translucent tracing-paper fish with crystalline ink-window scales.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "sardine"
+      "form": "sardine",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A translucent tracing-paper fish with crystalline ink-window scales."
     },
     "tidebar_mullet": {
       "name": "Tidebar Mullet",
@@ -1877,13 +2075,16 @@
       "max_length": 38,
       "habitat": "Foldwater Inlet",
       "color": "#a8aca0",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A chunky shipping-label fish, folded from tide-chart strips.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "mullet"
+      "form": "mullet",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A chunky shipping-label fish, folded from tide-chart strips."
     },
     "kelpstripe_wrasse": {
       "name": "Kelpstripe Wrasse",
@@ -1894,12 +2095,15 @@
       "max_length": 33,
       "habitat": "Foldwater Inlet",
       "color": "#599d84",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A green paper-cut wrasse with ribbon kelp fins and zigzag cut edges.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "wrasse"
+      "form": "wrasse",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A green paper-cut wrasse with ribbon kelp fins and zigzag cut edges."
     },
     "brinewhisker_catshark": {
       "name": "Brinewhisker Catshark",
@@ -1910,12 +2114,15 @@
       "max_length": 118,
       "habitat": "Foldwater Inlet",
       "color": "#879394",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A sleek ink-blot catshark with folded sheet fins and quill-like whiskers.",
       "group": "predator",
       "methods": [
         "rod"
       ],
-      "form": "shark"
+      "form": "shark",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A sleek ink-blot catshark with folded sheet fins and quill-like whiskers."
     },
     "foldshore_lobster": {
       "name": "Foldshore Lobster",
@@ -1926,12 +2133,15 @@
       "max_length": 36,
       "habitat": "Foldwater Inlet",
       "color": "#b77558",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A long folded-cardstock lobster with hinged claws and a pleated paper tail.",
       "group": "bottom",
       "methods": [
         "pot"
       ],
-      "form": "lobster"
+      "form": "lobster",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A long folded-cardstock lobster with hinged claws and a pleated paper tail."
     },
     "sailpaper_skate": {
       "name": "Sailpaper Skate",
@@ -1942,12 +2152,15 @@
       "max_length": 70,
       "habitat": "Foldwater Inlet",
       "color": "#a89e85",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A broad origami skate with a centre fold and a long curled drafting ribbon.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "skate"
+      "form": "skate",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A broad origami skate with a centre fold and a long curled drafting ribbon."
     },
     "seafoam_anchovy": {
       "name": "Seafoam Anchovy",
@@ -1958,13 +2171,16 @@
       "max_length": 23,
       "habitat": "Foldwater Inlet",
       "color": "#a2c9c0",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A slim curled parchment anchovy with a paper-fan tail.",
       "group": "surface",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "anchovy"
+      "form": "anchovy",
+      "art_version": "198.21",
+      "art_realm": "folded_coast",
+      "art_note": "A slim curled parchment anchovy with a paper-fan tail."
     },
     "peatfin_minnow": {
       "name": "Peatfin Minnow",
@@ -1975,13 +2191,16 @@
       "max_length": 24,
       "habitat": "Wispwater Pool",
       "color": "#ab9862",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Lantern Marsh minnow: Peat-black water, reed lanterns, wandering wisps and marsh roots. Lantern Marsh sprat: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "minnow"
+      "form": "minnow",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "Lantern Marsh sprat: Peat-black water, reed lanterns, wandering wisps and marsh roots."
     },
     "reednose_mudfish": {
       "name": "Reednose Mudfish",
@@ -1992,12 +2211,15 @@
       "max_length": 32,
       "habitat": "Wispwater Pool",
       "color": "#77764d",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Lantern Marsh mudfish: Peat-black water, reed lanterns, wandering wisps and marsh roots. Lantern Marsh dace: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "mudfish"
+      "form": "mudfish",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "Lantern Marsh dace: Peat-black water, reed lanterns, wandering wisps and marsh roots."
     },
     "lanternroot_tadpole": {
       "name": "Lanternroot Tadpole",
@@ -2008,13 +2230,16 @@
       "max_length": 23,
       "habitat": "Wispwater Pool",
       "color": "#a8ad66",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A lantern seed that grew into a newt-like tadpole with branching root gills.",
       "group": "school",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "tadpole"
+      "form": "tadpole",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "A lantern seed that grew into a newt-like tadpole with branching root gills."
     },
     "bogwhisker_catfish": {
       "name": "Bogwhisker Catfish",
@@ -2025,12 +2250,15 @@
       "max_length": 46,
       "habitat": "Wispwater Pool",
       "color": "#797e65",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A broad peat catfish with root-whiskers and two small hanging ember seeds.",
       "group": "bottom",
       "methods": [
         "rod"
       ],
-      "form": "catfish"
+      "form": "catfish",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "A broad peat catfish with root-whiskers and two small hanging ember seeds."
     },
     "amberfen_eel": {
       "name": "Amberfen Eel",
@@ -2041,12 +2269,15 @@
       "max_length": 42,
       "habitat": "Wispwater Pool",
       "color": "#b79855",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. An amber-windowed eel with a root-lined spine and peat-dark tail.",
       "group": "bottom",
       "methods": [
         "rod"
       ],
-      "form": "eel"
+      "form": "eel",
+      "art_version": "198.21",
+      "art_realm": "lantern_marsh",
+      "art_note": "An amber-windowed eel with a root-lined spine and peat-dark tail."
     },
     "blindvault_loach": {
       "name": "Blindvault Loach",
@@ -2057,13 +2288,16 @@
       "max_length": 25,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#b4a9a3",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Buried Spring loach: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "loach"
+      "form": "loach",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring loach: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "ironbelly_cavefish": {
       "name": "Ironbelly Cavefish",
@@ -2074,12 +2308,15 @@
       "max_length": 29,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#8c9099",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Buried Spring cavefish: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "cavefish"
+      "form": "cavefish",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring cavefish: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "deepvent_char": {
       "name": "Deepvent Char",
@@ -2090,12 +2327,15 @@
       "max_length": 38,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#9a7c78",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Buried Spring char: Basalt plates, dark mineral seams and blind deep-spring creatures. Descent \u2022 Buried Spring trout: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "char"
+      "form": "char",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring trout: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "obsidian_jawfish": {
       "name": "Obsidian Jawfish",
@@ -2106,12 +2346,15 @@
       "max_length": 46,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#6d788b",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Buried Spring jawfish: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "predator",
       "methods": [
         "rod"
       ],
-      "form": "jawfish"
+      "form": "jawfish",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring jawfish: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "pallid_cavern_eel": {
       "name": "Pallid Cavern Eel",
@@ -2122,12 +2365,15 @@
       "max_length": 58,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#c7bfc6",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Buried Spring eel: Basalt plates, dark mineral seams and blind deep-spring creatures.",
       "group": "bottom",
       "methods": [
         "rod"
       ],
-      "form": "eel"
+      "form": "eel",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "Descent \u2022 Buried Spring eel: Basalt plates, dark mineral seams and blind deep-spring creatures."
     },
     "basaltback_sturgeon": {
       "name": "Basaltback Sturgeon",
@@ -2138,12 +2384,15 @@
       "max_length": 126,
       "habitat": "Floor 56 \u2022 Buried Spring",
       "color": "#7f8793",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A plated basalt sturgeon with obsidian scutes and a luminous mineral seam.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "sturgeon"
+      "form": "sturgeon",
+      "art_version": "198.21",
+      "art_realm": "descent56",
+      "art_note": "A plated basalt sturgeon with obsidian scutes and a luminous mineral seam."
     },
     "chalknose_gudgeon": {
       "name": "Chalknose Gudgeon",
@@ -2154,13 +2403,16 @@
       "max_length": 26,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#c9bbb2",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Garnet Spring goby: Chalk-white cave life and growing garnet crystals.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "goby"
+      "form": "goby",
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "Descent \u2022 Garnet Spring goby: Chalk-white cave life and growing garnet crystals."
     },
     "garnet_dace": {
       "name": "Garnet Dace",
@@ -2171,13 +2423,16 @@
       "max_length": 27,
       "habitat": "Floor 38 \u2022 Garnet Spring",
       "color": "#af766e",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. Descent \u2022 Garnet Spring gar: Chalk-white cave life and growing garnet crystals. Descent \u2022 Garnet Spring dace: Chalk-white cave life and growing garnet crystals.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "dace"
+      "form": "dace",
+      "art_version": "198.21",
+      "art_realm": "descent38",
+      "art_note": "Descent \u2022 Garnet Spring dace: Chalk-white cave life and growing garnet crystals."
     },
     "rampart_roach": {
       "name": "Rampart Roach",
@@ -2188,13 +2443,16 @@
       "max_length": 30,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#98ad87",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. North Gate \u2022 Watchwater roach: Bastion stone, heraldic fins, shield shells and watch-lamp markings. North Gate \u2022 Watchwater dace: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "roach"
+      "form": "roach",
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "North Gate \u2022 Watchwater dace: Bastion stone, heraldic fins, shield shells and watch-lamp markings."
     },
     "moatglass_stickleback": {
       "name": "Moatglass Stickleback",
@@ -2205,13 +2463,16 @@
       "max_length": 23,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#8aadaf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. North Gate \u2022 Watchwater stickleback: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "stickleback"
+      "form": "stickleback",
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "North Gate \u2022 Watchwater stickleback: Bastion stone, heraldic fins, shield shells and watch-lamp markings."
     },
     "watchwater_carp": {
       "name": "Watchwater Carp",
@@ -2222,12 +2483,15 @@
       "max_length": 54,
       "habitat": "North Gate \u2022 Watchwater Bank",
       "color": "#b7a063",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. North Gate \u2022 Watchwater carp: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
       "group": "school",
       "methods": [
         "rod"
       ],
-      "form": "carp"
+      "form": "carp",
+      "art_version": "198.21",
+      "art_realm": "defense",
+      "art_note": "North Gate \u2022 Watchwater carp: Bastion stone, heraldic fins, shield shells and watch-lamp markings."
     },
     "silkfin_killifish": {
       "name": "Silkfin Killifish",
@@ -2238,13 +2502,16 @@
       "max_length": 24,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#9d9bcc",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A tiny embroidered silk fish with long uneven lace fins.",
       "group": "surface",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "killifish"
+      "form": "killifish",
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A tiny embroidered silk fish with long uneven lace fins."
     },
     "masklace_guppy": {
       "name": "Masklace Guppy",
@@ -2255,13 +2522,16 @@
       "max_length": 23,
       "habitat": "Moonveil \u2022 Silver Canal",
       "color": "#ba88b9",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. A guppy with a huge lace theatre-fan tail and a gold eye mask.",
       "group": "surface",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "guppy"
+      "form": "guppy",
+      "art_version": "198.21",
+      "art_realm": "moonveil",
+      "art_note": "A guppy with a huge lace theatre-fan tail and a gold eye mask."
     },
     "glassroot_crayfish": {
       "name": "Glassroot Crayfish",
@@ -2272,13 +2542,16 @@
       "max_length": 26,
       "habitat": "Rootglass Pool",
       "color": "#9bb687",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Rootglass lobster: Hollow glass, roots and fragments of a lost woodland.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "between_root",
+      "art_note": "The Between \u2022 Rootglass lobster: Hollow glass, roots and fragments of a lost woodland."
     },
     "rootlace_loach": {
       "name": "Rootlace Loach",
@@ -2289,13 +2562,16 @@
       "max_length": 28,
       "habitat": "Rootglass Pool",
       "color": "#97a179",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Rootglass loach: Hollow glass, roots and fragments of a lost woodland.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "loach"
+      "form": "loach",
+      "art_version": "198.21",
+      "art_realm": "between_root",
+      "art_note": "The Between \u2022 Rootglass loach: Hollow glass, roots and fragments of a lost woodland."
     },
     "coalchip_shrimp": {
       "name": "Coalchip Shrimp",
@@ -2306,13 +2582,16 @@
       "max_length": 23,
       "habitat": "Cinderwell Pool",
       "color": "#bf8e70",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Cinderwell shrimp: Charcoal shells, molten seams and ember fins.",
       "group": "surface",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "between_ember",
+      "art_note": "The Between \u2022 Cinderwell shrimp: Charcoal shells, molten seams and ember fins."
     },
     "cinderclaw_crab": {
       "name": "Cinderclaw Crab",
@@ -2323,12 +2602,15 @@
       "max_length": 30,
       "habitat": "Cinderwell Pool",
       "color": "#bd7761",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Cinderwell crab: Charcoal shells, molten seams and ember fins.",
       "group": "bottom",
       "methods": [
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "between_ember",
+      "art_note": "The Between \u2022 Cinderwell crab: Charcoal shells, molten seams and ember fins."
     },
     "sootfin_gudgeon": {
       "name": "Sootfin Gudgeon",
@@ -2339,13 +2621,16 @@
       "max_length": 28,
       "habitat": "Cinderwell Pool",
       "color": "#8b8072",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Cinderwell goby: Charcoal shells, molten seams and ember fins.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "goby"
+      "form": "goby",
+      "art_version": "198.21",
+      "art_realm": "between_ember",
+      "art_note": "The Between \u2022 Cinderwell goby: Charcoal shells, molten seams and ember fins."
     },
     "icegrain_shrimp": {
       "name": "Icegrain Shrimp",
@@ -2356,13 +2641,16 @@
       "max_length": 23,
       "habitat": "Frostveil Pool",
       "color": "#b7d9df",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Frostveil shrimp: Fractured ice, snow crystals and translucent rime.",
       "group": "surface",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "between_frost",
+      "art_note": "The Between \u2022 Frostveil shrimp: Fractured ice, snow crystals and translucent rime."
     },
     "frostburrow_crayfish": {
       "name": "Frostburrow Crayfish",
@@ -2373,13 +2661,16 @@
       "max_length": 27,
       "habitat": "Frostveil Pool",
       "color": "#a5bbd3",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Frostveil lobster: Fractured ice, snow crystals and translucent rime.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "between_frost",
+      "art_note": "The Between \u2022 Frostveil lobster: Fractured ice, snow crystals and translucent rime."
     },
     "rimeback_sculpin": {
       "name": "Rimeback Sculpin",
@@ -2390,13 +2681,16 @@
       "max_length": 29,
       "habitat": "Frostveil Pool",
       "color": "#879daf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Frostveil sculpin: Fractured ice, snow crystals and translucent rime.",
       "group": "bottom",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "sculpin"
+      "form": "sculpin",
+      "art_version": "198.21",
+      "art_realm": "between_frost",
+      "art_note": "The Between \u2022 Frostveil sculpin: Fractured ice, snow crystals and translucent rime."
     },
     "lanternseed_shrimp": {
       "name": "Lanternseed Shrimp",
@@ -2407,13 +2701,16 @@
       "max_length": 23,
       "habitat": "Lanternmere Pool",
       "color": "#bfb486",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Lanternmere shrimp: Hollow reed lanterns and silver mist drifting through their bodies.",
       "group": "surface",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "between_mist",
+      "art_note": "The Between \u2022 Lanternmere shrimp: Hollow reed lanterns and silver mist drifting through their bodies."
     },
     "mireglass_crab": {
       "name": "Mireglass Crab",
@@ -2424,13 +2721,16 @@
       "max_length": 30,
       "habitat": "Lanternmere Pool",
       "color": "#a798ae",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Lanternmere crab: Hollow reed lanterns and silver mist drifting through their bodies.",
       "group": "bottom",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "crab"
+      "form": "crab",
+      "art_version": "198.21",
+      "art_realm": "between_mist",
+      "art_note": "The Between \u2022 Lanternmere crab: Hollow reed lanterns and silver mist drifting through their bodies."
     },
     "mistreed_killifish": {
       "name": "Mistreed Killifish",
@@ -2441,13 +2741,16 @@
       "max_length": 24,
       "habitat": "Lanternmere Pool",
       "color": "#a0bfa9",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Lanternmere killifish: Hollow reed lanterns and silver mist drifting through their bodies.",
       "group": "surface",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "killifish"
+      "form": "killifish",
+      "art_version": "198.21",
+      "art_realm": "between_mist",
+      "art_note": "The Between \u2022 Lanternmere killifish: Hollow reed lanterns and silver mist drifting through their bodies."
     },
     "starlace_shrimp": {
       "name": "Starlace Shrimp",
@@ -2458,13 +2761,16 @@
       "max_length": 24,
       "habitat": "Starfall Pool",
       "color": "#b4acd6",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Starfall shrimp: Constellations, broken orbit rings and deep-space voids.",
       "group": "surface",
       "methods": [
         "net",
         "pot"
       ],
-      "form": "shrimp"
+      "form": "shrimp",
+      "art_version": "198.21",
+      "art_realm": "between_star",
+      "art_note": "The Between \u2022 Starfall shrimp: Constellations, broken orbit rings and deep-space voids."
     },
     "cometclaw_crayfish": {
       "name": "Cometclaw Crayfish",
@@ -2475,12 +2781,15 @@
       "max_length": 29,
       "habitat": "Starfall Pool",
       "color": "#8e9ebf",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Starfall lobster: Constellations, broken orbit rings and deep-space voids.",
       "group": "bottom",
       "methods": [
         "pot"
       ],
-      "form": "crayfish"
+      "form": "crayfish",
+      "art_version": "198.21",
+      "art_realm": "between_star",
+      "art_note": "The Between \u2022 Starfall lobster: Constellations, broken orbit rings and deep-space voids."
     },
     "silverorbit_smelt": {
       "name": "Silverorbit Smelt",
@@ -2491,13 +2800,1523 @@
       "max_length": 27,
       "habitat": "Starfall Pool",
       "color": "#b8c8df",
-      "note": "Native to these waters; its anatomy and markings reflect its home.",
+      "note": "Native to these waters; its anatomy and markings reflect its home. The Between \u2022 Starfall smelt: Constellations, broken orbit rings and deep-space voids. The Between \u2022 Starfall sprat: Constellations, broken orbit rings and deep-space voids.",
       "group": "school",
       "methods": [
         "rod",
         "net"
       ],
-      "form": "smelt"
+      "form": "smelt",
+      "art_version": "198.21",
+      "art_realm": "between_star",
+      "art_note": "The Between \u2022 Starfall sprat: Constellations, broken orbit rings and deep-space voids."
+    },
+    "v20_harbour_sprat": {
+      "name": "Harbour Sprat",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.18,
+      "max_kg": 1.5,
+      "max_length": 26,
+      "habitat": "Coastal waters",
+      "color": "#8e7c66",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_sandstripe_whiting": {
+      "name": "Sandstripe Whiting",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.22,
+      "max_kg": 2.3,
+      "max_length": 29,
+      "habitat": "Coastal waters",
+      "color": "#9c9b67",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_copperback_mackerel": {
+      "name": "Copperback Mackerel",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.26,
+      "max_kg": 3.1,
+      "max_length": 32,
+      "habitat": "Coastal waters",
+      "color": "#8eaa66",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "favoured_bait": [
+        "saltflash"
+      ]
+    },
+    "v20_slate_mullet": {
+      "name": "Slate Mullet",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.3,
+      "max_kg": 3.9,
+      "max_length": 36,
+      "habitat": "Coastal waters",
+      "color": "#70b863",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_silver_scad": {
+      "name": "Silver Scad",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.34,
+      "max_kg": 4.7,
+      "max_length": 39,
+      "habitat": "Coastal waters",
+      "color": "#5fc67d",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_shore_herring": {
+      "name": "Shore Herring",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.38,
+      "max_kg": 5.5,
+      "max_length": 42,
+      "habitat": "Coastal waters",
+      "color": "#99d4c4",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_dapple_flounder": {
+      "name": "Dapple Flounder",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.42,
+      "max_kg": 6.3,
+      "max_length": 45,
+      "habitat": "Coastal waters",
+      "color": "#5e868e",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_reef_gurnard": {
+      "name": "Reef Gurnard",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.46,
+      "max_kg": 8.52,
+      "max_length": 54,
+      "habitat": "Coastal waters",
+      "color": "#5e769c",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_amber_wrasse": {
+      "name": "Amber Wrasse",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.5,
+      "max_kg": 9.48,
+      "max_length": 58,
+      "habitat": "Coastal waters",
+      "color": "#5f5caa",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_sickle_bream": {
+      "name": "Sickle Bream",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.54,
+      "max_kg": 10.44,
+      "max_length": 62,
+      "habitat": "Coastal waters",
+      "color": "#8758b8",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_ribbon_needlefish": {
+      "name": "Ribbon Needlefish",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.58,
+      "max_kg": 11.4,
+      "max_length": 66,
+      "habitat": "Coastal waters",
+      "color": "#c28fc6",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_kelp_rockling": {
+      "name": "Kelp Rockling",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.62,
+      "max_kg": 12.36,
+      "max_length": 69,
+      "habitat": "Coastal waters",
+      "color": "#d48cbb",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_tidewater_garfish": {
+      "name": "Tidewater Garfish",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.66,
+      "max_kg": 13.32,
+      "max_length": 73,
+      "habitat": "Coastal waters",
+      "color": "#8e5561",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_bluefin_trevally": {
+      "name": "Bluefin Trevally",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.7,
+      "max_kg": 16.66,
+      "max_length": 87,
+      "habitat": "Coastal waters",
+      "color": "#9c6554",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_stone_grouper": {
+      "name": "Stone Grouper",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.74,
+      "max_kg": 17.78,
+      "max_length": 91,
+      "habitat": "Coastal waters",
+      "color": "#aa8d52",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_spotted_skate": {
+      "name": "Spotted Skate",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.78,
+      "max_kg": 18.9,
+      "max_length": 96,
+      "habitat": "Coastal waters",
+      "color": "#b3b885",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_saffron_snapper": {
+      "name": "Saffron Snapper",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.82,
+      "max_kg": 20.02,
+      "max_length": 100,
+      "habitat": "Coastal waters",
+      "color": "#a1c683",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_marbled_bonito": {
+      "name": "Marbled Bonito",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.86,
+      "max_kg": 24.16,
+      "max_length": 117,
+      "habitat": "Coastal waters",
+      "color": "#80d47f",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_glass_barracuda": {
+      "name": "Glass Barracuda",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.9,
+      "max_kg": 25.44,
+      "max_length": 122,
+      "habitat": "Coastal waters",
+      "color": "#4d8e68",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_lantern_anglerfish": {
+      "name": "Lantern Anglerfish",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.94,
+      "max_kg": 26.72,
+      "max_length": 127,
+      "habitat": "Coastal waters",
+      "color": "#4b9c91",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ]
+    },
+    "v20_cobalt_moray": {
+      "name": "Cobalt Moray",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.98,
+      "max_kg": 28.0,
+      "max_length": 132,
+      "habitat": "Coastal waters",
+      "color": "#7b9caa",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_crown_lionfish": {
+      "name": "Crown Lionfish",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 1.02,
+      "max_kg": 29.28,
+      "max_length": 137,
+      "habitat": "Coastal waters",
+      "color": "#7a8ab8",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_sawtail_wahoo": {
+      "name": "Sawtail Wahoo",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 1.06,
+      "max_kg": 34.38,
+      "max_length": 158,
+      "habitat": "Coastal waters",
+      "color": "#8577c6",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_pale_hammerhead": {
+      "name": "Pale Hammerhead",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 1.1,
+      "max_kg": 179.1,
+      "max_length": 650,
+      "habitat": "Coastal waters",
+      "color": "#af72d4",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_deepwater_oarfish": {
+      "name": "Deepwater Oarfish",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 1.14,
+      "max_kg": 186.3,
+      "max_length": 650,
+      "habitat": "Coastal waters",
+      "color": "#8e448a",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_pearl_coelacanth": {
+      "name": "Pearl Coelacanth",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 1.18,
+      "max_kg": 38.7,
+      "max_length": 175,
+      "habitat": "Coastal waters",
+      "color": "#9c7087",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_midnight_thresher": {
+      "name": "Midnight Thresher",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 1.22,
+      "max_kg": 44.6,
+      "max_length": 198,
+      "habitat": "Coastal waters",
+      "color": "#aa7074",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch. A black-water shark with a huge crescent-scythe tail and a thin luminous star seam.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "A black-water shark with a huge crescent-scythe tail and a thin luminous star seam."
+    },
+    "v20_stormback_sunfish": {
+      "name": "Stormback Sunfish",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 1.26,
+      "max_kg": 231.0,
+      "max_length": 650,
+      "habitat": "Coastal waters",
+      "color": "#b8896e",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch. A tall, round sunfish with storm-cloud glass fins and natural lightning-shaped veins.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "weather": [
+        "Rain",
+        "Storm"
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "A tall, round sunfish with storm-cloud glass fins and natural lightning-shaped veins."
+    },
+    "v20_abyss_sleeper_shark": {
+      "name": "Abyss Sleeper Shark",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 1.3,
+      "max_kg": 239.0,
+      "max_length": 650,
+      "habitat": "Coastal waters",
+      "color": "#c6b46b",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch. A broad, dark abyssal shark, with a sleeping crescent eye and bioluminescent vent gills.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "A broad, dark abyssal shark, with a sleeping crescent eye and bioluminescent vent gills."
+    },
+    "v20_sovereign_sturgeon": {
+      "name": "Sovereign Sturgeon",
+      "rarity": "Fabled",
+      "chance": 0.035,
+      "min_kg": 1.34,
+      "max_kg": 271.7,
+      "max_length": 650,
+      "habitat": "Coastal waters",
+      "color": "#bad466",
+      "note": "Search reefs, kelp forests and the deep channel. Return alive to record this catch. An ancient tidal sovereign with coral-gold crown scutes, pearl lanterns and a sweeping living-water tail.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.21",
+      "art_realm": "fabled",
+      "art_note": "An ancient tidal sovereign with coral-gold crown scutes, pearl lanterns and a sweeping living-water tail."
+    },
+    "v20_tide_glass_shrimp": {
+      "name": "Tide Glass Shrimp",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.02,
+      "max_kg": 0.4,
+      "max_length": 22,
+      "habitat": "Coastal shoals",
+      "color": "#828e66",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "school",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_copper_prawn": {
+      "name": "Copper Prawn",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.02,
+      "max_kg": 0.62,
+      "max_length": 22,
+      "habitat": "Coastal shoals",
+      "color": "#749c67",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "bottom",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_speckled_sand_eel": {
+      "name": "Speckled Sand Eel",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.02,
+      "max_kg": 1.01,
+      "max_length": 24,
+      "habitat": "Coastal shoals",
+      "color": "#66aa73",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "surface",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_blue_shore_squid": {
+      "name": "Blue Shore Squid",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.02,
+      "max_kg": 1.27,
+      "max_length": 25,
+      "habitat": "Coastal shoals",
+      "color": "#63b899",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "predator",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_spotted_cuttlefish": {
+      "name": "Spotted Cuttlefish",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.02,
+      "max_kg": 1.79,
+      "max_length": 27,
+      "habitat": "Coastal shoals",
+      "color": "#5fbfc6",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "school",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_moon_disc_jelly": {
+      "name": "Moon Disc Jelly",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.02,
+      "max_kg": 2.1,
+      "max_length": 28,
+      "habitat": "Coastal shoals",
+      "color": "#99b6d4",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "bottom",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_amber_comb_jelly": {
+      "name": "Amber Comb Jelly",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.02,
+      "max_kg": 2.75,
+      "max_length": 31,
+      "habitat": "Coastal shoals",
+      "color": "#5e608e",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "surface",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_striped_pipefish": {
+      "name": "Striped Pipefish",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.02,
+      "max_kg": 3.1,
+      "max_length": 32,
+      "habitat": "Coastal shoals",
+      "color": "#765e9c",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "predator",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_spiny_seahorse": {
+      "name": "Spiny Seahorse",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 0.02,
+      "max_kg": 3.89,
+      "max_length": 36,
+      "habitat": "Coastal shoals",
+      "color": "#9d5caa",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "school",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_violet_sea_slug": {
+      "name": "Violet Sea Slug",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 0.02,
+      "max_kg": 4.28,
+      "max_length": 37,
+      "habitat": "Coastal shoals",
+      "color": "#b8589f",
+      "note": "Scoop with a net from your anchored boat.",
+      "group": "bottom",
+      "methods": [
+        "net"
+      ]
+    },
+    "v20_rustclaw_lobster": {
+      "name": "Rustclaw Lobster",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.02,
+      "max_kg": 0.4,
+      "max_length": 22,
+      "habitat": "Coastal seabed",
+      "color": "#668e6a",
+      "note": "Only enters a cage lowered from your boat. Recover it before sailing home.",
+      "group": "school",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "roe"
+      ]
+    },
+    "v20_blue_spiny_lobster": {
+      "name": "Blue Spiny Lobster",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.02,
+      "max_kg": 0.74,
+      "max_length": 23,
+      "habitat": "Coastal seabed",
+      "color": "#679c84",
+      "note": "Only enters a cage lowered from your boat. Recover it before sailing home.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "kelp_crumble",
+        "roe"
+      ]
+    },
+    "v20_slate_shore_crab": {
+      "name": "Slate Shore Crab",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.02,
+      "max_kg": 0.84,
+      "max_length": 23,
+      "habitat": "Coastal seabed",
+      "color": "#66aaa9",
+      "note": "Only enters a cage lowered from your boat. Recover it before sailing home.",
+      "group": "surface",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "roe"
+      ]
+    },
+    "v20_copper_dungeness": {
+      "name": "Copper Dungeness",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.02,
+      "max_kg": 1.48,
+      "max_length": 26,
+      "habitat": "Coastal seabed",
+      "color": "#6395b8",
+      "note": "Only enters a cage lowered from your boat. Recover it before sailing home.",
+      "group": "predator",
+      "methods": [
+        "pot"
+      ]
+    },
+    "v20_ivory_spider_crab": {
+      "name": "Ivory Spider Crab",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.02,
+      "max_kg": 2.05,
+      "max_length": 28,
+      "habitat": "Coastal seabed",
+      "color": "#5f6ec6",
+      "note": "Only enters a cage lowered from your boat. Recover it before sailing home.",
+      "group": "school",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "roe"
+      ]
+    },
+    "v20_ancient_king_crab": {
+      "name": "Ancient King Crab",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 0.02,
+      "max_kg": 3.0,
+      "max_length": 32,
+      "habitat": "Coastal seabed",
+      "color": "#aa99d4",
+      "note": "Only enters a cage lowered from your boat. Recover it before sailing home. A deep-sea king crab with a weathered coral crown shell and huge asymmetrical mineral claws.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "A deep-sea king crab with a weathered coral crown shell and huge asymmetrical mineral claws.",
+      "favoured_bait": [
+        "roe"
+      ]
+    },
+    "v20_opal_crater_char": {
+      "name": "Opal Crater Char",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.18,
+      "max_kg": 2.1,
+      "max_length": 28,
+      "habitat": "Night Island crater lake",
+      "color": "#668e8a",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake dace: Opal moonstone, crater basins, ink shadows and pale lunar tides. Night Island \u2022 Crater Lake trout: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake trout: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_inkfin_whitefish": {
+      "name": "Inkfin Whitefish",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.22,
+      "max_kg": 3.22,
+      "max_length": 33,
+      "habitat": "Night Island crater lake",
+      "color": "#678b9c",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake dace: Opal moonstone, crater basins, ink shadows and pale lunar tides. Night Island \u2022 Crater Lake salmon: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake salmon: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_silverring_bream": {
+      "name": "Silverring Bream",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.26,
+      "max_kg": 4.34,
+      "max_length": 37,
+      "habitat": "Night Island crater lake",
+      "color": "#6677aa",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake dace: Opal moonstone, crater basins, ink shadows and pale lunar tides. Night Island \u2022 Crater Lake bream: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake bream: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_nightglass_loach": {
+      "name": "Nightglass Loach",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.3,
+      "max_kg": 5.46,
+      "max_length": 42,
+      "habitat": "Night Island crater lake",
+      "color": "#7463b8",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake loach: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake loach: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_mottled_moon_carp": {
+      "name": "Mottled Moon Carp",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.34,
+      "max_kg": 6.58,
+      "max_length": 46,
+      "habitat": "Night Island crater lake",
+      "color": "#a05fc6",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake dace: Opal moonstone, crater basins, ink shadows and pale lunar tides. Night Island \u2022 Crater Lake carp: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake carp: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_duskband_newt": {
+      "name": "Duskband Newt",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.38,
+      "max_kg": 8.8,
+      "max_length": 55,
+      "habitat": "Night Island crater lake",
+      "color": "#d499d0",
+      "note": "Found only in the crater lake of the island that emerges at night. A four-legged crater newt with translucent lunar gills and a long curled dusk tail.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "A four-legged crater newt with translucent lunar gills and a long curled dusk tail."
+    },
+    "v20_moonstone_catfish": {
+      "name": "Moonstone Catfish",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.42,
+      "max_kg": 10.08,
+      "max_length": 60,
+      "habitat": "Night Island crater lake",
+      "color": "#8e5e76",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake catfish: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake catfish: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_violet_lake_eel": {
+      "name": "Violet Lake Eel",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.46,
+      "max_kg": 11.36,
+      "max_length": 65,
+      "habitat": "Night Island crater lake",
+      "color": "#9c5e61",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake eel: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake eel: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "favoured_bait": [
+        "moonmoth"
+      ]
+    },
+    "v20_pale_crown_pike": {
+      "name": "Pale Crown Pike",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 0.5,
+      "max_kg": 14.22,
+      "max_length": 77,
+      "habitat": "Night Island crater lake",
+      "color": "#aa7a5c",
+      "note": "Found only in the crater lake of the island that emerges at night. Night Island \u2022 Crater Lake dace: Opal moonstone, crater basins, ink shadows and pale lunar tides. Night Island \u2022 Crater Lake pike: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "Night Island \u2022 Crater Lake pike: Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "v20_crater_paddlefish": {
+      "name": "Crater Paddlefish",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 0.54,
+      "max_kg": 15.66,
+      "max_length": 83,
+      "habitat": "Night Island crater lake",
+      "color": "#b8a758",
+      "note": "Found only in the crater lake of the island that emerges at night. A moonstone paddlefish with an unmistakably long flat snout and opal crater markings.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "A moonstone paddlefish with an unmistakably long flat snout and opal crater markings."
+    },
+    "v20_black_pearl_gar": {
+      "name": "Black Pearl Gar",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 0.58,
+      "max_kg": 19.0,
+      "max_length": 96,
+      "habitat": "Night Island crater lake",
+      "color": "#b8c68f",
+      "note": "Found only in the crater lake of the island that emerges at night. A black-pearl plated gar with a long toothed snout and a soft lunar fin fringe.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "A black-pearl plated gar with a long toothed snout and a soft lunar fin fringe."
+    },
+    "v20_lunar_blind_sturgeon": {
+      "name": "Lunar Blind Sturgeon",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 0.62,
+      "max_kg": 103.0,
+      "max_length": 432,
+      "habitat": "Night Island crater lake",
+      "color": "#a2d48c",
+      "note": "Found only in the crater lake of the island that emerges at night. A pale blind sturgeon with a cratered stone brow and chipped moonstone scutes.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "A pale blind sturgeon with a cratered stone brow and chipped moonstone scutes."
+    },
+    "v20_selenite_lake_giant": {
+      "name": "Selenite Lake Giant",
+      "rarity": "Fabled",
+      "chance": 0.035,
+      "min_kg": 0.66,
+      "max_kg": 122.1,
+      "max_length": 508,
+      "habitat": "Night Island crater lake",
+      "color": "#558e5d",
+      "note": "Found only in the crater lake of the island that emerges at night. A vast crescent of moonstone with a living crater lake in its flank and a fragmented crystal tail.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "night_island",
+      "art_note": "A vast crescent of moonstone with a living crater lake in its flank and a fragmented crystal tail."
+    },
+    "v20_birchfin_dace": {
+      "name": "Birchfin Dace",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.18,
+      "max_kg": 1.5,
+      "max_length": 26,
+      "habitat": "Upstream island lake",
+      "color": "#66748e",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_olive_lake_perch": {
+      "name": "Olive Lake Perch",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.22,
+      "max_kg": 2.3,
+      "max_length": 29,
+      "habitat": "Upstream island lake",
+      "color": "#6c679c",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "favoured_bait": [
+        "honeygrain"
+      ]
+    },
+    "v20_sandbar_shiner": {
+      "name": "Sandbar Shiner",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.26,
+      "max_kg": 3.1,
+      "max_length": 32,
+      "habitat": "Upstream island lake",
+      "color": "#8b66aa",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_copper_cheek_bream": {
+      "name": "Copper Cheek Bream",
+      "rarity": "Common",
+      "chance": 36,
+      "min_kg": 0.3,
+      "max_kg": 3.9,
+      "max_length": 36,
+      "habitat": "Upstream island lake",
+      "color": "#b663b8",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_island_whitefish": {
+      "name": "Island Whitefish",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.34,
+      "max_kg": 5.64,
+      "max_length": 43,
+      "habitat": "Upstream island lake",
+      "color": "#c65f9c",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_weedbed_tench": {
+      "name": "Weedbed Tench",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.38,
+      "max_kg": 6.6,
+      "max_length": 46,
+      "habitat": "Upstream island lake",
+      "color": "#d499a2",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_bluebar_trout": {
+      "name": "Bluebar Trout",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.42,
+      "max_kg": 8.82,
+      "max_length": 55,
+      "habitat": "Upstream island lake",
+      "color": "#8e6c5e",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "favoured_bait": [
+        "moonmoth"
+      ]
+    },
+    "v20_granite_burbot": {
+      "name": "Granite Burbot",
+      "rarity": "Rare",
+      "chance": 6,
+      "min_kg": 0.46,
+      "max_kg": 9.94,
+      "max_length": 60,
+      "habitat": "Upstream island lake",
+      "color": "#9c8b5e",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ]
+    },
+    "v20_reedbank_pickerel": {
+      "name": "Reedbank Pickerel",
+      "rarity": "Very rare",
+      "chance": 2,
+      "min_kg": 0.5,
+      "max_kg": 12.64,
+      "max_length": 71,
+      "habitat": "Upstream island lake",
+      "color": "#9daa5c",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_moonspotted_char": {
+      "name": "Moonspotted Char",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 0.54,
+      "max_kg": 15.66,
+      "max_length": 83,
+      "habitat": "Upstream island lake",
+      "color": "#7fb858",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ]
+    },
+    "v20_deepglass_cisco": {
+      "name": "Deepglass Cisco",
+      "rarity": "Legendary",
+      "chance": 0.7,
+      "min_kg": 0.58,
+      "max_kg": 17.1,
+      "max_length": 88,
+      "habitat": "Upstream island lake",
+      "color": "#8fc691",
+      "note": "An upstream lake native. Bring it home safely to record it.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ]
+    },
+    "v20_oldwater_lake_sturgeon": {
+      "name": "Oldwater Lake Sturgeon",
+      "rarity": "Mystical",
+      "chance": 0.2,
+      "min_kg": 0.62,
+      "max_kg": 103.0,
+      "max_length": 432,
+      "habitat": "Upstream island lake",
+      "color": "#8cd4af",
+      "note": "An upstream lake native. Bring it home safely to record it. An ancient lake sturgeon with driftwood horns, amber water pockets and root-like barbels.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "art_version": "198.21",
+      "art_realm": "mystical",
+      "art_note": "An ancient lake sturgeon with driftwood horns, amber water pockets and root-like barbels."
+    },
+    "v22_oldwater_mussel": {
+      "name": "Oldwater Mussel",
+      "rarity": "Common",
+      "chance": 32,
+      "min_kg": 0.03,
+      "max_kg": 0.22,
+      "max_length": 12,
+      "habitat": "Upstream lake \u2022 reedbanks, island narrows and deep basin",
+      "color": "#7787aa",
+      "note": "A freshwater mussel with an indigo shell, worn growth rings and a pale inner lip. Found only in Oldwater Lake; scoop with a net or lower a baited cage. Bring it home alive to record it.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "mussel"
+    },
+    "v22_birchbank_crayfish": {
+      "name": "Birchbank Crayfish",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.05,
+      "max_kg": 0.65,
+      "max_length": 21,
+      "habitat": "Upstream lake \u2022 island narrows and deep basin",
+      "color": "#8ba28a",
+      "note": "Olive lake crayfish with copper claw tips, a curled fan tail and pale birch-like bands. Found only around the lake islands and basin; use a net or baited cage. Bring it home alive to record it.",
+      "group": "bottom",
+      "methods": [
+        "net",
+        "pot"
+      ],
+      "form": "crayfish",
+      "favoured_bait": [
+        "roe"
+      ]
+    },
+    "v23_atlas_leviathan": {
+      "name": "Atlas Leviathan",
+      "rarity": "Fabled",
+      "chance": 0.035,
+      "min_kg": 2,
+      "max_kg": 85,
+      "max_length": 320,
+      "habitat": "Folded Coast \u2022 Foldwater Inlet",
+      "color": "#dfbd76",
+      "note": "A living folded sea chart with inked contour lines and a compass eye. Found only in Folded Coast.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.23"
+    },
+    "v23_oldwater_crownback": {
+      "name": "Oldwater Crownback",
+      "rarity": "Fabled",
+      "chance": 0.035,
+      "min_kg": 3,
+      "max_kg": 110,
+      "max_length": 380,
+      "habitat": "Oldwater Lake \u2022 Deep Lake Basin",
+      "color": "#78aa87",
+      "note": "An ancient lake fish with a crown of reed-shaped dorsal fins and bronze-ringed scales. Requires Scented Worms AND Rain; bring your catch home alive.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.23",
+      "required_bait": "worms",
+      "weather": [
+        "Rain"
+      ]
+    },
+    "v23_pelagic_monarch": {
+      "name": "Pelagic Monarch",
+      "rarity": "Fabled",
+      "chance": 0.035,
+      "min_kg": 8,
+      "max_kg": 240,
+      "max_length": 570,
+      "habitat": "Ocean \u2022 Outer Deep Channel",
+      "color": "#619bd0",
+      "note": "A deep-water ribbon sovereign with silver constellation markings and a sweeping crescent tail. Return alive to record it.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.23",
+      "favoured_bait": [
+        "saltflash"
+      ]
+    },
+    "v23_midnight_glassfin": {
+      "name": "Midnight Glassfin",
+      "rarity": "Mystical",
+      "chance": 0.11,
+      "min_kg": 0.2,
+      "max_kg": 6,
+      "max_length": 115,
+      "habitat": "Oldwater Lake \u2022 Island Narrows and Deep Lake Basin",
+      "color": "#99d6df",
+      "note": "A translucent lake fish with a dark spine and luminous blue fin edges. Night only, 20:00\u201306:00. Return alive to record it.",
+      "group": "surface",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.23",
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ],
+      "favoured_bait": [
+        "moonmoth"
+      ]
+    },
+    "v23_squallfin_marlin": {
+      "name": "Squallfin Marlin",
+      "rarity": "Legendary",
+      "chance": 0.28,
+      "min_kg": 2,
+      "max_kg": 72,
+      "max_length": 290,
+      "habitat": "Ocean \u2022 Sunlit Shoals and Broken Crown Reef",
+      "color": "#478b9d",
+      "note": "A streamlined marlin with a tall storm-striped sail. Feeds only in Rain. Return alive to record it.",
+      "group": "predator",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.23",
+      "weather": [
+        "Rain"
+      ],
+      "favoured_bait": [
+        "saltflash"
+      ]
+    },
+    "v23_duskveil_manta": {
+      "name": "Duskveil Manta",
+      "rarity": "Legendary",
+      "chance": 0.28,
+      "min_kg": 2,
+      "max_kg": 95,
+      "max_length": 340,
+      "habitat": "Ocean \u2022 Swaying Kelp Forest and Outer Deep Channel",
+      "color": "#65758f",
+      "note": "A broad manta with pale speckled shoulders and a curling whip tail. Night only, 20:00\u201306:00. Return alive to record it.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.23",
+      "hours": [
+        [
+          20,
+          6
+        ]
+      ]
+    },
+    "v25_copper_reef_lobster": {
+      "name": "Copper Reef Lobster",
+      "rarity": "Rare",
+      "chance": 4,
+      "min_kg": 0.25,
+      "max_kg": 3.5,
+      "max_length": 65,
+      "color": "#b77c59",
+      "habitat": "Ocean \u2022 Broken Crown Reef / Kelp Forest",
+      "note": "Heavy copper claws, a curled striped tail and pale reef freckles. Cage catch; favours Kelp Crumble or Fish Roe.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "kelp_crumble",
+        "roe"
+      ],
+      "art_version": "198.25"
+    },
+    "v25_pearl_spiny_lobster": {
+      "name": "Pearl Spiny Lobster",
+      "rarity": "Legendary",
+      "chance": 0.25,
+      "min_kg": 0.5,
+      "max_kg": 8,
+      "max_length": 95,
+      "color": "#c6bca4",
+      "habitat": "Ocean \u2022 Outer Deep Channel",
+      "note": "Long branching antennae, pearl-white spines and a midnight-blue segmented tail. A rare cage catch; favours Fish Roe.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "roe"
+      ],
+      "art_version": "198.25"
+    },
+    "v25_mossback_crab": {
+      "name": "Mossback Crab",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.08,
+      "max_kg": 1.8,
+      "max_length": 40,
+      "color": "#7c9564",
+      "habitat": "Ocean \u2022 Sunlit Shoals / Kelp Forest",
+      "note": "A low, broad green crab with algae-like mottling and one oversized claw. Cage catch; favours Fish Roe.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "roe"
+      ],
+      "art_version": "198.25"
+    },
+    "v25_crown_reef_crab": {
+      "name": "Crown Reef Crab",
+      "rarity": "Legendary",
+      "chance": 0.24,
+      "min_kg": 0.4,
+      "max_kg": 6,
+      "max_length": 85,
+      "color": "#b9975b",
+      "habitat": "Ocean \u2022 Broken Crown Reef / Outer Deep Channel",
+      "note": "A spiked golden carapace and dark paddle-shaped legs distinguish this large reef crab. Cage catch; favours Kelp Crumble or Fish Roe.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ],
+      "favoured_bait": [
+        "kelp_crumble",
+        "roe"
+      ],
+      "art_version": "198.25"
     }
   },
   "pools": {
@@ -2727,7 +4546,8 @@
         "brinewhisker_catshark",
         "foldshore_lobster",
         "sailpaper_skate",
-        "seafoam_anchovy"
+        "seafoam_anchovy",
+        "v23_atlas_leviathan"
       ]
     },
     "marsh_wisp": {
@@ -2819,15 +4639,15 @@
       ]
     },
     "moonveil_canal": {
-      "name": "Moonveil \u2022 Silver Canal",
+      "name": "Moonveil \u2022 Moonwater Lake",
       "region": "moonveil",
       "bank": [
-        1700,
-        2630
+        4950,
+        4050
       ],
       "water": [
-        1700,
-        2460
+        5120,
+        4050
       ],
       "fish": [
         "moonveil_minnow",
@@ -2960,6 +4780,303 @@
         "cometclaw_crayfish",
         "silverorbit_smelt"
       ]
+    },
+    "voyage_coast_shoals": {
+      "name": "Sunlit Shoals",
+      "region": "voyage_coast",
+      "fish": [
+        "v20_harbour_sprat",
+        "v20_sandstripe_whiting",
+        "v20_copperback_mackerel",
+        "v20_slate_mullet",
+        "v20_silver_scad",
+        "v20_shore_herring",
+        "v20_dapple_flounder",
+        "v20_amber_wrasse",
+        "v20_tidewater_garfish",
+        "v20_saffron_snapper",
+        "v20_cobalt_moray",
+        "v20_deepwater_oarfish",
+        "v20_abyss_sleeper_shark",
+        "v20_tide_glass_shrimp",
+        "v20_copper_prawn",
+        "v20_speckled_sand_eel",
+        "v20_blue_shore_squid",
+        "v20_spotted_cuttlefish",
+        "v20_moon_disc_jelly",
+        "v20_amber_comb_jelly",
+        "v20_striped_pipefish",
+        "v20_spiny_seahorse",
+        "v20_violet_sea_slug",
+        "v20_rustclaw_lobster",
+        "v20_blue_spiny_lobster",
+        "v20_slate_shore_crab",
+        "v20_copper_dungeness",
+        "v20_ivory_spider_crab",
+        "v20_ancient_king_crab",
+        "v23_squallfin_marlin",
+        "v25_mossback_crab"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 3.0
+    },
+    "voyage_coast_kelp": {
+      "name": "Swaying Kelp Forest",
+      "region": "voyage_coast",
+      "fish": [
+        "v20_harbour_sprat",
+        "v20_sandstripe_whiting",
+        "v20_copperback_mackerel",
+        "v20_slate_mullet",
+        "v20_silver_scad",
+        "v20_shore_herring",
+        "v20_dapple_flounder",
+        "v20_sickle_bream",
+        "v20_bluefin_trevally",
+        "v20_marbled_bonito",
+        "v20_crown_lionfish",
+        "v20_pearl_coelacanth",
+        "v20_sovereign_sturgeon",
+        "v20_tide_glass_shrimp",
+        "v20_copper_prawn",
+        "v20_speckled_sand_eel",
+        "v20_blue_shore_squid",
+        "v20_spotted_cuttlefish",
+        "v20_moon_disc_jelly",
+        "v20_amber_comb_jelly",
+        "v20_striped_pipefish",
+        "v20_spiny_seahorse",
+        "v20_violet_sea_slug",
+        "v20_rustclaw_lobster",
+        "v20_blue_spiny_lobster",
+        "v20_slate_shore_crab",
+        "v20_copper_dungeness",
+        "v20_ivory_spider_crab",
+        "v20_ancient_king_crab",
+        "v23_duskveil_manta",
+        "v25_copper_reef_lobster",
+        "v25_mossback_crab"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 2.7
+    },
+    "voyage_coast_reef": {
+      "name": "Broken Crown Reef",
+      "region": "voyage_coast",
+      "fish": [
+        "v20_harbour_sprat",
+        "v20_sandstripe_whiting",
+        "v20_copperback_mackerel",
+        "v20_slate_mullet",
+        "v20_silver_scad",
+        "v20_shore_herring",
+        "v20_dapple_flounder",
+        "v20_ribbon_needlefish",
+        "v20_stone_grouper",
+        "v20_glass_barracuda",
+        "v20_sawtail_wahoo",
+        "v20_midnight_thresher",
+        "v20_tide_glass_shrimp",
+        "v20_copper_prawn",
+        "v20_speckled_sand_eel",
+        "v20_blue_shore_squid",
+        "v20_spotted_cuttlefish",
+        "v20_moon_disc_jelly",
+        "v20_amber_comb_jelly",
+        "v20_striped_pipefish",
+        "v20_spiny_seahorse",
+        "v20_violet_sea_slug",
+        "v20_rustclaw_lobster",
+        "v20_blue_spiny_lobster",
+        "v20_slate_shore_crab",
+        "v20_copper_dungeness",
+        "v20_ivory_spider_crab",
+        "v20_ancient_king_crab",
+        "v23_squallfin_marlin",
+        "v25_copper_reef_lobster",
+        "v25_crown_reef_crab"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 2.5
+    },
+    "voyage_coast_channel": {
+      "name": "Outer Deep Channel",
+      "region": "voyage_coast",
+      "fish": [
+        "v20_harbour_sprat",
+        "v20_sandstripe_whiting",
+        "v20_copperback_mackerel",
+        "v20_slate_mullet",
+        "v20_silver_scad",
+        "v20_shore_herring",
+        "v20_dapple_flounder",
+        "v20_reef_gurnard",
+        "v20_kelp_rockling",
+        "v20_spotted_skate",
+        "v20_lantern_anglerfish",
+        "v20_pale_hammerhead",
+        "v20_midnight_thresher",
+        "v20_stormback_sunfish",
+        "v20_abyss_sleeper_shark",
+        "v20_sovereign_sturgeon",
+        "v20_tide_glass_shrimp",
+        "v20_copper_prawn",
+        "v20_speckled_sand_eel",
+        "v20_blue_shore_squid",
+        "v20_spotted_cuttlefish",
+        "v20_moon_disc_jelly",
+        "v20_amber_comb_jelly",
+        "v20_striped_pipefish",
+        "v20_spiny_seahorse",
+        "v20_violet_sea_slug",
+        "v20_rustclaw_lobster",
+        "v20_blue_spiny_lobster",
+        "v20_slate_shore_crab",
+        "v20_copper_dungeness",
+        "v20_ivory_spider_crab",
+        "v20_ancient_king_crab",
+        "v23_pelagic_monarch",
+        "v23_duskveil_manta",
+        "v25_pearl_spiny_lobster",
+        "v25_crown_reef_crab"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 3.8
+    },
+    "voyage_lake_reeds": {
+      "name": "Sheltered Reedbanks",
+      "region": "voyage_lake",
+      "fish": [
+        "v20_birchfin_dace",
+        "v20_olive_lake_perch",
+        "v20_sandbar_shiner",
+        "v20_copper_cheek_bream",
+        "v20_bluebar_trout",
+        "v20_moonspotted_char",
+        "river_sprat",
+        "russet_river_chub",
+        "bridge_shrimp",
+        "bridge_claw",
+        "v22_oldwater_mussel"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 3.0
+    },
+    "voyage_lake_islands": {
+      "name": "Island Narrows",
+      "region": "voyage_lake",
+      "fish": [
+        "v20_birchfin_dace",
+        "v20_olive_lake_perch",
+        "v20_sandbar_shiner",
+        "v20_copper_cheek_bream",
+        "v20_island_whitefish",
+        "v20_granite_burbot",
+        "v20_deepglass_cisco",
+        "bridge_shrimp",
+        "bridge_claw",
+        "v22_oldwater_mussel",
+        "v22_birchbank_crayfish",
+        "v23_midnight_glassfin"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 3.3
+    },
+    "voyage_lake_deep": {
+      "name": "Deep Lake Basin",
+      "region": "voyage_lake",
+      "fish": [
+        "v20_birchfin_dace",
+        "v20_olive_lake_perch",
+        "v20_sandbar_shiner",
+        "v20_copper_cheek_bream",
+        "v20_weedbed_tench",
+        "v20_reedbank_pickerel",
+        "v20_oldwater_lake_sturgeon",
+        "v22_oldwater_mussel",
+        "v22_birchbank_crayfish",
+        "v23_oldwater_crownback",
+        "v23_midnight_glassfin"
+      ],
+      "bank": [
+        1000,
+        1000
+      ],
+      "water": [
+        1100,
+        1000
+      ],
+      "wait": 3.6
+    },
+    "voyage_night_crater": {
+      "name": "Night Island \u2022 Crater Lake",
+      "region": "voyage_coast",
+      "fish": [
+        "v20_opal_crater_char",
+        "v20_inkfin_whitefish",
+        "v20_silverring_bream",
+        "v20_nightglass_loach",
+        "v20_mottled_moon_carp",
+        "v20_duskband_newt",
+        "v20_moonstone_catfish",
+        "v20_violet_lake_eel",
+        "v20_pale_crown_pike",
+        "v20_crater_paddlefish",
+        "v20_black_pearl_gar",
+        "v20_lunar_blind_sturgeon",
+        "v20_selenite_lake_giant"
+      ],
+      "bank": [
+        7060,
+        1880
+      ],
+      "water": [
+        7180,
+        1880
+      ],
+      "wait": 2.7
     }
   },
   "legacy_pool_fish": {

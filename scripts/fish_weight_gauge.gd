@@ -5,7 +5,7 @@ var compact:=false
 var species=""
 var kg=0.0
 static func rarity_color(grade:String)->Color:
- return {"Common":Color("#d0e4e8"),"Uncommon":Color("#89dbac"),"Rare":Color("#86c8ff"),"Very rare":Color("#c3a1ff"),"Legendary":Color("#ffd17e"),"Mystical":Color("#ffa6e5")}.get(grade,Color.WHITE)
+ return {"Common":Color("#d0e4e8"),"Uncommon":Color("#89dbac"),"Rare":Color("#86c8ff"),"Very rare":Color("#c3a1ff"),"Legendary":Color("#ffd17e"),"Fabled":Color("#f4d28a"),"Mystical":Color("#ffa6e5")}.get(grade,Color.WHITE)
 static func fraction(id:String,weight:float)->float:
  return clampf(weight/maxf(.001,float(FISH.fish().get(id,{}).get("max_kg",1))*4),0,1)
 func _ready()->void:

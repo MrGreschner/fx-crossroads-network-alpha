@@ -1,0 +1,791 @@
+{
+  "version": "198.21",
+  "species": {
+    "cascade_darter": {
+      "theme": "silverfall",
+      "form": "darter",
+      "design": "A darting rivulet with a visible pebble heart and a forked spray tail.",
+      "source_sha256": "70fa4048f291df986ee2812bc265d3cafa728e27d723315f7180432f47811fc7"
+    },
+    "mist_pearl": {
+      "theme": "silverfall",
+      "form": "pearl",
+      "design": "A pearl held in the body of a translucent living water droplet.",
+      "source_sha256": "0f10863f7988c9676473206d48fc124de80aaa7b63562a179d54fddf3d2e2386"
+    },
+    "cascade_crown": {
+      "theme": "silverfall",
+      "form": "cascade",
+      "design": "A living wave whose crown is a crest of falling water.",
+      "source_sha256": "b25262f9d7520ad5cbc647b805889f9450b7edeec7aeb05755dad8e1e7446902"
+    },
+    "aurora_koifin": {
+      "theme": "silverfall",
+      "form": "koi",
+      "design": "A long koi with flowing aurora-water fins and pearl-bright scales.",
+      "source_sha256": "9189af62cd966d73f2ce57c73f71555dbf642078b43f4fde9565fb57227a2500"
+    },
+    "torrent_wyrm": {
+      "theme": "silverfall",
+      "form": "wyrm",
+      "design": "A serpentine water dragon with cataract fins, stone horns and a river-current spine.",
+      "source_sha256": "0e53d4033a7640a0033f7c1561f3521e033185150b693f59dca0afaf6e721c43"
+    },
+    "inkfold_flounder": {
+      "theme": "folded_coast",
+      "form": "flounder",
+      "design": "An asymmetric folded-envelope flatfish, with an inky living eye on one flap.",
+      "source_sha256": "8c0c2807741c2b6d8d3ef8425287ce0331ff730e15c33ebba8a354e08be28461"
+    },
+    "paper_nautilus": {
+      "theme": "folded_coast",
+      "form": "nautilus",
+      "design": "A coiled map-scroll shell with folded paper tentacles and ink-written chambers.",
+      "source_sha256": "c16486f7c6146c53f0a89f20785d66f87dec2f25912a3aac99e979c32d95748c"
+    },
+    "wispfin_lurker": {
+      "theme": "lantern_marsh",
+      "form": "lurker",
+      "design": "A hollow reed lantern creature, lit by its own green marsh wisp.",
+      "source_sha256": "fd0e4ff35fe45c3272e9eacab196a481ae80afc1eb8c8002d2c2decc6904228f"
+    },
+    "chalkblind_loach": {
+      "theme": "descent38",
+      "form": "loach",
+      "design": "Descent \u2022 Garnet Spring loach: Chalk-white cave life and growing garnet crystals.",
+      "source_sha256": "6354f1c1b058f2471ee65f8c9f013017141ab9396a417e4b9ed6e9e3900b52b4"
+    },
+    "garnet_char": {
+      "theme": "descent38",
+      "form": "trout",
+      "design": "Descent \u2022 Garnet Spring trout: Chalk-white cave life and growing garnet crystals.",
+      "source_sha256": "07234dcafa94ff0abe5e5710634080ce44e9341f750109763a8f5c1dc1da1954"
+    },
+    "vaultjaw_wyrm": {
+      "theme": "descent38",
+      "form": "wyrm",
+      "design": "A long garnet-veined cave wyrm with a mineral jaw and eyeless stone brow.",
+      "source_sha256": "84813c0f78631eee810fec45e10e06ccb4754783d82454245a6e872c34dd4c4b"
+    },
+    "bastion_barbel": {
+      "theme": "defense",
+      "form": "barbel",
+      "design": "A rampart-backed barbel whose stone plates form a small aquatic bastion.",
+      "source_sha256": "69ea01e1c5eae3da64e246ebb90fd981052abc9b40d7cb79fb6d78e05a1266ee"
+    },
+    "watchlight_trout": {
+      "theme": "defense",
+      "form": "trout",
+      "design": "North Gate \u2022 Watchwater trout: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
+      "source_sha256": "1c048a70d6e599398df1d83f2c6992f4fe650dc7dbdfaab7bcde55fb06e10e8f"
+    },
+    "pennant_pike": {
+      "theme": "defense",
+      "form": "pike",
+      "design": "A spear-snouted watchwater hunter with a pennant dorsal and masonry scale plates.",
+      "source_sha256": "e37ddb14606949455cba9dda4af00622e691ec44be70e06e503454fb7ac89b7b"
+    },
+    "moonveil_minnow": {
+      "theme": "moonveil",
+      "form": "sprat",
+      "design": "A little silver half-mask face with short silk streamers.",
+      "source_sha256": "16aabb13c86c82cdbe1ba56d1026641e21896265271efec27ac1d09ca095f937"
+    },
+    "velvet_dace": {
+      "theme": "moonveil",
+      "form": "dace",
+      "design": "A midnight-blue velvet fish with long theatrical cape-like fins.",
+      "source_sha256": "de5cba15bd3c1b0b2621753902c0c1edfdc49518db05d239e567f9e73d5234ee"
+    },
+    "confetti_perch": {
+      "theme": "moonveil",
+      "form": "perch",
+      "design": "A spiny party fish with cut-paper confetti scales and a scalloped fan tail.",
+      "source_sha256": "e4d5ade18054d7f80ecf103498829b8bf11acc007cbf47e46bd977733274c85f"
+    },
+    "masque_bream": {
+      "theme": "moonveil",
+      "form": "bream",
+      "design": "A broad ballroom fish wearing a two-tone masquerade mask.",
+      "source_sha256": "cb06c6236f5c00c4e8b4d88fc95a85dff966787ec986d03944870e7ff0549aed"
+    },
+    "ribbon_sailfin": {
+      "theme": "moonveil",
+      "form": "sailfin",
+      "design": "A fish formed from several sweeping satin ribbons and a high folded sail.",
+      "source_sha256": "9b7d5857199a384cad3f1b541463420f9b795b24dbe9b5a6f91f865b8ebcb1be"
+    },
+    "prism_glassray": {
+      "theme": "moonveil",
+      "form": "ray",
+      "design": "An asymmetric stained-mirror ray with floating prism segments.",
+      "source_sha256": "87f0df32633be94cb553a15da28b98728d49fe9651d17465719e37497c60ab2d"
+    },
+    "midnight_lanternfin": {
+      "theme": "moonveil",
+      "form": "lurker",
+      "design": "A deep velvet lantern fish carrying tiny ballroom lights in its fin.",
+      "source_sha256": "70088e2cc2f1ec93d936cbb4bc735ef89ed0a5c5665867aba14cffc348700fe5"
+    },
+    "crescent_regent": {
+      "theme": "moonveil",
+      "form": "regent",
+      "design": "A sweeping crescent-bodied regent with a silver mask and crescent tail.",
+      "source_sha256": "7cc6266c56e6731826ac4210e042974e78cee302a5633baa1a37a5d8ab9d125d"
+    },
+    "veilfin_oracle": {
+      "theme": "mystical",
+      "form": "oracle",
+      "design": "An oracle fish with enormous drifting translucent veil fins and a pale opal sight-stone.",
+      "source_sha256": "616fa7f3fb4c9328f87d3e8ed2dea9f908175ae4326b35db9b120f408d6cf94d"
+    },
+    "quiet_shrimp": {
+      "theme": "wayfarer",
+      "form": "shrimp",
+      "design": "Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones.",
+      "source_sha256": "5b77936e5a7037972fda016ef937ea4382fddc11418660c1aaffaa9af5e979dc"
+    },
+    "quiet_claw": {
+      "theme": "wayfarer",
+      "form": "lobster",
+      "design": "Wayfarer Waters lobster: Fern fans, stream-polished wood and faintly enchanted brook stones.",
+      "source_sha256": "ecee91acf59622ed14ce74a018e0f16fcbdd41fe575a1afe579f4e2a0c769343"
+    },
+    "brook_shrimp": {
+      "theme": "wayfarer",
+      "form": "shrimp",
+      "design": "Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones.",
+      "source_sha256": "4c9ef0ec575183ec6b29679994b4ff102cccca38c2a504d99c98ce9c66651f9b"
+    },
+    "brook_claw": {
+      "theme": "wayfarer",
+      "form": "lobster",
+      "design": "Wayfarer Waters lobster: Fern fans, stream-polished wood and faintly enchanted brook stones.",
+      "source_sha256": "231ba4202e12e319b4f3267d105f7d8d649ace7b572c3a54f37934aba7c552e5"
+    },
+    "deep_shrimp": {
+      "theme": "wayfarer",
+      "form": "shrimp",
+      "design": "Wayfarer Waters shrimp: Fern fans, stream-polished wood and faintly enchanted brook stones.",
+      "source_sha256": "f888f61c65d06a139648305c7dfa7962cb348dfd17487b017d20e0a9acbd2410"
+    },
+    "deep_claw": {
+      "theme": "wayfarer",
+      "form": "crab",
+      "design": "Wayfarer Waters crab: Fern fans, stream-polished wood and faintly enchanted brook stones.",
+      "source_sha256": "9ba10a2dda4dd3d9f22357b8d6bb2f7e7f2c783a37fd00c2f53388e3c0acd9af"
+    },
+    "ferry_shrimp": {
+      "theme": "silverfall",
+      "form": "shrimp",
+      "design": "Silverfall Reach shrimp: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "530e745370ef8f929ce0e655374e2ff174f9a2b70e20acd3dfcc63ccaee5695e"
+    },
+    "ferry_claw": {
+      "theme": "silverfall",
+      "form": "lobster",
+      "design": "Silverfall Reach lobster: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "a03361e8a4943cb8ef71e67bbc6c0fb7ae109a7fa375b357e58121cc022207b5"
+    },
+    "cascade_shrimp": {
+      "theme": "silverfall",
+      "form": "shrimp",
+      "design": "Silverfall Reach shrimp: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "8825ea69f6399de4371f67b97bffe35267b3479f7bd3cf831659227c76c9c393"
+    },
+    "cascade_claw": {
+      "theme": "silverfall",
+      "form": "crab",
+      "design": "Silverfall Reach crab: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "b57a28c2054c3502d6c13448991577bd83e6598db56eefd184e2e132da5ba531"
+    },
+    "fold_shrimp": {
+      "theme": "folded_coast",
+      "form": "shrimp",
+      "design": "An accordion paper shrimp with angular ink antennae and pleated parchment legs.",
+      "source_sha256": "c5959420f78165d04d2da3abe51fa55af2f8e34266c0be7e7281c3594b6fe4ef"
+    },
+    "fold_claw": {
+      "theme": "folded_coast",
+      "form": "crab",
+      "design": "A paper-box crab whose claws open like folded envelopes.",
+      "source_sha256": "f049c499ff36d005e7911ef06ffa4e61b3ab110dd3f4e1b4299191cb34969f72"
+    },
+    "wisp_shrimp": {
+      "theme": "lantern_marsh",
+      "form": "shrimp",
+      "design": "Lantern Marsh shrimp: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
+      "source_sha256": "0cf8e206252b430fae3d68d04684482858e27f9bdd232d6a252d8bea4c82710c"
+    },
+    "wisp_claw": {
+      "theme": "lantern_marsh",
+      "form": "crab",
+      "design": "Lantern Marsh crab: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
+      "source_sha256": "f61e218f10ec331779024fafcf522800ccf78ff6d34d9a222301f814645ac99d"
+    },
+    "buried_shrimp": {
+      "theme": "descent56",
+      "form": "shrimp",
+      "design": "Descent \u2022 Buried Spring shrimp: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "0bae2afb735887acd220c9f07c2dcbeba5250a13b95ebfc9aab236596b4daafb"
+    },
+    "buried_claw": {
+      "theme": "descent56",
+      "form": "crab",
+      "design": "Descent \u2022 Buried Spring crab: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "56f3240fa0a8742d5bb425481ceffb56c8fa050adedf261cbd4f25888ef45515"
+    },
+    "garnet_shrimp": {
+      "theme": "descent38",
+      "form": "shrimp",
+      "design": "Descent \u2022 Garnet Spring shrimp: Chalk-white cave life and growing garnet crystals.",
+      "source_sha256": "def2feade99f2915e1e6425ff167f00f6e6372d59e6890ac2e4c812544ce5ffa"
+    },
+    "garnet_claw": {
+      "theme": "descent38",
+      "form": "lobster",
+      "design": "Descent \u2022 Garnet Spring lobster: Chalk-white cave life and growing garnet crystals.",
+      "source_sha256": "76f301e71ca588d0a2c6ad4c7745703aee5276a07dbce327f0ed4176b8b2a4e0"
+    },
+    "watch_shrimp": {
+      "theme": "defense",
+      "form": "shrimp",
+      "design": "North Gate \u2022 Watchwater shrimp: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
+      "source_sha256": "9bcce506265208dd4c8eab493247c22969768704b33a17aab1ce041e4354082f"
+    },
+    "watch_claw": {
+      "theme": "defense",
+      "form": "lobster",
+      "design": "North Gate \u2022 Watchwater lobster: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
+      "source_sha256": "8cc771569c8c3e47f3475a359fecc514abcbb98caf7475f73e439fb71944abf7"
+    },
+    "masque_shrimp": {
+      "theme": "moonveil",
+      "form": "shrimp",
+      "design": "Moonveil Masquerade shrimp: Moonlit silk, carnival masks, mirror glass and ballroom ribbons.",
+      "source_sha256": "d9a643f229765f5013fd63419e7600d58b57cc0988df17509baa8b46344015af"
+    },
+    "masque_claw": {
+      "theme": "moonveil",
+      "form": "crab",
+      "design": "Moonveil Masquerade crab: Moonlit silk, carnival masks, mirror glass and ballroom ribbons.",
+      "source_sha256": "ce586243116b47093576ae6641fa36a84f01990bfaed752315d405118dbf4341"
+    },
+    "wayward_dace": {
+      "theme": "between_root",
+      "form": "dace",
+      "design": "The Between \u2022 Rootglass dace: Hollow glass, roots and fragments of a lost woodland.",
+      "source_sha256": "3ae4fcca1899240c4e2a31089b1f74cafc22e08b4cf4523a9d5a4c1561f37262"
+    },
+    "cinder_goby": {
+      "theme": "between_ember",
+      "form": "goby",
+      "design": "The Between \u2022 Cinderwell goby: Charcoal shells, molten seams and ember fins.",
+      "source_sha256": "7a765e58fcce57d1e66196f44d3b6152ee3f1f60c504b5cfe80a8c1d734e7996"
+    },
+    "rift_shrimp": {
+      "theme": "between_root",
+      "form": "shrimp",
+      "design": "The Between \u2022 Rootglass shrimp: Hollow glass, roots and fragments of a lost woodland.",
+      "source_sha256": "043581b333f393de51c2e8003913ffa15d0f5ebcc328ca4bf438c70ac6b59a81"
+    },
+    "lantern_loach": {
+      "theme": "between_mist",
+      "form": "loach",
+      "design": "The Between \u2022 Lanternmere loach: Hollow reed lanterns and silver mist drifting through their bodies.",
+      "source_sha256": "4c1f78c49771c05e77372c2364344929a247f4a518a93150c69c17e39eef8687"
+    },
+    "frostveil_char": {
+      "theme": "between_frost",
+      "form": "trout",
+      "design": "The Between \u2022 Frostveil trout: Fractured ice, snow crystals and translucent rime.",
+      "source_sha256": "148dd7c66ead4fa66ee89b5a0846b6b6e2999dc079314978643d829f47b8edd9"
+    },
+    "embercrest_koi": {
+      "theme": "between_ember",
+      "form": "koi",
+      "design": "A charcoal koi with an ember crest and flowing tongues of molten glass.",
+      "source_sha256": "42e163891ba501fb0f04eb3e7fc2d9d5f118f55146f3477952c31309ec8cc05c"
+    },
+    "moonrift_eel": {
+      "theme": "between_mist",
+      "form": "eel",
+      "design": "A ribbon of moonlit fog around a hollow, lantern-lined eel spine.",
+      "source_sha256": "f2afdd97fd462cc02676b6d4d243d474afc7285ec2ae825a9093d6772aad513c"
+    },
+    "starcrown_ray": {
+      "theme": "between_star",
+      "form": "ray",
+      "design": "An open star-map ray with broken orbital fins and a comet-thread tail.",
+      "source_sha256": "6750fd170a15083c742f550ab644f20f3330ecaa8b5c5e03aee0fbc01056d212"
+    },
+    "waylight_leviathan": {
+      "theme": "between_star",
+      "form": "wyrm",
+      "design": "An immense hollow constellation serpent, carrying a bright Waylight core in its ribs.",
+      "source_sha256": "c0d9fd194b1270a1bc1019fe8387ee23d0c25fdce1904b17d833877de8fbc2bd"
+    },
+    "moonthread_arowana": {
+      "theme": "mystical",
+      "form": "dace",
+      "design": "A long arowana with moon-phase plates and thin moon-thread whiskers trailing from its face.",
+      "source_sha256": "50b6bcfc4e9b1c0082526ee5b87ce4cd4225a8a11141bb953e3eb09bb354da3c"
+    },
+    "starveil_river_ray": {
+      "theme": "mystical",
+      "form": "ray",
+      "design": "A wide night-sky ray whose translucent veil holds a precise tiny constellation.",
+      "source_sha256": "0d14bf8f0ab588dd47a5d4700449d76c319dab38c69e0ef2f486d5b6f925c1ba"
+    },
+    "sprayfin_shiner": {
+      "theme": "silverfall",
+      "form": "sprat",
+      "design": "Silverfall Reach sprat: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "99ddf14777f706704078265bc6bf1d8bc852db43943e0a51e7c2c6bd5aae9ca2"
+    },
+    "slatewater_gudgeon": {
+      "theme": "silverfall",
+      "form": "goby",
+      "design": "Silverfall Reach goby: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "3f8417ec4bee70956944cca3121be425b4e54a319d786d427adbba5d868e4f21"
+    },
+    "silverfall_whitefish": {
+      "theme": "silverfall",
+      "form": "salmon",
+      "design": "Silverfall Reach salmon: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "b2ee197a4026960e544d6119b10f45671ace5a88e73c945176a79129e3247830"
+    },
+    "cataract_grayling": {
+      "theme": "silverfall",
+      "form": "grayling",
+      "design": "Silverfall Reach grayling: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "fc855e619cd251ea58c635d3e1872320300e5dee7c53c022db3e05e3bf9d85c3"
+    },
+    "fallspeck_trout": {
+      "theme": "silverfall",
+      "form": "trout",
+      "design": "Silverfall Reach trout: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "1e92d4014a2396b969132ad394643394c3bf4f0c342cb689c4ca069f97491064"
+    },
+    "longpool_sturgeon": {
+      "theme": "silverfall",
+      "form": "sturgeon",
+      "design": "Silverfall Reach sturgeon: Living cascades, river pearls, water ribbons and polished river stones.",
+      "source_sha256": "3bcbecc9d0fce38f62623c7c232136f55edbd6e98253b06dcc6b10ea96bee3f4"
+    },
+    "saltglass_sprat": {
+      "theme": "folded_coast",
+      "form": "sprat",
+      "design": "A translucent tracing-paper fish with crystalline ink-window scales.",
+      "source_sha256": "428a36501bccb227a0328f9c4a0f0faf6d065cc7cc616a210eef2e089046bee6"
+    },
+    "tidebar_mullet": {
+      "theme": "folded_coast",
+      "form": "mullet",
+      "design": "A chunky shipping-label fish, folded from tide-chart strips.",
+      "source_sha256": "b6781aa002cbfdc5f1d091e88e04d8f921977f297dcbb5aeeea06b14b3568877"
+    },
+    "kelpstripe_wrasse": {
+      "theme": "folded_coast",
+      "form": "wrasse",
+      "design": "A green paper-cut wrasse with ribbon kelp fins and zigzag cut edges.",
+      "source_sha256": "7dd62b5062dc65bda0135468e021de8430539133765374fc5248b7a2bb786e18"
+    },
+    "brinewhisker_catshark": {
+      "theme": "folded_coast",
+      "form": "shark",
+      "design": "A sleek ink-blot catshark with folded sheet fins and quill-like whiskers.",
+      "source_sha256": "b33f5c033e5df96bc300caa800a61b726bc3df271752953ca64f19e8f77d1ab2"
+    },
+    "foldshore_lobster": {
+      "theme": "folded_coast",
+      "form": "lobster",
+      "design": "A long folded-cardstock lobster with hinged claws and a pleated paper tail.",
+      "source_sha256": "f0f30943a0beb328c614888fb0c3873e80927a234970aef516deff41d76cc80d"
+    },
+    "sailpaper_skate": {
+      "theme": "folded_coast",
+      "form": "ray",
+      "design": "A broad origami skate with a centre fold and a long curled drafting ribbon.",
+      "source_sha256": "df5040e70c5e2fb10e83ba442182b043380425c88b302c053dd4740db7ed3b20"
+    },
+    "seafoam_anchovy": {
+      "theme": "folded_coast",
+      "form": "sprat",
+      "design": "A slim curled parchment anchovy with a paper-fan tail.",
+      "source_sha256": "aea59f98e431dc74f3855da2dfbcf750333859f483f8bdfbde08aed4dd49c578"
+    },
+    "peatfin_minnow": {
+      "theme": "lantern_marsh",
+      "form": "sprat",
+      "design": "Lantern Marsh sprat: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
+      "source_sha256": "fff6cb5ed6459de88e3af6092cc2596fbfd5025ab5579e3756768070c499a2c4"
+    },
+    "reednose_mudfish": {
+      "theme": "lantern_marsh",
+      "form": "dace",
+      "design": "Lantern Marsh dace: Peat-black water, reed lanterns, wandering wisps and marsh roots.",
+      "source_sha256": "fc56657b0a1e55c763c4199c7e7b1777de2b8e5138f3c30c201262f7a8fb6e59"
+    },
+    "lanternroot_tadpole": {
+      "theme": "lantern_marsh",
+      "form": "tadpole",
+      "design": "A lantern seed that grew into a newt-like tadpole with branching root gills.",
+      "source_sha256": "06a6621db4603683233a1e0fbbc5ffd4d4e8a69be7408d4228866198b5216b73"
+    },
+    "bogwhisker_catfish": {
+      "theme": "lantern_marsh",
+      "form": "catfish",
+      "design": "A broad peat catfish with root-whiskers and two small hanging ember seeds.",
+      "source_sha256": "c6efab548369e46691b4a1b1741bf9e3217a085560e516c64c47a4b4fb224789"
+    },
+    "amberfen_eel": {
+      "theme": "lantern_marsh",
+      "form": "eel",
+      "design": "An amber-windowed eel with a root-lined spine and peat-dark tail.",
+      "source_sha256": "b104c1eddd58921d7e2384676c6b007623ff7f799686d33318676b341e9ce662"
+    },
+    "blindvault_loach": {
+      "theme": "descent56",
+      "form": "loach",
+      "design": "Descent \u2022 Buried Spring loach: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "f10d554c52652e474f96073214c46e827f55db63de345aea35d33fc15ca3cbcc"
+    },
+    "ironbelly_cavefish": {
+      "theme": "descent56",
+      "form": "cavefish",
+      "design": "Descent \u2022 Buried Spring cavefish: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "e91e32b3bf64559e013011d689b083ca448ea83afbea17d3aa2c1b7583f90db5"
+    },
+    "deepvent_char": {
+      "theme": "descent56",
+      "form": "trout",
+      "design": "Descent \u2022 Buried Spring trout: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "bfa66c9e2f2c188291eac193e86f9b9ed298aad2e24b7bb684b03832dbca3b1d"
+    },
+    "obsidian_jawfish": {
+      "theme": "descent56",
+      "form": "jawfish",
+      "design": "Descent \u2022 Buried Spring jawfish: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "1f34cb96433c930ce8b38c3bfe5d1aa9e4627767daf9599f0e909e8d227c4549"
+    },
+    "pallid_cavern_eel": {
+      "theme": "descent56",
+      "form": "eel",
+      "design": "Descent \u2022 Buried Spring eel: Basalt plates, dark mineral seams and blind deep-spring creatures.",
+      "source_sha256": "cfaf0a218008a6cec6e9c003a48e32a59a78dfe1397f91e58abcbd43b920dc75"
+    },
+    "basaltback_sturgeon": {
+      "theme": "descent56",
+      "form": "sturgeon",
+      "design": "A plated basalt sturgeon with obsidian scutes and a luminous mineral seam.",
+      "source_sha256": "108db04e5d997d5c86ffb8b1cd6d3978575ecd8c89e33db51bd81736ecad6146"
+    },
+    "chalknose_gudgeon": {
+      "theme": "descent38",
+      "form": "goby",
+      "design": "Descent \u2022 Garnet Spring goby: Chalk-white cave life and growing garnet crystals.",
+      "source_sha256": "23cf7c3c74d348ed0c7d044d4f7183bee8b03b91c9158c283d4bfaa3e69a582c"
+    },
+    "garnet_dace": {
+      "theme": "descent38",
+      "form": "dace",
+      "design": "Descent \u2022 Garnet Spring dace: Chalk-white cave life and growing garnet crystals.",
+      "source_sha256": "30d52dab869cf262f12935edd9e04b21d922e37dce1ac890cce22fe22f598aea"
+    },
+    "rampart_roach": {
+      "theme": "defense",
+      "form": "dace",
+      "design": "North Gate \u2022 Watchwater dace: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
+      "source_sha256": "7f57187e0c115af449164ef08b9c59cee32db2f308f841d0c8ceef6cc410e93c"
+    },
+    "moatglass_stickleback": {
+      "theme": "defense",
+      "form": "stickleback",
+      "design": "North Gate \u2022 Watchwater stickleback: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
+      "source_sha256": "7ece8ca149bc3b0eaf017f41be6570d5f02e8072dc08b85e27347dfe9f8e3e19"
+    },
+    "watchwater_carp": {
+      "theme": "defense",
+      "form": "carp",
+      "design": "North Gate \u2022 Watchwater carp: Bastion stone, heraldic fins, shield shells and watch-lamp markings.",
+      "source_sha256": "573b5c7309aa25234e1cf5478a53beb8bbeb7e21c0b1da3ee07ea42fa64a16c1"
+    },
+    "silkfin_killifish": {
+      "theme": "moonveil",
+      "form": "killifish",
+      "design": "A tiny embroidered silk fish with long uneven lace fins.",
+      "source_sha256": "f5edd3ec4e395a66d19e7480cd94d5f164b4dea31960f8479da6e8e3cd85724f"
+    },
+    "masklace_guppy": {
+      "theme": "moonveil",
+      "form": "guppy",
+      "design": "A guppy with a huge lace theatre-fan tail and a gold eye mask.",
+      "source_sha256": "d46932f3eebf168ae97b1dbc0e62ec95c810771ff32209f7c288e4fff647a45b"
+    },
+    "glassroot_crayfish": {
+      "theme": "between_root",
+      "form": "lobster",
+      "design": "The Between \u2022 Rootglass lobster: Hollow glass, roots and fragments of a lost woodland.",
+      "source_sha256": "d364da97673129de226eb53f9d1f6fa46e65025e7051826d4650b490d4994310"
+    },
+    "rootlace_loach": {
+      "theme": "between_root",
+      "form": "loach",
+      "design": "The Between \u2022 Rootglass loach: Hollow glass, roots and fragments of a lost woodland.",
+      "source_sha256": "4a709a2c8f4e07fe5f7ed10685a7a127c04b86d9181ec4ab4a61123806418ff7"
+    },
+    "coalchip_shrimp": {
+      "theme": "between_ember",
+      "form": "shrimp",
+      "design": "The Between \u2022 Cinderwell shrimp: Charcoal shells, molten seams and ember fins.",
+      "source_sha256": "982eda13620b3d56331f099b1c57c8f411f795d5e0619224b754ca7df54332e6"
+    },
+    "cinderclaw_crab": {
+      "theme": "between_ember",
+      "form": "crab",
+      "design": "The Between \u2022 Cinderwell crab: Charcoal shells, molten seams and ember fins.",
+      "source_sha256": "9c683642beed67cc00d79b6b2c04ce2ed8d58526160995dbdb8b3148d23a4a34"
+    },
+    "sootfin_gudgeon": {
+      "theme": "between_ember",
+      "form": "goby",
+      "design": "The Between \u2022 Cinderwell goby: Charcoal shells, molten seams and ember fins.",
+      "source_sha256": "b4fe079f5dcdad5b82b47663da4013bcccb1a04ac38cf849ffcab0302ad07436"
+    },
+    "icegrain_shrimp": {
+      "theme": "between_frost",
+      "form": "shrimp",
+      "design": "The Between \u2022 Frostveil shrimp: Fractured ice, snow crystals and translucent rime.",
+      "source_sha256": "c106d563883fe5fc3e0e85bcab56d0f55da37f5f3931cb98a4ffd818e9f1fec9"
+    },
+    "frostburrow_crayfish": {
+      "theme": "between_frost",
+      "form": "lobster",
+      "design": "The Between \u2022 Frostveil lobster: Fractured ice, snow crystals and translucent rime.",
+      "source_sha256": "623ff2cf923a8f6da44766caaced9de0f0b8ef216c2e0e88221c5f53a89bdd35"
+    },
+    "rimeback_sculpin": {
+      "theme": "between_frost",
+      "form": "sculpin",
+      "design": "The Between \u2022 Frostveil sculpin: Fractured ice, snow crystals and translucent rime.",
+      "source_sha256": "9b9023e45c960ee2be5b8f2e3abdac945b4401d69460c803dbf2708d9ffb31b7"
+    },
+    "lanternseed_shrimp": {
+      "theme": "between_mist",
+      "form": "shrimp",
+      "design": "The Between \u2022 Lanternmere shrimp: Hollow reed lanterns and silver mist drifting through their bodies.",
+      "source_sha256": "ff4582667cde12197b61fc6be36ce47058f214bee6574e6953da08e53c15e018"
+    },
+    "mireglass_crab": {
+      "theme": "between_mist",
+      "form": "crab",
+      "design": "The Between \u2022 Lanternmere crab: Hollow reed lanterns and silver mist drifting through their bodies.",
+      "source_sha256": "1ef7b3f26a9a57f02b0cfbcb31ec1abe1c6cbd0d58a908752604470d6c12467b"
+    },
+    "mistreed_killifish": {
+      "theme": "between_mist",
+      "form": "killifish",
+      "design": "The Between \u2022 Lanternmere killifish: Hollow reed lanterns and silver mist drifting through their bodies.",
+      "source_sha256": "6673302b3f7d926ba86f7ebc46d67ba283ab543ab2717e0253644aa8f166396f"
+    },
+    "starlace_shrimp": {
+      "theme": "between_star",
+      "form": "shrimp",
+      "design": "The Between \u2022 Starfall shrimp: Constellations, broken orbit rings and deep-space voids.",
+      "source_sha256": "2f9c871171b98e06bf19064d589ffd3cf6df043a9a9e46c97f5189b40acf9241"
+    },
+    "cometclaw_crayfish": {
+      "theme": "between_star",
+      "form": "lobster",
+      "design": "The Between \u2022 Starfall lobster: Constellations, broken orbit rings and deep-space voids.",
+      "source_sha256": "402c09c647f5858add19c6464529431623e800bc2cbe6451f9c7f31af0c96433"
+    },
+    "silverorbit_smelt": {
+      "theme": "between_star",
+      "form": "sprat",
+      "design": "The Between \u2022 Starfall sprat: Constellations, broken orbit rings and deep-space voids.",
+      "source_sha256": "b7897f8e445b0686cb9de38c1d937cb3a3a03eae51b452ba8565dbb7d3388162"
+    },
+    "v20_midnight_thresher": {
+      "theme": "mystical",
+      "form": "thresher",
+      "design": "A black-water shark with a huge crescent-scythe tail and a thin luminous star seam.",
+      "source_sha256": "61066631dcc3c0b93bfe1b26307315ac966e6a33d9ee13f5360a4e66652145c8"
+    },
+    "v20_stormback_sunfish": {
+      "theme": "mystical",
+      "form": "sunfish",
+      "design": "A tall, round sunfish with storm-cloud glass fins and natural lightning-shaped veins.",
+      "source_sha256": "8e4d429e824c1e3ee4f6b1c821437b9d7c74e12de83b441105daf3d514f3386c"
+    },
+    "v20_abyss_sleeper_shark": {
+      "theme": "mystical",
+      "form": "shark",
+      "design": "A broad, dark abyssal shark, with a sleeping crescent eye and bioluminescent vent gills.",
+      "source_sha256": "fe8dae48547fccd3185cc295f484c7694c3ba336d9c2f5614d6ea4a3b8b25d2e"
+    },
+    "v20_sovereign_sturgeon": {
+      "theme": "fabled",
+      "form": "sturgeon",
+      "design": "An ancient tidal sovereign with coral-gold crown scutes, pearl lanterns and a sweeping living-water tail.",
+      "source_sha256": "67ff6fe19a34fae0526953a4daab0f92aebd5eacd2ca5a2d54745b0019fb67cf"
+    },
+    "v20_ancient_king_crab": {
+      "theme": "mystical",
+      "form": "crab",
+      "design": "A deep-sea king crab with a weathered coral crown shell and huge asymmetrical mineral claws.",
+      "source_sha256": "90096af8e520d55145f7cc5fffec7e9c495c7ef09f25ece3bef8f87b48e36fa3"
+    },
+    "v20_opal_crater_char": {
+      "theme": "night_island",
+      "form": "trout",
+      "design": "Night Island \u2022 Crater Lake trout: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "d0ccfc7cb86f8550c3bd898ea453a2d7d681268c0f59b3fa97f5f2994144bd89"
+    },
+    "v20_inkfin_whitefish": {
+      "theme": "night_island",
+      "form": "salmon",
+      "design": "Night Island \u2022 Crater Lake salmon: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "12ae19672733a90fc539c837d2b3a7ab88cdd0a145ab4f56f6806b5b355968b7"
+    },
+    "v20_silverring_bream": {
+      "theme": "night_island",
+      "form": "bream",
+      "design": "Night Island \u2022 Crater Lake bream: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "75992290b3252479d13aef17613c55aa44eaa7908e97af08aeaeecb2c1d04fc3"
+    },
+    "v20_nightglass_loach": {
+      "theme": "night_island",
+      "form": "loach",
+      "design": "Night Island \u2022 Crater Lake loach: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "a129a53a7fcbedc7e2e16eb7f592aa85e83c4b949f420abc943b9adee7088269"
+    },
+    "v20_mottled_moon_carp": {
+      "theme": "night_island",
+      "form": "carp",
+      "design": "Night Island \u2022 Crater Lake carp: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "fee312866d1acdaa5b2f0e1e5ad8dde0e53e7decbe595519717c0f3429a8fde7"
+    },
+    "v20_duskband_newt": {
+      "theme": "night_island",
+      "form": "newt",
+      "design": "A four-legged crater newt with translucent lunar gills and a long curled dusk tail.",
+      "source_sha256": "448de0ff7617d815452dd68a13561ff2eb1493ee842fa057bbf8e4077a84f462"
+    },
+    "v20_moonstone_catfish": {
+      "theme": "night_island",
+      "form": "catfish",
+      "design": "Night Island \u2022 Crater Lake catfish: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "596e339704c90ff3a6b05523bf0a815ef180fb98997231fd838e8ed5684543e9"
+    },
+    "v20_violet_lake_eel": {
+      "theme": "night_island",
+      "form": "eel",
+      "design": "Night Island \u2022 Crater Lake eel: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "f4ee5bec9b3dc71239ea81de9f3c6096726906139037f623aa40db576d4c8d46"
+    },
+    "v20_pale_crown_pike": {
+      "theme": "night_island",
+      "form": "pike",
+      "design": "Night Island \u2022 Crater Lake pike: Opal moonstone, crater basins, ink shadows and pale lunar tides.",
+      "source_sha256": "0806c74d81068cfe6647e02f3cea1161853f5c9d1568122a0eba5acb61a2ccd0"
+    },
+    "v20_crater_paddlefish": {
+      "theme": "night_island",
+      "form": "paddlefish",
+      "design": "A moonstone paddlefish with an unmistakably long flat snout and opal crater markings.",
+      "source_sha256": "e23a87cf19b392c548a367386592f922601ad2680edaf3cba8c5a4b0bc8a12f9"
+    },
+    "v20_black_pearl_gar": {
+      "theme": "night_island",
+      "form": "gar",
+      "design": "A black-pearl plated gar with a long toothed snout and a soft lunar fin fringe.",
+      "source_sha256": "514e77724ad54f3c7c99fce1fda752d55cd69ffbea8c1ea17134d7ad2b1b33fe"
+    },
+    "v20_lunar_blind_sturgeon": {
+      "theme": "night_island",
+      "form": "sturgeon",
+      "design": "A pale blind sturgeon with a cratered stone brow and chipped moonstone scutes.",
+      "source_sha256": "1c4ed665e2afe8c2854a211201e258b321c88735d9f2b20016650e2030e6fe08"
+    },
+    "v20_selenite_lake_giant": {
+      "theme": "night_island",
+      "form": "dace",
+      "design": "A vast crescent of moonstone with a living crater lake in its flank and a fragmented crystal tail.",
+      "source_sha256": "429eaffd56eda3076e67a6e308dff959fd0ea22969fe5a791eae544673d38799"
+    },
+    "v20_oldwater_lake_sturgeon": {
+      "theme": "mystical",
+      "form": "sturgeon",
+      "design": "An ancient lake sturgeon with driftwood horns, amber water pockets and root-like barbels.",
+      "source_sha256": "c18a3bf21804eb151507b2719148908a5ce9d7b4f379be9f80e490f0f4808fe4"
+    }
+  },
+  "themes": {
+    "folded_coast": {
+      "name": "Folded Coast",
+      "direction": "Folded parchment, ink tides and moving cartography."
+    },
+    "moonveil": {
+      "name": "Moonveil Masquerade",
+      "direction": "Moonlit silk, carnival masks, mirror glass and ballroom ribbons."
+    },
+    "silverfall": {
+      "name": "Silverfall Reach",
+      "direction": "Living cascades, river pearls, water ribbons and polished river stones."
+    },
+    "lantern_marsh": {
+      "name": "Lantern Marsh",
+      "direction": "Peat-black water, reed lanterns, wandering wisps and marsh roots."
+    },
+    "descent38": {
+      "name": "Descent \u2022 Garnet Spring",
+      "direction": "Chalk-white cave life and growing garnet crystals."
+    },
+    "descent56": {
+      "name": "Descent \u2022 Buried Spring",
+      "direction": "Basalt plates, dark mineral seams and blind deep-spring creatures."
+    },
+    "defense": {
+      "name": "North Gate \u2022 Watchwater",
+      "direction": "Bastion stone, heraldic fins, shield shells and watch-lamp markings."
+    },
+    "wayfarer": {
+      "name": "Wayfarer Waters",
+      "direction": "Fern fans, stream-polished wood and faintly enchanted brook stones."
+    },
+    "between_root": {
+      "name": "The Between \u2022 Rootglass",
+      "direction": "Hollow glass, roots and fragments of a lost woodland."
+    },
+    "between_ember": {
+      "name": "The Between \u2022 Cinderwell",
+      "direction": "Charcoal shells, molten seams and ember fins."
+    },
+    "between_frost": {
+      "name": "The Between \u2022 Frostveil",
+      "direction": "Fractured ice, snow crystals and translucent rime."
+    },
+    "between_mist": {
+      "name": "The Between \u2022 Lanternmere",
+      "direction": "Hollow reed lanterns and silver mist drifting through their bodies."
+    },
+    "between_star": {
+      "name": "The Between \u2022 Starfall",
+      "direction": "Constellations, broken orbit rings and deep-space voids."
+    },
+    "night_island": {
+      "name": "Night Island \u2022 Crater Lake",
+      "direction": "Opal moonstone, crater basins, ink shadows and pale lunar tides."
+    },
+    "mystical": {
+      "name": "Mystical Waters",
+      "direction": "Extraordinary river and ocean creatures shaped by moonlight, storms and ancient water."
+    },
+    "fabled": {
+      "name": "Fabled Waters",
+      "direction": "Sovereign, ancient creatures with impossible mineral and tidal anatomy."
+    }
+  }
+}

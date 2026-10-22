@@ -1,0 +1,18 @@
+{
+  "id": "voyage_lake",
+  "name": "Oldwater Lake Voyage",
+  "size": [
+    9000,
+    6800
+  ],
+  "terrain": "river_water",
+  "scene": "res://scenes/realms/voyage_lake.tscn",
+  "boss_sprite": "bramble_boss",
+  "boss_enemy": "bramble_boss",
+  "boss_health": 500,
+  "xp_per_level": 4,
+  "unlock_cost": 0,
+  "difficulty_label": "Voyage \u2022 return alive",
+  "description": "Boat exploration with unbanked catches.",
+  "difficulty_tier": "medium"
+}

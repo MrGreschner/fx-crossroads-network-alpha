@@ -112,7 +112,12 @@
     "lodge_silverfall",
     "lodge_coast",
     "lodge_marsh",
-    "lodge_cavern"
+    "lodge_cavern",
+    "lodge_oldwater",
+    "lodge_bluebar",
+    "lodge_saltwind",
+    "lodge_reefguard",
+    "lodge_seaclear"
   ],
   "enemies": [
     "archer",

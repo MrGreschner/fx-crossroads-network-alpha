@@ -60,6 +60,7 @@ func model(index:int)->Dictionary:
  var label:String=["LMB / Primary","RMB / Secondary","Space / Special"][index]
  return {"name":str(stats.get("name",kind.capitalize())),"description":text+("\n\n"+" · ".join(numbers) if not numbers.is_empty() else ""),"subtitle":label+" · "+("Unlocked" if int(ctx.level)>=needed else "Unlocks at level "+str(needed)),"locked":int(ctx.level)<needed}
 func active()->bool:
+ if not arcade and game.get("voyage")!=null and game.voyage.active and not game.voyage.ashore:return false
  if game==null or not is_instance_valid(game.presentation) or not is_instance_valid(game.session_menu):return false
  if not game.presentation.page.is_empty() or not game.session_menu.page.is_empty() or game.media.clean_view or game.media.capturing or game.has_node("FXIntro"):return false
  return game.started and game.shop_open.is_empty() and not game.spectating() and not game.arena_world.shatter.active() if arcade else game.mode=="run" and game.menu.is_empty()

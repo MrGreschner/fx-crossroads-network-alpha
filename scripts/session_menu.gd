@@ -91,7 +91,7 @@ func open(kind:String)->void:
   if preload("res://scripts/education_access.gd").student() or preload("res://scripts/education_access.gd").review_allowed():button("Education Guide",func():resume();load("res://scripts/education_guide.gd").open(game.legacy))
   if preload("res://scripts/education_access.gd").review_allowed():button("Teacher • class view",func():resume();load("res://scripts/teacher_dashboard.gd").open(game.legacy))
   button("Main menu",func():open("main"))
-  text("Exiting to town ends this attempt. If you host a live room, leaving disconnects your party.",16)
+  text("Exiting to town suspends your boat voyage. Resume it at the river pier; unbanked catches stay aboard." if not arcade and game.get("voyage")!=null and game.voyage.active else "Exiting to town ends this attempt. If you host a live room, leaving disconnects your party.",16)
  if kind=="options":make_options_scroll()
  message=text("",17);message.modulate=Color("#f4cf8b");menu_button.visible=false;layout_panel()
 func make_options_scroll()->void:
@@ -156,6 +156,8 @@ func resume(_offer_tutorial:bool=false)->void:
   if previous_menu=="presentation" and game.presentation.page.is_empty():game.menu=""
 
 func town()->void:
+ if not arcade and game.get("voyage")!=null and game.voyage.active:
+  resume();game.enter_region("town");return
  if arcade:game._town();return
  if game.tutorial.active:game.tutorial.finish(false,true)
  game.presentation.close();game.legacy.close();game.menu="";game.gold=100;game.character_id=game.selected_character;game.loadout.clear();game.enter_region("town");previous_menu="";resume()

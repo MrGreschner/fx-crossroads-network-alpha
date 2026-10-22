@@ -1,0 +1,115 @@
+{
+  "baits": {
+    "honeygrain": {
+      "name": "Honeygrain Paste",
+      "group": "",
+      "needs": {
+        "sunleaf": 2,
+        "petal": 1
+      },
+      "cost": 15,
+      "description": "Freshwater blend: attracts River Sprat, Russet River Chub and Olive Lake Perch. Does not alter feeding windows."
+    },
+    "moonmoth": {
+      "name": "Moonmoth Lure",
+      "group": "",
+      "needs": {
+        "firefly": 2,
+        "mooncap": 1
+      },
+      "cost": 24,
+      "description": "Freshwater scent: attracts Midnight Glassfin, Violet Lake Eel and Bluebar Trout. Night-only fish still require night."
+    },
+    "saltflash": {
+      "name": "Saltflash Strips",
+      "group": "",
+      "needs": {
+        "mint": 1,
+        "petal": 2
+      },
+      "cost": 27,
+      "regions": [
+        "voyage_coast"
+      ],
+      "description": "Ocean only: attracts Copperback Mackerel, Squallfin Marlin and Pelagic Monarch. Rain requirements still apply."
+    },
+    "kelp_crumble": {
+      "name": "Kelp Crumble",
+      "group": "",
+      "needs": {
+        "sunleaf": 2,
+        "willow": 1
+      },
+      "cost": 21,
+      "regions": [
+        "voyage_coast"
+      ],
+      "description": "Ocean only: attracts Blue Spiny Lobster, Copper Reef Lobster and Crown Reef Crab; ideal for cages."
+    },
+    "roe": {
+      "name": "Fish Roe",
+      "group": "",
+      "needs": {
+        "mint": 1
+      },
+      "cost": 18,
+      "methods": [
+        "pot"
+      ],
+      "fish_source": "ordinary",
+      "description": "Cages/baskets only: attracts ocean lobsters and crabs plus freshwater crayfish. Craft with one ordinary Common/Uncommon kept rod fish and River Mint. Displayed fish, favourites and trophies are protected."
+    }
+  },
+  "species": [
+    "v25_copper_reef_lobster",
+    "v25_pearl_spiny_lobster",
+    "v25_mossback_crab",
+    "v25_crown_reef_crab"
+  ],
+  "habitats": {
+    "voyage_coast_shoals": [
+      "v25_mossback_crab"
+    ],
+    "voyage_coast_kelp": [
+      "v25_copper_reef_lobster",
+      "v25_mossback_crab"
+    ],
+    "voyage_coast_reef": [
+      "v25_copper_reef_lobster",
+      "v25_crown_reef_crab"
+    ],
+    "voyage_coast_channel": [
+      "v25_pearl_spiny_lobster",
+      "v25_crown_reef_crab"
+    ]
+  },
+  "interactions": {
+    "honeygrain": [
+      "river_sprat",
+      "russet_river_chub",
+      "v20_olive_lake_perch"
+    ],
+    "moonmoth": [
+      "v23_midnight_glassfin",
+      "v20_violet_lake_eel",
+      "v20_bluebar_trout"
+    ],
+    "saltflash": [
+      "v20_copperback_mackerel",
+      "v23_squallfin_marlin",
+      "v23_pelagic_monarch"
+    ],
+    "kelp_crumble": [
+      "v20_blue_spiny_lobster"
+    ],
+    "roe": [
+      "v20_rustclaw_lobster",
+      "v20_blue_spiny_lobster",
+      "v20_slate_shore_crab",
+      "v20_ivory_spider_crab",
+      "v20_ancient_king_crab",
+      "bridge_claw",
+      "v22_birchbank_crayfish"
+    ]
+  }
+}

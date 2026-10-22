@@ -48,6 +48,7 @@ func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
  chunks.clear()
 func sync()->void:
+ if game.mode=="coop" and game.realm_id=="moonveil":hide();return
  visible=game.started and not game.spectating() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
  if not visible:return
  position=game.media.offset()-game.camera*game.media.factor();scale=Vector2.ONE*game.media.factor();age+=1

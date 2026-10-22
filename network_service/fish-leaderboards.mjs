@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';
 const fish=JSON.parse(readFileSync(new URL('../content/fishing.json',import.meta.url))).fish;
-const grades=['Common','Uncommon','Rare','Very rare','Legendary','Mystical'];
+const grades=['Common','Uncommon','Rare','Very rare','Legendary','Mystical',"Fabled"];
 export const FISH_BOARD_KEYS=['fish_all','fish_week','rarest_all','rarest_week'];
 export const FISH_BOARD_LIMIT=5;
 export function fishOrder(a,b,rarest=false){

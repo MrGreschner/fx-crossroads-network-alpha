@@ -15,7 +15,7 @@ func setup(owner:Node)->void:
  fishing=owner;set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);mouse_filter=Control.MOUSE_FILTER_STOP
  hud=PanelContainer.new();UI.apply(hud);add_child(hud)
  var col=VBoxContainer.new();hud.add_child(col);fishing.label(col,"RIPPLE & REEL • THE TOWN AQUARIUM",24)
- var row=HBoxContainer.new();col.add_child(row);UI.accent(fishing.button(row,"Talk to Bramble",talk));fishing.button(row,"Catches & display tanks",fishing.open_journal);fishing.button(row,"Fishing profile & mastery",open_profile);fishing.button(row,"Sales",fishing.open_sales);fishing.button(row,"Return to town",fishing.close_shop)
+ var row=HBoxContainer.new();col.add_child(row);UI.accent(fishing.button(row,"Talk to Bramble",talk));fishing.button(row,"Collection & cases",fishing.open_journal);fishing.button(row,"Gear & mastery",func():fishing.close_shop();fishing.open_workshop());fishing.button(row,"Sales",fishing.open_sales);fishing.button(row,"Aquarium income",fishing.open_aquarium_income);fishing.button(row,"Return to town",fishing.close_shop)
 func open_profile()->void:
  fishing.close_shop();fishing.game.legacy.open_page("fishing")
 func talk_near()->void:
@@ -32,7 +32,7 @@ func talk()->void:
  var has_rod=bool(fishing.records().state().rod)
  fishing.label(body,"Every little ripple has a story. Here's a fishing rod for yours!" if not has_rod else "Welcome back, angler! Your rod and bare hook are ready. Sell catches for Glimmers, unlock the net at level 5 and baskets at level 10.",20)
  fishing.label(body,"Find bubbling water and stand at its shore marker. Press F or Cast. When the float dips and flashes, press F / Hook within the gold window. A full wait bar does not guarantee a fish. Moving or taking damage cancels a cast; combat keeps going in realms.",18)
- fishing.label(body,"Keep a fish for your collection or release it: both earn fishing XP, and immediate release grants 25% extra. Use Sales to sell kept catches for Glimmers. Select any occupied tank to inspect its fish. Visit Fishing profile & mastery for your gear, fish bait, baskets and progression.",18)
+ fishing.label(body,"Keep a fish for your collection or release it: both earn fishing XP, and immediate release grants at least 25% extra (upgradable with mastery). Use Sales to sell kept catches for Glimmers. Rare, large and trophy exhibits attract paying visitors. Open Aquarium income to see each case’s hourly rate and collect Glimmers, even after time away. Select any occupied tank to inspect its fish. Visit Fishing profile & mastery for your gear, fish bait, baskets and progression.",18)
  fishing.label(body,"Explore the town pond and river, realm waters, North Gate, and deep Descent springs. Hours, weekdays and weather change what bites. Rarity and weight are separate: even a familiar species can become a trophy.",17)
  if not has_rod:
   UI.accent(fishing.button(col,"Discover my fishing rod",func():fishing.records().unlock();dialogue.queue_free();dialogue=null))
@@ -40,9 +40,9 @@ func talk()->void:
  fishing.button(col,"Back to the shop",func():dialogue.queue_free();dialogue=null)
 func _process(delta:float)->void:
  clock+=delta;moving=false
- var view=get_viewport_rect().size;var hud_fit=minf(1,(view.x-24)/1140);hud.size=Vector2(1140,108);hud.scale=Vector2.ONE*hud_fit;hud.position=Vector2((view.x-1140*hud_fit)*.5,10)
+ var view=get_viewport_rect().size;var hud_width=maxf(1140,hud.get_combined_minimum_size().x);var hud_fit=minf(1,(view.x-24)/hud_width);hud.size=Vector2(hud_width,108);hud.scale=Vector2.ONE*hud_fit;hud.position=Vector2((view.x-hud_width*hud_fit)*.5,10)
  if is_instance_valid(dialogue):fishing.fit_panel(dialogue,Vector2(760,560))
- if not is_instance_valid(dialogue) and not is_instance_valid(fishing.journal) and not is_instance_valid(fishing.inspector) and fishing.game.menu=="fishing_shop" and not is_instance_valid(fishing.workshop):
+ if not is_instance_valid(dialogue) and not is_instance_valid(fishing.journal) and not is_instance_valid(fishing.inspector) and fishing.game.menu=="fishing_shop" and not is_instance_valid(fishing.workshop) and not is_instance_valid(fishing.aquarium_panel):
   var direction=fishing.game.mobile.movement+Input.get_vector("move_left","move_right","move_up","move_down");moving=direction.length_squared()>.01
   var candidate=(player+direction.normalized()*180*delta).clamp(Vector2(75,240),Vector2(945,586))
   if Rect2(765,425,195,115).has_point(candidate):candidate=player
@@ -88,7 +88,7 @@ func _draw()->void:
   var catch=fishing.records().specimen(str(fishing.records().state().display[n]))
   if not catch.is_empty():
    var dimensions:Vector2=C.display_size(catch,shared_scale);var pos=p+Vector2(75+sin(clock*.6+n)*6,77+sin(clock+n)*4)-dimensions*.5;draw_texture_rect_region(C.texture(str(catch.species)),Rect2(pos,dimensions),C.display_region(catch))
-   var name=("★ " if C.is_trophy(catch) else "")+str(C.fish()[catch.species].name);text(p+Vector2(-2,174),name,13,Color("#fae4b4"));text(p+Vector2(20,195),"%.2f kg" % catch.kg,14)
+   var name=("★ " if C.is_trophy(catch) else "")+str(C.fish()[catch.species].name);text(p+Vector2(-2,174),name,13,Color("#fae4b4"));text(p+Vector2(20,195),"%.2f kg • %d G/h" % [catch.kg,fishing.records().income.rate(catch)],14)
   else:text(p+Vector2(28,80),"Empty tank",14);text(p+Vector2(35,174),"DISPLAY "+str(n+1),14,Color("#fae4b4"))
   draw_rect(Rect2(p+Vector2(8,6),Vector2(8,112)),Color(1,1,1,.09))
  # Carved tackle counter, inset drawers, brass handles and a welcoming bear keeper.

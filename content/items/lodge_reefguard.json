@@ -1,0 +1,19 @@
+{
+  "name": "Reefshell Phial",
+  "tier": 3,
+  "seconds": 210,
+  "needs": {
+    "willow": 3,
+    "mooncap": 1
+  },
+  "fish": "v25_copper_reef_lobster",
+  "effect": "lodge_guard",
+  "amount": 22,
+  "duration": 5,
+  "description": "Gain 22% damage reduction for 5 seconds. Uses one ordinary kept Copper Reef Lobster. One use; guard does not stack.",
+  "id": "lodge_reefguard",
+  "cost": 0,
+  "sprite": "lodges/lodge_reefguard",
+  "shop": false,
+  "crafted": true
+}

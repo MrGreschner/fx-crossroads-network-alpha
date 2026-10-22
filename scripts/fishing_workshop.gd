@@ -50,8 +50,13 @@ func build()->void:
  fit()
 func feedback(value:String)->void:notice=value;build()
 func gear_ui(body:Node)->void:
+ if not fishing.multi:
+  var sea=UI.card(body,"DEEP SEA ROD • COASTAL VOYAGES","Permanent equipment • 1,200 Glimmers • Unlocks the river pier boat route to saltwater habitats, sea cages and the hidden Night Island.")
+  var owned=bool(fishing.records().state().get("deep_sea_rod",false))
+  var buy=fishing.button(sea,"Owned ✓" if owned else "Buy Deep Sea Rod • 1,200 Glimmers",func():fishing.game.voyage.purchase();feedback(fishing.game.message))
+  buy.disabled=owned or fishing.game.mode!="town"
  var p=fishing.records().progress
- fishing.label(body,"ROD • patient casts and full XP. NET • a quick timed scoop for small fish and creatures. BASKET • one catch after 13–20 real minutes, then stops. Start with a free rod and bare hook. Buy a net at level 5 and baskets at level 10. Equipment is permanent; fish bait is consumed.",17)
+ fishing.label(body,"ROD • patient casts and full XP. NET • a quick timed scoop for small fish and creatures. BASKET • five fish after 20 real minutes, then stops. Perks improve fill time and capacity up to ten. Start with a free rod and bare hook. Buy a net at level 5 and baskets at level 10. Equipment is permanent; fish bait is consumed.",17)
  var row=HBoxContainer.new();body.add_child(row)
  for method in ["rod","net","pot"]:
   var b=fishing.button(row,method.capitalize()+(" ✓" if p.state().method==method else ""),func():p.state().method=method;fishing.records().save();feedback("Selected "+method+". Return to a shore marker."));b.disabled=not p.method_unlocked(method)
@@ -63,12 +68,15 @@ func gear_ui(body:Node)->void:
   fishing.button(fruit,"Buy Sunstar Fruit",func():fishing.game.provisions.buy("sunstar_fruit");feedback(fishing.game.message))
  for id in E.BAITS:
   var spec=E.BAITS[id];var box=UI.card(body,spec.name+(" • unlimited" if id=="basic" else " • "+str(p.state().bait.get(id,0))+" in box"),spec.description)
+  if id in ["honeygrain","moonmoth","saltflash","kelp_crumble","roe"]:
+   var art=TextureRect.new();art.texture=preload("res://scripts/source_art.gd").texture("res://assets/fishing/bait_"+id+".svg");art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(80,64);box.add_child(art)
   var controls=HFlowContainer.new();box.add_child(controls)
   var equip=fishing.button(controls,"Equip"+(" ✓" if p.state().selected_bait==id else ""),func():p.state().selected_bait=id;fishing.records().save();feedback("Selected "+str(spec.name)));equip.disabled=not p.bait_unlocked(id) or (id!="basic" and int(p.state().bait.get(id,0))<=0)
   if not p.bait_unlocked(id):fishing.label(box,"Unlocks at fishing level %d" % int(P.BAIT_LEVELS[id]),16)
   if id!="basic":
    var names=[]
    for ingredient in spec.needs:names.append(str(spec.needs[ingredient])+" "+str(preload("res://scripts/lodge_catalog.gd").INGREDIENTS[ingredient].name))
+   if spec.has("fish_source"):names.append("1 ordinary Common/Uncommon kept rod fish (not trophy/favourite/displayed)")
    fishing.label(box,"Recipe: "+" + ".join(names)+" → "+str((8 if p.has("cook") else 6)+int(p.perk_bonus("bait_yield")))+" fish bait",15)
    var craft=fishing.button(controls,"Craft batch",func():feedback(p.craft(id)));craft.disabled=not p.bait_unlocked(id)
    var buy=fishing.button(controls,"Buy 3 • %d Glimmers" % int(spec.cost),func():feedback(p.buy(id,fishing.game)));buy.disabled=not p.bait_unlocked(id)
@@ -91,16 +99,21 @@ func tree_ui(body:Node)->void:
  fishing.label(body,"One full tree. Zoom with the mouse wheel or + / −, drag to explore, then select a badge for its details.",16)
  fishing.button(body,"Open full Fishing mastery tree",fishing.open_mastery)
 func pot_ui(body:Node)->void:
+ if not fishing.multi and fishing.game.get("voyage")!=null and fishing.game.voyage.active:
+  fishing.label(body,"Voyage cages are shown on the boat chart. Anchor near a marker to deploy or recover. Their catches remain unbanked until you return safely. Town baskets wait in town.",18);return
  var p=fishing.records().progress;var now=E.context(fishing.game).utc
- fishing.label(body,"%d / %d baskets placed. Cast a basket at a shore marker, then claim here from any location. The catch is determined for its ready time, not your collection time. Dawn baskets must finish before 06:00." % [p.state().pots.size(),p.basket_limit()],17)
+ fishing.label(body,"%d / %d baskets placed. Cast a basket at a shore marker, then claim here from any location. New baskets hold %d fish before they stop. Its catches are determined for its ready time, not your collection time. Dawn baskets must finish before 06:00." % [p.state().pots.size(),p.basket_limit(),p.basket_capacity()],17)
  fishing.label(body,p.basket_summary(now),18)
  for i in p.state().pots.size():
   var pot=p.state().pots[i];var ready=now>=float(pot.ready)
-  var box=UI.card(body,fishing.basket_location(str(pot.pool)),"Ready to collect" if ready else "%d real minutes remaining" % ceili((float(pot.ready)-now)/60))
+  var box=UI.card(body,fishing.basket_location(str(pot.pool)),"%d fish ready to collect" % p.basket_count(pot) if ready else "%d real minutes remaining" % ceili((float(pot.ready)-now)/60))
   var countdown=fishing.label(box,"",17)
   if ready:fishing.picture(box,str(pot.catch.species),Vector2(130,70));fishing.label(box,str(fishing.C.fish()[pot.catch.species].name)+" • %.2f kg" % float(pot.catch.kg),18)
   var row=HBoxContainer.new();box.add_child(row)
   var b=fishing.button(row,"Inspect catch",func():fishing.open_basket(i));b.disabled=not ready
+  if ready:
+   fishing.button(row,"Keep all (%d)" % p.basket_count(pot),func():feedback(p.claim_all(i,now,true)))
+   fishing.button(row,"Release all • +%d%% XP" % roundi(p.release_bonus()*100),func():feedback(p.claim_all(i,now,false)))
   pot_labels.append({"label":countdown,"ready":float(pot.ready),"button":b})
   fishing.button(row,"Retrieve basket…",func():
    var dialog=ConfirmationDialog.new();dialog.title="Retrieve this basket?";dialog.dialog_text="This cancels the basket and discards its catch. Fish bait is not refunded. Collect & keep or Collect & release to earn catch XP instead.";add_child(dialog)

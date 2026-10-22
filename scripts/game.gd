@@ -163,6 +163,7 @@ func setup_media()->void:
 	add_child(media);media.setup(self)
 func media_mouse_world()->Vector2:
 	return media.world_mouse() if media.game!=null else get_global_mouse_position()+camera
+var voyage:Node
 func _ready() -> void:
 	var travel=preload("res://scripts/travel_polish.gd").new();travel.name="TravelPolish";add_child(travel);travel.play("town")
 	call_deferred("setup_media")
@@ -213,6 +214,7 @@ func _ready() -> void:
 	version_check=preload("res://scripts/build_update.gd").new();add_child(version_check);version_check.setup(self)
 	var quick_slots=preload("res://scripts/loadout_hud.gd").new();add_child(quick_slots);quick_slots.setup(self)
 	var guide=preload("res://scripts/ability_guide.gd").new();add_child(guide);guide.setup(self)
+	voyage=preload("res://scripts/water_voyage.gd").new();add_child(voyage);voyage.setup(self)
 	level_cards=preload("res://scripts/level_cards.gd").new();add_child(level_cards);level_cards.setup(self,false)
 	if not get_tree().root.has_meta("fx_intro_seen"):
 		get_tree().root.set_meta("fx_intro_seen",true)
@@ -342,6 +344,8 @@ func build_scenery() -> void:
 		scenery_tiles[key].append(obstacle)
 
 func can_stand_at(point: Vector2) -> bool:
+	if voyage!=null and voyage.active:return voyage.land_at(point)
+	if mode=="town" and Rect2(2120,2400,310,150).has_point(point):return true
 	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if mistglass_rift!=null and mistglass_rift.active and not Rect2(55,220,VIEW.x-110,VIEW.y-275).has_point(point):return false
 	if mode=="town" and (preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
@@ -355,6 +359,7 @@ func can_stand_at(point: Vector2) -> bool:
 	return true
 
 func clear_of_obstacles(point: Vector2, padding: float = 0.0) -> bool:
+	if voyage!=null and voyage.active:return voyage.land_at(point)
 	if waylight!=null and waylight.between() and mode=="run":
 		for offset in [Vector2.ZERO,Vector2(padding,0),Vector2(-padding,0),Vector2(0,padding),Vector2(0,-padding)]:
 			if not waylight.expedition.open(point+offset):return false
@@ -525,6 +530,7 @@ func combat_frame_active(epoch: int) -> bool:
 	return epoch == combat_epoch and mode == "run" and menu.is_empty()
 
 func enter_region(id: String) -> void:
+	if voyage!=null and voyage.active and id not in ["voyage_lake","voyage_coast"]:voyage.suspend()
 	if waylight!=null:waylight.entering(id)
 	if id=="town" and continuation!=null:continuation.end()
 	var travel=get_node_or_null("TravelPolish")
@@ -677,6 +683,7 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	message_time = 5.0
 
 func finish_run(won: bool, abandoned:bool=false) -> void:
+	if voyage!=null and voyage.active: voyage.fail("Voyage abandoned" if abandoned else "You fell on the island");return
 	if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.finish(won);return
 	if tutorial.active:tutorial.finish(won);return
 	if mode != "run" or menu=="results":
@@ -729,6 +736,7 @@ func _process(delta: float) -> void:
 		if preload("res://scripts/garden_hunting.gd").interact(self):
 			if Input.is_action_just_pressed("interact"):return
 	town_life.calendar.step()
+	if voyage!=null and voyage.step(delta):return
 	town_life.events.step(self,delta)
 	if mode=="town" and not has_node("FXIntro") and get_tree().root.has_meta("fx_daily_launch"):
 		get_tree().root.remove_meta("fx_daily_launch");legacy.daily.quick_play();return
@@ -857,6 +865,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func handle_town_interactions() -> void:
+	if voyage!=null and voyage.pier_interact():return
 	if fishing!=null and fishing.interact():return
 	if town_life.events.interact(self):return
 	if commerce_town.interact(self):return
@@ -894,6 +903,10 @@ func handle_town_interactions() -> void:
 	town_life.interact(self)
 
 func handle_run(delta: float) -> void:
+	if voyage!=null and voyage.active:
+		adventure.step(delta);update_flames(delta)
+		if voyage.active:voyage.combat(delta)
+		return
 	if tutorial.active and tutorial.interact():return
 	var epoch := combat_epoch
 	if waylight!=null:waylight.step(delta)
@@ -1651,6 +1664,7 @@ func _draw() -> void:
 		town_life.calendar.draw_lighting(self,camera)
 		render_work["lighting"]=Time.get_ticks_usec()-light_began
 		preload("res://scripts/town_afterglow.gd").draw_on(self,camera)
+	if voyage!=null and voyage.active:voyage.draw_lighting(self,camera)
 	VIEW=screen;draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 	if (media.clean_view or media.capturing) and menu.is_empty():return
 	draw_hud()
@@ -1685,9 +1699,15 @@ func ground_tile_at(tx:int,ty:int,base:String)->String:
 	return tile
 
 func draw_world() -> void:
-	if waylight!=null and waylight.between() and mode=="run":
+	if voyage!=null and voyage.active:
+		if terrain_cache!=null:terrain_cache.hide()
+		voyage.draw_ground(self,camera)
+	elif waylight!=null and waylight.between() and mode=="run":
 		if terrain_cache!=null:terrain_cache.hide()
 		waylight.expedition.draw_ground(self,camera)
+	elif region_id=="moonveil" and mode=="run":
+		if terrain_cache!=null:terrain_cache.hide()
+		preload("res://scripts/moon_castle.gd").draw(self,camera)
 	else:sync_terrain()
 	if practice:training_yard.draw_on(self,camera);town_chapter.draw_guide(self,camera)
 	adventure.polish.draw_world(self,camera)
@@ -1722,6 +1742,7 @@ func draw_world() -> void:
 	if mode == "town":
 		town_chapter.draw_ground(self,camera)
 		town_plan.draw_ground(self,camera)
+		if voyage!=null:voyage.draw_pier(self,camera)
 		preload("res://scripts/town_v173.gd").draw_tracks(self,camera)
 		idle_mine_town.draw_on(self,camera)
 		commerce_town.draw_on(self,camera)
@@ -1766,8 +1787,8 @@ func draw_world() -> void:
 		town_life.draw_recognition(self,camera,font)
 		presentation.elder_guide.draw_marker(self,camera)
 	else:
-		draw_sprite("portal", pair(region["gate"]["position"]) - Vector2(40, 76), Vector2(80, 120))
-		if region.has("merchant") and not practice and not tutorial.active:
+		if voyage==null or not voyage.active:draw_sprite("portal", pair(region["gate"]["position"]) - Vector2(40, 76), Vector2(80, 120))
+		if region.has("merchant") and not practice and not tutorial.active and (voyage==null or not voyage.active):
 			draw_sprite("merchant", pair(region["merchant"]) - Vector2(48, 72), Vector2(96, 80))
 			draw_world_label(pair(region["merchant"]), "MERCHANT")
 		if boss_defeated:
@@ -1869,6 +1890,7 @@ func draw_world() -> void:
 	for trail in dodge_trails:
 		var trail_sprite := str(hero.get("sprite", "ram")) + "_walk1"
 		draw_sprite(trail_sprite, trail["pos"] - Vector2(28,42), Vector2(56,64), Color(0.7,0.9,1.0, float(trail["time"])*1.8))
+	if voyage!=null and voyage.active and not voyage.ashore:return
 	var walking: bool = mobile.movement.length_squared() > 0 or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down")
 	var frame := int(visual_clock * 7.0) % 2 if walking and menu == "" else 0
 	var town_sprite_data: Dictionary = characters.get(selected_character, {})
@@ -1936,7 +1958,7 @@ func draw_hud() -> void:
 		var label="First steps • wave %d/3" % mini(3,1+int(tutorial.defeated)/3) if tutorial.active else "Lv %d • XP %s" % [level,"MAX" if level>=10 else str(experience)+" / "+str(level*span)]
 		layout.experience(self,label,1.0 if level>=10 else fraction)
 		draw_string(font,Vector2(24,78),"PRACTICE • discoveries only" if continuation!=null and continuation.active else "%02d:%02d" % [int(run_time)/60,int(run_time)%60],HORIZONTAL_ALIGNMENT_LEFT,240,13,Color("#b7cbd6"))
-		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active:
+		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and (voyage==null or not voyage.active or voyage.ashore):
 			var closest_enemy: Dictionary = enemies[0]
 			for candidate in enemies:
 				if position_in_world.distance_squared_to(candidate["pos"]) < position_in_world.distance_squared_to(closest_enemy["pos"]):
@@ -2071,7 +2093,7 @@ func elder_lines() -> Array[String]:
 		"Enter / Continue or Escape: close. Visit the Journey board for local progress."]
 
 func draw_menu() -> void:
-	if menu in ["levelup","session","journey_cosmetics","dev_desk","workshop","town_almanac"]:return
+	if menu in ["waylight","levelup","session","journey_cosmetics","dev_desk","workshop","town_almanac"]:return
 	if menu in ["rift_builder","rift_countdown","arcane_tower","barracks","chimehouse","presentation","seedhouse","postoffice","training_guide","portal","wayfinder","supplies","merchant","food"]:return
 	if menu in ["portal","supplies","merchant","food","wayfinder"]:
 		draw_scroll_menu()
@@ -2235,6 +2257,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if menu == "elder":
 		if code in [KEY_ESCAPE, KEY_ENTER, KEY_KP_ENTER]:
 			menu = ""
+		return
+	if menu=="voyage":
+		if code==KEY_ESCAPE:voyage.close_menu()
 		return
 	if mode == "run":
 		var inventory_choice := int(code) - int(KEY_1)

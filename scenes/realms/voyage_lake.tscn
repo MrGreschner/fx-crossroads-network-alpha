@@ -1,0 +1,42 @@
+[gd_scene format=3]
+[node name="Voyagelake" type="Node2D"]
+[node name="Points" type="Node2D" parent="."]
+[node name="Spawn" type="Marker2D" parent="Points"]
+position = Vector2(1100,5650)
+[node name="ReturnGate" type="Marker2D" parent="Points"]
+position = Vector2(1100,5650)
+[node name="Merchant" type="Marker2D" parent="Points"]
+position = Vector2(1100,5650)
+[node name="Boss" type="Marker2D" parent="Points"]
+position = Vector2(8500,6500)
+[node name="GroundPaint" type="Node2D" parent="."]
+[node name="Obstacles" type="Node2D" parent="."]
+[node name="Decorations" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="."]
+[node name="Camp0_0" type="Marker2D" parent="Enemies"]
+position = Vector2(2540,4410)
+metadata/enemy_id = "bramble"
+[node name="Camp0_1" type="Marker2D" parent="Enemies"]
+position = Vector2(2650,4410)
+metadata/enemy_id = "bramble"
+[node name="Camp0_2" type="Marker2D" parent="Enemies"]
+position = Vector2(2760,4410)
+metadata/enemy_id = "bramble"
+[node name="Camp1_0" type="Marker2D" parent="Enemies"]
+position = Vector2(4990,3110)
+metadata/enemy_id = "bramble"
+[node name="Camp1_1" type="Marker2D" parent="Enemies"]
+position = Vector2(5100,3110)
+metadata/enemy_id = "bramble"
+[node name="Camp1_2" type="Marker2D" parent="Enemies"]
+position = Vector2(5210,3110)
+metadata/enemy_id = "bramble"
+[node name="Camp2_0" type="Marker2D" parent="Enemies"]
+position = Vector2(2690,1560)
+metadata/enemy_id = "bramble"
+[node name="Camp2_1" type="Marker2D" parent="Enemies"]
+position = Vector2(2800,1560)
+metadata/enemy_id = "bramble"
+[node name="Camp2_2" type="Marker2D" parent="Enemies"]
+position = Vector2(2910,1560)
+metadata/enemy_id = "bramble"

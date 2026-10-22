@@ -11,7 +11,11 @@ func setup(p:RefCounted)->void:
  progress=p;custom_minimum_size=CANVAS;size=custom_minimum_size
  mouse_filter=Control.MOUSE_FILTER_IGNORE
  var branch=P.BRANCHES[branch_index]
- var positions=[Vector2(400,198),Vector2(255,374),Vector2(545,374),Vector2(400,550),Vector2(400,726),Vector2(255,902),Vector2(545,902),Vector2(400,1078),Vector2(255,1254),Vector2(545,1254)]
+ var positions:Array=[];var xs:Array=[];var ys:Array=[]
+ for id in branch.nodes:xs.append(float(P.TALENTS[id].position[0]));ys.append(float(P.TALENTS[id].position[1]))
+ for id in branch.nodes:
+  var xy=P.TALENTS[id].position
+  positions.append(Vector2(100+(float(xy[0])-float(xs.min()))/maxf(1,float(xs.max())-float(xs.min()))*600,198+(float(ys.max())-float(xy[1]))/maxf(1,float(ys.max())-float(ys.min()))*1056))
  for n in branch.nodes.size():
   var id=str(branch.nodes[n]);var at:Vector2=positions[n];points[id]=at
   var hit=Button.new();hit.name=id;hit.flat=true;hit.position=at-Vector2(66,36);hit.size=Vector2(132,140);hit.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
@@ -33,7 +37,6 @@ func _draw()->void:
   for id in branch.nodes:
    var p:Vector2=points[id];var spec=P.TALENTS[id]
    for parent in spec.requires:
-    if spec.slot==4 and P.TALENTS[parent].slot!=3:continue
     var from:Vector2=points[parent]+Vector2(0,104);var to=p-Vector2(0,36)
     draw_polyline(PackedVector2Array([from,Vector2(from.x,(from.y+to.y)*.5),Vector2(to.x,(from.y+to.y)*.5),to]),colour if progress.has(id) else colour.darkened(.55),3,true)
  draw_circle(root,26,Color("#274c56"));draw_arc(root,26,0,TAU,40,Color("#efce84"),2,true);icon(root,3,Color("#efce84"))
@@ -58,7 +61,7 @@ func _draw()->void:
    caption(p+Vector2(-63,49),line1,126,17,Color("#fff0cf") if learned else Color("#d6e3e2"))
    if not line2.is_empty():caption(p+Vector2(-63,69),line2,126,17,Color("#d6e3e2"))
    caption(p+Vector2(-62,94),"LEARNED" if learned else "Lv %d • 1 point" % int(spec.level),124,14,colour if learned or available else Color("#91a3af"))
- caption(Vector2(30,1470),"Choose a fork to reach the next node. Learn both forks to claim a branch crown.",740,16,Color("#adbec2"))
+ caption(Vector2(30,1470),"Choose one specialization at marked forks. Combine other connected paths.",740,16,Color("#adbec2"))
 func backdrop()->StyleBoxFlat:
  var s=StyleBoxFlat.new();s.bg_color=Color("#0c2633");s.border_color=Color("#43616b");s.set_border_width_all(1);s.set_corner_radius_all(15);return s
 func icon(p:Vector2,kind:int,c:Color)->void:

@@ -30,6 +30,7 @@ func setup(owner:Node,id:String)->void:
   fishing.label(summary,"Your species records: %.2f kg • %.1f cm • %d caught" % [record.kg,record.cm,record.count],16)
   fishing.label(summary,"Matches your current weight record" if is_equal_approx(float(specimen.kg),float(record.kg)) else "%.2f kg below your current weight record" % maxf(0,float(record.kg)-float(specimen.kg)),16).modulate=Color("#ade0cd")
  if C.is_trophy(specimen):fishing.label(summary,"Trophy catches earn +50% base catch XP; fishing mastery can increase this bonus.",16).modulate=Color("#ffdb7d")
+ fishing.label(summary,"On display: %d Glimmers / real hour from visitors. Only kept, safely returned catches can fill a case." % fishing.records().income.rate(specimen),16).modulate=Color("#f0d18c")
  var provenance=UI.card(col,"CATCH DETAILS")
  var method=str(specimen.get("method",""));var bait=str(specimen.get("bait",""))
  fishing.label(provenance,"Water: "+str(C.pools().get(str(specimen.pool),{}).get("name",specimen.pool))+" • Date: "+str(specimen.get("date","Not recorded")),17)

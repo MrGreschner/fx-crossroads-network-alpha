@@ -61,7 +61,7 @@ func record_between(amount:int,route:String)->void:
 static func rarer(a:Dictionary,b:Dictionary)->bool:
  if a.is_empty() or not FISH.fish().has(a.get("species")):return false
  if b.is_empty() or not FISH.fish().has(b.get("species")):return true
- var grades=["Common","Uncommon","Rare","Very rare","Legendary","Mystical"];var fa=FISH.fish()[a.species];var fb=FISH.fish()[b.species];var ga=grades.find(fa.rarity);var gb=grades.find(fb.rarity)
+ var grades=["Common","Uncommon","Rare","Very rare","Legendary","Mystical","Fabled"];var fa=FISH.fish()[a.species];var fb=FISH.fish()[b.species];var ga=grades.find(fa.rarity);var gb=grades.find(fb.rarity)
  if ga!=gb:return ga>gb
  if float(fa.chance)!=float(fb.chance):return float(fa.chance)<float(fb.chance)
  if a.species!=b.species:return str(a.species)<str(b.species)

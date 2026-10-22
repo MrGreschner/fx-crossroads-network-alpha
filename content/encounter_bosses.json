@@ -1,9 +1,28 @@
 {
+  "quarry": [
+    "boss:bramble_boss"
+  ],
+  "between": [],
+  "practice": [],
   "ice": [
     "boss:cryowarden"
   ],
+  "elementary": [
+    "yellow_bus",
+    "recess_ringleader"
+  ],
   "ebonwake": [
     "last_creditor"
+  ],
+  "wayfarer": [],
+  "brasslock": [
+    "lockmaster_regent"
+  ],
+  "folded_coast": [
+    "cartographer"
+  ],
+  "mistglass_rift": [
+    "boss:bramble_boss"
   ],
   "confluence": [
     "confluence_heart"
@@ -11,44 +30,58 @@
   "silverfall": [
     "crowned_torrent"
   ],
-  "honeyglass": [
-    "glass_queen"
+  "clockwork_orchard": [
+    "hourglass_hart"
   ],
-  "petalbrook": [
-    "bloomtail_regent"
+  "first_steps": [
+    "boss:bramble_boss"
+  ],
+  "lantern_marsh": [
+    "bellroot"
+  ],
+  "shattered_oath": [
+    "briar_matron",
+    "kiln_knight",
+    "mirror_oracle",
+    "storm_archon",
+    "gilded_usurper"
+  ],
+  "moonburrow": [
+    "flintroot"
+  ],
+  "zombie": [
+    "boss:plague_director"
+  ],
+  "town": [],
+  "neon_crucible": [
+    "continuum_crown",
+    "continuum_forge",
+    "continuum_archive",
+    "continuum_reactor"
+  ],
+  "space": [
+    "boss:signal_core"
   ],
   "astral_rift": [
     "eclipse_engine"
   ],
-  "elementary": [
-    "yellow_bus",
-    "recess_ringleader"
+  "grove": [
+    "boss:bramble_boss"
+  ],
+  "honeyglass": [
+    "glass_queen"
   ],
   "middle_school": [
     "bellwork_colossus",
     "lunchline_leviathan"
   ],
-  "clockwork_orchard": [
-    "hourglass_hart"
+  "chimevault": [
+    "silence_regent",
+    "gongbreaker"
   ],
-  "space": [
-    "boss:signal_core"
-  ],
-  "town": [],
   "sunfield": [
     "sun_sentinel"
   ],
-  "grove": [],
-  "neon_crucible": [
-    "continuum_crown"
-  ],
-  "quarry": [],
-  "wayfarer": [],
-  "practice": [],
-  "zombie": [
-    "boss:plague_director"
-  ],
-  "first_steps": [],
   "high_school": [
     "exam_math",
     "spotlight_sovereign",
@@ -58,30 +91,10 @@
     "exam_history",
     "exam_science"
   ],
+  "petalbrook": [
+    "bloomtail_regent"
+  ],
   "moonveil": [
     "mirror_marquis"
-  ],
-  "moonburrow": [
-    "flintroot"
-  ],
-  "shattered_oath": [
-    "briar_matron",
-    "kiln_knight",
-    "mirror_oracle",
-    "storm_archon",
-    "gilded_usurper"
-  ],
-  "brasslock": [
-    "lockmaster_regent"
-  ],
-  "chimevault": [
-    "silence_regent",
-    "gongbreaker"
-  ],
-  "lantern_marsh": [
-    "bellroot"
-  ],
-  "folded_coast": [
-    "cartographer"
   ]
 }

@@ -1,0 +1,54 @@
+{
+  "v23_atlas_leviathan": {
+    "pools": [
+      "coast_fold"
+    ]
+  },
+  "v23_oldwater_crownback": {
+    "pools": [
+      "voyage_lake_deep"
+    ],
+    "required_bait": "worms",
+    "weather": [
+      "Rain"
+    ]
+  },
+  "v23_pelagic_monarch": {
+    "pools": [
+      "voyage_coast_channel"
+    ]
+  },
+  "v23_midnight_glassfin": {
+    "pools": [
+      "voyage_lake_islands",
+      "voyage_lake_deep"
+    ],
+    "hours": [
+      [
+        20,
+        6
+      ]
+    ]
+  },
+  "v23_squallfin_marlin": {
+    "pools": [
+      "voyage_coast_shoals",
+      "voyage_coast_reef"
+    ],
+    "weather": [
+      "Rain"
+    ]
+  },
+  "v23_duskveil_manta": {
+    "pools": [
+      "voyage_coast_kelp",
+      "voyage_coast_channel"
+    ],
+    "hours": [
+      [
+        20,
+        6
+      ]
+    ]
+  }
+}

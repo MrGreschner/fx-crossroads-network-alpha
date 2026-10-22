@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';
 const fish=JSON.parse(readFileSync(new URL('../content/fishing.json',import.meta.url))).fish;
-const grades=['Common','Uncommon','Rare','Very rare','Legendary','Mystical'];
+const grades=['Common','Uncommon','Rare','Very rare','Legendary','Mystical',"Fabled"];
 function rarer(a,b){if(!a||!fish[a.species])return false;if(!b||!fish[b.species])return true;const fa=fish[a.species],fb=fish[b.species];return grades.indexOf(fa.rarity)>grades.indexOf(fb.rarity)||(fa.rarity===fb.rarity&&(fa.chance<fb.chance||(a.species===b.species&&a.kg>b.kg)));}
 export function brokenRecords(claims,before,after,username){
  const messages=[];

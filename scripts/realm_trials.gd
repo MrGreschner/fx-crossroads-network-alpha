@@ -115,6 +115,8 @@ func alive(id: String) -> bool:
 func authoritative() -> bool:
 	return not arcade or game.role == "host"
 func can_stand(point: Vector2) -> bool:
+	if str(game.realm_id if arcade else game.region_id)=="moonveil":return preload("res://scripts/moon_castle.gd").open(point)
+	if not arcade and game.get("voyage")!=null and game.voyage.active:return game.voyage.land_at(point)
 	if arcade and game.get("expedition")!=null and game.expedition.between():return game.expedition.expedition.open(point)
 	if not arcade and game.get("waylight")!=null and game.waylight.between() and game.mode=="run":return game.waylight.expedition.open(point)
 	if immersive.active:return immersive.can_stand(point)

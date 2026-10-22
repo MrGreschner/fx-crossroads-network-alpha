@@ -7,7 +7,7 @@ import {readFileSync} from 'node:fs';
 import {rankWeek} from './cosmetic-rankings.mjs';
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),'utf8'));
 const manifest=read('../content/manifest.json'),fish=read('../content/fishing.json').fish,crops=read('../content/gardening.json').seeds;
-const grades={'Common':0,'Uncommon':1,'Rare':2,'Very rare':3,'Legendary':4,'Mystical':5};
+const grades={'Common':0,'Uncommon':1,'Rare':2,'Very rare':3,'Legendary':4,'Mystical':5,'Fabled':6};
 export const monthKey=(now=Date.now())=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',year:'numeric',month:'2-digit'}).format(new Date(now));
 const heroes=new Set(manifest.characters),realms=new Set(manifest.regions);
 export const schema=`CREATE TABLE IF NOT EXISTS crossroads_community_fish_accounts(profile text PRIMARY KEY,account text NOT NULL);
