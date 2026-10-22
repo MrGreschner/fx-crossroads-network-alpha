@@ -2,7 +2,9 @@ extends RefCounted
 ## One street graph: civic square, service street, creative campus and southern walk.
 ## Each building has a short doorstep spur; no roads cross a river except the bridge.
 const ROADS=[
- [Vector2(2000,2080),Vector2(2160,2080),Vector2(2160,2470),Vector2(2300,2470)],
+ [Vector2(1240,2152),Vector2(1130,2152),Vector2(1130,2380),Vector2(1580,2380),Vector2(1610,2300),Vector2(1650,2300)],
+ [Vector2(1405,2660),Vector2(1580,2660),Vector2(1580,2380)],
+ [Vector2(2000,2080),Vector2(2160,2080),Vector2(2160,2236)],
  [Vector2(1600,1740),Vector2(1700,1740),Vector2(1700,2080),Vector2(2000,2080),Vector2(2000,2020)],
  [Vector2(-780,540),Vector2(-780,900)],
  [Vector2(-100,1680),Vector2(-100,1740)],

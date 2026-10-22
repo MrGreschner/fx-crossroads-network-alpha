@@ -21,14 +21,14 @@ var unreachable:Array=[]
 func setup(g:Node,residents:Array[Dictionary])->void:
  if ready:return
  var started=Time.get_ticks_usec();owner=g
- navigation.region=Rect2i(0,0,141,93);navigation.cell_size=Vector2.ONE*CELL;navigation.offset=ORIGIN+Vector2.ONE*CELL*.5
+ navigation.region=Rect2i(0,0,141,107);navigation.cell_size=Vector2.ONE*CELL;navigation.offset=ORIGIN+Vector2.ONE*CELL*.5
  navigation.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
  navigation.default_compute_heuristic=AStarGrid2D.HEURISTIC_OCTILE;navigation.default_estimate_heuristic=AStarGrid2D.HEURISTIC_OCTILE;navigation.update()
  var streets=preload("res://scripts/town_plan.gd").ROADS+N.ROADS
  for y in navigation.region.size.y:
   for x in navigation.region.size.x:
    var id=Vector2i(x,y);var p=navigation.get_point_position(id)
-   var solid=p.y<225 or p.y>2270 or not g.can_stand_at(p)
+   var solid=p.y<225 or (p.y>2270 and not Rect2(1050,2150,1180,660).has_point(p)) or not g.can_stand_at(p)
    if not solid:
     for offset in [Vector2(9,0),Vector2(-9,0),Vector2(0,9),Vector2(0,-9)]:
      if not g.can_stand_at(p+offset):solid=true;break
@@ -83,6 +83,8 @@ func daily_plan(index:int,day:int,npc:Dictionary)->Dictionary:
  elif day==5 and index>=6 and index<12:extra={"start":11.0,"end":16.0,"at":Vector2(800+(index-6)*54,1360),"task":"market","label":"Makers' Fair"}
  elif day==4 and index>=12 and index<17:extra={"start":20.0,"end":22.0,"at":Vector2(1640+(index-12)*30,1180),"task":"lanterns","label":"Lantern Walk"}
  elif day==5 and index in [2,7,10]:extra={"start":22.0,"end":23.9,"at":Vector2(2760+index%3*35,1350),"task":"stars","label":"Stories Under Stars"}
+ if day in [1,3] and index in [4,5,13]:extra={"start":10.0,"end":12.0,"at":Vector2(1500+(index%3)*35,2380),"task":"harbour_trade","label":"Marina deliveries"}
+ elif day==6 and index in [0,2,8,14]:extra={"start":15.0,"end":18.0,"at":Vector2(1710+[0,2,8,14].find(index)*110,2304),"task":"fish","label":"Marina fishing afternoon"}
  if not extra.is_empty():
   events=events.filter(func(e):return float(e.hour)<float(extra.start) or float(e.hour)>float(extra.end))
   events.append({"hour":extra.start,"stop":{"at":extra.at,"task":extra.task,"inside":false,"label":extra.label}})

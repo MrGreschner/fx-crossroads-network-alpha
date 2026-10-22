@@ -54,7 +54,7 @@ func interact(g:Node)->bool:
   if not state.visible or g.position_in_world.distance_to(state.pos)>48:continue
   g.hint="E • Say hello to "+str(state.name)
   if Input.is_action_just_pressed("interact"):
-   var sayings={"picnic":"We bring lunch here on Tuesdays and Thursdays. The river sounds different every day.","market":"Fresh fruit, handmade wares and fish bait for a good day by the water.","lanterns":"Walk with us. The little lanterns make the whole street feel warmer.","stars":"That constellation looks like a leaping fish, if you tilt your head.","shop":"A full shopping basket is my kind of treasure.","read":"One more page, then I really will head home.","guard":"Keeping the roads safe. My boots deserve a medal.","water":"A little water, a little patience. No shouting at seedlings.","deliver":"Special delivery! Mostly herbs. Probably no beetles.","repair":"Measure twice, hammer once. Usually.","fish":"Bramble says the big one is still out there.","rest":"Best seat in town. Listen to that fountain.","chat":"Just catching up with the neighbours.","lunch":"Moss makes a good lunch. Then it is back to work!","music":"Wednesday evenings belong to music. Come listen with us!","explore":"The forest is different every time I walk it.","camp":"A warm fire after a long walk. I fish at dawn, before the town wakes.","sleep":"Time for a good night’s sleep.","home":"Heading home. Even adventurers need a cosy doorstep."}
+   var sayings={"harbour_trade":"Fresh supplies for the marina! We meet the river traders here on Tuesday and Thursday mornings.","picnic":"We bring lunch here on Tuesdays and Thursdays. The river sounds different every day.","market":"Fresh fruit, handmade wares and fish bait for a good day by the water.","lanterns":"Walk with us. The little lanterns make the whole street feel warmer.","stars":"That constellation looks like a leaping fish, if you tilt your head.","shop":"A full shopping basket is my kind of treasure.","read":"One more page, then I really will head home.","guard":"Keeping the roads safe. My boots deserve a medal.","water":"A little water, a little patience. No shouting at seedlings.","deliver":"Special delivery! Mostly herbs. Probably no beetles.","repair":"Measure twice, hammer once. Usually.","fish":"Bramble says the big one is still out there.","rest":"Best seat in town. Listen to that fountain.","chat":"Just catching up with the neighbours.","lunch":"Moss makes a good lunch. Then it is back to work!","music":"Wednesday evenings belong to music. Come listen with us!","explore":"The forest is different every time I walk it.","camp":"A warm fire after a long walk. I fish at dawn, before the town wakes.","sleep":"Time for a good night’s sleep.","home":"Heading home. Even adventurers need a cosy doorstep."}
    g.message=str(state.name)+": "+str(sayings.get(state.task,"Lovely day in Crossroads!"))
    if not state.working:g.message+=" Next stop: "+str(state.destination)+"."
    g.message_time=5
@@ -121,11 +121,13 @@ func draw_residents(c:CanvasItem,camera:Vector2)->void:
   var atlas=preload("res://scripts/town_sprite_cache.gd").texture("residents")
   c.draw_texture_rect_region(atlas,Rect2(point-Vector2(24,56),Vector2(48,72)),Rect2(phase*48,index*72,48,72))
   var skin:Color=Color("#e7dac4") if state.kind!="human" else Color("#c99970")
-  if state.task in ["deliver","shop","read","guard","repair"] or working:
+  if state.task in ["deliver","harbour_trade","shop","read","guard","repair"] or working:
    var hand:Vector2=point+Vector2(14,-17+sin(clock*4)*3)
    c.draw_line(point+Vector2(8,-20),hand,skin,4)
    match str(state.task):
     "fish":
+     if str(state.get("destination",""))=="Marina fishing afternoon":
+      c.draw_line(hand,hand+Vector2(12,-18),Color("#c8ae7c"),2);c.draw_line(hand+Vector2(12,-18),point+Vector2(28,42),Color(.8,.87,.83,.7),1);c.draw_circle(point+Vector2(28,42),2,Color("#e2bb79"));continue
      var facing=-1 if index==20 else 1
      c.draw_line(hand,hand+Vector2(facing*20,-30),Color("#c8ae7c"),2)
      c.draw_line(hand+Vector2(facing*20,-30),hand+Vector2(facing*42,14),Color(.8,.87,.83,.7),1)
@@ -146,7 +148,7 @@ func draw_residents(c:CanvasItem,camera:Vector2)->void:
     "sweep":
      c.draw_line(hand,hand+Vector2(8,22),Color("#ba9262"),2)
      c.draw_rect(Rect2(hand+Vector2(2,20),Vector2(15,5)),Color("#d1bd82"))
-    "deliver","shop":c.draw_rect(Rect2(hand+Vector2(-3,-1),Vector2(12,10)),Color("#c29567"))
+    "deliver","harbour_trade","shop":c.draw_rect(Rect2(hand+Vector2(-3,-1),Vector2(12,10)),Color("#c29567"))
 
 func recognition(c:Node,index:int)->String:
  if c.get("legacy")==null or bool(c.legacy.data.get("teacher",false)):return ""

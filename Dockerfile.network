@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 RUN godot --headless --editor --path /app --import --single-threaded-scene
 WORKDIR /app/network_service
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 ENV GODOT_BIN=/usr/local/bin/godot FX_PROJECT_ROOT=/app PORT=9080 FX_GAME_PORT=9081
 EXPOSE 9080
 USER node

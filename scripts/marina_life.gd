@@ -7,8 +7,9 @@ const TRADER=Vector2(1515,2362)
 const HOME=Rect2(1300,2490,210,145)
 const DOOR=Vector2(1405,2660)
 const TREE=Vector2(1290,2350)
+const TREES=[Vector2(1025,2310),Vector2(1035,2540),Vector2(1180,2715),Vector2(1450,2780),Vector2(1780,2140)]
 const GOODS=["honeygrain","moonmoth","saltflash","kelp_crumble","roe"]
-const CARGO=[Rect2(1440,2390,32,28),Rect2(1475,2400,38,31),Rect2(1520,2670,34,28),Rect2(1480,2705,42,30),Rect2(2110,2180,36,30)]
+const CARGO=[Rect2(1435,2450,32,28),Rect2(1475,2465,38,31),Rect2(1520,2670,34,28),Rect2(1480,2705,42,30),Rect2(2015,2160,36,30)]
 const ROUTE=[Vector2(1585,2355),Vector2(1605,2240),Vector2(2000,2220),Vector2(2220,2250),Vector2(2000,2220),Vector2(1605,2240),Vector2(1585,2355),Vector2(1565,2680),Vector2(1660,2740),Vector2(2140,2745),Vector2(2220,2705),Vector2(2140,2745),Vector2(1660,2740),Vector2(1565,2680)]
 const LAMPS=[Vector2(1595,2255),Vector2(1660,2725),Vector2(2110,2725),Vector2(2195,2250)]
 var game:Node
@@ -26,6 +27,8 @@ static func blocked(p:Vector2)->bool:
  if STALL.grow(6).has_point(p) or HOME.grow(9).has_point(p) or p.distance_to(TREE)<23:return true
  for box in CARGO:
   if box.grow(5).has_point(p):return true
+ for tree in TREES:
+  if p.distance_squared_to(tree)<625:return true
  return false
 static func reserved(p:Vector2)->bool:
  if Rect2(1150,2180,470,580).has_point(p):return true
@@ -117,11 +120,9 @@ static func person(c:Node2D,at:Vector2,coat:Color,guard:bool,t:float,walking:boo
 func draw_on(c:Node2D,cam:Vector2)->void:
  if not Rect2(cam,c.VIEW).grow(200).intersects(Rect2(1130,2130,1150,680)):return
  var t=shimmer;var hour=game.town_life.calendar.hour;var night=game.town_life.calendar.night_amount()
- # Worn footpaths connect cottage, trader and both sides of the inlet.
- for path in [[DOOR,Vector2(1580,2670),Vector2(1585,2355),TRADER],[TRADER,Vector2(1615,2310),Vector2(1670,2300)]]:
-  var points=PackedVector2Array()
-  for p in path:points.append(p-cam)
-  c.draw_polyline(points,Color('#7d8970'),34,true);c.draw_polyline(points,Color('#b4a77f'),22,true)
+ # Streets are rendered by town_plan with the shared town path tiles.
+ for at in TREES:
+  if Rect2(cam,c.VIEW).grow(150).has_point(at):c.draw_sprite("tree",at-Vector2(55,115),Vector2(110,145))
  # Tidekeeper cottage: irregular shingles, chimney, window boxes, front porch.
  var h=HOME.position-cam;c.draw_rect(Rect2(h+Vector2(7,12),HOME.size),Color(0,0,0,.2));c.draw_rect(Rect2(h,HOME.size),Color('#c4b08b'));c.draw_rect(Rect2(h+Vector2(0,15),Vector2(210,14)),Color('#806b51'))
  for y in range(35,145,23):c.draw_line(h+Vector2(0,y),h+Vector2(210,y),Color('#9b8b6b'),2)
@@ -161,7 +162,7 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  var night_shift=hour<7 or hour>=20;person(c,TRADER-cam,Color('#7d719d') if night_shift else Color('#4d8e92'),false,t,false)
  c.draw_string(ThemeDB.fallback_font,TRADER-cam+Vector2(-20,27),"Lio • night shift" if night_shift else "Brin • bait trader",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color('#ead9ba'))
  for n in 2:
-  var guard=patrol(game.town_life.calendar.now,n*37);person(c,guard.pos-cam,Color('#637c99') if n==0 else Color('#677e69'),true,t+float(n),guard.walking)
+  var guard=patrol(game.town_life.calendar.now,n*37);game.town_scenery.guard(c,guard.pos-cam,guard.walking)
  for at in LAMPS:preload("res://scripts/town_calendar.gd").draw_lantern_source(c,at-cam,night)
  for at in [Vector2(1834,2500),Vector2(2074,2500)]:
   c.draw_rect(Rect2(at-cam-Vector2(6,5),Vector2(12,12)),Color('#4f5f59'));c.draw_rect(Rect2(at-cam-Vector2(3,3),Vector2(6,8)),Color('#f8d88f') if night>.1 else Color('#a5ad91'))

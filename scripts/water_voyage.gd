@@ -48,6 +48,8 @@ var darkness_texture:ImageTexture
 var darkness_key=""
 var darkness_builds=0
 var is_banking=false
+var surf=preload("res://scripts/voyage_waves.gd").new()
+const ISLES=preload("res://scripts/voyage_islands.gd")
 func setup(g:Node)->void:
  game=g;rng.randomize();hud=CanvasLayer.new();hud.layer=57;add_child(hud)
  var back=PanelContainer.new();UI.apply(back);hud.add_child(back);back.name="VoyageBar"
@@ -62,13 +64,12 @@ func context()->Dictionary:
  var ctx=preload("res://scripts/town_weather.gd").context(game.town_life.calendar.now)
  ctx.weather=game.town_life.calendar.weather()
  ctx.region="night_crater" if route=="coast" and ashore else "voyage_"+route
- ctx.hour=fposmod(start_hour+elapsed/30.0,24)
- if elapsed>=300:ctx.weather=["Clear","Rain","Mist","Storm"][int(elapsed/300)%4]
+ ctx.hour=game.town_life.calendar.hour
  return ctx
 func night()->bool:
  var hour=float(context().hour);return hour>=20 or hour<6
 func world_size()->Vector2:return OCEAN_WORLD if route=="coast" else WORLD
-func night_number()->int:return night_seed+floori((start_hour+elapsed/30.0-20.0)/24.0)
+func night_number()->int:return int(game.town_life.calendar.day_number)-(1 if float(context().hour)<20 else 0)
 func night_center()->Vector2:
  var number=night_number()
  if number==cached_night:return cached_night_center
@@ -82,7 +83,7 @@ func safe_water_near(center:Vector2)->Vector2:
   for rock in rocks():
    if candidate.distance_to(rock.p)<float(rock.r)+60:clear=false
   for isle in islands():
-   if candidate.distance_to(isle.p)<float(isle.r)+60:clear=false
+   if ISLES.distance_to_shore(isle,candidate)<60:clear=false
   if clear:return candidate
  return (center+Vector2(0,1100)).clamp(Vector2(100,100),world_size()-Vector2(100,100))
 func current_at(point:Vector2)->Vector2:
@@ -115,13 +116,13 @@ func rocks()->Array:
 func land_at(p:Vector2)->bool:
  if not active:return true
  for isle in islands():
-  if p.distance_to(isle.p)<float(isle.r)-28:
+  if ISLES.contains(isle,p,28):
    if route=="coast" and str(isle.name)=="Night Island" and p.distance_to(night_center())<210:return false
    return true
  return false
 func nearby_island()->Dictionary:
  for isle in islands():
-  if boat.distance_to(isle.p)<float(isle.r)+145:return isle
+  if ISLES.distance_to_shore(isle,boat)<145:return isle
  return {}
 func habitat()->String:
  if route=="lake":return "voyage_lake_"+("reeds" if boat.x<3300 else "islands" if boat.y>2700 else "deep")
@@ -165,7 +166,7 @@ func launch(destination:String,resume:bool=false)->void:
   route=str(previous.route);boat=Vector2(previous.boat[0],previous.boat[1]);hull=float(previous.hull);elapsed=float(previous.elapsed);start_hour=float(previous.start_hour);cargo=previous.cargo.duplicate(true);cages=previous.cages.duplicate(true);seen=previous.seen.duplicate();repairs=previous.repairs.duplicate()
  game.start_run(false,"voyage_"+route)
  if game.region_id!="voyage_"+route:return
- active=true;last_night=night();game.level=6;game.position_in_world=boat;game.update_camera();game.enemies=game.enemies.filter(func(e):return land_at(e.pos))
+ active=true;surf.reset();last_night=night();game.level=6;game.position_in_world=boat;game.update_camera();game.enemies=game.enemies.filter(func(e):return land_at(e.pos))
  if resume:
   game.health=minf(game.max_health(),maxf(1,float(previous.get("hero_hp",game.health))))
   var camp_hp:Dictionary=previous.get("camp_hp",{})
@@ -199,7 +200,7 @@ func interact()->void:
   ashore=false;game.position_in_world=boat;anchored=true;checkpoint();return
  var isle=nearby_island()
  if isle.is_empty():game.message="Approach a sandy island landing, or the harbour to return.";game.message_time=4;return
- var dir=(boat-isle.p).normalized();var target:Vector2=isle.p+dir*(float(isle.r)-70)
+ var dir=(boat-isle.p).normalized();var target:Vector2=isle.p+dir*(ISLES.radius(isle,dir.angle())-70)
  if not land_at(target):return
  ashore=true;anchored=true;game.position_in_world=target;game.update_camera();game.message="Island landing • your normal hero attacks work here. Return to the lantern to board.";game.message_time=6
 func cage_action()->void:
@@ -259,7 +260,7 @@ func step(delta:float)->bool:
  if not game.menu.is_empty() or not game.session_menu.page.is_empty() or not game.presentation.page.is_empty():return not ashore
  if not ashore:
   game.VIEW=game.get_viewport_rect().size;game.visual_clock+=delta;game.run_time+=delta;game.message_time=maxf(0,game.message_time-delta);game.hint="Anchor to fish • E near islands to land • bring catches home alive"
- elapsed+=minf(delta,.1);impact=maxf(0,impact-delta)
+ elapsed+=minf(delta,.1);impact=maxf(0,impact-delta);surf.step(self,minf(delta,.1))
  var now_night=night()
  if last_night and not now_night and route=="coast" and boat.distance_to(night_center())<1000:
   ashore=false;boat=safe_water_near(night_center());game.position_in_world=boat;game.fishing.cancel("Dawn • Night Island slips beneath the mist. You are back aboard.")
@@ -273,18 +274,25 @@ func step(delta:float)->bool:
   var move:Vector2=game.mobile.movement if game.mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
   if not anchored:
    var current=current_at(boat)
-   velocity=velocity.lerp(move*280+current,1-exp(-delta*3))
+   velocity=velocity.lerp(move*280+current+surf.force_at(boat),1-exp(-delta*3))
    var next=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100));var blocked=next.x<520
    for rock in rocks():
     if next.distance_to(rock.p)<float(rock.r)+25:blocked=true
    for isle in islands():
-    if next.distance_to(isle.p)<float(isle.r)+40:blocked=true
+    if ISLES.distance_to_shore(isle,next)<40:blocked=true
    if blocked:
     if impact<=0:hull-=12;impact=1.2;game.message="Hull struck a hazard! Approach shore slowly.";game.message_time=3
     velocity=-velocity*.4
    else:boat=next
    if move.length()>.1:facing=lerp_angle(facing,velocity.angle(),minf(1,delta*6))
-  else:velocity=Vector2.ZERO
+  else:
+   velocity=surf.force_at(boat)*.18
+   var drift=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100));var safe=drift.x>=520
+   for isle in islands():
+    if ISLES.distance_to_shore(isle,drift)<40:safe=false
+   for rock in rocks():
+    if drift.distance_to(rock.p)<float(rock.r)+25:safe=false
+   if safe:boat=drift
   game.position_in_world=boat;game.update_camera()
   if str(context().weather)=="Storm":
    weather_timer+=delta
@@ -295,7 +303,9 @@ func step(delta:float)->bool:
   if route=="coast" and night() and boat.distance_to(night_center())<1050:island_found_night=night_number()
  if elapsed-last_checkpoint>=8:checkpoint()
  status.text=("COAST" if route=="coast" else "UPSTREAM LAKE")+"  •  Hull %d%%  •  Cargo %d/%d  •  %02d:%02d  •  %s" % [ceili(hull),cargo.size(),LIMIT,int(context().hour),int(fmod(float(context().hour)*60,60)),str(context().weather).capitalize()]
- if night():status.text+=" • NIGHT: lantern visibility"
+ if night():status.text+=" • NIGHT: stay near the lantern"
+ var swell=surf.warning_at(boat)
+ if not swell.is_empty():status.text+=" • "+swell
  if not ashore and current_at(boat).length()>120:status.text+=" • STRONG CURRENT"
  anchor_button.text="Ashore" if ashore else "Raise anchor" if anchored else "Drop anchor to fish"
  anchor_button.disabled=ashore
@@ -345,7 +355,7 @@ func open_menu(kind:String)->void:
    var coast=UI.card(col,"DOWNSTREAM • COASTAL WATERS","33 rod fish • 10 net creatures • 10 cage creatures. Strong currents, reefs and squalls. A hidden island emerges from 20:00–06:00 in a different offshore position each night. Cross three current belts and search beyond the deep channel for 13 Rare+ crater-lake species. Its chart marker is revealed only when you find it that night.")
    if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
    else:f.label(coast,"LOCKED • Buy the Deep Sea Rod at Ripple & Reel • 1,200 Glimmers. This is permanent fishing equipment.",18)
-  f.label(col,"Day and night pass during the voyage (one hour per 30 seconds). The starting hour and weather follow town. Nights are dark: your boat carries one lantern. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
+  f.label(col,"Lake, ocean and town share the same real 24-hour Edmonton clock and weather, including on resume. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
  else:
   f.label(col,"Unbanked cargo • %d/%d • Collection space %d • %s" % [cargo.size(),LIMIT,records().capacity()-records().state().kept.size(),game.fishing.status],17)
   var map=Control.new();map.custom_minimum_size=Vector2(700,300);col.add_child(map);map.draw.connect(func():draw_chart(map))
@@ -373,7 +383,12 @@ func draw_chart(c:Control)->void:
    c.draw_line(p,p+direction,Color('#547e8f'),1);c.draw_line(p+direction,p+direction*.6+direction.orthogonal()*.3,Color('#547e8f'),1)
  for isle in islands():
   if str(isle.name)=="Night Island" and island_found_night!=night_number():continue
-  c.draw_circle(isle.p*scale_xy,float(isle.r)*scale_xy.y,Color('#b5b894'));c.draw_string(ThemeDB.fallback_font,isle.p*scale_xy+Vector2(8,-9),isle.name,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#f5e5c4'))
+  if night():c.draw_circle(isle.p*scale_xy,3,Color('#b5b894'))
+  else:
+   var outline=PackedVector2Array()
+   for point in ISLES.polygon(isle):outline.append(point*scale_xy)
+   c.draw_colored_polygon(outline,Color('#b5b894'))
+  c.draw_string(ThemeDB.fallback_font,isle.p*scale_xy+Vector2(8,-9),isle.name,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#f5e5c4'))
  for rock in rocks():c.draw_circle(rock.p*scale_xy,2,Color('#8b9f9b'))
  for cage in cages:
   var p=Vector2(cage.pos[0],cage.pos[1])*scale_xy;c.draw_circle(p,5,Color('#edb378'))
@@ -423,24 +438,33 @@ func draw_ground(c:Node2D,cam:Vector2)->void:
  var inland=PackedVector2Array([Vector2(-cam.x,-cam.y),Vector2(280-cam.x,-cam.y)])
  for y in range(0,int(world_size().y)+201,220):inland.append(Vector2(250+sin(y*.003)*65,y)-cam)
  inland.append(Vector2(0,world_size().y)-cam);c.draw_colored_polygon(inland,Color('#4b705b'))
+ surf.draw_on(c,cam)
  for rock in rocks():
   if not view.has_point(rock.p):continue
   c.draw_circle(rock.p-cam,float(rock.r)+12,Color('#50747c'));c.draw_circle(rock.p-cam,float(rock.r),Color('#69797c'));c.draw_arc(rock.p-cam,float(rock.r)+20,0,TAU,22,Color('#b3c6c3'),3)
  for isle in islands():
   if not view.intersects(Rect2(isle.p-Vector2.ONE*(float(isle.r)+40),Vector2.ONE*float(isle.r)*2+Vector2(80,80))):continue
-  var p:Vector2=isle.p-cam;c.draw_circle(p,float(isle.r)+22,Color('#63918e'));c.draw_circle(p,float(isle.r),Color('#c8bc8b'));c.draw_circle(p,float(isle.r)-55,Color('#5c7862'))
+  var p:Vector2=isle.p-cam
+  for layer in [{"inset":-18.0,"color":"#63918e"},{"inset":0.0,"color":"#c8bc8b"},{"inset":52.0,"color":"#5c7862"}]:
+   var outline=PackedVector2Array()
+   for point in ISLES.polygon(isle,float(layer.inset)):outline.append(point-cam)
+   c.draw_colored_polygon(outline,Color(layer.color))
   for j in 9:
-   var q=p+Vector2.from_angle(j*2.4)*(float(isle.r)*.65);c.draw_circle(q,40,Color('#3c5d51'));c.draw_circle(q-Vector2(0,14),32,Color('#6b8767'))
+   var q=p+Vector2.from_angle(j*2.4)*(ISLES.radius(isle,j*2.4)*.64);c.draw_circle(q,40,Color('#3c5d51'));c.draw_circle(q-Vector2(0,14),32,Color('#6b8767'))
   c.draw_string(ThemeDB.fallback_font,p-Vector2(95,float(isle.r)+35),str(isle.name),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color('#f3e5bf'))
   for j in 22:
-   var angle=j*2.399;var at=p+Vector2.from_angle(angle)*(float(isle.r)-29-j%3*13)
+   var angle=j*2.399;var at=p+Vector2.from_angle(angle)*(ISLES.radius(isle,angle)-29-j%3*13)
    c.draw_circle(at,4+j%4*2,Color('#a19f84'))
    if j%4==0:c.draw_arc(at,11,.2,PI,8,Color('#ede0af'),2)
   for j in 6:
-   var at=p+Vector2.from_angle(j*2.1+1)*float(isle.r)*.54
+   var at=p+Vector2.from_angle(j*2.1+1)*ISLES.radius(isle,j*2.1+1)*.52
    c.draw_line(at+Vector2(0,13),at-Vector2(0,35),Color('#766a4e'),7)
    for crown in 4:c.draw_circle(at+Vector2.from_angle(crown*1.8)*24-Vector2(0,33),19,Color('#719062') if j%2 else Color('#597b5d'))
-  c.draw_arc(p,float(isle.r)-105,.3,2.2,35,Color('#b7b080',.6),14)
+  var trail=PackedVector2Array()
+  for j in 30:
+   var a=.3+j/29.0*1.9;trail.append(p+Vector2.from_angle(a)*(ISLES.radius(isle,a)-105))
+  c.draw_polyline(trail,Color('#b7b080',.6),14)
+  ISLES.draw_details(c,isle,cam)
   if str(isle.name)=="Night Island":c.draw_circle(p,210,Color('#305a70'));c.draw_arc(p,216,0,TAU,70,Color('#a0bac1'),8)
  var hp=HOME-cam
  c.draw_rect(Rect2(hp-Vector2(230,95),Vector2(150,190)),Color('#9d8059'))
@@ -506,8 +530,8 @@ func lighting_state()->Dictionary:
  var hour=float(context().hour);var dark=hour>=20 or hour<6
  # Dawn fades gradually after 06:00; dusk gathers before 20:00. Anchor state is irrelevant.
  var dusk=clampf((hour-19)/1.0,0,1) if hour>=12 else clampf((7-hour)/1.0,0,1)
- var weather=str(context().weather);var alpha=maxf(.88 if dark else .88*dusk,.32 if weather=="Storm" else .18 if weather=="Mist" else 0)
- return {"night":dark,"alpha":alpha,"radius":190.0 if dark or dusk>0 else 420.0}
+ var weather=str(context().weather);var alpha=maxf(.998 if dark else .998*dusk,.32 if weather=="Storm" else .18 if weather=="Mist" else 0)
+ return {"night":dark,"alpha":alpha,"radius":165.0 if dark or dusk>0 else 420.0}
 func draw_lighting(c:Node2D,cam:Vector2)->void:
  var state=lighting_state();var dark=bool(state.night);var weather=str(context().weather);var alpha=float(state.alpha)
  if alpha>0:
@@ -520,8 +544,8 @@ func draw_lighting(c:Node2D,cam:Vector2)->void:
    for y in 36:
     for x in 64:
      var point=Vector2((x+.5)/64*c.VIEW.x,(y+.5)/36*c.VIEW.y)
-     var shade=alpha*smoothstep(radius*.65,radius*1.3,point.distance_to(center))
-     darkness_image.set_pixel(x,y,Color(.01,.025,.06,shade))
+     var shade=alpha*smoothstep(radius*.5,radius*1.05,point.distance_to(center))
+     darkness_image.set_pixel(x,y,Color(0,0,.002,shade))
    var softened=darkness_image.duplicate();softened.resize(512,288,Image.INTERPOLATE_BILINEAR)
    if darkness_texture==null:darkness_texture=ImageTexture.create_from_image(softened)
    else:darkness_texture.update(softened)

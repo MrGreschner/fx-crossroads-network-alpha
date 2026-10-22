@@ -1,7 +1,7 @@
 extends RefCounted
 ## A river-side inlet. Geometry is shared by visual rendering and town collision.
 const WATER=[Vector2(2280,2290),Vector2(2170,2260),Vector2(1740,2260),Vector2(1660,2300),Vector2(1630,2390),Vector2(1640,2590),Vector2(1700,2680),Vector2(2140,2700),Vector2(2280,2660),Vector2(2440,2660),Vector2(2440,2290)]
-const DECKS=[Rect2(1640,2275,570,53),Rect2(1810,2328,48,190),Rect2(2050,2328,48,190)]
+const DECKS=[Rect2(1640,2275,570,53),Rect2(1810,2328,48,190),Rect2(2050,2328,48,190),Rect2(2130,2220,68,108)]
 const BERTHS=[{"at":Vector2(1740,2415),"crew":1,"angle":0.0,"hull":"#a16642","trim":"#e4bf83"},{"at":Vector2(1920,2430),"crew":3,"angle":0.0,"hull":"#365c70","trim":"#dfbb7e"},{"at":Vector2(2155,2430),"crew":3,"angle":0.0,"hull":"#766c46","trim":"#e8cc8a"},{"at":Vector2(1910,2610),"crew":1,"angle":PI/2,"hull":"#995d43","trim":"#d7b386"}]
 static func wet(p:Vector2)->bool:return Geometry2D.is_point_in_polygon(p,PackedVector2Array(WATER))
 static func on_deck(p:Vector2)->bool:
@@ -72,7 +72,7 @@ static func draw(c:Node2D,cam:Vector2)->void:
  # Bank-side fittings keep the water and embarkation walk clear.
  for at in [Vector2(1654,2236),Vector2(2188,2236)]:
   c.draw_rect(Rect2(at-cam-Vector2(4,26),Vector2(8,35)),Color('#645343'));c.draw_circle(at-cam-Vector2(0,27),9,Color('#e6c184'));c.draw_circle(at-cam-Vector2(0,27),5,Color('#ffe7a9'))
- for at in [Vector2(1680,2243),Vector2(2165,2225)]:
+ for at in [Vector2(1680,2243),Vector2(2075,2195)]:
   c.draw_rect(Rect2(at-cam-Vector2(15,12),Vector2(30,24)),Color('#98794f'));c.draw_rect(Rect2(at-cam-Vector2(15,12),Vector2(30,24)),Color('#d3b47e'),false,2);c.draw_line(at-cam-Vector2(13,10),at-cam+Vector2(13,10),Color('#594d3d'),2)
  for n in 8:
   var at=Vector2(1665+n*68,2690+sin(n)*12)-cam
