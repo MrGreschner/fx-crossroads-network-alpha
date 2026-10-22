@@ -35,6 +35,8 @@ func button(value:String,action:Callable,tint:String="#345866")->Button:
  var b:=Button.new();b.text=value;b.pressed.connect(action);style(b,tint);body.add_child(b);return b
 func in_town()->bool:return not arcade and game.mode=="town"
 func open(kind:String)->void:
+ if kind=="main" and not arcade and game.get("voyage")!=null and game.voyage.active:
+  game.voyage.abandon(func():open("main"));return
  if page.is_empty():
   if arcade:previous_shop=game.shop_open;game.shop_open="Session"
   else:previous_menu=game.menu;game.menu="session"
@@ -85,13 +87,13 @@ func open(kind:String)->void:
   var classroom:=Button.new();classroom.text="Demo Broadcast";classroom.size_flags_horizontal=Control.SIZE_EXPAND_FILL;style(classroom,"#665e81");classroom.pressed.connect(func():get_tree().root.get_node("FXClassroom").open_join());settings_row.add_child(classroom)
 
  else:
-  button("Resume adventure",resume,"#3e7968")
-  button("Exit to town",town,"#6b587a")
+  button("Back to voyage" if not arcade and game.get("voyage")!=null and game.voyage.active else "Resume adventure",resume,"#3e7968")
+  button("End voyage…" if not arcade and game.get("voyage")!=null and game.voyage.active else "Exit to town",town,"#6b587a")
   button("Options",show_options)
   if preload("res://scripts/education_access.gd").student() or preload("res://scripts/education_access.gd").review_allowed():button("Education Guide",func():resume();load("res://scripts/education_guide.gd").open(game.legacy))
   if preload("res://scripts/education_access.gd").review_allowed():button("Teacher • class view",func():resume();load("res://scripts/teacher_dashboard.gd").open(game.legacy))
   button("Main menu",func():open("main"))
-  text("Exiting to town suspends your boat voyage. Resume it at the river pier; unbanked catches stay aboard." if not arcade and game.get("voyage")!=null and game.voyage.active else "Exiting to town ends this attempt. If you host a live room, leaving disconnects your party.",16)
+  text("Leaving ends this voyage. All unbanked fish, release XP and deployed cages are lost. Sail home to bank them instead." if not arcade and game.get("voyage")!=null and game.voyage.active else "Exiting to town ends this attempt. If you host a live room, leaving disconnects your party.",16)
  if kind=="options":make_options_scroll()
  message=text("",17);message.modulate=Color("#f4cf8b");menu_button.visible=false;layout_panel()
 func make_options_scroll()->void:
@@ -157,7 +159,7 @@ func resume(_offer_tutorial:bool=false)->void:
 
 func town()->void:
  if not arcade and game.get("voyage")!=null and game.voyage.active:
-  resume();game.enter_region("town");return
+  game.voyage.abandon();return
  if arcade:game._town();return
  if game.tutorial.active:game.tutorial.finish(false,true)
  game.presentation.close();game.legacy.close();game.menu="";game.gold=100;game.character_id=game.selected_character;game.loadout.clear();game.enter_region("town");previous_menu="";resume()

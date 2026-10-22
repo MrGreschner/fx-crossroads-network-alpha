@@ -32,7 +32,7 @@ static func roll(pool:String,rng:RandomNumberGenerator,ctx:Dictionary={},method:
  weight=snappedf(weight,.01)
  if trophy:weight=maxf(weight,trophy_threshold_kg(picked))
  var length=clampf(float(spec.max_length)*pow(weight/(float(spec.max_kg)*4),.32),8,900)
- return {"id":"%d-%d" % [Time.get_ticks_usec(),rng.randi()],"species":picked,"kg":snappedf(weight,.01),"cm":snappedf(length,.1),"trophy":weight+.0000001>=mean_kg(picked)*2.5,"size_version":2,"trophy_rate":.025+trophy_bonus,"pool":pool,"date":Time.get_date_string_from_system(false),"method":method,"bait":bait}
+ return {"id":"%d-%d" % [Time.get_ticks_usec(),rng.randi()],"species":picked,"kg":snappedf(weight,.01),"cm":snappedf(length,.1),"trophy":weight+.0000001>=mean_kg(picked)*2.5,"size_version":2,"trophy_rate":.025+trophy_bonus,"pool":pool,"caught_at":Time.get_unix_time_from_system(),"date":Time.get_date_string_from_system(false),"method":method,"bait":bait}
 
 static func typical_kg(id:String)->float:
  var spec:Dictionary=fish().get(id,{})

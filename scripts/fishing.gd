@@ -43,7 +43,7 @@ var room_layer:CanvasLayer
 var room:Control
 var journal_page=0
 var kept_query=""
-var kept_sort=0
+var kept_sort=4
 var sales:CanvasLayer
 var sales_focus_id=""
 var collection_tab=0
@@ -267,8 +267,8 @@ func fit_catch_frame()->void:
 func finish_catch(keep:bool)->void:
  if not multi and game.get("voyage")!=null and game.voyage.active:
   if phase!="landed" or pending.is_empty():return
-  if game.voyage.stow(pending,keep):records().progress.spend_bait(rng);cancel("Catch logged aboard • return alive to earn XP and records.")
-  else:catch_text.text="Voyage cargo full (60). Return to harbour to land these catches."
+  if game.voyage.stow(pending,keep):records().progress.spend_bait(rng);cancel("Catch kept aboard • return alive for XP and records." if keep else "Released • no cargo slot used. Bonus XP awaits a safe return.")
+  else:catch_text.text="Cargo %d/%d. Release this fish to keep fishing, or return to harbour. If the release log is full, return to bank its XP." % [game.voyage.cargo.size(),game.voyage.capacity()]
   return
  if phase!="landed" or pending.is_empty():return
  if keep and records().state().kept.size()>=records().capacity():catch_text.text="Fish bag full (%d / %d). Release this catch for XP, or sell/release kept fish to make room." % [records().state().kept.size(),records().capacity()];return

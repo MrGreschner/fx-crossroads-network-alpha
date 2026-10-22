@@ -1,2 +1,2 @@
-export const BUILD="V198.31-darkwater-swells";
+export const BUILD="V198.32-voyage-manifest";
 export const REPORT_SCHEMA=3;

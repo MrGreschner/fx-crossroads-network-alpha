@@ -67,3 +67,23 @@ static func valid(v:Variant)->bool:
   var n=v.get(key)
   if not (n is int or n is float) or not is_finite(float(n)) or float(n)!=floorf(float(n)) or n<0 or n>(1e9 if key=="balance" else 1e15):return false
  return v.get("market_day") is String and v.market_day.length()<=10 and int(v.earned)-int(v.spent)==int(v.balance)
+func sell_fish_batch(ids:Array,expected_base:int=-1)->String:
+ if legacy.game.mode!="town" or not allowed():return "Return to a normal town profile to trade."
+ if not is_instance_valid(legacy.game.fishing.sales) or not is_instance_valid(legacy.game.fishing.room):return "Visit Ripple & Reel's sales counter."
+ if ids.is_empty() or ids.size()>100:return "Select between 1 and 100 kept fish."
+ var records=legacy.fishing_records;var unique={};var base=0
+ for id in ids:
+  if not id is String or unique.has(id):return "Selection changed. Review your fish again."
+  var fish=records.specimen(id)
+  if fish.is_empty():return "A selected fish is no longer available. Review the selection."
+  unique[id]=true;base+=fish_price(fish)
+ if expected_base>=0 and expected_base!=base:return "Prices changed. Review the selection before selling."
+ records.income.advance()
+ if not credit(base):return "Sale cancelled: your Glimmer wallet is full."
+ var paid=last_credit;var bonus=last_crown_bonus;var s=records.state()
+ s.kept=s.kept.filter(func(c):return not unique.has(str(c.id)))
+ if unique.has(str(s.favorite)):s.favorite=""
+ for slot in 5:
+  if unique.has(str(s.display[slot])):s.display[slot]=""
+ records.save()
+ return "Sold %d fish for %d Glimmers%s. Journal and XP retained." % [ids.size(),paid," • includes %d crown bonus" % bonus if bonus>0 else ""]

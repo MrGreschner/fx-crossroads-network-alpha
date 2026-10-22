@@ -60,7 +60,7 @@ func caught_in_realm(realm:String)->bool:
     if region not in regions:regions.append(region)
   if regions.size()==1 and regions[0]==realm:return true
  return false
-func capacity()->int:return mini(CAPACITY,10+10*mini(4,progress.level()/5)+int(progress.perk_bonus("capacity")))
+func capacity()->int:return mini(CAPACITY,20+10*mini(4,progress.level()/5)+int(progress.perk_bonus("capacity")))
 func save()->void:legacy.save()
 func unlock()->void:state().rod=true;save()
 func specimen(id:String)->Dictionary:
@@ -119,6 +119,7 @@ static func valid_catch(v:Variant)->bool:
  if C.fish()[v.species].has("required_bait") and v.get("bait","")!=C.fish()[v.species].required_bait:return false
  if not v.get("pool",null) is String or not C.pools().has(v.pool) or (v.species not in C.pools()[v.pool].fish and v.species not in C.data().get("legacy_pool_fish",{}).get(v.pool,[])):return false
  if not v.get("date",null) is String or v.date.length()>32 or not v.get("trophy",null) is bool:return false
+ if v.has("caught_at") and not number(v.caught_at,1e12):return false
  if v.has("size_version"):
   if not number(v.size_version,2) or int(v.size_version)!=2 or float(v.size_version)!=2:return false
   if not number(v.get("trophy_rate",null),1):return false
@@ -182,9 +183,11 @@ static func valid_voyage(v:Variant)->bool:
   if not (v.get(key) is int or v.get(key) is float) or not is_finite(float(v[key])) or float(v[key])<0:return false
  if v.hull>100 or v.start_hour>=24 or v.elapsed>10000000:return false
  if not v.get("cargo",null) is Array or v.cargo.size()>60 or not v.get("cages",null) is Array or v.cages.size()>3:return false
+ if not v.get("release_log",[]) is Array or v.get("release_log",[]).size()>1000:return false
  var ids:Array=[]
- for item in v.cargo:
+ for item in v.cargo+v.get("release_log",[]):
   if not item is Dictionary or not item.get("keep") is bool or not valid_catch(item.get("catch")):return false
+  if item in v.get("release_log",[]) and bool(item.keep):return false
   if str(C.pools()[item.catch.pool].region)!="voyage_"+str(v.route):return false
   if item.catch.id in ids:return false
   ids.append(item.catch.id)

@@ -535,7 +535,8 @@ func combat_frame_active(epoch: int) -> bool:
 	return epoch == combat_epoch and mode == "run" and menu.is_empty()
 
 func enter_region(id: String) -> void:
-	if voyage!=null and voyage.active and id not in ["voyage_lake","voyage_coast"]:voyage.suspend()
+	if voyage!=null and voyage.active and id not in ["voyage_lake","voyage_coast"]:
+		voyage.fail("Voyage ended");return
 	if waylight!=null:waylight.entering(id)
 	if id=="town" and continuation!=null:continuation.end()
 	var travel=get_node_or_null("TravelPolish")

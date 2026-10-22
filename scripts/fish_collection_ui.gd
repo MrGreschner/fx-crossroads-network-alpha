@@ -45,7 +45,7 @@ static func kept_filters(f:Node,parent:Node,changed:Callable=Callable())->void:
  var row=HBoxContainer.new();parent.add_child(row)
  var search=LineEdit.new();search.placeholder_text="Search kept fish by name…";search.text=f.kept_query;search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search.custom_minimum_size.y=36;row.add_child(search)
  var sort=OptionButton.new();row.add_child(sort)
- for title in ["Name A–Z","Weight: heaviest","Relative size: largest","Rarity: highest"]:sort.add_item(title)
+ for title in ["Name A–Z","Weight: heaviest","Relative size: largest","Rarity: highest","Newest caught","Oldest caught","Sale value: highest"]:sort.add_item(title)
  sort.select(f.kept_sort)
  var update=func():
   if changed.is_valid():changed.call()
@@ -59,6 +59,12 @@ static func selected_catches(f:Node)->Array:
   if f.kept_sort==1:va=float(a.kg);vb=float(b.kg)
   elif f.kept_sort==2:va=float(a.kg)/C.mean_kg(a.species);vb=float(b.kg)/C.mean_kg(b.species)
   elif f.kept_sort==3:va=PALETTE.keys().find(str(C.fish()[a.species].rarity));vb=PALETTE.keys().find(str(C.fish()[b.species].rarity))
+  elif f.kept_sort in [4,5]:
+   var date_a=str(a.date);var date_b=str(b.date)
+   if float(a.get("caught_at",0))>0 and float(b.get("caught_at",0))>0 and a.caught_at!=b.caught_at:return a.caught_at>b.caught_at if f.kept_sort==4 else a.caught_at<b.caught_at
+   if date_a!=date_b:return date_a>date_b if f.kept_sort==4 else date_a<date_b
+   return f.records().state().kept.find(a)>f.records().state().kept.find(b) if f.kept_sort==4 else f.records().state().kept.find(a)<f.records().state().kept.find(b)
+  elif f.kept_sort==6:va=f.game.legacy.glimmers.fish_price(a);vb=f.game.legacy.glimmers.fish_price(b)
   if va!=vb:return va>vb
   return (str(C.fish()[a.species].name)+str(a.id)).naturalnocasecmp_to(str(C.fish()[b.species].name)+str(b.id))<0)
  return catches

@@ -26,6 +26,7 @@ func build()->void:
  fishing.label(top,"RIPPLE & REEL • "+("FISHING MASTERY" if compact else "ANGLER'S WORKSHOP"),20 if compact else 24);fishing.button(top,"Close",close)
  var prog=fishing.records().progress;var level=prog.level();var xp=int(prog.state().xp)
  fishing.label(col,"Fishing level %d / 80 • %d XP • %d Glimmers" % [level,xp,fishing.game.legacy.glimmers.balance()],16)
+ fishing.label(col,"Boat cargo capacity: %d • Upgrade Trailcraft packing perks" % prog.voyage_capacity(),14)
  if not compact:
   fishing.label(col,prog.title()+" • rarity weight +%.1f%% • Bag %d/%d" % [10.0*clampf((level-1)/39.0,0,1),fishing.records().state().kept.size(),fishing.records().capacity()],15)
   var bar=ProgressBar.new();bar.custom_minimum_size.y=14;bar.show_percentage=false;bar.value=100 if level==P.MAX_LEVEL else 100.0*(xp-P.threshold(level))/maxi(1,P.threshold(level+1)-P.threshold(level));col.add_child(bar)
