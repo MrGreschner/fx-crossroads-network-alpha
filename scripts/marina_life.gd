@@ -9,7 +9,7 @@ const DOOR=Vector2(1405,2660)
 const TREE=Vector2(1290,2350)
 const TREES=[Vector2(1025,2310),Vector2(1035,2540),Vector2(1180,2715),Vector2(1450,2780),Vector2(1780,2140)]
 const GOODS=["honeygrain","moonmoth","saltflash","kelp_crumble","roe"]
-const CARGO=[Rect2(1435,2450,32,28),Rect2(1475,2465,38,31),Rect2(1520,2670,34,28),Rect2(1480,2705,42,30),Rect2(2015,2160,36,30)]
+const CARGO=[Rect2(1540,2510,32,28),Rect2(1543,2550,38,31),Rect2(1520,2670,34,28),Rect2(1480,2705,42,30),Rect2(2015,2160,36,30)]
 const ROUTE=[Vector2(1585,2355),Vector2(1605,2240),Vector2(2000,2220),Vector2(2220,2250),Vector2(2000,2220),Vector2(1605,2240),Vector2(1585,2355),Vector2(1565,2680),Vector2(1660,2740),Vector2(2140,2745),Vector2(2220,2705),Vector2(2140,2745),Vector2(1660,2740),Vector2(1565,2680)]
 const LAMPS=[Vector2(1595,2255),Vector2(1660,2725),Vector2(2110,2725),Vector2(2195,2250)]
 var game:Node
@@ -151,6 +151,18 @@ func draw_on(c:Node2D,cam:Vector2)->void:
   var at=box.position-cam;c.draw_rect(Rect2(at+Vector2(3,4),box.size),Color(0,0,0,.2));c.draw_rect(Rect2(at,box.size),Color('#a78358'));c.draw_rect(Rect2(at,box.size),Color('#d4b681'),false,2);c.draw_line(at+Vector2(3,3),at+box.size-Vector2(3,3),Color('#70593e'),3);c.draw_line(at+Vector2(box.size.x-3,3),at+Vector2(3,box.size.y-3),Color('#70593e'),3);c.draw_circle(at+box.size*.5,4,Color('#d7c093'))
  for x in range(1530,1590,9):c.draw_line(Vector2(x,2410)-cam,Vector2(x+6,2450)-cam,Color('#c9c2a0',.5),1)
  for y in range(2410,2455,9):c.draw_line(Vector2(1530,y)-cam,Vector2(1590,y)-cam,Color('#c9c2a0',.5),1)
+ # Trade details stay on the bank, clear of the cottage and walking route.
+ for at in [Vector2(1244,2590),Vector2(1244,2630)]:
+  var q=at-cam;pass
+  c.draw_rect(Rect2(q-Vector2(12,20),Vector2(24,29)),Color("#896b48"));c.draw_arc(q-Vector2(0,20),12,PI,TAU,12,Color("#bf9c6e"),4,true)
+  for y in [-14,2]:c.draw_line(q+Vector2(-12,y),q+Vector2(12,y),Color("#506466"),3)
+ var rope=Vector2(1615,2465)-cam
+ for n in 4:c.draw_arc(rope,9+n*2,0,TAU,18,Color("#c4af7e"),1.5,true)
+ var rack=Vector2(1270,2700)-cam
+ for x in [0,78]:c.draw_line(rack+Vector2(x,0),rack+Vector2(x,-45),Color("#826d4f"),4)
+ c.draw_line(rack-Vector2(3,40),rack+Vector2(81,-40),Color("#b4ad86"),2)
+ for n in 4:
+  var q=rack+Vector2(12+n*18,-37);c.draw_line(q,q+Vector2(sin(t*1.2+n)*2,12),Color("#b7aa83"),1);c.draw_colored_polygon(PackedVector2Array([q+Vector2(-4,12),q+Vector2(0,22),q+Vector2(4,12),q+Vector2(0,8)]),Color("#91aaa1"))
  # Striped awning, specimen jars and specialist bait trays.
  var s=STALL.position-cam;c.draw_rect(Rect2(s+Vector2(0,36),Vector2(130,49)),Color('#816348'));c.draw_rect(Rect2(s+Vector2(-8,-30),Vector2(146,54)),Color('#477c7a'))
  for n in 7:

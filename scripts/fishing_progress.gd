@@ -161,7 +161,8 @@ func craft(id:String)->String:
  if int(state().bait.get(id,0))>990:return "Your fish bait box is full."
  var source=bait_fish_index(id)
  if source==-1:return "Keep an ordinary Common/Uncommon rod fish first. Trophies, favourites and displayed specimens are protected."
- if source>=0:state().kept.remove_at(source)
+ if source>=0:
+  state().stored_ids.erase(str(state().kept[source].id));state().kept.remove_at(source)
  economy.pay(E.BAITS[id].needs);var amount=(8 if has("cook") else 6)+int(perk_bonus("bait_yield"))
  state().bait[id]=int(state().bait.get(id,0))+amount;records.save();return "Crafted %d %s." % [amount,E.BAITS[id].name]
 func buy(id:String,game:Node)->String:
@@ -218,7 +219,7 @@ func claim_all(index:int,utc:float,keep:bool)->String:
  var pot:Dictionary=state().pots[index]
  if utc<float(pot.ready):return "This basket is not ready."
  var count=basket_count(pot);var pool=str(pot.pool);var total_xp=0
- if keep and records.state().kept.size()+count>records.capacity():return "Not enough bag space for all %d fish. Inspect individually or release them." % count
+ if keep and records.bag_count()+count>records.capacity():return "Not enough bag space for all %d fish. Inspect individually or release them." % count
  for n in count:
   if index>=state().pots.size() or str(state().pots[index].pool)!=pool:break
   var id=str(state().pots[index].catch.id);var message=claim(index,utc,keep)

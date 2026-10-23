@@ -1,7 +1,7 @@
 extends Node
 const C=preload("res://scripts/lodge_catalog.gd")
 const UI=preload("res://scripts/studio_ui.gd")
-const CHALLENGE=Vector2(-780,540)
+const CHALLENGE=Vector2(-1030,540)
 const GATHER=Vector2(2800,655)
 const APPLE_TREE=GATHER+Vector2(-200,15)
 const CHEMIST=Vector2(-100,1680)

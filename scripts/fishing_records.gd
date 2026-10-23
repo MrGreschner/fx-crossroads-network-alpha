@@ -1,6 +1,6 @@
 extends RefCounted
 const C=preload("res://scripts/fishing_catalog.gd")
-const CAPACITY=100
+const CAPACITY=200
 var legacy:Node
 var dev_ready=false
 var income=preload("res://scripts/aquarium_income.gd").new()
@@ -9,6 +9,11 @@ func defaults()->Dictionary:return {"rod":true,"journal":{},"kept":[],"display":
 func state()->Dictionary:
  if not legacy.data.has("fishing"):legacy.data.fishing=defaults()
  income.records=self;income.migrate(legacy.data.fishing)
+ if not legacy.data.fishing.has("stored_ids"):
+  legacy.data.fishing.stored_ids=[]
+  # Preserve all legacy specimens; excess stays safe even above the new limit.
+  for n in range(4,legacy.data.fishing.kept.size()):legacy.data.fishing.stored_ids.append(str(legacy.data.fishing.kept[n].id))
+ if not legacy.data.fishing.has("storage_upgrades"):legacy.data.fishing.storage_upgrades=0
  legacy.data.fishing.rod=true
  progress.records=self
  progress.migrate(legacy.data.fishing)
@@ -60,7 +65,35 @@ func caught_in_realm(realm:String)->bool:
     if region not in regions:regions.append(region)
   if regions.size()==1 and regions[0]==realm:return true
  return false
-func capacity()->int:return mini(CAPACITY,20+10*mini(4,progress.level()/5)+int(progress.perk_bonus("capacity")))
+func capacity()->int:
+ var level=progress.level()
+ return mini(100,(10 if level>=10 else 6 if level>=5 else 4)+int(progress.perk_bonus("capacity")))
+func stored(id:String)->bool:return id in state().stored_ids
+func bag_count()->int:
+ var s=state();return s.kept.filter(func(c):return c.id not in s.stored_ids).size()
+func storage_count()->int:
+ var s=state();return s.kept.filter(func(c):return c.id in s.stored_ids).size()
+func storage_capacity()->int:return 20+int(state().storage_upgrades)*10
+func storage_access()->bool:
+ return legacy.game.mode=="town" and is_instance_valid(legacy.game.fishing.room)
+func transfer(id:String,to_storage:bool)->bool:
+ if not storage_access() or specimen(id).is_empty() or stored(id)==to_storage:return false
+ if to_storage and storage_count()>=storage_capacity() or not to_storage and bag_count()>=capacity():return false
+ if to_storage:state().stored_ids.append(id)
+ else:state().stored_ids.erase(id)
+ save();return true
+func deposit_all()->int:
+ if not storage_access():return 0
+ var count=0
+ for c in state().kept:
+  if stored(c.id):continue
+  if storage_count()>=storage_capacity():break
+  state().stored_ids.append(c.id);count+=1
+ save();return count
+func upgrade_storage()->bool:
+ if not storage_access() or state().storage_upgrades>=8:return false
+ if not legacy.glimmers.debit(250*(int(state().storage_upgrades)+1)):return false
+ state().storage_upgrades+=1;save();return true
 func save()->void:legacy.save()
 func unlock()->void:state().rod=true;save()
 func specimen(id:String)->Dictionary:
@@ -68,16 +101,18 @@ func specimen(id:String)->Dictionary:
   if str(catch.id)==id:return catch
  return {}
 func favorite()->Dictionary:return specimen(str(state().favorite))
-func complete(catch:Dictionary,keep:bool)->bool:
+func complete(catch:Dictionary,keep:bool,to_storage:bool=false)->bool:
  if not valid_catch(catch):return false
  if preload("res://scripts/profile_store.gd").progression_blocked() and not bool(legacy.data.get("teacher",false)):return false
- if keep and state().kept.size()>=capacity():return false
+ if keep and (storage_count()>=storage_capacity() if to_storage else bag_count()>=capacity()):return false
  if not specimen(str(catch.id)).is_empty():return false
  if str(catch.id) in state().recent:return false
  var s=state();var id=str(catch.species);var first=not s.journal.has(id);var better=first or float(catch.kg)>float(s.journal.get(id,{}).get("kg",0));var rec:Dictionary=s.journal.get(id,{"count":0,"kg":0.0,"cm":0.0})
  rec.count=int(rec.count)+1;rec.kg=maxf(float(rec.kg),float(catch.kg));rec.cm=maxf(float(rec.cm),float(catch.cm));s.journal[id]=rec;s.total=int(s.total)+1
  s.visited_pools[str(catch.pool)]=true;s.caught_pools[str(catch.pool)]=true
- if keep:s.kept.append(catch.duplicate(true))
+ if keep:
+  s.kept.append(catch.duplicate(true))
+  if to_storage:s.stored_ids.append(str(catch.id))
  s.recent.append(str(catch.id))
  if s.recent.size()>100:s.recent.pop_front()
  if better:preload("res://scripts/record_toast.gd").show(legacy.game,("NEW SPECIES • " if first else "NEW PERSONAL BEST • ")+str(C.fish()[catch.species].name)+" • %.2f kg" % float(catch.kg))
@@ -96,6 +131,7 @@ func release(id:String)->void:
  for n in state().kept.size():
   if str(state().kept[n].id)!=id:continue
   state().kept.remove_at(n)
+  state().stored_ids.erase(id)
   if state().favorite==id:state().favorite=""
   for slot in 5:
    if state().display[slot]==id:state().display[slot]=""
@@ -156,6 +192,13 @@ static func valid(v:Variant)->bool:
  for id in pending_ids:
   if id in ids or id in v.get("recent",[]):return false
  if v.favorite!="" and v.favorite not in ids:return false
+ if v.has("storage_upgrades") and (not number(v.storage_upgrades,8) or float(v.storage_upgrades)!=floorf(float(v.storage_upgrades))):return false
+ if v.has("stored_ids"):
+  if not v.stored_ids is Array or v.stored_ids.size()>100:return false
+  var stored_unique=[]
+  for id in v.stored_ids:
+   if not id is String or id not in ids or id in stored_unique:return false
+   stored_unique.append(id)
  var displayed:Array=[]
  for id in v.display:
   if not id is String:return false

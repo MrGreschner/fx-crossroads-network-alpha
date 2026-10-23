@@ -48,7 +48,7 @@ static func build(legacy:Node,parent:Node)->void:
  if not favorite.is_empty():f.picture(row,str(favorite.species),Vector2(110,60))
  else:icon(row,"rod")
  var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
- UI.label(details,"%s • %d XP • %d / %d fish carried" % [prog.title(),xp,rec.state().kept.size(),rec.capacity()],17)
+ UI.label(details,"%s • %d XP • %d / %d fish carried" % [prog.title(),xp,rec.bag_count(),rec.capacity()],17)
  UI.label(details,"%d species discovered • %d mastery points ready • %d Glimmers" % [rec.state().journal.size(),prog.available_points(),legacy.glimmers.balance()],14)
  var bar=ProgressBar.new();bar.show_percentage=false;bar.custom_minimum_size.y=8;bar.value=100 if level==80 else 100.0*(xp-prog.threshold(level))/maxi(1,prog.threshold(level+1)-prog.threshold(level));details.add_child(bar)
  var tiles=GridContainer.new();tiles.columns=3;tiles.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(tiles)

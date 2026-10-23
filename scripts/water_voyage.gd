@@ -271,8 +271,8 @@ func bank()->void:
  if not active or boat.distance_to(HOME)>260:return
  var keep_count=0
  for item in cargo:
-  if item.keep:keep_count+=1
- if records().state().kept.size()+keep_count>records().capacity():game.fishing.status="Not enough collection space. Release some cargo for bonus XP, then finish landing. Sell existing fish before your next voyage.";open_menu("landing");return
+  if item.keep and item.catch.id not in records().state().recent:keep_count+=1
+ if keep_count>0 and records().storage_count()+keep_count>records().storage_capacity():game.fishing.status="Ripple & Reel storage is full. Release cargo to free space, then finish landing. Sell fish or upgrade storage before sailing again.";open_menu("landing");return
  is_banking=true
  # Pop first, then complete() saves both reward and remaining queue together.
  var s=records().state();s.voyage=manifest_state(true);records().save()
@@ -280,7 +280,7 @@ func bank()->void:
  while not cargo.is_empty() or not release_log.is_empty():
   var item:Dictionary=cargo.pop_front() if not cargo.is_empty() else release_log.pop_front();s.voyage.cargo=cargo;s.voyage.release_log=release_log
   if item.catch.id in s.recent:continue
-  if not records().complete(item.catch,bool(item.keep)):
+  if not records().complete(item.catch,bool(item.keep),true):
    
    if item.keep:cargo.push_front(item)
    else:release_log.push_front(item)
@@ -381,7 +381,7 @@ func open_menu(kind:String)->void:
    f.button(col,"Finish safe landing",func():launch(str(saved.route),true))
   else:
    if not saved.is_empty():records().state().erase("voyage");records().save();f.label(col,"The previous unfinished voyage ended. Unbanked rewards were not kept.",15)
-   f.label(col,"Cargo %d • Collection space %d. Sell kept fish before departing if your collection is full." % [capacity(),records().capacity()-records().state().kept.size()],15)
+   f.label(col,"Cargo %d • Ripple & Reel storage space %d. Sell kept fish before departing if your storage is full." % [capacity(),maxi(0,records().storage_capacity()-records().storage_count())],15)
    var lake=UI.card(col,"UPSTREAM • OLDWATER LAKE","Open from the start • lake fish, creatures and island landings. Return alive with every catch you want to keep.");f.button(lake,"Launch lake voyage",func():launch("lake"))
    var coast=UI.card(col,"DOWNSTREAM • COASTAL WATERS","Deep Sea Rod required • saltwater habitats, currents, surf and an island found only at night.")
    if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
@@ -389,7 +389,7 @@ func open_menu(kind:String)->void:
   f.label(col,"Lake, ocean and town share the same real 24-hour Edmonton clock and weather, throughout every voyage. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
  else:
   f.label(col,"Released at sea: %d • Safe-return XP pool: +%d" % [release_log.size(),pending_xp()],16)
-  f.label(col,"Unbanked cargo • %d/%d • Collection space %d • %s" % [cargo.size(),capacity(),records().capacity()-records().state().kept.size(),game.fishing.status],17)
+  f.label(col,"Unbanked cargo • %d/%d • Ripple & Reel storage space %d • %s" % [cargo.size(),capacity(),maxi(0,records().storage_capacity()-records().storage_count()),game.fishing.status],17)
   var map=Control.new();map.custom_minimum_size=Vector2(700,300);col.add_child(map);map.draw.connect(func():draw_chart(map))
   f.label(col,"Chart: gold = harbour • cream = island • cyan = fishing habitat • orange = cage • arrows = currents. Night Island is shown only while it is above the water.",15)
   if kind=="landing":

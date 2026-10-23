@@ -1,6 +1,6 @@
 extends RefCounted
 ## Bounded, culled facade accents; emissive details render after the ambient tint.
-const TORCHES=[Vector2(-1205,1210),Vector2(-955,1210),Vector2(-948,430),Vector2(-612,430)]
+const TORCHES=[Vector2(-1205,1210),Vector2(-955,1210),Vector2(-1198,430),Vector2(-862,430)]
 const WINDOWS={
  "character_hall_v65":[Vector2(360,255),[Rect2(72,126,16,41),Rect2(283,126,16,41)]],
  "healer_shack":[Vector2(290,220),[Rect2(52,117,44,33),Rect2(212,117,25,33)]],
@@ -20,7 +20,7 @@ static func panes(g:Node2D)->Array:
  for y in [52,134]:
   for x in [28,110,374,456]:result.append(Rect2(studio+Vector2(x,y),Vector2(36,48)))
  for n in 3:result.append(Rect2(studio+Vector2(204+n*44,118),Vector2(24,42)))
- for x in [48,90,132,346,388,430]:result.append(Rect2(Vector2(-1030,215)+Vector2(x+2,169),Vector2(18,42)))
+ for x in [48,90,132,346,388,430]:result.append(Rect2((preload("res://scripts/lodges.gd").CHALLENGE-Vector2(250,325))+Vector2(x+2,169),Vector2(18,42)))
  # Squirrel Post and the aquarium welcome passing anglers after sunset.
  return result
 static func light_sources(g:Node2D)->Array:
@@ -28,7 +28,7 @@ static func light_sources(g:Node2D)->Array:
  for landmark in g.town_art:
   if WINDOWS.has(str(landmark.sprite)) or str(landmark.sprite)=="pond_food_stand":
    lights.append({"at":landmark.pos+Vector2(0,landmark.size.y*.2),"radius":165.0,"strength":.95})
- for at in [Vector2(600,1035),Vector2(-820,1200),Vector2(-360,1200),Vector2(-780,425),Vector2(1290,560),Vector2(1150,1095),Vector2(550,1440),Vector2(2000,1880),Vector2(1375,1430),Vector2(2800,520)]:lights.append({"at":at,"radius":160.0,"strength":1.0})
+ for at in [Vector2(600,1035),Vector2(-820,1200),Vector2(-360,1200),Vector2(-1030,425),Vector2(-580,400),Vector2(1290,560),Vector2(1150,1095),Vector2(550,1440),Vector2(2000,1880),Vector2(1375,1430),Vector2(2800,520)]:lights.append({"at":at,"radius":160.0,"strength":1.0})
  for at in [Vector2(550,1310),Vector2(790,1565)]:lights.append({"at":at,"radius":165.0,"strength":1.0})
  for at in TORCHES:lights.append({"at":at-Vector2(0,26),"radius":185.0,"strength":1.1})
  return lights

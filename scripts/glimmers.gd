@@ -70,7 +70,7 @@ static func valid(v:Variant)->bool:
 func sell_fish_batch(ids:Array,expected_base:int=-1)->String:
  if legacy.game.mode!="town" or not allowed():return "Return to a normal town profile to trade."
  if not is_instance_valid(legacy.game.fishing.sales) or not is_instance_valid(legacy.game.fishing.room):return "Visit Ripple & Reel's sales counter."
- if ids.is_empty() or ids.size()>100:return "Select between 1 and 100 kept fish."
+ if ids.is_empty() or ids.size()>200:return "Select between 1 and 200 kept fish."
  var records=legacy.fishing_records;var unique={};var base=0
  for id in ids:
   if not id is String or unique.has(id):return "Selection changed. Review your fish again."
@@ -82,6 +82,7 @@ func sell_fish_batch(ids:Array,expected_base:int=-1)->String:
  if not credit(base):return "Sale cancelled: your Glimmer wallet is full."
  var paid=last_credit;var bonus=last_crown_bonus;var s=records.state()
  s.kept=s.kept.filter(func(c):return not unique.has(str(c.id)))
+ s.stored_ids=s.get("stored_ids",[]).filter(func(id):return not unique.has(str(id)))
  if unique.has(str(s.favorite)):s.favorite=""
  for slot in 5:
   if unique.has(str(s.display[slot])):s.display[slot]=""

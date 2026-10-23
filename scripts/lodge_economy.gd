@@ -55,7 +55,8 @@ func brew(id:String)->String:
  var fish_index=fish_ingredient(r)
  if fish_index==-1:return "Keep an ordinary "+str(preload("res://scripts/fishing_catalog.gd").fish().get(str(r.get("fish","")),{}).get("name","fish"))+" first. Trophies, favourites and displayed fish are protected."
  if int(s.potions.get(id,0))>=99:return "You already have 99 bottles of this potion."
- if fish_index>=0:legacy.fishing_records.state().kept.remove_at(fish_index)
+ if fish_index>=0:
+  var fish_state=legacy.fishing_records.state();fish_state.stored_ids.erase(str(fish_state.kept[fish_index].id));fish_state.kept.remove_at(fish_index)
  pay(r.needs);s.brew={"id":id,"start":now(),"end":now()+float(r.seconds)};save();return "Brewing "+str(r.name)+"."
 func claim_brew()->String:
  var s=state()

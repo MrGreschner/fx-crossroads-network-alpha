@@ -16,10 +16,12 @@ static func build(f:Node,parent:Node)->void:
  var col=VBoxContainer.new();col.add_theme_constant_override("separation",7);parent.add_child(col)
  var header=HBoxContainer.new();col.add_child(header);text(header,"RIPPLE & REEL • COLLECTION",22,Color("#f1ddad"));action(header,"Close",f.close_journal,80)
  var state=f.records().state()
- text(col,"%d / %d species • %d catches • %d / %d kept    |    Fishing level %d • %s" % [state.journal.size(),C.fish().size(),int(state.total),state.kept.size(),f.records().capacity(),f.records().progress.level(),f.records().progress.title()],14)
+ text(col,"%d / %d species • %d catches • %d / %d kept    |    Fishing level %d • %s" % [state.journal.size(),C.fish().size(),int(state.total),f.records().bag_count(),f.records().capacity(),f.records().progress.level(),f.records().progress.title()],14)
  var shortcuts=HBoxContainer.new();shortcuts.add_theme_constant_override("separation",8);col.add_child(shortcuts)
  action(shortcuts,"Gear, fish bait & mastery",f.open_workshop)
- if is_instance_valid(f.room):action(shortcuts,"Aquarium income",f.open_aquarium_income)
+ if is_instance_valid(f.room):
+  action(shortcuts,"Aquarium income",f.open_aquarium_income)
+  action(shortcuts,"Storage & selling",f.open_sales)
  action(shortcuts,"Weekly challenge",f.game.legacy.weekly.open_board)
  var task=f.game.legacy.weekly.fishing_task();var target=C.fish()[task.species]
  text(shortcuts,"Weekly: %s • %.2f+ kg" % [target.name,float(task.kg)],14)

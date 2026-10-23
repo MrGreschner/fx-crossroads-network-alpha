@@ -15,7 +15,7 @@ func setup(owner:Node)->void:
  fishing=owner;set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);mouse_filter=Control.MOUSE_FILTER_STOP
  hud=PanelContainer.new();UI.apply(hud);add_child(hud)
  var col=VBoxContainer.new();hud.add_child(col);fishing.label(col,"RIPPLE & REEL • THE TOWN AQUARIUM",24)
- var row=HBoxContainer.new();col.add_child(row);UI.accent(fishing.button(row,"Talk to Bramble",talk));fishing.button(row,"Collection & cases",fishing.open_journal);fishing.button(row,"Gear & mastery",func():fishing.close_shop();fishing.open_workshop());fishing.button(row,"Sales",fishing.open_sales);fishing.button(row,"Aquarium income",fishing.open_aquarium_income);fishing.button(row,"Return to town",fishing.close_shop)
+ var row=HBoxContainer.new();col.add_child(row);UI.accent(fishing.button(row,"Talk to Bramble",talk));fishing.button(row,"Collection & cases",fishing.open_journal);fishing.button(row,"Gear & mastery",func():fishing.close_shop();fishing.open_workshop());fishing.button(row,"Storage & sales",fishing.open_sales);fishing.button(row,"Aquarium income",fishing.open_aquarium_income);fishing.button(row,"Return to town",fishing.close_shop)
 func open_profile()->void:
  fishing.close_shop();fishing.game.legacy.open_page("fishing")
 func talk_near()->void:

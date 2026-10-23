@@ -28,7 +28,7 @@ func build()->void:
  fishing.label(col,"Fishing level %d / 80 • %d XP • %d Glimmers" % [level,xp,fishing.game.legacy.glimmers.balance()],16)
  fishing.label(col,"Boat cargo capacity: %d • Upgrade Trailcraft packing perks" % prog.voyage_capacity(),14)
  if not compact:
-  fishing.label(col,prog.title()+" • rarity weight +%.1f%% • Bag %d/%d" % [10.0*clampf((level-1)/39.0,0,1),fishing.records().state().kept.size(),fishing.records().capacity()],15)
+  fishing.label(col,prog.title()+" • rarity weight +%.1f%% • Bag %d/%d" % [10.0*clampf((level-1)/39.0,0,1),fishing.records().bag_count(),fishing.records().capacity()],15)
   var bar=ProgressBar.new();bar.custom_minimum_size.y=14;bar.show_percentage=false;bar.value=100 if level==P.MAX_LEVEL else 100.0*(xp-P.threshold(level))/maxi(1,P.threshold(level+1)-P.threshold(level));col.add_child(bar)
   fishing.label(col,notice if not notice.is_empty() else "All rod fish are possible from level one. Unlock more methods and fish bait as you grow. Keep or release: both earn XP.",15)
  elif not notice.is_empty():fishing.label(col,notice,15)

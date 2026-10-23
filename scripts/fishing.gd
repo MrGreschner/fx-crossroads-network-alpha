@@ -161,7 +161,7 @@ func _process(delta:float)->void:
  for i in E.BAITS.size():
   var id=str(E.BAITS.keys()[i]);bait_picker.set_item_text(i,str(E.BAITS[id].name)+(" · "+str(prog.state().bait.get(id,0)) if id!="basic" else ""))
  method_picker.disabled=busy();bait_picker.disabled=busy()
- title.text=str(cast_spot.get("name",spot.get("name","Fishing")))+" • Lv %d • Bag %d/%d" % [prog.level(),records().state().kept.size(),records().capacity()]
+ title.text=str(cast_spot.get("name",spot.get("name","Fishing")))+" • Lv %d • Bag %d/%d" % [prog.level(),records().bag_count(),records().capacity()]
  if phase=="waiting":
   timer-=delta;detail.text="Watch the float. Press F / Hook when it dips!";cast_button.text="Waiting… • click to cancel";meter.visible=true;meter.value=clampf(100*(1-timer/float(cast_spot.wait)),0,100)
   var age=float(cast_spot.wait)-timer
@@ -271,7 +271,7 @@ func finish_catch(keep:bool)->void:
   else:catch_text.text="Cargo %d/%d. Release this fish to keep fishing, or return to harbour. If the release log is full, return to bank its XP." % [game.voyage.cargo.size(),game.voyage.capacity()]
   return
  if phase!="landed" or pending.is_empty():return
- if keep and records().state().kept.size()>=records().capacity():catch_text.text="Fish bag full (%d / %d). Release this catch for XP, or sell/release kept fish to make room." % [records().state().kept.size(),records().capacity()];return
+ if keep and records().bag_count()>=records().capacity():catch_text.text="Fish bag full (%d / %d). Release this catch for XP, or sell/release kept fish to make room." % [records().bag_count(),records().capacity()];return
  var name=str(C.fish()[pending.species].name)
  var reward_before=game.legacy.weekly.earned("week_fish")
  var saved=false;var next_pool=""

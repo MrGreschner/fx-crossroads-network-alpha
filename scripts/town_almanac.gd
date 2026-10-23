@@ -66,7 +66,7 @@ func _process(_delta:float)->void:
  if game==null:return
  var dev=preload("res://scripts/profile_store.gd").dev_session()
  button.visible=dev!=null and dev.active and game.mode=="town" and game.menu.is_empty() and not game.has_node("FXIntro")
- button.position=Vector2(game.get_viewport_rect().size.x-200,206)
+ button.position=Vector2(game.get_viewport_rect().size.x-200,292)
  fit()
 func _unhandled_input(event:InputEvent)->void:
  if is_instance_valid(panel) and event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:close();get_viewport().set_input_as_handled()

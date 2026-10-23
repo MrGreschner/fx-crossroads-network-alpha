@@ -77,7 +77,7 @@ func _process(_delta:float)->void:
  visible=session!=null and session.active
  if not visible:return
  var view:=get_viewport().get_visible_rect().size
- desk.position=Vector2(view.x-200,164)
+ desk.position=Vector2(view.x-200,250)
  panel.size=Vector2(620,maxf(460,body.get_combined_minimum_size().y+44))
  var fit:=minf(1,minf((view.x-24)/panel.size.x,(view.y-100)/panel.size.y));panel.scale=Vector2.ONE*fit;panel.position=(view-panel.size*fit)*.5
  banner.size=Vector2(view.x-40,30);banner.position=Vector2(20,view.y-38)

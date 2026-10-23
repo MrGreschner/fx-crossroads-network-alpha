@@ -21,8 +21,12 @@ static func rate(catch:Dictionary)->int:
  if not is_finite(kg) or kg<=0:return 0
  var size=clampf(kg/maxf(.001,C.mean_kg(species)),0.0,3.5)
  var rarity=int(BASE.get(str(C.fish()[species].rarity),0))
- # Small rare specimens still attract visitors; normal common specimens do not.
- return int(floor(rarity*clampf(size,.5,2.0)+maxf(0,size-1.25)*4))+(8 if C.is_trophy(catch) else 0)
+ # Rarity drives admission; common trophies never out-earn rare specimens.
+ var trophy=C.is_trophy(catch)
+ if rarity==0:return 1 if trophy else 0
+ var growth=clampf(size,0.65,1.2)
+ return int(round(rarity*growth*(1.25 if trophy else 1.0)))
+
 func hourly()->int:
  var s=records.state();var total=0;var used:Array=[]
  for id in s.display:

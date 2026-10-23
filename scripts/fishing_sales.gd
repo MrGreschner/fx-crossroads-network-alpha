@@ -12,21 +12,29 @@ var selection:Dictionary={}
 var batch_row:HBoxContainer
 var summary:Label
 var sell_button:Button
+var tank_strip:HBoxContainer
+var storage_label:Label
 func setup(f:Node)->void:
  fishing=f;layer=93;f.game.menu="fishing_sales";build()
 func build()->void:
  var shade=ColorRect.new();shade.color=Color(.02,.05,.07,.94);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(shade)
  panel=PanelContainer.new();UI.apply(panel);add_child(panel);var col=VBoxContainer.new();col.add_theme_constant_override("separation",8);panel.add_child(col)
  var top=HBoxContainer.new();col.add_child(top);CARDS.text(top,"RIPPLE & REEL • SELL CATCHES",22);CARDS.action(top,"Back",close,75)
+ scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(scroll)
+ var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",8);scroll.add_child(body);col=body
  notice=CARDS.text(col,"Tick fish, review the total, then sell together. Your journal and XP stay.",14)
  var tabs=HBoxContainer.new();col.add_child(tabs);CARDS.action(tabs,"Fish sales",func():goods=false;refresh(),140);CARDS.action(tabs,"Gathered goods",func():goods=true;refresh(),140)
+ storage_label=CARDS.text(col,"",14)
+ var storage_actions=HBoxContainer.new();col.add_child(storage_actions)
+ CARDS.action(storage_actions,"Drop off bag",func():var n=fishing.records().deposit_all();refresh();notice.text="Stored %d fish." % n,110)
+ CARDS.action(storage_actions,"Upgrade storage +10",func():var ok=fishing.records().upgrade_storage();refresh();notice.text="Storage expanded." if ok else "Upgrade unavailable: check Glimmers or the 100-fish limit.",160)
+ tank_strip=HBoxContainer.new();tank_strip.add_theme_constant_override("separation",8);col.add_child(tank_strip)
  CARDS.kept_filters(fishing,col,refresh);filters=col.get_child(col.get_child_count()-1)
  batch_row=HBoxContainer.new();batch_row.add_theme_constant_override("separation",6);col.add_child(batch_row)
  CARDS.action(batch_row,"Select matches",func():choose(false),110);CARDS.action(batch_row,"Ordinary only",func():choose(true),110);CARDS.action(batch_row,"Clear",func():selection.clear();refresh(),65)
  sell_button=CARDS.action(batch_row,"Sell selected…",confirm_batch,140)
  summary=CARDS.text(col,"",14,Color("#f0d38c"))
- scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
- list=VBoxContainer.new();list.size_flags_horizontal=Control.SIZE_EXPAND_FILL;list.add_theme_constant_override("separation",5);scroll.add_child(list);preload("res://scripts/touch_list_scroll.gd").attach(scroll);refresh()
+ list=VBoxContainer.new();list.size_flags_horizontal=Control.SIZE_EXPAND_FILL;list.add_theme_constant_override("separation",5);col.add_child(list);preload("res://scripts/touch_list_scroll.gd").attach(scroll);refresh()
 func protected_catch(c:Dictionary)->bool:
  var s=fishing.records().state();return fishing.C.is_trophy(c) or str(fishing.C.fish()[c.species].rarity) in ["Very rare","Legendary","Mystical","Fabled"] or str(c.id)==str(s.favorite) or c.id in s.display
 func choose(ordinary:bool)->void:
@@ -47,6 +55,15 @@ func refresh()->void:
  if not is_instance_valid(list):return
  for id in selection.keys():
   if fishing.records().specimen(str(id)).is_empty():selection.erase(id)
+ var rec=fishing.records();storage_label.text="Bag %d/%d • Ripple & Reel storage %d/%d • Upgrade: %s" % [rec.bag_count(),rec.capacity(),rec.storage_count(),rec.storage_capacity(),"MAX" if rec.state().storage_upgrades>=8 else str(250*(int(rec.state().storage_upgrades)+1))+" Glimmers"]
+ for child in tank_strip.get_children():tank_strip.remove_child(child);child.queue_free()
+ for n in 5:
+  var c=rec.specimen(str(rec.state().display[n]));var cell=VBoxContainer.new();cell.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tank_strip.add_child(cell)
+  if c.is_empty():CARDS.text(cell,"Tank %d • Empty" % (n+1),12)
+  else:
+   fishing.picture(cell,str(c.species),Vector2(65,32))
+   CARDS.text(cell,"Tank %d • %s\n%.2f kg • %d/h" % [n+1,fishing.C.fish()[c.species].name,float(c.kg),rec.income.rate(c)],12)
+ tank_strip.visible=not goods
  filters.visible=not goods;batch_row.visible=not goods;summary.visible=not goods
  for child in list.get_children():list.remove_child(child);child.queue_free()
  if goods:
@@ -69,7 +86,12 @@ func fish_row(c:Dictionary)->void:
   update_summary())
  fishing.picture(row,str(c.species),Vector2(76,47))
  var info=VBoxContainer.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(info);CARDS.text(info,str(spec.name),16);CARDS.text(info,"%s • %.2f kg • %s%s" % [spec.rarity,float(c.kg),str(c.date)," • Protected" if special else ""],13)
+ var mean=fishing.C.mean_kg(str(c.species))
+ CARDS.text(info,("TROPHY SIZE" if fishing.C.is_trophy(c) else "Normal size • Not trophy")+" • %.0f%% of average (%.2f kg)" % [float(c.kg)/maxf(.001,mean)*100,mean],12,Color("#f0d38d"))
+ var meter=preload("res://scripts/fish_size_meter.gd").new();meter.percentile=fishing.C.size_percentile(str(c.species),float(c.kg),float(c.get("trophy_rate",.025)));info.add_child(meter)
+ CARDS.text(info,"Ripple & Reel storage" if fishing.records().stored(id) else "Carried in bag",12)
  var actions=VBoxContainer.new();row.add_child(actions);CARDS.text(actions,"%d Glimmers" % fishing.game.legacy.glimmers.fish_price(c),16,Color("#ffe0a0"));var buttons=HBoxContainer.new();actions.add_child(buttons)
+ CARDS.action(actions,"Take to bag" if fishing.records().stored(id) else "Store fish",func():var ok=fishing.records().transfer(id,not fishing.records().stored(id));refresh();notice.text="Fish moved." if ok else "No space at destination.",100)
  CARDS.action(buttons,"Details",fishing.show_catch_details.bind(id),70);CARDS.action(buttons,"Sell…" if special else "Sell",func():sell(id),65)
 func focus_selected()->void:
  await get_tree().process_frame
@@ -94,6 +116,6 @@ func close()->void:
  if is_instance_valid(fishing.inspector):fishing.inspector.close()
  fishing.sales=null;fishing.game.menu="fishing_shop";queue_free()
 func _process(_delta:float)->void:
- var view=fishing.game.get_viewport_rect().size;panel.scale=Vector2.ONE;panel.size=Vector2(minf(1020,view.x-24),minf(660,view.y-24));panel.position=(view-panel.size)*.5
+ var view=fishing.game.get_viewport_rect().size;panel.scale=Vector2.ONE;panel.size=Vector2(minf(1100,view.x-24),minf(900,view.y-24));panel.position=(view-panel.size)*.5
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_ESCAPE:close();get_viewport().set_input_as_handled()
