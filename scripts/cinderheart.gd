@@ -27,7 +27,12 @@ func setup(id:String)->void:
  if not active:return
  data=JSON.parse_string(FileAccess.get_file_as_string("res://content/campaigns/cinderheart.json"))
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,141,97);grid.cell_size=Vector2(64,64);grid.offset=Vector2(32,32);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
- preload("res://scripts/navigation_cache.gd").populate(grid,"cinderheart_v26",JSON.stringify(data),func(point):return not floor_at(point) or danger(point)==1)
+ preload("res://scripts/navigation_cache.gd").populate(grid,"cinderheart_v37",JSON.stringify(data),func(point):return not floor_at(point) or danger(point)==1)
+ for cell_x in grid.region.size.x:
+  for cell_y in grid.region.size.y:
+   var cell=Vector2i(cell_x,cell_y)
+   if not grid.is_point_solid(cell):grid.set_point_weight_scale(cell,7 if danger(grid.get_point_position(cell))==2 else 2.5 if danger(grid.get_point_position(cell))==3 else 1)
+
 func floor_at(point:Vector2)->bool:
  for solid in data.get("solids",[]):
   if rect(solid).grow(16).has_point(point):return false
@@ -347,7 +352,34 @@ func draw_world(c:Node2D,cam:Vector2)->void:
   c.draw_circle(throne,80+(4.5-reveal)*35,Color(1,.45,.1,.12));c.draw_arc(throne,80+(4.5-reveal)*35,0,TAU,48,Color('#f6bb6d'),5)
  if done:
   var p=v(data.exit)-cam;c.draw_circle(p,52,Color('#458d95',.5));c.draw_arc(p,47,0,TAU,40,Color('#b1f4ed'),5);c.draw_string(ThemeDB.fallback_font,p+Vector2(-85,76),"COOLED THRONE • E",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color('#b9eee7'))
+func guidance(c:Node2D,cam:Vector2)->void:
+ var id:String=str(adventure.game.my_id) if adventure.arcade else "solo"
+ if not adventure.points().has(id) or not adventure.alive(id):return
+ var origin:Vector2=adventure.points()[id];var target=v(data.exit) if done else v(data.bodies[mini(stage,4)].pos);var text="Return portal" if done else str(data.bodies[mini(stage,4)].name)
+ var nearest_distance=INF
+ if not boss_live and remaining(mini(stage,3))>0:
+  for enemy in adventure.foes():
+   if int(enemy.get("cinder_sector",-1))!=mini(stage,3) or bool(enemy.boss):continue
+   var distance:float=origin.distance_squared_to(enemy.pos)
+   if distance<nearest_distance:target=enemy.pos;nearest_distance=distance;text="Remaining defender"
+ var entry:Dictionary=routes.get("guide",{})
+ if clock>float(entry.get("until",-1)) or target.distance_to(v(entry.get("target",[0,0])))>140:
+  var from=Vector2i(floori(origin.x/64),floori(origin.y/64));var to=Vector2i(floori(target.x/64),floori(target.y/64));var path=PackedVector2Array()
+  if grid!=null and grid.is_in_boundsv(from) and grid.is_in_boundsv(to) and not grid.is_point_solid(from) and not grid.is_point_solid(to):path=grid.get_point_path(from,to)
+  entry={"until":clock+.8,"path":path,"target":a(target)};routes["guide"]=entry
+ var path:PackedVector2Array=entry.get("path",PackedVector2Array());var count=0
+ for at in path:
+  if origin.distance_to(at)<90:continue
+  if origin.distance_to(at)>650 or count>=5:break
+  if count%2==0:
+   var direction=(at-origin).normalized();var side=direction.orthogonal();var point=at-cam
+   c.draw_polyline(PackedVector2Array([point-direction*11+side*8,point+direction*4,point-direction*11-side*8]),Color("#f6d98c"),3,true)
+  count+=1
+ var direction=(target-origin).normalized();var at=origin-cam+direction*86
+ c.draw_colored_polygon(PackedVector2Array([at+direction*13,at-direction*8+direction.orthogonal()*7,at-direction*8-direction.orthogonal()*7]),Color("#f6d98c"))
+ c.draw_string(ThemeDB.fallback_font,origin-cam+Vector2(-145,66),text+" • "+str(int(origin.distance_to(target)))+" away",HORIZONTAL_ALIGNMENT_CENTER,290,14,Color("#f5dfaa"))
 func draw_on(c:Node2D,cam:Vector2)->void:
+ if active:guidance(c,cam)
  if not active:return
  var view=Rect2(cam,c.VIEW).grow(200)
  for h in hazards:

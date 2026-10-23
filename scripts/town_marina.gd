@@ -18,8 +18,8 @@ static func transformed(points:PackedVector2Array,at:Vector2,angle:float)->Packe
  for p in points:result.append(p.rotated(angle)+at)
  return result
 static func line(c:Node2D,at:Vector2,angle:float,a:Vector2,b:Vector2,color:Color,width:float)->void:c.draw_line(at+a.rotated(angle),at+b.rotated(angle),color,width,true)
-static func boat(c:Node2D,at:Vector2,crew:int,angle:float,hull:Color,trim:Color,t:float)->void:
- var size=boat_size(crew);var h=size.y*.5;var w=size.x*.5;at.y+=sin(t*1.5+at.x*.01)*1.3
+static func boat_source(c:Node2D,at:Vector2,crew:int,angle:float,hull:Color,trim:Color,t:float)->void:
+ var size=boat_size(crew);var h=size.y*.5;var w=size.x*.5
  var edge=transformed(hull_points(size),at,angle);var inner=transformed(hull_points(size-Vector2(15,18)),at,angle)
  c.draw_colored_polygon(transformed(hull_points(size+Vector2(8,2)),at+Vector2(4,7),angle),Color(.03,.12,.17,.35))
  c.draw_colored_polygon(edge,hull);c.draw_polyline(PackedVector2Array(Array(edge)+[edge[0]]),Color('#283e43'),3,true)
@@ -40,7 +40,7 @@ static func boat(c:Node2D,at:Vector2,crew:int,angle:float,hull:Color,trim:Color,
   line(c,at,angle,Vector2(0,h*.95),Vector2(0,h+13),Color('#352d2c'),7)
   line(c,at,angle,Vector2(0,h*.97),Vector2(13,h*.62),Color('#d1af7d'),4)
   line(c,at,angle,Vector2(-w*.55,h*.80),Vector2(w*.55,h*.80),trim,3)
-static func draw(c:Node2D,cam:Vector2)->void:
+static func draw_structure_source(c:Node2D,cam:Vector2)->void:
  var view=Rect2(cam,c.VIEW).grow(100)
  if not view.intersects(Rect2(1540,2150,930,620)):return
  var t=Time.get_ticks_msec()/1000.0;var bank=PackedVector2Array(WATER.slice(0,9));var shifted=PackedVector2Array()
@@ -54,9 +54,6 @@ static func draw(c:Node2D,cam:Vector2)->void:
  var shallow=PackedVector2Array()
  for p in bank:shallow.append(p.lerp(Vector2(1980,2460),.04)-cam)
  c.draw_polyline(shallow,Color('#509594',.7),14,true)
- for n in 53:
-  var at=Vector2(1660+posmod(n*113,760),2305+posmod(n*67,355));at.x+=sin(t*.55+n)*5
-  if wet(at) and not on_deck(at):c.draw_line(at-cam,at-cam+Vector2(12+posmod(n,3)*6,0),Color(.66,.87,.85,.28),1.5,true)
  # Mooring ropes lead to the fingers, away from the river channel.
  for ends in [[Vector2(1740,2360),Vector2(1815,2350)],[Vector2(1920,2340),Vector2(1855,2345)],[Vector2(2155,2340),Vector2(2095,2345)],[Vector2(1850,2610),Vector2(1834,2510)]]:
   var rope=PackedVector2Array([ends[0]-cam,(ends[0]+ends[1])*.5-cam+Vector2(0,5),ends[1]-cam]);c.draw_polyline(rope,Color('#c6b186'),2,true)
@@ -68,7 +65,6 @@ static func draw(c:Node2D,cam:Vector2)->void:
   c.draw_rect(rect,Color('#d4b782'),false,3)
   for p in [deck.position,deck.position+Vector2(deck.size.x,0),deck.end,deck.position+Vector2(0,deck.size.y)]:
    c.draw_circle(p-cam+Vector2(0,3),7,Color('#4e5044'));c.draw_circle(p-cam,5,Color('#dbc291'))
- for spec in BERTHS:boat(c,spec.at-cam,int(spec.crew),float(spec.angle),Color(spec.hull),Color(spec.trim),t)
  # Bank-side fittings keep the water and embarkation walk clear.
  for at in [Vector2(1654,2236),Vector2(2188,2236)]:
   c.draw_rect(Rect2(at-cam-Vector2(4,26),Vector2(8,35)),Color('#645343'));c.draw_circle(at-cam-Vector2(0,27),9,Color('#e6c184'));c.draw_circle(at-cam-Vector2(0,27),5,Color('#ffe7a9'))
@@ -79,3 +75,17 @@ static func draw(c:Node2D,cam:Vector2)->void:
   for k in 3:c.draw_line(at+Vector2(k*4,0),at+Vector2(k*6-4,-12-k*3),Color('#8ea77b'),2)
  c.draw_string(ThemeDB.fallback_font,Vector2(1690,2298)-cam,"RIPPLE & REEL • MARINA",HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color('#f4dfb6'))
  c.draw_string(ThemeDB.fallback_font,Vector2(1750,2317)-cam,"E • Lake & coastal voyages",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color('#d4dcca'))
+
+static func draw(c:Node2D,cam:Vector2)->void:
+ var view=Rect2(cam,c.VIEW).grow(100)
+ if not view.intersects(Rect2(1540,2150,930,620)):return
+ preload("res://scripts/town_art39.gd").draw(c,"marina_deck",cam)
+ var t=Time.get_ticks_msec()/1000.0
+ for n in 53:
+  var at=Vector2(1660+posmod(n*113,760),2305+posmod(n*67,355));at.x+=sin(t*.55+n)*5
+  if wet(at) and not on_deck(at):c.draw_line(at-cam,at-cam+Vector2(12+posmod(n,3)*6,0),Color(.66,.87,.85,.28),1.5,true)
+ for n in BERTHS.size():
+  var spec=BERTHS[n];var at:Vector2=spec.at
+  if not Rect2(at-boat_size(int(spec.crew))*.5-Vector2(15,15),boat_size(int(spec.crew))+Vector2(30,30)).intersects(Rect2(cam,c.VIEW)):continue
+  var bob=sin(t*1.5+at.x*.01)*1.3
+  preload("res://scripts/town_art39.gd").draw(c,"boat_"+str(n),cam-Vector2(0,bob))

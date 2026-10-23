@@ -16,5 +16,11 @@ static func open(hall:Node)->void:
  var dialog=AcceptDialog.new();preload("res://scripts/studio_ui.gd").apply(dialog);dialog.title="Hero of the day";dialog.ok_button_text="Pick hero of the day";dialog.dialog_text=""
  var col=VBoxContainer.new();col.add_theme_constant_override("separation",12);dialog.add_child(col)
  var label=Label.new();label.text=str(hero.name)+"\nEarn 10% more Glimmers during gameplay with today's hero.\nTown trades keep their normal prices.";label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.custom_minimum_size.x=460;col.add_child(label)
- var art=TextureRect.new();art.texture=hall.game.art.get(str(hero.get("sprite",hero_id))+"_idle");art.custom_minimum_size=Vector2(130,130);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;col.add_child(art)
+ var art=TextureRect.new();art.texture=portrait(hall.game,hero_id);art.custom_minimum_size=Vector2(130,130);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;col.add_child(art)
  dialog.confirmed.connect(func():hall.collection=0;hall.custom_only=false;hall.collection_picker.select(0);hall.select(hero_id);dialog.queue_free());dialog.canceled.connect(dialog.queue_free);hall.add_child(dialog);dialog.popup_centered(Vector2i(520,300))
+
+static func portrait(g:Node,hero_id:String)->Texture2D:
+ var sprite=str(g.characters.get(hero_id,{}).get("sprite",hero_id))
+ var texture:Texture2D=g.art.get(sprite+"_idle",g.art.get(sprite+"_0"))
+ if texture==null and ResourceLoader.exists("res://assets/"+sprite+"_idle.png"):texture=load("res://assets/"+sprite+"_idle.png")
+ return texture

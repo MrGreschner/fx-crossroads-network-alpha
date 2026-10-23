@@ -131,7 +131,7 @@ func draw_props(c:Node2D,camera:Vector2)->void:
    c.draw_circle(note,3,Color(1,.86,.5,1-t));c.draw_line(note,note-Vector2(0,10),Color(1,.86,.5,1-t),2)
 func collect_lights(c:Node2D,camera:Vector2)->void:
  lights.clear()
- var view=Rect2(camera,c.VIEW).grow(180)
+ var view=Rect2(camera,c.VIEW).grow(450)
  for spot in LAMPS:
   if view.has_point(spot):lights.append({"pos":spot-camera-Vector2(0,55),"radius":150.0,"strength":1.0})
  for spot in EXISTING_LAMPS:
@@ -165,9 +165,12 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
  # Daylight also changes subtly across morning, noon and afternoon.
  collect_lights(c,camera)
  frame_shade=ambient_shade()
- # One gradient mesh dims the world and opens soft pools of light; HUD is drawn afterwards.
+ # Keep the spatial light field separate from the ambient tint. Time/weather modulate
+ # its draw colour without rebuilding thousands of vertices twice per second.
+ # The expanded source margin covers every light influencing the retained grid.
+ # HUD is drawn afterwards.
  var origin=Vector2(floorf(camera.x/128)*128-64,floorf(camera.y/128)*128-64)
- var key=str(origin)+str(c.VIEW)+str(floori(now*2))+weather()
+ var key=str(origin)+str(c.VIEW)+str(roundi(fire_strength()*64))
  if mesh_key!=key:
   mesh_key=key;mesh_origin=origin;lighting_rebuilds+=1
   var extent=c.VIEW+Vector2(256,256)
@@ -195,13 +198,14 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
      strengths[index]=maxf(strengths[index],strength)
   var colours=PackedColorArray();colours.resize(grid_vertices.size())
   for i in grid_vertices.size():
-   var shade=frame_shade;shade.a=frame_shade.a*(1.0-strengths[i]*.95);colours[i]=shade
+   colours[i]=Color(1,1,1,1.0-strengths[i]*.95)
   var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=grid_vertices;arrays[Mesh.ARRAY_COLOR]=colours;arrays[Mesh.ARRAY_INDEX]=grid_indices
   mesh.clear_surfaces();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
- c.draw_mesh(mesh,null,Transform2D(0,mesh_origin-camera))
+ c.draw_mesh(mesh,null,Transform2D(0,mesh_origin-camera),frame_shade)
  for lamp in lights:
   if float(lamp.strength)<.1:continue
   var p:Vector2=lamp.pos
+  if not Rect2(Vector2.ZERO,c.VIEW).grow(100).has_point(p):continue
   if lamp.get("portal",false):
    for radius in [95,70,45]:c.draw_circle(p,radius,Color(.24,.55,1,night*.025))
    continue

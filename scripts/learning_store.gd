@@ -24,7 +24,9 @@ static func valid_artifact(a:Variant)->bool:
   "behavior":return preload("res://scripts/studio_behavior.gd").validate(a.value).is_empty()
   "photo":return preload("res://scripts/media_portfolio.gd").valid([a.value])
   "business":return load("res://scripts/education_business.gd").valid(a.value)
+  "district":return preload("res://scripts/business_district/catalog.gd").valid(a.value)
   "market":return preload("res://scripts/commerce.gd").valid(a.value)
+  "structured_program":return load("res://scripts/structured_program.gd").valid(a.value)
   "program":return load("res://scripts/education_ipo.gd").valid(a.value)
   "quiz":return load("res://scripts/learning_auto.gd").valid_quiz(a.value)
   "graphic":return a.value is Dictionary and a.value.has_all(["image","svg","settings"]) and text_ok(a.value.image,180000) and text_ok(a.value.svg,8000) and a.value.settings is Dictionary and JSON.stringify(a.value.settings).length()<4000 and safe_svg(a.value.svg) and P.png_error(Marshalls.base64_to_raw(a.value.image)).is_empty()
@@ -154,6 +156,7 @@ static func readiness(data:Dictionary,code:String,w:Dictionary)->Dictionary:
    for ref in w.refs:
     var a:Dictionary=data.artifacts[ref]
     if a.kind==needed or needed=="market" and a.kind=="business" and a.value.module==code or needed=="code" and a.kind in ["ability","behavior"]:found=true
+    if code=="MAM1010" and needed=="market" and a.kind=="district" and district_comparison(a.value):found=true
     if needed=="animation" and a.kind=="hero":
      var poses:Dictionary=a.value.hero.art
      if poses.get("walk1","")!=poses.get("walk2",""):found=true
@@ -233,4 +236,10 @@ static func practical_evidence(data:Dictionary,w:Dictionary,needed:String)->bool
    var a=data.artifacts[ref]
    if a.kind=="object":versions[a.value.id]=int(versions.get(a.value.id,0))+1
   return objects.size()>=4 and layered>=2 and settings>=2 and "Create custom brush" in operations and "Stamp custom brush" in operations and "Tone" in operations and "Mask" in operations and versions.values().any(func(n):return n>=2)
+ return false
+
+static func district_comparison(value:Dictionary)->bool:
+ if not preload("res://scripts/business_district/catalog.gd").valid(value):return false
+ for b in value.businesses.values():
+  if b.history.size()>=2 and not b.note.strip_edges().is_empty():return true
  return false

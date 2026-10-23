@@ -10,7 +10,7 @@ func state()->Dictionary:
   var previous:Dictionary=legacy.data.get("competitive",{}).get("cursors",{}).duplicate(true)
   legacy.data.competitive={"version":1,"week":week(),"wins":0,"kos":0,"deaths":0,"matches":0,"explore":0,"defeated":false,"cursors":previous}
  return legacy.data.competitive
-func allowed()->bool:return not bool(legacy.data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").progression_blocked() and not legacy.get_tree().root.has_meta("fx_dedicated_server")
+func allowed()->bool:return is_instance_valid(legacy) and legacy.is_inside_tree() and not bool(legacy.data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").progression_blocked() and not legacy.get_tree().root.has_meta("fx_dedicated_server")
 func cursor(key:String)->Dictionary:
  var c:Dictionary=state().cursors
  if not c.has(key):

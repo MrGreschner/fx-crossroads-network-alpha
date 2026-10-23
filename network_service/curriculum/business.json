@@ -1,0 +1,2897 @@
+{
+  "version": 1,
+  "edition": "academy-2",
+  "title": "Crossroads Learning Academy",
+  "core_sequence": [
+    "ENT1010",
+    "ENT1020",
+    "MAM1010",
+    "ENT2010",
+    "ENT2020",
+    "ENT2030",
+    "ENT3010",
+    "MAM3050",
+    "ENT3020"
+  ],
+  "rubric": {
+    "Not assessed": "No judgement recorded.",
+    "More evidence needed": "Evidence is missing, inaccurate or insufficient for a judgement.",
+    "Developing": "Some relevant understanding or application, with gaps that need revision.",
+    "Meets": "The main outcome is demonstrated accurately with relevant application and supported reasoning.",
+    "Extends": "The outcome is demonstrated with thoughtful comparison, critical interpretation and purposeful improvement."
+  },
+  "terms": {
+    "Venture": "An organized attempt to create value through an offering. It can be commercial, social or nonprofit; explain whose needs it addresses.",
+    "Target market": "The group a venture chooses to serve with a particular offering. It is an evidence-based working choice, not a stereotype.",
+    "Primary research": "Information collected for the current investigation, such as your own interview, survey or observation. Simulated observations describe the teaching model only.",
+    "Secondary research": "Existing information created for another purpose. Record the source, date, relevance and limitations.",
+    "Marketing mix": "Connected decisions about product, price, place and promotion, considered alongside consumers and competition.",
+    "Merchandising": "Retail decisions about assortment, display, pricing offers, service and presentation that help customers understand and buy an offering.",
+    "Revenue": "The value recognized from sales. It differs from cash received when customers pay later.",
+    "Cash flow": "Receipts and payments over time. A cash forecast shows when money is expected to arrive and leave.",
+    "Operating profit": "Revenue less cost of sold stock and operating expenses for the period. Loan proceeds are not revenue; equipment purchases are not all current operating expense.",
+    "Inventory": "Supplies and goods held for use or sale. Unsold inventory remains an asset at its recorded cost, subject to appropriate adjustments.",
+    "Contribution": "Selling price minus variable cost per unit. It contributes toward fixed costs and then profit.",
+    "Break-even": "The point at which revenue covers relevant costs. Fixed costs divided by positive unit contribution gives break-even units in the simple model.",
+    "Fixed cost": "A cost that does not change with output within the period and operating range being considered.",
+    "Variable cost": "A cost that changes with the relevant activity, such as materials used per unit. Identify the activity and assumptions.",
+    "Debt": "Funding with an obligation to repay under agreed terms. Compare timing, total cost, security and consequences, not only the initial cash received.",
+    "Equity": "An ownership interest. Equity finance exchanges an agreed interest for resources and may change control and future returns.",
+    "Working capital": "Current assets minus current liabilities. Cash tied up in stock or receivables can affect the ability to meet near-term obligations.",
+    "Accounts receivable": "Amounts customers owe the business. A sale on credit is not yet cash in the bank.",
+    "Accounts payable": "Amounts the business owes suppliers. Delaying payment affects cash timing and may affect relationships or terms.",
+    "Balance sheet": "A statement of assets, liabilities and equity at a point in time. Assets equal liabilities plus equity.",
+    "Channel": "The organizations and roles through which an offering reaches its customer; transport is the physical movement used along that channel.",
+    "Intermediary": "An organization between producer and final customer, such as an agent, broker, wholesaler or retailer. Explain what value it adds.",
+    "Horizontal expansion": "Growth in a similar activity or market stage, such as another comparable retail location.",
+    "Vertical expansion": "Adding another stage of the supply chain, such as a grower adding processing or direct retail.",
+    "Diversification": "Adding a different offering or activity. Assess the additional capabilities and risk rather than assuming variety is always beneficial.",
+    "Franchise": "An arrangement to operate using another business system or brand under agreed terms. Compare support, fees, consistency, control and obligations.",
+    "Sole proprietor": "A business owned by an individual. Compare control, resources, responsibility and applicable obligations with alternatives.",
+    "Partnership": "An arrangement in which partners share a venture under agreed terms. Explain roles, decision making, contributions and responsibilities.",
+    "Cooperative": "An enterprise organized around its members and their shared needs, with governance and benefits determined by its structure and applicable rules.",
+    "Risk": "An uncertain event and its possible consequences. Compare likelihood and impact, prevention and contingency.",
+    "Opportunity cost": "The value of the best alternative forgone when a choice uses limited resources.",
+    "Observation evidence": "A teacher-confirmed demonstration, discussion or role-play. A student note identifies what was demonstrated; the teacher judges the evidence.",
+    "Consumer behaviour": "The motives, circumstances, preferences, budgets and influences affecting decisions. Do not infer a person's motives from appearance.",
+    "Forecast": "An estimate based on assumptions. Compare actual results with it and revise; it is not a promise.",
+    "Profit versus learning": "A good commercial result is not a grade. Teachers assess the main outcomes using the quality of explanation, application, evidence and judgement.",
+    "Algorithm": "An ordered method for solving a problem; a useful plan can be traced before coding.",
+    "Selection": "Choosing which block runs according to a condition.",
+    "Iteration": "Repeating a block of instructions, with a count or condition that controls it.",
+    "Raster": "An image represented by a grid of pixels.",
+    "Vector": "An image represented by scalable shapes and paths.",
+    "Critique": "An evidence-based discussion of how well work communicates or meets its brief.",
+    "IPO": "Input, processing and output: the data received, the work done with it, and the result produced."
+  },
+  "modules": [
+    {
+      "code": "ENT1010",
+      "name": "Challenge & Opportunity",
+      "level": 10,
+      "core": true,
+      "order": 0,
+      "scenario": "Opportunity Scout",
+      "tool": "opportunity",
+      "venture": "kitchen",
+      "brief": "Investigate needs before choosing a venture. Rejecting an unsuitable idea can be a strong result.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Recognize and assess venture opportunities in the environment",
+          "criteria": "Plausible needs, relevant evidence and an explained decision process",
+          "evidence": "Opportunity log with supporting observations and a comparison"
+        },
+        {
+          "id": "2",
+          "title": "Generate ideas for possible opportunities",
+          "criteria": "Breadth of ideas, sensitivity to customer needs and constructive response to feedback",
+          "evidence": "Idea board, alternatives and a short revision explanation"
+        },
+        {
+          "id": "3",
+          "title": "Plan a venture",
+          "criteria": "Coherent connections between the proposed offering, resources, customers and goals",
+          "evidence": "Initial venture concept and explanation of key choices"
+        },
+        {
+          "id": "4",
+          "title": "Assess a venture",
+          "criteria": "A supported judgement rather than an automatic decision to launch",
+          "evidence": "Feasibility recommendation: pursue, revise or reject, with reasons"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Need, evidence and solution",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Read community requests; observe potential customers; distinguish a problem from a proposed solution; apply a simple decision model",
+          "required_evidence": "Opportunity log with supporting observations and a comparison",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Plausible needs, relevant evidence and an explained decision process. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A need is the gap you are trying to address; a product is one possible response. Observe behaviour, ask questions and separate what you saw from your interpretation. Use criteria to compare ideas instead of choosing the first appealing solution.",
+          "worked_example": "Five travellers leave a food queue before being served. That may suggest a need for quicker service, not necessarily a need for a second restaurant. Compare a faster menu, advance orders and another cart; investigate before deciding.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Generate before judging",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Generate several alternatives before selecting; consider other perspectives; use an unsuccessful pilot as a prompt for a revised idea",
+          "required_evidence": "Idea board, alternatives and a short revision explanation",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Breadth of ideas, sensitivity to customer needs and constructive response to feedback. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Divergent thinking creates alternatives; convergent thinking selects among them. Invite perspectives from users, buyers and people affected by the venture. A failed test supplies information if you explain what changed in your understanding.",
+          "worked_example": "A wet market day reduces foot traffic. Generate a sheltered stall, delivery service and durable rainwear before selecting one. A resident who cannot carry a large parcel may prefer delivery even when it costs more.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Connect the parts of a venture",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Build an initial concept covering purpose, customers, offering, resources, responsibilities, risks and basic finances; introduce ownership and ways to enter business through concise cases",
+          "required_evidence": "Initial venture concept and explanation of key choices",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Coherent connections between the proposed offering, resources, customers and goals. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A venture concept connects purpose, offering, customers, resources, responsibilities and money. Entry routes and ownership arrangements influence control, support and obligations. A short concept should be coherent before a detailed plan is written.",
+          "worked_example": "A two-person repair partnership needs parts, tools, a service promise and a way to share decisions. Buying an existing shop offers equipment and customers, but also costs and commitments. Explain why the arrangement fits the idea.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Feasibility is a justified judgement",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Establish feasibility criteria; compare concepts against them; identify limitations and a realistic next step",
+          "required_evidence": "Feasibility recommendation: pursue, revise or reject, with reasons",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. A supported judgement rather than an automatic decision to launch. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Feasibility asks whether a venture can work under stated conditions. Compare demand, resources, timing, finances and responsibility. Distinguish an uncertain assumption from a fact and include a revise or reject option.",
+          "worked_example": "A fish shop forecasts 20 sales but has only eight chilled display spaces. Demand alone does not prove feasibility. Revise storage and delivery plans, test a smaller opening, or reject the idea with reasons.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        },
+        {
+          "title": "Canada \u2014 sole proprietorships and partnerships",
+          "url": "https://www.canada.ca/en/services/business/start/register-with-gov/register-sole-prop-partner.html",
+          "use": "Research ownership and registration using current rules for the selected jurisdiction."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT1020",
+      "name": "Elements of a Venture Plan",
+      "level": 10,
+      "core": true,
+      "order": 1,
+      "scenario": "From Concept to Proposal",
+      "tool": "planning",
+      "venture": "workshop",
+      "brief": "Turn a promising concept into a coherent plan, with risks, resources, feedback and revisions.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Demonstrate goal-setting and problem-solving strategies facilitating change",
+          "criteria": "Useful goals, a reasoned response and alignment between plans and purpose",
+          "evidence": "Goals and action board, problem-solving record and support map"
+        },
+        {
+          "id": "2",
+          "title": "Describe potential risks and assessment strategies",
+          "criteria": "Relevant risks, justified priorities and practical mitigation",
+          "evidence": "Risk register with priorities and responses"
+        },
+        {
+          "id": "3",
+          "title": "Describe strategies for securing resources and support",
+          "criteria": "Feasible sourcing, support arrangements and awareness of changing conditions",
+          "evidence": "Resource/support strategy with comparisons and market assumptions"
+        },
+        {
+          "id": "4",
+          "title": "Select, plan and assess a venture",
+          "criteria": "Internal consistency, credible assumptions and evaluation of strengths/weaknesses",
+          "evidence": "Venture plan, presentation record and revision commentary"
+        },
+        {
+          "id": "5",
+          "title": "Demonstrate qualities initiating change",
+          "criteria": "Initiative, flexibility and demonstrable contribution; time online is not a proxy",
+          "evidence": "Decision/revision history plus observed role-play, discussion or collaboration evidence"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Goals that guide action",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Establish a purpose, measurable goals and milestones; respond to an initial planning obstacle; identify responsibilities, support and obligations",
+          "required_evidence": "Goals and action board, problem-solving record and support map",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Useful goals, a reasoned response and alignment between plans and purpose. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A goal describes an intended result; an action describes what someone will do. A useful goal has a measure and review time. Solve problems by identifying the issue, considering alternatives, choosing a response and checking its effect.",
+          "worked_example": "Goal: reduce the average queue from 20 to 12 seconds next period. Action: assign Nell to service and keep the price unchanged. If the queue remains long, check stock availability before assuming staff are the problem.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Risk, prevention and contingency",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Identify venture-specific financial, people and operational risks; compare likelihood/impact; propose prevention and contingency measures",
+          "required_evidence": "Risk register with priorities and responses",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Relevant risks, justified priorities and practical mitigation. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Risk combines an uncertain event with its possible consequences. Consider likelihood and impact separately. Prevention reduces the chance or impact; a contingency explains what to do if the event occurs. Review risks as conditions change.",
+          "worked_example": "Late fish delivery could create empty displays. A second supplier is prevention; a smaller menu and customer notice are a contingency. A low-likelihood fire can still require serious attention because its consequences are severe.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Resources and support must fit the market",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Compare suppliers, facilities, expertise and support; connect resource choices to customers, competition and market assumptions",
+          "required_evidence": "Resource/support strategy with comparisons and market assumptions",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Feasible sourcing, support arrangements and awareness of changing conditions. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Resources include people, finance, equipment, information, materials and time. Compare suppliers and support rather than treating price as the only criterion. Customer needs, competition and changing conditions influence which resources are suitable.",
+          "worked_example": "One supplier charges 4 per unit plus 4 delivery; another offers cheaper units in a large batch. Compare the total cost, storage, cash tied up and spoilage before choosing. A mentor provides expertise rather than inventory.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Plan, present and revise",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Complete a connected plan, present it, consider feedback and revise it",
+          "required_evidence": "Venture plan, presentation record and revision commentary",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Internal consistency, credible assumptions and evaluation of strengths/weaknesses. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A plan links market, operations, people and financial assumptions. Check that the same sales forecast is used throughout. Present the rationale, gather feedback and document changes; an attractive presentation cannot fix contradictory numbers.",
+          "worked_example": "A plan promises 30 bowls while its preparation schedule permits 18. Revise capacity, opening targets or the offer. Explain which feedback you accepted, which you rejected and why.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o5",
+          "title": "Initiative and flexibility are observable",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Take responsibility for a planning task; adapt after feedback; lead or contribute during a planning review",
+          "required_evidence": "Decision/revision history plus observed role-play, discussion or collaboration evidence",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Initiative, flexibility and demonstrable contribution; time online is not a proxy. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Initiative means taking a useful action without waiting for every step to be specified. Flexibility means changing a justified approach when evidence changes. Leadership and teamwork require a visible contribution that a teacher can observe.",
+          "worked_example": "You arrange a short supplier review, assign responsibilities and revise the plan after an accessibility concern is raised. Record your contribution and ask the teacher to note the discussion; time logged in is not evidence of leadership.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        },
+        {
+          "title": "Canada \u2014 sole proprietorships and partnerships",
+          "url": "https://www.canada.ca/en/services/business/start/register-with-gov/register-sole-prop-partner.html",
+          "use": "Research ownership and registration using current rules for the selected jurisdiction."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "MAM1010",
+      "name": "Marketing & Management",
+      "level": 10,
+      "core": true,
+      "order": 2,
+      "scenario": "The Trading Floor",
+      "tool": "marketing",
+      "venture": "store",
+      "brief": "Explain how a business works, then test one merchandising decision and interpret what changed.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Identify and describe organizational roles and features",
+          "criteria": "Accurate roles, distinctions and connections within the organization",
+          "evidence": "Annotated business-role map and ownership/operations explanation"
+        },
+        {
+          "id": "2",
+          "title": "Describe marketing characteristics and marketing-mix decisions",
+          "criteria": "Connected choices and understanding of customer and societal consequences",
+          "evidence": "Marketing-mix card with reasons and predicted effects"
+        },
+        {
+          "id": "3",
+          "title": "Identify and analyze contemporary retail merchandising strategies",
+          "criteria": "Explanation of how the strategy works, relevant comparisons and limits of evidence",
+          "evidence": "Before/after merchandising plan, results and analysis"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "The organization behind a sale",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Assign buying, selling, merchandising and management responsibilities; compare suitable ownership examples; explain how the operation works",
+          "required_evidence": "Annotated business-role map and ownership/operations explanation",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Accurate roles, distinctions and connections within the organization. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Buying acquires stock, selling completes exchanges and merchandising shapes the retail offer and presentation. Management plans, organizes, leads, monitors and communicates. Ownership affects who controls decisions, bears risk and receives returns.",
+          "worked_example": "Bram prepares repaired tools, Nell serves and Tavi checks deliveries. The proprietor sets goals and monitors cash. Compare that sole-owner arrangement with a partnership or cooperative rather than treating all workers as owners.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "A connected marketing mix",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Choose customers, offering, price, place and promotion; examine competition and customer/profit trade-offs",
+          "required_evidence": "Marketing-mix card with reasons and predicted effects",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Connected choices and understanding of customer and societal consequences. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Product, price, promotion and place work together around consumers and competition. Marketing seeks a sustainable fit between customer value and the venture. Consider social and environmental consequences as well as profit.",
+          "worked_example": "A low-cost produce basket, convenient pickup and a modest local campaign form one coherent offer. An expensive luxury message aimed at rushed budget travellers would conflict with that offer.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Test merchandising, then interpret",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Compare two layouts, assortments, offers or service approaches under controlled conditions; examine modern retail examples",
+          "required_evidence": "Before/after merchandising plan, results and analysis",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Explanation of how the strategy works, relevant comparisons and limits of evidence. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Merchandising includes assortment, display, pricing offers, service and retail layout. Test one factor as consistently as possible, compare results and explain other influences. Research a current retailer to check how the idea works outside this model.",
+          "worked_example": "Compare compact and open-aisle layouts with the same product, price, stock and campaign. Higher sales might result from faster service, but a festival or changing customer mix could also contribute. Report waits and lost customers, not sales alone.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        },
+        {
+          "title": "Canada \u2014 sole proprietorships and partnerships",
+          "url": "https://www.canada.ca/en/services/business/start/register-with-gov/register-sole-prop-partner.html",
+          "use": "Research ownership and registration using current rules for the selected jurisdiction."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT2010",
+      "name": "Analyzing Ventures",
+      "level": 20,
+      "core": true,
+      "order": 3,
+      "scenario": "The Investment Panel",
+      "tool": "comparison",
+      "venture": "fishery",
+      "brief": "Compare alternatives using research, explicit criteria and uncertain forecasts. Explain what the evidence can and cannot establish.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Describe and apply venture-analysis methods",
+          "criteria": "Appropriate methods, accurate interpretation and awareness of risks/limitations",
+          "evidence": "Analysis workbook with calculations, sources and assumptions"
+        },
+        {
+          "id": "2",
+          "title": "Describe criteria important to venture success",
+          "criteria": "Relevant criteria and reasons for their selection, beyond profit alone",
+          "evidence": "Weighted or justified criteria framework with comparisons"
+        },
+        {
+          "id": "3",
+          "title": "Analyze research, compare ventures and judge feasibility",
+          "criteria": "Evidence-based comparison, balanced conclusions and transparent uncertainty",
+          "evidence": "Comparative feasibility report and written or oral defence"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Choose an analysis method",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Model market, industry, financial, resource and product questions; examine uncertain assumptions; distinguish simulated observation from external research",
+          "required_evidence": "Analysis workbook with calculations, sources and assumptions",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Appropriate methods, accurate interpretation and awareness of risks/limitations. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Market, industry, financial, resource and product analyses answer different questions. Primary research is collected for the investigation; secondary research was produced for another purpose. Scenario observations are simulated data, not real customer research.",
+          "worked_example": "Count visitors and waits in the district, then compare supplied cost cases. For an external claim, record a credible source and its date. A survey of six friends may be useful but cannot represent every potential customer.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Define what success means",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Define success for different stakeholders; choose criteria such as cash resilience, customer benefit, quality and growth potential",
+          "required_evidence": "Weighted or justified criteria framework with comparisons",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Relevant criteria and reasons for their selection, beyond profit alone. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Success criteria express what matters and to whom. Financial resilience, customer benefit, product quality, staff wellbeing and environmental effects can conflict. Explain criteria and weights before scoring alternatives to avoid changing the rules to favour your preferred idea.",
+          "worked_example": "Score a workshop and fishmonger for startup cost, cash resilience and customer benefit. If quality matters twice as much as convenience, show that weighting and explain the trade-off rather than hiding it in a final total.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Compare evidence and uncertainty",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Combine research with operating and financial evidence; assess strengths and weaknesses; recommend the most feasible alternative",
+          "required_evidence": "Comparative feasibility report and written or oral defence",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Evidence-based comparison, balanced conclusions and transparent uncertainty. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A feasibility recommendation should integrate methods, criteria, calculations and research. Test important assumptions and identify missing information. An argument can support revising or rejecting an option; the highest simulated profit is not automatically the best venture.",
+          "worked_example": "A workshop looks profitable at 20 jobs but loses cash at ten. A store has lower margin but steadier demand. Compare both cases, describe uncertainty and defend which option is more feasible for the proposed owner.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT2020",
+      "name": "Financing Ventures",
+      "level": 20,
+      "core": true,
+      "order": 4,
+      "scenario": "The Funding Desk",
+      "tool": "finance",
+      "venture": "rental",
+      "brief": "Compare ways to fund a venture and model the timing of cash. Financing is a choice about cost, risk, control and relationships.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Identify advantages and disadvantages of financing options",
+          "criteria": "Balanced trade-offs and fit to the venture's circumstances",
+          "evidence": "Funding comparison and justified shortlist"
+        },
+        {
+          "id": "2",
+          "title": "Describe financing sources",
+          "criteria": "Correct classification and explanation; availability is researched, not assumed",
+          "evidence": "Financing-source guide or presentation with source references"
+        },
+        {
+          "id": "3",
+          "title": "Demonstrate short- and long-term financing differences",
+          "criteria": "Timing and repayment consequences understood; cash and profit distinguished",
+          "evidence": "Cash-flow schedule and financing recommendation with a stress test"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Funding changes more than cash",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Compare cost, risk, repayment, control and relationships across relevant funding choices",
+          "required_evidence": "Funding comparison and justified shortlist",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Balanced trade-offs and fit to the venture's circumstances. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Debt creates a repayment obligation; equity exchanges an ownership interest for funds. Consider total cost, control, risk, timing and relationships. Grants, supplier credit and other supports have conditions; availability must be investigated.",
+          "worked_example": "Compare borrowing 600 with a fixed repayment against giving an investor 25% ownership for 600. The investor does not simply receive an interest payment. Explain how control and future returns differ.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Identify and classify sources",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Explain debt, equity and other relevant support; investigate supplied sources and at least one appropriate real-world source where assigned",
+          "required_evidence": "Financing-source guide or presentation with source references",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Correct classification and explanation; availability is researched, not assumed. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A source is where financing comes from; the arrangement determines whether it is debt, equity or another form. Money from a relative could be a gift, loan or investment. Check the agreement rather than classifying by the person alone.",
+          "worked_example": "A friend lends 200 repayable in three months: debt. A partner invests 200 for an agreed ownership share: equity. A grant may be non-repayable if its conditions are met; do not assume a fictional offer exists locally.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Match finance to cash timing",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Match the term of finance to the need; model repayments, fixed/variable costs, break-even and cash timing",
+          "required_evidence": "Cash-flow schedule and financing recommendation with a stress test",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Timing and repayment consequences understood; cash and profit distinguished. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Short-term needs and long-lived assets have different cash patterns. Separate fixed and variable costs, forecast receipts and payments, and test repayment timing. Break-even units equal fixed costs divided by positive contribution per unit; a zero or negative contribution has no finite break-even.",
+          "worked_example": "At price 20, variable cost 8 and fixed costs 120, contribution is 12 and break-even is ten units. Selling on credit can show revenue before cash arrives. A profitable month may still need cash to pay wages earlier.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT2030",
+      "name": "Marketing the Venture",
+      "level": 20,
+      "core": true,
+      "order": 5,
+      "scenario": "Reach the Right Customers",
+      "tool": "marketing",
+      "venture": "clothier",
+      "brief": "Research an audience, implement a coordinated campaign, evaluate it and make a purposeful revision.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Describe strategies suitable for reaching the target market",
+          "criteria": "Suitability supported by evidence rather than channel popularity alone",
+          "evidence": "Audience brief, research references and strategy comparison"
+        },
+        {
+          "id": "2",
+          "title": "Describe and implement a venture marketing strategy",
+          "criteria": "Consistency, justified choices and evidence of implementation",
+          "evidence": "Campaign plan, supplied-template or original materials and execution record"
+        },
+        {
+          "id": "3",
+          "title": "Identify strengths/weaknesses and revise the strategy",
+          "criteria": "Reasoned interpretation, cost-benefit awareness and purposeful changes",
+          "evidence": "Campaign evaluation and revised strategy"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Reach a defined audience",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Research customers, compare channels and messages, and select a coherent approach",
+          "required_evidence": "Audience brief, research references and strategy comparison",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Suitability supported by evidence rather than channel popularity alone. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Use research to explain who buys, uses and influences the purchase. Compare channels by audience fit, cost, access and message. An audience description should support choices without stereotyping people.",
+          "worked_example": "Travellers may value speed while collectors may allow more time for a premium item. These are teaching-model segments, not facts about all people. Compare observation, a short interview and an external source before designing a campaign.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Implement a coordinated strategy",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Set objectives and a budget; coordinate offering, price, distribution and promotion; execute an approved campaign",
+          "required_evidence": "Campaign plan, supplied-template or original materials and execution record",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Consistency, justified choices and evidence of implementation. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Set a measurable objective, budget and responsibilities. Coordinate product, price, place and promotion, then carry the plan into action. A supplied visual template is sufficient; artistic skill is not an assessment requirement.",
+          "worked_example": "Plan a 10-cash campaign for a useful travel garment, choose a price and ensure stock and service can support demand. Record the opening and campaign settings so you can compare the plan with what actually happened.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Evaluate and revise with a purpose",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Inspect reach, conversion, sales, margins and customer feedback; distinguish demand from stock/capacity effects; revise and retest where useful",
+          "required_evidence": "Campaign evaluation and revised strategy",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Reasoned interpretation, cost-benefit awareness and purposeful changes. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Separate reach, interest, purchase and repeat demand. Consider margins and capacity as well as sales. Compare the costs and benefits of options, identify a weakness and make a revision connected to evidence.",
+          "worked_example": "More visitors but more lost customers may indicate a service bottleneck. Increasing promotion again could worsen it. Try service training or a smaller promise and explain why the revision addresses the observed cause.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT3010",
+      "name": "Managing the Venture",
+      "level": 30,
+      "core": true,
+      "order": 6,
+      "scenario": "A Business That Can Run",
+      "tool": "operations",
+      "venture": "kitchen",
+      "brief": "Manage people, operations and finances. Respond to incidents and monitor the venture rather than simply chasing sales.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Describe implementation management procedures",
+          "criteria": "Procedures support the goals and make responsibilities clear",
+          "evidence": "Operating handbook and responsibility map"
+        },
+        {
+          "id": "2",
+          "title": "Manage through decisions",
+          "criteria": "Relevant alternatives, justified action, ethical awareness and follow-through",
+          "evidence": "Decision log, action plans and communications"
+        },
+        {
+          "id": "3",
+          "title": "Manage human resources",
+          "criteria": "Fair criteria, role fit, staff development and thoughtful supervision",
+          "evidence": "Staffing plan, hiring explanation and supervision/training task"
+        },
+        {
+          "id": "4",
+          "title": "Manage finances",
+          "criteria": "Correct interpretation and calculations, traceable records and financial consequences understood",
+          "evidence": "Financial packet with reconciled records, reports, payroll and cash-timing explanation"
+        },
+        {
+          "id": "5",
+          "title": "Describe procedures for monitoring and revising the plan",
+          "criteria": "A workable review process, respectful treatment and justified improvement actions",
+          "evidence": "People-review procedure, appraisal and observed negotiation/resolution task"
+        },
+        {
+          "id": "6",
+          "title": "Describe monitoring procedures and revisions to the plan",
+          "criteria": "Appropriate indicators, timing, evidence-based adjustments and responsibilities understood",
+          "evidence": "Monitoring calendar, performance review and revised venture/exit plan"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Procedures turn goals into work",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Translate venture goals into responsibilities, operating procedures and an organizational arrangement",
+          "required_evidence": "Operating handbook and responsibility map",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Procedures support the goals and make responsibilities clear. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "An operating procedure identifies the task, responsible person, sequence and check. An organizational map shows responsibility and communication. Procedures should support the venture goals and remain usable by the people doing the work.",
+          "worked_example": "For a freshness goal, Tavi checks delivery condition, records exceptions and tells the proprietor before stock is accepted. Show who can approve a replacement and how the sales team is informed.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Decisions and responsibilities",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Allocate capital, labour, promotion and production/service; respond to an ethical or operational incident; communicate decisions",
+          "required_evidence": "Decision log, action plans and communications",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Relevant alternatives, justified action, ethical awareness and follow-through. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Managers balance capital, labour, marketing and production while considering ethics and obligations. Identify alternatives, communicate a choice and monitor its effects. For real legal questions, use current official sources appropriate to the jurisdiction.",
+          "worked_example": "A worker reports an unsafe storage stack during a busy opening. Do not trade safety for a sales target. Plan a safe response, assign responsibilities and investigate the current obligations that would apply to a real workplace.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "People are not interchangeable capacity",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Compare candidates, plan onboarding/training, supervise and choose recognition appropriate to the situation",
+          "required_evidence": "Staffing plan, hiring explanation and supervision/training task",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Fair criteria, role fit, staff development and thoughtful supervision. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Recruit with fair role-related criteria, plan onboarding and training, and provide supervision and recognition. Consider development and wellbeing as well as output. Explain decisions without inferring ability from appearance or personal characteristics.",
+          "worked_example": "Bram has strong craft skills while Nell is stronger in service. Assign work using those stated skills, teach the procedure and arrange a review. Recognition might include useful feedback or development, not only a bonus.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Trace the financial records",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Trace source records into cash-flow, profit/loss and balance-sheet examples; handle a sample banking task and payroll; examine receivables/payables",
+          "required_evidence": "Financial packet with reconciled records, reports, payroll and cash-timing explanation",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Correct interpretation and calculations, traceable records and financial consequences understood. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Receipts and other source documents support accounting records. Cash flow tracks receipts/payments; profit compares revenue and relevant expenses; a balance sheet reports assets, liabilities and equity at a point in time. Payroll, receivables and payables affect cash timing.",
+          "worked_example": "Paying 84 for 20 units creates inventory, not an immediate 84 operating expense. Selling half transfers half that cost to cost of sales. A customer invoice may be receivable while a supplier bill is payable. Use the provided payroll case and reconcile the totals.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o5",
+          "title": "Review people-management procedures",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Establish people-management review procedures; address morale, performance, conflict and attendance through a case",
+          "required_evidence": "People-review procedure, appraisal and observed negotiation/resolution task",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. A workable review process, respectful treatment and justified improvement actions. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A review procedure explains how performance, morale, conflict and attendance concerns are discussed and addressed. Use fair evidence, respectful communication, listening and a negotiated improvement plan. Explain how the process will be checked.",
+          "worked_example": "A team member is repeatedly late because the proposed rota conflicts with an agreed commitment. Gather information, discuss alternatives and agree expectations. Demonstrate the conversation or role-play and ask the teacher to record the observation.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o6",
+          "title": "Monitor, adjust and know when to stop",
+          "outcomes": [
+            "6"
+          ],
+          "activity": "Set a review timetable for cash, customers, staff and stock; apply it to changing conditions; revise strategy and consider downsizing/closure where appropriate",
+          "required_evidence": "Monitoring calendar, performance review and revised venture/exit plan",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Appropriate indicators, timing, evidence-based adjustments and responsibilities understood. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Choose indicators, review intervals and responsibilities for cash, customers, staff and stock. Compare actual results with the plan and external changes. Expansion is not the only response: adapting, downsizing or closure may be appropriate, with responsibilities to people and suppliers.",
+          "worked_example": "Review cash each opening and customer waits after each period. If demand stays low, compare a smaller operation with further investment. An exit plan should address outstanding bills, staff communication and remaining inventory.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "MAM3050",
+      "name": "Distributing Goods & Services",
+      "level": 30,
+      "core": true,
+      "order": 7,
+      "scenario": "From Maker to Customer",
+      "tool": "distribution",
+      "venture": "courier",
+      "brief": "Trace goods through channels and transport. Investigate real retailers in your own community as well as the fantasy model.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Compare distribution channels and transport modes",
+          "criteria": "Roles and alternatives understood, with product-appropriate trade-offs",
+          "evidence": "Channel comparison with shipping calculations and recommendation"
+        },
+        {
+          "id": "2",
+          "title": "Describe retailer types in the community",
+          "criteria": "Relevant examples, accurate distinctions and community connection",
+          "evidence": "Retail-community map or comparison with sources"
+        },
+        {
+          "id": "3",
+          "title": "Present distribution and transport for a manufactured product",
+          "criteria": "An accurate sequence, appropriate transport and justified design choices",
+          "evidence": "Annotated supply-chain diagram and explanation"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Channels and transport answer different questions",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Compare direct and intermediary channels, wholesalers/brokers and appropriate transport; use cost, accessibility, reliability and time",
+          "required_evidence": "Channel comparison with shipping calculations and recommendation",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Roles and alternatives understood, with product-appropriate trade-offs. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A channel describes the organizations involved in getting an offering to the customer; transport describes how goods physically move. Intermediaries can add storage, selling, information and coordination. Compare extensive, selective and exclusive distribution for suitable products.",
+          "worked_example": "A maker may sell directly, through a retailer, or through a wholesaler and retailer. Road transport could serve any of those channels. Compare cost, speed, accessibility and reliability for fresh fish versus durable tools.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Investigate retailers in your community",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Investigate retail and service formats, including nonstore retail; connect the scenario to student-local examples",
+          "required_evidence": "Retail-community map or comparison with sources",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Relevant examples, accurate distinctions and community connection. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Retailers sell to final users; retail formats and services vary. Compare a specialist, general retailer, service business and nonstore or online seller using real examples from the community relevant to you. Explain evidence and possible future change.",
+          "worked_example": "Map a local independent repair shop and an online clothing retailer. Explain how customers access each, what service it supplies and how distribution differs. The fantasy district illustrates roles but does not replace the real-community investigation.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Make the supply chain visible",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Trace materials, processing/manufacturing, storage, intermediaries and final sale; examine developments affecting the route",
+          "required_evidence": "Annotated supply-chain diagram and explanation",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. An accurate sequence, appropriate transport and justified design choices. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Trace a manufactured product from inputs through processing, storage, intermediaries and final sale. Label who adds value and which transport moves each leg. Explain the trade-offs and a development that could alter the design.",
+          "worked_example": "Trace fibre to fabric, garment maker, wholesaler, retailer and wearer. A direct online sale can remove a retail intermediary but still needs fulfilment and transport. Explain why a route suits the product rather than drawing arrows without reasons.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT3020",
+      "name": "Expanding the Venture",
+      "level": 30,
+      "core": true,
+      "order": 8,
+      "scenario": "The Next Branch",
+      "tool": "expansion",
+      "venture": "garden",
+      "brief": "Growth is optional. Compare expansion with staying the same size, plan the chosen strategy and evaluate its consequences.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Describe the rationale for expansion",
+          "criteria": "A supported decision consistent with goals and limitations",
+          "evidence": "Expansion rationale, including a maintain-size alternative"
+        },
+        {
+          "id": "2",
+          "title": "Identify options and describe a strategy",
+          "criteria": "Benefits, risks, organizational consequences and realistic expectations",
+          "evidence": "Option appraisal and selected strategy"
+        },
+        {
+          "id": "3",
+          "title": "Describe an expansion plan",
+          "criteria": "Feasible, coherent and measurable planning",
+          "evidence": "Implementation proposal with projections and monitoring criteria"
+        },
+        {
+          "id": "4",
+          "title": "Describe success in the expanded venture",
+          "criteria": "Balanced evidence, consequences and awareness of further growth limits",
+          "evidence": "Post-expansion evaluation and recommendation"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Growth needs a rationale",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Compare the business's goals, capacity, finances, social effects and owner priorities; test whether growth is justified",
+          "required_evidence": "Expansion rationale, including a maintain-size alternative",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. A supported decision consistent with goals and limitations. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Expansion should fit goals, finances, capacity, owner priorities and social responsibilities. Compare expanding with improving the current operation or maintaining its size. Strong sales alone do not prove that another location is justified.",
+          "worked_example": "A full queue may signal a service problem rather than unmet demand for a new branch. Compare training, a second workstation and another location, including the cash and people each requires.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Different growth strategies create different risks",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Compare another location, new products, vertical/horizontal growth, diversification or franchising where relevant",
+          "required_evidence": "Option appraisal and selected strategy",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Benefits, risks, organizational consequences and realistic expectations. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Horizontal growth extends a similar activity; vertical growth adds another supply-chain stage; diversification adds a different offering. Franchising has its own control, support and consistency issues. Compare realistic alternatives and their consequences.",
+          "worked_example": "A grower could open another stall, add processing, or start an unrelated hire service. These options demand different capabilities. Explain which strategy fits the venture rather than treating every new building as the same kind of growth.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "An expansion plan must connect the functions",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Connect financing, people, operations and promotion to milestones and contingencies",
+          "required_evidence": "Implementation proposal with projections and monitoring criteria",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Feasible, coherent and measurable planning. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Coordinate management, finance, staffing, operations and promotion with milestones and contingencies. Forecast the effects on the original operation as well as the new branch. Identify indicators that would make you stop or revise the rollout.",
+          "worked_example": "Opening a second kitchen needs equipment, trained staff and working cash before extra sales arrive. Plan a small trial, preserve service at the first shop and specify what evidence permits the next investment.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Evaluate the expanded venture",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Evaluate an assigned expansion trial or supplied post-expansion case against financial and social goals; consider future action",
+          "required_evidence": "Post-expansion evaluation and recommendation",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Balanced evidence, consequences and awareness of further growth limits. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Compare financial and social outcomes with the expansion goals. Consider effects on customers, employees, suppliers and the original business. Distinguish short-term disruption from a persistent weakness and justify the next step.",
+          "worked_example": "The new branch raises combined sales but increases waste and weakens service at the first shop. Compare profit and customer outcomes before recommending further growth, consolidation or a smaller operation.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "MAM1020",
+      "name": "Quality Customer Service",
+      "level": 10,
+      "core": false,
+      "order": 99,
+      "scenario": "Every Customer Matters",
+      "tool": "service",
+      "venture": "store",
+      "brief": "Understand customers and demonstrate effective sales and service, including an observed interaction.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Define target market",
+          "criteria": "Clear meaning and suitable application",
+          "evidence": "Short explanation and example"
+        },
+        {
+          "id": "2",
+          "title": "Describe target-market components",
+          "criteria": "Meaningful distinctions without stereotyping",
+          "evidence": "Annotated customer profiles"
+        },
+        {
+          "id": "3",
+          "title": "Identify target markets for varied offerings",
+          "criteria": "Plausible matches and reasons",
+          "evidence": "Offering-to-market comparison"
+        },
+        {
+          "id": "4",
+          "title": "Describe consumer behaviours",
+          "criteria": "Nuanced explanations rather than unsupported assumptions",
+          "evidence": "Consumer-behaviour analysis"
+        },
+        {
+          "id": "5",
+          "title": "Demonstrate effective retail sales and service",
+          "criteria": "Accuracy, listening, appropriate service and professional communication",
+          "evidence": "Transaction record, interactive case and observed role-play"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Target market",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Explain the concept using an appropriate product/service",
+          "required_evidence": "Short explanation and example",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Clear meaning and suitable application. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A target market is the group a business chooses to serve with a particular offering. Defining it helps coordinate product, service, price and communication. It is a useful working choice that should be checked with evidence.",
+          "worked_example": "An affordable quick meal for rushed visitors is a more usable target than everyone who eats. Explain why the offering fits the chosen group.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Buyer, user and influencer",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Distinguish buyer, user and influencer; consider relevant customer circumstances and preferences",
+          "required_evidence": "Annotated customer profiles",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Meaningful distinctions without stereotyping. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "The buyer pays, the user uses the offering and an influencer affects the choice; one person may fill several roles. Consider relevant circumstances, preferences and behaviour without assuming that demographic labels determine needs.",
+          "worked_example": "An adult buys a coat used by a child, while a friend influences the style choice. Your communication and service may need to address more than one participant.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Different offers fit different groups",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Match several products/services to customers and justify differences",
+          "required_evidence": "Offering-to-market comparison",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Plausible matches and reasons. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Compare several products and services and identify plausible target markets for each. Explain the fit using benefits and circumstances rather than appearance. A venture may serve more than one segment with a deliberate offer.",
+          "worked_example": "A tool repair, an everyday produce basket and a collectible garment solve different problems. Match each to a suitable customer and explain a situation where the initial match would not fit.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Buying behaviour",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Interpret needs/wants, motives, budgets and promotional influences through cases",
+          "required_evidence": "Consumer-behaviour analysis",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Nuanced explanations rather than unsupported assumptions. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Needs, wants, budgets, attitudes and social or promotional influences can all affect buying. Rational and emotional motives can coexist. AIDA describes attention, interest, desire and action; it is a planning model rather than a guarantee.",
+          "worked_example": "A customer likes a display but cannot afford the item, while another values a repair because it avoids replacing a useful tool. Explain both the practical and emotional influences without assuming motives from the sale alone.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o5",
+          "title": "Demonstrate service",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Complete a sale and receipt, handle a complaint/return, follow policy and demonstrate a service interaction",
+          "required_evidence": "Transaction record, interactive case and observed role-play",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Accuracy, listening, appropriate service and professional communication. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Effective service combines accurate product knowledge, clear communication, appropriate policy, records and respectful problem solving. Demonstrate a sale and receipt, a complaint/return, and a service interaction. An observed role-play can provide evidence that a written answer cannot.",
+          "worked_example": "A customer reports a faulty repaired tool. Listen, check the receipt and stated policy, explain options honestly and record the resolution. Practise the conversation with a peer or teacher and document feedback.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "ENT2040",
+      "name": "Create the Venture",
+      "level": 20,
+      "core": false,
+      "order": 99,
+      "scenario": "Opening Day",
+      "tool": "operations",
+      "venture": "workshop",
+      "brief": "Implement a venture, lead through an obstacle, and assess its results against the plan.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Implement a venture",
+          "criteria": "Decisions carried into action coherently",
+          "evidence": "Launch checklist and operating record"
+        },
+        {
+          "id": "2",
+          "title": "Describe startup management procedures",
+          "criteria": "Practical organization and clear management functions",
+          "evidence": "Startup procedure guide"
+        },
+        {
+          "id": "3",
+          "title": "Demonstrate leadership during implementation",
+          "criteria": "Initiative, problem-solving and appropriate leadership",
+          "evidence": "Decision history and observation/role-play evidence"
+        },
+        {
+          "id": "4",
+          "title": "Assess the venture",
+          "criteria": "Honest evidence-based assessment and personal reflection",
+          "evidence": "Venture review and recommended improvements"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Implement the plan",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Prepare and open a business using approved startup resources, staffing, marketing and financial assumptions",
+          "required_evidence": "Launch checklist and operating record",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Decisions carried into action coherently. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Implementation turns linked startup decisions into actions. Check supplies, ownership arrangements, people, pricing, promotion and cash. Use supplied starter resources so a weak previous game economy cannot prevent participation.",
+          "worked_example": "Prepare a repair service, order parts, assign a role and open. Compare the actual settings with the launch plan rather than claiming that a saved plan alone is implementation.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Startup procedures",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Establish sequencing, responsibilities and essential procedures",
+          "required_evidence": "Startup procedure guide",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Practical organization and clear management functions. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Sequence startup work and assign responsibilities. Management procedures should specify what is done, by whom, when and how it is checked. Explain why the order supports the launch.",
+          "worked_example": "Confirm supplier availability before promising a delivery date. Check stock and product knowledge before the first customer arrives. Assign someone to handle an exception rather than improvising every step.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Leadership in action",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Respond to implementation obstacles and lead or coordinate an observed task",
+          "required_evidence": "Decision history and observation/role-play evidence",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Initiative, problem-solving and appropriate leadership. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Demonstrate decision making, initiative and appropriate leadership during an implementation obstacle. Record individual contributions in group work. A teacher can use an observation or role-play in addition to the decision history.",
+          "worked_example": "A delivery arrives late before opening. Compare delaying, narrowing the offer and finding an alternative. Communicate the decision, allocate tasks and check whether the team understood the revised plan.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Assess what happened",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Establish criteria, compare results with plans and critique the venture",
+          "required_evidence": "Venture review and recommended improvements",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Honest evidence-based assessment and personal reflection. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Choose criteria before judging the venture and compare actual results with plans. Consider quality, people, supplies, costs, personal goals and future conditions. Honest analysis of a poor result can demonstrate strong learning.",
+          "worked_example": "Sales exceeded the forecast but too many visitors left and staff were rushed. Evaluate the venture against more than revenue and recommend a change supported by the record.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "MAM3010",
+      "name": "The Business Organization",
+      "level": 30,
+      "core": false,
+      "order": 99,
+      "scenario": "Inside the Organization",
+      "tool": "operations",
+      "venture": "courier",
+      "brief": "Connect organizational structures and management approaches to real examples and a current challenge.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Analyze local organizational structures",
+          "criteria": "Accurate structure analysis grounded in evidence",
+          "evidence": "Organization profiles and annotated charts"
+        },
+        {
+          "id": "2",
+          "title": "Analyze management theories and forecast trends",
+          "criteria": "Reasoned critique and distinction between evidence and prediction",
+          "evidence": "Theory comparison and supported forecast"
+        },
+        {
+          "id": "3",
+          "title": "Examine functional areas and managers' responsibilities",
+          "criteria": "How functions interact and who is responsible",
+          "evidence": "Functional map and responsibility analysis"
+        },
+        {
+          "id": "4",
+          "title": "Explain success/failure and measurement",
+          "criteria": "Balanced measures and supported causal claims",
+          "evidence": "Performance framework and success/failure analysis"
+        },
+        {
+          "id": "5",
+          "title": "Evaluate a current management challenge",
+          "criteria": "Current evidence, ethical reasoning and consequences",
+          "evidence": "Case recommendation and stakeholder analysis"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Structure and communication",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Investigate real examples and compare authority, hierarchy and communication",
+          "required_evidence": "Organization profiles and annotated charts",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Accurate structure analysis grounded in evidence. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Functional, product/line, geographical and matrix/team structures arrange responsibility differently. Investigate real local examples and show hierarchy, authority and communication. A drawing should explain relationships rather than only list job titles.",
+          "worked_example": "Compare an independent local shop with a larger organization operating in several areas. Identify who reports to whom and how a decision travels. Use a real source or interview, not assumptions based on business size.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Management approaches and trends",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Compare management approaches and evaluate a contemporary change such as remote coordination, automation or participative decision-making",
+          "required_evidence": "Theory comparison and supported forecast",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Reasoned critique and distinction between evidence and prediction. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Management approaches emphasize different ways of coordinating work and improving results. Compare approaches using evidence and context, then distinguish a supported forecast from a prediction. Avoid presenting a theory as universally best.",
+          "worked_example": "A tightly standardized routine may improve consistency, while participative problem solving may surface better ideas. Examine a current change such as automation or remote coordination and explain where your forecast is uncertain.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Functions work together",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Trace a business problem across purchasing, production, finance, marketing, administration and people functions",
+          "required_evidence": "Functional map and responsibility analysis",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. How functions interact and who is responsible. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Purchasing, production, finance, marketing, administration, research and people management have different responsibilities but depend on each other. Trace a problem across functions and identify who coordinates the response.",
+          "worked_example": "A campaign doubles demand. Marketing must communicate with purchasing, production, finance and staffing so the promise can be met. Show the responsibilities and the information each function needs.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Success, failure and measures",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Evaluate competing indicators across stakeholders and investigate a case",
+          "required_evidence": "Performance framework and success/failure analysis",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Balanced measures and supported causal claims. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Investigate reasons for organizational success or failure and compare measures for different stakeholders. Separate correlation from a supported explanation. A single profitable period cannot establish long-term success.",
+          "worked_example": "A retailer grows revenue while cash and customer satisfaction fall. Compare liquidity, margins, quality, staff retention and service before judging success, and investigate possible causes.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o5",
+          "title": "A current management challenge",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Investigate an ethical/social or organizational challenge with alternatives",
+          "required_evidence": "Case recommendation and stakeholder analysis",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Current evidence, ethical reasoning and consequences. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Choose a current ethical, social or organizational challenge and research competing perspectives. Compare alternatives, effects and responsibilities, then justify a recommendation. Update evidence rather than relying on an old example alone.",
+          "worked_example": "Consider the use of automation in customer service. Compare accessibility, staff development, privacy, cost and service quality using current sources. Explain safeguards and how the decision would be reviewed.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "MAM3130",
+      "name": "Agriculture Marketing",
+      "level": 30,
+      "core": false,
+      "order": 99,
+      "scenario": "Harvest to Market",
+      "tool": "agriculture",
+      "venture": "garden",
+      "brief": "Compare open and supply-managed teaching models, then research current real systems without assuming that every commodity follows the same rules.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Investigate open agriculture marketing factors",
+          "criteria": "Relationships and limitations understood",
+          "evidence": "Market investigation and interpreted scenario results"
+        },
+        {
+          "id": "2",
+          "title": "Describe marketing in a closed, supply-managed structure",
+          "criteria": "Accurate roles and mechanisms; rules not overgeneralized",
+          "evidence": "System explanation and example comparison"
+        },
+        {
+          "id": "3",
+          "title": "Assess open and supply-managed systems' costs/benefits",
+          "criteria": "Balanced trade-offs and evidence",
+          "evidence": "Stakeholder comparison and supported judgement"
+        },
+        {
+          "id": "4",
+          "title": "Explain production and marketing decisions under either structure",
+          "criteria": "Fit between product, system and chosen actions",
+          "evidence": "Production/marketing decision record"
+        },
+        {
+          "id": "5",
+          "title": "Develop and present an agricultural marketing plan",
+          "criteria": "A coherent strategy justified within the selected structure",
+          "evidence": "Marketing plan, presentation and response to feedback"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Open-market forces",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Model supply/demand shocks, quality, consumer preferences, processing, competition and transport",
+          "required_evidence": "Market investigation and interpreted scenario results",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Relationships and limitations understood. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "In an open-market teaching model, supply, demand, quality, consumer preferences, weather, technology, competition and transport influence prices and decisions. Explain shifts rather than assuming a price change has only one cause.",
+          "worked_example": "A poor harvest reduces available produce while demand stays similar. Compare the resulting pressure on prices with a case where customer preferences change. State which assumptions the model holds constant.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o2",
+          "title": "Supply-managed systems",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Study a clearly defined teaching model and sourced real examples; compare how producers enter and market products",
+          "required_evidence": "System explanation and example comparison",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Accurate roles and mechanisms; rules not overgeneralized. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "A supply-managed system uses arrangements that influence production and marketing, such as quotas or coordinated market structures. Specific mechanisms and commodities differ. Use the model to ask questions, then check current official real-world sources.",
+          "worked_example": "Compare an unrestricted produce case with a fictional quota-limited case. The model is not a statement of Canadian law or a rule applying to every agricultural product. Research who sets limits and how producers participate in a real example.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o3",
+          "title": "Compare stakeholder effects",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Compare effects on producers, customers, prices, stability and access",
+          "required_evidence": "Stakeholder comparison and supported judgement",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Balanced trade-offs and evidence. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Compare open and supply-managed systems for producers, consumers, prices, stability, entry and choice. Identify benefits, costs and trade-offs with evidence. A supported judgement can differ depending on the stated goals.",
+          "worked_example": "A production limit may stabilize a teaching case while restricting entry for a new producer. Compare effects on existing producers, new entrants and consumers rather than labelling one system simply good or bad.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o4",
+          "title": "Product constraints affect choices",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Respond to perishability, quality, finance, timing and distribution constraints",
+          "required_evidence": "Production/marketing decision record",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. Fit between product, system and chosen actions. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Perishability, quality, financing, timing and transport affect what can be produced and marketed. Investigate relevant policies and rules for the real example instead of copying the fantasy model. Compare viable marketing alternatives.",
+          "worked_example": "Fresh produce may suit a nearby direct sale while a processed product can travel farther. Compare cash, shelf life, transport and buyer requirements before selecting the channel.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        },
+        {
+          "id": "o5",
+          "title": "Present a coherent marketing plan",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Combine market research, product decisions, distribution and promotion",
+          "required_evidence": "Marketing plan, presentation and response to feedback",
+          "prompt": "Show or describe your work, explain the choices and evidence, and identify a limitation or revision. A coherent strategy justified within the selected structure. You may cite a class demonstration or oral evidence for your teacher to confirm.",
+          "lesson": "Combine research, product decisions, market position, pricing, distribution and promotion for a specific agricultural/horticultural offering. Name the chosen structure and explain how it affects the plan. Present, receive feedback and revise.",
+          "worked_example": "Plan a herb basket or processed fruit product using direct sale, a cooperative or another researched route. Explain quality, timing, margin, promotion and how you would adapt the product to customer feedback.",
+          "check": "What evidence would support your conclusion, and what could change it?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Canada \u2014 research and business intelligence",
+          "url": "https://www.canada.ca/en/services/business/research.html",
+          "use": "Optional real-world research; identify relevance to your context."
+        },
+        {
+          "title": "BDC \u2014 cash-flow planning",
+          "url": "https://www.bdc.ca/en/articles-tools/money-finance/manage-finances/making-projection-coming-year",
+          "use": "Compare the teaching forecast with real planning guidance."
+        },
+        {
+          "title": "Alberta \u2014 employer responsibilities",
+          "url": "https://www.alberta.ca/employer-responsibilities",
+          "use": "For a real Alberta workplace research task; use current rules and a suitable source for other jurisdictions."
+        },
+        {
+          "title": "Farm Products Council of Canada \u2014 supply management",
+          "url": "https://www.canada.ca/en/farm-products-council/services/supply-management.html",
+          "use": "Research the real system and the commodities covered; distinguish it from the simplified quota case."
+        }
+      ],
+      "subject": "Business",
+      "requires": []
+    },
+    {
+      "code": "DES1020",
+      "name": "The Design Process",
+      "level": 10,
+      "core": false,
+      "subject": "Design",
+      "order": 14,
+      "scenario": "Hero with a purpose",
+      "tool": "creator",
+      "creator": "hero",
+      "venture": "kitchen",
+      "brief": "Design an original playable hero for an identified player need. Compare rough alternatives, build a prototype, test against your criteria and present a supported revision. The work and design process are the main evidence.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify the steps in the design process",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "apply the steps in the design process through production of a designed solution",
+          "criteria": "Relevant practical evidence, accurate reasoning and a supported judgement against the main outcome.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "present a portfolio-ready drawing, rendering or model that the student produced",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "4",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "5",
+          "title": "apply consistent and appropriate work station routines",
+          "criteria": "Teacher-confirmed observation or other sufficient evidence of consistent appropriate practice.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "criteria": "Relevant demonstrated competencies with individual evidence or teacher-confirmed observation.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "criteria": "A specific, supported personal connection and an appropriate next step.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Identify the steps in the design process",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Identify the steps in the design process. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "A design process connects an identified problem, investigation, alternative ideas, a justified decision, production and evaluation. Real projects may return to an earlier step after a test; explain the purpose of the steps rather than memorising a single diagram.",
+          "worked_example": "A hero fails a readability test. Returning to the silhouette sketch is a purposeful design revision, not a failure to follow the process.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Apply the steps in the design process through production of a designed solution",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Apply the steps in the design process through production of a designed solution. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Apply the process to a real design need. Let your brief and criteria guide choices, build an inspectable prototype and compare the result with the intended solution. Preserve enough process evidence to explain why the result changed.",
+          "worked_example": "A slow tank hero needs a readable wind-up. Prototype two poses, test recognition with a peer and revise the stronger idea.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o4",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o5",
+          "title": "Workstation practice",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Demonstrate your routines and briefly identify the evidence your teacher can confirm.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Demonstrate suitable workstation, equipment and file practices during your work. A claim in a text box is not a substitute for observation.",
+          "worked_example": "The teacher observes suitable posture, breaks and organised files across the working session, then references that observation in the assessment.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o6",
+          "title": "Competencies in practice",
+          "outcomes": [
+            "6"
+          ],
+          "activity": "Demonstrate relevant competencies through the project and reference work or class observation.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Communication, information use, problem solving and responsible work should be visible in the project process. Use the experiences you actually had; this is not a separate checklist of every supporting example.",
+          "worked_example": "A pair divides tasks, records a test clearly and revises after disagreement. The teacher observes each student\u2019s contribution, rather than awarding both the same result automatically.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o7",
+          "title": "Your next pathway",
+          "outcomes": [
+            "7"
+          ],
+          "activity": "Make a short personal connection using your actual experience in this module.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Connect this work to your interests, strengths, resources and a realistic next step. A specific connection is more useful than naming many careers.",
+          "worked_example": "After improving an animation, a student identifies timing as a strength and chooses a motion-design exercise as the next step.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "DES1030",
+      "name": "2-D Design 1",
+      "level": 10,
+      "core": false,
+      "subject": "Design",
+      "order": 15,
+      "scenario": "A readable four-pose hero",
+      "tool": "creator",
+      "creator": "hero",
+      "venture": "kitchen",
+      "brief": "Create readable, coordinated 2-D hero artwork at an appropriate game scale. Use suitable tools and design choices, solve the visual brief and present the work. Poses and supporting graphics can show consistency; assess the main outcomes rather than a separate checklist of tool operations.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and practise 2-D design techniques within the parameters of a design brief to appropriate scale",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "identify and use tools and materials common to 2-D design",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "identify, select and use elements and principles of design in project activities",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "4",
+          "title": "use 2-D design techniques to solve simple design problems",
+          "criteria": "Relevant practical evidence, accurate reasoning and a supported judgement against the main outcome.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "5",
+          "title": "produce and present a portfolio-ready drawing, image or rendering",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "6",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "7",
+          "title": "apply consistent and appropriate work station routines",
+          "criteria": "Teacher-confirmed observation or other sufficient evidence of consistent appropriate practice.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "demonstrate basic competencies",
+          "criteria": "Relevant demonstrated competencies with individual evidence or teacher-confirmed observation.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "9",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "criteria": "A specific, supported personal connection and an appropriate next step.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Identify and practise 2-d design techniques within the parameters of a design brief to appropriate scale",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Identify and practise 2-d design techniques within the parameters of a design brief to appropriate scale. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Work within a 2-D brief using an appropriate scale and technique. State the output size, audience and visual problem, then make the image readable in that context. Sketches, shapes and pixel or vector work are possible methods.",
+          "worked_example": "A detailed helmet disappears at game scale. A stronger outline and a simple highlight communicate more clearly at 64 pixels.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Identify and use tools and materials common to 2-d design",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Identify and use tools and materials common to 2-d design. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Choose tools and materials for the job and demonstrate their use in the actual work. Compare relevant strengths and limitations. An editable source can show more than a written list of tool names.",
+          "worked_example": "Raster painting suits a textured cloak; independent vector shapes suit a scalable emblem. Show the sources and explain the decision.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Identify, select and use elements and principles of design in project activities",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Identify, select and use elements and principles of design in project activities. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Elements are visual ingredients such as line, shape, value, colour, texture and space. Principles describe relationships such as contrast, balance, emphasis, rhythm, proportion and unity. Select what helps the brief and explain its visible effect.",
+          "worked_example": "A bright face against a dark cloak creates emphasis, while repeated edge shapes make four poses feel related.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o4",
+          "title": "Use 2-d design techniques to solve simple design problems",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Use 2-d design techniques to solve simple design problems. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Solve the stated visual problem and test whether the design communicates. A revision should respond to evidence, not merely add detail. Compare the result at the intended size and against relevant backgrounds.",
+          "worked_example": "Players miss the attack direction. Adjust the leading arm and negative space, then ask another player to identify the pose.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o5",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o6",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "6"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o7",
+          "title": "Workstation practice",
+          "outcomes": [
+            "7"
+          ],
+          "activity": "Demonstrate your routines and briefly identify the evidence your teacher can confirm.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Demonstrate suitable workstation, equipment and file practices during your work. A claim in a text box is not a substitute for observation.",
+          "worked_example": "The teacher observes suitable posture, breaks and organised files across the working session, then references that observation in the assessment.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o8",
+          "title": "Competencies in practice",
+          "outcomes": [
+            "8"
+          ],
+          "activity": "Demonstrate relevant competencies through the project and reference work or class observation.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Communication, information use, problem solving and responsible work should be visible in the project process. Use the experiences you actually had; this is not a separate checklist of every supporting example.",
+          "worked_example": "A pair divides tasks, records a test clearly and revises after disagreement. The teacher observes each student\u2019s contribution, rather than awarding both the same result automatically.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o9",
+          "title": "Your next pathway",
+          "outcomes": [
+            "9"
+          ],
+          "activity": "Make a short personal connection using your actual experience in this module.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Connect this work to your interests, strengths, resources and a realistic next step. A specific connection is more useful than naming many careers.",
+          "worked_example": "After improving an animation, a student identifies timing as a strength and chooses a motion-design exercise as the next step.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "DES1020"
+      ],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "DES2035",
+      "name": "2-D Design 2",
+      "level": 20,
+      "core": false,
+      "subject": "Design",
+      "order": 16,
+      "scenario": "Build a world worth exploring",
+      "tool": "creator",
+      "creator": "realm",
+      "venture": "kitchen",
+      "brief": "Plan and build a playable realm with a clear purpose, mood and route. Use coordinated objects and layout decisions to communicate the vision, test the result and present a meaningful critique or revision. Choose the amount of artwork needed to demonstrate the main outcomes.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "plan and produce solutions to 2-D design briefs",
+          "criteria": "An original, inspectable solution that responds to the brief and is presented at a useful scale.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "incorporate the elements and principles of design to achieve the design solution",
+          "criteria": "Relevant practical evidence, accurate reasoning and a supported judgement against the main outcome.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "produce and present a portfolio-ready drawing, image or rendering",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Plan and produce solutions to 2-d design briefs",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Plan and produce solutions to 2-d design briefs. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "A 2-D design solution should connect the brief, composition and the route the player experiences. Establish the vision before production, coordinate objects, and use contrast and spacing to guide movement.",
+          "worked_example": "A ruined courtyard needs a clear route to a tower. Use three coordinated props, a value contrast along the path and an obvious landmark. A peer takes a wrong turn, so revise the layout and test again.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Incorporate the elements and principles of design to achieve the design solution",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Incorporate the elements and principles of design to achieve the design solution. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "A 2-D design solution should connect the brief, composition and the route the player experiences. Establish the vision before production, coordinate objects, and use contrast and spacing to guide movement.",
+          "worked_example": "A ruined courtyard needs a clear route to a tower. Use three coordinated props, a value contrast along the path and an obvious landmark. A peer takes a wrong turn, so revise the layout and test again.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "DES1030"
+      ],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "COM1005",
+      "name": "Visual Composition",
+      "level": 10,
+      "core": false,
+      "subject": "Graphics & Animation",
+      "order": 17,
+      "scenario": "One message, different media",
+      "tool": "creator",
+      "creator": "media",
+      "venture": "kitchen",
+      "brief": "Create and present visual compositions in a variety of media for an intended audience. Discuss composition and typography, credit sources and participate in critique. A game photo, graphic and animation are useful options; the main outcomes determine sufficient evidence.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and discuss the elements and principles of design",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "discuss typography as it relates to the use of text in visual messages",
+          "criteria": "Relevant practical evidence, accurate reasoning and a supported judgement against the main outcome.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "produce visual compositions using a variety of media where elements and principles have an identifiable impact on the message",
+          "criteria": "An original, inspectable solution that responds to the brief and is presented at a useful scale.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "4",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "5",
+          "title": "present a selection of work completed in this course to an audience",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "6",
+          "title": "participate in a critique or an assessment of compositions created by others",
+          "criteria": "Specific, constructive analysis connected to the intended message.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "7",
+          "title": "apply consistent and appropriate work station routines",
+          "criteria": "Teacher-confirmed observation or other sufficient evidence of consistent appropriate practice.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "demonstrate basic competencies",
+          "criteria": "Relevant demonstrated competencies with individual evidence or teacher-confirmed observation.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "9",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "criteria": "A specific, supported personal connection and an appropriate next step.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Identify and discuss the elements and principles of design",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Identify and discuss the elements and principles of design. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Discuss how visual elements and their relationships affect a composition. Refer to the audience, intended message and visible evidence. Vocabulary helps explain an effect; naming every principle is not the assessment goal.",
+          "worked_example": "An empty courtyard around one small figure suggests isolation. Cropping tightly changes the message to the figure\u2019s expression.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Discuss typography as it relates to the use of text in visual messages",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Discuss typography as it relates to the use of text in visual messages. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Typography uses the design and arrangement of text to communicate. Consider hierarchy, readability, spacing, alignment and the relationship between type and imagery. Choose type for the audience and context, then compare it at the intended viewing size.",
+          "worked_example": "A decorative title catches attention, but the date needs a simpler readable face. Reduced contrast makes the date disappear on a phone-sized proof.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Produce visual compositions using a variety of media where elements and principles have an identifiable impact on the message",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Produce visual compositions using a variety of media where elements and principles have an identifiable impact on the message. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Produce visual compositions in varied media where design decisions have an identifiable effect on the message. A photo, graphic, animation or other teacher-approved medium can show different strengths. Explain what each communicates through the actual work.",
+          "worked_example": "A framed screenshot builds atmosphere, a graphic clarifies a faction identity, and an animation shows the action. Each uses different visual choices for its intended audience.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o4",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o5",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o6",
+          "title": "Useful peer critique",
+          "outcomes": [
+            "6"
+          ],
+          "activity": "Participate in a critique and record the relevant feedback or teacher observation.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Critique the effect of another composition on its intended audience. Refer to a visible feature and explain the effect; taste alone is not an evaluation.",
+          "worked_example": "The title blends into the sky. Explain how a value change could improve hierarchy, then let the author decide how to respond.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o7",
+          "title": "Workstation practice",
+          "outcomes": [
+            "7"
+          ],
+          "activity": "Demonstrate your routines and briefly identify the evidence your teacher can confirm.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Demonstrate suitable workstation, equipment and file practices during your work. A claim in a text box is not a substitute for observation.",
+          "worked_example": "The teacher observes suitable posture, breaks and organised files across the working session, then references that observation in the assessment.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o8",
+          "title": "Competencies in practice",
+          "outcomes": [
+            "8"
+          ],
+          "activity": "Demonstrate relevant competencies through the project and reference work or class observation.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Communication, information use, problem solving and responsible work should be visible in the project process. Use the experiences you actually had; this is not a separate checklist of every supporting example.",
+          "worked_example": "A pair divides tasks, records a test clearly and revises after disagreement. The teacher observes each student\u2019s contribution, rather than awarding both the same result automatically.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o9",
+          "title": "Your next pathway",
+          "outcomes": [
+            "9"
+          ],
+          "activity": "Make a short personal connection using your actual experience in this module.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Connect this work to your interests, strengths, resources and a realistic next step. A specific connection is more useful than naming many careers.",
+          "worked_example": "After improving an animation, a student identifies timing as a strength and chooses a motion-design exercise as the next step.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "COM1035",
+      "name": "Graphics Tools",
+      "level": 10,
+      "core": false,
+      "subject": "Graphics & Animation",
+      "order": 18,
+      "scenario": "Raster and vector identity",
+      "tool": "creator",
+      "creator": "graphic",
+      "venture": "kitchen",
+      "brief": "Compare appropriate graphics applications, create raster and vector work, organise source and export files, and present a coherent result. Keep the editable work visible; a short explanation supports the practical evidence.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "investigate graphic programs",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "select and use appropriate applications to create basic vector and raster graphic images",
+          "criteria": "An original, inspectable solution that responds to the brief and is presented at a useful scale.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "organize and manage image files using correct file conventions",
+          "criteria": "Relevant practical evidence, accurate reasoning and a supported judgement against the main outcome.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "4",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "5",
+          "title": "present a selection of work completed in this course to an audience",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "6",
+          "title": "apply consistent and appropriate work station routines",
+          "criteria": "Teacher-confirmed observation or other sufficient evidence of consistent appropriate practice.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "demonstrate basic competencies",
+          "criteria": "Relevant demonstrated competencies with individual evidence or teacher-confirmed observation.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "criteria": "A specific, supported personal connection and an appropriate next step.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Investigate graphic programs",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Investigate graphic programs. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Investigate graphics applications through their relevant capabilities, limitations and working context. A useful comparison explains which application suits the task and why; the most complicated application is not always the best choice.",
+          "worked_example": "Compare the Studio\u2019s small vector composer with a full vector editor and its raster painter. Identify the task each can complete and what would require an external tool.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Select and use appropriate applications to create basic vector and raster graphic images",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Select and use appropriate applications to create basic vector and raster graphic images. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Raster images store pixels; vector images store shapes and paths. Use appropriate applications to create original basic work in both forms. Inspect the editable source and compare what happens when the result is scaled or exported.",
+          "worked_example": "Build an emblem from independently movable shapes in Vector Studio and paint a matching prop in Object Lab. Compare SVG source with PNG exports.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Organize and manage image files using correct file conventions",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Organize and manage image files using correct file conventions. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Organise and manage editable sources and exports so another person can find and use the right files. Use meaningful naming and suitable format/settings. A flattened export and its editable source serve different purposes.",
+          "worked_example": "Keep a clearly named source, an approved revision and a correctly sized game PNG. Explain which file a teammate should edit and which should install.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o4",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o5",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o6",
+          "title": "Workstation practice",
+          "outcomes": [
+            "6"
+          ],
+          "activity": "Demonstrate your routines and briefly identify the evidence your teacher can confirm.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Demonstrate suitable workstation, equipment and file practices during your work. A claim in a text box is not a substitute for observation.",
+          "worked_example": "The teacher observes suitable posture, breaks and organised files across the working session, then references that observation in the assessment.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o7",
+          "title": "Competencies in practice",
+          "outcomes": [
+            "7"
+          ],
+          "activity": "Demonstrate relevant competencies through the project and reference work or class observation.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Communication, information use, problem solving and responsible work should be visible in the project process. Use the experiences you actually had; this is not a separate checklist of every supporting example.",
+          "worked_example": "A pair divides tasks, records a test clearly and revises after disagreement. The teacher observes each student\u2019s contribution, rather than awarding both the same result automatically.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o8",
+          "title": "Your next pathway",
+          "outcomes": [
+            "8"
+          ],
+          "activity": "Make a short personal connection using your actual experience in this module.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Connect this work to your interests, strengths, resources and a realistic next step. A specific connection is more useful than naming many careers.",
+          "worked_example": "After improving an animation, a student identifies timing as a strength and chooses a motion-design exercise as the next step.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "COM1005"
+      ],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "COM1145",
+      "name": "Animation 1",
+      "level": 10,
+      "core": false,
+      "subject": "Graphics & Animation",
+      "order": 19,
+      "scenario": "Motion that communicates",
+      "tool": "creator",
+      "creator": "animation",
+      "venture": "kitchen",
+      "brief": "Animate one readable game action: plan key poses, create a short sequence, add or justify audio, compare timing, present and revise after feedback. Also compare at least THREE industry animation styles.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "identify and describe the fundamental concepts of the illusion of movement through a minimum of three animation styles used in the animation industry",
+          "criteria": "An accurate explanation grounded in the student\u2019s own work or a suitable comparison.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "produce short animation assignment(s)",
+          "criteria": "An original, inspectable solution that responds to the brief and is presented at a useful scale.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "4",
+          "title": "present a selection of work completed in this course to an audience",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "5",
+          "title": "apply consistent and appropriate work station routines",
+          "criteria": "Teacher-confirmed observation or other sufficient evidence of consistent appropriate practice.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "criteria": "Relevant demonstrated competencies with individual evidence or teacher-confirmed observation.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "criteria": "A specific, supported personal connection and an appropriate next step.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Identify and describe the fundamental concepts of the illusion of movement through a minimum of three animation styles used in the animation industry",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Identify and describe the fundamental concepts of the illusion of movement through a minimum of three animation styles used in the animation industry. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Compare at least three industry animation styles, as required by this main outcome. For example, drawn/cel animation changes drawings, stop motion photographs physical changes, and computer animation changes digital artwork or models. Explain how successive frames create perceived movement and how production differs.",
+          "worked_example": "The same wave can be made with drawings, a photographed clay figure or a digital rig. Compare frame creation, timing choices and the practical production process.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Produce short animation assignment(s)",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Produce short animation assignment(s). Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Plan and produce a short animation that communicates an action. Use a storyboard or key poses, choose timing and a suitable technique, and test the motion at its intended size. Sound can support the message where appropriate.",
+          "worked_example": "A ram crouches, strikes and recovers. Compare a long anticipation with a shorter one, then use audience feedback to refine readability.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o4",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o5",
+          "title": "Workstation practice",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Demonstrate your routines and briefly identify the evidence your teacher can confirm.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Demonstrate suitable workstation, equipment and file practices during your work. A claim in a text box is not a substitute for observation.",
+          "worked_example": "The teacher observes suitable posture, breaks and organised files across the working session, then references that observation in the assessment.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o6",
+          "title": "Competencies in practice",
+          "outcomes": [
+            "6"
+          ],
+          "activity": "Demonstrate relevant competencies through the project and reference work or class observation.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Communication, information use, problem solving and responsible work should be visible in the project process. Use the experiences you actually had; this is not a separate checklist of every supporting example.",
+          "worked_example": "A pair divides tasks, records a test clearly and revises after disagreement. The teacher observes each student\u2019s contribution, rather than awarding both the same result automatically.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o7",
+          "title": "Your next pathway",
+          "outcomes": [
+            "7"
+          ],
+          "activity": "Make a short personal connection using your actual experience in this module.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Connect this work to your interests, strengths, resources and a realistic next step. A specific connection is more useful than naming many careers.",
+          "worked_example": "After improving an animation, a student identifies timing as a strength and chooses a motion-design exercise as the next step.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "COM1005"
+      ],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "COM2035",
+      "name": "Raster Graphics 1",
+      "level": 20,
+      "core": false,
+      "subject": "Graphics & Animation",
+      "order": 20,
+      "scenario": "A coordinated raster prop set",
+      "tool": "creator",
+      "creator": "object",
+      "venture": "kitchen",
+      "brief": "Create and present a coordinated raster solution with editable source and suitable exports. Use techniques such as layers, selections or masks where they help your brief. These are teaching examples, not separate compulsory grade gates. Include appropriate credits and a concise presentation.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "create raster images using graphic applications",
+          "criteria": "An original, inspectable solution that responds to the brief and is presented at a useful scale.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "present a selection of work completed in this course to an audience",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Create raster images using graphic applications",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Create raster images using graphic applications. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Create a raster solution using appropriate graphic applications and retain its editable source. Layers, selections, masks and colour decisions are useful techniques when they serve the brief. Judge the practical result and purposeful application rather than checking off every example tool.",
+          "worked_example": "Paint coordinated realm props in Object Lab, retain their source layers and export the result at game scale. Use a mask or selection where it solves a visible problem.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "COM1035"
+      ],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "COM3035",
+      "name": "Raster Graphics 2",
+      "level": 30,
+      "core": false,
+      "subject": "Graphics & Animation",
+      "order": 21,
+      "scenario": "Advanced art with a visible revision",
+      "tool": "creator",
+      "creator": "object",
+      "venture": "kitchen",
+      "brief": "Create a refined advanced raster solution, present suitable proofs and explain a purposeful revision. Show editable sources and credits. Choose techniques that serve the brief; use external applications for teacher-selected workflows the Studio does not support. Grade the main outcomes, not every example operation.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "create raster images using graphic applications",
+          "criteria": "An original, inspectable solution that responds to the brief and is presented at a useful scale.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "identify copyright restrictions and permissions and put them into practice",
+          "criteria": "Accurate source/permission record connected to the actual work.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "present a selection of work completed in this course to an audience",
+          "criteria": "A suitable, coherent presentation of the student\u2019s work with relevant supporting explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Create raster images using graphic applications",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Create raster images using graphic applications. Use the practical project as evidence; explain the choices and relevant test or critique.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Create an advanced raster solution with purposeful control, refinement and appropriate proofing. Show before/after evidence and editable sources. A custom brush, tonal correction or layered mask may help; external applications remain appropriate for workflows the Studio does not implement.",
+          "worked_example": "Refine a coordinated realm pack after a mobile-size proof reveals weak contrast. Show what changed, how the source was edited and why the revision improves the brief.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Authorship and permissions",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Show your credits and explain the decisions needed to use sources appropriately.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Distinguish your original work from borrowed material. Explain the permission or licence and relevant restrictions. A short, accurate credit record supports the practical work.",
+          "worked_example": "An icon has a stated attribution licence. Credit its creator and licence, record your changes, and check whether the intended use is allowed. Do not label downloaded work as your own.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Present and explain the work",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Present the relevant finished work and inspectable source; explain one important decision or revision.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Let the finished work communicate first. Choose a suitable presentation, briefly explain an important choice, and use relevant audience feedback.",
+          "worked_example": "Show the playable realm at normal scale, point out one route decision and compare the revision after a peer\u2019s test.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "COM2035"
+      ],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "CSE1110",
+      "name": "Structured Programming 1",
+      "level": 10,
+      "core": false,
+      "subject": "Computer Science",
+      "order": 22,
+      "scenario": "From inputs to a working program",
+      "tool": "programming",
+      "creator": "program",
+      "venture": "kitchen",
+      "brief": "Write a SEQUENTIAL input \u2192 processing \u2192 output program in the IPO Workbench. Predict results, translate your algorithm, test success/failure data, debug and revise. Branching and loops are optional extensions, not required for this course.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "demonstrate introductory structured programming skills by writing sequential algorithms to solve problems involving input, processing and output",
+          "criteria": "A coherent sequential algorithm and accurate IPO explanation.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "2",
+          "title": "translate algorithms into source code, convert the source code into machine executable form, execute and debug, as required",
+          "criteria": "Source faithfully implements the algorithm; execution and debugging are demonstrated.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "3",
+          "title": "analyze and compare the results of the program with the intent of the algorithm and modify as required",
+          "criteria": "A supported comparison and a meaningful correction/retest, or justified confirmation of correctness.",
+          "evidence": "Practical work and a brief supporting explanation",
+          "observation": false
+        },
+        {
+          "id": "4",
+          "title": "demonstrate basic competencies",
+          "criteria": "Relevant demonstrated competencies with individual evidence or teacher-confirmed observation.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        },
+        {
+          "id": "5",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "criteria": "A specific, supported personal connection and an appropriate next step.",
+          "evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "observation": true
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Plan the sequential algorithm",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Define the problem and IPO data, write the sequence, and predict a result before running it.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Write the algorithm before the program. In a sequential IPO program, inputs are obtained before calculations and outputs follow the processing. Explain the distinction between source code, a translator/interpreter and execution. Predict results, debug, and rerun evidence after edits.",
+          "worked_example": "A damage calculator takes damage and number of hits, multiplies them and outputs the total. Predict 12 \u00d7 3 = 36; test zero hits and invalid data. Correct the mistaken addition operator, then rerun the same inputs.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o2",
+          "title": "Translate, execute and debug",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Write and run a sequential program; retain source and test cases. Explain how the Studio interpreter executes it and demonstrate debugging.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Write the algorithm before the program. In a sequential IPO program, inputs are obtained before calculations and outputs follow the processing. Explain the distinction between source code, a translator/interpreter and execution. Predict results, debug, and rerun evidence after edits.",
+          "worked_example": "A damage calculator takes damage and number of hits, multiplies them and outputs the total. Predict 12 \u00d7 3 = 36; test zero hits and invalid data. Correct the mistaken addition operator, then rerun the same inputs.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o3",
+          "title": "Compare, revise and retest",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Compare predictions with outputs, diagnose a fault, revise and rerun the same tests.",
+          "required_evidence": "Practical work and a brief supporting explanation",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Write the algorithm before the program. In a sequential IPO program, inputs are obtained before calculations and outputs follow the processing. Explain the distinction between source code, a translator/interpreter and execution. Predict results, debug, and rerun evidence after edits.",
+          "worked_example": "A damage calculator takes damage and number of hits, multiplies them and outputs the total. Predict 12 \u00d7 3 = 36; test zero hits and invalid data. Correct the mistaken addition operator, then rerun the same inputs.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o4",
+          "title": "Competencies in practice",
+          "outcomes": [
+            "4"
+          ],
+          "activity": "Demonstrate relevant competencies through the project and reference work or class observation.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Communication, information use, problem solving and responsible work should be visible in the project process. Use the experiences you actually had; this is not a separate checklist of every supporting example.",
+          "worked_example": "A pair divides tasks, records a test clearly and revises after disagreement. The teacher observes each student\u2019s contribution, rather than awarding both the same result automatically.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        },
+        {
+          "id": "o5",
+          "title": "Your next pathway",
+          "outcomes": [
+            "5"
+          ],
+          "activity": "Make a short personal connection using your actual experience in this module.",
+          "required_evidence": "Relevant work and teacher-confirmed observation / discussion",
+          "prompt": "Show the work and add a short explanation where it helps the teacher judge this main outcome. Class presentation or observation may be confirmed by the teacher.",
+          "lesson": "Connect this work to your interests, strengths, resources and a realistic next step. A specific connection is more useful than naming many careers.",
+          "worked_example": "After improving an animation, a student identifies timing as a strength and chooses a motion-design exercise as the next step.",
+          "check": "What evidence demonstrates this outcome, and what did you change or learn?"
+        }
+      ],
+      "sources": [],
+      "requires": [],
+      "alignment": "Saved teacher-supplied main outcomes; teacher verifies local credit evidence. Supporting examples are not individual grade gates."
+    },
+    {
+      "code": "CSE1120",
+      "name": "Structured Programming 2",
+      "level": 10,
+      "core": false,
+      "subject": "Computer Science",
+      "order": 24,
+      "scenario": "Code a chain spell",
+      "tool": "programming",
+      "creator": "program",
+      "venture": "kitchen",
+      "brief": "Program the decisions and repeated actions of a spell. Plan how it selects targets, write source, run a visual test, compare predicted results and revise. One well-developed solution can provide evidence for all three main outcomes. Configuration sliders alone are not programming evidence.",
+      "outcomes": [
+        {
+          "id": "1",
+          "title": "Demonstrate basic structured programming skills by writing algorithms to solve problems involving selection and iteration",
+          "criteria": "An algorithm with appropriate decisions/repetition, coherent IPO flow and explained reasoning.",
+          "evidence": "Algorithm / IPO plan and explanation"
+        },
+        {
+          "id": "2",
+          "title": "Translate algorithms into source code, convert the source code into machine executable form, execute and debug as required",
+          "criteria": "An inspectable program that implements the algorithm, executed tests and demonstrated debugging; interpreter execution is explained accurately.",
+          "evidence": "Source code, test cases and demonstrated execution/debugging"
+        },
+        {
+          "id": "3",
+          "title": "Analyze and compare program results with the intent of the algorithm and modify as required",
+          "criteria": "Predictions compared with actual outputs, diagnosis and a supported revision/retest.",
+          "evidence": "Predictions, actual results and revision evidence"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "o1",
+          "title": "Plan the decisions and repetition",
+          "outcomes": [
+            "1"
+          ],
+          "activity": "Plan target eligibility, selection, repetition and the total damage output before coding. Choose suitable tests.",
+          "required_evidence": "Algorithm / IPO plan and explanation",
+          "prompt": "Attach the relevant code/tests or practical work and briefly explain the main-outcome evidence. Do not complete a separate question for every curriculum subpoint.",
+          "lesson": "Selection chooses a path from a Boolean condition; iteration repeats a block. A changing accumulator can record a total, while a target search retains the best eligible candidate. Keep input, processing and output ordered. Crossroads translates source into an internal instruction tree and interprets it; it does not export a standalone native executable.",
+          "worked_example": "The sample spell considers three targets at distances 100, 180 and 260. With base damage 20, three jumps and a shield on the second target, it selects different targets and outputs 20 + 8 + 12 = 40. Try zero targets, one target, a smaller reach and an invalid loop count; predict the result before running.",
+          "check": "Did the code do what the algorithm intended? Which test would reveal a mistake that a normal three-target cast misses?"
+        },
+        {
+          "id": "o2",
+          "title": "Write, run and debug the spell",
+          "outcomes": [
+            "2"
+          ],
+          "activity": "Write source for the planned behaviour. Run it in Code Playground, inspect the visual cast and outputs, and diagnose errors.",
+          "required_evidence": "Source code, test cases and demonstrated execution/debugging",
+          "prompt": "Attach the relevant code/tests or practical work and briefly explain the main-outcome evidence. Do not complete a separate question for every curriculum subpoint.",
+          "lesson": "Selection chooses a path from a Boolean condition; iteration repeats a block. A changing accumulator can record a total, while a target search retains the best eligible candidate. Keep input, processing and output ordered. Crossroads translates source into an internal instruction tree and interprets it; it does not export a standalone native executable.",
+          "worked_example": "The sample spell considers three targets at distances 100, 180 and 260. With base damage 20, three jumps and a shield on the second target, it selects different targets and outputs 20 + 8 + 12 = 40. Try zero targets, one target, a smaller reach and an invalid loop count; predict the result before running.",
+          "check": "Did the code do what the algorithm intended? Which test would reveal a mistake that a normal three-target cast misses?"
+        },
+        {
+          "id": "o3",
+          "title": "Compare, revise and retest",
+          "outcomes": [
+            "3"
+          ],
+          "activity": "Compare normal, boundary and failure tests with predictions. Revise the source where needed and rerun the same data.",
+          "required_evidence": "Predictions, actual results and revision evidence",
+          "prompt": "Attach the relevant code/tests or practical work and briefly explain the main-outcome evidence. Do not complete a separate question for every curriculum subpoint.",
+          "lesson": "Selection chooses a path from a Boolean condition; iteration repeats a block. A changing accumulator can record a total, while a target search retains the best eligible candidate. Keep input, processing and output ordered. Crossroads translates source into an internal instruction tree and interprets it; it does not export a standalone native executable.",
+          "worked_example": "The sample spell considers three targets at distances 100, 180 and 260. With base damage 20, three jumps and a shield on the second target, it selects different targets and outputs 20 + 8 + 12 = 40. Try zero targets, one target, a smaller reach and an invalid loop count; predict the result before running.",
+          "check": "Did the code do what the algorithm intended? Which test would reveal a mistake that a normal three-target cast misses?"
+        }
+      ],
+      "sources": [],
+      "requires": [
+        "CSE1110"
+      ],
+      "alignment": "Main outcomes supplied by the teacher in this conversation. Subpoints are instructional examples, not separate compulsory assessments."
+    }
+  ],
+  "source_note": "Main outcomes supplied by the teacher; supporting subpoints inform examples, lessons and research rather than separate compulsory quizzes. This teaching pathway does not create provincial prerequisites or award school credit.",
+  "sources_checked": "2026-10-23",
+  "subjects": [
+    "Business",
+    "Design",
+    "Graphics & Animation",
+    "Computer Science"
+  ]
+}

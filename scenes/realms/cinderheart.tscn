@@ -6,7 +6,7 @@ position = Vector2(480,5360)
 [node name="ReturnGate" type="Marker2D" parent="Points"]
 position = Vector2(480,5360)
 [node name="Merchant" type="Marker2D" parent="Points"]
-position = Vector2(480,5360)
+position = Vector2(2540,5020)
 [node name="Boss" type="Marker2D" parent="Points"]
 position = Vector2(7700,2520)
 [node name="GroundPaint" type="Node2D" parent="."]

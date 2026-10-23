@@ -4317,6 +4317,91 @@
         "roe"
       ],
       "art_version": "198.25"
+    },
+    "siltglass_perch": {
+      "name": "Siltglass Perch",
+      "rarity": "Common",
+      "chance": 70,
+      "min_kg": 0.15,
+      "max_kg": 1.6,
+      "max_length": 40,
+      "habitat": "Floor 36 \u2022 Siltglass Cistern",
+      "color": "#c6b785",
+      "note": "Found only in this sealed Descent spring. A translucent flank reveals a pale mineral spine.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.37",
+      "art_realm": "descent36"
+    },
+    "amberbarbel": {
+      "name": "Amberbarbel",
+      "rarity": "Rare",
+      "chance": 19,
+      "min_kg": 0.7,
+      "max_kg": 4.8,
+      "max_length": 75,
+      "habitat": "Floor 36 \u2022 Siltglass Cistern",
+      "color": "#d49b49",
+      "note": "Found only in this sealed Descent spring. Long amber whiskers feel for cracks in the silt.",
+      "group": "school",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.37",
+      "art_realm": "descent36"
+    },
+    "faultline_ray": {
+      "name": "Faultline Ray",
+      "rarity": "Legendary",
+      "chance": 3,
+      "min_kg": 2.5,
+      "max_kg": 11,
+      "max_length": 125,
+      "habitat": "Floor 36 \u2022 Siltglass Cistern",
+      "color": "#7669a0",
+      "note": "Found only in this sealed Descent spring. Its broad folded fins slip between narrow fault seams.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.37",
+      "art_realm": "descent36"
+    },
+    "pressurefin_gar": {
+      "name": "Pressurefin Gar",
+      "rarity": "Very rare",
+      "chance": 9,
+      "min_kg": 1.8,
+      "max_kg": 9,
+      "max_length": 115,
+      "habitat": "Floor 57 \u2022 Pressurewell",
+      "color": "#537e92",
+      "note": "Found only in this sealed Descent spring. A long armored jaw and pressure-hardened scales.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.37",
+      "art_realm": "descent57"
+    },
+    "midnight_crown_eel": {
+      "name": "Midnight Crown Eel",
+      "rarity": "Mystical",
+      "chance": 1.2,
+      "min_kg": 3,
+      "max_kg": 18,
+      "max_length": 175,
+      "habitat": "Floor 57 \u2022 Pressurewell",
+      "color": "#7562b2",
+      "note": "Found only in this sealed Descent spring. A crown of pale sensory pores follows the darkness.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "art_version": "198.37",
+      "art_realm": "descent57"
     }
   },
   "pools": {
@@ -5077,6 +5162,41 @@
         1880
       ],
       "wait": 2.7
+    },
+    "descent36_spring": {
+      "name": "Floor 36 \u2022 Siltglass Cistern",
+      "region": "descent36",
+      "bank": [
+        460,
+        460
+      ],
+      "water": [
+        580,
+        460
+      ],
+      "fish": [
+        "siltglass_perch",
+        "amberbarbel",
+        "faultline_ray"
+      ],
+      "spring": true
+    },
+    "descent57_spring": {
+      "name": "Floor 57 \u2022 Pressurewell",
+      "region": "descent57",
+      "bank": [
+        460,
+        460
+      ],
+      "water": [
+        580,
+        460
+      ],
+      "fish": [
+        "pressurefin_gar",
+        "midnight_crown_eel"
+      ],
+      "spring": true
     }
   },
   "legacy_pool_fish": {

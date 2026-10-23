@@ -9,7 +9,7 @@ const DOOR=Vector2(1405,2660)
 const TREE=Vector2(1290,2350)
 const TREES=[Vector2(1025,2310),Vector2(1035,2540),Vector2(1180,2715),Vector2(1450,2780),Vector2(1780,2140)]
 const GOODS=["honeygrain","moonmoth","saltflash","kelp_crumble","roe"]
-const CARGO=[Rect2(1540,2510,32,28),Rect2(1543,2550,38,31),Rect2(1520,2670,34,28),Rect2(1480,2705,42,30),Rect2(2015,2160,36,30)]
+const CARGO=[Rect2(1490,2745,32,28),Rect2(1510,2400,38,31),Rect2(1520,2670,34,28),Rect2(1480,2705,42,30),Rect2(2015,2160,36,30)]
 const ROUTE=[Vector2(1585,2355),Vector2(1605,2240),Vector2(2000,2220),Vector2(2220,2250),Vector2(2000,2220),Vector2(1605,2240),Vector2(1585,2355),Vector2(1565,2680),Vector2(1660,2740),Vector2(2140,2745),Vector2(2220,2705),Vector2(2140,2745),Vector2(1660,2740),Vector2(1565,2680)]
 const LAMPS=[Vector2(1595,2255),Vector2(1660,2725),Vector2(2110,2725),Vector2(2195,2250)]
 var game:Node
@@ -117,12 +117,8 @@ static func person(c:Node2D,at:Vector2,coat:Color,guard:bool,t:float,walking:boo
  else:
   c.draw_arc(at+Vector2(0,-36),12,PI,TAU,16,coat.lightened(.2),7,true);c.draw_line(at+Vector2(-12,-35),at+Vector2(13,-35),coat.lightened(.3),4)
   c.draw_rect(Rect2(at+Vector2(-8,-18),Vector2(16,20)),Color('#d3bc88'));c.draw_line(at+Vector2(6,-20),at+Vector2(13,-12),Color('#d8bb8f'),5)
-func draw_on(c:Node2D,cam:Vector2)->void:
- if not Rect2(cam,c.VIEW).grow(200).intersects(Rect2(1130,2130,1150,680)):return
- var t=shimmer;var hour=game.town_life.calendar.hour;var night=game.town_life.calendar.night_amount()
- # Streets are rendered by town_plan with the shared town path tiles.
- for at in TREES:
-  if Rect2(cam,c.VIEW).grow(150).has_point(at):c.draw_sprite("tree",at-Vector2(55,115),Vector2(110,145))
+func draw_cottage_source(c:Node2D,cam:Vector2)->void:
+ var night=game.town_life.calendar.night_amount()
  # Tidekeeper cottage: irregular shingles, chimney, window boxes, front porch.
  var h=HOME.position-cam;c.draw_rect(Rect2(h+Vector2(7,12),HOME.size),Color(0,0,0,.2));c.draw_rect(Rect2(h,HOME.size),Color('#c4b08b'));c.draw_rect(Rect2(h+Vector2(0,15),Vector2(210,14)),Color('#806b51'))
  for y in range(35,145,23):c.draw_line(h+Vector2(0,y),h+Vector2(210,y),Color('#9b8b6b'),2)
@@ -130,22 +126,12 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  for row in 4:
   var y=-37+row*14;c.draw_line(h+Vector2(30-row*12,y),h+Vector2(170+row*11,y),Color('#aaa08a'),3)
  c.draw_rect(Rect2(h+Vector2(157,-67),Vector2(25,58)),Color('#8c8174'))
- for n in 3:c.draw_circle(h+Vector2(169+sin(t+n)*6,-79-n*17-fposmod(t*8,17)),8+n*3,Color(.8,.8,.74,.17))
  for x in [28,158]:
   c.draw_rect(Rect2(h+Vector2(x,49),Vector2(29,38)),Color('#524d43'));c.draw_rect(Rect2(h+Vector2(x+3,52),Vector2(23,32)),Color('#efcb87') if night>.1 else Color('#7fadae'));c.draw_line(h+Vector2(x+14,50),h+Vector2(x+14,85),Color('#5e6558'),3);c.draw_line(h+Vector2(x,68),h+Vector2(x+29,68),Color('#5e6558'),3);c.draw_rect(Rect2(h+Vector2(x-4,87),Vector2(37,8)),Color('#766143'))
   for n in 4:c.draw_circle(h+Vector2(x+n*8,83),3,Color('#c3988e') if n%2 else Color('#92ab6c'))
  c.draw_rect(Rect2(h+Vector2(85,74),Vector2(40,71)),Color('#705944'));c.draw_circle(h+Vector2(116,112),2,Color('#e0c58b'));c.draw_rect(Rect2(h+Vector2(72,145),Vector2(66,20)),Color('#b19e7e'));c.draw_string(ThemeDB.fallback_font,h+Vector2(12,191),"TIDEKEEPER COTTAGE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#e9dabb'))
- # Ancient knot willow: bent trunk, swaying limbs and hanging lanterns.
- var tree=TREE-cam;var sway=sin(t*.8)*4
- c.draw_line(tree,tree+Vector2(-15,-82),Color('#655847'),28);c.draw_line(tree+Vector2(-15,-74),tree+Vector2(12,-131),Color('#786b53'),20)
- for side in [-1,1]:c.draw_line(tree+Vector2(-8,-82),tree+Vector2(side*60+sway,-115),Color('#786b53'),10)
- for n in 7:
-  var at=tree+Vector2(-83+n*27+sway*sin(n+1),-123-absf(sin(n*1.6))*32);c.draw_circle(at,35,Color('#547c63') if n%2 else Color('#6d906c'))
-  c.draw_arc(at+Vector2(0,10),26,.1,2.8,14,Color('#9cb58a',.6),2,true)
-  for k in 3:c.draw_line(at+Vector2(k*9-9,17),at+Vector2(k*9-9+sin(t+n)*4,44+k*7),Color('#82a17a'),2,true)
- c.draw_circle(tree+Vector2(-8,-37),11,Color('#473e36'));c.draw_arc(tree+Vector2(-8,-37),8,0,TAU,16,Color('#a08b64'),2,true)
- for pair in [[-45,-85],[49,-104]]:
-  var x=pair[0];var y=pair[1];var at=tree+Vector2(x+sin(t)*2,y);c.draw_line(at-Vector2(0,27),at,Color('#b1ac88'),1.5);c.draw_rect(Rect2(at-Vector2(5,0),Vector2(10,15)),Color('#eacb82') if night>.1 else Color('#b7ae85'));c.draw_rect(Rect2(at-Vector2(7,2),Vector2(14,3)),Color('#736348'))
+
+func draw_fittings_source(c:Node2D,cam:Vector2)->void:
  # Export crates with rope handles, stencilled fish and a net drying on the bank.
  for box in CARGO:
   var at=box.position-cam;c.draw_rect(Rect2(at+Vector2(3,4),box.size),Color(0,0,0,.2));c.draw_rect(Rect2(at,box.size),Color('#a78358'));c.draw_rect(Rect2(at,box.size),Color('#d4b681'),false,2);c.draw_line(at+Vector2(3,3),at+box.size-Vector2(3,3),Color('#70593e'),3);c.draw_line(at+Vector2(box.size.x-3,3),at+Vector2(3,box.size.y-3),Color('#70593e'),3);c.draw_circle(at+box.size*.5,4,Color('#d7c093'))
@@ -161,8 +147,6 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  var rack=Vector2(1270,2700)-cam
  for x in [0,78]:c.draw_line(rack+Vector2(x,0),rack+Vector2(x,-45),Color("#826d4f"),4)
  c.draw_line(rack-Vector2(3,40),rack+Vector2(81,-40),Color("#b4ad86"),2)
- for n in 4:
-  var q=rack+Vector2(12+n*18,-37);c.draw_line(q,q+Vector2(sin(t*1.2+n)*2,12),Color("#b7aa83"),1);c.draw_colored_polygon(PackedVector2Array([q+Vector2(-4,12),q+Vector2(0,22),q+Vector2(4,12),q+Vector2(0,8)]),Color("#91aaa1"))
  # Striped awning, specimen jars and specialist bait trays.
  var s=STALL.position-cam;c.draw_rect(Rect2(s+Vector2(0,36),Vector2(130,49)),Color('#816348'));c.draw_rect(Rect2(s+Vector2(-8,-30),Vector2(146,54)),Color('#477c7a'))
  for n in 7:
@@ -171,6 +155,31 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  for n in 3:
   var at=s+Vector2(23+n*39,33);c.draw_rect(Rect2(at-Vector2(10,13),Vector2(20,24)),Color('#9dc4b9'));c.draw_rect(Rect2(at-Vector2(10,16),Vector2(20,4)),Color('#d7c096'));c.draw_arc(at,6,0,TAU,14,[Color('#cbb17a'),Color('#b8b0db'),Color('#d59d7c')][n],3,true)
  c.draw_string(ThemeDB.fallback_font,s+Vector2(-4,-42),"EXOTIC BAIT • DAILY DELIVERY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#f4dfb5'))
+
+func draw_on(c:Node2D,cam:Vector2)->void:
+ if not Rect2(cam,c.VIEW).grow(200).intersects(Rect2(1130,2130,1150,680)):return
+ var t=shimmer;var hour=game.town_life.calendar.hour;var night=game.town_life.calendar.night_amount()
+ # Streets are rendered by town_plan with the shared town path tiles.
+ for at in TREES:
+  if Rect2(cam,c.VIEW).grow(150).has_point(at):c.draw_sprite("tree",at-Vector2(55,115),Vector2(110,145))
+ preload("res://scripts/town_art39.gd").draw(c,"marina_cottage_night" if night>.1 else "marina_cottage",cam)
+ var h=HOME.position-cam
+ for n in 3:c.draw_circle(h+Vector2(169+sin(t+n)*6,-79-n*17-fposmod(t*8,17)),8+n*3,Color(.8,.8,.74,.17))
+ # Ancient knot willow: bent trunk, swaying limbs and hanging lanterns.
+ var tree=TREE-cam;var sway=sin(t*.8)*4
+ c.draw_line(tree,tree+Vector2(-15,-82),Color('#655847'),28);c.draw_line(tree+Vector2(-15,-74),tree+Vector2(12,-131),Color('#786b53'),20)
+ for side in [-1,1]:c.draw_line(tree+Vector2(-8,-82),tree+Vector2(side*60+sway,-115),Color('#786b53'),10)
+ for n in 7:
+  var at=tree+Vector2(-83+n*27+sway*sin(n+1),-123-absf(sin(n*1.6))*32);c.draw_circle(at,35,Color('#547c63') if n%2 else Color('#6d906c'))
+  c.draw_arc(at+Vector2(0,10),26,.1,2.8,14,Color('#9cb58a',.6),2,true)
+  for k in 3:c.draw_line(at+Vector2(k*9-9,17),at+Vector2(k*9-9+sin(t+n)*4,44+k*7),Color('#82a17a'),2,true)
+ c.draw_circle(tree+Vector2(-8,-37),11,Color('#473e36'));c.draw_arc(tree+Vector2(-8,-37),8,0,TAU,16,Color('#a08b64'),2,true)
+ for pair in [[-45,-85],[49,-104]]:
+  var x=pair[0];var y=pair[1];var at=tree+Vector2(x+sin(t)*2,y);c.draw_line(at-Vector2(0,27),at,Color('#b1ac88'),1.5);c.draw_rect(Rect2(at-Vector2(5,0),Vector2(10,15)),Color('#eacb82') if night>.1 else Color('#b7ae85'));c.draw_rect(Rect2(at-Vector2(7,2),Vector2(14,3)),Color('#736348'))
+ preload("res://scripts/town_art39.gd").draw(c,"marina_fittings",cam)
+ var rack=Vector2(1270,2700)-cam
+ for n in 4:
+  var q=rack+Vector2(12+n*18,-37);c.draw_line(q,q+Vector2(sin(t*1.2+n)*2,12),Color("#b7aa83"),1);c.draw_colored_polygon(PackedVector2Array([q+Vector2(-4,12),q+Vector2(0,22),q+Vector2(4,12),q+Vector2(0,8)]),Color("#91aaa1"))
  var night_shift=hour<7 or hour>=20;person(c,TRADER-cam,Color('#7d719d') if night_shift else Color('#4d8e92'),false,t,false)
  c.draw_string(ThemeDB.fallback_font,TRADER-cam+Vector2(-20,27),"Lio • night shift" if night_shift else "Brin • bait trader",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color('#ead9ba'))
  for n in 2:

@@ -1,0 +1,12 @@
+{
+  "id": "hinge_conjurer",
+  "name": "Hinge Conjurer",
+  "sprite": "hinge_conjurer",
+  "health": 125,
+  "speed": 80,
+  "damage": 10,
+  "behaviour": "custom",
+  "custom_attack": "secret_door",
+  "aggro_range": 760,
+  "expansion_only": true
+}

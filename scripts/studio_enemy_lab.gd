@@ -31,7 +31,7 @@ func render()->void:
  if preload("res://scripts/education_access.gd").student():
   var learning_row=HBoxContainer.new();body.add_child(learning_row)
   workshop.button(learning_row,"Learning journal • record this design",func():workshop.game.legacy.learning_open())
-  workshop.button(learning_row,"Finalize & submit to active module",func():status.text=preload("res://scripts/studio_finalize.gd").submit("enemy",enemy,str(enemy.name)))
+  workshop.button(learning_row,"Freeze source for module",func():status.text=preload("res://scripts/studio_finalize.gd").submit("enemy",enemy,str(enemy.name)))
  workshop.button(head,"Journey",func():save_enemy();load("res://scripts/studio_showcase.gd").open(workshop))
  var samples=HBoxContainer.new();body.add_child(samples);preload("res://scripts/studio_examples.gd").picker(samples,"enemy",func(value:Dictionary):enemy=value;persist();render());UI.accent(workshop.button(samples,"Clear / Start fresh",func():preload("res://scripts/studio_examples.gd").confirm(self,func():enemy=Project.fresh();persist();render())))
  var info=UI.card(body,"MEET YOUR OPPONENT","Design → choose decisions → battle → record evidence. Tests never award profile progress.")

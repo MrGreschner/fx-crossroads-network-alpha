@@ -27,7 +27,7 @@ var tick=0.0
 var enabled_before=false
 func setup(owner:Node)->void:
  game=owner;layer=92
- var cfg=ConfigFile.new();cfg.load("user://fx_camera.cfg");normal_zoom=float(cfg.get_value("camera","zoom",1.0));if normal_zoom not in [.75,1.0,1.25]:normal_zoom=1.0
+ normal_zoom=1.0;zoom=1.0;framing=Vector2.ZERO
  var tree=get_tree()
  active=bool(tree.root.get_meta("fx_media_mode",false))
  var edge=Control.new();edge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);edge.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(edge);border=edge
@@ -39,14 +39,6 @@ func setup(owner:Node)->void:
  var title=Label.new();title.text="MEDIA CAMERA • F9 hide/show";box.add_child(title)
  var help=Label.new();help.text="F8 • photo (3-second timer)\nF9 • show/hide controls\nF10 • clean view for OBS\nUse the buttons below on touch devices.";box.add_child(help)
  var music=Button.new();music.text="Music Studio";box.add_child(music);music.pressed.connect(func():var studio=preload("res://scripts/music_studio.gd").new();game.add_child(studio);studio.setup(game))
- var row=HBoxContainer.new();box.add_child(row)
- for value in [.5,.75,1.0,1.25,1.5]:
-  var b=Button.new();b.text=str(value)+"×";b.custom_minimum_size=Vector2(57,36);row.add_child(b);b.pressed.connect(func():zoom=value;game.update_camera() if game.has_method("update_camera") else refresh_arcade())
- var arrows=HBoxContainer.new();box.add_child(arrows)
- for spec in [["←",Vector2(-80,0)],["↑",Vector2(0,-60)],["↓",Vector2(0,60)],["→",Vector2(80,0)]]:
-  var b=Button.new();b.text=spec[0];b.custom_minimum_size=Vector2(45,36);arrows.add_child(b);b.pressed.connect(func():framing=(framing+spec[1]).clamp(Vector2(-320,-240),Vector2(320,240));refresh_camera())
- var reset=Button.new();reset.text="Reset framing";box.add_child(reset);reset.pressed.connect(func():zoom=1;framing=Vector2.ZERO;refresh_camera())
- var capture=Button.new();capture.text="Photo & film tools";box.add_child(capture);capture.pressed.connect(open_tools)
  var hide_button=Button.new();hide_button.text="Minimize camera controls";box.add_child(hide_button);box.move_child(hide_button,1);hide_button.pressed.connect(func():control_visible=false;update_visible())
  restore_button=Button.new();restore_button.text="Camera • show controls";restore_button.position=Vector2(16,250);restore_button.custom_minimum_size=Vector2(210,40);add_child(restore_button);preload("res://scripts/top_button_style.gd").apply(restore_button);restore_button.pressed.connect(func():control_visible=true;update_visible())
  var stop=Button.new();stop.text="Exit Media mode";box.add_child(stop);stop.pressed.connect(func():clean_view=false;apply_clean(false);active=false;control_visible=false;get_tree().root.remove_meta("fx_media_mode");zoom=1;framing=Vector2.ZERO;refresh_camera();border.queue_redraw())
@@ -58,11 +50,8 @@ func dev()->bool:
  var session=get_tree().root.get_node_or_null("FXDevSession")
  return session!=null and session.active
 func enabled()->bool:return active or dev()
-func factor()->float:
- if game==null:return 1.0
- if game.has_method("spectating") and game.spectating():return 1.0
- if not enabled():return normal_zoom
- return zoom
+func factor()->float:return 1.0
+
 func offset()->Vector2:return Vector2.ZERO
 func screen_point(point:Vector2)->Vector2:return (point-offset())/factor()
 func world_mouse()->Vector2:return screen_point(game.get_global_mouse_position())+game.camera
@@ -217,8 +206,5 @@ func edit_reflection(shot_time:String)->void:
   dialog.queue_free())
  dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(600,280))
 
-func set_normal_zoom(value:float)->void:
- if value not in [.75,1.0,1.25]:return
- normal_zoom=value
- var cfg=ConfigFile.new();cfg.set_value("camera","zoom",value);cfg.save("user://fx_camera.cfg")
- refresh_camera()
+func set_normal_zoom(_value:float)->void:
+ normal_zoom=1.0;zoom=1.0;framing=Vector2.ZERO;refresh_camera()

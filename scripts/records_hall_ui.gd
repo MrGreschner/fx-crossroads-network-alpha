@@ -49,8 +49,17 @@ static func damage_leaders(parent:Node,rows:Array,award:String,empty_text:String
   label(detail,String.num(float(record.get("value",0)),0)+" damage",15,Color("#b5d1d8"))
 static func run_row(parent:Node,l:Node,record:Dictionary,title:String,result:String)->void:
  var line=HBoxContainer.new();line.name="RunRecord";line.add_theme_constant_override("separation",10);line.custom_minimum_size.y=58;parent.add_child(line)
+ var party=record.get("party",[])
+ if party is Array and party.size()>1:
+  var text=VBoxContainer.new();text.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(text);label(text,title+" • "+result,18)
+  for member in party:
+   var row=HBoxContainer.new();text.add_child(row);portrait(row,l,str(member.get("hero","")))
+   var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
+   label(details,str(member.get("name","Player")),17);G.label(details,str(l.game.characters.get(str(member.get("hero","")),{}).get("name","Hero not recorded")),14)
+  return
  var hero=str(record.get("hero",""));portrait(line,l,hero)
  var text=VBoxContainer.new();text.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(text)
  label(text,title+" • "+str(record.get("username","")),18)
  var hero_name=str(l.game.characters.get(hero,{}).get("name","Hero not recorded"))
  var description=G.label(text,result+"  •  "+hero_name,15);description.modulate=Color("#b9d3dc")
+ if str(record.get("record_route",""))=="coop":G.label(text,"Partner not recorded in this older result",13)

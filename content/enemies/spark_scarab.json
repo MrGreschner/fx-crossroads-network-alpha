@@ -1,0 +1,12 @@
+{
+  "id": "spark_scarab",
+  "name": "Volatile Spark Scarab",
+  "sprite": "spark_scarab",
+  "health": 32,
+  "speed": 185,
+  "damage": 7,
+  "behaviour": "custom",
+  "custom_attack": "volatile_bite",
+  "aggro_range": 760,
+  "expansion_only": true
+}

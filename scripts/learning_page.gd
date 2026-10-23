@@ -59,7 +59,7 @@ func setup(owner:Node,review:bool=false,received:Dictionary={})->void:
  var footer=HBoxContainer.new();body.add_child(footer);button(footer,"Download portfolio",download);button(footer,"Download marking report",func():game.hero_workshop.write_download(S.report(data),"crossroads-learning-report.md"))
  if not sample:button(footer,"Open portfolio file" if teacher else "Import teacher feedback",func():transfer.choose())
  if not teacher:
-  var actions=HBoxContainer.new();body.add_child(actions);button(actions,"Open Studio",func():finish();game.hero_workshop.open());button(actions,"Open Market",func():finish();legacy.commerce.open());button(actions,"Join teacher submission room",func():get_tree().root.get_node("FXEducationRoom").open())
+  var actions=HBoxContainer.new();body.add_child(actions);button(actions,"Open Studio",func():finish();game.hero_workshop.open());button(actions,"Business Academy",func():finish();game.open_business_academy());button(actions,"Join teacher submission room",func():get_tree().root.get_node("FXEducationRoom").open())
  link=preload("res://scripts/learning_share.gd").new();add_child(link);link.setup(self)
  render();UI.enter(panel)
 func label(parent:Node,t:String,n:int=17)->Label:
@@ -101,7 +101,7 @@ func render()->void:
    4:practice()
 func brief()->void:
  var m:Dictionary=S.catalog()[module];label(content,m.brief,18);label(content,"Prerequisite: "+str(m.prerequisite)+" • "+str(m.source),15)
- if module in preload("res://scripts/education_business.gd").MODULES:UI.accent(button(content,"Open "+preload("res://scripts/education_business.gd").TITLES[module],func():preload("res://scripts/education_business_page.gd").open(legacy,module,self)))
+ if module in preload("res://scripts/education_business.gd").MODULES:UI.accent(button(content,"Continue in Business Academy",func():finish();game.open_business_academy()))
  var w=S.work(data,module);var ready=S.readiness(data,module,w)
  for o in m.outcomes:
   if o.get("observation",false):continue
@@ -134,7 +134,7 @@ func journal()->void:
 func update_prompt()->void:prompt.text=S.stages(module)[stage_picker.selected].prompt
 func attach_page()->void:
  label(content,"Attach frozen copies, not live links. Later edits in the Lab will not silently change a submission. Attach another snapshot to show a revision.",16)
- var row=HBoxContainer.new();content.add_child(row);button(row,"Current hero draft",attach_draft);button(row,"Vector card",func():var p=preload("res://scripts/learning_graphic.gd").new();add_child(p);p.setup(self));button(row,"Market snapshot",func():attach("market",legacy.commerce.state(),"Market • day "+str(legacy.commerce.state().day),"Local simulation • decisions and reports"))
+ var row=HBoxContainer.new();content.add_child(row);button(row,"Current hero draft",attach_draft);button(row,"Vector card",func():var p=preload("res://scripts/learning_graphic.gd").new();add_child(p);p.setup(self));button(row,"Business Academy",func():finish();game.open_business_academy())
  var library=preload("res://scripts/studio_library.gd").load_data();options=[]
  for collection in ["heroes","abilities","enemies","behaviors","objects","realms"]:
   for id in library[collection]:
@@ -186,6 +186,14 @@ func evidence(w:Dictionary)->void:
   if a.kind=="business":label(card,preload("res://scripts/education_business.gd").summary(a.value)+"\nReflection: "+a.value.reflection,17)
   if a.kind=="ability":
    for frame in a.value.get("animation",[]):picture(row,frame)
+  if a.kind=="district":
+   var district=a.value
+   label(card,"Market Quarter • "+str(district.periods)+" completed periods • "+str(district.visitors)+" visitors",19)
+   for venture_id in district.businesses:
+    var venture=district.businesses[venture_id]
+    label(card,venture.name+" • cash %.2f • inventory %.2f • loan %.2f" % [venture.cash,venture.input_book+venture.stock_book,venture.loan],17)
+    if not venture.note.is_empty():label(card,"Reasoning: "+venture.note,16)
+    if not venture.last_result.is_empty():label(card,"Last period: %d sold • sales %.2f • operating profit %.2f • lost customers %d" % [venture.last_result.sold,venture.last_result.revenue,venture.last_result.profit,venture.last_result.lost],16)
   if a.kind=="market":label(card,"Day "+str(a.value.day)+" • revenue "+str(a.value.revenue)+" • profit "+str(a.value.profit)+" • "+str(a.value.history.size())+" reports\nForecast: "+str(a.value.forecast)+"\nReflection: "+str(a.value.reflection),16)
   var expand=button(card,"Show source / decisions",func():
    var code=TextEdit.new();code.editable=false;code.text=JSON.stringify(source_summary(a.value),"  ").left(18000);code.custom_minimum_size.y=220;card.add_child(code))

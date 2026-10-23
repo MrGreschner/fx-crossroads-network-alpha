@@ -15,7 +15,7 @@ func interact(g:Node)->bool:
   if allowed():g.hero_workshop.open(true)
   else:g.message="The Academy door is locked. Education access is required; speak to the Elder Ram. Crossroads Studio is open to everyone.";g.message_time=6
  return true
-func draw_on(g:Node2D,camera:Vector2)->void:
+func draw_structure_source(g:Node2D,camera:Vector2)->void:
  if not Rect2(camera,g.VIEW).grow(150).intersects(WALL.grow(100)):return
  var p:Vector2=WALL.position-camera
  g.draw_rect(Rect2(p+Vector2(-15,240),Vector2(410,30)),Color(0,0,0,.18))
@@ -38,6 +38,11 @@ func draw_on(g:Node2D,camera:Vector2)->void:
  g.draw_string(font,p+Vector2(30,55),"CROSSROADS ACADEMY",HORIZONTAL_ALIGNMENT_CENTER,320,20,Color("#f2dca5"))
  var crest:Vector2=p+Vector2(190,-16)
  g.draw_circle(crest,23,Color("#d8bb78"));g.draw_arc(crest+Vector2(-8,0),10,PI*.5,TAU,16,Color("#3b5668"),4,true);g.draw_arc(crest+Vector2(8,0),10,PI,TAU+PI*.5,16,Color("#3b5668"),4,true)
+
+func draw_on(g:Node2D,camera:Vector2)->void:
+ if not Rect2(camera,g.VIEW).grow(150).intersects(WALL.grow(100)):return
+ preload("res://scripts/town_art39.gd").draw(g,"academy",camera)
+ var p:Vector2=WALL.position-camera
  var e:Vector2=ENTRY-camera;var near:bool=g.position_in_world.distance_to(ENTRY)<85
  g.draw_rect(Rect2(e-Vector2(56,23),Vector2(112,46)),Color(.65,.84,.84,.23 if near else .08));g.draw_rect(Rect2(e-Vector2(56,23),Vector2(112,46)),Color("#d9c48b"),false,2)
  g.draw_string(font,e+Vector2(-50,7),"E • ENTER" if allowed() else "LOCKED",HORIZONTAL_ALIGNMENT_CENTER,100,15,Color("#f1dfb3"))

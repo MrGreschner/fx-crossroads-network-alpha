@@ -72,6 +72,7 @@ func open(kind:String)->void:
   for state in ["normal","hover","pressed"]:
    var border=continue_button.get_theme_stylebox(state).duplicate();border.border_color=Color("#f2d699");border.set_border_width_all(2);continue_button.add_theme_stylebox_override(state,border)
   if not arcade:button("CLOUD ACCOUNT • sign in / save",func():resume(false);game.get_node("/root/FXAccount").open(),"#3e7968")
+  if not arcade:button("LEARNING ACADEMY • lessons & assignments",func():resume(false);game.open_business_academy(),"#58796d")
   button("NEW GAME • start your adventure",func():request_clear(),"#3e7968")
   if not arcade:button("CROSSROADS STUDIO • create & test",func():resume(false);game.hero_workshop.open(),"#665e81")
   button("DOWNLOAD GAME • WINDOWS",func():open("download"),"#496681")
@@ -112,11 +113,6 @@ func show_options()->void:
 func build_options()->void:
  var stability:Node=get_tree().root.get_node("FXStability")
  text("Tune performance and sound for this device.",18)
- text("SCREEN ZOOM",16).modulate=Color("#f2d699")
- var zoom_row=HBoxContainer.new();body.add_child(zoom_row)
- for value in [.75,1.0,1.25]:
-  var choice=Button.new();choice.text=str(value)+"×";choice.custom_minimum_size=Vector2(130,44);zoom_row.add_child(choice);style(choice,"#567269" if game.media.normal_zoom==value else "#345866");choice.pressed.connect(func():game.media.set_normal_zoom(value);open("options"))
- text("0.75× shows more of the world; 1.25× brings the action closer. Saved on this device. Media has additional framing controls.",15)
  text("FRAME RATE",16).modulate=Color("#f2d699")
  var fps:=OptionButton.new();fps.custom_minimum_size.y=48;fps.add_theme_font_override("font",ui_font);fps.add_theme_font_size_override("font_size",18);body.add_child(fps)
  var limits:Array=[30,60,120]

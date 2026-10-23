@@ -3,9 +3,9 @@ extends RefCounted
 const OPEN=["grove"]
 const BEGINNER=["grove","quarry","honeyglass","elementary"]
 const INTRO_MODERATE=["sunfield","ice"]
-const MEDIUM=["folded_coast","moonburrow","moonveil","petalbrook","middle_school"]
+const MEDIUM=["folded_coast","moonburrow","moonveil","petalbrook","middle_school","clockwork_orchard"]
 const CHALLENGING=["space","zombie"]
-const HARD=["lantern_marsh","silverfall","confluence","brasslock","clockwork_orchard","high_school","neon_crucible","cinderheart"]
+const HARD=["lantern_marsh","silverfall","confluence","brasslock","high_school","neon_crucible","cinderheart"]
 const EXPERT=["astral_rift","chimevault","ebonwake"]
 const EXTREME=["shattered_oath"]
 static func cleared(legacy:Node,id:String)->bool:

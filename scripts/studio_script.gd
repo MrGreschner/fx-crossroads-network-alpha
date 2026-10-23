@@ -10,6 +10,9 @@ static func template(a:Dictionary)->String:
  code+="\n# A loop repeats an action. index starts at zero.\nrepeat count\n  emit "+command+" angle index * 12 - 12\nend\n\n# Logic: reward a nearly full charge.\nif charged\n  emit pulse\nelif targets\n  # Add an action here for a nearby target.\nelse\n  # Add a fallback action here.\nend\n"
  return code
 static func compile(code:String)->Dictionary:
+ if code.begins_with("# @structured"):
+  var result=preload("res://scripts/structured_program.gd").compile(code)
+  return {"error":result.error,"variables":{},"instructions":[{"structured":code}]}
  if code.length()>6000:return {"error":"Code is limited to 6,000 characters."}
  var vars={"damage":18.0,"heal":8.0,"range":180.0,"radius":70.0,"speed":350.0,"count":3.0,"duration":3.0,"cooldown":1.0,"charge":0.0,"angle":0.0}
  var root:Array=[];var stack:Array=[root];var blocks:Array=[];var line_number=0;var instructions=0
@@ -68,6 +71,7 @@ static func math_value(source:String,index:int)->Dictionary:
  return {"ok":true,"value":clampf(float(result),-180,180)}
 static func actions(nodes:Array,charged:bool,targets:bool,index:int=0,output:Array=[],count_override:int=-1)->Array:
  for node in nodes:
+  if node.has("structured"):continue
   if output.size()>=32:break
   if node.has("repeat"):
    for n in (count_override if node.get("uses_count",false) and count_override>0 else int(node.repeat)):actions(node.body,charged,targets,n,output,count_override)

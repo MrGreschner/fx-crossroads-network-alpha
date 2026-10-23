@@ -181,3 +181,27 @@ position = Vector2(770, 2160)
 texture = ExtResource("104")
 scale = Vector2(2, 2)
 metadata/enemy_id = "keywing_courier"
+
+[node name="V19838Patrol0" type="Marker2D" parent="Enemies"]
+position = Vector2(820, 730)
+metadata/enemy_id = "copper_constable"
+
+[node name="V19838Patrol1" type="Marker2D" parent="Enemies"]
+position = Vector2(1570, 1450)
+metadata/enemy_id = "copper_constable"
+
+[node name="V19838Patrol2" type="Marker2D" parent="Enemies"]
+position = Vector2(3000, 2170)
+metadata/enemy_id = "copper_constable"
+
+[node name="V19838Patrol3" type="Marker2D" parent="Enemies"]
+position = Vector2(2280, 730)
+metadata/enemy_id = "copper_constable"
+
+[node name="V19838Patrol4" type="Marker2D" parent="Enemies"]
+position = Vector2(835, 1090)
+metadata/enemy_id = "hinge_conjurer"
+
+[node name="V19838Patrol5" type="Marker2D" parent="Enemies"]
+position = Vector2(2260, 1840)
+metadata/enemy_id = "hinge_conjurer"

@@ -13,5 +13,4 @@ static func submit(kind:String,value:Dictionary,title:String)->String:
  if not issue.is_empty():return issue
  var store=load("res://scripts/learning_store.gd");var data=store.load_data()
  issue=store.attach(data,data.active,kind,value,title,"Finalized in Studio")
- if issue.is_empty():issue=store.submit(data,data.active)
- return "Submitted to "+data.active+" • frozen copy ready for teacher review." if issue.is_empty() else issue
+ return "Frozen source saved. Open Learning Academy → My evidence to attach it to an assigned module, then submit when ready." if issue.is_empty() else issue

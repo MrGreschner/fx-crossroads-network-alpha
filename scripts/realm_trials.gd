@@ -23,6 +23,7 @@ var pursuers:Node
 var tech:Node
 var foundry:Node
 var school:Node
+var clockfield:Node
 var lob_shots: Array = []
 var lob_blasts: Array = []
 var lob_snapshot_msec := 0
@@ -64,6 +65,7 @@ func _ready() -> void:
 	cinder=preload("res://scripts/cinderheart.gd").new();add_child(cinder);cinder.adventure=self
 	tech=preload("res://scripts/neon_crucible.gd").new();add_child(tech);tech.adventure=self
 	foundry=preload("res://scripts/confluence_world.gd").new();add_child(foundry);foundry.adventure=self
+	clockfield=preload("res://scripts/clockwork_world.gd").new();add_child(clockfield);clockfield.adventure=self
 	school=preload("res://scripts/school_world.gd").new();add_child(school);school.adventure=self
 
 func setup(id: String) -> void:
@@ -74,6 +76,7 @@ func setup(id: String) -> void:
 	pursuers.reset()
 	tech.setup(id)
 	foundry.setup(id)
+	clockfield.setup(id)
 	school.setup(id)
 	expansion.setup(id)
 	quests.setup(id)
@@ -121,6 +124,7 @@ func alive(id: String) -> bool:
 func authoritative() -> bool:
 	return not arcade or game.role == "host"
 func can_stand(point: Vector2) -> bool:
+	if clockfield.active and not clockfield.can_stand(point):return false
 	if cinder.active:return cinder.can_stand(point)
 	if str(game.realm_id if arcade else game.region_id)=="moonveil":return preload("res://scripts/moon_castle.gd").open(point)
 	if not arcade and game.get("voyage")!=null and game.voyage.active:return game.voyage.land_at(point)
@@ -223,6 +227,7 @@ func spawn_trial(n: int) -> void:
 
 func on_defeat(enemy: Dictionary) -> bool:
 	if arcade and game.get("expedition")!=null and game.expedition.special():game.expedition.defeated(enemy)
+	clockfield.on_defeat(enemy)
 	if newcomers.on_defeat(enemy):return true
 	if immersive.active and immersive.on_defeat(enemy):return true
 	if foundry.active and foundry.on_defeat(enemy):return true
@@ -342,6 +347,7 @@ func step(delta: float) -> void:
 	pursuers.step(delta)
 	tech.step(delta)
 	foundry.step(delta)
+	clockfield.step(delta)
 	school.step(delta)
 	expansion.step(delta)
 	quests.step(delta)
@@ -385,7 +391,7 @@ func step(delta: float) -> void:
 			if alive(str(id)) and bounds.has_point(points()[id]) and clock-float(last_trap_hit.get(id,-2.0))>.8:
 				hit_player(str(id),18 if active else 12,"",preload("res://scripts/defeat_credit.gd").hazard("Realm trap"));last_trap_hit[id]=clock
 	for enemy in foes().duplicate():
-		if bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in newcomers.TYPES:continue
+		if bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in newcomers.TYPES or str(enemy.get("type","")) in clockfield.TYPES:continue
 		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in cinder.TYPES or str(enemy.get("type","")) in foundry.TYPES or str(enemy.get("type","")) in tech.TYPES or str(enemy.get("type","")) in school.TYPES or str(enemy.get("type","")) in expansion.TYPES or str(enemy.get("type","")) in hollow.TYPES or str(enemy.get("type","")) in city.TYPES or bool(enemy.get("vault_actor",false)) or combat.stunned(combat.npc_key(enemy)):continue
 		var definitions: Dictionary = game.enemy_defs if arcade else game.enemy_types
 		var custom := str(definitions.get(str(enemy["type"]),{}).get("custom_attack",""))
@@ -519,6 +525,7 @@ func step(delta: float) -> void:
 						warn(point-ray,35,20,1.1,point+ray)
 					2:
 						warn(target,100,21,1.4)
+						clockfield.summon(point)
 			"crowned_torrent":
 				match turn%3:
 					0:
@@ -567,7 +574,7 @@ func step(delta: float) -> void:
 	warning_credit.clear()
 
 func snapshot() -> Dictionary:
-	return {"pursuers":pursuers.snapshot(),"cinder":cinder.snapshot(),"newcomers":newcomers.snapshot(),"additions":additions.snapshot(),"foundry":foundry.snapshot(),"immersive":immersive.snapshot(),"tech":tech.snapshot(),"school":school.snapshot(),"expansion":expansion.snapshot(),"quests":quests.snapshot(),"hollow":hollow.snapshot(),"city":city.snapshot(),"combat":combat.snapshot() if combat != null else {},"waves":waves,"vault":vault.snapshot() if vault != null else {},"lob_shots":lob_shots,"lob_blasts":lob_blasts,"healing_zones":healing_zones,"discs":discs,"active":active,"visited":visited,"cleared":cleared,"final":final_started,"complete":complete,"clock":clock,"warnings":warnings,"stolen":stolen}
+	return {"pursuers":pursuers.snapshot(),"cinder":cinder.snapshot(),"newcomers":newcomers.snapshot(),"additions":additions.snapshot(),"clockfield":clockfield.snapshot(),"foundry":foundry.snapshot(),"immersive":immersive.snapshot(),"tech":tech.snapshot(),"school":school.snapshot(),"expansion":expansion.snapshot(),"quests":quests.snapshot(),"hollow":hollow.snapshot(),"city":city.snapshot(),"combat":combat.snapshot() if combat != null else {},"waves":waves,"vault":vault.snapshot() if vault != null else {},"lob_shots":lob_shots,"lob_blasts":lob_blasts,"healing_zones":healing_zones,"discs":discs,"active":active,"visited":visited,"cleared":cleared,"final":final_started,"complete":complete,"clock":clock,"warnings":warnings,"stolen":stolen}
 func receive(data: Dictionary) -> void:
 	newcomers.receive(data.get("newcomers",{}))
 	additions.receive(data.get("additions",{}))
@@ -576,6 +583,7 @@ func receive(data: Dictionary) -> void:
 	pursuers.receive(data.get("pursuers",{}))
 	tech.receive(data.get("tech",{}))
 	foundry.receive(data.get("foundry",{}))
+	clockfield.receive(data.get("clockfield",{}))
 	school.receive(data.get("school",{}))
 	expansion.receive(data.get("expansion",{}))
 	quests.receive(data.get("quests",{}))
@@ -602,6 +610,7 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 	pursuers.draw_on(canvas,camera)
 	tech.draw_on(canvas,camera)
 	foundry.draw_on(canvas,camera)
+	clockfield.draw_on(canvas,camera)
 	school.draw_on(canvas,camera)
 	expansion.draw_on(canvas,camera)
 	quests.draw_on(canvas,camera)

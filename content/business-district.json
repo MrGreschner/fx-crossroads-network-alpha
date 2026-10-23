@@ -1,0 +1,319 @@
+{
+  "version": 1,
+  "ventures": [
+    {
+      "id": "kitchen",
+      "name": "Hearth & Ladle",
+      "kind": "Food cart & kitchen",
+      "description": "Fresh meals, quick service and a welcoming place to stop.",
+      "product": "Rosemary bowls",
+      "input": "Provisions",
+      "cost": 4,
+      "price": 15,
+      "prep": 3.6,
+      "perishable": true,
+      "colors": [
+        "#d59a61",
+        "#8c5447",
+        "#e8c58a"
+      ],
+      "icon": "cook",
+      "upgrade": "Restaurant",
+      "tip": "Perishable meals; lunchtime crowds reward fast preparation.",
+      "plot": [
+        120,
+        190
+      ]
+    },
+    {
+      "id": "workshop",
+      "name": "Copperwick Works",
+      "kind": "Workshop & repairs",
+      "description": "Make useful things, restore worn equipment and keep promises.",
+      "product": "Repaired tools",
+      "input": "Parts",
+      "cost": 7,
+      "price": 25,
+      "prep": 6.2,
+      "perishable": false,
+      "colors": [
+        "#679b9a",
+        "#3d5e68",
+        "#bdc7aa"
+      ],
+      "icon": "artisan",
+      "upgrade": "Guild workshop",
+      "tip": "Longer jobs; craftsmanship raises willingness to pay.",
+      "plot": [
+        710,
+        190
+      ]
+    },
+    {
+      "id": "clothier",
+      "name": "Thread & Thistle",
+      "kind": "Clothier & outfitters",
+      "description": "Everyday garments and well-made travelling clothes.",
+      "product": "Travel garments",
+      "input": "Fabric bundles",
+      "cost": 6,
+      "price": 23,
+      "prep": 5.0,
+      "perishable": false,
+      "colors": [
+        "#a58bb1",
+        "#625773",
+        "#e8bdac"
+      ],
+      "icon": "tailor",
+      "upgrade": "Fashion house",
+      "tip": "Style campaigns and thoughtful displays attract collectors.",
+      "plot": [
+        1300,
+        190
+      ]
+    },
+    {
+      "id": "fishery",
+      "name": "Silverfin Exchange",
+      "kind": "Fishmonger",
+      "description": "Cool, carefully handled catches for tables across town.",
+      "product": "Fresh fish boxes",
+      "input": "Chilled catch",
+      "cost": 5,
+      "price": 18,
+      "prep": 2.8,
+      "perishable": true,
+      "colors": [
+        "#7cb5be",
+        "#345c73",
+        "#b4e0d5"
+      ],
+      "icon": "fish",
+      "upgrade": "Seafood hall",
+      "tip": "Cold storage protects stock; freshness and delivery matter.",
+      "plot": [
+        120,
+        660
+      ]
+    },
+    {
+      "id": "garden",
+      "name": "Bramble & Bloom",
+      "kind": "Grower & gathering",
+      "description": "Seasonal produce, herbs and gathered ingredients.",
+      "product": "Produce baskets",
+      "input": "Harvest crates",
+      "cost": 3,
+      "price": 12,
+      "prep": 3.1,
+      "perishable": true,
+      "colors": [
+        "#95af70",
+        "#526f55",
+        "#edcf87"
+      ],
+      "icon": "grower",
+      "upgrade": "Produce cooperative",
+      "tip": "Affordable baskets; seasonal events change customer demand.",
+      "plot": [
+        710,
+        660
+      ]
+    },
+    {
+      "id": "mine",
+      "name": "Deepwell Foundry",
+      "kind": "Mine & crafted materials",
+      "description": "Sort materials, finish metalwork and supply other makers.",
+      "product": "Metal fittings",
+      "input": "Ore consignments",
+      "cost": 8,
+      "price": 28,
+      "prep": 6.5,
+      "perishable": false,
+      "colors": [
+        "#ad8d6a",
+        "#585b61",
+        "#dfb56e"
+      ],
+      "icon": "miner",
+      "upgrade": "Materials yard",
+      "tip": "Capital-intensive preparation and durable wholesale orders.",
+      "plot": [
+        1300,
+        660
+      ]
+    },
+    {
+      "id": "store",
+      "name": "Wayfarer General",
+      "kind": "General store",
+      "description": "Select a useful range and help travellers find what they need.",
+      "product": "Supply packs",
+      "input": "Wholesale cases",
+      "cost": 5,
+      "price": 19,
+      "prep": 2.3,
+      "perishable": false,
+      "colors": [
+        "#b4a16c",
+        "#677365",
+        "#d6d6b0"
+      ],
+      "icon": "merchant",
+      "upgrade": "Trading emporium",
+      "tip": "Fast handling; merchandising and reliable stock drive sales.",
+      "plot": [
+        120,
+        1130
+      ]
+    },
+    {
+      "id": "courier",
+      "name": "Parcel & Post",
+      "kind": "Delivery & trading",
+      "description": "Move parcels safely and choose which delivery promises to make.",
+      "product": "Delivery jobs",
+      "input": "Packing supplies",
+      "cost": 3,
+      "price": 17,
+      "prep": 4.4,
+      "perishable": false,
+      "colors": [
+        "#b57c69",
+        "#594e68",
+        "#e2b97d"
+      ],
+      "icon": "courier",
+      "upgrade": "Courier depot",
+      "tip": "Service jobs; route choice balances speed, cost and reliability.",
+      "plot": [
+        710,
+        1130
+      ]
+    },
+    {
+      "id": "rental",
+      "name": "Lantern & Ladder",
+      "kind": "Equipment hire",
+      "description": "Rent useful equipment, maintain it and help customers choose.",
+      "product": "Equipment hires",
+      "input": "Service kits",
+      "cost": 4,
+      "price": 21,
+      "prep": 4.8,
+      "perishable": false,
+      "colors": [
+        "#ccad65",
+        "#536c71",
+        "#e2d3aa"
+      ],
+      "icon": "rental",
+      "upgrade": "Equipment depot",
+      "tip": "Bonus venture: asset investment, maintenance and utilization.",
+      "plot": [
+        1300,
+        1130
+      ]
+    }
+  ],
+  "staff": [
+    {
+      "id": "0",
+      "name": "Mira",
+      "species": "ram",
+      "role": "Kitchen hand",
+      "bio": "Warm, unhurried and excellent with customers.",
+      "service": 1.12,
+      "craft": 0.95,
+      "wage": 18,
+      "coat": "#8d684f",
+      "skin": "#e8c990"
+    },
+    {
+      "id": "1",
+      "name": "Bram",
+      "species": "badger",
+      "role": "Craftsperson",
+      "bio": "Careful repairs and a preference for a tidy bench.",
+      "service": 0.93,
+      "craft": 1.28,
+      "wage": 21,
+      "coat": "#506c77",
+      "skin": "#c7ac78"
+    },
+    {
+      "id": "2",
+      "name": "Nell",
+      "species": "cat",
+      "role": "Shop assistant",
+      "bio": "An eye for displays and a quick welcome.",
+      "service": 1.28,
+      "craft": 1.02,
+      "wage": 20,
+      "coat": "#92739c",
+      "skin": "#edc5a6"
+    },
+    {
+      "id": "3",
+      "name": "Tavi",
+      "species": "newt",
+      "role": "Stock keeper",
+      "bio": "Keeps a steady count and always checks the delivery.",
+      "service": 1.0,
+      "craft": 1.16,
+      "wage": 17,
+      "coat": "#678a66",
+      "skin": "#d0db97"
+    },
+    {
+      "id": "4",
+      "name": "Orin",
+      "species": "human",
+      "role": "Courier",
+      "bio": "Quick feet, careful parcels and clear directions.",
+      "service": 1.15,
+      "craft": 1.08,
+      "wage": 19,
+      "coat": "#a5795e",
+      "skin": "#e1b793"
+    },
+    {
+      "id": "5",
+      "name": "Sable",
+      "species": "fox",
+      "role": "Tailor",
+      "bio": "Patient stitching and pride in every finished piece.",
+      "service": 1.03,
+      "craft": 1.22,
+      "wage": 22,
+      "coat": "#777196",
+      "skin": "#deb77f"
+    },
+    {
+      "id": "6",
+      "name": "Pip",
+      "species": "hare",
+      "role": "Service assistant",
+      "bio": "Energetic, adaptable and keen to learn.",
+      "service": 1.16,
+      "craft": 0.96,
+      "wage": 16,
+      "coat": "#719a9c",
+      "skin": "#ddd7bc"
+    },
+    {
+      "id": "7",
+      "name": "Ada",
+      "species": "owl",
+      "role": "Bookkeeper",
+      "bio": "Measured decisions and very dependable routines.",
+      "service": 1.07,
+      "craft": 1.1,
+      "wage": 20,
+      "coat": "#807c66",
+      "skin": "#cbbbad"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "bg_focus_2",
+  "name": "Chronicle Lens 2",
+  "cost": 500,
+  "effect": "cooldown",
+  "amount": 18,
+  "shop": false,
+  "bg_only": true,
+  "bg_family": "focus",
+  "bg_tier": 2,
+  "description": "18% shorter cooldowns. Replaces a lower tier of this family; pay only the price difference. Three equipment slots total."
+}

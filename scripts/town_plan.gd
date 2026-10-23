@@ -2,6 +2,7 @@ extends RefCounted
 ## One street graph: civic square, service street, creative campus and southern walk.
 ## Each building has a short doorstep spur; no roads cross a river except the bridge.
 const ROADS=[
+ [Vector2(-1275,1050),Vector2(-1275,1085),Vector2(-1150,1085),Vector2(-1150,1025)],
  [Vector2(1240,2152),Vector2(1130,2152),Vector2(1130,2380),Vector2(1580,2380),Vector2(1610,2300),Vector2(1650,2300)],
  [Vector2(1405,2660),Vector2(1580,2660),Vector2(1580,2380)],
  [Vector2(2000,2080),Vector2(2160,2080),Vector2(2160,2236)],
@@ -41,7 +42,7 @@ const ROADS=[
  [Vector2(1600,1180),Vector2(1600,1645)],
  [Vector2(2175,1580),Vector2(2175,1645),Vector2(1800,1645)]
 ]
-const LOTS=[Rect2(1820,1720,360,310),Rect2(-1300,205,540,365),Rect2(-750,200,340,300),Rect2(2530,300,450,410),Rect2(-255,1390,310,320),Rect2(-550,430,770,380),Rect2(490,885,230,250),Rect2(-850,935,630,480),Rect2(-1240,1650,480,490),Rect2(-340,1740,320,310),Rect2(160,1740,330,320)]
+const LOTS=[Rect2(-1440,790,310,320),Rect2(1820,1720,360,310),Rect2(-1300,205,540,365),Rect2(-750,200,340,300),Rect2(2530,300,450,410),Rect2(-255,1390,310,320),Rect2(-550,430,770,380),Rect2(490,885,230,250),Rect2(-850,935,630,480),Rect2(-1240,1650,480,490),Rect2(-340,1740,320,310),Rect2(160,1740,330,320)]
 static func reserved(p:Vector2)->bool:
  if Rect2(-500,1390,170,390).has_point(p):return true
  if Rect2(-125,905,510,420).has_point(p):return true
@@ -70,7 +71,7 @@ func apply(g:Node)->void:
  for court in [preload("res://scripts/town_neighborhood.gd").COURT,Rect2(-745,1350,430,70),Rect2(-1170,2015,340,82),Rect2(200,1985,250,62)]:
   g.ground_patches.append({"polygon":PackedVector2Array([court.position,Vector2(court.end.x,court.position.y),court.end,Vector2(court.position.x,court.end.y)]),"tile":"path"})
  if g.terrain_cache!=null:g.terrain_cache.reset()
-func draw_ground(g:Node2D,camera:Vector2)->void:
+func draw_ground_source(g:Node2D,camera:Vector2)->void:
  var view:=Rect2(camera,g.VIEW).grow(180)
  # Use the same textured paths as the streets; only a quiet curb outlines the square.
  var border=PackedVector2Array([Vector2(680,565),Vector2(1100,565),Vector2(1100,625),Vector2(1200,625),Vector2(1200,810),Vector2(1165,845),Vector2(680,845),Vector2(640,810),Vector2(640,625),Vector2(680,625),Vector2(680,565)])
@@ -90,3 +91,6 @@ func draw_ground(g:Node2D,camera:Vector2)->void:
   g.draw_rect(Rect2(bench-Vector2(32,10),Vector2(64,12)),Color("#aa825b"));g.draw_line(bench-Vector2(32,18),bench+Vector2(32,-18),Color("#cfaa7a"),5)
   for x in [-25,25]:g.draw_line(bench+Vector2(x,2),bench+Vector2(x,13),Color("#5b6153"),4)
 
+
+func draw_ground(g:Node2D,camera:Vector2)->void:
+ preload("res://scripts/town_art39.gd").draw(g,"streets",camera)

@@ -56,6 +56,7 @@ var my_id := ""
 var host_id := ""
 var role := ""
 var roster: Array[Dictionary] = []
+var record_party:Array=[]
 var positions: Dictionary = {}
 var health: Dictionary = {}
 var xp: Dictionary = {}
@@ -273,7 +274,7 @@ func _ready() -> void:
 	for entry in manifest.get("enemies", []):
 		var data := _json("res://content/enemies/" + str(entry) + ".json")
 		enemy_defs[str(entry)] = data
-		if str(entry) in preload("res://scripts/cinderheart.gd").TYPES:
+		if str(entry) in preload("res://scripts/cinderheart.gd").TYPES+["ratchet_keeper","spark_scarab","hinge_conjurer","latch_hound"]:
 			for pose in ["idle","walk1","walk2","attack"]:art[str(entry)+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+str(entry)+"_"+pose+".svg")
 			continue
 		for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin"]:
@@ -708,6 +709,8 @@ func _start_match() -> void:
 		for id in enemy_defs:
 			if not bool(enemy_defs[id].get("expansion_only",false)): enemy_pool.append(str(id))
 	if enemy_pool.is_empty(): enemy_pool = ["bramble"]
+	record_party=[]
+	if mode in ["coop","descent"]:record_party=preload("res://scripts/named_records.gd").party(legacy)
 	_make_floor()
 	# Classic co-op waves may only use the first scene markers. Keep authored
 	# expansion encounters present even when their markers are later in the scene.
@@ -778,7 +781,7 @@ func _make_floor() -> void:
 			adventure.spawn(str(marker.type),marker.pos,float(enemy_defs.get(str(marker.type),{}).get("health",100)),false)
 	if role == "host" and mode == "descent":
 		enemy_pool = _descent_pool()
-		_spawn_wave(0 if floor_number%5==0 else mini(18,3+floor_number))
+		_spawn_wave(0 if floor_number%5==0 else mini(26,4+floor_number/2))
 		descent.floor_start()
 	elif role == "host" and mode == "coop" and not adventure.active and not adventure.vault.active and not adventure.quests.active and not adventure.expansion.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and not adventure.cinder.active:
 		if adventure.city.active or adventure.hollow.active or realm_id in ["moonveil","zombie"]:
@@ -1370,7 +1373,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 	if mode=="defense" and killer=="lane_guard":north_gate.guard_bounty(boss)
 	if not gold.has(killer): return
 	kills[killer] = int(kills.get(killer,0))+1
-	gold[killer] = int(gold.get(killer,0))+ (20 if boss else 2) + (2 if (inventory.get(killer,[]) as Array).has("gold_magnet") else 0)
+	gold[killer] = int(gold.get(killer,0))+ (40 if boss else 6+posmod(int(defeated.get("uid",0)),3) if mode in ["coop","descent"] else 2) + (2 if (inventory.get(killer,[]) as Array).has("gold_magnet") else 0)
 	xp[killer] = 0 if mode=="arena" and not arena_opening else int(xp.get(killer,0)) + (12 if boss else 1)
 	if int(levels.get(killer,1))>=5 and str(characters.get(str(hero_ids.get(killer,"ram")),{}).get("passive_effect",""))=="heal_on_kill":
 		health[killer] = mini(_max_hp(killer),int(health.get(killer,100))+(9 if str(mastery_choice.get(killer,""))=="passive" else 4))
@@ -1385,6 +1388,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 			status_label.text = "LEVEL " + str(new_level) + ": press J for primary/special or K for secondary/passive."
 
 func _hurt(id: String, amount: float, source: String = "", melee_attacker:String="", cause:Dictionary={}) -> void:
+	if mode=="descent" and source=="enemy":amount*=float(descent.scaling(floor_number).damage)
 	if arena_world.shatter.active():return
 	if id.begins_with("c|"):
 		adventure.combat.damage(id,amount,source);return
@@ -1482,7 +1486,7 @@ func _spawn_wave(amount: int) -> void:
 		if mode == "defense": pos = GATE + (APPROACHES[lane]-GATE).normalized()*minf(GATE.distance_to(APPROACHES[lane]),2200.0+maxi(0,wave-1)*180.0) + Vector2(random.randf_range(-45,45),random.randf_range(-45,45))
 		if mode == "arena" and positions.size() > 0 and pos.distance_to(local_pos) < 150: pos += Vector2(200,0)
 		var hp := float(stats.get("health",65))*(1.0+0.13*float(wave)+0.09*float(floor_number-1))* (1.4 if mode == "coop" else 1.0)
-		if mode == "descent": hp = float(stats.get("health",65))*(0.70+0.075*float(floor_number-1))
+		if mode == "descent": hp = float(stats.get("health",65))*descent.scaling(floor_number).health*(1+.5*maxi(0,positions.size()-1))
 		opponents.append({"pos":pos,"hp":hp,"max_hp":hp,"type":id,"lane":lane,"boss":false,"attack_timer":0.0,"uid":randi()})
 	if mode == "defense" and wave%5 == 0 or mode == "coop" and wave == 3:
 		opponents.append({"pos":APPROACHES[0] if mode == "defense" else FIELD.size * Vector2(0.78,0.5),"hp":180.0+floor_number*28.0 if mode == "descent" else 230.0+wave*75.0+floor_number*50.0,"max_hp":180.0+floor_number*28.0 if mode == "descent" else 230.0+wave*75.0+floor_number*50.0,"type":str(regions[realm_id]["boss_enemy"]) if mode=="coop" and regions.get(realm_id,{}).has("boss_enemy") else "cartographer" if adventure.combat.coast.active else "eclipse_engine" if adventure.astral else "hourglass_hart" if adventure.clockwork else "crowned_torrent" if adventure.river else "bellroot" if adventure.marsh else enemy_pool[0],"lane":0,"boss":true,"expansion_boss":(mode=="coop" and regions.get(realm_id,{}).has("boss_enemy")) or adventure.combat.coast.active or adventure.marsh or adventure.river or adventure.clockwork or adventure.astral,"skill_timer":2.0,"skill_step":0,"attack_timer":0.0,"uid":randi()})
@@ -1594,13 +1598,13 @@ func _simulate(delta: float) -> void:
 		if bool(enemy.get("health_gem",false)) or bool(enemy.get("depth_boss",false)):continue
 		if mode=="defense" and str(enemy.get("type","")) in north_gate.TYPES:continue
 		if bool(enemy.get("roaming_actor",false)) or bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
-		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("expansion_boss",false)) or bool(enemy.get("vault_actor",false)): continue
+		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.clockfield.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("expansion_boss",false)) or bool(enemy.get("vault_actor",false)): continue
 		if adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		var definition: Dictionary = enemy_defs.get(str(enemy["type"]),{}).duplicate()
 		if mode=="defense":
 			definition["damage"]=float(definition.get("damage",10))*float(enemy.get("damage_scale",1))
 			definition["speed"]=maxf(115,float(definition.get("speed",65)))*north_gate.opening_speed(enemy,delta)
-		definition["speed"]=float(definition.get("speed",65))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))
+		definition["speed"]=float(definition.get("speed",65))*(float(descent.scaling(floor_number).speed) if mode=="descent" else 1.0)*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))
 		var target_id := ""
 		var nearest := INF
 		for id in positions:
@@ -2283,7 +2287,8 @@ func _draw() -> void:
 		if str(foe["type"])=="gilded_usurper":size*=1.0 if int(foe.get("generation",0))==0 else .78 if int(foe.get("generation",0))==1 else .56
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
 		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
-		if texture != null: draw_texture_rect(texture,Rect2(pos-size*Vector2(0.5,0.7),size),false)
+		if bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
+		elif texture != null: draw_texture_rect(texture,Rect2(pos-size*Vector2(0.5,0.7),size),false)
 		else: draw_circle(pos,19,Color("#ffad7a"))
 		var hp_y:float=-size.y*.7-8 if bool(foe.get("veilbound",false)) or str(foe.type) in adventure.cinder.TYPES or str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
 		if not (adventure.school.active and bool(foe.boss)):draw_rect(Rect2(pos+Vector2(-23,hp_y),Vector2(46,5)),Color("#382936"))
@@ -2449,6 +2454,7 @@ func _draw_world() -> void:
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
 	if adventure.foundry.active:adventure.foundry.draw_world(self,camera)
+	if adventure.clockfield.active:adventure.clockfield.draw_world(self,camera)
 	if adventure.cinder.active:adventure.cinder.draw_world(self,camera)
 	if adventure.tech.active:adventure.tech.draw_world(self,camera)
 	if adventure.school.active:adventure.school.draw_world(self,camera)

@@ -81,7 +81,7 @@ func local_hp()->float:return float(game.health.get(game.my_id,0)) if multi else
 func region_key()->String:
  if multi:
   if not game.started or game.start_countdown>0 or game.spectating():return ""
-  if game.mode=="descent" and game.floor_number in [38,56]:return "descent"+str(game.floor_number)
+  if game.mode=="descent" and game.floor_number in [36,38,56,57]:return "descent"+str(game.floor_number)
   if game.mode=="defense":return "defense"
   return "wayfarer" if game.mode=="quest" else str(game.realm_id) if game.mode=="coop" else ""
  if game.mode=="town":return "town"
@@ -142,7 +142,7 @@ func _process(delta:float)->void:
  var region=region_key()
  if region!=cached_region:
   cancel("");cached_region=region;spots=C.spots(region)
-  if region in ["descent38","descent56"]:place_buried_spring()
+  if region in ["descent36","descent38","descent56","descent57"]:place_buried_spring()
  if not multi and region=="between" and game.waylight.between():spots=game.waylight.expedition.fishing_spots()
  if multi and game.get("expedition")!=null and game.expedition.between():spots=game.expedition.expedition.fishing_spots()
  if is_instance_valid(journal_panel):fit_panel(journal_panel,Vector2(1000,610))
@@ -392,7 +392,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   var water=Vector2(float(spot.water[0]),float(spot.water[1]));var bank=Vector2(float(spot.bank[0]),float(spot.bank[1]))
   if not bounds.has_point(water):continue
   var p=water-camera
-  if region in ["descent38","descent56"]:
+  if region in ["descent36","descent38","descent56","descent57"]:
    canvas.draw_circle(p,67,Color("#233f50"));canvas.draw_circle(p,54,Color("#478398"));canvas.draw_arc(p,57,0,TAU,40,Color("#9cbec2"),4)
   for n in 3:
    var r=fposmod(clock*8+n*10,30.0);canvas.draw_arc(p+Vector2(n*11-11,sin(n)*5),r,0,TAU,20,Color(.66,.93,.94,.55*(1-r/30)),1.5)
@@ -464,7 +464,7 @@ static func basket_notice_rect(view:Vector2,in_town:bool)->Rect2:
 static func basket_location(pool:String)->String:
  var water:Dictionary=C.pools().get(pool,{})
  var region=str(water.get("region",""))
- var realm={"town":"Crossroads Town","wayfarer":"Wayfarer Quest","between_remote":"The Between","descent38":"The Descent · Floor 38","descent56":"The Descent · Floor 56","defense":"North Gate Defense"}.get(region,region.replace("_"," ").capitalize())
+ var realm={"town":"Crossroads Town","wayfarer":"Wayfarer Quest","between_remote":"The Between","descent36":"The Descent · Floor 36","descent57":"The Descent · Floor 57","descent38":"The Descent · Floor 38","descent56":"The Descent · Floor 56","defense":"North Gate Defense"}.get(region,region.replace("_"," ").capitalize())
  var path="res://content/regions/"+region+".json"
  if FileAccess.file_exists(path):
   var data=JSON.parse_string(FileAccess.get_file_as_string(path))

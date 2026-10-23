@@ -14,7 +14,7 @@ static func open(legacy:Node)->void:
    if sub.module==code:marks=maxi(marks,sub.marks.keys().filter(func(key):return S.assessed_outcomes(code).any(func(o):return o.id==key)).size())
   for pair in [["Evidence",ready],["Teacher reviewed",marks]]:
    game.presentation.label(card,pair[0]+" • "+str(pair[1])+" / "+str(S.assessed_outcomes(code).size()),16);var bar=ProgressBar.new();bar.max_value=S.assessed_outcomes(code).size();bar.value=pair[1];bar.custom_minimum_size.y=20;card.add_child(bar)
-  if code in preload("res://scripts/education_business.gd").MODULES:game.presentation.button(card,"Open "+preload("res://scripts/education_business.gd").TITLES[code],func():preload("res://scripts/education_business_page.gd").open(legacy,code))
+  if not str(code).begins_with("DRAFT-"):game.presentation.button(card,"Open in Business Academy",func():game.presentation.close();game.open_business_academy())
   if A.student():game.presentation.button(card,"Open assignment",func():d.active=code;S.save(d);game.presentation.close();legacy.learning_open())
  game.presentation.button(body,"Join teacher submission room",func():get_tree_root(legacy).get_node("FXEducationRoom").open())
 static func get_tree_root(node:Node)->Node:return node.get_tree().root

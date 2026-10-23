@@ -6,14 +6,16 @@ var buildings:Array=[]
 var walls:Array[Rect2]=[]
 var doors:Array=[]
 var eruptions:Array=[]
+var rifts:Array=[]
+var next_rift=0
 var clock:=0.0
 var last_door:=0.0
 var grid:AStarGrid2D
 var blockers:Dictionary={}
 const SIZE=Vector2(3840,2560)
-const TYPES=["copper_constable","grate_witch","lockmaster_regent","amber_hornet","brass_sapper","keywing_courier"]
+const TYPES=["copper_constable","grate_witch","lockmaster_regent","amber_hornet","brass_sapper","keywing_courier","hinge_conjurer","latch_hound"]
 func setup(id:String)->void:
- active=id=="brasslock";clock=0;last_door=-1;buildings.clear();walls.clear();doors.clear();eruptions.clear();blockers.clear();grid=null
+ active=id=="brasslock";rifts.clear();next_rift=0;clock=0;last_door=-1;buildings.clear();walls.clear();doors.clear();eruptions.clear();blockers.clear();grid=null
  if not active:return
  for row in 3:
   for col in 5:
@@ -49,7 +51,11 @@ func can_stand(point:Vector2)->bool:
  if not Rect2(Vector2(32,32),SIZE-Vector2(64,64)).has_point(point):return false
  for entry in blockers.get(Vector2i(floori(point.x/128),floori(point.y/128)),[]):
   if int(entry.door)>=0 and bool(doors[int(entry.door)].open):continue
-  if (entry.rect as Rect2).has_point(point):return false
+  if (entry.rect as Rect2).has_point(point):
+   var passage=false
+   for portal in rifts:
+    if bool(portal.open) and rift_rect(portal).has_point(point):passage=true;break
+   if not passage:return false
  return true
 func rebuild_grid()->void:
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,96,64);grid.cell_size=Vector2(40,40);grid.offset=Vector2(20,20);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_NEVER;grid.update()
@@ -87,7 +93,9 @@ func route(enemy:Dictionary,target:Vector2,delta:float)->Vector2:
 func quake(point:Vector2,damage:float,delay:float,source:String="")->void:
  if eruptions.size()<48:eruptions.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,source,"Ground eruption"),"pos":[point.x,point.y],"time":delay,"duration":delay,"damage":damage,"hit":false,"radius":55.0})
 func step(delta:float)->void:
+ if not active:return
  clock+=delta
+ step_rifts(delta)
  for door in doors:door.anim=move_toward(float(door.anim),1.0 if bool(door.open) else 0.0,delta*4)
  for i in range(eruptions.size()-1,-1,-1):
   var blast:Dictionary=eruptions[i];blast.time-=delta
@@ -102,6 +110,17 @@ func step(delta:float)->void:
   var target:=Vector2.ZERO;var nearest:=INF
   for id in adventure.points():
    if adventure.alive(str(id)) and (enemy.pos as Vector2).distance_to(adventure.points()[id])<nearest:target=adventure.points()[id];nearest=(enemy.pos as Vector2).distance_to(target)
+  if nearest>1100:continue
+  if str(enemy.type)=="hinge_conjurer":
+   enemy["door_timer"]=float(enemy.get("door_timer",2.0))-delta
+   if float(enemy.door_timer)<=0 and adventure.authoritative():
+    enemy.door_timer=10.5;open_rift(target)
+  if str(enemy.type)=="latch_hound":
+   var move:Vector2=route(enemy,target,delta)*205*delta*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))
+   if adventure.combat.path_clear(enemy.pos,enemy.pos+move):enemy.pos+=move
+   enemy["bite_timer"]=float(enemy.get("bite_timer",.8))-delta
+   if nearest<65 and float(enemy.bite_timer)<=0:enemy.bite_timer=1.2;adventure.warn(enemy.pos+(target-enemy.pos).normalized()*20,42,8,.3)
+   continue
   if nearest>760:continue
   var boss:=str(enemy.type)=="lockmaster_regent"
   var lure:Vector2=adventure.combat.fern.redirect(enemy,target)
@@ -123,7 +142,7 @@ func step(delta:float)->void:
   elif str(enemy.type)=="amber_hornet":
    for angle in [-.2,0,.2]:adventure.combat.launch_projectile("enemy",origin,aim.rotated(angle),{"range":580,"speed":215,"amplitude":20,"wavelength":155,"slow_duration":1.2,"slow_factor":.75,"color":"#efc36b"},8,"weaving")
    enemy.city_timer=3.5
-  elif str(enemy.type)=="copper_constable" or boss and turn%3==0:
+  elif str(enemy.type) in ["copper_constable","hinge_conjurer"] or boss and turn%3==0:
    for angle in [-.28,0,.28]:adventure.combat.launch_projectile("enemy",origin,aim.rotated(angle),{"range":700,"speed":235,"wall_bounces":2,"color":"#ffcc87"},18 if boss else 10,"bankshot")
   elif str(enemy.type)=="grate_witch" or boss and turn%3==1:
    for n in 4 if boss else 3:
@@ -137,15 +156,19 @@ func step(delta:float)->void:
     if not adventure.combat.path_clear(end,next):break
     end=next
    adventure.warn(origin,34,28,.8,end);adventure.warnings[-1]["charge_uid"]=int(enemy.uid)
-func snapshot()->Dictionary:return {"doors":doors,"eruptions":eruptions,"clock":clock}
+func snapshot()->Dictionary:return {"doors":doors,"eruptions":eruptions,"rifts":rifts,"clock":clock}
 func receive(data:Dictionary)->void:
+ var old_rifts=rifts.duplicate(true)
  var old:Array=[]
  for door in doors:old.append(bool(door.open))
- doors=data.get("doors",doors);eruptions=data.get("eruptions",[]);clock=float(data.get("clock",clock))
+ doors=data.get("doors",doors);eruptions=data.get("eruptions",[]);rifts=data.get("rifts",[]);clock=float(data.get("clock",clock))
  var changed:=old.size()!=doors.size()
  for i in mini(old.size(),doors.size()):
   if old[i]!=bool(doors[i].open):changed=true
  if active and changed:rebuild_grid()
+ if old_rifts.map(func(v):return str(v.id)+str(v.open))!=rifts.map(func(v):return str(v.id)+str(v.open)):
+  for portal in old_rifts+rifts:refresh_rift(rift_rect(portal))
+
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  var view:Vector2=canvas.VIEW;var visible:=Rect2(camera-Vector2(100,100),view+Vector2(200,200))
  for building in buildings:
@@ -197,6 +220,14 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   if not Rect2(-Vector2(100,100),view+Vector2(200,200)).has_point(p):continue
   canvas.draw_line(p-Vector2(90,0),p+Vector2(90,0),Color("#b7a47a"),2)
   for k in 5:canvas.draw_colored_polygon(PackedVector2Array([p+Vector2(-80+k*35,0),p+Vector2(-60+k*35,0),p+Vector2(-70+k*35,24)]),Color("#7a879b"))
+ for portal in rifts:
+  var p=Vector2(portal.pos[0],portal.pos[1])-camera
+  if not Rect2(Vector2.ZERO,canvas.get_viewport_rect().size).grow(150).has_point(p):continue
+  var shape=rift_rect(portal);shape.position-=camera
+  canvas.draw_rect(shape,Color("#1c263c"));canvas.draw_rect(shape,Color("#ecc16c"),false,5)
+  for k in 4:canvas.draw_arc(p,27+k*8,clock*.8+k,clock*.8+k+PI*1.5,24,Color(.95,.76,.4,.65-k*.1),2,true)
+  canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-110,-80),"SECRET DOOR • 2 HOUNDS" if not bool(portal.spawned) else "SECRET PASSAGE",HORIZONTAL_ALIGNMENT_CENTER,220,14,Color("#f8d68b"))
+
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  for blast in eruptions:
   var point:Vector2=adventure.vec(blast.pos)-camera;var radius:=float(blast.radius)
@@ -205,3 +236,53 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
    preload("res://scripts/combat_cues.gd").danger(canvas,point,radius,float(blast.time),float(blast.get("duration",1)))
   else:
    for n in 7:canvas.draw_line(point+Vector2((n-3)*12,12),point+Vector2((n-3)*16,-50),Color(1,.65,.3,.65),6,true)
+
+func rift_rect(portal:Dictionary)->Rect2:
+ var r=portal.rect;return Rect2(r[0],r[1],r[2],r[3])
+func open_rift(target:Vector2)->bool:
+ if rifts.size()>=3:return false
+ var hounds=0
+ for foe in adventure.foes():
+  if str(foe.type)=="latch_hound":hounds+=1
+ if hounds>=6:return false
+ var choice={};var closest=INF
+ for wall in walls:
+  if wall.size.x<100 and wall.size.y<100:continue
+  var horizontal=wall.size.x>wall.size.y;var center=wall.get_center()
+  if horizontal:center.x=clampf(target.x,wall.position.x+45,wall.end.x-45)
+  else:center.y=clampf(target.y,wall.position.y+65,wall.end.y-65)
+  var normal=Vector2.DOWN if horizontal else Vector2.RIGHT;var p=center+normal*85;var q=center-normal*85
+  if not can_stand(p) or not can_stand(q):continue
+  var distance=center.distance_to(target)
+  if distance>420 or distance<70 or distance>=closest:continue
+  var overlaps=false
+  for portal in rifts:
+   if center.distance_to(Vector2(portal.pos[0],portal.pos[1]))<180:overlaps=true
+  if overlaps:continue
+  var near=p if p.distance_to(target)<q.distance_to(target) else q
+  var rect=Rect2(center-Vector2(62,60),Vector2(124,120)) if horizontal else Rect2(center-Vector2(60,62),Vector2(120,124))
+  choice={"id":next_rift,"pos":[center.x,center.y],"rect":[rect.position.x,rect.position.y,rect.size.x,rect.size.y],"exit":[near.x,near.y],"side":[normal.y,-normal.x],"time":0.0,"open":false,"spawned":false};closest=distance
+ if choice.is_empty():return false
+ next_rift+=1;rifts.append(choice);return true
+func refresh_rift(rect:Rect2)->void:
+ if grid==null:return
+ for x in range(maxi(0,floori((rect.position.x-40)/40)),mini(96,ceili((rect.end.x+40)/40))):
+  for y in range(maxi(0,floori((rect.position.y-40)/40)),mini(64,ceili((rect.end.y+40)/40))):grid.set_point_solid(Vector2i(x,y),not can_stand(Vector2(x*40+20,y*40+20)))
+ for enemy in adventure.foes():enemy.erase("city_path");enemy.route_timer=0.0
+func step_rifts(dt:float)->void:
+ if not adventure.authoritative():return
+ for i in range(rifts.size()-1,-1,-1):
+  var portal=rifts[i];portal.time=float(portal.time)+dt
+  if float(portal.time)>=1.2 and not bool(portal.spawned):
+   portal.open=true;portal.spawned=true;refresh_rift(rift_rect(portal))
+   for side in [-1,1]:
+    var p=Vector2(portal.exit[0],portal.exit[1])+Vector2(portal.side[0],portal.side[1])*side*28
+    if can_stand(p):adventure.spawn("latch_hound",p,42,false);adventure.foes()[-1].summoned=true
+  if float(portal.time)<9.2:continue
+  var occupied=false
+  for point in adventure.points().values():
+   if rift_rect(portal).grow(32).has_point(point):occupied=true
+  for foe in adventure.foes():
+   if float(foe.hp)>0 and rift_rect(portal).grow(32).has_point(foe.pos):occupied=true
+  if occupied:continue
+  var rect=rift_rect(portal);rifts.remove_at(i);refresh_rift(rect)

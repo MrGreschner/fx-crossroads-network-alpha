@@ -30,7 +30,7 @@ var stale=false
 var last_refresh=""
 func compatible(data:Dictionary)->bool:
  var limits=data.get("limits",{});var named=data.get("named",{})
- return named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=5 and data.get("fish_boards") is Dictionary
+ return named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=5 and int(limits.get("descent",0))>=10 and data.get("fish_boards") is Dictionary
 func board_notice()->String:
  if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending older record lists. Deploy the matching server ZIP; your saved records are safe."
  if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
@@ -39,7 +39,7 @@ func board_notice()->String:
 func setup(owner:Node)->void:
  legacy=owner;state();endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
  sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=4096;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
- read_request=HTTPRequest.new();read_request.timeout=8;read_request.body_size_limit=131072;legacy.add_child(read_request);read_request.request_completed.connect(received)
+ read_request=HTTPRequest.new();read_request.timeout=8;read_request.body_size_limit=524288;legacy.add_child(read_request);read_request.request_completed.connect(received)
 func state()->Dictionary:
  if not legacy.data.has("community_records"):legacy.data.community_records={"version":1,"solo":0,"coop":0}
  return legacy.data.community_records
@@ -185,7 +185,7 @@ func build_navigation(parent:Node)->void:
  refresh.tooltip_text="Upload the active profile, then refresh the community boards."
  var notice=gui.label(col,board_notice(),14);notice.name="RecordsSyncStatus";notice.modulate=Color("#f0ca87") if not snapshot.is_empty() and not compatible(snapshot) or stale else Color("#b7d4d7")
  var tabs=HFlowContainer.new();tabs.name="RecordsCategoryTabs";tabs.add_theme_constant_override("h_separation",6);tabs.add_theme_constant_override("v_separation",5);col.add_child(tabs)
- for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
+ for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Ram’s Descent","descent"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
   var tab=gui.button(tabs,entry[0],choose_category.bind(str(entry[1])));tab.name="RecordsTab_"+str(entry[1]);tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size=Vector2(126,36);tab.add_theme_font_size_override("font_size",15)
   var skin=UI.box("#32636c" if category==entry[1] else "#102b34","#f1cd82" if category==entry[1] else "#416b74",5,7)
   tab.add_theme_stylebox_override("normal",skin);tab.add_theme_stylebox_override("pressed",skin)
@@ -217,7 +217,7 @@ func build(parent:Node)->void:
     var art=TextureRect.new();var sprite=str(data.get("sprite",id));art.texture=legacy.game.art.get(sprite+"_idle",legacy.game.art.get(sprite+"_0"));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(44,48);line.add_child(art)
    preload("res://scripts/garden_ui.gd").label(line,"%d. %s    %s" % [n,str(data.get("name",id)),String.num(float(row.value),0)],20)
  preload("res://scripts/named_records_ui.gd").build(times_parent if category=="realms" else parent,legacy,snapshot.get("named",{}),"times" if category=="realms" else category)
- if category in ["heroes","realms","times","streak","relic"]:return
+ if category in ["heroes","realms","times","streak","relic","descent"]:return
  if category=="garden":garden_records(parent);return
  if category=="fish":fish_leaderboards(parent)
  if category=="fish":species_records(parent)

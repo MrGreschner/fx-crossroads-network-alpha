@@ -106,6 +106,7 @@ func gameplay_category(game:Node)->String:
  var mode=str(game.get("mode"))
  return "realm" if mode in ["run","coop"] else mode if mode in ["arena","descent","defense","battlegrounds","town","quest"] else "menu"
 func classification(game:Node)->String:
+ if is_instance_valid(game.get("business_district")):return "market"
  var expedition=game.get("expedition")
  if expedition!=null and expedition.special() and game.get("started")==true:return "overcharge" if expedition.kind=="overcharge" else "between"
  var legacy=game.get("legacy")
@@ -181,6 +182,9 @@ func world_metrics(game:Node)->Dictionary:
   result.bg_units=bg.units.size();result.bg_shots=bg.shots.size();result.bg_bombs=bg.bombs.size();result.bg_work_ms=float(bg.work.get("step_ms",0));result.bg_units_ms=float(bg.work.get("units_ms",0));result.bg_spawn_queued=0
   for base in bg.bases.values():result.bg_spawn_queued+=base.get("queue",[]).size()
   result.enemies=maxi(int(result.get("enemies",0)),bg.units.size());result.projectiles=int(result.get("projectiles",0))+bg.shots.size()
+ var district=game.get("business_district")
+ if is_instance_valid(district):
+  result.district_customers=district.sim.people.size();result.district_workers=district.sim.workers.size();result.district_tick_ms=district.sim.last_us/1000.0;result.district_draw_ms=district.frame_us/1000.0
  var mobile=game.get("mobile");result.touch_controls=1 if mobile!=null and mobile.enabled else 0
  var legacy=game.get("legacy")
  if legacy!=null:
@@ -242,6 +246,7 @@ func packet(kind:String,result:String="",duration:float=0,metrics:Dictionary={})
  var game=current_game();p.details={}
  if game!=null:
   p.details={"rules":safe_key(game.get("pvp_rule")),"map":safe_key(game.get("bg_map") if str(game.get("mode"))=="battlegrounds" else game.get("arena_map")),"input":"touch" if latest_metrics.get("touch_controls",0)==1 else "keyboard_mouse","graphics":"auto" if game.get("balanced_graphics")==true else "full"}
+ if is_instance_valid(game) and is_instance_valid(game.get("business_district")):p.details.venture=safe_key(game.business_district.state.selected)
  p.metrics=latest_metrics.duplicate();p.metrics.merge(metrics,true)
  if kind=="garden_harvest":p.details.garden_seed=safe_key(metrics.get("seed_id",""))
  if kind=="fish_catch":p.details.fish_species=safe_key(metrics.get("species_id",""))

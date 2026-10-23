@@ -224,11 +224,25 @@ func execute_attack(a:Dictionary,target:Vector2)->void:
    var compiled=preload("res://scripts/studio_script.gd").compile(str(a.program))
    if compiled.error.is_empty():
     var actions=preload("res://scripts/studio_script.gd").actions(compiled.instructions,cast_factor>=.75,closest(player,600)>=0,0,[],int(a.count))
-    var original_aim=aim
+    if str(a.program).begins_with("# @structured"):
+     var data=preload("res://scripts/structured_program.gd").sample_inputs(mini(12,foes.size()));data.base_damage=float(a.damage);data.jump_limit=int(a.count);data.reach=float(a.range)
+     for n in int(data.target_count):data.distances[n]=player.distance_to(foes[n].pos) if valid_target(n) else 1000000;data.shields[n]=bool(foes[n].get("shield",false))
+     var run=preload("res://scripts/structured_program.gd").run(str(a.program),data)
+     actions=run.actions if run.error.is_empty() else []
+    var original_aim=aim;var chain_origin=player
     for action in actions:
      var copy=a.duplicate(true);copy.erase("program")
      for key in compiled.variables:
       if copy.has(key):copy[key]=compiled.variables[key]
+     for key in action.get("stats",{}):
+      if copy.has(key):copy[key]=clampf(float(action.stats[key]),float(preload("res://scripts/studio_script.gd").VARIABLES[key][0]),minf(float(a.get(key,preload("res://scripts/studio_script.gd").VARIABLES[key][1])),float(preload("res://scripts/studio_script.gd").VARIABLES[key][1])))
+     if action.command=="zap":
+      var n=int(action.target)
+      if valid_target(n) and player.distance_to(foes[n].pos)<=float(a.range):
+       var from=chain_origin;chain_origin=foes[n].pos
+       if visuals.size()<40:add_visual({"pos":from,"end":foes[n].pos,"life":.5,"total":.5,"color":Color(a.color),"radius":3,"shape":"beam"})
+       hurt(n,copy)
+      continue
      if hero.passive=="mendersgift":copy.heal*=1.2
      preload("res://scripts/studio_charge.gd").apply(copy,cast_factor)
      copy.style={"pulse":"spin","field":"poison_zone","heal":"heal_wave","lob":"target_aoe","healing_field":"heal_zone","slow_field":"slow_aura","burn_field":"burn_zone","stun_field":"stun_zone","buff_field":"buff_zone","mine":"trap","protect":"block"}.get(action.command,action.command)

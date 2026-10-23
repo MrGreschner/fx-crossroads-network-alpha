@@ -1,0 +1,12 @@
+{
+  "id": "ratchet_keeper",
+  "name": "Ratchet Keeper",
+  "sprite": "ratchet_keeper",
+  "health": 65,
+  "speed": 85,
+  "damage": 9,
+  "behaviour": "custom",
+  "custom_attack": "gear_volley",
+  "aggro_range": 760,
+  "expansion_only": true
+}

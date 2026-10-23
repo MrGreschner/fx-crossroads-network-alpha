@@ -213,6 +213,7 @@ func adventures()->void:
   ["CROSSROADS STUDIO","Build heroes, abilities, enemies, objects and realms","studio"]
  ]
  if adventures_tab==1:
+  destinations.append(["LEARNING ACADEMY","Design, graphics, coding and business modules","business_academy"])
   if showcase_allowed():destinations.append(["COMMUNITY SHOWCASE","Play selected creations and share useful feedback","showcase"])
   if preload("res://scripts/education_access.gd").student() or preload("res://scripts/education_access.gd").review_allowed():destinations.append(["CROSSROADS ACADEMY","Assignments, project ideas and your progress","academy"])
  for entry in destinations:adventure_tile(grid,entry)
@@ -252,11 +253,12 @@ func choose_adventure(value:String)->void:
  elif value=="fishing":
   close();game.enter_region("town");game.position_in_world=game.fishing.SHOP+Vector2(0,45);game.update_camera();game.fishing.open_shop()
  elif value=="mine":close();game.legacy.mine.open()
- elif value=="market":close();game.legacy.commerce.open()
+ elif value=="market":close();game.open_business_district()
  elif value=="studio":close();game.hero_workshop.open()
  elif value=="showcase":
   if not showcase_allowed():return
   close();game.hero_workshop.open();var view=load("res://scripts/studio_showcase.gd").new();game.hero_workshop.add_child(view);view.setup(game.hero_workshop);view.page=2;view.render()
+ elif value=="business_academy":close();game.open_business_academy()
  elif value=="academy":close();game.hero_workshop.open(true)
  elif value=="training":close();game.start_training()
  else:launch(value)

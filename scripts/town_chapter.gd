@@ -24,13 +24,12 @@ func blocked(p:Vector2)->bool:
   for col in 2:
    if Rect2(Vector2(805 if col==0 else 962,1840+row*85),Vector2(50 if col==0 else 90,42)).grow(5).has_point(p):return true
  if RIVER.has_point(p) and not BRIDGE.has_point(p) and not HOME_BRIDGE.has_point(p):return true
- if Rect2(-1370,560,120,740).has_point(p):return true
+ if Rect2(-1370,560,120,740).has_point(p) and not Rect2(-1310,1025,160,95).has_point(p):return true
  if FOREST.grow(30).has_point(p):
   for tree in forest_trees:
    if p.distance_squared_to(tree)<625:return true
  return false
-func draw_ground(c:Node2D,camera:Vector2)->void:
- var t:=Time.get_ticks_msec()/1000.0
+func draw_ground_source(c:Node2D,camera:Vector2)->void:
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
  if visible.intersects(FOREST):
   c.draw_rect(Rect2(FOREST.position-camera,FOREST.size),Color("#526d50"))
@@ -46,10 +45,6 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
  if visible.intersects(RIVER.grow(20)):
   c.draw_rect(Rect2(RIVER.position-camera,RIVER.size),Color("#347889"))
   for x in [2268,2440]:c.draw_rect(Rect2(Vector2(x,-560)-camera,Vector2(12,RIVER.size.y)),Color("#8b9a7c"))
-  for n in 64:
-   var world:=Vector2(2295+posmod(n*37,125),fposmod(n*37+t*45,RIVER.size.y)-560)
-   if visible.has_point(world):
-    var p:=world-camera;c.draw_line(p,p+Vector2(30,0),Color(.65,.9,.92,.4),2,true)
  if visible.intersects(Rect2(2200,250,950,1950)):
   for bridge in [BRIDGE,HOME_BRIDGE]:
    if not visible.intersects(bridge.grow(45)):continue
@@ -82,13 +77,25 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
     c.draw_rect(Rect2(p,size),Color("#70543d"));c.draw_rect(Rect2(p,size),Color("#bba378"),false,3)
     for n in (2 if col==0 else 4):
      var plant=p+Vector2(13+n*19,27);c.draw_line(plant,plant-Vector2(0,16),Color("#83b574"),3);c.draw_circle(plant-Vector2(0,18),5,Color("#deb171") if row==1 else Color("#9ac084"))
+  for x in [800,1080]:
+   c.draw_line(Vector2(x,1790)-camera,Vector2(x,2110)-camera,Color("#a99068"),4)
+   for y in range(1790,2111,64):c.draw_line(Vector2(x-10,y)-camera,Vector2(x+10,y)-camera,Color("#7f684c"),5)
+func draw_ground(c:Node2D,camera:Vector2)->void:
+ preload("res://scripts/town_art39.gd").draw(c,"chapter_ground",camera)
+ var t:=Time.get_ticks_msec()/1000.0
+ var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
+ if visible.intersects(RIVER.grow(20)):
+  for n in 64:
+   var world:=Vector2(2295+posmod(n*37,125),fposmod(n*37+t*45,RIVER.size.y)-560)
+   if visible.has_point(world):
+    var p:=world-camera;c.draw_line(p,p+Vector2(30,0),Color(.65,.9,.92,.4),2,true)
+ if visible.intersects(Rect2(800,1780,285,350)):
   var phase=fposmod(t*.006,1);var travel=phase*2 if phase<.5 else 2-phase*2
   var farmer=Vector2(1030,1890+travel*200)-camera
   c.draw_circle(farmer+Vector2(0,1),19,Color(0,0,0,.18))
   c.draw_texture_rect(farmer_art,Rect2(farmer-Vector2(38,94+sin(t*3)*1.5),Vector2(76,95)),false)
-  for x in [800,1080]:
-   c.draw_line(Vector2(x,1790)-camera,Vector2(x,2110)-camera,Color("#a99068"),4)
-   for y in range(1790,2111,64):c.draw_line(Vector2(x-10,y)-camera,Vector2(x+10,y)-camera,Color("#7f684c"),5)
+ for spot in [Vector2(2540,980),Vector2(2850,1080)]:
+  if visible.has_point(spot):preload("res://scripts/town_calendar.gd").draw_lantern(c,spot-camera,c.town_life.calendar.night_amount())
 func draw_pads(c:Node2D,camera:Vector2)->void:
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
  if visible.intersects(Rect2(600,-500,600,720)):
@@ -143,8 +150,6 @@ func draw_east_details(c:Node2D,camera:Vector2)->void:
  c.draw_rect(Rect2(pier-Vector2(17,48),Vector2(34,10)),Color("#bbc1a1"))
  for y in [-32,-15,2]:c.draw_line(pier+Vector2(-11,y),pier+Vector2(11,y),Color("#acb096"),2)
  # Trail-side lanterns mark the two destinations without obstructing either lane.
- for spot in [Vector2(2540,980),Vector2(2850,1080)]:
-  preload("res://scripts/town_calendar.gd").draw_lantern(c,spot-camera,c.town_life.calendar.night_amount())
  for spot in [Vector2(2510,1010)]:
   var p:Vector2=spot-camera;c.draw_rect(Rect2(p,Vector2(52,10)),Color("#a28662"));c.draw_line(p-Vector2(0,8),p+Vector2(52,-8),Color("#ba9e75"),4)
   for x in [7,45]:c.draw_line(p+Vector2(x,10),p+Vector2(x,19),Color("#6b6150"),3)

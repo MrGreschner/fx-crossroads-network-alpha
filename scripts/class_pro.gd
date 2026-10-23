@@ -47,6 +47,7 @@ func open_teacher()->void:
  shell("TEACHER WORKSPACE")
  UI.accent(button(content,"Manage Class Pro ↗",launch))
  label(content,"Open your professional class workspace in a separate browser tab. See assigned and unsorted students, create classes and assignments, review frozen work, return marks and export your gradebook.",18)
+ button(content,"Learning Academy • course lessons & practice",func():close();account().legacy().game.open_business_academy())
  button(content,"Student progress",func():launch("Students"))
  button(content,"Submitted assignments • review & grade",func():launch("Submissions"))
  button(content,"Spotlight • harmless presentation marker",func():get_tree().root.get_node("FXEducationTools").spotlight=true;close())
@@ -65,6 +66,7 @@ func open_student(module:String="")->void:
  selected_module=module
  shell("STUDENT • ASSIGNMENTS & FEEDBACK")
  if not account().loaded or account().school_role()!="student":label(content,"Sign in, load your student profile and ask your administrator to link you to your teacher.",18);return
+ button(content,"Learning Academy • assigned modules",func():close();account().legacy().game.open_business_academy())
  label(content,"Only your learning journal and frozen submitted work are shared. Unrelated game saves and passwords are not sent.",16)
  call_api("student",null,"student")
 func render_student()->void:

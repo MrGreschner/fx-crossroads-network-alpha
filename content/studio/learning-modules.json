@@ -936,7 +936,7 @@
     "MAM1010": {
       "code": "MAM1010",
       "name": "Marketing & Management",
-      "brief": "Use the Merchandising A/B Lab to compare ONE change for the SAME product and audience. Hold stock and budget constant, interpret units/revenue/profit, then discuss additional pricing, service, place and promotion strategies. This is a controlled retail experiment, not a venture selection or full business plan. Attach a Merchandising A/B Lab comparison. Change one factor and use its results as practical evidence; add a short recommendation.",
+      "brief": "Compare one merchandising change for the same product and audience using the Merchandising A/B Lab OR two completed Market Quarter trading periods. Keep other decisions as steady as possible, record your reasoning and explain limitations. Attach the comparison and use units, revenue, costs and profit to justify a recommendation. The simulation is evidence for teacher review, not an automatic outcome award.",
       "kind": "market",
       "prerequisite": "None",
       "draft": false,
@@ -1007,7 +1007,7 @@
         {
           "id": "campaigns",
           "title": "Campaign comparison",
-          "prompt": "Use the Merchandising A/B Lab and attach a trial. Change ONE factor while holding audience, budget, stock and product constant. Compare pricing, packaging, service/place and promotion strategies beyond the trial; identify model limitations and research real retail examples.",
+          "prompt": "Attach a Merchandising A/B Lab comparison or Market Quarter snapshot with two completed periods and a saved decision journal. Change one merchandising factor and compare sales, stock costs, waits, customers lost and profit. Explain other influences and model limitations; research real examples of pricing, service, place and promotion.",
           "outcomes": [
             "3"
           ],

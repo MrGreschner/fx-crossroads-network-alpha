@@ -1,0 +1,12 @@
+{
+  "id": "bg_stride_1",
+  "name": "Pathfinder Boots 1",
+  "cost": 160,
+  "effect": "bonus_speed",
+  "amount": 15,
+  "shop": false,
+  "bg_only": true,
+  "bg_family": "stride",
+  "bg_tier": 1,
+  "description": "+15% movement speed. Replaces a lower tier of this family; pay only the price difference. Three equipment slots total."
+}

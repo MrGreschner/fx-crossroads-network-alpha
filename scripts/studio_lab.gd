@@ -58,7 +58,8 @@ func setup(owner:Node,initial:Dictionary={},use:Callable=Callable())->void:
  if preload("res://scripts/education_access.gd").student():
   var learning_row=HBoxContainer.new();body.add_child(learning_row)
   workshop.button(learning_row,"Learning journal • record this design",func():workshop.game.legacy.learning_open())
-  workshop.button(learning_row,"Finalize & submit to active module",func():if apply_code():status.text=preload("res://scripts/studio_finalize.gd").submit("ability",attack,str(attack.name)))
+  workshop.button(learning_row,"Freeze source for module",func():if apply_code():status.text=preload("res://scripts/studio_finalize.gd").submit("ability",attack,str(attack.name)))
+ workshop.button(body,"Code playground • loops, targets & tests",func():var lab=preload("res://scripts/structured_lab.gd").new();add_child(lab);lab.setup(workshop,Callable(),func(source:String):attack.forced_balance=false;updating=true;code.text=source;updating=false;attack.style="custom";apply_code()))
  var split=HSplitContainer.new();split.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(split)
  var scroll=ScrollContainer.new();scroll.custom_minimum_size.x=375;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;split.add_child(scroll)
  gui=VBoxContainer.new();gui.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(gui);preload("res://scripts/touch_list_scroll.gd").attach(scroll).form_controls=true
@@ -184,6 +185,7 @@ func edit_minion()->void:
  var editor=preload("res://scripts/studio_pixel_editor.gd").new();add_child(editor);editor.setup(str(attack.get("minion_image","")),"Minion");editor.bind_live(["value","minion_image"])
  editor.saved.connect(func(encoded:String):attack.minion_image=encoded;apply_code())
 func replace_variable(key:String,value:float)->void:
+ if code.text.begins_with("# @structured"):return
  var lines=code.text.split("\n");var found=false
  for i in lines.size():
   if lines[i].strip_edges().begins_with("let "+key+" ="):lines[i]="let "+key+" = "+str(value);found=true;break

@@ -363,7 +363,7 @@ func valid_action(data:Dictionary)->bool:
   return point is Array and point.size()==2 and finite_number(point[0]) and finite_number(point[1]) and Vector2(float(point[0]),float(point[1])).length()<60000 and int(data.get("input_seq",-1))>=0
  if kind=="bg_upgrade":
   var key=str(data.get("key",""))
-  if key not in ["melee","ranged","healing","vitality","production"] and key not in ["unit:foot","unit:archer","unit:healer","unit:catapult","unit:mage","unit:berserker","unit:tank","unit:longbow","unit:lancer","unit:standard","unit:mossbinder","order:base","order:capital","order:center","order:open","order:enemy_base","order:enemy_capital","order:recall"]:return false
+  if key not in ["melee","ranged","healing","vitality","production"] and key not in ["unit:foot","unit:archer","unit:healer","unit:catapult","unit:mage","unit:berserker","unit:tank","unit:longbow","unit:lancer","unit:standard","unit:mossbinder","order:base","order:capital","order:center","order:open","order:enemy_base","order:enemy_capital","order:recall"] and key not in ["hero:bg_might_1", "hero:bg_might_2", "hero:bg_might_3", "hero:bg_might_4", "hero:bg_vigor_1", "hero:bg_vigor_2", "hero:bg_vigor_3", "hero:bg_ward_1", "hero:bg_ward_2", "hero:bg_ward_3", "hero:bg_stride_1", "hero:bg_stride_2", "hero:bg_focus_1", "hero:bg_focus_2", "hero:bg_siphon_1", "hero:bg_siphon_2"]:return false
  if kind=="purchase" and not data.get("id") is String:return false
  if kind=="held_cast" and str(data.get("phase",""))=="cancel":return true
  if kind in ["attack","held_cast"]:
@@ -510,7 +510,7 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
     g._purchase(id,str(data.id));accepted=int(g.gold.get(id,0))<before_money or g.inventory.get(id,[]).size()>before_items
   var base:Dictionary=g.battlegrounds.bases.get(g.battlegrounds.owners.get(id,""),{}) if g.mode=="battlegrounds" else {}
   var order={"gold":int(g.gold.get(id,0)),"counts":base.get("counts",[]),"upgrades":base.get("upgrades",{})}
-  send_actor(id,{"type":"economy_ack","order":order,"seq":int(data.seq),"accepted":accepted,"kind":kind,"match_id":g.match_id,"message":"Army order accepted." if accepted and str(data.get("key","")).begins_with("order:") else "Army upgraded!" if accepted and kind=="bg_upgrade" else "Item purchased!" if accepted else "Order not completed. Check CC, capacity and distance from your shop."});return
+  send_actor(id,{"type":"economy_ack","order":order,"items":g.inventory.get(id,[]),"hp":int(g.health.get(id,0)),"seq":int(data.seq),"accepted":accepted,"kind":kind,"match_id":g.match_id,"message":"Hero equipment purchased!" if accepted and str(data.get("key","")).begins_with("hero:") else "Army order accepted." if accepted and str(data.get("key","")).begins_with("order:") else "Army upgraded!" if accepted and kind=="bg_upgrade" else "Item purchased!" if accepted else "Order not completed. Check CC, capacity and distance from your shop."});return
  var custom_before=g.adventure.combat.projectiles.size()
  var born:Array=[]
  var before=g.missiles.size();var style=str(data.get("style","primary"));var previous=int(g.cooldown_at.get(id,{}).get(style,0))

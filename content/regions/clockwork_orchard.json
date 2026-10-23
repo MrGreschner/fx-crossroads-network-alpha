@@ -2,16 +2,17 @@
   "id": "clockwork_orchard",
   "name": "The Clockwork Orchard",
   "size": [
-    7200,
-    4200
+    4320,
+    2520
   ],
   "terrain": "clock_floor",
   "scene": "res://scenes/realms/clockwork_orchard.tscn",
   "boss_sprite": "hourglass_hart",
-  "boss_health": 900,
+  "boss_health": 780,
   "xp_per_level": 4,
   "boss_secondary": "clockwork",
   "expansion": "clockwork",
-  "difficulty_label": "Very hard: timed machinery and explosive moths",
-  "difficulty_tier": "hard"
+  "difficulty_label": "Medium \u2014 rotating sluice gears and volatile scarabs",
+  "difficulty_tier": "medium",
+  "description": "A compact brass orchard. Two timed gear walls open one passage at a time. Watch the countdowns; Ratchet Keepers defend the lanes, and the Hourglass Hart summons volatile scarabs."
 }

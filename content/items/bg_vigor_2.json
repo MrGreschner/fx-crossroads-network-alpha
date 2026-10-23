@@ -1,0 +1,12 @@
+{
+  "id": "bg_vigor_2",
+  "name": "Heartstone 2",
+  "cost": 400,
+  "effect": "bonus_health",
+  "amount": 130,
+  "shop": false,
+  "bg_only": true,
+  "bg_family": "vigor",
+  "bg_tier": 2,
+  "description": "+130 maximum health. Replaces a lower tier of this family; pay only the price difference. Three equipment slots total."
+}

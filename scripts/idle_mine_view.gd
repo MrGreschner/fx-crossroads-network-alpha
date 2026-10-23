@@ -26,7 +26,7 @@ func setup(owner:RefCounted)->void:
  var body=VBoxContainer.new();panel.add_child(body)
  var header=HBoxContainer.new();body.add_child(header)
  var title=label(header,"IDLE MINING • Deepwell",26);title.add_theme_color_override("font_color",Color("#f0cc87"));title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- button(header,"Crossroads Market",func():close();mine.legacy.commerce.open())
+ button(header,"Sell finds • Deepwell Exchange",func():close();mine.legacy.commerce.open())
  button(header,"Back up profile",backup)
  button(header,"Back to town",close)
  var goods=Control.new();goods.custom_minimum_size.y=38;body.add_child(goods);goods.draw.connect(func():
@@ -275,7 +275,7 @@ func _process(delta:float)->void:
 func foundry_page()->void:
  var f=mine.FOUNDRY.state(mine)
  var intro=UI.card(page,"RAMFORGE • from seam to bar","Six metals unlock deeper underground. Collect the depot, then use metal ore + coal at the furnace. Keep bars for machinery or prepare them as Market stock.")
- var row=HBoxContainer.new();intro.add_child(row);tracked(row,"Collect depot",mine.collect,"collect");button(row,"Sell bars at Market",func():close();mine.legacy.commerce.open())
+ var row=HBoxContainer.new();intro.add_child(row);tracked(row,"Collect depot",mine.collect,"collect");button(row,"Sell finds at Deepwell Exchange",func():close();mine.legacy.commerce.open())
  labels.furnace=label(intro,"",17);progress_bar(intro,"furnace");tracked(intro,"Cancel bar batch • refund materials",mine.FOUNDRY.cancel_forge.bind(mine),"forge_cancel")
  if mine.depth()<mine.CATALOG.data().max_shafts or not mine.state().job.is_empty():
   var next=UI.card(page,"YOUR NEXT BUILD")

@@ -17,7 +17,7 @@ static func attack_cost(a:Dictionary)->float:
  if style=="custom":
   var compiled=preload("res://scripts/studio_script.gd").compile(str(a.get("program","")))
   if not compiled.error.is_empty():return INF
-  count=1
+  count=32 if str(a.get("program","")).begins_with("# @structured") else 1
   for charged in [false,true]:
    for targets in [false,true]:count=maxf(count,preload("res://scripts/studio_script.gd").actions(compiled.instructions,charged,targets,0,[],int(a.get("count",1))).size())
   # Programs may emit persistent fields, piercing hits or summons: reserve their worst-case budget.
@@ -32,6 +32,7 @@ static func attack_cost(a:Dictionary)->float:
  var charge=1.7 if float(a.get("charge",0))>0 else 1.0
  return (hit+2)*count*reach*area*charge*maxf(1,1/float(a.get("minion_interval",1)))*(1+float(a.get("lifesteal",0))/100)/maxf(.3,float(a.get("cooldown",1)))
 static func sync_code(a:Dictionary)->void:
+ if str(a.get("program","")).begins_with("# @structured"):return
  if a.get("style")!="custom":return
  var lines=str(a.get("program","")).split("\n")
  for key in ["damage","heal","cooldown","range","radius","count","duration"]:

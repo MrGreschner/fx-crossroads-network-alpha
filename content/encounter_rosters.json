@@ -1,50 +1,10 @@
 {
-  "quarry": [
-    "imp",
-    "cinderling",
-    "archer",
-    "warlock",
-    "boss:bramble_boss"
-  ],
-  "between": [],
-  "practice": [],
-  "ice": [
-    "frostling",
-    "ice_archer",
-    "glacier_hound",
-    "snow_oracle",
-    "boss:cryowarden"
-  ],
-  "elementary": [
-    "yellow_bus",
-    "pencil_scrapper",
-    "backpack_biter",
-    "paper_sprite",
-    "lesson_warden",
-    "recess_ringleader"
-  ],
-  "ebonwake": [
-    "last_creditor",
-    "ashen_revenant",
-    "gravity_husk",
-    "mercy_cantor",
-    "chrysalis_knight",
-    "singularity_oracle",
-    "brood_reliquary",
-    "exalted_wraith",
-    "cinderling"
-  ],
-  "wayfarer": [
-    "briar_bandit",
-    "glowcap_slinger",
-    "rootbound_keeper",
-    "rootwarden",
-    "ice_archer",
-    "frostling",
-    "summit_golem",
-    "sluice_beetle",
-    "tidebinder",
-    "inkfin"
+  "lantern_marsh": [
+    "bellroot",
+    "lantern_crab",
+    "reed_stalker",
+    "wick_wisp",
+    "bog_bellringer"
   ],
   "brasslock": [
     "lockmaster_regent",
@@ -52,7 +12,18 @@
     "grate_witch",
     "brass_bailiff",
     "brass_sapper",
-    "keywing_courier"
+    "keywing_courier",
+    "hinge_conjurer",
+    "latch_hound"
+  ],
+  "middle_school": [
+    "bellwork_colossus",
+    "backpack_biter",
+    "paper_sprite",
+    "pencil_scrapper",
+    "hall_monitor",
+    "culture_blob",
+    "lunchline_leviathan"
   ],
   "folded_coast": [
     "cartographer",
@@ -60,37 +31,27 @@
     "foldwing",
     "crease_sentry"
   ],
-  "mistglass_rift": [
+  "town": [],
+  "zombie": [
+    "plague_director",
+    "shambler",
+    "spore_thrower",
+    "hazmat_raider",
+    "quarantine_hound",
+    "antiseptic_drone",
+    "spore_orderly",
+    "quarantine_warden",
+    "lockdown_aberration"
+  ],
+  "voyage_coast": [
     "boss:bramble_boss"
   ],
-  "confluence": [
-    "confluence_heart",
-    "sluice_crab",
-    "coil_singer",
-    "glass_mender"
-  ],
-  "silverfall": [
-    "crowned_torrent",
-    "cascade_heron",
-    "sluice_beetle",
-    "ripple_eel",
-    "tidebinder"
-  ],
-  "clockwork_orchard": [
-    "hourglass_hart",
-    "pendulum_moth",
-    "tick_acorn",
-    "gearhorn_runner"
-  ],
-  "first_steps": [
-    "boss:bramble_boss"
-  ],
-  "lantern_marsh": [
-    "bellroot",
-    "lantern_crab",
-    "reed_stalker",
-    "wick_wisp",
-    "bog_bellringer"
+  "ice": [
+    "frostling",
+    "ice_archer",
+    "glacier_hound",
+    "snow_oracle",
+    "boss:cryowarden"
   ],
   "shattered_oath": [
     "thorn_sentinel",
@@ -104,28 +65,96 @@
     "gilded_usurper",
     "oath_shade"
   ],
-  "moonburrow": [
-    "flintroot",
-    "burrowfang",
-    "shardspitter",
-    "fusehare",
+  "sunfield": [
+    "sun_sentinel",
+    "bramble",
+    "archer",
+    "sunbeam_cantor",
+    "saffron_hopper"
+  ],
+  "practice": [],
+  "petalbrook": [
+    "bloomtail_regent",
+    "petal_ducker",
+    "briar_tail",
+    "nectar_keeper",
+    "silk_spinner",
+    "dewcap_guard"
+  ],
+  "first_steps": [
+    "boss:bramble_boss"
+  ],
+  "elementary": [
+    "yellow_bus",
+    "pencil_scrapper",
+    "backpack_biter",
+    "paper_sprite",
+    "lesson_warden",
+    "recess_ringleader"
+  ],
+  "voyage_lake": [
+    "bramble",
+    "boss:bramble_boss"
+  ],
+  "moonveil": [
+    "mirror_marquis",
+    "mask_duelist",
+    "prism_acolyte",
+    "lunar_usher",
+    "velvet_dancer",
+    "moonlit_puppeteer"
+  ],
+  "astral_rift": [
+    "eclipse_engine",
+    "rift_weaver",
+    "prism_kite",
+    "comet_urchin",
+    "gravity_husk",
+    "singularity_oracle",
+    "rift_skitter"
+  ],
+  "mistglass_rift": [
+    "boss:bramble_boss"
+  ],
+  "wayfarer": [
+    "briar_bandit",
+    "glowcap_slinger",
+    "rootbound_keeper",
     "rootwarden",
-    "echo_bat",
-    "sap_nurse"
+    "ice_archer",
+    "frostling",
+    "summit_golem",
+    "sluice_beetle",
+    "tidebinder",
+    "inkfin"
   ],
-  "zombie": [
-    "shambler",
-    "spore_thrower",
-    "hazmat_raider",
-    "quarantine_hound",
-    "antiseptic_drone",
-    "spore_orderly",
-    "quarantine_warden",
-    "boss:plague_director",
-    "lockdown_aberration",
-    "plague_director"
+  "between": [],
+  "cinderheart": [
+    "calderax",
+    "cinder_page",
+    "crucible_scuttler",
+    "furnace_sentinel",
+    "ashglass_alchemist",
+    "coalwing_gargoyle",
+    "brandbound_chain",
+    "kiln_slug",
+    "cinderbell_wisp",
+    "gatebreaker_korr",
+    "glass_matron",
+    "pyrewing_bellkeeper",
+    "castellan_varr"
   ],
-  "town": [],
+  "ebonwake": [
+    "last_creditor",
+    "ashen_revenant",
+    "gravity_husk",
+    "mercy_cantor",
+    "chrysalis_knight",
+    "singularity_oracle",
+    "brood_reliquary",
+    "exalted_wraith",
+    "cinderling"
+  ],
   "neon_crucible": [
     "continuum_crown",
     "fork_runner",
@@ -137,56 +166,6 @@
     "continuum_forge",
     "continuum_archive",
     "continuum_reactor"
-  ],
-  "space": [
-    "drone",
-    "star_mine",
-    "void_seeker",
-    "boss:signal_core"
-  ],
-  "astral_rift": [
-    "eclipse_engine",
-    "rift_weaver",
-    "prism_kite",
-    "comet_urchin",
-    "gravity_husk",
-    "singularity_oracle",
-    "rift_skitter"
-  ],
-  "grove": [
-    "bramble",
-    "archer",
-    "lantern_moth",
-    "boss:bramble_boss"
-  ],
-  "honeyglass": [
-    "glass_queen",
-    "honey_beetle",
-    "seed_blossom",
-    "amber_hornet",
-    "royal_nurse"
-  ],
-  "middle_school": [
-    "bellwork_colossus",
-    "backpack_biter",
-    "paper_sprite",
-    "pencil_scrapper",
-    "hall_monitor",
-    "culture_blob",
-    "lunchline_leviathan"
-  ],
-  "chimevault": [
-    "silence_regent",
-    "tuning_wraith",
-    "resonance_beetle",
-    "gongbreaker"
-  ],
-  "sunfield": [
-    "sun_sentinel",
-    "bramble",
-    "archer",
-    "sunbeam_cantor",
-    "saffron_hopper"
   ],
   "high_school": [
     "exam_math",
@@ -203,35 +182,66 @@
     "exam_history",
     "exam_science"
   ],
-  "petalbrook": [
-    "bloomtail_regent",
-    "petal_ducker",
-    "briar_tail",
-    "nectar_keeper",
-    "silk_spinner",
-    "dewcap_guard"
+  "confluence": [
+    "confluence_heart",
+    "sluice_crab",
+    "coil_singer",
+    "glass_mender"
   ],
-  "moonveil": [
-    "mirror_marquis",
-    "prism_acolyte",
-    "mask_duelist",
-    "lunar_usher",
-    "velvet_dancer",
-    "moonlit_puppeteer"
+  "chimevault": [
+    "silence_regent",
+    "tuning_wraith",
+    "resonance_beetle",
+    "gongbreaker"
   ],
-  "cinderheart": [
-    "cinder_page",
-    "crucible_scuttler",
-    "furnace_sentinel",
-    "ashglass_alchemist",
-    "coalwing_gargoyle",
-    "brandbound_chain",
-    "kiln_slug",
-    "cinderbell_wisp",
-    "gatebreaker_korr",
-    "glass_matron",
-    "pyrewing_bellkeeper",
-    "castellan_varr",
-    "calderax"
+  "grove": [
+    "bramble",
+    "archer",
+    "lantern_moth",
+    "boss:bramble_boss"
+  ],
+  "clockwork_orchard": [
+    "hourglass_hart",
+    "pendulum_moth",
+    "tick_acorn",
+    "gearhorn_runner",
+    "ratchet_keeper",
+    "spark_scarab"
+  ],
+  "moonburrow": [
+    "flintroot",
+    "burrowfang",
+    "shardspitter",
+    "fusehare",
+    "rootwarden",
+    "echo_bat",
+    "sap_nurse"
+  ],
+  "quarry": [
+    "imp",
+    "cinderling",
+    "archer",
+    "warlock",
+    "boss:bramble_boss"
+  ],
+  "space": [
+    "drone",
+    "star_mine",
+    "void_seeker",
+    "boss:signal_core"
+  ],
+  "honeyglass": [
+    "glass_queen",
+    "honey_beetle",
+    "seed_blossom",
+    "amber_hornet",
+    "royal_nurse"
+  ],
+  "silverfall": [
+    "crowned_torrent",
+    "cascade_heron",
+    "sluice_beetle",
+    "ripple_eel",
+    "tidebinder"
   ]
 }

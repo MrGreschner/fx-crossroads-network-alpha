@@ -1,43 +1,26 @@
 {
-  "quarry": [
-    "boss:bramble_boss"
+  "lantern_marsh": [
+    "bellroot"
   ],
-  "between": [],
-  "practice": [],
-  "ice": [
-    "boss:cryowarden"
-  ],
-  "elementary": [
-    "yellow_bus",
-    "recess_ringleader"
-  ],
-  "ebonwake": [
-    "last_creditor"
-  ],
-  "wayfarer": [],
   "brasslock": [
     "lockmaster_regent"
+  ],
+  "middle_school": [
+    "bellwork_colossus",
+    "lunchline_leviathan"
   ],
   "folded_coast": [
     "cartographer"
   ],
-  "mistglass_rift": [
+  "town": [],
+  "zombie": [
+    "plague_director"
+  ],
+  "voyage_coast": [
     "boss:bramble_boss"
   ],
-  "confluence": [
-    "confluence_heart"
-  ],
-  "silverfall": [
-    "crowned_torrent"
-  ],
-  "clockwork_orchard": [
-    "hourglass_hart"
-  ],
-  "first_steps": [
-    "boss:bramble_boss"
-  ],
-  "lantern_marsh": [
-    "bellroot"
+  "ice": [
+    "boss:cryowarden"
   ],
   "shattered_oath": [
     "briar_matron",
@@ -46,43 +29,45 @@
     "storm_archon",
     "gilded_usurper"
   ],
-  "moonburrow": [
-    "flintroot"
+  "sunfield": [
+    "sun_sentinel"
   ],
-  "zombie": [
-    "quarantine_warden",
-    "lockdown_aberration",
-    "plague_director"
+  "practice": [],
+  "petalbrook": [
+    "bloomtail_regent"
   ],
-  "town": [],
+  "first_steps": [
+    "boss:bramble_boss"
+  ],
+  "elementary": [
+    "yellow_bus",
+    "recess_ringleader"
+  ],
+  "voyage_lake": [
+    "boss:bramble_boss"
+  ],
+  "moonveil": [
+    "mirror_marquis"
+  ],
+  "astral_rift": [
+    "eclipse_engine"
+  ],
+  "mistglass_rift": [
+    "boss:bramble_boss"
+  ],
+  "wayfarer": [],
+  "between": [],
+  "cinderheart": [
+    "calderax"
+  ],
+  "ebonwake": [
+    "last_creditor"
+  ],
   "neon_crucible": [
     "continuum_crown",
     "continuum_forge",
     "continuum_archive",
     "continuum_reactor"
-  ],
-  "space": [
-    "boss:signal_core"
-  ],
-  "astral_rift": [
-    "eclipse_engine"
-  ],
-  "grove": [
-    "boss:bramble_boss"
-  ],
-  "honeyglass": [
-    "glass_queen"
-  ],
-  "middle_school": [
-    "bellwork_colossus",
-    "lunchline_leviathan"
-  ],
-  "chimevault": [
-    "silence_regent",
-    "gongbreaker"
-  ],
-  "sunfield": [
-    "sun_sentinel"
   ],
   "high_school": [
     "exam_math",
@@ -93,17 +78,32 @@
     "exam_history",
     "exam_science"
   ],
-  "petalbrook": [
-    "bloomtail_regent"
+  "confluence": [
+    "confluence_heart"
   ],
-  "moonveil": [
-    "mirror_marquis"
+  "chimevault": [
+    "silence_regent",
+    "gongbreaker"
   ],
-  "cinderheart": [
-    "gatebreaker_korr",
-    "glass_matron",
-    "pyrewing_bellkeeper",
-    "castellan_varr",
-    "calderax"
+  "grove": [
+    "boss:bramble_boss"
+  ],
+  "clockwork_orchard": [
+    "hourglass_hart"
+  ],
+  "moonburrow": [
+    "flintroot"
+  ],
+  "quarry": [
+    "boss:bramble_boss"
+  ],
+  "space": [
+    "boss:signal_core"
+  ],
+  "honeyglass": [
+    "glass_queen"
+  ],
+  "silverfall": [
+    "crowned_torrent"
   ]
 }

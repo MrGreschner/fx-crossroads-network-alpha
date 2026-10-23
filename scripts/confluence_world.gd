@@ -14,20 +14,74 @@ const TYPES=["sluice_crab","coil_singer","glass_mender","confluence_heart"]
 const ROOMS=[Rect2(180,920,700,560),Rect2(1080,280,900,620),Rect2(1080,1500,900,620),Rect2(2210,890,650,620),Rect2(3130,780,850,840),Rect2(2280,280,490,350)]
 const WALKS=[Rect2(850,1120,430,160),Rect2(1150,850,150,700),Rect2(1930,520,410,145),Rect2(1930,1750,410,145),Rect2(2230,610,150,1160),Rect2(2800,1120,400,160),Rect2(2400,570,150,380)]
 const EXIT=Vector2(3850,1200)
+var floor_mesh:ArrayMesh
+var water_mesh:ArrayMesh
+var floor_rects:Array[Rect2]=[]
+var column_points:Array[Vector2]=[Vector2(1390,460),Vector2(1750,750),Vector2(1390,1930),Vector2(1750,1640),Vector2(3330,970),Vector2(3760,1430)]
+func build_floor_mesh()->void:
+ var vertices=PackedVector2Array();var colours=PackedColorArray()
+ for r in WALKS+ROOMS:
+  for layer in [Rect2(r.position+Vector2(0,12),r.size),r,Rect2(r.position+Vector2(8,8),r.size-Vector2(16,16))]:
+   mesh_rect(vertices,colours,layer,Color("#0c192b") if layer.position.y==r.position.y+12 else Color("#c19660") if layer==r else Color("#334c5b"))
+  for x in range(int(r.position.x)+20,int(r.end.x)-20,64):
+   for y in range(int(r.position.y)+20,int(r.end.y)-20,64):mesh_rect(vertices,colours,Rect2(x,y,59,59),Color("#3d5963") if (x/64+y/64)%2 else Color("#405965"))
+ build_decor(vertices,colours)
+ floor_mesh=make_mesh(vertices,colours)
+ vertices=PackedVector2Array();colours=PackedColorArray()
+ for x in 43:
+  for y in 28:mesh_arc(vertices,colours,Vector2(x*100,y*90),18,0,PI,10,Color(.3,.68,.73,.16),2)
+ water_mesh=make_mesh(vertices,colours)
+func mesh_rect(vertices:PackedVector2Array,colours:PackedColorArray,r:Rect2,ink:Color)->void:
+ for point in [r.position,Vector2(r.end.x,r.position.y),r.end,r.position,r.end,Vector2(r.position.x,r.end.y)]:vertices.append(point);colours.append(ink)
+func make_mesh(vertices:PackedVector2Array,colours:PackedColorArray)->ArrayMesh:
+ var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_COLOR]=colours
+ var mesh=ArrayMesh.new();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays,[],{},Mesh.ARRAY_FLAG_USE_2D_VERTICES);return mesh
+func mesh_line(vertices:PackedVector2Array,colours:PackedColorArray,a:Vector2,b:Vector2,ink:Color,width:float)->void:
+ var normal=(b-a).normalized().orthogonal()*width*.5
+ for p in [a-normal,b-normal,b+normal,a-normal,b+normal,a+normal]:vertices.append(p);colours.append(ink)
+func mesh_arc(vertices:PackedVector2Array,colours:PackedColorArray,p:Vector2,r:float,start:float,end:float,count:int,ink:Color,width:float)->void:
+ for n in count:mesh_line(vertices,colours,p+Vector2.from_angle(lerpf(start,end,n/float(count)))*r,p+Vector2.from_angle(lerpf(start,end,(n+1)/float(count)))*r,ink,width)
+func mesh_circle(vertices:PackedVector2Array,colours:PackedColorArray,p:Vector2,r:float,ink:Color)->void:
+ for n in 16:
+  for point in [p,p+Vector2.from_angle(n*TAU/16)*r,p+Vector2.from_angle((n+1)*TAU/16)*r]:vertices.append(point);colours.append(ink)
+func build_decor(v:PackedVector2Array,c:PackedColorArray)->void:
+ for n in ROOMS.size():
+  var r:Rect2=ROOMS[n];var center=r.get_center();var seal=Color(.4,.85,.8,.14) if n==1 else Color(.95,.75,.35,.14) if n==2 else Color(.6,.8,.85,.12)
+  mesh_arc(v,c,center,105,0,TAU,48,seal,5);mesh_arc(v,c,center,82,0,TAU,40,seal,2)
+  for spoke in 8:
+   var direction=Vector2.from_angle(spoke*TAU/8);mesh_line(v,c,center+direction*88,center+direction*103,seal,3)
+  for side in [0,1]:
+   var a=r.position+Vector2(45,145+side*(r.size.y-195));var b=a+Vector2(r.size.x-90,0)
+   mesh_line(v,c,a,b,Color("#243d4b"),12);mesh_line(v,c,a,b,Color("#8a7357"),4)
+   for x in range(0,int(r.size.x)-90,80):
+    var q=a+Vector2(x,0);mesh_circle(v,c,q,5,Color("#bea37a"));mesh_circle(v,c,q,2,Color("#43505c"))
+   var q=r.position+Vector2(70+side*(r.size.x-205),r.size.y-120)
+   mesh_rect(v,c,Rect2(q,Vector2(90,45)),Color("#1c3749"));mesh_rect(v,c,Rect2(q+Vector2(4,4),Vector2(82,37)),Color(.25,.7,.72,.32))
+   for bar in 6:mesh_line(v,c,q+Vector2(10+bar*14,4),q+Vector2(10+bar*14,41),Color("#799b9b"),2)
+  var tint=Color("#78d8d0") if n==1 else Color("#f2cd75") if n==2 else Color("#9bb9c9")
+  for x in range(int(r.position.x)+45,int(r.end.x)-30,100):
+   var p=Vector2(x,r.position.y+10);mesh_rect(v,c,Rect2(p-Vector2(20,20),Vector2(40,35)),Color("#182b40"));mesh_rect(v,c,Rect2(p-Vector2(15,15),Vector2(30,23)),Color(tint,.6));mesh_line(v,c,p+Vector2(0,-15),p+Vector2(0,8),Color("#c29a67"),3)
+  for side in [0,1]:
+   var p=Vector2(r.position.x+30+side*(r.size.x-60),r.position.y+45);mesh_rect(v,c,Rect2(p,Vector2(16,48)),Color("#aa845c"));mesh_circle(v,c,p+Vector2(8,-5),7,tint)
+ for p in column_points:
+  mesh_circle(v,c,p+Vector2(0,10),40,Color(0,0,0,.3));mesh_rect(v,c,Rect2(p-Vector2(25,60),Vector2(50,88)),Color("#bc996e"));mesh_rect(v,c,Rect2(p-Vector2(17,54),Vector2(34,64)),Color("#506c78"));mesh_circle(v,c,p-Vector2(0,38),12,Color("#8ae1dc"))
 func setup(id:String)->void:
- active=id=="confluence";initialized=false;done=false;cleared=[];started=[];warnings.clear();bolts.clear();clock=0;spring_used=false
+ active=id=="confluence";initialized=false;done=false;cleared=[];started=[];warnings.clear();bolts.clear();clock=0;spring_used=false;floor_rects.clear();floor_mesh=null;water_mesh=null
+ if active:
+  for rect in ROOMS+WALKS:floor_rects.append(rect.grow(-15))
+  if not is_inside_tree() or not get_tree().root.has_meta("fx_dedicated_server"):build_floor_mesh()
 func floor_at(p:Vector2)->bool:
- for r in ROOMS+WALKS:
-  if r.grow(-15).has_point(p):return true
+ for r in floor_rects:
+  if r.has_point(p):return true
  return false
 func barrier()->Rect2:return Rect2(2920,1090,35,220)
 func can_stand(p:Vector2)->bool:
  if not floor_at(p):return false
  if not (cleared.has(1) and cleared.has(2)) and barrier().grow(18).has_point(p):return false
  for center in columns():
-  if center.distance_to(p)<43:return false
+  if center.distance_squared_to(p)<1849:return false
  return true
-func columns()->Array[Vector2]:return [Vector2(1390,460),Vector2(1750,750),Vector2(1390,1930),Vector2(1750,1640),Vector2(3330,970),Vector2(3760,1430)]
+func columns()->Array[Vector2]:return column_points
 func spawn_room(index:int)->void:
  started.append(index)
  var r:Rect2=ROOMS[index]
@@ -145,55 +199,21 @@ func receive(d:Dictionary)->void:
  warnings=d.get("warnings",[]);bolts=d.get("bolts",[]);clock=float(d.get("clock",0));spring_used=bool(d.get("spring_used",false))
 func draw_world(c:Node2D,camera:Vector2)->void:
  if not active:return
- var view:=Rect2(camera-Vector2(150,150),Vector2(2300,1600))
+ var extent=c.get_viewport_rect().size
+ var view:=Rect2(camera-Vector2(150,150),extent+Vector2(300,300))
  c.draw_rect(Rect2(-camera,Vector2(4200,2400)),Color("#102c3b"))
- # Water channels animate gently; geometry and collision use the same room plan.
- for x in range(maxi(0,int(camera.x/100)-1),mini(43,int(camera.x/100)+24)):
-  for y in range(maxi(0,int(camera.y/90)-1),mini(28,int(camera.y/90)+18)):
-   var p:=Vector2(x*100,y*90)-camera;c.draw_arc(p,18,clock*.3,clock*.3+PI,10,Color(.3,.68,.73,.16),2,true)
- for r in WALKS+ROOMS:
-  if not view.intersects(r):continue
-  c.draw_rect(Rect2(r.position-camera+Vector2(0,12),r.size),Color("#0c192b"))
-  c.draw_rect(Rect2(r.position-camera,r.size),Color("#c19660"));c.draw_rect(Rect2(r.position-camera+Vector2(8,8),r.size-Vector2(16,16)),Color("#334c5b"))
-  for x in range(int(r.position.x)+20,int(r.end.x)-20,64):
-   for y in range(int(r.position.y)+20,int(r.end.y)-20,64):
-    var p:=Vector2(x,y)
-    if view.has_point(p):c.draw_rect(Rect2(p-camera,Vector2(59,59)),Color("#3d5963") if (x/64+y/64)%2 else Color("#405965"))
+ # Cached geometry keeps water, floor tiles and brass detail out of the per-frame script loops.
+ if water_mesh!=null:c.draw_mesh(water_mesh,null,Transform2D(0,-camera+Vector2(0,sin(clock*.3)*3)))
+ if floor_mesh!=null:c.draw_mesh(floor_mesh,null,Transform2D(0,-camera))
+ var names=["ARRIVAL DOCK","RAINWORK HALL","COPPER CHOIR","CONFLUENCE","THE DIVIDED HEART","HIDDEN CONDENSER"]
  for n in ROOMS.size():
   var r:Rect2=ROOMS[n]
   if not view.intersects(r):continue
-  var center:Vector2=r.get_center()-camera
-  # An inlaid seal teaches the two-colour identity without obscuring combat.
-  var seal_color:=Color(.4,.85,.8,.14) if n==1 else Color(.95,.75,.35,.14) if n==2 else Color(.6,.8,.85,.12)
-  c.draw_arc(center,105,0,TAU,48,seal_color,5,true)
-  c.draw_arc(center,82,0,TAU,40,seal_color,2,true)
-  for spoke in 8:
-   var direction:=Vector2.from_angle(spoke*TAU/8)
-   c.draw_line(center+direction*88,center+direction*103,seal_color,3,true)
-  for side in [0,1]:
-   var a:Vector2=r.position-camera+Vector2(45,145+side*(r.size.y-195))
-   var b:Vector2=a+Vector2(r.size.x-90,0)
-   c.draw_line(a,b,Color("#243d4b"),12,true);c.draw_line(a,b,Color("#8a7357"),4,true)
-   for x in range(0,int(r.size.x)-90,80):
-    var q:=a+Vector2(x,0);c.draw_circle(q,5,Color("#bea37a"));c.draw_circle(q,2,Color("#43505c"))
-  # Low glass inspection plates and drainage grates are flush with the floor.
-  for side in [0,1]:
-   var q:=r.position-camera+Vector2(70+side*(r.size.x-205),r.size.y-120)
-   c.draw_rect(Rect2(q,Vector2(90,45)),Color("#1c3749"))
-   c.draw_rect(Rect2(q+Vector2(4,4),Vector2(82,37)),Color(.25,.7,.72,.32))
-   for bar in 6:c.draw_line(q+Vector2(10+bar*14,4),q+Vector2(10+bar*14,41),Color("#799b9b"),2)
-  var tint:=Color("#78d8d0") if n==1 else Color("#f2cd75") if n==2 else Color("#9bb9c9")
-  # Glass roof edges, brass supports and lit windows frame each hall.
-  for x in range(int(r.position.x)+45,int(r.end.x)-30,100):
-   var p:=Vector2(x,r.position.y+10)-camera;c.draw_rect(Rect2(p-Vector2(20,20),Vector2(40,35)),Color("#182b40"));c.draw_rect(Rect2(p-Vector2(15,15),Vector2(30,23)),Color(tint,.6));c.draw_line(p+Vector2(0,-15),p+Vector2(0,8),Color("#c29a67"),3)
-  for side in [0,1]:
-   var p:=Vector2(r.position.x+30+side*(r.size.x-60),r.position.y+45)-camera;c.draw_rect(Rect2(p,Vector2(16,48)),Color("#aa845c"));c.draw_circle(p+Vector2(8,-5),7,tint)
-  var names:=["ARRIVAL DOCK","RAINWORK HALL","COPPER CHOIR","CONFLUENCE","THE DIVIDED HEART","HIDDEN CONDENSER"]
+  var tint=Color("#78d8d0") if n==1 else Color("#f2cd75") if n==2 else Color("#9bb9c9")
   c.draw_string(ThemeDB.fallback_font,r.position-camera+Vector2(35,90),names[n],HORIZONTAL_ALIGNMENT_LEFT,-1,20,tint)
- for p in columns():
-  c.draw_circle(p-camera+Vector2(0,10),40,Color(0,0,0,.3));c.draw_rect(Rect2(p-camera-Vector2(25,60),Vector2(50,88)),Color("#bc996e"));c.draw_rect(Rect2(p-camera-Vector2(17,54),Vector2(34,64)),Color("#506c78"));c.draw_circle(p-camera-Vector2(0,38),12,Color("#8ae1dc"))
  # Working waterwheels and copper turbines outside the walking lanes.
  for location in [Vector2(965,550),Vector2(2090,1810),Vector2(4070,1160),Vector2(2120,430)]:
+  if not view.grow(100).has_point(location):continue
   var center:Vector2=location-camera
   c.draw_rect(Rect2(center-Vector2(20,95),Vector2(40,190)),Color("#304f62"))
   for stream in 5:

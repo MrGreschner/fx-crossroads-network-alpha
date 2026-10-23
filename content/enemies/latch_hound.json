@@ -1,0 +1,12 @@
+{
+  "id": "latch_hound",
+  "name": "Latch Hound",
+  "sprite": "latch_hound",
+  "health": 42,
+  "speed": 205,
+  "damage": 8,
+  "behaviour": "custom",
+  "custom_attack": "latch_bite",
+  "aggro_range": 760,
+  "expansion_only": true
+}

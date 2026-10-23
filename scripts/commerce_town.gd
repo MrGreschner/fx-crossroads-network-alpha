@@ -16,15 +16,13 @@ func interact(g:Node)->bool:
  if g.position_in_world.distance_to(OFFICE_DOOR)<80:
   g.hint="E • Crossroads Market Office"
   if Input.is_action_just_pressed("interact"):
-   g.presentation.window("CROSSROADS MARKET OFFICE","market_office")
-   g.presentation.label(g.presentation.content,"The future home of your market ventures.",23)
-   g.presentation.label(g.presentation.content,"Mining • Fishing • Gathering • Trading",20)
-   g.presentation.label(g.presentation.content,"Business applications are not open yet. Visit Crossroads Market to manage your existing mining business.",18)
+   g.presentation.window("MARKET OFFICE","market_office")
+   g.presentation.label(g.presentation.content,"Reserved for future business services.",20)
    g.presentation.button(g.presentation.content,"Back to town",g.presentation.close)
   return true
  if g.position_in_world.distance_to(DOOR)>85:return false
- g.hint="E • Crossroads Market • manage your mining business"
- if Input.is_action_just_pressed("interact"):g.legacy.commerce.open()
+ g.hint="E • Crossroads Market • business district"
+ if Input.is_action_just_pressed("interact"):g.open_business_district()
  return true
 static func path(g:Node2D,points:PackedVector2Array)->void:
  g.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -87,7 +85,7 @@ func draw_market(g:Node2D,camera:Vector2)->void:
  g.draw_rect(Rect2(cart-Vector2(10,21),Vector2(54,27)),Color("#796448"));crate(g,cart-Vector2(4,32),Vector2(28,24))
  for x in [0,34]:g.draw_circle(cart+Vector2(x,8),7,Color("#465a5d"));g.draw_circle(cart+Vector2(x,8),3,Color("#b4a181"))
  g.draw_arc(DOOR-camera,28,0,TAU,32,Color("#efc77b") if g.position_in_world.distance_to(DOOR)<85 else Color(.9,.8,.5,.35),2,true)
- g.draw_string(font,DOOR-camera+Vector2(-105,36),"TRADE • STOCK • SHIPMENTS",HORIZONTAL_ALIGNMENT_CENTER,210,13,Color("#ecd39b"))
+ g.draw_string(font,DOOR-camera+Vector2(-105,36),"ENTER THE BUSINESS DISTRICT",HORIZONTAL_ALIGNMENT_CENTER,210,13,Color("#ecd39b"))
 
 func draw_market_structure(g:Node2D,camera:Vector2)->void:
  var p=WALL.position-camera;var yard=YARD.position-camera

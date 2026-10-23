@@ -15,7 +15,7 @@ static func route()->PackedVector2Array:
    var t=float(k)/8;rails.append(a.lerp(at,t).lerp(at.lerp(b,t),t))
  rails.append(TRACK[-1]);return rails
 static func blocked(p:Vector2)->bool:return p.distance_to(ELDER)<23 or p.distance_to(WILLOW)<23
-static func draw_tracks(g:Node2D,camera:Vector2)->void:
+static func draw_tracks_source(g:Node2D,camera:Vector2)->void:
  var visible=Rect2(camera,g.VIEW).grow(45)
  var points=route()
  for n in range(1,points.size()):
@@ -50,3 +50,6 @@ static func draw_trees(g:Node2D,camera:Vector2)->void:
    var shade=Color("#84e5e0") if n%3 else Color("#b5a0ff")
    g.draw_circle(leaf,6,Color(shade,pulse*.11));g.draw_line(leaf-Vector2(2,0),leaf+Vector2(2,0),Color(shade,pulse*.9),2,true)
    if pulse>.8:g.draw_line(leaf-Vector2(0,3),leaf+Vector2(0,3),Color(shade,pulse*.75),1,true)
+
+static func draw_tracks(g:Node2D,camera:Vector2)->void:
+ preload("res://scripts/town_art39.gd").draw(g,"rails",camera)

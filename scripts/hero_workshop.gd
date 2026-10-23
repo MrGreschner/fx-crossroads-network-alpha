@@ -38,7 +38,8 @@ func setup(owner:Node)->void:
  panel=PanelContainer.new();panel.size=Vector2(1140,680);add_child(panel);skin(panel);panel.hide()
  body=VBoxContainer.new();body.add_theme_constant_override("separation",12);panel.add_child(body)
  var title=HBoxContainer.new();body.add_child(title);label(title,"CROSSROADS STUDIO • HERO WORKSHOP",24).size_flags_horizontal=Control.SIZE_EXPAND_FILL
- button(title,"Journey",func():save_draft();load("res://scripts/studio_showcase.gd").open(self));button(title,"Partner up",func():get_tree().root.get_node("FXStudioPartner").open(self));button(title,"Close",close)
+ button(title,"Journey",func():save_draft();load("res://scripts/studio_showcase.gd").open(self));button(title,"Partner up",func():get_tree().root.get_node("FXStudioPartner").open(self));button(title,"Return to module",func():if is_instance_valid(game.business_academy):close()).visible=is_instance_valid(game.business_academy)
+ button(title,"Code playground",func():var lab=preload("res://scripts/structured_lab.gd").new();add_child(lab);lab.setup(self));button(title,"Close",close)
  var tools=HBoxContainer.new();body.add_child(tools)
  button(tools,"Clear / Start fresh",confirm_new);button(tools,"Open project",func():choose_file("project"));button(tools,"Download project",export_project);button(tools,"Save draft",save_draft)
  button(tools,"Playtest",start_test);button(tools,"Finalize & Play",play_draft)
@@ -66,6 +67,8 @@ func button(parent:Node,value:String,action:Callable)->Button:
 func clear(node:Node)->void:
  for child in node.get_children():node.remove_child(child);child.queue_free()
 func open(classroom:bool=false)->void:
+ for b in panel.find_children("*","Button",true,false):
+  if b.text=="Return to module":b.visible=is_instance_valid(game.business_academy)
  if active:
   if classroom:enter_classroom()
   return
@@ -508,7 +511,7 @@ func show_hub()->void:
  button(object_card,"Create objects",func():open_world_lab(false))
  var realm_card=UI.card(cards,"06  REALM BUILDER","Paint terrain, place objects and enemies, then explore your own world.")
  button(realm_card,"Build a realm",func():open_world_lab(true))
- var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"Projects & Showcase",func():load("res://scripts/studio_showcase.gd").open(self)));button(row,"Music Studio",func():hub.hide();var page=preload("res://scripts/music_studio.gd").new();add_child(page);page.setup(game,self));button(row,"Partner up",func():get_tree().root.get_node("FXStudioPartner").open(self));
+ var row=HBoxContainer.new();col.add_child(row);UI.accent(button(row,"Projects & Showcase",func():load("res://scripts/studio_showcase.gd").open(self)));button(row,"Vector Studio",func():var vector=preload("res://scripts/vector_studio.gd").new();add_child(vector);vector.setup(self));button(row,"Music Studio",func():hub.hide();var page=preload("res://scripts/music_studio.gd").new();add_child(page);page.setup(game,self));button(row,"Partner up",func():get_tree().root.get_node("FXStudioPartner").open(self));
  if preload("res://scripts/academy_town.gd").allowed():button(row,"Visit Crossroads Academy",enter_classroom)
  button(row,"Return to game",close)
  UI.enter(hub)

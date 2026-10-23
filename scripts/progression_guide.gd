@@ -2,7 +2,7 @@ extends CanvasLayer
 ## A collapsible town guide. It never opens over combat or changes unlock rules.
 const A=preload("res://scripts/realm_access.gd")
 const UI=preload("res://scripts/studio_ui.gd")
-const ORDER=["grove","quarry","honeyglass","elementary","sunfield","ice","folded_coast","moonburrow","moonveil","petalbrook","middle_school","space","zombie","lantern_marsh","silverfall","confluence","brasslock","clockwork_orchard","high_school","neon_crucible","cinderheart","astral_rift","chimevault","ebonwake","shattered_oath"]
+const ORDER=["grove","quarry","honeyglass","elementary","sunfield","ice","folded_coast","moonburrow","moonveil","petalbrook","clockwork_orchard","middle_school","space","zombie","lantern_marsh","silverfall","confluence","brasslock","high_school","neon_crucible","cinderheart","astral_rift","chimevault","ebonwake","shattered_oath"]
 var panel:PanelContainer
 var rows:VBoxContainer
 var minimize:Button

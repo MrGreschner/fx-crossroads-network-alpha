@@ -1,0 +1,12 @@
+{
+  "id": "bg_might_4",
+  "name": "Warbrand 4",
+  "cost": 950,
+  "effect": "bonus_damage",
+  "amount": 40,
+  "shop": false,
+  "bg_only": true,
+  "bg_family": "might",
+  "bg_tier": 4,
+  "description": "+40 attack damage. Replaces a lower tier of this family; pay only the price difference. Three equipment slots total."
+}

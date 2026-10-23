@@ -1,0 +1,11 @@
+{
+  "id": "undertow_nautilus",
+  "name": "Undertow Nautilus",
+  "sprite": "undertow_nautilus",
+  "health": 500,
+  "speed": 110,
+  "damage": 24,
+  "behaviour": "chase",
+  "expansion_only": true,
+  "aggro_range": 1400
+}

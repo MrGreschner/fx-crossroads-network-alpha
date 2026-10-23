@@ -76,7 +76,7 @@ func _draw()->void:
   for n in ids.size():badge(Vector2(83+n*155,345),str(ids[n]))
  depth_badge(Vector2(60,436))
  label(Vector2(24,492),"MINE • ORE LV %d / GEM LV %d • %dm DEEP" % [legacy.commerce.ore_level(),legacy.commerce.gem_level(),legacy.mine.depth()*30],17,Color("#e8cc90"))
- label(Vector2(24,517),"MARKET • SALES %.0f / PROFIT %.0f / %d UNITS SOLD" % [legacy.commerce.state().revenue,legacy.commerce.state().profit,legacy.commerce.state().units],16,Color("#9dcec3"))
+ label(Vector2(24,517),"DEEPWELL • %.0f MINE GOLD EARNED / %d FINDS SOLD" % [legacy.commerce.exchange().earned,legacy.commerce.exchange().sold],16,Color("#9dcec3"))
  var favourite:Dictionary=legacy.fishing_records.favorite()
  draw_line(Vector2(24,535),Vector2(w-24,535),Color("#476267"),1)
  if not favourite.is_empty():

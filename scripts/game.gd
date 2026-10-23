@@ -6,6 +6,8 @@ var dev_magic:Node2D
 var session_menu:CanvasLayer
 var level_cards:CanvasLayer
 var town_services:Node
+var business_academy:CanvasLayer
+var business_district:CanvasLayer
 var commerce_town=preload("res://scripts/commerce_town.gd").new()
 var idle_mine_town=preload("res://scripts/idle_mine_town.gd").new()
 var town_chapter=preload("res://scripts/town_chapter.gd").new()
@@ -286,7 +288,7 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
-	if prefix=="lockdown_aberration" or prefix.begins_with("veil_") or prefix in preload("res://scripts/cinderheart.gd").TYPES:
+	if prefix=="lockdown_aberration" or prefix.begins_with("veil_") or prefix in preload("res://scripts/cinderheart.gd").TYPES+["ratchet_keeper","spark_scarab","hinge_conjurer","latch_hound"]:
 		for pose in ["idle","walk1","walk2","attack","0","1"]:art[prefix+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+prefix+"_"+pose+".svg")
 		return
 	for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin", "shell", "0", "1"]:
@@ -353,7 +355,7 @@ func can_stand_at(point: Vector2) -> bool:
 	if mode=="town" and preload("res://scripts/town_marina.gd").on_deck(point):return true
 	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if mistglass_rift!=null and mistglass_rift.active and not Rect2(55,220,VIEW.x-110,VIEW.y-275).has_point(point):return false
-	if mode=="town" and (preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
+	if mode=="town" and (preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or idle_mine_town.blocked(point) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
 	if not adventure.can_stand(point): return false
 	for tx in range(maxi(0, int(point.x / 64) - 1), mini(int(region_size().x / 64) + 1, int(point.x / 64) + 2)):
 		for ty in range(maxi(0, int(point.y / 64) - 1), mini(int(region_size().y / 64) + 1, int(point.y / 64) + 2)):
@@ -1404,6 +1406,11 @@ func damage_enemy(index: int, amount: float) -> void:
 		if was_boss and presentation!=null:presentation.burst(enemy.pos);journey.cue("victory")
 		enemies.remove_at(index)
 		if waylight!=null and waylight.defeated(enemy):return
+		if not bool(enemy.get("summoned",false)):
+			var cc=40 if was_boss else 6+posmod(int(enemy.get("uid",kills)),3)
+			cc+=2 if inventory.has("gold_magnet") else 0
+			gold+=cc;bounty_earned+=cc
+			add_float_text(enemy.pos+Vector2(-22,-68),"+"+str(cc)+" CC",Color("#f3d697"))
 		if adventure.on_defeat(enemy):
 			grant_enemy_xp(50)
 			return
@@ -1420,10 +1427,7 @@ func damage_enemy(index: int, amount: float) -> void:
 		elif not bool(enemy.get("summoned", false)):
 			kills += 1
 			experience += 10
-			var payout := 2 + (2 if inventory.has("gold_magnet") else 0)
-			gold += payout
-			bounty_earned += payout
-			add_float_text(enemy["pos"] + Vector2(-22, -68), "+10 XP  +" + str(payout) + " CC", Color("#a9ecba"))
+			add_float_text(enemy["pos"] + Vector2(-22, -90), "+10 XP", Color("#a9ecba"))
 			if level >= 5 and str(hero.get("passive_effect", "")) == "heal_on_kill":
 				health = minf(max_health(), health + (8.0 if mastery == "passive" else 4.0))
 			if kills % 10 == 0 and not trial:
@@ -1458,7 +1462,7 @@ func update_enemies(delta: float) -> void:
 		var enemy: Dictionary = enemies[i]
 		enemy["strike_flash"]=maxf(0,float(enemy.get("strike_flash",0))-delta)
 		if bool(enemy.get("roaming_actor",false)) or bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
-		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
+		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.clockfield.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		if enemy.get("expansion_boss",false): continue
 		if tutorial.active and tutorial.update_melee(enemy,delta):continue
 		var definition: Dictionary = enemy_types.get(enemy.get("type", ""), {}).duplicate()
@@ -1724,6 +1728,7 @@ func draw_world() -> void:
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
 	if adventure.foundry.active:adventure.foundry.draw_world(self,camera)
+	if adventure.clockfield.active:adventure.clockfield.draw_world(self,camera)
 	if adventure.cinder.active:adventure.cinder.draw_world(self,camera)
 	if adventure.tech.active:adventure.tech.draw_world(self,camera)
 	if adventure.school.active:adventure.school.draw_world(self,camera)
@@ -1952,6 +1957,7 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if mode=="town" and not Rect2(camera,VIEW).intersects(Rect2(world_pos,size)):return
 	if art.has(name) and art[name] != null:
 		draw_texture_rect(art[name], Rect2(world_pos - camera, size), false, tint)
 
@@ -2464,3 +2470,14 @@ func safe_town_respawn()->Vector2:
 
 func world_transform(p:Vector2=Vector2.ZERO,angle:float=0,zoom:Vector2=Vector2.ONE)->void:
 	draw_set_transform(media.offset()+p*media.factor(),angle,zoom*media.factor())
+
+func open_business_district()->void:
+	if is_instance_valid(business_district):return
+	business_district=preload("res://scripts/business_district/view.gd").new();add_child(business_district);business_district.setup(self)
+
+func open_business_academy()->void:
+	if is_instance_valid(business_academy):return
+	if is_instance_valid(business_district):
+		business_district.leave()
+		await get_tree().process_frame
+	business_academy=preload("res://scripts/business_academy/page.gd").new();add_child(business_academy);business_academy.setup(self)

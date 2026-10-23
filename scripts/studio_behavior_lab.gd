@@ -33,7 +33,7 @@ func setup(owner:Node,initial:Dictionary={},use:Callable=Callable())->void:
  if preload("res://scripts/education_access.gd").student():
   var learning_row=HBoxContainer.new();body.add_child(learning_row)
   workshop.button(learning_row,"Learning journal • record this design",func():workshop.game.legacy.learning_open())
-  workshop.button(learning_row,"Finalize & submit to active module",func():status.text=preload("res://scripts/studio_finalize.gd").submit("behavior",behavior,str(behavior.name)))
+  workshop.button(learning_row,"Freeze source for module",func():status.text=preload("res://scripts/studio_finalize.gd").submit("behavior",behavior,str(behavior.name)))
  var split=HBoxContainer.new();split.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(split)
  var left=VBoxContainer.new();left.custom_minimum_size.x=285;split.add_child(left);var form=UI.card(left,"YOUR DECISION MODEL")
  name_field=LineEdit.new();name_field.text=behavior.name;form.add_child(name_field);name_field.text_changed.connect(func(value:String):behavior.name=value;persist())

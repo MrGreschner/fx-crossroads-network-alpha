@@ -596,11 +596,14 @@ func receive_net(data:Dictionary)->void:
   "economy_ack":
    if str(data.get("match_id",""))!=match_id:return
    economy_pending=false;status_label.text=str(data.get("message","Order received."))
+   if data.get("items") is Array:inventory[my_id]=data.items;health[my_id]=int(data.get("hp",health.get(my_id,0)))
    if data.get("order",{}) is Dictionary:
     var order:Dictionary=data.get("order",{});gold[my_id]=int(order.get("gold",gold.get(my_id,0)))
     var base:Dictionary=battlegrounds.bases.get(battlegrounds.owners.get(my_id,""),{})
     if not base.is_empty():base.counts=order.get("counts",base.counts);base.upgrades=order.get("upgrades",base.upgrades)
-   if str(data.get("kind",""))=="bg_upgrade" and presentation.page=="battlegrounds":
+   if str(data.get("kind",""))=="bg_upgrade" and presentation.page=="battleground_hero_shop":
+    presentation.close();battlegrounds.open_hero_shop(status_label.text)
+   elif str(data.get("kind",""))=="bg_upgrade" and presentation.page=="battlegrounds":
     presentation.close();battlegrounds.open_shop(status_label.text)
   "interaction_ack":
    if not str(data.get("notice","")).is_empty():status_label.text=str(data.notice)

@@ -13,12 +13,26 @@ static func build(parent:Node,l:Node,n:Dictionary,category:String)->void:
   G.label(parent,"REALM TIMES • SPEED RECORDS",23);G.label(parent,"Fastest recorded completion • hero shown when recorded with the run. Weekly results reset Monday.",15)
   for id in l.game.manifest.regions:
    var rows=[]
-   for entry in [["All time","realm_times_all"],["This week","realm_times_week"]]:
-    for row in n.get(entry[1],[]):
-     if str(row.key)==str(id):rows.append({"title":entry[0],"record":row})
+   for route in ["solo","coop"]:
+    for scope in ["all","week"]:
+     for row in n.get("route_times",{}).get(route,{}).get(scope,[]):
+      if str(row.key)==str(id):rows.append({"title":("Co-op" if route=="coop" else "Solo")+" • "+("All time" if scope=="all" else "This week"),"record":row})
+   if rows.is_empty():
+    for row in n.get("realm_times_all",[]):
+     if str(row.key)==str(id):rows.append({"title":"Earlier clear","record":row})
    if not rows.is_empty():
     var card=UI.card(parent,str(l.game.realms.get(id,{}).get("name",id)),"")
     for row in rows:preload("res://scripts/records_hall_ui.gd").run_row(card,l,row.record,row.title,clock(float(row.record.value)))
+ if category=="descent":
+  G.label(parent,"RAM’S DESCENT • TOP 10 FLOORS CLEARED",23)
+  G.label(parent,"Completed floors, not merely entered • separate solo/co-op records • signed-in accounts • no developer/practice records",15)
+  var boards=n.get("descent",{})
+  for route in ["solo","coop"]:
+   var card=UI.card(parent,("CO-OP" if route=="coop" else "SOLO")+" • ALL TIME","")
+   var rows=boards.get(route,[]);var cols=preload("res://scripts/records_hall_ui.gd").columns(card)
+   for i in 10:
+    if i<rows.size():preload("res://scripts/records_hall_ui.gd").run_row(cols[i/5],l,rows[i],str(i+1)+". Highest clear","Floor "+str(int(rows[i].value)))
+    else:G.label(cols[i/5],str(i+1)+". No record yet",16)
  if category=="streak":
   for e in [["LONGEST LIFE • ALL TIME","streak_all"],["LONGEST LIFE • THIS WEEK","streak_week"]]:
    var card=UI.card(parent,e[0],"Realms completed without a defeat • counted from v188 onward")

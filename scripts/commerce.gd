@@ -1,5 +1,5 @@
 extends RefCounted
-## Local classroom simulation. Business days are explicit, reproducible decision rounds.
+## Instant mining counter. Original commerce fields are retained as a read-only archive.
 const PRODUCTS=[
  {"id":"ore","name":"Sorted ore","depth":1,"ore":10.0,"gems":0.0,"cost":2.0,"base":12.0,"segment":0},
  {"id":"bars","name":"Forged tool blanks","depth":2,"ore":18.0,"gems":0.0,"cost":5.0,"base":24.0,"segment":0},
@@ -13,170 +13,123 @@ const PRODUCTS=[
  {"id":"mithril_bar","name":"Mithril bars","depth":11,"ore":0.0,"gems":0.0,"cost":4.0,"base":60.0,"segment":1,"bar":"mithril"},
  {"id":"emberite_bar","name":"Emberite bars","depth":15,"ore":0.0,"gems":0.0,"cost":6.0,"base":90.0,"segment":2,"bar":"emberite"},
  {"id":"starsteel_bar","name":"Starsteel bars","depth":18,"ore":0.0,"gems":0.0,"cost":8.0,"base":130.0,"segment":1,"bar":"starsteel"}]
-const SEGMENTS=["Builders • value and durability","Collectors • quality and story","Guilds • reliability and service"]
-const CHANNELS=["Street posters","Town gazette","Guild bulletin"]
-const MESSAGES=["Honest value","Handcrafted wonder","Dependable supply"]
+const GOLD_CAP=1e15
 var legacy:Node
 var view:CanvasLayer
-var time_for_test=-1.0
-var tick=0.0
+var note="Choose the finds to sell. Mine Gold pays for your mine and its supplies."
 var reward_date_for_test=""
 func reward_date()->String:return reward_date_for_test if not reward_date_for_test.is_empty() else Time.get_date_string_from_system(false)
-func supply_reward()->Dictionary:
- if not state().has("supply_reward"):state().supply_reward={"pending":0,"last_earned":"","claimed":0}
- return state().supply_reward
-func earn_supply(profit:float,sold:int)->bool:
- if profit<=0 or sold<=0 or readonly() or bool(legacy.data.get("teacher",false)) or preload("res://scripts/profile_store.gd").progression_blocked():return false
- var reward=supply_reward()
- if str(reward.last_earned)==reward_date() or int(reward.pending)>=60:return false
- reward.pending=mini(60,int(reward.pending)+20);reward.last_earned=reward_date();return true
-func claim_supply()->bool:
- if legacy.game.mode!="town" or readonly() or bool(legacy.data.get("teacher",false)) or preload("res://scripts/profile_store.gd").progression_blocked():return false
- var reward=supply_reward();var amount=int(reward.pending)
- if amount<=0:note="Complete a profitable market day with at least one sale to earn a supply dividend.";return false
- reward.pending=0;reward.claimed=int(reward.claimed)+amount;save();legacy.game.gold+=amount
- legacy.game.save_profile();note="Collected "+str(amount)+" CC for town supplies. Combat stats and multiplayer starting CC are unchanged.";save();return true
-func now()->float:return time_for_test if time_for_test>=0 else Time.get_unix_time_from_system()
-func busy()->bool:return not state().get("trading",{}).is_empty()
-func step(delta:float)->void:
- tick+=delta
- if tick>=1:tick=0;advance()
-func advance()->void:
- if legacy==null or readonly() or not busy():return
- if now()>=float(state().trading.end):
-  state().trading={}
-  settle_day()
-func set_duration(seconds:float)->bool:
- if readonly() or busy() or seconds<300 or seconds>86400:return false
- state().day_seconds=seconds;save();return true
-var note="Welcome! Choose Basic setup for your first stall, or prepare goods from your mine. Then open for a timed business day."
+static func exchange_defaults()->Dictionary:
+ return {"version":1,"settled":true,"cash":0.0,"stock":0.0,"upgrades":0.0,"debt":0.0,"credit":0.0,"pending":0.0,"sold":0,"earned":0.0,"notice_seen":true}
+static func valid_exchange(v:Variant)->bool:
+ if not v is Dictionary or v.size()!=11 or v.get("version")!=1 or v.get("settled")!=true or not v.get("notice_seen") is bool:return false
+ for k in ["cash","stock","upgrades","debt","credit","pending","earned","sold"]:
+  if not (v.get(k) is float or v.get(k) is int) or not is_finite(float(v[k])) or v[k]<0 or v[k]>1e17:return false
+ return v.sold==floorf(float(v.sold)) and v.pending<=v.credit
 static func fresh()->Dictionary:
  var items={}
  for product in PRODUCTS:items[product.id]={"units":0,"book":0.0,"price":product.base}
- return {"version":1,"day_seconds":300.0,"trading":{},"cash":160.0,"debt":0.0,"day":0,"inventory":items,"product":0,"segment":0,"channel":0,"message":0,"budget":0.0,"quality":0,"service":0,"shop":0,"reputation":50.0,"revenue":0.0,"profit":0.0,"units":0,"marketing":0.0,"materials_ore":0.0,"materials_gems":0.0,"history":[],"brand":"Deepwell Goods","copy":"Built from the heart of the mountain.","forecast":"","reflection":""}
+ return {"version":1,"day_seconds":300.0,"trading":{},"cash":160.0,"debt":0.0,"day":0,"inventory":items,"product":0,"segment":0,"channel":0,"message":0,"budget":0.0,"quality":0,"service":0,"shop":0,"reputation":50.0,"revenue":0.0,"profit":0.0,"units":0,"marketing":0.0,"materials_ore":0.0,"materials_gems":0.0,"history":[],"brand":"Deepwell Goods","copy":"Built from the heart of the mountain.","forecast":"","reflection":"","exchange":exchange_defaults()}
 func setup(owner:Node)->void:
  legacy=owner
  if not legacy.data.has("commerce") or not valid(legacy.data.commerce):legacy.data.commerce=fresh()
- for d in PRODUCTS:
-  if not state().inventory.has(d.id):state().inventory[d.id]={"units":0,"book":0.0,"price":d.base}
- for key in ["day_seconds","trading"]:
-  if not state().has(key):state()[key]=fresh()[key]
- advance()
+ migrate()
 func state()->Dictionary:return legacy.data.commerce
+func exchange()->Dictionary:return state().get("exchange",exchange_defaults())
 func readonly()->bool:return legacy.mine.readonly()
 func save()->void:legacy.save()
-func unlocked(index:int)->bool:return index>=0 and index<PRODUCTS.size() and (index==0 or legacy.mine.depth()>=int(PRODUCTS[index].depth))
-func stock(index:int,count:int)->bool:
- if readonly() or busy() or not unlocked(index) or count<1 or count>100:return false
- legacy.mine.advance()
- var d=PRODUCTS[index];var w=legacy.mine.state().wallet;var q=1+.25*int(state().quality)
- var ore=float(d.ore)*count;var gems=float(d.gems)*count;var cash=float(d.cost)*q*count
- var metal=str(d.get("bar",""));var bars=preload("res://scripts/mine_foundry.gd").state(legacy.mine).bars
- if not metal.is_empty() and float(bars[metal])<count:return false
- if w.ore+1e-7<ore or w.gems+1e-7<gems or state().cash+1e-7<cash:return false
- var item=state().inventory[d.id]
- if int(item.units)+count>10000:return false
- w.ore=maxf(0,w.ore-ore);w.gems=maxf(0,w.gems-gems);state().cash-=cash
- if not metal.is_empty():bars[metal]-=count
- item.units+=count;item.book+=cash+ore*.45+gems*8+(count*float(d.base)*.55 if not metal.is_empty() else 0.0) # teaching opportunity-cost convention, not a conversion.
- state().materials_ore+=ore;state().materials_gems+=gems;save();return true
-func upgrade(kind:String)->bool:
- if readonly() or busy() or kind not in ["quality","service","shop"] or int(state()[kind])>=5:return false
- var cost=70*pow(1.8,int(state()[kind]))
- if state().cash<cost:return false
- state().cash-=cost;state()[kind]+=1;save();return true
-func transfer(amount:float)->bool:
- if readonly() or busy() or amount<=0 or amount>10000 or state().cash<amount:return false
- state().cash-=amount;legacy.mine.state().wallet.gold=minf(1e15,legacy.mine.state().wallet.gold+amount);save();return true
-func loan()->bool:
- if readonly() or busy() or state().debt>0:return false
- state().cash+=80;state().debt=100;note="Working-capital loan: received 80 cash; repay 100. Only one loan at a time. Borrowing is not revenue or profit.";save();return true
-func repay()->bool:
- if readonly() or busy() or state().debt<=0 or state().cash<state().debt:return false
- state().cash-=state().debt;state().debt=0;note="Loan repaid. Keep a cash reserve for your next campaign.";save();return true
-func research()->bool:
- if readonly() or busy() or state().cash<12:return false
- state().cash-=12;note="CUSTOMER SURVEY: Builders compare price and value. Collectors prefer quality and a handcrafted story. Guilds favour service and reliable supply. Posters reach builders; the gazette reaches collectors; bulletins reach guilds. Price above the reference cuts conversion. Forecast before spending.";save();return true
-func start_problem()->String:
- if readonly():return "Playtest mode protects your business. Return to a normal profile to trade."
- if busy():return "Your market is already trading. Wait for the displayed countdown."
- var a=state();var product=PRODUCTS[int(a.product)]
- if not unlocked(int(a.product)):return "This product needs a deeper mine. Select Sorted ore, or use Basic setup."
- if int(a.inventory[product.id].units)<=0:return "No stock for this product. Prepare goods from collected mine materials, or choose Basic setup."
- var required=float(a.budget)+2+a.shop*2+a.service*2
- if float(a.cash)<required:return "Need %.1f market cash for advertising and daily overhead. Lower the budget or check your financing options." % required
- return ""
-func basic_setup()->bool:
- if readonly() or busy():return false
- var a=state();var item=a.inventory.ore
- if int(item.units)==0:
-  # A wholesale purchase starts a business without granting free mine materials.
-  if a.cash<32:note="Basic setup needs 32 market cash: 30 for five wholesale units and 2 daily overhead. Reduce costs or use the working-capital loan.";return false
-  a.cash-=30;item.units=5;item.book=30.0
- a.product=0;a.segment=0;a.channel=0;a.message=0;a.budget=0;item.price=12.0
- note="Basic setup ready: Sorted ore, builders, fair price, posters and no paid advertising. Five wholesale units cost 30 market cash if stock was empty. Press Open market; one day lasts your chosen time. Future stock can come from your mine."
+func busy()->bool:return false
+func step(_delta:float)->void:pass # No campaigns, passive trading or business simulation here.
+func advance()->void:pass
+func migrate()->bool:
+ if readonly() or state().has("exchange"):return false
+ var a=state();var x=exchange_defaults();var invested=not a.trading.is_empty() if a.has("trading") else false
+ invested=invested or a.day>0 or a.cash!=160 or a.debt>0 or a.revenue>0 or a.materials_ore>0 or a.materials_gems>0
+ for product in a.inventory.values():
+  x.stock+=float(product.book);invested=invested or product.units>0 or product.book>0
+ for k in ["quality","service","shop"]:
+  for level in int(a[k]):x.upgrades+=70*pow(1.8,level)
+ invested=invested or x.upgrades>0
+ if invested:
+  x.cash=float(a.cash);x.debt=float(a.debt);x.credit=maxf(0,x.cash+x.stock+x.upgrades-x.debt);x.pending=x.credit;x.notice_seen=false
+ # Keep the old cash, stock, upgrades and reports untouched for recovery/history.
+ # An unused default 160-credit stall is not an investment and earns no conversion.
+ a.exchange=x
+ claim_credit(false)
+ return true
+func claim_credit(persist:bool=true)->bool:
+ if readonly() or not state().has("exchange"):return false
+ var x=exchange();var amount=minf(float(x.pending),maxf(0,GOLD_CAP-float(legacy.mine.state().wallet.gold)))
+ if amount<=0:return false
+ x.pending=maxf(0,float(x.pending)-amount);legacy.mine.state().wallet.gold+=amount
+ if persist:save()
+ return true
+func supply_reward()->Dictionary:
+ if not state().has("supply_reward"):state().supply_reward={"pending":0,"last_earned":"","claimed":0}
+ return state().supply_reward
+func claim_supply()->bool:
+ if legacy.game.mode!="town" or readonly() or bool(legacy.data.get("teacher",false)) or preload("res://scripts/profile_store.gd").progression_blocked():return false
+ var reward=supply_reward();var amount=int(reward.pending)
+ if amount<=0:return false
+ reward.pending=0;reward.claimed+=amount;legacy.game.gold+=amount;legacy.game.save_profile();save();note="Collected your remaining old supply reward: "+str(amount)+" CC.";return true
+func goods()->Array:
+ var list=[{"id":"ore","name":"Loose ore","price":.45,"kind":"ore","hint":"Useful for mine construction and refining."},{"id":"gems","name":"Gem fragments","price":8.0,"kind":"gem","hint":"Keep some for deeper mine upgrades."}]
+ for id in preload("res://scripts/mine_geology.gd").DEPOSITS:
+  var d=preload("res://scripts/mine_geology.gd").DEPOSITS[id]
+  list.append({"id":"deposit:"+id,"name":d.name,"price":float(d.price),"kind":"ore" if id=="coal" else "gem","hint":"Coal fuels the foundry." if id=="coal" else "A find from the deeper seams."})
+ for id in legacy.mine.FOUNDRY.METALS:
+  var d=legacy.mine.FOUNDRY.METALS[id]
+  list.append({"id":"metal:"+id,"name":d.name+" ore","price":float(d.price)*.55/float(d.ore),"kind":"ore","hint":"Forge this into bars at your mine."})
+  list.append({"id":"bar:"+id,"name":d.name+" bars","price":float(d.price),"kind":"bar","hint":"Bars are also needed for deeper construction."})
+ return list
+func bucket(id:String)->Dictionary:
+ if id in ["ore","gems"]:return legacy.mine.state().wallet
+ if id.begins_with("deposit:"):return preload("res://scripts/mine_geology.gd").state(legacy.mine).wallet
+ return legacy.mine.FOUNDRY.state(legacy.mine).bars if id.begins_with("bar:") else legacy.mine.FOUNDRY.state(legacy.mine).wallet
+func key_for(id:String)->String:return id.get_slice(":",1) if ":" in id else id
+func amount(id:String)->float:return float(bucket(id).get(key_for(id),0))
+func quote(selection:Dictionary)->Dictionary:
+ if selection.is_empty() or selection.size()>20:return {}
+ var available={}
+ for d in goods():available[d.id]=d
+ var rows=[];var total=0.0
+ var ids=selection.keys();ids.sort()
+ for id in ids:
+  var n:Variant=selection[id]
+  if not available.has(id) or not (n is int or n is float) or not is_finite(float(n)) or n!=floorf(float(n)) or n<1 or n>1000000000 or amount(id)+1e-7<float(n):return {}
+  var d=available[id];var value=float(n)*float(d.price);rows.append({"id":id,"name":d.name,"count":int(n),"price":d.price,"value":value});total+=value
+ return {"rows":rows,"total":total}
+func sell(selection:Dictionary,expected:Dictionary)->bool:
+ if readonly() or legacy.game.mode!="town":return false
+ var offer=quote(selection)
+ if offer.is_empty() or JSON.stringify(offer)!=JSON.stringify(expected):note="Your selection changed. Review the sale again.";return false
+ if float(legacy.mine.state().wallet.gold)+offer.total>GOLD_CAP:note="Not enough room in your Mine Gold wallet. Spend some at the mine first.";return false
+ for row in offer.rows:
+  var stock=bucket(row.id);stock[key_for(row.id)]=maxf(0,float(stock[key_for(row.id)])-row.count)
+ legacy.mine.state().wallet.gold+=offer.total
+ var x=exchange();var count=0
+ for row in offer.rows:count+=row.count
+ x.sold=mini(int(1e17),int(x.sold)+count);x.earned=minf(1e17,float(x.earned)+offer.total)
+ note="Sold "+str(count)+" finds for %.2f Mine Gold." % offer.total
  save();return true
-func run_day()->bool:
- if readonly():return false
- advance()
- if busy():return false
- var a=state();var product=PRODUCTS[int(a.product)]
- var issue=start_problem()
- if not issue.is_empty():note=issue;return false
- a.trading={"start":now(),"end":now()+float(a.day_seconds),"seconds":float(a.day_seconds)}
- note="Market open. Customers are browsing; this business day settles when the countdown ends. You can adventure or close the game."
- save();return true
-func settle_day()->bool:
- if readonly():return false
- var a=state();var index=int(a.product)
- if not unlocked(index):return false
- var product=PRODUCTS[index];var item=a.inventory[product.id];var price=float(item.price)
- var budget=float(a.budget);var overhead=2+int(a.shop)*2+int(a.service)*2
- if int(item.units)<=0 or a.cash<budget+overhead:return false
- # Campaign and customer fit are visible to learners. Seeded calendar events are shared per business day.
- var event_index=int(a.day)%5;var events=["Ordinary market day","Builders repair the bridge","Collectors visit town","Guild procurement day","Rain reduces foot traffic"]
- var target=int(a.segment);var match=target==int(product.segment)
- var channel_fit=1.0 if int(a.channel)==target else .4
- var message_fit=1.0 if int(a.message)==target else .45
- var reach=80+int(a.shop)*22+int(budget*8*channel_fit)
- var visits=int(reach*(.17+.05*message_fit)*(.7+float(a.reputation)/150))
- if event_index==target+1:visits=int(visits*1.35)
- if event_index==4:visits=int(visits*.7)
- var ratio=price/(float(product.base)*(1+.08*int(a.quality)))
- var conversion=clampf(.55*(1.18 if match else .68)*pow(maxf(.25,ratio),-1.8)*(1+.05*int(a.service)),.02,.95)
- var demand=maxi(0,int(round(visits*conversion)));var sold=mini(demand,int(item.units))
- var unit_cost=float(item.book)/maxi(1,int(item.units));var cogs=sold*unit_cost
- var revenue=sold*price;var profit=revenue-cogs-budget-overhead
- if profit>0 and sold>0:legacy.weekly.advance("market",1)
- # COGS was committed at preparation. Cash receives sales minus today's operating spend, without double payment.
- a.cash=minf(1e15,maxf(0,a.cash+revenue-budget-overhead));item.units-=sold;item.book=maxf(0,item.book-cogs)
- var satisfaction=clampf(68+int(a.quality)*4+int(a.service)*4-(ratio-1)*30+(8 if match else -8),0,100)
- a.reputation=clampf(a.reputation*.85+satisfaction*.15-(4 if demand>sold else 0),0,100)
- a.day+=1;a.revenue+=revenue;a.profit+=profit;a.units+=sold;a.marketing+=budget
- var row={"day":a.day,"event":events[event_index],"product":product.name,"target":SEGMENTS[target],"price":price,"stock":sold+int(item.units),"sold":sold,"unmet":demand-sold,"reach":reach,"visits":visits,"conversion":conversion,"revenue":revenue,"cogs":cogs,"advertising":budget,"overhead":overhead,"profit":profit,"satisfaction":satisfaction,"roas":revenue/budget if budget>0 else 0.0,"forecast":a.forecast,"reflection":a.reflection,"brand":a.brand,"copy":a.copy,"channel":CHANNELS[int(a.channel)],"message":MESSAGES[int(a.message)]}
- a.history.append(row)
- legacy.game.get_tree().root.get_node("FXActivity").event(legacy.game,"market_day","completed",float(a.day_seconds),{"day":int(a.day),"sold":sold,"profit":profit,"duration_configured":float(a.day_seconds)},"market-"+str(a.day))
- preload("res://scripts/learning_store.gd").activity("Market day completed",str(product.name)+" • day "+str(a.day))
- if a.history.size()>100:a.history.pop_front()
- note="DAY %d • %s\nSold %d • missed demand %d • revenue %.1f • profit %.1f\nYour market day is complete. Restock or adjust your stall for the next day." % [a.day,row.event,sold,demand-sold,revenue,profit]
- if profit>0 and sold>0 and legacy.glimmers.market_reward():note+="\nTown trade reward: +10 Glimmers (once per real day)."
- if earn_supply(profit,sold):note+="\nSupply dividend earned: +20 CC. Collect it in the Market floor tab."
- save();return true
+func buy_supply(id:String,expected:Dictionary)->bool:
+ if readonly() or legacy.game.mode!="town" or not legacy.mine.SERVICES.has(id):return false
+ if JSON.stringify(legacy.mine.upgrade_cost(id))!=JSON.stringify(expected):note="The upgrade changed. Check its price again.";return false
+ var ok=legacy.mine.upgrade(id)
+ note="Your mine crew has started the upgrade." if ok else "Check your materials, shaft depth or current construction job."
+ return ok
 func ore_level()->int:return mini(50,1+int(sqrt(float(legacy.mine.state().lifetime.ore)/200)))
 func gem_level()->int:return mini(50,1+int(sqrt(float(legacy.mine.state().lifetime.gems)/2)))
-func report()->String:
- var business=state().duplicate(true)
- if not preload("res://scripts/education_access.gd").student():
-  business.erase("forecast");business.erase("reflection")
-  for row in business.history:row.erase("forecast");row.erase("reflection")
- return JSON.stringify({"format":"fx-commerce-report","version":1,"testing_mode":"Game Dev" if bool(legacy.data.teacher) else "Playtest" if readonly() else "Normal","simulation":"Educational model, not real market predictions","mine":{"depth_m":legacy.mine.depth()*30,"ore_level":ore_level(),"gem_level":gem_level(),"lifetime":legacy.mine.state().lifetime},"business":business},"  ")
+func report()->String:return JSON.stringify({"format":"fx-retired-commerce-archive","version":1,"business":state()},"  ")
 func open()->void:
  if legacy.game.mode!="town":return
+ migrate();claim_credit();save()
  if not is_instance_valid(view):view=preload("res://scripts/commerce_view.gd").new();legacy.game.add_child(view);view.setup(self)
  view.open()
 static func valid(value:Variant)->bool:
  if not value is Dictionary:return false
  var d:Dictionary=value
+ if d.has("exchange") and not valid_exchange(d.exchange):return false
  if d.has("supply_reward"):
   var reward=d.supply_reward
   if not reward is Dictionary:return false
@@ -185,7 +138,7 @@ static func valid(value:Variant)->bool:
   if int(reward.pending)>60 or int(reward.pending)%20!=0 or float(reward.claimed)>1e12:return false
   if not reward.get("last_earned") is String or reward.last_earned.length()>10:return false
  for key in fresh():
-  if key not in ["day_seconds","trading"] and not d.has(key):return false
+  if key not in ["day_seconds","trading","exchange"] and not d.has(key):return false
  if d.has("day_seconds") and (not (d.day_seconds is int or d.day_seconds is float) or not is_finite(float(d.day_seconds)) or d.day_seconds<300 or d.day_seconds>86400):return false
  if d.has("trading"):
   if not d.trading is Dictionary:return false

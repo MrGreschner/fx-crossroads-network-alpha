@@ -19,6 +19,7 @@ func draw_on(g:Node2D,camera:Vector2)->void:
  var p=CENTER-camera;var t=g.town_life.clock;var grand=wins(g)>=10
  preload("res://scripts/town_sprite_cache.gd").draw(g,"arena_grand" if grand else "arena",Rect2(p-Vector2(250,190),Vector2(500,420)))
  for side in [-1,1]:
+  if not Rect2(Vector2.ZERO,g.VIEW).grow(35).intersects(Rect2(p+Vector2(side*185-50,-175),Vector2(100,365))) and not Rect2(Vector2.ZERO,g.VIEW).grow(18).has_point(p+Vector2(side*91,-40)):continue
   var q=p+Vector2(side*91,-27);var color=Color("#ef9c52") if side<0 else Color("#8acff3")
   g.draw_arc(q-Vector2(0,13),13,t*.4,t*.4+PI*1.7,24,color,2,true)
   q=p+Vector2(side*185,0)
@@ -30,6 +31,7 @@ func draw_on(g:Node2D,camera:Vector2)->void:
  g.draw_string(font,p+Vector2(-160,202),"10 PvP wins • Grand honours" if grand else "%d / 10 PvP wins • Grand honours" % wins(g),HORIZONTAL_ALIGNMENT_CENTER,320,13,Color("#cbd8cc"))
  # Contained lightning between conductors on the storm tower (no fullscreen flash).
  var coil=p+Vector2(185,-143)
+ if not Rect2(Vector2.ZERO,g.VIEW).grow(35).has_point(coil):return
  for side in [-1,1]:g.draw_line(coil+Vector2(side*20,20),coil+Vector2(side*20,-11),Color("#bcc6bb"),3,true)
  g.draw_circle(coil,20,Color(.45,.75,1,.08+.03*sin(t*4)))
  if fposmod(t,2.4)<.45:

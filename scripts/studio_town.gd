@@ -9,7 +9,7 @@ func interact(g:Node)->bool:
  g.hint="E • Crossroads Studio • six labs • create, test and share"
  if Input.is_action_just_pressed("interact"):g.hero_workshop.open()
  return true
-func draw_on(g:Node2D,camera:Vector2)->void:
+func draw_structure_source(g:Node2D,camera:Vector2)->void:
  if not Rect2(Vector2.ZERO,g.VIEW).grow(120).intersects(Rect2(WALL.position-camera-Vector2(0,90),WALL.size+Vector2(0,150))):return
  var p=WALL.position-camera
  g.draw_rect(Rect2(p+Vector2(-12,268),Vector2(544,46)),Color("#9f9476"))
@@ -30,5 +30,9 @@ func draw_on(g:Node2D,camera:Vector2)->void:
   var x=200+n*44;g.draw_rect(Rect2(p+Vector2(x,113),Vector2(32,54)),Color("#49677a"));g.draw_rect(Rect2(p+Vector2(x+4,118),Vector2(24,42)),Color("#9fd4d7"))
  g.draw_rect(Rect2(p+Vector2(226,190),Vector2(68,90)),Color("#324654"));g.draw_rect(Rect2(p+Vector2(232,195),Vector2(56,84)),Color("#6b8b95"));g.draw_line(p+Vector2(260,196),p+Vector2(260,279),Color("#d7c599"),3)
  for x in [212,302]:g.draw_circle(p+Vector2(x,214),5,Color("#efd691"))
+
+func draw_on(g:Node2D,camera:Vector2)->void:
+ if not Rect2(camera,g.VIEW).grow(150).intersects(WALL.grow(100)):return
+ preload("res://scripts/town_art39.gd").draw(g,"studio",camera)
  var entry=ENTRY-camera;g.draw_rect(Rect2(entry-Vector2(52,20),Vector2(104,40)),Color(.5,.85,.9,.16))
  if g.position_in_world.distance_to(ENTRY)<80:g.draw_arc(entry,32,0,TAU,24,Color("#ffe39e"),2)

@@ -1,0 +1,12 @@
+{
+  "id": "bg_ward_2",
+  "name": "Bastion Seal 2",
+  "cost": 400,
+  "effect": "armor",
+  "amount": 16,
+  "shop": false,
+  "bg_only": true,
+  "bg_family": "ward",
+  "bg_tier": 2,
+  "description": "16% damage reduction. Replaces a lower tier of this family; pay only the price difference. Three equipment slots total."
+}

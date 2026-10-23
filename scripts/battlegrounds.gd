@@ -43,6 +43,10 @@ func setup(g:Node)->void:
   owners[id]=str(team)+":"+str(lane)
   bases[owners[id]]={"owner":id,"team":team,"lane":lane,"pos":barrack_pos(team,lane),"hp":950.0,"max_hp":950.0,"timer":4.0,"order":"open","counts":[2,0,0,0,0,0,0,0,0,0,0],"queue":[],"recruit_cursor":0,"recruit_timer":0.0,"upgrades":{"melee":0,"ranged":0,"healing":0,"vitality":0,"production":0}}
  game.world_buildings.append({"name":"Supplies","pos":SIZE*.5,"kind":"shop"})
+ rebuild_terrain()
+ command.setup(self)
+func rebuild_terrain()->void:
+ game.field_obstacles.clear()
  # Tree/sandbag islands leave continuous march lanes and cross-lane routes.
  for lane in range(lanes-1):
   var y:float=(lane_y(lane)+lane_y(lane+1))*.5
@@ -52,7 +56,6 @@ func setup(g:Node)->void:
   for x in [1250,2150,4650,5550]:
    for side in [-1,1]:
     for n in 3:game.field_obstacles.append({"pos":Vector2(x+(n-1)*65,lane_y(lane)+side*(240+abs(n-1)*25)),"radius":30.0,"kind":"tree" if map_id=="woodland" else "rock"})
- command.setup(self)
 func lane_y(lane:int)->float:return 700.0+float(lane)*3000.0/maxi(1,lanes-1)
 func barrack_pos(team:int,lane:int)->Vector2:return Vector2(550 if team==0 else 6250,lane_y(lane))
 func heart_pos(team:int)->Vector2:return Vector2(950 if team==0 else 5850,2200)
@@ -326,6 +329,7 @@ func price(b:Dictionary,key:String)->int:
   return COSTS[k]*(1+int(b.counts[k])) if k>=0 else 0
  return 100+int(b.upgrades.get(key,0))*70
 func buy(id:String,key:String)->bool:
+ if key.begins_with("hero:"):return buy_hero(id,key.trim_prefix("hero:"))
  if key in COMMANDS:return command.execute(id,key)
  if game.role!="host" or not game.started or game.start_countdown>0 or int(game.health.get(id,0))<=0:return false
  var b:Dictionary=bases.get(owners.get(id,""),{})
@@ -343,6 +347,7 @@ func buy(id:String,key:String)->bool:
  game._stat(id,"upgrades",1)
  return true
 func interact(id:String)->bool:
+ if near_forge(id):open_hero_shop();return true
  var b:Dictionary=bases.get(owners.get(id,""),{})
  if not b.is_empty() and float(b.hp)>0 and (game.positions.get(id,Vector2.ZERO) as Vector2).distance_to(b.pos)<240:open_shop();return true
  return false
@@ -365,7 +370,9 @@ func open_shop(notice:String="")->void:
   game.presentation.button(game.presentation.content,text,request_buy.bind(str(key)))
 func request_buy(key:String)->void:
  if game.role=="host":
-  var success:=buy(game.my_id,key);game.presentation.close();open_shop("Upgraded!" if success else "Need more CC, upgrade capped, or move closer to your barracks.")
+  var success:=buy(game.my_id,key);game.presentation.close()
+  if key.begins_with("hero:"):open_hero_shop("Purchased!" if success else "Check CC, slots, tier and your distance from the forge.")
+  else:open_shop("Upgraded!" if success else "Need more CC, upgrade capped, or move closer to your barracks.")
  elif game.has_method("request_battleground_order"):game.request_battleground_order(key)
  else:game._send_channel(game.host_id,{"type":"bg_upgrade","key":key});game.presentation.close();game.status_label.text="Barracks order sent. Press E to view your updated army."
 func snapshot()->Dictionary:
@@ -381,7 +388,9 @@ func snapshot()->Dictionary:
 func receive(data:Dictionary)->void:
  if data.is_empty():return
  data=data.duplicate(true);work=data.get("work",work);command.recall_ready=data.get("recall",{})
- map_id=str(data.get("map","woodland"));lanes=clampi(int(data.get("lanes",4)),3,4);clock=float(data.get("clock",clock));owners=data.get("owners",{});heart_hp=data.get("hearts",[2600,2600]);winner=int(data.get("winner",-1));units=data.get("units",{});bases=data.get("bases",{});shots=data.get("shots",[]);bombs=data.get("bombs",[])
+ var old_terrain=map_id+str(lanes)
+ map_id=str(data.get("map","woodland"));lanes=clampi(int(data.get("lanes",4)),1,4);clock=float(data.get("clock",clock));owners=data.get("owners",{});heart_hp=data.get("hearts",[2600,2600]);winner=int(data.get("winner",-1));units=data.get("units",{});bases=data.get("bases",{});shots=data.get("shots",[]);bombs=data.get("bombs",[])
+ if old_terrain!=map_id+str(lanes):rebuild_terrain()
  for collection in [units,bases]:
   for key in collection:collection[key].pos=Vector2(float(collection[key].pos[0]),float(collection[key].pos[1]))
  for collection in [shots,bombs]:
@@ -432,6 +441,7 @@ func draw_world(canvas:Node2D)->void:
  if map_id=="warzone" and not draw_bombs.is_empty():
   var plane:=Vector2(fposmod(draw_clock*650,SIZE.x),350)-cam
   canvas.draw_colored_polygon(PackedVector2Array([plane+Vector2(0,-28),plane+Vector2(16,0),plane+Vector2(80,24),plane+Vector2(12,16),plane+Vector2(6,54),plane+Vector2(-6,54),plane+Vector2(-12,16),plane+Vector2(-80,24),plane+Vector2(-16,0)]),Color("#bbc1af"))
+ draw_obstacles(canvas,visible)
  for side in 2:
   canvas.draw_line(Vector2(550 if side==0 else 6250,400)-cam,Vector2(550 if side==0 else 6250,4000)-cam,Color("#a59675"),200)
   var p:=heart_pos(side)-cam;var tint:=Color("#78cce8") if side==0 else Color("#ef9876")
@@ -537,3 +547,52 @@ func nearby_units(p:Vector2,radius:float)->Array:
  for x in range(floori((p.x-reach)/256),floori((p.x+reach)/256)+1):
   for y in range(floori((p.y-reach)/256),floori((p.y+reach)/256)+1):result.append_array(unit_grid.get(Vector2i(x,y),[]))
  return result
+
+func near_forge(id:String)->bool:return game.positions.has(id) and int(game.health.get(id,0))>0 and (game.positions[id] as Vector2).distance_to(SIZE*.5)<240
+func hero_quote(id:String,item:String)->Dictionary:
+ var spec:Dictionary=game.items.get(item,{})
+ if not bool(spec.get("bg_only",false)):return {}
+ var pack:Array=game.inventory.get(id,[]);var old="";var credit=0
+ for carried in pack:
+  var d:Dictionary=game.items.get(str(carried),{})
+  if str(d.get("bg_family",""))==str(spec.bg_family):
+   if int(d.get("bg_tier",0))>=int(spec.bg_tier):return {}
+   old=str(carried);credit=int(d.cost)
+ var next=pack.duplicate()
+ if not old.is_empty():next.erase(old)
+ if not preload("res://scripts/supply_slots.gd").can_add(next,item,game.items):return {}
+ return {"item":item,"old":old,"cost":maxi(0,int(spec.cost)-credit)}
+func buy_hero(id:String,item:String)->bool:
+ if game.role!="host" or game.mode!="battlegrounds" or not game.started or game.start_countdown>0 or winner>=0 or not near_forge(id):return false
+ var quote=hero_quote(id,item)
+ if quote.is_empty() or int(game.gold.get(id,0))<int(quote.cost):return false
+ var pack:Array=game.inventory[id];var health_before=game._max_hp(id)
+ if not str(quote.old).is_empty():pack.erase(quote.old)
+ pack.append(item);game.gold[id]=int(game.gold[id])-int(quote.cost)
+ var health_after=game._max_hp(id)
+ if health_after>health_before:game.health[id]=mini(health_after,int(game.health.get(id,0))+health_after-health_before)
+ game._stat(id,"upgrades",1);return true
+func open_hero_shop(notice:String="")->void:
+ game.presentation.window("CENTRAL WARFORGE • BUILD YOUR HERO","battleground_hero_shop")
+ game.presentation.label(game.presentation.content,"CC: "+str(game.gold.get(game.my_id,0))+" • three equipment slots • combat continues",20)
+ game.presentation.label(game.presentation.content,"Spend on your army at your barracks, or save for a powerful hero here. Higher tiers replace their own family and charge only the difference. Unrelated gear keeps its slot.",17)
+ if not notice.is_empty():game.presentation.label(game.presentation.content,notice,19)
+ var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;game.presentation.content.add_child(grid)
+ for item in game.items:
+  var spec:Dictionary=game.items[item]
+  if not bool(spec.get("bg_only",false)):continue
+  var quote=hero_quote(game.my_id,str(item));var card=preload("res://scripts/studio_ui.gd").card(grid,spec.name,spec.description);card.custom_minimum_size.x=370;card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  var icon=TextureRect.new();icon.texture=preload("res://scripts/source_art.gd").texture("res://assets/items/"+str(item)+".svg");icon.custom_minimum_size=Vector2(58,58);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;card.add_child(icon)
+  var price=int(quote.get("cost",spec.cost));var b=game.presentation.button(card,("Upgrade" if not str(quote.get("old","")).is_empty() else "Buy")+" • "+str(price)+" CC",request_buy.bind("hero:"+str(item)))
+  b.disabled=quote.is_empty() or int(game.gold.get(game.my_id,0))<price
+ game.presentation.button(game.presentation.content,"Keep saving / back to battle",game.presentation.close)
+
+func draw_obstacles(canvas:Node2D,visible:Rect2)->void:
+ for obstacle in game.field_obstacles:
+  var at:Vector2=obstacle.pos
+  if not visible.grow(80).has_point(at):continue
+  var radius=float(obstacle.get("radius",36));var p=at-game.camera
+  canvas.draw_circle(p+Vector2(0,6),radius,Color("#4c5944") if map_id=="woodland" else Color("#514e48"))
+  canvas.draw_arc(p,radius,0,TAU,18,Color("#859373") if map_id=="woodland" else Color("#928a74"),2)
+  if str(obstacle.get("kind","tree"))=="rock":game._sprite("rock",at-Vector2.ONE*(radius+4),Vector2.ONE*(radius*2+8))
+  else:game._sprite(str(obstacle.get("kind","tree")),at-Vector2(44,65),Vector2(88,112))

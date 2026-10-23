@@ -4,7 +4,7 @@ static func build(parent:Node,l:Node,realm:String)->void:
  var row=HBoxContainer.new();parent.add_child(row)
  ui.label(parent,"List times: your best / community best • S = solo • Co = co-op",12)
  for route in ["solo","coop"]:
-  var card=preload("res://scripts/studio_ui.gd").card(row,route.to_upper()+" • FASTEST CLEAR","")
+  var card=preload("res://scripts/studio_ui.gd").card(row,("CO-OP" if route=="coop" else "SOLO")+" • FASTEST CLEAR","")
   card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
   var personal=float(state.routes[route].all.get(realm,0));ui.label(card,"Personal: "+(preload("res://scripts/named_records_ui.gd").clock(personal) if personal>0 else "No clear yet"),15)
   var found=false

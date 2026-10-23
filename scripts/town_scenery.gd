@@ -87,32 +87,12 @@ func guard(c:CanvasItem,point:Vector2,moving:bool)->void:
 	c.draw_texture_rect(guard_texture,Rect2(point+Vector2(-20,-42+bob),Vector2(40,48)),false)
 func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	var visible:Rect2=Rect2(camera,c.get_viewport_rect().size).grow(210)
-	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/marina_life.gd").reserved(p))
 	for tree in trees:
 		if visible.has_point(tree):c.draw_sprite("tree",tree-Vector2(55,115),Vector2(110,145))
 	# A planned pond garden sits north of the cliff, with a separate waterside walk.
 	if visible.has_point(POND):
-		var walk:=PackedVector2Array([Vector2(420,510)-camera,Vector2(330,525)-camera,Vector2(220,530)-camera,Vector2(180,550)-camera,Vector2(290,550)-camera])
-		c.draw_polyline(walk,Color("#8e9871"),44,true);c.draw_polyline(walk,Color("#c2b28a"),30,true)
-		for point in [Vector2(105,440),Vector2(188,456),Vector2(413,375)]:
-			var q:Vector2=point-camera; c.draw_circle(q,5,Color("#d4c495"));c.draw_circle(q+Vector2(12,6),3,Color("#dcb7c9"))
-		# Pond, lily pads and visible swimming fish.
+		preload("res://scripts/town_art39.gd").draw(c,"pond",camera)
 		var pond:Vector2=POND-camera
-		var rim:PackedVector2Array=PackedVector2Array()
-		var water:PackedVector2Array=PackedVector2Array()
-		for n in 48:
-			var angle:float=n*TAU/48
-			rim.append(pond+Vector2(cos(angle)*(220+sin(angle*3)*9),sin(angle)*(132+cos(angle*5)*7)))
-			water.append(pond+Vector2(cos(angle)*(202+sin(angle*3)*7),sin(angle)*(114+cos(angle*5)*5)))
-		c.draw_colored_polygon(rim,Color("#899e7c"))
-		c.draw_colored_polygon(water,Color("#3e8592"))
-		for n in 12:
-			var a:float=n*TAU/12;var shore:Vector2=pond+Vector2(cos(a)*214,sin(a)*124)
-			c.draw_circle(shore,5+n%3,Color("#b4b295"))
-			if n%3==0:
-				for k in 3:c.draw_line(shore+Vector2(k*4,0),shore+Vector2(k*4-3,-18-k*4),Color("#789569"),2,true)
-		c.draw_circle(pond+Vector2(18,-3),44,Color(.15,.39,.47,.15))
-		c.draw_polyline(water,Color(.65,.86,.83,.3),2,true)
 		for n in 4:
 			var angle:float=clock*(.28+n*.04)+n*1.7
 			var fish:Vector2=pond+Vector2(cos(angle)*(55+n*12),sin(angle)*(24+n*5))
@@ -136,18 +116,9 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 			c.draw_circle(lily+Vector2(2,-3),3,Color("#edc6d5"))
 	# Wooden lookout with ladder, parapet and a watch light.
 	if visible.has_point(TOWER):
+		preload("res://scripts/town_art39.gd").draw(c,"lookout",camera)
 		var tower:Vector2=TOWER-camera
-		c.draw_circle(tower+Vector2(0,10),48,Color(0,0,0,.2))
-		for side in [-1,1]:c.draw_line(tower+Vector2(side*30,-85),tower+Vector2(side*40,18),Color("#81624d"),8)
-		c.draw_line(tower+Vector2(-30,-70),tower+Vector2(34,12),Color("#b49366"),5)
-		c.draw_line(tower+Vector2(30,-70),tower+Vector2(-34,12),Color("#b49366"),5)
-		c.draw_rect(Rect2(tower+Vector2(-44,-107),Vector2(88,32)),Color("#a68b64"))
-		for n in 6:c.draw_rect(Rect2(tower+Vector2(-42+n*15,-113),Vector2(9,13)),Color("#c3ab7e"))
-		for side in [-1,1]:c.draw_line(tower+Vector2(side*10,-74),tower+Vector2(side*10,18),Color("#d1b884"),3)
-		for n in 8:c.draw_line(tower+Vector2(-10,-68+n*11),tower+Vector2(10,-68+n*11),Color("#d1b884"),3)
-		c.draw_rect(Rect2(tower+Vector2(-7,-140),Vector2(14,20)),Color("#ead49b"))
 		c.draw_circle(tower+Vector2(0,-132),16,Color(1,.8,.3,.1+.03*sin(clock*3)))
-		c.draw_string(font,tower+Vector2(-48,44),"LOOKOUT",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#e9d9b3"))
 	# Two small guard stations at the arena entrance.
 	for station in [Vector2(-70,1335),Vector2(330,1335)]:
 		if not visible.has_point(station):continue
@@ -195,6 +166,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 
 	for n in 4:
 		var m:Vector2=Vector2(1970+n*35,1240)-camera
+		if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(10).has_point(m):continue
 		c.draw_circle(m+Vector2(0,-7),5,Color("#a8cdaf"))
 		c.draw_line(m+Vector2(0,-4),m+Vector2(0,3),Color("#d8d6ac"),2)
 	for group in 2:
@@ -205,6 +177,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 		var start:Vector2=points[int(progress)%3]
 		var finish:Vector2=points[(int(progress)+1)%3]
 		var fairy:Vector2=start.lerp(finish,smoothstep(0,1,fposmod(progress,1)))-camera+Vector2(sin(clock*3)*9,-60+cos(clock*4)*7)
+		if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(20).has_point(fairy):continue
 		for glow in [18,10,4]:c.draw_circle(fairy,glow,Color(.8,1,.69,.08 if glow>4 else .9))
 		c.draw_circle(fairy+Vector2(sin(clock*5)*13,8),1.5,Color(.9,1,.7,.5))
 func _guard_at_time(index:int,time:float)->Vector2:
@@ -230,3 +203,39 @@ func draw_flower_source(c:Node2D,b:Vector2,small:bool)->void:
 		var flower:Vector2=b+Vector2(-half+7+n*9,sin(n*2)*5)
 		c.draw_line(flower+Vector2(0,11),flower,Color("#739666"),2)
 		c.draw_circle(flower,4,Color("#dcb3c9") if n%2==0 else Color("#ead29a"))
+
+func draw_pond_source(c:Node2D,camera:Vector2)->void:
+	var walk:=PackedVector2Array([Vector2(420,510)-camera,Vector2(330,525)-camera,Vector2(220,530)-camera,Vector2(180,550)-camera,Vector2(290,550)-camera])
+	c.draw_polyline(walk,Color("#8e9871"),44,true);c.draw_polyline(walk,Color("#c2b28a"),30,true)
+	for point in [Vector2(105,440),Vector2(188,456),Vector2(413,375)]:
+		var q:Vector2=point-camera; c.draw_circle(q,5,Color("#d4c495"));c.draw_circle(q+Vector2(12,6),3,Color("#dcb7c9"))
+	# Pond, lily pads and visible swimming fish.
+	var pond:Vector2=POND-camera
+	var rim:PackedVector2Array=PackedVector2Array()
+	var water:PackedVector2Array=PackedVector2Array()
+	for n in 48:
+		var angle:float=n*TAU/48
+		rim.append(pond+Vector2(cos(angle)*(220+sin(angle*3)*9),sin(angle)*(132+cos(angle*5)*7)))
+		water.append(pond+Vector2(cos(angle)*(202+sin(angle*3)*7),sin(angle)*(114+cos(angle*5)*5)))
+	c.draw_colored_polygon(rim,Color("#899e7c"))
+	c.draw_colored_polygon(water,Color("#3e8592"))
+	for n in 12:
+		var a:float=n*TAU/12;var shore:Vector2=pond+Vector2(cos(a)*214,sin(a)*124)
+		c.draw_circle(shore,5+n%3,Color("#b4b295"))
+		if n%3==0:
+			for k in 3:c.draw_line(shore+Vector2(k*4,0),shore+Vector2(k*4-3,-18-k*4),Color("#789569"),2,true)
+	c.draw_circle(pond+Vector2(18,-3),44,Color(.15,.39,.47,.15))
+	c.draw_polyline(water,Color(.65,.86,.83,.3),2,true)
+
+func draw_lookout_source(c:Node2D,camera:Vector2,font:Font)->void:
+	var tower:Vector2=TOWER-camera
+	c.draw_circle(tower+Vector2(0,10),48,Color(0,0,0,.2))
+	for side in [-1,1]:c.draw_line(tower+Vector2(side*30,-85),tower+Vector2(side*40,18),Color("#81624d"),8)
+	c.draw_line(tower+Vector2(-30,-70),tower+Vector2(34,12),Color("#b49366"),5)
+	c.draw_line(tower+Vector2(30,-70),tower+Vector2(-34,12),Color("#b49366"),5)
+	c.draw_rect(Rect2(tower+Vector2(-44,-107),Vector2(88,32)),Color("#a68b64"))
+	for n in 6:c.draw_rect(Rect2(tower+Vector2(-42+n*15,-113),Vector2(9,13)),Color("#c3ab7e"))
+	for side in [-1,1]:c.draw_line(tower+Vector2(side*10,-74),tower+Vector2(side*10,18),Color("#d1b884"),3)
+	for n in 8:c.draw_line(tower+Vector2(-10,-68+n*11),tower+Vector2(10,-68+n*11),Color("#d1b884"),3)
+	c.draw_rect(Rect2(tower+Vector2(-7,-140),Vector2(14,20)),Color("#ead49b"))
+	c.draw_string(font,tower+Vector2(-48,44),"LOOKOUT",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#e9d9b3"))

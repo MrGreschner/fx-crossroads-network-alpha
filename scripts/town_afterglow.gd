@@ -52,7 +52,7 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
    g.draw_line(screen.position+Vector2(0,screen.size.y*.48),screen.position+Vector2(screen.size.x,screen.size.y*.48),Color(.38,.31,.21,night*.65),2)
    g.draw_rect(screen.grow(3),Color(1,.75,.36,night*.06))
  # The acorn itself casts light; the greenhouse uses one small front lantern.
- if night>.01:
+ if night>.01 and view.has_point(Vector2(550,1310)):
   var acorn=Vector2(550,1310)-camera
   for n in range(3,0,-1):g.draw_circle(acorn,n*9,Color(1,.74,.35,night*.04))
   g.draw_arc(acorn,9,0,PI,16,Color(1,.84,.48,night),3,true)

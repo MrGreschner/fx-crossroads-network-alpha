@@ -1,0 +1,12 @@
+{
+  "id": "bg_siphon_1",
+  "name": "Bloodroot Charm 1",
+  "cost": 220,
+  "effect": "lifesteal",
+  "amount": 5,
+  "shop": false,
+  "bg_only": true,
+  "bg_family": "siphon",
+  "bg_tier": 1,
+  "description": "5% lifesteal. Replaces a lower tier of this family; pay only the price difference. Three equipment slots total."
+}
