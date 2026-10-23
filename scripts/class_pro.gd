@@ -46,7 +46,7 @@ func open_teacher()->void:
  if account().token.is_empty() or str(account().user.get("role",""))!="teacher":return
  shell("TEACHER WORKSPACE")
  UI.accent(button(content,"Manage Class Pro ↗",launch))
- label(content,"Open your professional class workspace in a separate browser tab. See assigned and unsorted students, create classes and assignments, review frozen work, return marks and export your gradebook.",18)
+ label(content,"Open your professional class workspace in a separate browser tab. Your existing teacher workspace session is reused; otherwise sign in with your Crossroads teacher account. See students, classes, assignments, submitted work and your gradebook.",18)
  button(content,"Learning Academy • course lessons & practice",func():close();account().legacy().game.open_business_academy())
  button(content,"Student progress",func():launch("Students"))
  button(content,"Submitted assignments • review & grade",func():launch("Submissions"))
@@ -56,12 +56,27 @@ func open_teacher()->void:
   close();load("res://scripts/teacher_dashboard.gd").open(account().legacy()))
  button(content,"Existing lesson broadcast",func():get_tree().root.get_node("FXClassroom").host())
  label(content,"Teacher and Student access do not switch on Game Dev, unlock realms, change combat, or stop normal progress. Close this menu to keep playing.",16)
+const TEACHER_VIEWS=["Overview","Students","Assignments","Submissions","Gradebook","Learning Academy"]
+func workspace_url(view:String="Overview")->String:
+ var base=account().endpoint.trim_suffix("/")
+ if not base.begins_with("https://") and not (OS.is_debug_build() and base.begins_with("http://127.0.0.1:")):return ""
+ var selected=view if view in TEACHER_VIEWS else "Overview"
+ return base+"/education/teacher?view="+selected.uri_encode()
 func launch(view:String="Overview")->void:
- target_view=view
+ target_view=view if view in TEACHER_VIEWS else "Overview"
  if account().token.is_empty() or str(account().user.get("role",""))!="teacher":account().open();return
- if busy:set_status("Please wait for the current request.");return
- if OS.has_feature("web"):JavaScriptBridge.eval("window.fxClassProWindow=window.open('about:blank','crossroadsClassPro');",true)
- call_api("handoff",{"view":view},"handoff");set_status("Opening Manage Class Pro…")
+ var url=workspace_url(target_view)
+ if url.is_empty():set_status("The teacher website address is unavailable. Reopen the cloud account menu and try again.");return
+ # Open the actual destination during this click. The website already supports
+ # its own secure teacher login and first-party session. No waiting blank tab,
+ # deferred popup redirect, or one-use handoff is required for this action.
+ open_workspace_url(url)
+func open_workspace_url(url:String)->void:
+ if OS.has_feature("web"):
+  JavaScriptBridge.eval("window.open("+JSON.stringify(url)+",'_blank','noopener'); void 0;",true)
+ elif OS.shell_open(url)!=OK:
+  set_status("Could not open your browser. Open "+account().endpoint+"/education/teacher and sign in with your Crossroads teacher account.");return
+ set_status("Teacher website opened. If asked, use your Crossroads teacher account. If no tab appeared, allow pop-ups and click again.")
 func open_student(module:String="")->void:
  selected_module=module
  shell("STUDENT • ASSIGNMENTS & FEEDBACK")
@@ -104,12 +119,6 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
   if op=="sync":last_sync=""
   set_status(str(d.get("error","Could not connect. Your local work is retained.")) if d is Dictionary else "Could not connect. Your local work is retained.");return
  match op:
-  "handoff":
-   var url=account().endpoint+str(d.url)
-   if OS.has_feature("web"):
-    JavaScriptBridge.eval("if(window.fxClassProWindow&&!window.fxClassProWindow.closed){window.fxClassProWindow.location="+JSON.stringify(url)+";}else{window.open("+JSON.stringify(url)+",'crossroadsClassPro');}",true)
-   else:OS.shell_open(url)
-   set_status("Manage Class Pro opened in a separate browser window. If it was blocked, allow pop-ups and click again.")
   "student":student_data=d;render_student();set_status("Your assignments and returned feedback are up to date.")
   "submit":set_status("Frozen work submitted. Your teacher can now review it in Manage Class Pro.")
   "sync":pass

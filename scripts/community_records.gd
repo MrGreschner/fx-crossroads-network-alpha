@@ -30,7 +30,7 @@ var stale=false
 var last_refresh=""
 func compatible(data:Dictionary)->bool:
  var limits=data.get("limits",{});var named=data.get("named",{})
- return named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=5 and int(limits.get("descent",0))>=10 and data.get("fish_boards") is Dictionary
+ return int(data.get("record_policy",0))>=2 and named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=5 and int(limits.get("descent",0))>=10 and data.get("fish_boards") is Dictionary
 func board_notice()->String:
  if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending older record lists. Deploy the matching server ZIP; your saved records are safe."
  if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
@@ -76,7 +76,7 @@ func note_fish(catch:Dictionary)->void:
 func payload()->Dictionary:
  var scores=legacy.cosmetics.rankings.scores();var hero_damage={};var realm_clears={};var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
  for id in legacy.data.heroes:
-  if id in manifest.characters:hero_damage[id]=minf(1e12,float(legacy.data.heroes[id].get("damage",0)))
+  if preload("res://scripts/record_eligibility.gd").hero_allowed(legacy.game,str(id)):hero_damage[id]=minf(1e12,float(legacy.data.heroes[id].get("damage",0)))
  for id in legacy.data.realm_counts:
   if id in manifest.regions:realm_clears[id]=mini(1000000,int(legacy.data.realm_counts[id]))
  var best={"species":"","kg":0.0};var rare={};var trophies=[]
@@ -86,7 +86,7 @@ func payload()->Dictionary:
   if FISH.is_trophy(entry):trophies.append(entry)
   if weight>0 and rarer(entry,rare):rare=entry
   if weight>float(best.kg):best={"species":id,"kg":weight}
- return {"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
+ return {"record_policy":2,"unofficial":false,"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
 func cloud_identity()->String:
  var account=legacy.get_node("/root/FXAccount")
  return str(account.user.get("id","")) if account.loaded and not account.conflict else ""

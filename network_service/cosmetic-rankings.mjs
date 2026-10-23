@@ -1,3 +1,4 @@
+import {combatEligible} from './record-policy.mjs';
 import {createHmac,timingSafeEqual} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 const fishCatalogue=JSON.parse(readFileSync(new URL('../content/fishing.json',import.meta.url),'utf8')).fish;
@@ -41,7 +42,7 @@ export function createCosmeticRankings({pool,secret=process.env.REPORT_SIGNING_S
   if(++rate.count>600||pending>=3){send(res,429,{error:'Try again later'},{'Retry-After':'15'});req.resume();return true;}
   pending++;const chunks=[];let size=0;const timer=setTimeout(()=>req.destroy(),5000);timer.unref();
   try{for await(const part of req){size+=part.length;if(size>4096){send(res,413,{error:'Too large'});req.destroy();return true;}chunks.push(part);}
-   let p;try{p=cleanScores(JSON.parse(Buffer.concat(chunks)),now());}catch(e){send(res,e.message==='Week changed'?409:400,{error:e.message,week:rankWeek(now()).week,week_start:Math.floor(rankWeek(now()).start/1000),reset_at:Math.floor(rankWeek(now()).end/1000),server_time:Math.floor(now()/1000)});return true;}
+   let p;try{const raw=JSON.parse(Buffer.concat(chunks));if(!combatEligible(raw))throw Error("Update the game; unofficial or legacy scores cannot enter rankings");p=cleanScores(raw,now());}catch(e){send(res,e.message==='Week changed'?409:400,{error:e.message,week:rankWeek(now()).week,week_start:Math.floor(rankWeek(now()).start/1000),reset_at:Math.floor(rankWeek(now()).end/1000),server_time:Math.floor(now()/1000)});return true;}
    const id=createHmac('sha256',secret).update('cosmetics:'+p.profile).digest('hex');await store.submit(id,p);const ranks=await store.ranks(id,p.week),w=rankWeek(now());
    // Do not issue last week's award if midnight passed while the database was busy.
    if(w.week!==p.week){send(res,409,{error:'Week changed',week:w.week,week_start:Math.floor(w.start/1000),reset_at:Math.floor(w.end/1000),server_time:Math.floor(now()/1000)});return true;}

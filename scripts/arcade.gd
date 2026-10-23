@@ -374,7 +374,7 @@ func _ui() -> void:
 	code_field=LineEdit.new();code_field.position=Vector2(375,556);code_field.size=Vector2(165,44);code_field.max_length=6;code_field.placeholder_text="ROOM CODE";control.add_child(code_field)
 	_button("HOST ROOM",550,556,_host,154);_button("JOIN / REQUEST",712,556,_join,146);_button("PUBLIC ROOMS",866,556,func():party_tools.browse(),173)
 	_button("START ADVENTURE",1047,556,_start_button,177)
-	custom_picker=CheckButton.new();custom_picker.text="CUSTOM HEROES";custom_picker.position=Vector2(350,30);custom_picker.size=Vector2(230,42);control.add_child(custom_picker);custom_picker.tooltip_text="Public rooms: checked Forced Balance builds. Private code rooms: experimental builds allowed. Off by default.";custom_picker.toggled.connect(func(value:bool):allow_custom=value;_update_lobby_settings())
+	custom_picker=CheckButton.new();custom_picker.text="CUSTOM HEROES";custom_picker.position=Vector2(350,30);custom_picker.size=Vector2(230,42);control.add_child(custom_picker);custom_picker.tooltip_text="Public rooms: checked Forced Balance builds. Every custom build needs Forced Balance. Custom matches are unofficial and earn no records. Off by default.";custom_picker.toggled.connect(func(value:bool):allow_custom=value;_update_lobby_settings())
 	public_room=CheckButton.new();public_room.text="PUBLIC ROOM";public_room.position=Vector2(375,608);public_room.size=Vector2(185,44);control.add_child(public_room)
 	public_room.toggled.connect(func(value:bool):
 		if role=="host" and server_matchmaking:_send_ws({"type":"room_update","public":value})
@@ -540,7 +540,7 @@ func _connect(command: Dictionary) -> void:
 
 func _host() -> void:
 	if version_check!=null and version_check.blocked():version_check.notice();return
-	if selected_hero.begins_with("custom_") and not custom_party.allowed(custom_party.project_for(selected_hero)):status_label.text="Enable custom heroes; public builds need checked Forced Balance.";return
+	if selected_hero.begins_with("custom_") and not custom_party.allowed(custom_party.project_for(selected_hero)):status_label.text="Enable custom heroes; all multiplayer builds need checked Forced Balance.";return
 	if started: return
 	party_tools.auto_solo=false
 	var command := _room_command("host")
@@ -629,7 +629,7 @@ func _start_button() -> void:
 	for peer_id in links: _send_channel(str(peer_id), config)
 
 func match_config()->Dictionary:
-	return {"type":"start","bg_map":bg_map,"bg_team_size":bg_team_size,"mode":mode,"realm":realm_id,"rule":pvp_rule,"seed":floor_seed,"no_items":arena_no_items,"random_heroes":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"opening":arena_opening,"arena_map":arena_map,"heroes":hero_ids,"match_id":match_id,"party_size":match_party_size,"teams":teams,"countdown":start_countdown,"allow_custom":allow_custom}
+	return {"type":"start","unofficial":bool(get_meta("records_unofficial",false)),"bg_map":bg_map,"bg_team_size":bg_team_size,"mode":mode,"realm":realm_id,"rule":pvp_rule,"seed":floor_seed,"no_items":arena_no_items,"random_heroes":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"opening":arena_opening,"arena_map":arena_map,"heroes":hero_ids,"match_id":match_id,"party_size":match_party_size,"teams":teams,"countdown":start_countdown,"allow_custom":allow_custom}
 
 func _start_match() -> void:
 	if version_check!=null and version_check.blocked():version_check.notice();return
@@ -666,6 +666,7 @@ func _start_match() -> void:
 				if id!=my_id:
 					hero_ids[id]=lobby_heroes.get(id,hero_ids.get(id,"ram"));legacy.builds[id]=lobby_builds.get(id,legacy.builds.get(id,{}))
 	else:arena_no_items=mode=="arena" and arena_no_items;arena_random=mode=="arena" and arena_random
+	preload("res://scripts/record_eligibility.gd").begin(self,hero_ids.values())
 	defeat_causes.clear();defense_cleared_wave=0;arena_records.clear();arena_outcomes.clear()
 	legacy_result_recorded=false
 	pvp_scores.clear();contributions.clear();downed.clear();revive_held.clear();shield_reduction.clear();aim_angles.clear();results_reason=""
@@ -712,6 +713,7 @@ func _start_match() -> void:
 	record_party=[]
 	if mode in ["coop","descent"]:record_party=preload("res://scripts/named_records.gd").party(legacy)
 	_make_floor()
+	preload("res://scripts/record_eligibility.gd").warn(self)
 	# Classic co-op waves may only use the first scene markers. Keep authored
 	# expansion encounters present even when their markers are later in the scene.
 	if role=="host" and mode=="coop":
@@ -1581,7 +1583,8 @@ func _simulate(delta: float) -> void:
 		if mode == "descent":
 			if not adventure.combat.v90.rebirth.is_empty():return
 			descent.cleared(floor_number)
-			floor_number+=1;floor_transition=1.1;best_floor=maxi(best_floor,floor_number)
+			floor_number+=1;floor_transition=1.1
+			if not preload("res://scripts/profile_store.gd").progression_blocked():best_floor=maxi(best_floor,floor_number)
 			var save := null if preload("res://scripts/profile_store.gd").progression_blocked() or spectating() else FileAccess.open(best_path,FileAccess.WRITE)
 			if save != null: save.store_string(JSON.stringify({"best":best_floor}));save.close()
 		else: wave += 1
@@ -1846,9 +1849,10 @@ func _snapshot() -> Dictionary:
 	for guard in guards:
 		if not guard.has("net_uid"):guard.net_uid=transport.next()
 		sent_guards.append({"net_uid":guard.net_uid,"pos":[roundi(guard["pos"].x),roundi(guard["pos"].y)],"type":guard["type"],"sprite":str(guard.get("sprite","")),"owner":str(guard.get("owner","")),"hp":float(guard.get("hp",0)),"max_hp":float(guard.get("max_hp",70))})
-	return {"type":"state","studio":custom_party.snapshot(),"dev_magic":dev_magic.snapshot(),"descent":descent.snapshot(),"battlegrounds":battlegrounds.snapshot() if mode=="battlegrounds" else {},"match_id":match_id,"party_size":match_party_size,"arena_random":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"arena_no_items":arena_no_items,"arena_records":arena_records,"arena_outcomes":arena_outcomes,"defense_cleared_wave":defense_cleared_wave,"arena_world":arena_world.snapshot(),"north_gate":north_gate.snapshot() if mode=="defense" else {},"pvp_scores":pvp_scores,"contributions":contributions,"downed":downed,"results":results_reason,"notice":status_label.text,"adventure":adventure.snapshot(),"players":players,"enemies":foes,"shots":shots,"guards":sent_guards,"effects":sent_effects,"walls":_wall_packet(),"wave":wave,"floor":floor_number,"gate":gate_hp,"upgrades":upgrade_level,"active":started,"timer":run_time}
+	return {"type":"state","unofficial":bool(get_meta("records_unofficial",false)),"studio":custom_party.snapshot(),"dev_magic":dev_magic.snapshot(),"descent":descent.snapshot(),"battlegrounds":battlegrounds.snapshot() if mode=="battlegrounds" else {},"match_id":match_id,"party_size":match_party_size,"arena_random":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"arena_no_items":arena_no_items,"arena_records":arena_records,"arena_outcomes":arena_outcomes,"defense_cleared_wave":defense_cleared_wave,"arena_world":arena_world.snapshot(),"north_gate":north_gate.snapshot() if mode=="defense" else {},"pvp_scores":pvp_scores,"contributions":contributions,"downed":downed,"results":results_reason,"notice":status_label.text,"adventure":adventure.snapshot(),"players":players,"enemies":foes,"shots":shots,"guards":sent_guards,"effects":sent_effects,"walls":_wall_packet(),"wave":wave,"floor":floor_number,"gate":gate_hp,"upgrades":upgrade_level,"active":started,"timer":run_time}
 
 func _packet(remote_id: String, data: Dictionary) -> void:
+	if role=="guest" and remote_id==host_id and data.get("unofficial",false)==true:set_meta("records_unofficial",true)
 	if custom_party.packet(remote_id,data):return
 	if music_network.packet(remote_id,data):return
 	if str(data.get("type",""))=="dev_test":
@@ -3231,7 +3235,7 @@ func _open_hero_grid()->void:
 	hero_grid.open(self,selected_hero,_grid_select,_grid_permission)
 func _grid_permission(id:String)->String:
 	if started or spectating():return "Hero selection is unavailable during a match or while spectating."
-	if id.begins_with("custom_") and not custom_party.allowed(custom_party.project_for(id)):return "Enable custom heroes; public rooms require Forced Balance."
+	if id.begins_with("custom_") and not custom_party.allowed(custom_party.project_for(id)):return "Enable custom heroes; all multiplayer rooms require Forced Balance."
 	return ""
 func _grid_select(id:String)->bool:
 	if not _grid_permission(id).is_empty():return false

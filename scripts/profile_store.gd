@@ -9,7 +9,7 @@ static func testing()->bool:
  return (research!=null and (research.active or research.discarding)) or (session!=null and (session.active or session.discarding)) or (Engine.get_main_loop() as SceneTree).root.has_meta("fx_dev_match")
 static func progression_blocked()->bool:
  var tree=Engine.get_main_loop() as SceneTree
- return testing() or (tree!=null and tree.root.has_meta("fx_practice_continue"))
+ return testing() or (tree!=null and tree.root.has_meta("fx_practice_continue")) or preload("res://scripts/record_eligibility.gd").blocked()
 static func read(path:String,accept:Callable=Callable())->Dictionary:
  var session:=dev_session()
  if session!=null and session.active and session.memory.has(path):

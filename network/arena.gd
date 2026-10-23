@@ -65,6 +65,7 @@ var remote_strike_view:Dictionary={}
 var confirmed_damage_events=0
 var recent_hit_events:Array=[]
 var show_hit_geometry=false
+var custom_transfer=preload("res://network/custom_transfer.gd").new()
 var room_paused=false
 var dedicated=false
 var gateway:Node
@@ -129,6 +130,7 @@ var server_snapshot_tick=0
 var last_snapshot_tick=-1
 var metrics={"rtt_ms":0,"corrections":0,"max_correction":0.0,"snapshots":0,"wire_bytes":0,"stale":0,"tick_ms":0.0}
 func _ready()->void:
+ add_child(custom_transfer);custom_transfer.setup(self)
  dedicated=get_tree().root.has_meta("fx_dedicated_server")
  if not dedicated:RenderingServer.set_default_clear_color(Color("#081b27"));Engine.max_fps=120 # Also bound uncapped native/headless client polling.
  if dedicated:get_tree().root.set_meta("fx_dev_match",true)
@@ -323,11 +325,13 @@ func _capacity_changed(_index:int)->void:
  send_net({"type":"capacity","seats":capacity.get_selected_id()})
  net_status.text="Updating room capacity…"
 func net_select(id:String)->bool:
- if id.begins_with("custom_"):return false
+ if id.begins_with("custom_") and not preload("res://scripts/studio_balance.gd").hero_checked(characters.get(id,{}).get("studio_project",{})):return false
  selected_hero=id;preferred_hero=id;hero_button.text="Hero • "+str(characters[id].name)
- if net_ready:send_net({"type":"hero","hero":id,"build_choice":legacy.payload(id)})
+ if net_ready:
+  if id.begins_with("custom_"):net_status.text=custom_transfer.upload(id)
+  else:send_net({"type":"hero","hero":id,"build_choice":legacy.payload(id)})
  return true
-func net_permission(id:String)->String:return "Official heroes only during networking validation." if id.begins_with("custom_") else ""
+func net_permission(id:String)->String:return "Save with Forced Balance enabled before multiplayer." if id.begins_with("custom_") and not preload("res://scripts/studio_balance.gd").hero_checked(characters.get(id,{}).get("studio_project",{})) else ""
 func _leave_room_connection()->void:
  if browser_peer!=null:
   var browse_drain=preload("res://network/leave_link.gd").new();get_tree().root.add_child(browse_drain);browse_drain.setup(browser_peer,false);browser_peer=null
@@ -365,6 +369,7 @@ func _town()->void:
  # Post-match return keeps Host / Join available.
  return_to_network_menu()
 func connect_net(kind:String)->void:
+ if kind in ["host","join"] and not net_permission(preferred_hero).is_empty():net_status.text=net_permission(preferred_hero);return
  if kind=="join" and room_field.text.strip_edges().length()!=6:net_status.text="Enter the six-character room code, or choose a public party.";return
  if kind=="resume":metrics.resume_attempts=int(metrics.get("resume_attempts",0))+1
  if kind=="host" and mode=="coop" and realm_id not in ["between","overcharge","attunement"] and realm_id not in RealmCatalogue.available(legacy):net_status.text=preload("res://scripts/realm_access.gd").reason(legacy,realm_id);return
@@ -397,7 +402,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"consumable":preload("res://scripts/prepared_supply.gd").ready(items),"shop_discount":legacy.discount(10)<10,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":str(test_arena.get_item_metadata(test_arena.selected)),"token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":"ram" if preferred_hero.begins_with("custom_") else preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"consumable":preload("res://scripts/prepared_supply.gd").ready(items),"shop_discount":legacy.discount(10)<10,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":str(test_arena.get_item_metadata(test_arena.selected)),"token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw
@@ -456,6 +461,7 @@ func _check_stale_link()->void:
  if age>4000 and net_peer!=null and net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   disconnect_reason="state_timeout";net_peer.close(1000,"state_timeout")
 func receive_net(data:Dictionary)->void:
+ if custom_transfer.receive("authority",data):return
  match str(data.get("type","")):
   "expedition_prepare":
    expedition_offer=data.get("config",{}).duplicate(true)
@@ -470,6 +476,7 @@ func receive_net(data:Dictionary)->void:
   "welcome":
    server_build=str(data.get("build","unknown"))
    my_id=str(data.id);net_room=str(data.room);resume_token=str(data.token);net_host=bool(data.host);net_ready=true;reconnect_until=0;capacity.disabled=not net_host
+   if preferred_hero.begins_with("custom_") and not started:custom_transfer.upload(preferred_hero)
    room_field.text=net_room;net_status.text="Room "+net_room+" • server "+server_build+(" • install the V179-preview server repair" if server_build in ["T4.8","T4.9.1"] else "");net_start.disabled=not net_host
   "lobby":
    mode=str(data.get("mode",mode));realm_id=str(data.get("realm",realm_id));roster.assign(data.members);net_host=str(data.host)==my_id;net_start.disabled=not net_host or roster.size()<2
@@ -495,7 +502,7 @@ func receive_net(data:Dictionary)->void:
    test_arena.hide()
    capacity.select(capacity.get_item_index(int(data.seats)))
    test_arena.disabled=not net_host;arena_map=str(data.get("arena_map","sand"));test_arena.select(maxi(0,arena_world.MAPS.keys().find(arena_map)));_sync_network_mode_controls()
-   net_status.text="Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+("COMPETITION • crown bonuses off" if bool(get_meta("crown_competition",false)) else str(data.get("message","")))
+   net_status.text=("CUSTOM HERO • UNOFFICIAL • NO RECORDS\n" if data.get("unofficial",false)==true else "")+"Room "+net_room+" • "+str(roster.size())+" / "+str(data.seats)+" players • "+("COMPETITION • crown bonuses off" if bool(get_meta("crown_competition",false)) else str(data.get("message","")))
   "error":net_status.text=str(data.get("message","Error"));net_panel.show();_sync_network_mode_controls()
   "start":
    gate_rival_plan=data.get("rivals",preload("res://network/party_rules.gd").DEFAULT_RIVALS).duplicate()
@@ -520,9 +527,12 @@ func receive_net(data:Dictionary)->void:
    for key in ["corrections","max_correction","authority_resets","correction_1_8","correction_8_32","correction_32_plus"]:metrics[key]=0
    metrics.last_authority_reset=""
    if scenery_view!=null:scenery_view.reset()
-   _start_match();expedition.start();ability_view.reset();local_view.reset(local_pos);start_countdown=0;control.hide();net_panel.hide();shots_view.reset();dodge_journal.clear();received_point_ready=false;local_strikes.clear();predicted_actions.clear();pending_bursts.clear();world_view.clear();actor_motion.clear();render_shots.clear();render_events.clear();remote_strike_view.clear();confirmed_damage_events=0;recent_hit_events.clear()
+   _start_match();
+   if data.get("unofficial",false)==true:set_meta("records_unofficial",true)
+   expedition.start();ability_view.reset();local_view.reset(local_pos);start_countdown=0;control.hide();net_panel.hide();shots_view.reset();dodge_journal.clear();received_point_ready=false;local_strikes.clear();predicted_actions.clear();pending_bursts.clear();world_view.clear();actor_motion.clear();render_shots.clear();render_events.clear();remote_strike_view.clear();confirmed_damage_events=0;recent_hit_events.clear()
   "state":
    if not _valid_state(data):return
+   if data.get("unofficial",false)==true:set_meta("records_unofficial",true)
    var tick=int(data.get("server_tick",0))
    var serial=int(data.get("snapshot_seq",tick))
    if serial<=last_snapshot_seq:metrics.stale+=1;return
@@ -725,7 +735,8 @@ func _physics_process(_delta:float)->void:
     _execute_due_actions(str(id))
    _execute_due_actions(str(id))
   bots.step(Move.DT);run_time+=Move.DT;visual_time+=Move.DT;arena_world.step(Move.DT);
-  if not arena_world.shatter.active():adventure.step(Move.DT)
+  if not arena_world.shatter.active():
+   adventure.step(Move.DT);custom_party._process(Move.DT)
   _update_flames(Move.DT);_simulate_charges(Move.DT);_simulate(Move.DT)
   expedition.step(Move.DT)
   _update_fountains(Move.DT);_update_revives(Move.DT);_track_card_progress()

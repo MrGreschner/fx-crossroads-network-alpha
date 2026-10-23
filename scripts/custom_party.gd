@@ -17,14 +17,14 @@ var last_input:Dictionary={}
 func setup(owner:Node)->void:game=owner
 func project_for(id:String)->Dictionary:return game.characters.get(id,{}).get("studio_project",{})
 func identity(owner:String)->String:return "custom_net_"+owner.sha256_text().left(16)
-func allowed(p:Dictionary)->bool:return game.allow_custom and not p.is_empty() and preload("res://scripts/community_validation.gd").art_issue(p).is_empty() and (not game.public_room.button_pressed or Balance.hero_checked(p))
+func allowed(p:Dictionary)->bool:return game.allow_custom and not p.is_empty() and preload("res://scripts/community_validation.gd").art_issue(p).is_empty() and Balance.hero_checked(p)
 func issue()->String:
  if not pending_builds.is_empty() or not incoming.is_empty():return "Receiving a custom build… please wait."
  for member in game.fighters():
   var id=str(member.id);var hero=str(game.hero_ids.get(id,game.selected_hero if id==game.my_id else "ram"))
   if hero.begins_with("custom_"):
    var p=project_for(hero)
-   if not allowed(p):return "Custom heroes are off, or this public build has not passed Forced Balance."
+   if not allowed(p):return "Custom heroes require Forced Balance in every multiplayer room; matches are unofficial."
    for peer in game.links:
     if game._link_open(str(peer)) and str(acknowledgements.get(str(peer)+":"+id,""))!=Project.fingerprint(p):return "Sharing custom hero artwork and abilities… please wait."
  return ""
@@ -36,6 +36,8 @@ func install(owner:String,p:Dictionary)->String:
   var image=Image.new()
   if image.load_png_from_buffer(Marshalls.base64_to_raw(h.art[pose]))==OK:game.art[id+"_"+pose]=ImageTexture.create_from_image(image)
  projects[owner]=p.duplicate(true);game.hero_ids[owner]=id;game.lobby_heroes[owner]=id
+ if game.started:
+  preload("res://scripts/record_eligibility.gd").observe(game,[id]);preload("res://scripts/record_eligibility.gd").warn(game)
  if owner==game.my_id:game.selected_hero=id;game.preferred_hero=id
  return id
 func enqueue(peer:String,owner:String,p:Dictionary)->void:
@@ -51,7 +53,7 @@ func _process(delta:float)->void:
  tick+=delta
  if not game.my_id.is_empty():
   var p=project_for(game.selected_hero)
-  if game.selected_hero.begins_with("custom_") and not p.is_empty() and game.allow_custom and (not game.public_room.button_pressed or bool(game.characters[game.selected_hero].get("studio_checked",false))):
+  if game.selected_hero.begins_with("custom_") and not p.is_empty() and game.allow_custom and (Balance.hero_checked(p)):
    if game.role=="host":
     if game.selected_hero!=identity(game.my_id) or not projects.has(game.my_id):install(game.my_id,p)
    elif game._link_open(game.host_id):enqueue(game.host_id,game.my_id,p)
@@ -81,7 +83,7 @@ func _process(delta:float)->void:
    if down!=bool(held.get(kind,false)) or down and input_clock>=.12:
     var p:Vector2=game.local_pos+game.mobile.aim*400 if game.mobile.enabled else game.media_mouse_world()
     if game.role=="host":input(game.my_id,kind,down,p)
-    else:game._send_channel(game.host_id,{"type":"community_input" if str(game.hero_ids.get(game.my_id,game.selected_hero)).begins_with("community_") else "custom_input","kind":kind,"down":down,"point":[p.x,p.y]})
+    else:game._send_channel(game.host_id,{"type":"community_input" if game.get("net_ready")==true or str(game.hero_ids.get(game.my_id,game.selected_hero)).begins_with("community_") else "custom_input","kind":kind,"down":down,"point":[p.x,p.y]})
     held[kind]=down
   if input_clock>=.12:input_clock=0
  if game.role=="host":
@@ -133,7 +135,7 @@ func packet(sender:String,data:Dictionary)->bool:
  var p=JSON.parse_string("".join(q.parts));incoming.erase(key)
  if not Project.validate(p).is_empty() or Project.fingerprint(p)!=token:return true
  if game.role=="host" and game.started and not game.party_tools.late_pending.has(sender):return true
- if game.role=="host" and not allowed(p):game.status_label.text="Rejected a custom build: enable customs; public builds need Forced Balance.";game._kick_member(sender);return true
+ if game.role=="host" and not allowed(p):game.status_label.text="Rejected a custom build: enable customs; all multiplayer builds need Forced Balance.";game._kick_member(sender);return true
  pending_builds.erase(owner)
  install(owner,p)
  if game.role=="guest":game._send_channel(game.host_id,{"type":"custom_ack","owner":owner,"token":token})

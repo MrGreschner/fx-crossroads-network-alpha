@@ -540,7 +540,7 @@ func elder_ui()->void:
  topics["Daily Mission & glow"]="Daily Mission is one featured objective from 50 shuffled tasks, separate from the Challenge Lodge’s combat trials and weekly trials. Read the objective in Adventures, then choose Play today’s mission. Use the main menu to jump into the activity. Finish it in normal play to earn a one of eight rotating animated cosmetic effects until local midnight. No combat bonus, no Game Dev credit. Download your profile to bring your reward to another computer."
  topics["Charged attacks & aiming"]="Some attacks fire when you release the button. Hold for more power, turn toward your target, then release. Ground markers appear only while aiming. The Living Book instead channels pages while held. Cancelling a charge never spends the attack."
  topics["Returning or sharing a computer"]="Continue goes straight into the game. New game offers a fresh local profile and the starter tutorial. Back up your own profile before giving the computer to someone else. My memory is woolly; your download should not be."
- topics["Custom builds & Forced Balance"]="Save a valid draft to play it from Custom heroes. Forced Balance trades damage, reach and area for cooldown, and health or protection for movement. Public custom rooms require a checked budget. Private rooms can allow experimental builds. Cyan sigils identify customs; violet sparks identify experimental ones."
+ topics["Custom builds & Forced Balance"]="Save a valid draft to play it from Custom heroes. Forced Balance trades damage, reach and area for cooldown, and health or protection for movement. Public custom rooms require a checked budget. All multiplayer rooms require Forced Balance. Local custom builds are Playtest: no records or competitive progress. A custom hero makes the entire multiplayer match unofficial. Cyan sigils identify customs; violet sparks identify experimental ones."
  if preload("res://scripts/education_access.gd").state().student or preload("res://scripts/education_access.gd").state().teacher:
   topics["Student Mode • outcome portfolios"]="Student access opens assignment tools and your portfolio. The classroom Education Guide lists nine projects and evidence progress bars. Save a brief before building, attach work and tests, then submit a frozen version. Practice checks verify concept answers and IPO predictions; a teacher decides outcome achievement. Join your teacher's ED submission code to send your education portfolio, then Send latest progress after further work. Download your player profile on shared computers."
  if preload("res://scripts/education_access.gd").state().teacher:
@@ -750,10 +750,10 @@ func validate(value:Variant)->bool:
   if not id is String or id.length()>32:return false
  if not progress.get("heroes",{}) is Dictionary or not progress.get("town",{}) is Dictionary or not progress.get("tasks",{}) is Dictionary:return false
  var known_heroes=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json")).characters
- if not progress.get("mastery_seen",{}) is Dictionary or progress.get("mastery_seen",{}).size()>known_heroes.size():return false
+ if not progress.get("mastery_seen",{}) is Dictionary or progress.get("mastery_seen",{}).size()>1024:return false
  for id in progress.get("mastery_seen",{}):
   var seen=progress.mastery_seen[id]
-  if id not in known_heroes or not (seen is int or seen is float) or not is_finite(float(seen)) or float(seen)<0 or float(seen)>4 or float(seen)!=floor(float(seen)):return false
+  if not preload("res://scripts/named_records.gd").record_hero_id(id,known_heroes) or not (seen is int or seen is float) or not is_finite(float(seen)) or float(seen)<0 or float(seen)>4 or float(seen)!=floor(float(seen)):return false
  if progress.has("education"):
   if not progress.education is Dictionary or progress.education.size()!=1 or not progress.education.get("studio_seconds",0) is float and not progress.education.get("studio_seconds",0) is int:return false
   if not is_finite(float(progress.education.studio_seconds)) or float(progress.education.studio_seconds)<0 or float(progress.education.studio_seconds)>315360000:return false
@@ -802,7 +802,7 @@ func validate(value:Variant)->bool:
    for state in stored.get("states",{}).values():
     if not state is Dictionary or not state.get("targets",[]) is Array:return false
  for id in progress.get("heroes",{}):
-  if not id is String or id.length()>32:return false
+  if not id is String or (id.length()>32 and not preload("res://scripts/named_records.gd").record_hero_id(id,known_heroes)):return false
   var rec:Variant=progress.heroes[id]
   if not rec is Dictionary or not rec.get("realms",[]) is Array or not rec.get("tuning",[]) is Array:return false
   if rec.has("duet_clear") and not rec.duet_clear is bool:return false

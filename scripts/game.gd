@@ -314,6 +314,9 @@ func load_profile() -> void:
 		for key in ["welcome","cosmetics","equipped","title"]:
 			profile[key] = saved.get(key,{} if key == "welcome" else [] if key == "cosmetics" else "")
 
+		profile["playtest_records"] = saved.get("playtest_records",{})
+	preload("res://scripts/record_eligibility.gd").archive_custom_personal(profile)
+
 func save_profile() -> void:
 	if preload("res://scripts/profile_store.gd").progression_blocked():return
 	profile["selected_hero"] = selected_character
@@ -637,6 +640,7 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	active_realm = "grove" if trial else realm_id
 	character_id = "ram" if trial else selected_character
 	hero = characters.get(character_id, {})
+	preload("res://scripts/record_eligibility.gd").begin(self,[character_id])
 	if hero.is_empty():
 		return
 	level = 1
@@ -689,6 +693,7 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	if active_realm == "grove": mark_welcome("realm")
 	message = "Speak to the villagers. Q / Journal shows your quests. Progress saves here." if adventure.quests.active else "Follow the target pointer, earn XP and bounties, then face the boss."
 	message_time = 5.0
+	preload("res://scripts/record_eligibility.gd").warn(self)
 
 func finish_run(won: bool, abandoned:bool=false) -> void:
 	if voyage!=null and voyage.active: voyage.fail("Voyage abandoned" if abandoned else "You fell on the island");return

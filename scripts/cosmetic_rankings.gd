@@ -59,7 +59,7 @@ func scores()->Dictionary:
  var activity=legacy.get_tree().root.get_node("FXActivity");activity.identity(legacy.game)
  var lifetime=minf(float(legacy.data.tasks.get("damage",0)),1e12)
  var c=legacy.cosmetics.competitive.state()
- return {"wins":int(c.wins),"kos":int(c.kos),"deaths":int(c.deaths),"matches":int(c.matches),"explore":int(c.explore),"descent":int(legacy.card.state().descent_best),"glimmers":int(legacy.glimmers.state().earned),"version":1,"profile":str(legacy.data.analytics_id),"week":week(),"lifetime":lifetime,"damage":minf(lifetime,weekly_damage()),"fish":float(state().fish),"fish_species":str(state().fish_species)}
+ return {"record_policy":2,"unofficial":false,"wins":int(c.wins),"kos":int(c.kos),"deaths":int(c.deaths),"matches":int(c.matches),"explore":int(c.explore),"descent":int(legacy.card.state().descent_best),"glimmers":int(legacy.glimmers.state().earned),"version":1,"profile":str(legacy.data.analytics_id),"week":week(),"lifetime":lifetime,"damage":minf(lifetime,weekly_damage()),"fish":float(state().fish),"fish_species":str(state().fish_species)}
 func catch_fish(catch:Dictionary)->void:
  if not allowed():return
  if float(catch.kg)>float(state().fish):state().fish=float(catch.kg);state().fish_species=str(catch.species)

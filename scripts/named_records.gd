@@ -40,7 +40,7 @@ static func payload(l:Node)->Dictionary:
  return {"hero_records":s.hero_records,"descent":s.descent,"routes":s.routes,"lifetime":minf(1e12,float(l.data.tasks.get("damage",0))),"buckets":l.crowns.state().buckets,"times":{"all":s.times_all,str(s.week):s.times_week},"streak":{"all":s.best,str(s.week):s.best_week},"relic":s.relic if not s.relic.is_empty() else null}
 static func note_relic(l:Node,item:Dictionary)->void:
  var s=state(l);var rare=s.relic;var best=(10 if rare.get("conclave",false) else 0)+int(rare.get("tier",0))+float(rare.get("percentile",0)) if not rare.is_empty() else -1.0
- if not C.valid_relic(item) or str(item.type)=="master_fisher":return
+ if preload("res://scripts/profile_store.gd").progression_blocked() or not C.valid_relic(item) or str(item.type)=="master_fisher":return
  var bounds=C.RELICS[item.type].range;var percentile=clampf((float(item.value)-float(bounds[0]))/maxf(.01,float(bounds[1])-float(bounds[0])),0,1)
  var score=(10 if item.get("conclave",false) else 0)+int(item.tier)+percentile
  if score>best:s.relic={"type":item.type,"tier":item.tier,"percentile":percentile,"conclave":bool(item.get("conclave",false))}
@@ -76,11 +76,11 @@ static func valid(v:Variant)->bool:
 # old winners from whichever hero happens to be selected at upload time.
 static func remember_hero(l:Node,kind:String,scope:String,key:String,value:float,replace:bool)->void:
  var s=state(l);var id=str(l.game.hero_ids.get(l.game.my_id,l.game.selected_hero)) if l.arcade else str(l.game.character_id)
- if id not in l.game.manifest.characters:return
+ if not preload("res://scripts/record_eligibility.gd").hero_allowed(l.game,id):return
  var record_key=kind+":"+scope+":"+key
  if replace or not s.hero_records.has(record_key):
   s.hero_records[record_key]={"value":value,"hero":id}
-  if l.arcade and (kind in ["time","time_coop"] and l.game.mode=="coop" or kind=="descent" and key=="coop"):s.hero_records[record_key].party=party(l)
+  if l.arcade and (kind in ["time","time_coop"] and l.game.mode=="coop" or kind in ["descent","between"] and key=="coop"):s.hero_records[record_key].party=party(l)
 static func valid_hero_records(records:Variant)->bool:
  if not records is Dictionary or records.size()>1024:return false
  var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
@@ -92,11 +92,11 @@ static func valid_hero_records(records:Variant)->bool:
    if parts[1]!="all" or parts[2] not in ["solo","coop"]:return false
   elif parts[2] not in manifest.regions:return false
   var r=records[key]
-  if not r is Dictionary or r.size() not in [2,3] or r.get("hero") not in manifest.characters or not C.number(r.get("value"),1000000 if parts[0] in ["between","descent"] else 86400):return false
+  if not r is Dictionary or r.size() not in [2,3] or not record_hero_id(r.get("hero"),manifest.characters) or not C.number(r.get("value"),1000000 if parts[0] in ["between","descent"] else 86400):return false
   if r.has("party"):
    if not r.party is Array or r.party.size()>8:return false
    for member in r.party:
-    if not member is Dictionary or member.size() not in [2,3] or not member.get("name") is String or member.name.length()>32 or member.get("hero") not in manifest.characters:return false
+    if not member is Dictionary or member.size() not in [2,3] or not member.get("name") is String or member.name.length()>32 or not record_hero_id(member.get("hero"),manifest.characters):return false
     if member.has("account") and (not member.account is String or member.account.length()!=32 or not member.account.is_valid_hex_number(false)):return false
  return true
 
@@ -105,7 +105,7 @@ static func party(l:Node)->Array:
  var result=[]
  for member in l.game.roster:
   var id=str(member.id);var hero=str(l.game.hero_ids.get(id,l.game.lobby_heroes.get(id,"")))
-  if id.begins_with("bot:") or not l.game.positions.has(id) or hero not in l.game.manifest.characters:continue
+  if id.begins_with("bot:") or not l.game.positions.has(id) or not preload("res://scripts/record_eligibility.gd").hero_allowed(l.game,hero):continue
   var name=str(member.get("name","Player")).strip_edges().left(32)
   var account=l.get_node("/root/FXAccount")
   if id==l.game.my_id and not account.user.is_empty():name=str(account.user.get("username",name)).left(32)
@@ -124,3 +124,6 @@ static func realm_name(l:Node,realm:String)->String:
  if not l.arcade:return str(l.game.realms.get(realm,{}).get("name",realm))
  var spec=JSON.parse_string(FileAccess.get_file_as_string("res://content/regions/"+realm+".json"))
  return str(spec.get("name",realm)) if spec is Dictionary else realm
+
+static func record_hero_id(id:Variant,official:Array)->bool:
+ return id is String and (id in official or id.begins_with("community_") and id.length()==42 and id.substr(10).is_valid_hex_number(false))

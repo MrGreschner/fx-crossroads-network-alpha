@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V198.39-town-rendering"
+const BUILD="V198.40-fair-play"
 const REPORT_SCHEMA=3

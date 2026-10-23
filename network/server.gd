@@ -37,9 +37,11 @@ var work_window=0.0
 var snapshot_serial=0
 var metrics_window=0
 var active_ms=0.0
+var transfers=preload("res://network/custom_transfer.gd").new()
 var previous_active=0
 var last_poll_ms=0
 func _ready()->void:
+ add_child(transfers);transfers.setup(null,self)
  get_tree().root.get_node("FXCommunityHeroes").changed.connect(_community_changed)
  var arena_script:Script=load("res://network/arena.gd")
  if arena_script==null or not arena_script.can_instantiate():
@@ -123,6 +125,7 @@ func backlog_max()->int:
   for queue in room.game.server_inputs.values():value=maxi(value,queue.size())
  return value
 func remove_actor(g:Node,id:String)->void:
+ transfers.forget(id)
  # Remove expired actors from every per-player map; no retained combat identities.
  for field in ["positions","health","hero_ids","server_inputs","server_actions","server_input_credit","input_ack","net_dash","net_velocity","pvp_scores","contributions","arena_records","arena_outcomes","teams","cooldown_at","inventory","levels","gold","kills","xp","invincible_until","shield_until","haste_until","stealth_until","respawn_at","dodge_at","aim_angles","attack_pose_until","defeat_causes","accepted_supplies","supply_loadouts","shop_discounts","food_registered","food_slots","food_loadouts","attack_branch","mastery_choice","player_epochs"]:
   var value=g.get(field)
@@ -185,6 +188,7 @@ func receive(key:int,data:Dictionary)->void:
   if int(data.get("protocol",0))!=PROTOCOL:fail(key,"Server requires V179-preview (protocol 11). Install the matching private client.");return
   join(key,data);return
  var id=str(connection.actor);var identity:Dictionary=identities[id];var room:Dictionary=rooms[identity.room];var g:Node=room.game
+ if transfers.receive(id,data,room):return
  if kind=="leave":
   expeditions.cancel(room,"A player left before launch; unstarted shards refunded.")
   room.members.erase(id);remove_actor(g,id)
@@ -253,6 +257,7 @@ func receive(key:int,data:Dictionary)->void:
   lobby(str(identity.room));return
  if kind=="start":
   if room.host!=id or g.started:return
+  if not transfers.ready(room):fail(key,"Wait for every player to receive and verify the custom heroes.");return
   if expeditions.special(room) and not g.has_meta("expedition_committed"):expeditions.prepare(key,room);return
   if room.members.size()+g.bot_plan.size()<2:fail(key,"Invite a player or add an AI companion; Play solo is also available offline.");return
   if preload("res://network/party_rules.gd").teamed(g):
@@ -450,7 +455,8 @@ func join(key:int,data:Dictionary)->void:
   var g:Node=rooms[code].game
   g.server_inputs[id]=[];g.server_actions[id]=[];identities[id].action_seq=0
   send(key,start_packet(g));send_state(key,g,id)
- else:lobby(code)
+ else:
+  transfers.share(rooms[code],id);lobby(code)
 func set_ai(room:Dictionary,value:Variant,level:Variant)->String:
  var plan=preload("res://scripts/arena_bots.gd").clean_plan(value);var g=room.game
  if not value is Array or plan.size()!=value.size():return "Choose at most seven official AI heroes."
@@ -470,12 +476,12 @@ func lobby(code:String)->void:
   var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");public.append(copy)
  for n in room.game.bot_plan.size():
   var bot=room.game.bot_plan[n];var i=preload("res://scripts/arena_bots.gd").IDS.find(str(bot.hero));public.append({"id":"bot:"+str(n),"name":preload("res://scripts/arena_bots.gd").NAMES[i]+" [AI]","hero":bot.hero,"team":bot.team})
- for id in room.members:send_actor(id,{"type":"lobby","rivals":room.game.gate_rival_plan,"rule":room.game.arena_party_rule,"team_size":room.game.arena_team_size,"bots":room.game.bot_plan,"difficulty":room.game.ai_difficulty,"competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
+ for id in room.members:send_actor(id,{"type":"lobby","unofficial":room.members.values().any(func(m):return str(m.hero).begins_with("custom_")),"rivals":room.game.gate_rival_plan,"rule":room.game.arena_party_rule,"team_size":room.game.arena_team_size,"bots":room.game.bot_plan,"difficulty":room.game.ai_difficulty,"competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})
 func room_for(g:Node)->Dictionary:
  for room in rooms.values():
   if room.game==g:return room
  return {}
-func start_packet(g:Node)->Dictionary:return {"type":"start","rivals":g.gate_rival_plan,"rule":g.pvp_rule,"bots":g.bot_plan,"difficulty":g.ai_difficulty,"competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
+func start_packet(g:Node)->Dictionary:return {"type":"start","unofficial":bool(g.get_meta("records_unofficial",false)),"rivals":g.gate_rival_plan,"rule":g.pvp_rule,"bots":g.bot_plan,"difficulty":g.ai_difficulty,"competition":bool(g.get_meta("crown_competition",false)),"mode":g.mode,"realm":g.realm_id,"match_id":g.match_id,"seed":g.floor_seed,"arena_map":g.arena_map,"seats":g.arena_seats,"expedition":g.expedition.config if g.expedition.special() else {},"heroes":g.hero_ids,"teams":g.teams,"bg_map":g.bg_map,"bg_team_size":g.bg_team_size}
 func broadcast_game(g:Node,data:Dictionary)->void:
  var room=room_for(g)
  for id in room.get("members",{}):send_actor(str(id),data)
@@ -489,7 +495,7 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
   send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":str(data.get("style","primary")),"accepted":accepted,"born_indices":[],"remaining":750 if str(data.get("style",""))=="primary" else 2500,"tick":g.authority_tick});return
  if str(data.get("type",""))=="community_input":
   var hero=str(g.hero_ids.get(id,""))
-  if hero.begins_with("community_") and g.characters.get(hero,{}).has("studio_project"):
+  if g.characters.get(hero,{}).has("studio_project"):
    g.custom_party.input(id,str(data.kind),bool(data.down),Vector2(float(data.point[0]),float(data.point[1])))
   return
  if str(data.get("type",""))=="crown_throw":

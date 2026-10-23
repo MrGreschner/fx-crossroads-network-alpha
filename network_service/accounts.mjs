@@ -1,3 +1,4 @@
+import {repairSchema,exclusions,scrubProfile} from './record-repair.mjs';
 import {randomInt,randomBytes,createHash,scrypt as derive,timingSafeEqual,createCipheriv,createDecipheriv} from 'node:crypto';
 import {promisify} from 'node:util';
 import {checkUsername} from './usernames.mjs';
@@ -34,7 +35,7 @@ export function validateCloudSave(v){
 export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_KEY||'',now=()=>Date.now(),number=()=>randomInt(0,1000000)}={}){
  let encryption;try{const k=Buffer.from(key,'base64');if(k.length===32)encryption=k;}catch{}
  let ready=false,busy=0,hashing=0;const rate=new Map(),failures=new Map();
- let retryAt=0;const initialize=async()=>{try{await pool.query(accountSchema);ready=!!encryption;}catch{ready=false;}retryAt=now()+30000;};const initialized=pool?initialize():Promise.resolve();
+ let retryAt=0;const initialize=async()=>{try{await pool.query(accountSchema);await pool.query(repairSchema);ready=!!encryption;}catch{ready=false;}retryAt=now()+30000;};const initialized=pool?initialize():Promise.resolve();
  const seal=v=>{const iv=randomBytes(12),c=createCipheriv('aes-256-gcm',encryption,iv);const b=Buffer.concat([c.update(JSON.stringify(v),'utf8'),c.final()]);return Buffer.concat([iv,c.getAuthTag(),b]).toString('base64');};
  const unseal=s=>{const b=Buffer.from(s,'base64'),d=createDecipheriv('aes-256-gcm',encryption,b.subarray(0,12));d.setAuthTag(b.subarray(12,28));return JSON.parse(Buffer.concat([d.update(b.subarray(28)),d.final()]).toString());};
  async function password(value,saved){
@@ -65,7 +66,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
  async function body(req){let bytes=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),15000);timer.unref();try{for await(const chunk of req){bytes+=chunk.length;if(bytes>4194304)fail(413,'Cloud profile limit is 4 MB. Download a local backup; your previous cloud save is safe.');chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks));}finally{clearTimeout(timer);}}
  function send(res,status,data,extra={}){res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff',...extra});res.end(JSON.stringify(data));}
  async function save(a,v,revision){
-  validateCloudSave(v);if(!Number.isInteger(revision)||revision<0)fail(400,'Invalid save revision.');
+  v=scrubProfile(v,await exclusions(pool,a.id));validateCloudSave(v);if(!Number.isInteger(revision)||revision<0)fail(400,'Invalid save revision.');
   // One conditional UPDATE owns the revision. A history row is written with it in one SQL statement.
   const q=await pool.query(`WITH changed AS (UPDATE crossroads_accounts SET save=$1,revision=revision+1,updated_at=now() WHERE id=$2 AND revision=$3 RETURNING id,revision,save) INSERT INTO crossroads_save_history(account,revision,save) SELECT id,revision,save FROM changed RETURNING revision`,[seal(v),a.id,revision]);
   if(!q.rows.length)fail(409,'A newer cloud save exists. Saving paused. Download this device profile, then load the cloud save.');
