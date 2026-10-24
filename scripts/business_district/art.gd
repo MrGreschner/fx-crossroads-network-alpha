@@ -4,10 +4,18 @@ const FONT=preload("res://assets/fonts/CrossroadsUI.ttf")
 static var actor_sources:Dictionary={}
 static var actor_textures:Dictionary={}
 static func actor(index:int,pose:int)->Texture2D:
- var key=str(posmod(index,9))+":"+str(clampi(pose,0,9))
+ var key=str(index)+":"+str(clampi(pose,0,9))
  if actor_textures.has(key):return actor_textures[key]
  if actor_sources.is_empty():actor_sources=JSON.parse_string(FileAccess.get_file_as_string("res://content/business-actors.json"))
- var im=Image.new();im.load_svg_from_string(actor_sources[key]);var texture=ImageTexture.create_from_image(im);actor_textures[key]=texture;return texture
+ var info=C.person(index) if index>=0 else {};var base=8 if index==-1 else posmod(-index-2,8) if index<0 else ["ram","badger","cat","newt","human","fox","hare","owl"].find(info.species)
+ var svg:String=actor_sources[str(maxi(0,base))+":"+str(clampi(pose,0,9))]
+ if index>=100:
+  var original=C.all().staff[maxi(0,base)];svg=svg.replace(original.coat,"#"+str(info.coat).trim_prefix("#").left(6)).replace(original.skin,"#"+str(info.skin).trim_prefix("#").left(6))
+  var badge='<circle cx="'+str(12+posmod(index,8))+'" cy="24" r="2" fill="#e8d3a0"/>'
+  svg=svg.replace('</svg>',badge+'</svg>')
+ var im=Image.new();im.load_svg_from_string(svg);var texture=ImageTexture.create_from_image(im);actor_textures[key]=texture
+ if actor_textures.size()>900:actor_textures.clear();actor_textures[key]=texture
+ return texture
 static func ink(c:CanvasItem,p:Vector2,t:String,size:int=15,col:Color=Color("#e9dfc5"))->void:c.draw_string(FONT,p,t,HORIZONTAL_ALIGNMENT_LEFT,-1,size,col)
 static func rect(c:CanvasItem,p:Vector2,s:Vector2,col:Color)->void:c.draw_rect(Rect2(p,s),col)
 static func rounded(c:CanvasItem,r:Rect2,col:Color,radius:int=6,border:Color=Color(0,0,0,0))->void:
@@ -81,41 +89,26 @@ static func fixture(c:CanvasItem,o:Vector2,kind:String,col:Color,level:int=0)->v
    for x in [12,83]:c.draw_circle(o+Vector2(x,53),7,Color("#e1cb89"));c.draw_circle(o+Vector2(x,53),3,col.darkened(.4))
   rect(c,o+Vector2(-3,44),Vector2(108,5),col);ink(c,o+Vector2(5,65),"UPGRADED "+str(level),10,col.lightened(.3))
 static func ground(c:CanvasItem,night:bool)->void:
- rect(c,Vector2(-100,-100),Vector2(2050,1800),Color("#79856a"))
- # A tiled pedestrian district; draw once rather than rebuilding decorative geometry each frame.
- for y in range(0,1650,24):
-  for x in range(0,1900,24):
-   var n=posmod(x*17+y*11,97)
-   if n<22:rect(c,Vector2(x+3,y+2),Vector2(3,5),Color("#9ba17d",.5))
- for y in [95,565,1035,1505]:
-  rect(c,Vector2(35,y),Vector2(1780,92),Color("#c0b394"));rect(c,Vector2(35,y+5),Vector2(1780,82),Color("#d0c5a9"))
-  for x in range(40,1810,34):
-   c.draw_line(Vector2(x,y+9),Vector2(x-12,y+80),Color("#a99e84",.28),1)
-   for yy in [27,53]:c.draw_line(Vector2(x-10,y+yy),Vector2(x+23,y+yy),Color("#a99e84",.25),1)
- for x in [50,585,1175,1765]:
-  rect(c,Vector2(x,155),Vector2(60,1350),Color("#c6b99c"))
-  for y in range(160,1500,32):c.draw_line(Vector2(x+3,y),Vector2(x+56,y),Color("#a99e84",.3),1)
- # North canal and footbridge.
- rect(c,Vector2(0,-60),Vector2(1860,105),Color("#557f89"));c.draw_line(Vector2(0,46),Vector2(1860,46),Color("#c1b68f"),8)
- for x in range(0,1860,90):c.draw_line(Vector2(x,-5),Vector2(x+32,-5),Color("#91afb0",.5),2)
- box(c,Vector2(740,-40),Vector2(150,97),Color("#b4a17a"),4)
- for y in range(-30,55,13):c.draw_line(Vector2(744,y),Vector2(886,y),Color("#8a7c61"),2)
- for x in [739,891]:c.draw_line(Vector2(x,-40),Vector2(x,57),Color("#695e4c"),6)
- for y in [162,632,1102,1540]:
-  for x in [70,610,1200,1770]:
-   tree(c,Vector2(x,y),int(x/100));lantern(c,Vector2(x+40,y+9),night)
- for y in [590,1060]:
-  for x in [330,920,1510]:
-   box(c,Vector2(x,y+32),Vector2(90,21),Color("#927e61"),14)
-   for xx in [10,75]:c.draw_line(Vector2(x+xx,y+54),Vector2(x+xx,y+66),Color("#4e605f"),4)
-   pot(c,Vector2(x-25,y+49));pot(c,Vector2(x+113,y+49))
- for y in [111,581,1051]:
-  for x in range(160,1720,44):
-   if x%5==0:continue
-   c.draw_line(Vector2(x,y-49),Vector2(x+44,y-47),Color("#8c8267"),1)
-   c.draw_colored_polygon(PackedVector2Array([Vector2(x+3,y-49),Vector2(x+17,y-29),Vector2(x+30,y-48)]),[Color("#a66c63"),Color("#7b9b8b"),Color("#c9ad70")][int(x/44)%3])
+ rect(c,Vector2(-200,-150),Vector2(3400,3500),Color("#79856a"))
+ for y in range(0,3400,32):
+  for x in range(0,2350,32):
+   if posmod(x*17+y*11,97)<18:rect(c,Vector2(x+3,y+2),Vector2(3,5),Color("#9ba17d",.5))
+ for y in [60,680,1300,1920,2540,3160]:
+  rect(c,Vector2(35,y),Vector2(2280,90),Color("#c6b99c"))
+  for x in range(40,2300,36):
+   c.draw_line(Vector2(x,y+5),Vector2(x-12,y+84),Color("#a99e84",.4),1)
+   for yy in [27,53]:c.draw_line(Vector2(x-10,y+yy),Vector2(x+23,y+yy),Color("#a99e84",.3),1)
+ for x in [38,752,1472,2192]:
+  rect(c,Vector2(x,130),Vector2(64,3150),Color("#c6b99c"))
+  for y in range(140,3250,40):c.draw_line(Vector2(x+3,y),Vector2(x+60,y),Color("#a99e84",.35),1)
+ rect(c,Vector2(-100,-70),Vector2(2600,90),Color("#557f89"));c.draw_line(Vector2(-100,22),Vector2(2500,22),Color("#c1b68f"),8)
+ for v in C.ventures():
+  var p=C.plot(v.id)
+  tree(c,p+Vector2(-48,400));lantern(c,p+Vector2(590,420),night);pot(c,p+Vector2(607,50))
+  box(c,p+Vector2(60,500),Vector2(95,22),Color("#927e61"),12);pot(c,p+Vector2(190,515))
 static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:bool)->void:
- var p=C.plot(v.id);var owned=not b.is_empty();var accent=Color(v.colors[0]);var dark=Color(v.colors[1]);var pale=Color(v.colors[2])
+ c.draw_set_transform(C.plot(v.id),0,Vector2.ONE*1.3)
+ var p=Vector2.ZERO;var owned=not b.is_empty();var accent=Color(v.colors[0]);var dark=Color(v.colors[1]);var pale=Color(v.colors[2])
  # Cutaway premises: back roof, side walls and an open trading floor.
  rounded(c,Rect2(p+Vector2(6,20),Vector2(446,325)),Color(0,0,0,.14),8)
  rounded(c,Rect2(p-Vector2(6,10),Vector2(452,333)),Color("#4f6560") if selected else Color("#8d9075"),8)
@@ -138,7 +131,8 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
   rect(c,p+Vector2(x,-30),Vector2(45,46),Color("#657a77"));rect(c,p+Vector2(x+4,-26),Vector2(37,38),Color("#d8bb7a") if night else Color("#9db9b2"));c.draw_line(p+Vector2(x+22,-26),p+Vector2(x+22,13),pale,2)
  rect(c,p+Vector2(300,30),Vector2(103,63),Color("#7e8771"));ink(c,p+Vector2(307,49),"RECEIVING",10,Color("#e0dbb9"))
  if owned:
-  var layout=int(b.layout);var craft=Vector2(30 if layout!=1 else 207,92);fixture(c,p+craft,v.icon,accent,int(b.equipment))
+  var layout=int(b.layout);var craft=Vector2(30 if layout!=1 else 207,92)
+  if not b.has("operations"):fixture(c,p+craft,v.icon,accent,int(b.equipment))
   # Distinct silhouettes and furniture for every trade.
   if v.id=="kitchen":
    c.draw_arc(p+Vector2(380,138),23,0,TAU,20,dark,5);box(c,p+Vector2(360,138),Vector2(40,33),pale,13)
@@ -208,7 +202,7 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
   ink(c,p+Vector2(130,343),v.kind.to_upper(),11,Color("#354e50"))
  else:
   rounded(c,Rect2(p+Vector2(100,100),Vector2(240,104)),Color("#ede0bb"),6,dark)
-  ink(c,p+Vector2(121,134),"PREMISES AVAILABLE",17,dark);ink(c,p+Vector2(121,162),v.kind,15,dark);ink(c,p+Vector2(121,187),"300 cash • start a venture",13,dark)
+  ink(c,p+Vector2(121,134),"PREMISES AVAILABLE",17,dark);ink(c,p+Vector2(121,162),v.kind,15,dark);ink(c,p+Vector2(121,187),"Inspect assets & acquisition",13,dark)
   for x in [30,360]:box(c,p+Vector2(x,227),Vector2(48,34),Color("#a98b63"),19)
  # Street-front border, entry and chalkboard.
  for x in [0,285]:rect(c,p+Vector2(x,310),Vector2(155,5),dark)
@@ -216,6 +210,7 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
  if owned:
   box(c,p+Vector2(35,332),Vector2(63,10),Color("#8b765a"),43);rect(c,p+Vector2(40,292),Vector2(53,34),Color("#304e50"));ink(c,p+Vector2(47,314),"OPEN" if b.open else "CLOSED",10,Color("#d7d7a6"))
  if selected:rounded(c,Rect2(p-Vector2(10,-315),Vector2(460,3)),Color("#edcd83"),1)
+ c.draw_set_transform(Vector2.ZERO)
 static func person(c:CanvasItem,p:Vector2,index:int,pose:int,scale:float=1,fade:float=1)->void:
  ellipse(c,p+Vector2(2,1),Vector2(12,5)*scale,Color(0,0,0,.16*fade))
  c.draw_texture_rect(actor(index,pose),Rect2(p-Vector2(24,62)*scale,Vector2(48,64)*scale),false,Color(1,1,1,fade))
@@ -225,7 +220,15 @@ static func night_lights(c:CanvasItem)->void:
  if glow==null:
   var gradient=Gradient.new();gradient.offsets=PackedFloat32Array([0,.3,.7,1]);gradient.colors=PackedColorArray([Color(1,.64,.23,.35),Color(1,.55,.18,.20),Color(1,.50,.15,.06),Color(1,.50,.15,0)])
   var texture=GradientTexture2D.new();texture.gradient=gradient;texture.width=128;texture.height=128;texture.fill=GradientTexture2D.FILL_RADIAL;texture.fill_from=Vector2(.5,.5);texture.fill_to=Vector2(1,.5);glow=texture
- for y in [162,632,1102,1540]:
-  for x in [70,610,1200,1770]:c.draw_texture_rect(glow,Rect2(Vector2(x+50,y-49)-Vector2(110,85),Vector2(220,170)),false)
+ for y in [162,782,1402,2022,2642,3262]:
+  for x in [70,790,1510,2230]:c.draw_texture_rect(glow,Rect2(Vector2(x+50,y-49)-Vector2(110,85),Vector2(220,170)),false)
  for v in C.ventures():
   for x in [44,392]:c.draw_texture_rect(glow,Rect2(C.plot(v.id)+Vector2(x,-5)-Vector2(55,45),Vector2(110,90)),false)
+
+static var icon_sources:Dictionary={}
+static var icon_cache:Dictionary={}
+static func item_texture(key:String,kind:String)->Texture2D:
+ var id=kind+":"+key
+ if icon_cache.has(id):return icon_cache[id]
+ if icon_sources.is_empty():icon_sources=JSON.parse_string(FileAccess.get_file_as_string("res://content/business-icons.json"))
+ var im=Image.new();im.load_svg_from_string(icon_sources.get(id,icon_sources.values()[0]));var texture=ImageTexture.create_from_image(im);icon_cache[id]=texture;return texture

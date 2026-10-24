@@ -2,7 +2,7 @@ extends RefCounted
 ## One street graph: civic square, service street, creative campus and southern walk.
 ## Each building has a short doorstep spur; no roads cross a river except the bridge.
 const ROADS=[
- [Vector2(-1275,1050),Vector2(-1275,1085),Vector2(-1150,1085),Vector2(-1150,1025)],
+ [Vector2(-815,825),Vector2(-815,870),Vector2(-850,870),Vector2(-850,900)],
  [Vector2(1240,2152),Vector2(1130,2152),Vector2(1130,2380),Vector2(1580,2380),Vector2(1610,2300),Vector2(1650,2300)],
  [Vector2(1405,2660),Vector2(1580,2660),Vector2(1580,2380)],
  [Vector2(2000,2080),Vector2(2160,2080),Vector2(2160,2236)],
@@ -33,7 +33,7 @@ const ROADS=[
  [Vector2(-1000,1200),Vector2(-850,1200),Vector2(-850,1375),Vector2(-530,1375)],
  [Vector2(-210,900),Vector2(-210,1350),Vector2(-530,1350),Vector2(-530,1375)],
  [Vector2(-210,1350),Vector2(130,1350),Vector2(130,1280)],
- [Vector2(-1080,800),Vector2(-850,800),Vector2(-850,900)],
+ [Vector2(-1080,800),Vector2(-1000,800),Vector2(-1000,870),Vector2(-850,870),Vector2(-850,900)],
  [Vector2(-1000,2080),Vector2(-560,2080),Vector2(-560,1740),Vector2(-420,1740)],
  [Vector2(325,2030),Vector2(325,2120),Vector2(100,2120),Vector2(100,1740)],
  [Vector2(900,1615),Vector2(900,1740)],
@@ -42,7 +42,7 @@ const ROADS=[
  [Vector2(1600,1180),Vector2(1600,1645)],
  [Vector2(2175,1580),Vector2(2175,1645),Vector2(1800,1645)]
 ]
-const LOTS=[Rect2(-1440,790,310,320),Rect2(1820,1720,360,310),Rect2(-1300,205,540,365),Rect2(-750,200,340,300),Rect2(2530,300,450,410),Rect2(-255,1390,310,320),Rect2(-550,430,770,380),Rect2(490,885,230,250),Rect2(-850,935,630,480),Rect2(-1240,1650,480,490),Rect2(-340,1740,320,310),Rect2(160,1740,330,320)]
+const LOTS=[Rect2(-975,575,330,300),Rect2(1820,1720,360,310),Rect2(-1300,205,540,365),Rect2(-750,200,340,300),Rect2(2530,300,450,410),Rect2(-255,1390,310,320),Rect2(-550,430,770,380),Rect2(490,885,230,250),Rect2(-850,935,630,480),Rect2(-1240,1650,480,490),Rect2(-340,1740,320,310),Rect2(160,1740,330,320)]
 static func reserved(p:Vector2)->bool:
  if Rect2(-500,1390,170,390).has_point(p):return true
  if Rect2(-125,905,510,420).has_point(p):return true

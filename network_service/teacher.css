@@ -5,3 +5,5 @@
 @media(min-width:1000px){.business-review>div{max-height:64vh;overflow:auto;padding-right:9px}.business-review .actions{position:sticky;bottom:0;background:white;padding:12px 0;box-shadow:0 -8px 12px white}}
 
 .source-code{white-space:pre-wrap;max-height:520px;overflow:auto;background:#10232e;color:#dfeee9;padding:16px}.source-images{display:flex;flex-wrap:wrap;gap:12px}.source-images img{width:180px;height:150px;object-fit:contain;image-rendering:pixelated;background:#203d47;border-radius:8px}
+
+.check-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #e0e9e9}.check-row input{width:18px;height:18px;flex:none}

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "ventures": [
     {
       "id": "kitchen",
@@ -23,7 +23,20 @@
       "plot": [
         120,
         190
-      ]
+      ],
+      "base_equipment": [
+        "stove",
+        "oven",
+        "fridge",
+        "prep_bench"
+      ],
+      "starter_products": [
+        "soup",
+        "sandwich"
+      ],
+      "blank": false,
+      "need": "Workers need quick, affordable lunches; evening visitors want treats.",
+      "tradeoff": "Hot meals need reliable preparation and short queues. Coffee and doughnuts require different machines."
     },
     {
       "id": "workshop",
@@ -45,9 +58,20 @@
       "upgrade": "Guild workshop",
       "tip": "Longer jobs; craftsmanship raises willingness to pay.",
       "plot": [
-        710,
+        840,
         190
-      ]
+      ],
+      "base_equipment": [
+        "workbench",
+        "saw"
+      ],
+      "starter_products": [
+        "tool_repair",
+        "shelf"
+      ],
+      "blank": false,
+      "need": "Merchants need repairs and dependable furniture for their premises.",
+      "tradeoff": "Complex jobs need skilled preparation and the right parts; expensive machines need enough work."
     },
     {
       "id": "clothier",
@@ -69,9 +93,20 @@
       "upgrade": "Fashion house",
       "tip": "Style campaigns and thoughtful displays attract collectors.",
       "plot": [
-        1300,
+        1560,
         190
-      ]
+      ],
+      "base_equipment": [
+        "sewing_machine",
+        "cutting_table"
+      ],
+      "starter_products": [
+        "shirt",
+        "apron"
+      ],
+      "blank": false,
+      "need": "Residents need work clothes; travellers look for durable garments and bags.",
+      "tradeoff": "Durable stock lasts, but slow production and an unpopular range can tie up cash."
     },
     {
       "id": "fishery",
@@ -94,8 +129,19 @@
       "tip": "Cold storage protects stock; freshness and delivery matter.",
       "plot": [
         120,
-        660
-      ]
+        810
+      ],
+      "base_equipment": [
+        "fillet_bench",
+        "fridge"
+      ],
+      "starter_products": [
+        "fillet",
+        "herb_fish"
+      ],
+      "blank": false,
+      "need": "Families and kitchens want fresh fish, with some demand for preserved catch.",
+      "tradeoff": "Freshness and cold storage matter. Preserved products need processing equipment and a different supply plan."
     },
     {
       "id": "garden",
@@ -117,9 +163,20 @@
       "upgrade": "Produce cooperative",
       "tip": "Affordable baskets; seasonal events change customer demand.",
       "plot": [
-        710,
-        660
-      ]
+        840,
+        810
+      ],
+      "base_equipment": [
+        "potting_bench",
+        "packing_table"
+      ],
+      "starter_products": [
+        "veg_basket",
+        "herb_pot"
+      ],
+      "blank": false,
+      "need": "Households want seasonal produce, herbs, flowers and garden plants.",
+      "tradeoff": "Perishable produce must sell quickly. Processing and potted products offer different shelf lives."
     },
     {
       "id": "mine",
@@ -141,9 +198,20 @@
       "upgrade": "Materials yard",
       "tip": "Capital-intensive preparation and durable wholesale orders.",
       "plot": [
-        1300,
-        660
-      ]
+        1560,
+        810
+      ],
+      "base_equipment": [
+        "forge",
+        "kiln"
+      ],
+      "starter_products": [
+        "iron_fittings",
+        "stone_tiles"
+      ],
+      "blank": false,
+      "need": "Local makers need fittings, refined materials and finished stone.",
+      "tradeoff": "Heavy equipment has a high acquisition cost. Slow finishing can bottleneck otherwise valuable products."
     },
     {
       "id": "store",
@@ -166,8 +234,19 @@
       "tip": "Fast handling; merchandising and reliable stock drive sales.",
       "plot": [
         120,
-        1130
-      ]
+        1430
+      ],
+      "base_equipment": [
+        "shelves",
+        "packing_table"
+      ],
+      "starter_products": [
+        "travel_kit",
+        "map_pack"
+      ],
+      "blank": false,
+      "need": "Travellers want useful essentials; residents also buy household goods and gifts.",
+      "tradeoff": "Choose a range customers want. A wide menu needs more materials and can trap money in unsold stock."
     },
     {
       "id": "courier",
@@ -189,9 +268,20 @@
       "upgrade": "Courier depot",
       "tip": "Service jobs; route choice balances speed, cost and reliability.",
       "plot": [
-        710,
-        1130
-      ]
+        840,
+        1430
+      ],
+      "base_equipment": [
+        "handcart",
+        "packing_table"
+      ],
+      "starter_products": [
+        "local_parcel",
+        "gift_delivery"
+      ],
+      "blank": false,
+      "need": "Residents and merchants need parcels delivered reliably and safely.",
+      "tradeoff": "Express, chilled and fragile deliveries need different equipment and packaging; route choices affect capacity."
     },
     {
       "id": "rental",
@@ -213,9 +303,226 @@
       "upgrade": "Equipment depot",
       "tip": "Bonus venture: asset investment, maintenance and utilization.",
       "plot": [
-        1300,
-        1130
-      ]
+        1560,
+        1430
+      ],
+      "base_equipment": [
+        "rental_rack",
+        "ladder_fleet",
+        "workbench"
+      ],
+      "starter_products": [
+        "ladder_hire",
+        "lamp_hire"
+      ],
+      "blank": false,
+      "need": "Visitors and merchants need temporary access to tools, ladders and camping equipment.",
+      "tradeoff": "Equipment on hire cannot serve another customer until it returns. Maintenance and fleet variety matter."
+    },
+    {
+      "id": "salon",
+      "name": "Shear & Shine",
+      "kind": "Salon & barber",
+      "description": "Appointments, clean stations and a finish worth returning for.",
+      "product": "Quick trim",
+      "input": "Named operating supplies",
+      "cost": 3,
+      "price": 18,
+      "prep": 4,
+      "perishable": false,
+      "colors": [
+        "#b88b9a",
+        "#67556a",
+        "#ead3bf"
+      ],
+      "icon": "salon",
+      "upgrade": "Salon & barber",
+      "tip": "Chairs, skilled stylists and reception must work together; long colour appointments occupy capacity.",
+      "plot": [
+        120,
+        2050
+      ],
+      "base_equipment": [
+        "barber_chair",
+        "styling_tools",
+        "wash_basin"
+      ],
+      "starter_products": [
+        "quick_trim",
+        "wash_cut"
+      ],
+      "blank": false,
+      "need": "Guests need haircuts, washes and styling they can book reliably.",
+      "tradeoff": "Chairs, skilled stylists and reception must work together; long colour appointments occupy capacity."
+    },
+    {
+      "id": "daycare",
+      "name": "Paws & Play",
+      "kind": "Dog daycare",
+      "description": "Safe play, quiet rest and individual care for visiting dogs.",
+      "product": "Short dog daycare",
+      "input": "Named operating supplies",
+      "cost": 3,
+      "price": 21,
+      "prep": 4,
+      "perishable": false,
+      "colors": [
+        "#a7b77c",
+        "#526b68",
+        "#ebd59c"
+      ],
+      "icon": "dog",
+      "upgrade": "Dog daycare",
+      "tip": "Resting capacity and care staff limit admissions. Extra pens alone do not create demand or good care.",
+      "plot": [
+        840,
+        2050
+      ],
+      "base_equipment": [
+        "dog_pen",
+        "play_yard"
+      ],
+      "starter_products": [
+        "short_stay",
+        "dog_walk"
+      ],
+      "blank": false,
+      "need": "Dog owners need reliable care while they work or explore town.",
+      "tradeoff": "Resting capacity and care staff limit admissions. Extra pens alone do not create demand or good care."
+    },
+    {
+      "id": "minigolf",
+      "name": "Lantern Links",
+      "kind": "Mini-golf",
+      "description": "A little putting course with clever obstacles and a relaxed welcome.",
+      "product": "Classic mini-golf round",
+      "input": "Named operating supplies",
+      "cost": 3,
+      "price": 16,
+      "prep": 4,
+      "perishable": false,
+      "colors": [
+        "#88ad81",
+        "#405f66",
+        "#efd3a0"
+      ],
+      "icon": "golf",
+      "upgrade": "Mini-golf",
+      "tip": "Rounds occupy lane capacity. Clubs, course maintenance and promotion must match visitor demand.",
+      "plot": [
+        1560,
+        2050
+      ],
+      "base_equipment": [
+        "golf_course",
+        "golf_clubs"
+      ],
+      "starter_products": [
+        "golf_round"
+      ],
+      "blank": false,
+      "need": "Families and visitors want affordable activities and short waits.",
+      "tradeoff": "Rounds occupy lane capacity. Clubs, course maintenance and promotion must match visitor demand."
+    },
+    {
+      "id": "dessert",
+      "name": "Sugar & Starlight",
+      "kind": "Dessert shop",
+      "description": "Fresh-baked treats, cool desserts and a tempting counter.",
+      "product": "Chocolate cookie box",
+      "input": "Named operating supplies",
+      "cost": 3,
+      "price": 18,
+      "prep": 4,
+      "perishable": true,
+      "colors": [
+        "#c4a1b2",
+        "#665775",
+        "#ecd1a1"
+      ],
+      "icon": "dessert",
+      "upgrade": "Dessert shop",
+      "tip": "Baking, frozen products and displays need different machines. Overproduction can spoil expensive ingredients.",
+      "plot": [
+        120,
+        2670
+      ],
+      "base_equipment": [
+        "oven",
+        "fridge",
+        "prep_bench"
+      ],
+      "starter_products": [
+        "cookie_box",
+        "dessert_tart"
+      ],
+      "blank": false,
+      "need": "Visitors want treats and residents need desserts for small occasions.",
+      "tradeoff": "Baking, frozen products and displays need different machines. Overproduction can spoil expensive ingredients."
+    },
+    {
+      "id": "cafe",
+      "name": "Kettle & Pearl",
+      "kind": "Coffee & bubble tea",
+      "description": "A straightforward drinks counter that can grow into a bubble-tea stop.",
+      "product": "House coffee",
+      "input": "Named operating supplies",
+      "cost": 3,
+      "price": 9,
+      "prep": 4,
+      "perishable": true,
+      "colors": [
+        "#b6a071",
+        "#5d6e64",
+        "#ead9b4"
+      ],
+      "icon": "cafe",
+      "upgrade": "Coffee & bubble tea",
+      "tip": "Start with two simple drinks; milk and bubble tea add cold storage, materials and equipment costs.",
+      "plot": [
+        840,
+        2670
+      ],
+      "base_equipment": [
+        "coffee_machine",
+        "tea_kettle"
+      ],
+      "starter_products": [
+        "cafe_coffee",
+        "cafe_tea"
+      ],
+      "blank": false,
+      "need": "Workers and travellers want quick drinks at an accessible price.",
+      "tradeoff": "Start with two simple drinks; milk and bubble tea add cold storage, materials and equipment costs."
+    },
+    {
+      "id": "blank1",
+      "name": "Eastcourt Empty Premises",
+      "kind": "Build from an empty shell",
+      "description": "No inherited stock or equipment. Choose a business model and build your own operation.",
+      "product": "Rosemary bowls",
+      "input": "Provisions",
+      "cost": 4,
+      "price": 15,
+      "prep": 3.6,
+      "perishable": true,
+      "colors": [
+        "#d59a61",
+        "#8c5447",
+        "#e8c58a"
+      ],
+      "icon": "merchant",
+      "upgrade": "Restaurant",
+      "tip": "Perishable meals; lunchtime crowds reward fast preparation.",
+      "plot": [
+        1560,
+        2670
+      ],
+      "base_equipment": [],
+      "starter_products": [],
+      "blank": true,
+      "need": "You will need to identify a customer need and choose a business model.",
+      "tradeoff": "No inherited equipment or stock. A larger opening cash budget must cover everything you install and order."
     }
   ],
   "staff": [
@@ -314,6 +621,68 @@
       "wage": 20,
       "coat": "#807c66",
       "skin": "#cbbbad"
+    }
+  ],
+  "legacy_ventures": [
+    {
+      "id": "blank2",
+      "name": "Canal Empty Premises",
+      "kind": "Build from an empty shell",
+      "description": "No inherited stock or equipment. Choose a business model and build your own operation.",
+      "product": "Rosemary bowls",
+      "input": "Provisions",
+      "cost": 4,
+      "price": 15,
+      "prep": 3.6,
+      "perishable": true,
+      "colors": [
+        "#d59a61",
+        "#8c5447",
+        "#e8c58a"
+      ],
+      "icon": "merchant",
+      "upgrade": "Restaurant",
+      "tip": "Perishable meals; lunchtime crowds reward fast preparation.",
+      "plot": [
+        2330,
+        190
+      ],
+      "base_equipment": [],
+      "starter_products": [],
+      "blank": true,
+      "need": "You will need to identify a customer need and choose a business model.",
+      "tradeoff": "No inherited equipment or stock. A larger opening cash budget must cover everything you install and order.",
+      "archived": true
+    },
+    {
+      "id": "blank3",
+      "name": "Southgate Empty Premises",
+      "kind": "Build from an empty shell",
+      "description": "No inherited stock or equipment. Choose a business model and build your own operation.",
+      "product": "Rosemary bowls",
+      "input": "Provisions",
+      "cost": 4,
+      "price": 15,
+      "prep": 3.6,
+      "perishable": true,
+      "colors": [
+        "#d59a61",
+        "#8c5447",
+        "#e8c58a"
+      ],
+      "icon": "merchant",
+      "upgrade": "Restaurant",
+      "tip": "Perishable meals; lunchtime crowds reward fast preparation.",
+      "plot": [
+        2330,
+        810
+      ],
+      "base_equipment": [],
+      "starter_products": [],
+      "blank": true,
+      "need": "You will need to identify a customer need and choose a business model.",
+      "tradeoff": "No inherited equipment or stock. A larger opening cash budget must cover everything you install and order.",
+      "archived": true
     }
   ]
 }

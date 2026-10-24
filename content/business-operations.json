@@ -1,0 +1,3525 @@
+{
+  "version": 2,
+  "materials": {
+    "flour": {
+      "id": "flour",
+      "name": "Flour",
+      "unit": "kg",
+      "cost": 2,
+      "life": 0,
+      "icon": "grain",
+      "cold": false,
+      "local_supplier": "Stonewheel Mill & Bakery"
+    },
+    "butter": {
+      "id": "butter",
+      "name": "Butter",
+      "unit": "block",
+      "cost": 3,
+      "life": 4,
+      "icon": "butter",
+      "cold": true,
+      "local_supplier": "Willowbank Dairy"
+    },
+    "milk": {
+      "id": "milk",
+      "name": "Milk",
+      "unit": "bottle",
+      "cost": 2,
+      "life": 3,
+      "icon": "bottle",
+      "cold": true,
+      "local_supplier": "Willowbank Dairy"
+    },
+    "eggs": {
+      "id": "eggs",
+      "name": "Eggs",
+      "unit": "tray",
+      "cost": 3,
+      "life": 5,
+      "icon": "eggs",
+      "cold": false,
+      "local_supplier": "Willowbank Dairy"
+    },
+    "sugar": {
+      "id": "sugar",
+      "name": "Sugar",
+      "unit": "bag",
+      "cost": 2,
+      "life": 0,
+      "icon": "grain",
+      "cold": false,
+      "local_supplier": "Stonewheel Mill & Bakery"
+    },
+    "coffee_beans": {
+      "id": "coffee_beans",
+      "name": "Coffee beans",
+      "unit": "bag",
+      "cost": 4,
+      "life": 0,
+      "icon": "beans",
+      "cold": false,
+      "local_supplier": "Spicebridge Dry Goods"
+    },
+    "vegetables": {
+      "id": "vegetables",
+      "name": "Root vegetables",
+      "unit": "basket",
+      "cost": 3,
+      "life": 4,
+      "icon": "vegetable",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "bread": {
+      "id": "bread",
+      "name": "Bread",
+      "unit": "loaf",
+      "cost": 2,
+      "life": 2,
+      "icon": "bread",
+      "cold": false,
+      "local_supplier": "Stonewheel Mill & Bakery"
+    },
+    "cheese": {
+      "id": "cheese",
+      "name": "Cheese",
+      "unit": "wheel portion",
+      "cost": 4,
+      "life": 5,
+      "icon": "cheese",
+      "cold": true,
+      "local_supplier": "Willowbank Dairy"
+    },
+    "pasta": {
+      "id": "pasta",
+      "name": "Dried pasta",
+      "unit": "bag",
+      "cost": 2,
+      "life": 0,
+      "icon": "pasta",
+      "cold": false,
+      "local_supplier": "Stonewheel Mill & Bakery"
+    },
+    "berries": {
+      "id": "berries",
+      "name": "Berries",
+      "unit": "punnet",
+      "cost": 3,
+      "life": 2,
+      "icon": "berries",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "cream": {
+      "id": "cream",
+      "name": "Cream",
+      "unit": "bottle",
+      "cost": 3,
+      "life": 2,
+      "icon": "bottle",
+      "cold": true,
+      "local_supplier": "Willowbank Dairy"
+    },
+    "cocoa": {
+      "id": "cocoa",
+      "name": "Cocoa",
+      "unit": "tin",
+      "cost": 4,
+      "life": 0,
+      "icon": "tin",
+      "cold": false,
+      "local_supplier": "Spicebridge Dry Goods"
+    },
+    "oil": {
+      "id": "oil",
+      "name": "Cooking oil",
+      "unit": "bottle",
+      "cost": 2,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Spicebridge Dry Goods"
+    },
+    "paper_cup": {
+      "id": "paper_cup",
+      "name": "Paper cups",
+      "unit": "sleeve",
+      "cost": 1,
+      "life": 0,
+      "icon": "cup",
+      "cold": false,
+      "local_supplier": "Papertrail Packaging"
+    },
+    "food_box": {
+      "id": "food_box",
+      "name": "Food packaging",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "package",
+      "cold": false,
+      "local_supplier": "Papertrail Packaging"
+    },
+    "cotton": {
+      "id": "cotton",
+      "name": "Cotton cloth",
+      "unit": "metre",
+      "cost": 4,
+      "life": 0,
+      "icon": "fabric",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "wool": {
+      "id": "wool",
+      "name": "Wool cloth",
+      "unit": "metre",
+      "cost": 6,
+      "life": 0,
+      "icon": "fabric",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "linen": {
+      "id": "linen",
+      "name": "Linen",
+      "unit": "metre",
+      "cost": 5,
+      "life": 0,
+      "icon": "fabric",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "leather": {
+      "id": "leather",
+      "name": "Leather",
+      "unit": "panel",
+      "cost": 7,
+      "life": 0,
+      "icon": "leather",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "thread": {
+      "id": "thread",
+      "name": "Thread",
+      "unit": "spool",
+      "cost": 1,
+      "life": 0,
+      "icon": "spool",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "buttons": {
+      "id": "buttons",
+      "name": "Buttons",
+      "unit": "card",
+      "cost": 1,
+      "life": 0,
+      "icon": "buttons",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "dye": {
+      "id": "dye",
+      "name": "Fabric dye",
+      "unit": "jar",
+      "cost": 3,
+      "life": 0,
+      "icon": "jar",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "zip": {
+      "id": "zip",
+      "name": "Fasteners",
+      "unit": "set",
+      "cost": 2,
+      "life": 0,
+      "icon": "zip",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "iron": {
+      "id": "iron",
+      "name": "Iron bars",
+      "unit": "bar",
+      "cost": 5,
+      "life": 0,
+      "icon": "ingot",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "copper": {
+      "id": "copper",
+      "name": "Copper bars",
+      "unit": "bar",
+      "cost": 6,
+      "life": 0,
+      "icon": "ingot",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "wood": {
+      "id": "wood",
+      "name": "Hardwood",
+      "unit": "plank",
+      "cost": 3,
+      "life": 0,
+      "icon": "wood",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "screws": {
+      "id": "screws",
+      "name": "Screws",
+      "unit": "box",
+      "cost": 2,
+      "life": 0,
+      "icon": "bolts",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "spring": {
+      "id": "spring",
+      "name": "Springs",
+      "unit": "set",
+      "cost": 3,
+      "life": 0,
+      "icon": "spring",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "varnish": {
+      "id": "varnish",
+      "name": "Varnish",
+      "unit": "tin",
+      "cost": 3,
+      "life": 0,
+      "icon": "tin",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "glass": {
+      "id": "glass",
+      "name": "Glass",
+      "unit": "panel",
+      "cost": 4,
+      "life": 0,
+      "icon": "glass",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "ore": {
+      "id": "ore",
+      "name": "Iron ore",
+      "unit": "sack",
+      "cost": 3,
+      "life": 0,
+      "icon": "ore",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "copper_ore": {
+      "id": "copper_ore",
+      "name": "Copper ore",
+      "unit": "sack",
+      "cost": 4,
+      "life": 0,
+      "icon": "ore",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "fuel": {
+      "id": "fuel",
+      "name": "Smelting fuel",
+      "unit": "sack",
+      "cost": 2,
+      "life": 0,
+      "icon": "fuel",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "stone": {
+      "id": "stone",
+      "name": "Cuttable stone",
+      "unit": "block",
+      "cost": 3,
+      "life": 0,
+      "icon": "stone",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "gem": {
+      "id": "gem",
+      "name": "Uncut crystal",
+      "unit": "stone",
+      "cost": 9,
+      "life": 0,
+      "icon": "gem",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "fresh_fish": {
+      "id": "fresh_fish",
+      "name": "Silverfin fish",
+      "unit": "catch",
+      "cost": 5,
+      "life": 2,
+      "icon": "fish",
+      "cold": true,
+      "local_supplier": "Silverfin Catch Cooperative"
+    },
+    "salmon": {
+      "id": "salmon",
+      "name": "River salmon",
+      "unit": "catch",
+      "cost": 8,
+      "life": 2,
+      "icon": "salmon",
+      "cold": true,
+      "local_supplier": "Silverfin Catch Cooperative"
+    },
+    "shellfish": {
+      "id": "shellfish",
+      "name": "Shellfish",
+      "unit": "basket",
+      "cost": 6,
+      "life": 2,
+      "icon": "shellfish",
+      "cold": true,
+      "local_supplier": "Silverfin Catch Cooperative"
+    },
+    "salt": {
+      "id": "salt",
+      "name": "Preserving salt",
+      "unit": "bag",
+      "cost": 1,
+      "life": 0,
+      "icon": "grain",
+      "cold": false,
+      "local_supplier": "Spicebridge Dry Goods"
+    },
+    "ice": {
+      "id": "ice",
+      "name": "Crushed ice",
+      "unit": "sack",
+      "cost": 1,
+      "life": 1,
+      "icon": "ice",
+      "cold": true,
+      "local_supplier": "Silverfin Catch Cooperative"
+    },
+    "herbs": {
+      "id": "herbs",
+      "name": "Fresh herbs",
+      "unit": "bunch",
+      "cost": 2,
+      "life": 3,
+      "icon": "herb",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "fruit": {
+      "id": "fruit",
+      "name": "Orchard fruit",
+      "unit": "basket",
+      "cost": 3,
+      "life": 4,
+      "icon": "fruit",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "flowers": {
+      "id": "flowers",
+      "name": "Cut flowers",
+      "unit": "bunch",
+      "cost": 4,
+      "life": 2,
+      "icon": "flower",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "seeds": {
+      "id": "seeds",
+      "name": "Seeds",
+      "unit": "packet",
+      "cost": 2,
+      "life": 0,
+      "icon": "seeds",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "soil": {
+      "id": "soil",
+      "name": "Potting soil",
+      "unit": "sack",
+      "cost": 2,
+      "life": 0,
+      "icon": "soil",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "pot": {
+      "id": "pot",
+      "name": "Clay pots",
+      "unit": "pot",
+      "cost": 3,
+      "life": 0,
+      "icon": "pot",
+      "cold": false,
+      "local_supplier": "Mossbank Growers Cooperative"
+    },
+    "wax": {
+      "id": "wax",
+      "name": "Beeswax",
+      "unit": "block",
+      "cost": 3,
+      "life": 0,
+      "icon": "wax",
+      "cold": false,
+      "local_supplier": "Canal Trading House"
+    },
+    "wick": {
+      "id": "wick",
+      "name": "Candle wicks",
+      "unit": "bundle",
+      "cost": 1,
+      "life": 0,
+      "icon": "spool",
+      "cold": false,
+      "local_supplier": "Canal Trading House"
+    },
+    "soap": {
+      "id": "soap",
+      "name": "Soap base",
+      "unit": "block",
+      "cost": 3,
+      "life": 0,
+      "icon": "soap",
+      "cold": false,
+      "local_supplier": "Canal Trading House"
+    },
+    "rope": {
+      "id": "rope",
+      "name": "Rope",
+      "unit": "coil",
+      "cost": 3,
+      "life": 0,
+      "icon": "rope",
+      "cold": false,
+      "local_supplier": "Canal Trading House"
+    },
+    "map": {
+      "id": "map",
+      "name": "Blank maps",
+      "unit": "sheet",
+      "cost": 2,
+      "life": 0,
+      "icon": "map",
+      "cold": false,
+      "local_supplier": "Papertrail Packaging"
+    },
+    "bottle": {
+      "id": "bottle",
+      "name": "Empty bottles",
+      "unit": "bottle",
+      "cost": 2,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Canal Trading House"
+    },
+    "tea": {
+      "id": "tea",
+      "name": "Tea leaves",
+      "unit": "tin",
+      "cost": 3,
+      "life": 0,
+      "icon": "herb",
+      "cold": false,
+      "local_supplier": "Spicebridge Dry Goods"
+    },
+    "paper": {
+      "id": "paper",
+      "name": "Packing paper",
+      "unit": "roll",
+      "cost": 1,
+      "life": 0,
+      "icon": "paper",
+      "cold": false,
+      "local_supplier": "Papertrail Packaging"
+    },
+    "carton": {
+      "id": "carton",
+      "name": "Shipping cartons",
+      "unit": "box",
+      "cost": 2,
+      "life": 0,
+      "icon": "package",
+      "cold": false,
+      "local_supplier": "Papertrail Packaging"
+    },
+    "label": {
+      "id": "label",
+      "name": "Labels",
+      "unit": "sheet",
+      "cost": 1,
+      "life": 0,
+      "icon": "label",
+      "cold": false,
+      "local_supplier": "Papertrail Packaging"
+    },
+    "padding": {
+      "id": "padding",
+      "name": "Protective wool",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "fabric",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "maintenance": {
+      "id": "maintenance",
+      "name": "Machine lubricant",
+      "unit": "tin",
+      "cost": 3,
+      "life": 0,
+      "icon": "tin",
+      "cold": false,
+      "local_supplier": "Deepwell Materials & Hardware"
+    },
+    "canvas": {
+      "id": "canvas",
+      "name": "Canvas",
+      "unit": "metre",
+      "cost": 4,
+      "life": 0,
+      "icon": "fabric",
+      "cold": false,
+      "local_supplier": "Thistledown Textile Guild"
+    },
+    "lamp_oil": {
+      "id": "lamp_oil",
+      "name": "Lantern oil",
+      "unit": "bottle",
+      "cost": 3,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Canal Trading House"
+    },
+    "shampoo": {
+      "id": "shampoo",
+      "name": "Shampoo",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "conditioner": {
+      "id": "conditioner",
+      "name": "Conditioner",
+      "unit": "pack",
+      "cost": 3,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "hair_colour": {
+      "id": "hair_colour",
+      "name": "Hair colour",
+      "unit": "pack",
+      "cost": 4,
+      "life": 0,
+      "icon": "jar",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "sanitiser": {
+      "id": "sanitiser",
+      "name": "Sanitising supplies",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "towel": {
+      "id": "towel",
+      "name": "Clean towels",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "fabric",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "dog_food": {
+      "id": "dog_food",
+      "name": "Dog meals",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "grain",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "dog_treat": {
+      "id": "dog_treat",
+      "name": "Dog treats",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "beans",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "pet_cleaner": {
+      "id": "pet_cleaner",
+      "name": "Pet-safe cleaner",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "dog_toy": {
+      "id": "dog_toy",
+      "name": "Enrichment toys",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "rope",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "golf_ball": {
+      "id": "golf_ball",
+      "name": "Practice golf balls",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "ball",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "score_card": {
+      "id": "score_card",
+      "name": "Scorecards",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "paper",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "grip": {
+      "id": "grip",
+      "name": "Club grips",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "spool",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "tapioca": {
+      "id": "tapioca",
+      "name": "Tapioca pearls",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "beans",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "tea_syrup": {
+      "id": "tea_syrup",
+      "name": "Tea syrup",
+      "unit": "pack",
+      "cost": 2,
+      "life": 0,
+      "icon": "bottle",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "chocolate": {
+      "id": "chocolate",
+      "name": "Chocolate chips",
+      "unit": "pack",
+      "cost": 3,
+      "life": 0,
+      "icon": "beans",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    },
+    "sprinkles": {
+      "id": "sprinkles",
+      "name": "Dessert sprinkles",
+      "unit": "pack",
+      "cost": 1,
+      "life": 0,
+      "icon": "jar",
+      "cold": false,
+      "local_supplier": "Town Service Supplies"
+    }
+  },
+  "equipment": {
+    "stove": {
+      "id": "stove",
+      "name": "Range stove",
+      "cost": 320,
+      "tag": "cook",
+      "speed": 1.0,
+      "icon": "cook"
+    },
+    "oven": {
+      "id": "oven",
+      "name": "Baking oven",
+      "cost": 400,
+      "tag": "bake",
+      "speed": 1.0,
+      "icon": "bake"
+    },
+    "fridge": {
+      "id": "fridge",
+      "name": "Cold cabinet",
+      "cost": 280,
+      "tag": "cold",
+      "speed": 1.0,
+      "icon": "cold"
+    },
+    "prep_bench": {
+      "id": "prep_bench",
+      "name": "Preparation bench",
+      "cost": 160,
+      "tag": "prep",
+      "speed": 1.0,
+      "icon": "prep"
+    },
+    "fryer": {
+      "id": "fryer",
+      "name": "Doughnut fryer",
+      "cost": 360,
+      "tag": "fry",
+      "speed": 1.0,
+      "icon": "fry"
+    },
+    "coffee_machine": {
+      "id": "coffee_machine",
+      "name": "Coffee brewer",
+      "cost": 290,
+      "tag": "coffee",
+      "speed": 1.0,
+      "icon": "coffee"
+    },
+    "freezer": {
+      "id": "freezer",
+      "name": "Ice cream churn & freezer",
+      "cost": 540,
+      "tag": "frozen",
+      "speed": 1.0,
+      "icon": "frozen"
+    },
+    "sewing_machine": {
+      "id": "sewing_machine",
+      "name": "Sewing machine",
+      "cost": 320,
+      "tag": "sew",
+      "speed": 1.0,
+      "icon": "sew"
+    },
+    "cutting_table": {
+      "id": "cutting_table",
+      "name": "Cutting table",
+      "cost": 190,
+      "tag": "cut",
+      "speed": 1.0,
+      "icon": "cut"
+    },
+    "loom": {
+      "id": "loom",
+      "name": "Weaving loom",
+      "cost": 450,
+      "tag": "weave",
+      "speed": 1.0,
+      "icon": "weave"
+    },
+    "leather_tools": {
+      "id": "leather_tools",
+      "name": "Leather tools",
+      "cost": 270,
+      "tag": "leather",
+      "speed": 1.0,
+      "icon": "leather"
+    },
+    "dye_vat": {
+      "id": "dye_vat",
+      "name": "Dye vat",
+      "cost": 240,
+      "tag": "dye",
+      "speed": 1.0,
+      "icon": "dye"
+    },
+    "workbench": {
+      "id": "workbench",
+      "name": "Repair bench",
+      "cost": 250,
+      "tag": "repair",
+      "speed": 1.0,
+      "icon": "repair"
+    },
+    "saw": {
+      "id": "saw",
+      "name": "Bench saw",
+      "cost": 360,
+      "tag": "wood",
+      "speed": 1.0,
+      "icon": "wood"
+    },
+    "forge": {
+      "id": "forge",
+      "name": "Small forge",
+      "cost": 480,
+      "tag": "forge",
+      "speed": 1.0,
+      "icon": "forge"
+    },
+    "kiln": {
+      "id": "kiln",
+      "name": "Stone kiln",
+      "cost": 380,
+      "tag": "stone",
+      "speed": 1.0,
+      "icon": "stone"
+    },
+    "polisher": {
+      "id": "polisher",
+      "name": "Gem polisher",
+      "cost": 450,
+      "tag": "polish",
+      "speed": 1.0,
+      "icon": "polish"
+    },
+    "fillet_bench": {
+      "id": "fillet_bench",
+      "name": "Filleting bench",
+      "cost": 220,
+      "tag": "fillet",
+      "speed": 1.0,
+      "icon": "fillet"
+    },
+    "smoker": {
+      "id": "smoker",
+      "name": "Fish smoker",
+      "cost": 360,
+      "tag": "smoke",
+      "speed": 1.0,
+      "icon": "smoke"
+    },
+    "brine_vat": {
+      "id": "brine_vat",
+      "name": "Brining vat",
+      "cost": 240,
+      "tag": "preserve",
+      "speed": 1.0,
+      "icon": "preserve"
+    },
+    "potting_bench": {
+      "id": "potting_bench",
+      "name": "Potting bench",
+      "cost": 180,
+      "tag": "plant",
+      "speed": 1.0,
+      "icon": "plant"
+    },
+    "press": {
+      "id": "press",
+      "name": "Fruit press",
+      "cost": 330,
+      "tag": "press",
+      "speed": 1.0,
+      "icon": "press"
+    },
+    "drying_rack": {
+      "id": "drying_rack",
+      "name": "Herb drying racks",
+      "cost": 220,
+      "tag": "dry",
+      "speed": 1.0,
+      "icon": "dry"
+    },
+    "packing_table": {
+      "id": "packing_table",
+      "name": "Packing table",
+      "cost": 140,
+      "tag": "pack",
+      "speed": 1.0,
+      "icon": "pack"
+    },
+    "shelves": {
+      "id": "shelves",
+      "name": "Retail shelving",
+      "cost": 200,
+      "tag": "retail",
+      "speed": 1.0,
+      "icon": "retail"
+    },
+    "candle_mold": {
+      "id": "candle_mold",
+      "name": "Candle molds",
+      "cost": 240,
+      "tag": "candle",
+      "speed": 1.0,
+      "icon": "candle"
+    },
+    "soap_mold": {
+      "id": "soap_mold",
+      "name": "Soap molds",
+      "cost": 230,
+      "tag": "soap",
+      "speed": 1.0,
+      "icon": "soap"
+    },
+    "handcart": {
+      "id": "handcart",
+      "name": "Delivery handcart",
+      "cost": 270,
+      "tag": "delivery",
+      "speed": 1.0,
+      "icon": "delivery"
+    },
+    "cargo_bike": {
+      "id": "cargo_bike",
+      "name": "Cargo cycle",
+      "cost": 520,
+      "tag": "express",
+      "speed": 1.0,
+      "icon": "express"
+    },
+    "rental_rack": {
+      "id": "rental_rack",
+      "name": "Rental equipment rack",
+      "cost": 300,
+      "tag": "hire",
+      "speed": 1.0,
+      "icon": "hire"
+    },
+    "tool_fleet": {
+      "id": "tool_fleet",
+      "name": "Hire tools",
+      "cost": 350,
+      "tag": "tools",
+      "speed": 1.0,
+      "icon": "tools"
+    },
+    "camp_fleet": {
+      "id": "camp_fleet",
+      "name": "Camping equipment",
+      "cost": 450,
+      "tag": "camp",
+      "speed": 1.0,
+      "icon": "camp"
+    },
+    "ladder_fleet": {
+      "id": "ladder_fleet",
+      "name": "Ladders",
+      "cost": 300,
+      "tag": "ladder",
+      "speed": 1.0,
+      "icon": "ladder"
+    },
+    "barber_chair": {
+      "id": "barber_chair",
+      "name": "Barber chair",
+      "cost": 260,
+      "tag": "salon",
+      "speed": 1.0,
+      "icon": "salon"
+    },
+    "wash_basin": {
+      "id": "wash_basin",
+      "name": "Hair wash basin",
+      "cost": 220,
+      "tag": "basin",
+      "speed": 1.0,
+      "icon": "basin"
+    },
+    "styling_tools": {
+      "id": "styling_tools",
+      "name": "Styling tools",
+      "cost": 160,
+      "tag": "scissors",
+      "speed": 1.0,
+      "icon": "scissors"
+    },
+    "colour_station": {
+      "id": "colour_station",
+      "name": "Colour station",
+      "cost": 260,
+      "tag": "dye",
+      "speed": 1.0,
+      "icon": "dye"
+    },
+    "drying_hood": {
+      "id": "drying_hood",
+      "name": "Drying hood",
+      "cost": 240,
+      "tag": "dryer",
+      "speed": 1.0,
+      "icon": "dryer"
+    },
+    "dog_pen": {
+      "id": "dog_pen",
+      "name": "Dog resting pens",
+      "cost": 300,
+      "tag": "kennel",
+      "speed": 1.0,
+      "icon": "kennel"
+    },
+    "play_yard": {
+      "id": "play_yard",
+      "name": "Dog play equipment",
+      "cost": 260,
+      "tag": "play",
+      "speed": 1.0,
+      "icon": "play"
+    },
+    "grooming_table": {
+      "id": "grooming_table",
+      "name": "Pet grooming table",
+      "cost": 230,
+      "tag": "groom",
+      "speed": 1.0,
+      "icon": "groom"
+    },
+    "training_area": {
+      "id": "training_area",
+      "name": "Dog training area",
+      "cost": 220,
+      "tag": "play",
+      "speed": 1.0,
+      "icon": "play"
+    },
+    "golf_course": {
+      "id": "golf_course",
+      "name": "Mini-golf course lanes",
+      "cost": 480,
+      "tag": "golf",
+      "speed": 1.0,
+      "icon": "golf"
+    },
+    "golf_clubs": {
+      "id": "golf_clubs",
+      "name": "Mini-golf club sets",
+      "cost": 180,
+      "tag": "golf_club",
+      "speed": 1.0,
+      "icon": "golf_club"
+    },
+    "putting_green": {
+      "id": "putting_green",
+      "name": "Practice putting green",
+      "cost": 240,
+      "tag": "golf",
+      "speed": 1.0,
+      "icon": "golf"
+    },
+    "obstacle_course": {
+      "id": "obstacle_course",
+      "name": "Moving-obstacle lanes",
+      "cost": 350,
+      "tag": "windmill",
+      "speed": 1.0,
+      "icon": "windmill"
+    },
+    "waffle_iron": {
+      "id": "waffle_iron",
+      "name": "Waffle iron",
+      "cost": 190,
+      "tag": "waffle",
+      "speed": 1.0,
+      "icon": "waffle"
+    },
+    "display_chiller": {
+      "id": "display_chiller",
+      "name": "Dessert display chiller",
+      "cost": 220,
+      "tag": "cold",
+      "speed": 1.0,
+      "icon": "cold"
+    },
+    "tea_kettle": {
+      "id": "tea_kettle",
+      "name": "Tea brewing station",
+      "cost": 120,
+      "tag": "coffee",
+      "speed": 1.0,
+      "icon": "coffee"
+    },
+    "tea_sealer": {
+      "id": "tea_sealer",
+      "name": "Bubble tea sealer",
+      "cost": 160,
+      "tag": "sealer",
+      "speed": 1.0,
+      "icon": "sealer"
+    }
+  },
+  "products": {
+    "soup": {
+      "id": "soup",
+      "name": "Garden soup",
+      "trade": "kitchen",
+      "materials": {
+        "vegetables": 2,
+        "herbs": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "stove",
+        "prep_bench"
+      ],
+      "price": 15,
+      "prep": 6,
+      "life": 1,
+      "demand": 1.3,
+      "icon": "soup",
+      "skill": "kitchen",
+      "variant": 0
+    },
+    "sandwich": {
+      "id": "sandwich",
+      "name": "Cheese sandwich",
+      "trade": "kitchen",
+      "materials": {
+        "bread": 1,
+        "cheese": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "prep_bench",
+        "fridge"
+      ],
+      "price": 13,
+      "prep": 4,
+      "life": 1,
+      "demand": 1.4,
+      "icon": "sandwich",
+      "skill": "kitchen",
+      "variant": 1
+    },
+    "pastry": {
+      "id": "pastry",
+      "name": "Berry pastry",
+      "trade": "kitchen",
+      "materials": {
+        "flour": 1,
+        "butter": 1,
+        "berries": 1
+      },
+      "equipment": [
+        "oven",
+        "prep_bench",
+        "fridge"
+      ],
+      "price": 17,
+      "prep": 7,
+      "life": 2,
+      "demand": 1.1,
+      "icon": "pastry",
+      "skill": "kitchen",
+      "variant": 2
+    },
+    "pasta_bowl": {
+      "id": "pasta_bowl",
+      "name": "Herb pasta",
+      "trade": "kitchen",
+      "materials": {
+        "pasta": 1,
+        "herbs": 1,
+        "cheese": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "stove",
+        "fridge"
+      ],
+      "price": 18,
+      "prep": 7,
+      "life": 1,
+      "demand": 1.1,
+      "icon": "pasta_bowl",
+      "skill": "kitchen",
+      "variant": 3
+    },
+    "doughnut": {
+      "id": "doughnut",
+      "name": "Sugar doughnuts",
+      "trade": "kitchen",
+      "materials": {
+        "flour": 1,
+        "sugar": 1,
+        "oil": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "fryer",
+        "prep_bench"
+      ],
+      "price": 14,
+      "prep": 5,
+      "life": 1,
+      "demand": 1.4,
+      "icon": "doughnut",
+      "skill": "kitchen",
+      "variant": 4
+    },
+    "coffee": {
+      "id": "coffee",
+      "name": "Fresh coffee",
+      "trade": "kitchen",
+      "materials": {
+        "coffee_beans": 1,
+        "milk": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "coffee_machine",
+        "fridge"
+      ],
+      "price": 12,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.7,
+      "icon": "coffee",
+      "skill": "kitchen",
+      "variant": 5
+    },
+    "ice_cream": {
+      "id": "ice_cream",
+      "name": "Berry ice cream",
+      "trade": "kitchen",
+      "materials": {
+        "cream": 1,
+        "sugar": 1,
+        "berries": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "freezer"
+      ],
+      "price": 18,
+      "prep": 5,
+      "life": 3,
+      "demand": 1.1,
+      "icon": "ice_cream",
+      "skill": "kitchen",
+      "variant": 6
+    },
+    "cake": {
+      "id": "cake",
+      "name": "Chocolate cake slice",
+      "trade": "kitchen",
+      "materials": {
+        "flour": 1,
+        "cocoa": 1,
+        "eggs": 1,
+        "sugar": 1
+      },
+      "equipment": [
+        "oven",
+        "fridge"
+      ],
+      "price": 21,
+      "prep": 8,
+      "life": 2,
+      "demand": 1.0,
+      "icon": "cake",
+      "skill": "kitchen",
+      "variant": 7
+    },
+    "salad": {
+      "id": "salad",
+      "name": "Garden salad",
+      "trade": "kitchen",
+      "materials": {
+        "vegetables": 1,
+        "herbs": 1,
+        "cheese": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "prep_bench",
+        "fridge"
+      ],
+      "price": 15,
+      "prep": 4,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "salad",
+      "skill": "kitchen",
+      "variant": 8
+    },
+    "toast": {
+      "id": "toast",
+      "name": "Butter toast",
+      "trade": "kitchen",
+      "materials": {
+        "bread": 1,
+        "butter": 1
+      },
+      "equipment": [
+        "stove",
+        "fridge"
+      ],
+      "price": 10,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.4,
+      "icon": "toast",
+      "skill": "kitchen",
+      "variant": 9
+    },
+    "berry_tart": {
+      "id": "berry_tart",
+      "name": "Orchard tart",
+      "trade": "kitchen",
+      "materials": {
+        "fruit": 1,
+        "flour": 1,
+        "butter": 1
+      },
+      "equipment": [
+        "oven",
+        "fridge"
+      ],
+      "price": 17,
+      "prep": 7,
+      "life": 2,
+      "demand": 1.1,
+      "icon": "berry_tart",
+      "skill": "kitchen",
+      "variant": 10
+    },
+    "tea_cup": {
+      "id": "tea_cup",
+      "name": "Herbal tea",
+      "trade": "kitchen",
+      "materials": {
+        "tea": 1,
+        "herbs": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "stove"
+      ],
+      "price": 10,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.1,
+      "icon": "tea_cup",
+      "skill": "kitchen",
+      "variant": 11
+    },
+    "shirt": {
+      "id": "shirt",
+      "name": "Cotton shirt",
+      "trade": "clothier",
+      "materials": {
+        "cotton": 2,
+        "thread": 1,
+        "buttons": 1
+      },
+      "equipment": [
+        "sewing_machine",
+        "cutting_table"
+      ],
+      "price": 29,
+      "prep": 8,
+      "life": 0,
+      "demand": 1.5,
+      "icon": "shirt",
+      "skill": "clothier",
+      "variant": 0
+    },
+    "cloak": {
+      "id": "cloak",
+      "name": "Wool traveller cloak",
+      "trade": "clothier",
+      "materials": {
+        "wool": 2,
+        "thread": 1,
+        "buttons": 1
+      },
+      "equipment": [
+        "sewing_machine"
+      ],
+      "price": 36,
+      "prep": 11,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "cloak",
+      "skill": "clothier",
+      "variant": 1
+    },
+    "apron": {
+      "id": "apron",
+      "name": "Linen work apron",
+      "trade": "clothier",
+      "materials": {
+        "linen": 1,
+        "thread": 1
+      },
+      "equipment": [
+        "sewing_machine",
+        "cutting_table"
+      ],
+      "price": 20,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "apron",
+      "skill": "clothier",
+      "variant": 2
+    },
+    "satchel": {
+      "id": "satchel",
+      "name": "Leather satchel",
+      "trade": "clothier",
+      "materials": {
+        "leather": 2,
+        "thread": 1,
+        "zip": 1
+      },
+      "equipment": [
+        "leather_tools"
+      ],
+      "price": 42,
+      "prep": 12,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "satchel",
+      "skill": "clothier",
+      "variant": 3
+    },
+    "scarf": {
+      "id": "scarf",
+      "name": "Woven scarf",
+      "trade": "clothier",
+      "materials": {
+        "wool": 1,
+        "thread": 1
+      },
+      "equipment": [
+        "loom"
+      ],
+      "price": 24,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.3,
+      "icon": "scarf",
+      "skill": "clothier",
+      "variant": 4
+    },
+    "dress": {
+      "id": "dress",
+      "name": "Dyed linen dress",
+      "trade": "clothier",
+      "materials": {
+        "linen": 2,
+        "dye": 1,
+        "thread": 1
+      },
+      "equipment": [
+        "sewing_machine",
+        "dye_vat"
+      ],
+      "price": 40,
+      "prep": 11,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "dress",
+      "skill": "clothier",
+      "variant": 5
+    },
+    "jacket": {
+      "id": "jacket",
+      "name": "Canvas jacket",
+      "trade": "clothier",
+      "materials": {
+        "canvas": 2,
+        "thread": 1,
+        "zip": 1
+      },
+      "equipment": [
+        "sewing_machine",
+        "cutting_table"
+      ],
+      "price": 34,
+      "prep": 10,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "jacket",
+      "skill": "clothier",
+      "variant": 6
+    },
+    "mitts": {
+      "id": "mitts",
+      "name": "Wool mittens",
+      "trade": "clothier",
+      "materials": {
+        "wool": 1,
+        "thread": 1
+      },
+      "equipment": [
+        "sewing_machine"
+      ],
+      "price": 22,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.3,
+      "icon": "mitts",
+      "skill": "clothier",
+      "variant": 7
+    },
+    "hat": {
+      "id": "hat",
+      "name": "Dyed cotton hat",
+      "trade": "clothier",
+      "materials": {
+        "cotton": 1,
+        "dye": 1,
+        "thread": 1
+      },
+      "equipment": [
+        "sewing_machine",
+        "dye_vat"
+      ],
+      "price": 24,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "hat",
+      "skill": "clothier",
+      "variant": 8
+    },
+    "belt": {
+      "id": "belt",
+      "name": "Leather belt",
+      "trade": "clothier",
+      "materials": {
+        "leather": 1,
+        "buttons": 1
+      },
+      "equipment": [
+        "leather_tools"
+      ],
+      "price": 25,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "belt",
+      "skill": "clothier",
+      "variant": 9
+    },
+    "tool_repair": {
+      "id": "tool_repair",
+      "name": "Hand-tool repair",
+      "trade": "workshop",
+      "materials": {
+        "iron": 1,
+        "screws": 1
+      },
+      "equipment": [
+        "workbench"
+      ],
+      "price": 24,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.5,
+      "icon": "tool_repair",
+      "skill": "workshop",
+      "variant": 0
+    },
+    "chair": {
+      "id": "chair",
+      "name": "Timber chair",
+      "trade": "workshop",
+      "materials": {
+        "wood": 2,
+        "screws": 1,
+        "varnish": 1
+      },
+      "equipment": [
+        "saw",
+        "workbench"
+      ],
+      "price": 35,
+      "prep": 10,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "chair",
+      "skill": "workshop",
+      "variant": 1
+    },
+    "lantern": {
+      "id": "lantern",
+      "name": "Glass lantern",
+      "trade": "workshop",
+      "materials": {
+        "iron": 1,
+        "glass": 1,
+        "lamp_oil": 1
+      },
+      "equipment": [
+        "workbench"
+      ],
+      "price": 32,
+      "prep": 9,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "lantern",
+      "skill": "workshop",
+      "variant": 2
+    },
+    "clock_repair": {
+      "id": "clock_repair",
+      "name": "Clock repair",
+      "trade": "workshop",
+      "materials": {
+        "spring": 1,
+        "copper": 1
+      },
+      "equipment": [
+        "workbench"
+      ],
+      "price": 31,
+      "prep": 10,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "clock_repair",
+      "skill": "workshop",
+      "variant": 3
+    },
+    "shelf": {
+      "id": "shelf",
+      "name": "Timber shelf",
+      "trade": "workshop",
+      "materials": {
+        "wood": 2,
+        "screws": 1
+      },
+      "equipment": [
+        "saw"
+      ],
+      "price": 29,
+      "prep": 8,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "shelf",
+      "skill": "workshop",
+      "variant": 4
+    },
+    "kettle": {
+      "id": "kettle",
+      "name": "Copper kettle",
+      "trade": "workshop",
+      "materials": {
+        "copper": 2,
+        "screws": 1
+      },
+      "equipment": [
+        "forge"
+      ],
+      "price": 40,
+      "prep": 12,
+      "life": 0,
+      "demand": 0.9,
+      "icon": "kettle",
+      "skill": "workshop",
+      "variant": 5
+    },
+    "window": {
+      "id": "window",
+      "name": "Window frame",
+      "trade": "workshop",
+      "materials": {
+        "wood": 1,
+        "glass": 1,
+        "varnish": 1
+      },
+      "equipment": [
+        "saw",
+        "workbench"
+      ],
+      "price": 30,
+      "prep": 9,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "window",
+      "skill": "workshop",
+      "variant": 6
+    },
+    "hinges": {
+      "id": "hinges",
+      "name": "Iron hinge set",
+      "trade": "workshop",
+      "materials": {
+        "iron": 1,
+        "screws": 1
+      },
+      "equipment": [
+        "forge"
+      ],
+      "price": 25,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "hinges",
+      "skill": "workshop",
+      "variant": 7
+    },
+    "fillet": {
+      "id": "fillet",
+      "name": "Chilled fillet",
+      "trade": "fishery",
+      "materials": {
+        "fresh_fish": 1,
+        "ice": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "fillet_bench",
+        "fridge"
+      ],
+      "price": 18,
+      "prep": 4,
+      "life": 2,
+      "demand": 1.5,
+      "icon": "fillet",
+      "skill": "fishery",
+      "variant": 0
+    },
+    "smoked_salmon": {
+      "id": "smoked_salmon",
+      "name": "Smoked salmon",
+      "trade": "fishery",
+      "materials": {
+        "salmon": 1,
+        "salt": 1,
+        "wood": 1
+      },
+      "equipment": [
+        "smoker",
+        "fridge"
+      ],
+      "price": 29,
+      "prep": 8,
+      "life": 4,
+      "demand": 1.0,
+      "icon": "smoked_salmon",
+      "skill": "fishery",
+      "variant": 1
+    },
+    "prawns": {
+      "id": "prawns",
+      "name": "Shellfish tray",
+      "trade": "fishery",
+      "materials": {
+        "shellfish": 1,
+        "ice": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "fillet_bench",
+        "fridge"
+      ],
+      "price": 23,
+      "prep": 5,
+      "life": 1,
+      "demand": 1.2,
+      "icon": "prawns",
+      "skill": "fishery",
+      "variant": 2
+    },
+    "saltfish": {
+      "id": "saltfish",
+      "name": "Salt-cured fish",
+      "trade": "fishery",
+      "materials": {
+        "fresh_fish": 1,
+        "salt": 2
+      },
+      "equipment": [
+        "brine_vat",
+        "fridge"
+      ],
+      "price": 21,
+      "prep": 7,
+      "life": 5,
+      "demand": 1.1,
+      "icon": "saltfish",
+      "skill": "fishery",
+      "variant": 3
+    },
+    "herb_fish": {
+      "id": "herb_fish",
+      "name": "Herb fish pack",
+      "trade": "fishery",
+      "materials": {
+        "fresh_fish": 1,
+        "herbs": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "fillet_bench",
+        "fridge"
+      ],
+      "price": 21,
+      "prep": 5,
+      "life": 2,
+      "demand": 1.2,
+      "icon": "herb_fish",
+      "skill": "fishery",
+      "variant": 4
+    },
+    "whole_salmon": {
+      "id": "whole_salmon",
+      "name": "Whole salmon",
+      "trade": "fishery",
+      "materials": {
+        "salmon": 1,
+        "ice": 1
+      },
+      "equipment": [
+        "fridge"
+      ],
+      "price": 24,
+      "prep": 3,
+      "life": 2,
+      "demand": 1.0,
+      "icon": "whole_salmon",
+      "skill": "fishery",
+      "variant": 5
+    },
+    "frozen_catch": {
+      "id": "frozen_catch",
+      "name": "Frozen catch",
+      "trade": "fishery",
+      "materials": {
+        "fresh_fish": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "freezer"
+      ],
+      "price": 20,
+      "prep": 5,
+      "life": 5,
+      "demand": 1.0,
+      "icon": "frozen_catch",
+      "skill": "fishery",
+      "variant": 6
+    },
+    "fish_gift": {
+      "id": "fish_gift",
+      "name": "Smoked fish gift box",
+      "trade": "fishery",
+      "materials": {
+        "salmon": 1,
+        "salt": 1,
+        "carton": 1
+      },
+      "equipment": [
+        "smoker",
+        "packing_table",
+        "fridge"
+      ],
+      "price": 30,
+      "prep": 9,
+      "life": 4,
+      "demand": 0.9,
+      "icon": "fish_gift",
+      "skill": "fishery",
+      "variant": 7
+    },
+    "veg_basket": {
+      "id": "veg_basket",
+      "name": "Seasonal vegetable basket",
+      "trade": "garden",
+      "materials": {
+        "vegetables": 2,
+        "carton": 1
+      },
+      "equipment": [
+        "packing_table"
+      ],
+      "price": 14,
+      "prep": 4,
+      "life": 3,
+      "demand": 1.4,
+      "icon": "veg_basket",
+      "skill": "garden",
+      "variant": 0
+    },
+    "bouquet": {
+      "id": "bouquet",
+      "name": "Wildflower bouquet",
+      "trade": "garden",
+      "materials": {
+        "flowers": 2,
+        "paper": 1
+      },
+      "equipment": [
+        "potting_bench"
+      ],
+      "price": 23,
+      "prep": 6,
+      "life": 2,
+      "demand": 1.2,
+      "icon": "bouquet",
+      "skill": "garden",
+      "variant": 1
+    },
+    "herb_pot": {
+      "id": "herb_pot",
+      "name": "Potted herbs",
+      "trade": "garden",
+      "materials": {
+        "herbs": 1,
+        "pot": 1,
+        "soil": 1
+      },
+      "equipment": [
+        "potting_bench"
+      ],
+      "price": 19,
+      "prep": 5,
+      "life": 5,
+      "demand": 1.2,
+      "icon": "herb_pot",
+      "skill": "garden",
+      "variant": 2
+    },
+    "juice": {
+      "id": "juice",
+      "name": "Pressed orchard juice",
+      "trade": "garden",
+      "materials": {
+        "fruit": 2,
+        "bottle": 1
+      },
+      "equipment": [
+        "press",
+        "fridge"
+      ],
+      "price": 19,
+      "prep": 5,
+      "life": 3,
+      "demand": 1.3,
+      "icon": "juice",
+      "skill": "garden",
+      "variant": 3
+    },
+    "dried_herbs": {
+      "id": "dried_herbs",
+      "name": "Dried herb sachets",
+      "trade": "garden",
+      "materials": {
+        "herbs": 2,
+        "paper": 1
+      },
+      "equipment": [
+        "drying_rack"
+      ],
+      "price": 15,
+      "prep": 7,
+      "life": 8,
+      "demand": 1.1,
+      "icon": "dried_herbs",
+      "skill": "garden",
+      "variant": 4
+    },
+    "seedlings": {
+      "id": "seedlings",
+      "name": "Garden seedlings",
+      "trade": "garden",
+      "materials": {
+        "seeds": 1,
+        "soil": 1,
+        "pot": 1
+      },
+      "equipment": [
+        "potting_bench"
+      ],
+      "price": 17,
+      "prep": 6,
+      "life": 5,
+      "demand": 1.3,
+      "icon": "seedlings",
+      "skill": "garden",
+      "variant": 5
+    },
+    "fruit_basket": {
+      "id": "fruit_basket",
+      "name": "Orchard fruit basket",
+      "trade": "garden",
+      "materials": {
+        "fruit": 2,
+        "carton": 1
+      },
+      "equipment": [
+        "packing_table"
+      ],
+      "price": 15,
+      "prep": 4,
+      "life": 4,
+      "demand": 1.2,
+      "icon": "fruit_basket",
+      "skill": "garden",
+      "variant": 6
+    },
+    "herbal_tea": {
+      "id": "herbal_tea",
+      "name": "Garden tea blend",
+      "trade": "garden",
+      "materials": {
+        "herbs": 1,
+        "tea": 1,
+        "paper": 1
+      },
+      "equipment": [
+        "drying_rack"
+      ],
+      "price": 16,
+      "prep": 6,
+      "life": 8,
+      "demand": 1.1,
+      "icon": "herbal_tea",
+      "skill": "garden",
+      "variant": 7
+    },
+    "iron_fittings": {
+      "id": "iron_fittings",
+      "name": "Iron fittings",
+      "trade": "mine",
+      "materials": {
+        "ore": 2,
+        "fuel": 1
+      },
+      "equipment": [
+        "forge"
+      ],
+      "price": 23,
+      "prep": 8,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "iron_fittings",
+      "skill": "mine",
+      "variant": 0
+    },
+    "copper_wire": {
+      "id": "copper_wire",
+      "name": "Copper wire",
+      "trade": "mine",
+      "materials": {
+        "copper_ore": 2,
+        "fuel": 1
+      },
+      "equipment": [
+        "forge"
+      ],
+      "price": 27,
+      "prep": 9,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "copper_wire",
+      "skill": "mine",
+      "variant": 1
+    },
+    "stone_tiles": {
+      "id": "stone_tiles",
+      "name": "Stone tiles",
+      "trade": "mine",
+      "materials": {
+        "stone": 2
+      },
+      "equipment": [
+        "kiln"
+      ],
+      "price": 21,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "stone_tiles",
+      "skill": "mine",
+      "variant": 2
+    },
+    "cut_crystal": {
+      "id": "cut_crystal",
+      "name": "Cut crystal",
+      "trade": "mine",
+      "materials": {
+        "gem": 1,
+        "maintenance": 1
+      },
+      "equipment": [
+        "polisher"
+      ],
+      "price": 35,
+      "prep": 12,
+      "life": 0,
+      "demand": 0.8,
+      "icon": "cut_crystal",
+      "skill": "mine",
+      "variant": 3
+    },
+    "iron_bars": {
+      "id": "iron_bars",
+      "name": "Refined iron bars",
+      "trade": "mine",
+      "materials": {
+        "ore": 2,
+        "fuel": 2
+      },
+      "equipment": [
+        "forge"
+      ],
+      "price": 25,
+      "prep": 9,
+      "life": 0,
+      "demand": 1.3,
+      "icon": "iron_bars",
+      "skill": "mine",
+      "variant": 4
+    },
+    "stone_bowl": {
+      "id": "stone_bowl",
+      "name": "Polished stone bowl",
+      "trade": "mine",
+      "materials": {
+        "stone": 1,
+        "maintenance": 1
+      },
+      "equipment": [
+        "polisher"
+      ],
+      "price": 21,
+      "prep": 8,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "stone_bowl",
+      "skill": "mine",
+      "variant": 5
+    },
+    "copper_plate": {
+      "id": "copper_plate",
+      "name": "Copper plate",
+      "trade": "mine",
+      "materials": {
+        "copper_ore": 2,
+        "fuel": 2
+      },
+      "equipment": [
+        "forge"
+      ],
+      "price": 28,
+      "prep": 10,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "copper_plate",
+      "skill": "mine",
+      "variant": 6
+    },
+    "garden_stone": {
+      "id": "garden_stone",
+      "name": "Garden stepping stones",
+      "trade": "mine",
+      "materials": {
+        "stone": 2
+      },
+      "equipment": [
+        "kiln"
+      ],
+      "price": 22,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "garden_stone",
+      "skill": "mine",
+      "variant": 7
+    },
+    "travel_kit": {
+      "id": "travel_kit",
+      "name": "Travelling essentials",
+      "trade": "store",
+      "materials": {
+        "rope": 1,
+        "map": 1,
+        "bottle": 1
+      },
+      "equipment": [
+        "shelves",
+        "packing_table"
+      ],
+      "price": 22,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "travel_kit",
+      "skill": "store",
+      "variant": 0
+    },
+    "candle": {
+      "id": "candle",
+      "name": "Beeswax candle",
+      "trade": "store",
+      "materials": {
+        "wax": 1,
+        "wick": 1
+      },
+      "equipment": [
+        "candle_mold"
+      ],
+      "price": 16,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "candle",
+      "skill": "store",
+      "variant": 1
+    },
+    "soap_bar": {
+      "id": "soap_bar",
+      "name": "Herbal soap",
+      "trade": "store",
+      "materials": {
+        "soap": 1,
+        "herbs": 1
+      },
+      "equipment": [
+        "soap_mold"
+      ],
+      "price": 17,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "soap_bar",
+      "skill": "store",
+      "variant": 2
+    },
+    "map_pack": {
+      "id": "map_pack",
+      "name": "Trail map pack",
+      "trade": "store",
+      "materials": {
+        "map": 2,
+        "paper": 1
+      },
+      "equipment": [
+        "shelves"
+      ],
+      "price": 15,
+      "prep": 2,
+      "life": 0,
+      "demand": 1.3,
+      "icon": "map_pack",
+      "skill": "store",
+      "variant": 3
+    },
+    "tea_tin": {
+      "id": "tea_tin",
+      "name": "Merchant tea tin",
+      "trade": "store",
+      "materials": {
+        "tea": 1,
+        "paper": 1
+      },
+      "equipment": [
+        "packing_table"
+      ],
+      "price": 12,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "tea_tin",
+      "skill": "store",
+      "variant": 4
+    },
+    "camp_bundle": {
+      "id": "camp_bundle",
+      "name": "Camping bundle",
+      "trade": "store",
+      "materials": {
+        "rope": 1,
+        "canvas": 1,
+        "lamp_oil": 1
+      },
+      "equipment": [
+        "packing_table",
+        "shelves"
+      ],
+      "price": 28,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "camp_bundle",
+      "skill": "store",
+      "variant": 5
+    },
+    "gift_box": {
+      "id": "gift_box",
+      "name": "Local gift box",
+      "trade": "store",
+      "materials": {
+        "wax": 1,
+        "tea": 1,
+        "carton": 1
+      },
+      "equipment": [
+        "packing_table"
+      ],
+      "price": 23,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "gift_box",
+      "skill": "store",
+      "variant": 6
+    },
+    "rope_coil": {
+      "id": "rope_coil",
+      "name": "Climbing rope coil",
+      "trade": "store",
+      "materials": {
+        "rope": 2,
+        "label": 1
+      },
+      "equipment": [
+        "shelves"
+      ],
+      "price": 20,
+      "prep": 2,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "rope_coil",
+      "skill": "store",
+      "variant": 7
+    },
+    "local_parcel": {
+      "id": "local_parcel",
+      "name": "Local parcel delivery",
+      "trade": "courier",
+      "materials": {
+        "carton": 1,
+        "paper": 1,
+        "label": 1
+      },
+      "equipment": [
+        "handcart",
+        "packing_table"
+      ],
+      "price": 17,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.6,
+      "icon": "local_parcel",
+      "skill": "courier",
+      "variant": 0
+    },
+    "fragile_parcel": {
+      "id": "fragile_parcel",
+      "name": "Fragile parcel delivery",
+      "trade": "courier",
+      "materials": {
+        "carton": 1,
+        "padding": 2,
+        "label": 1
+      },
+      "equipment": [
+        "handcart",
+        "packing_table"
+      ],
+      "price": 23,
+      "prep": 8,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "fragile_parcel",
+      "skill": "courier",
+      "variant": 1
+    },
+    "express_parcel": {
+      "id": "express_parcel",
+      "name": "Express delivery",
+      "trade": "courier",
+      "materials": {
+        "carton": 1,
+        "label": 1
+      },
+      "equipment": [
+        "cargo_bike"
+      ],
+      "price": 22,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "express_parcel",
+      "skill": "courier",
+      "variant": 2
+    },
+    "cold_delivery": {
+      "id": "cold_delivery",
+      "name": "Chilled food delivery",
+      "trade": "courier",
+      "materials": {
+        "food_box": 1,
+        "ice": 1,
+        "label": 1
+      },
+      "equipment": [
+        "handcart",
+        "fridge"
+      ],
+      "price": 22,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "cold_delivery",
+      "skill": "courier",
+      "variant": 3
+    },
+    "bulk_delivery": {
+      "id": "bulk_delivery",
+      "name": "Merchant consignment",
+      "trade": "courier",
+      "materials": {
+        "carton": 3,
+        "rope": 1,
+        "label": 1
+      },
+      "equipment": [
+        "handcart",
+        "packing_table"
+      ],
+      "price": 30,
+      "prep": 10,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "bulk_delivery",
+      "skill": "courier",
+      "variant": 4
+    },
+    "letter": {
+      "id": "letter",
+      "name": "Tracked letter",
+      "trade": "courier",
+      "materials": {
+        "paper": 1,
+        "label": 1
+      },
+      "equipment": [
+        "cargo_bike"
+      ],
+      "price": 12,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.3,
+      "icon": "letter",
+      "skill": "courier",
+      "variant": 5
+    },
+    "gift_delivery": {
+      "id": "gift_delivery",
+      "name": "Wrapped gift delivery",
+      "trade": "courier",
+      "materials": {
+        "paper": 2,
+        "padding": 1,
+        "label": 1
+      },
+      "equipment": [
+        "packing_table",
+        "handcart"
+      ],
+      "price": 20,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "gift_delivery",
+      "skill": "courier",
+      "variant": 6
+    },
+    "oversize_parcel": {
+      "id": "oversize_parcel",
+      "name": "Oversize delivery",
+      "trade": "courier",
+      "materials": {
+        "wood": 1,
+        "rope": 1,
+        "label": 1
+      },
+      "equipment": [
+        "handcart"
+      ],
+      "price": 25,
+      "prep": 9,
+      "life": 0,
+      "demand": 0.9,
+      "icon": "oversize_parcel",
+      "skill": "courier",
+      "variant": 7
+    },
+    "ladder_hire": {
+      "id": "ladder_hire",
+      "name": "Ladder hire",
+      "trade": "rental",
+      "materials": {
+        "maintenance": 1,
+        "label": 1
+      },
+      "equipment": [
+        "ladder_fleet",
+        "rental_rack"
+      ],
+      "price": 22,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "ladder_hire",
+      "skill": "rental",
+      "variant": 0
+    },
+    "tool_hire": {
+      "id": "tool_hire",
+      "name": "Hand-tool hire",
+      "trade": "rental",
+      "materials": {
+        "maintenance": 1,
+        "screws": 1
+      },
+      "equipment": [
+        "tool_fleet",
+        "workbench"
+      ],
+      "price": 25,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.3,
+      "icon": "tool_hire",
+      "skill": "rental",
+      "variant": 1
+    },
+    "camp_hire": {
+      "id": "camp_hire",
+      "name": "Camping kit hire",
+      "trade": "rental",
+      "materials": {
+        "canvas": 1,
+        "lamp_oil": 1
+      },
+      "equipment": [
+        "camp_fleet",
+        "rental_rack"
+      ],
+      "price": 31,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.1,
+      "icon": "camp_hire",
+      "skill": "rental",
+      "variant": 2
+    },
+    "lamp_hire": {
+      "id": "lamp_hire",
+      "name": "Lantern hire",
+      "trade": "rental",
+      "materials": {
+        "lamp_oil": 1,
+        "maintenance": 1
+      },
+      "equipment": [
+        "rental_rack"
+      ],
+      "price": 19,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "lamp_hire",
+      "skill": "rental",
+      "variant": 3
+    },
+    "cart_hire": {
+      "id": "cart_hire",
+      "name": "Handcart hire",
+      "trade": "rental",
+      "materials": {
+        "maintenance": 1,
+        "screws": 1
+      },
+      "equipment": [
+        "handcart"
+      ],
+      "price": 25,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "cart_hire",
+      "skill": "rental",
+      "variant": 4
+    },
+    "event_hire": {
+      "id": "event_hire",
+      "name": "Market stall hire",
+      "trade": "rental",
+      "materials": {
+        "canvas": 1,
+        "rope": 1
+      },
+      "equipment": [
+        "camp_fleet"
+      ],
+      "price": 29,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "event_hire",
+      "skill": "rental",
+      "variant": 5
+    },
+    "garden_hire": {
+      "id": "garden_hire",
+      "name": "Garden tool hire",
+      "trade": "rental",
+      "materials": {
+        "maintenance": 1,
+        "wood": 1
+      },
+      "equipment": [
+        "tool_fleet"
+      ],
+      "price": 23,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.2,
+      "icon": "garden_hire",
+      "skill": "rental",
+      "variant": 6
+    },
+    "climb_hire": {
+      "id": "climb_hire",
+      "name": "Climbing kit hire",
+      "trade": "rental",
+      "materials": {
+        "rope": 1,
+        "maintenance": 1
+      },
+      "equipment": [
+        "rental_rack"
+      ],
+      "price": 24,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "climb_hire",
+      "skill": "rental",
+      "variant": 7
+    },
+    "quick_trim": {
+      "id": "quick_trim",
+      "name": "Quick trim",
+      "trade": "salon",
+      "materials": {
+        "shampoo": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "barber_chair",
+        "styling_tools"
+      ],
+      "price": 18,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "quick_trim",
+      "skill": "salon",
+      "variant": 0,
+      "service_duration": 16
+    },
+    "wash_cut": {
+      "id": "wash_cut",
+      "name": "Wash & cut",
+      "trade": "salon",
+      "materials": {
+        "shampoo": 1,
+        "conditioner": 1,
+        "towel": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "barber_chair",
+        "wash_basin",
+        "styling_tools"
+      ],
+      "price": 28,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "wash_cut",
+      "skill": "salon",
+      "variant": 1,
+      "service_duration": 25
+    },
+    "hair_styling": {
+      "id": "hair_styling",
+      "name": "Styled finish",
+      "trade": "salon",
+      "materials": {
+        "conditioner": 1,
+        "towel": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "barber_chair",
+        "styling_tools",
+        "drying_hood"
+      ],
+      "price": 27,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "hair_styling",
+      "skill": "salon",
+      "variant": 2,
+      "service_duration": 23
+    },
+    "hair_colour": {
+      "id": "hair_colour",
+      "name": "Colour appointment",
+      "trade": "salon",
+      "materials": {
+        "hair_colour": 2,
+        "shampoo": 1,
+        "towel": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "barber_chair",
+        "colour_station",
+        "wash_basin"
+      ],
+      "price": 42,
+      "prep": 8,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "hair_colour",
+      "skill": "salon",
+      "variant": 3,
+      "service_duration": 38
+    },
+    "beard_trim": {
+      "id": "beard_trim",
+      "name": "Beard trim",
+      "trade": "salon",
+      "materials": {
+        "sanitiser": 1,
+        "towel": 1
+      },
+      "equipment": [
+        "barber_chair",
+        "styling_tools"
+      ],
+      "price": 16,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "beard_trim",
+      "skill": "salon",
+      "variant": 4,
+      "service_duration": 14
+    },
+    "occasion_style": {
+      "id": "occasion_style",
+      "name": "Occasion styling",
+      "trade": "salon",
+      "materials": {
+        "conditioner": 2,
+        "hair_colour": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "barber_chair",
+        "styling_tools",
+        "drying_hood"
+      ],
+      "price": 39,
+      "prep": 7,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "occasion_style",
+      "skill": "salon",
+      "variant": 5,
+      "service_duration": 32
+    },
+    "short_stay": {
+      "id": "short_stay",
+      "name": "Short dog daycare",
+      "trade": "daycare",
+      "materials": {
+        "dog_food": 1,
+        "dog_treat": 1,
+        "pet_cleaner": 1
+      },
+      "equipment": [
+        "dog_pen",
+        "play_yard"
+      ],
+      "price": 21,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "short_stay",
+      "skill": "daycare",
+      "variant": 0,
+      "service_duration": 30
+    },
+    "full_stay": {
+      "id": "full_stay",
+      "name": "Extended dog daycare",
+      "trade": "daycare",
+      "materials": {
+        "dog_food": 2,
+        "dog_treat": 2,
+        "pet_cleaner": 2
+      },
+      "equipment": [
+        "dog_pen",
+        "play_yard"
+      ],
+      "price": 35,
+      "prep": 6,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "full_stay",
+      "skill": "daycare",
+      "variant": 1,
+      "service_duration": 50
+    },
+    "dog_walk": {
+      "id": "dog_walk",
+      "name": "Enrichment walk",
+      "trade": "daycare",
+      "materials": {
+        "dog_treat": 1,
+        "pet_cleaner": 1
+      },
+      "equipment": [
+        "dog_pen",
+        "play_yard"
+      ],
+      "price": 18,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "dog_walk",
+      "skill": "daycare",
+      "variant": 2,
+      "service_duration": 24
+    },
+    "puppy_play": {
+      "id": "puppy_play",
+      "name": "Puppy play group",
+      "trade": "daycare",
+      "materials": {
+        "dog_food": 1,
+        "dog_treat": 1,
+        "dog_toy": 1,
+        "pet_cleaner": 1
+      },
+      "equipment": [
+        "dog_pen",
+        "play_yard"
+      ],
+      "price": 27,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "puppy_play",
+      "skill": "daycare",
+      "variant": 3,
+      "service_duration": 35
+    },
+    "wash_brush": {
+      "id": "wash_brush",
+      "name": "Dog wash & brush",
+      "trade": "daycare",
+      "materials": {
+        "shampoo": 1,
+        "towel": 1,
+        "pet_cleaner": 1
+      },
+      "equipment": [
+        "dog_pen",
+        "grooming_table"
+      ],
+      "price": 26,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "wash_brush",
+      "skill": "daycare",
+      "variant": 4,
+      "service_duration": 26
+    },
+    "dog_training": {
+      "id": "dog_training",
+      "name": "Guided training",
+      "trade": "daycare",
+      "materials": {
+        "dog_treat": 2,
+        "dog_toy": 1,
+        "pet_cleaner": 1
+      },
+      "equipment": [
+        "dog_pen",
+        "training_area"
+      ],
+      "price": 29,
+      "prep": 5,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "dog_training",
+      "skill": "daycare",
+      "variant": 5,
+      "service_duration": 32
+    },
+    "golf_round": {
+      "id": "golf_round",
+      "name": "Classic mini-golf round",
+      "trade": "minigolf",
+      "materials": {
+        "score_card": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "golf_course",
+        "golf_clubs"
+      ],
+      "price": 16,
+      "prep": 2,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "golf_round",
+      "skill": "minigolf",
+      "variant": 0,
+      "service_duration": 30
+    },
+    "golf_practice": {
+      "id": "golf_practice",
+      "name": "Practice putting",
+      "trade": "minigolf",
+      "materials": {
+        "golf_ball": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "putting_green",
+        "golf_clubs"
+      ],
+      "price": 11,
+      "prep": 2,
+      "life": 0,
+      "demand": 1.4,
+      "icon": "golf_practice",
+      "skill": "minigolf",
+      "variant": 1,
+      "service_duration": 20
+    },
+    "obstacle_round": {
+      "id": "obstacle_round",
+      "name": "Clockwork obstacle round",
+      "trade": "minigolf",
+      "materials": {
+        "score_card": 1,
+        "grip": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "golf_course",
+        "golf_clubs",
+        "obstacle_course"
+      ],
+      "price": 23,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "obstacle_round",
+      "skill": "minigolf",
+      "variant": 2,
+      "service_duration": 42
+    },
+    "family_round": {
+      "id": "family_round",
+      "name": "Family mini-golf booking",
+      "trade": "minigolf",
+      "materials": {
+        "score_card": 2,
+        "sanitiser": 2
+      },
+      "equipment": [
+        "golf_course",
+        "golf_clubs"
+      ],
+      "price": 27,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "family_round",
+      "skill": "minigolf",
+      "variant": 3,
+      "service_duration": 40
+    },
+    "golf_coaching": {
+      "id": "golf_coaching",
+      "name": "Putting coaching",
+      "trade": "minigolf",
+      "materials": {
+        "golf_ball": 1,
+        "score_card": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "putting_green",
+        "golf_clubs"
+      ],
+      "price": 22,
+      "prep": 4,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "golf_coaching",
+      "skill": "minigolf",
+      "variant": 4,
+      "service_duration": 32
+    },
+    "twilight_round": {
+      "id": "twilight_round",
+      "name": "Lantern mini-golf round",
+      "trade": "minigolf",
+      "materials": {
+        "score_card": 1,
+        "lamp_oil": 1,
+        "sanitiser": 1
+      },
+      "equipment": [
+        "golf_course",
+        "golf_clubs",
+        "obstacle_course"
+      ],
+      "price": 24,
+      "prep": 3,
+      "life": 0,
+      "demand": 1.0,
+      "icon": "twilight_round",
+      "skill": "minigolf",
+      "variant": 5,
+      "service_duration": 38
+    },
+    "berry_cup": {
+      "id": "berry_cup",
+      "name": "Berry sundae",
+      "trade": "dessert",
+      "materials": {
+        "cream": 1,
+        "berries": 1,
+        "sugar": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "freezer",
+        "fridge"
+      ],
+      "price": 16,
+      "prep": 4,
+      "life": 2,
+      "demand": 1.4,
+      "icon": "berry_cup",
+      "skill": "dessert",
+      "variant": 0,
+      "service_duration": 0
+    },
+    "waffle": {
+      "id": "waffle",
+      "name": "Warm waffle",
+      "trade": "dessert",
+      "materials": {
+        "flour": 1,
+        "eggs": 1,
+        "sugar": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "waffle_iron",
+        "fridge"
+      ],
+      "price": 15,
+      "prep": 4,
+      "life": 1,
+      "demand": 1.4,
+      "icon": "waffle",
+      "skill": "dessert",
+      "variant": 1,
+      "service_duration": 0
+    },
+    "cookie_box": {
+      "id": "cookie_box",
+      "name": "Chocolate cookie box",
+      "trade": "dessert",
+      "materials": {
+        "flour": 1,
+        "butter": 1,
+        "chocolate": 1,
+        "food_box": 1
+      },
+      "equipment": [
+        "oven",
+        "fridge"
+      ],
+      "price": 18,
+      "prep": 6,
+      "life": 3,
+      "demand": 1.0,
+      "icon": "cookie_box",
+      "skill": "dessert",
+      "variant": 2,
+      "service_duration": 0
+    },
+    "dessert_donut": {
+      "id": "dessert_donut",
+      "name": "Glazed doughnuts",
+      "trade": "dessert",
+      "materials": {
+        "flour": 1,
+        "sugar": 1,
+        "oil": 1,
+        "sprinkles": 1
+      },
+      "equipment": [
+        "fryer"
+      ],
+      "price": 15,
+      "prep": 4,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "dessert_donut",
+      "skill": "dessert",
+      "variant": 3,
+      "service_duration": 0
+    },
+    "cupcake": {
+      "id": "cupcake",
+      "name": "Berry cupcakes",
+      "trade": "dessert",
+      "materials": {
+        "flour": 1,
+        "eggs": 1,
+        "butter": 1,
+        "berries": 1
+      },
+      "equipment": [
+        "oven",
+        "fridge",
+        "display_chiller"
+      ],
+      "price": 23,
+      "prep": 7,
+      "life": 2,
+      "demand": 1.0,
+      "icon": "cupcake",
+      "skill": "dessert",
+      "variant": 4,
+      "service_duration": 0
+    },
+    "chocolate_sundae": {
+      "id": "chocolate_sundae",
+      "name": "Chocolate sundae",
+      "trade": "dessert",
+      "materials": {
+        "cream": 1,
+        "chocolate": 1,
+        "sprinkles": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "freezer",
+        "fridge"
+      ],
+      "price": 18,
+      "prep": 4,
+      "life": 2,
+      "demand": 1.0,
+      "icon": "chocolate_sundae",
+      "skill": "dessert",
+      "variant": 5,
+      "service_duration": 0
+    },
+    "fruit_parfait": {
+      "id": "fruit_parfait",
+      "name": "Fruit parfait",
+      "trade": "dessert",
+      "materials": {
+        "cream": 1,
+        "fruit": 1,
+        "berries": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "fridge",
+        "display_chiller"
+      ],
+      "price": 20,
+      "prep": 4,
+      "life": 2,
+      "demand": 1.0,
+      "icon": "fruit_parfait",
+      "skill": "dessert",
+      "variant": 6,
+      "service_duration": 0
+    },
+    "dessert_tart": {
+      "id": "dessert_tart",
+      "name": "Orchard pastry tart",
+      "trade": "dessert",
+      "materials": {
+        "flour": 1,
+        "butter": 1,
+        "fruit": 1
+      },
+      "equipment": [
+        "oven",
+        "fridge"
+      ],
+      "price": 18,
+      "prep": 6,
+      "life": 2,
+      "demand": 1.0,
+      "icon": "dessert_tart",
+      "skill": "dessert",
+      "variant": 7,
+      "service_duration": 0
+    },
+    "cafe_coffee": {
+      "id": "cafe_coffee",
+      "name": "House coffee",
+      "trade": "cafe",
+      "materials": {
+        "coffee_beans": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "coffee_machine"
+      ],
+      "price": 9,
+      "prep": 2,
+      "life": 1,
+      "demand": 1.4,
+      "icon": "cafe_coffee",
+      "skill": "cafe",
+      "variant": 0,
+      "service_duration": 0
+    },
+    "cafe_tea": {
+      "id": "cafe_tea",
+      "name": "Fresh-brewed tea",
+      "trade": "cafe",
+      "materials": {
+        "tea": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "tea_kettle"
+      ],
+      "price": 8,
+      "prep": 2,
+      "life": 1,
+      "demand": 1.4,
+      "icon": "cafe_tea",
+      "skill": "cafe",
+      "variant": 1,
+      "service_duration": 0
+    },
+    "cafe_latte": {
+      "id": "cafe_latte",
+      "name": "Creamy latte",
+      "trade": "cafe",
+      "materials": {
+        "coffee_beans": 1,
+        "milk": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "coffee_machine",
+        "fridge"
+      ],
+      "price": 12,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "cafe_latte",
+      "skill": "cafe",
+      "variant": 2,
+      "service_duration": 0
+    },
+    "bubble_tea": {
+      "id": "bubble_tea",
+      "name": "Classic bubble tea",
+      "trade": "cafe",
+      "materials": {
+        "tea": 1,
+        "milk": 1,
+        "tapioca": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "tea_kettle",
+        "fridge",
+        "tea_sealer"
+      ],
+      "price": 15,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "bubble_tea",
+      "skill": "cafe",
+      "variant": 3,
+      "service_duration": 0
+    },
+    "fruit_tea": {
+      "id": "fruit_tea",
+      "name": "Fruit bubble tea",
+      "trade": "cafe",
+      "materials": {
+        "tea": 1,
+        "fruit": 1,
+        "tapioca": 1,
+        "tea_syrup": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "tea_kettle",
+        "fridge",
+        "tea_sealer"
+      ],
+      "price": 18,
+      "prep": 4,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "fruit_tea",
+      "skill": "cafe",
+      "variant": 4,
+      "service_duration": 0
+    },
+    "iced_coffee": {
+      "id": "iced_coffee",
+      "name": "Iced coffee",
+      "trade": "cafe",
+      "materials": {
+        "coffee_beans": 1,
+        "milk": 1,
+        "ice": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "coffee_machine",
+        "fridge"
+      ],
+      "price": 13,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "iced_coffee",
+      "skill": "cafe",
+      "variant": 5,
+      "service_duration": 0
+    },
+    "cafe_cocoa": {
+      "id": "cafe_cocoa",
+      "name": "Hot chocolate",
+      "trade": "cafe",
+      "materials": {
+        "cocoa": 1,
+        "milk": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "tea_kettle",
+        "fridge"
+      ],
+      "price": 12,
+      "prep": 3,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "cafe_cocoa",
+      "skill": "cafe",
+      "variant": 6,
+      "service_duration": 0
+    },
+    "herbal_brew": {
+      "id": "herbal_brew",
+      "name": "Garden herbal brew",
+      "trade": "cafe",
+      "materials": {
+        "herbs": 1,
+        "tea": 1,
+        "paper_cup": 1
+      },
+      "equipment": [
+        "tea_kettle"
+      ],
+      "price": 10,
+      "prep": 2,
+      "life": 1,
+      "demand": 1.0,
+      "icon": "herbal_brew",
+      "skill": "cafe",
+      "variant": 7,
+      "service_duration": 0
+    }
+  },
+  "suppliers": [
+    {
+      "id": "local",
+      "name": "Crossroads specialist suppliers",
+      "multiplier": 1.15,
+      "lead": 5,
+      "freight": 4,
+      "minimum": 1,
+      "quality": 1.0
+    },
+    {
+      "id": "regional",
+      "name": "Regional wholesale caravan",
+      "multiplier": 0.85,
+      "lead": 18,
+      "freight": 12,
+      "minimum": 5,
+      "quality": 0.88
+    },
+    {
+      "id": "express",
+      "name": "Canal express merchants",
+      "multiplier": 1.45,
+      "lead": 1,
+      "freight": 8,
+      "minimum": 1,
+      "quality": 1.08
+    }
+  ]
+}

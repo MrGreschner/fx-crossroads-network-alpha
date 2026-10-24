@@ -1,6 +1,6 @@
 extends RefCounted
-const EXCHANGE=Rect2(-1390,875,230,145)
-const EXCHANGE_DOOR=Vector2(-1275,1050)
+const EXCHANGE=Rect2(-930,650,230,145)
+const EXCHANGE_DOOR=Vector2(-815,825)
 const ENTRY=Vector2(-1080,800)
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 func interact(g:Node)->bool:

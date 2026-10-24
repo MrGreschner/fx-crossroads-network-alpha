@@ -39,7 +39,7 @@ export function createReporting({pool:provided,adminPassword=process.env.REPORT_
  // Retry initialization on subsequent upload after an outage. Never gate combat readiness.
  let retryAt=Date.now()+15000;
  const retention=setInterval(()=>{if(ready)pool.query("DELETE FROM fx_reports WHERE created_at < now() - interval '30 days'").catch(()=>{});for(const [k,v]of limits)if(Date.now()-v.at>60000)limits.delete(k);},3600000);retention.unref();
- function admin(req){if(adminPassword.length<24)return false;const expected=Buffer.from('teacher:'+adminPassword);let got;try{got=Buffer.from((req.headers.authorization||'').replace(/^Basic /,''),'base64');}catch{return false;}return got.length===expected.length&&timingSafeEqual(got,expected);}
+ function admin(req){if(adminPassword.length<24)return false;const expected=Buffer.from('admin:'+adminPassword);let got;try{got=Buffer.from((req.headers.authorization||'').replace(/^Basic /,''),'base64');}catch{return false;}return got.length===expected.length&&timingSafeEqual(got,expected);}
  function reply(res,status,value,extra={}){res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...extra});res.end(JSON.stringify(value));}
  async function handle(req,res){
   const url=new URL(req.url,'http://localhost');if(!url.pathname.startsWith('/reports'))return false;
@@ -66,7 +66,7 @@ export function createReporting({pool:provided,adminPassword=process.env.REPORT_
    }catch{if(!res.headersSent)reply(res,503,{error:'Could not save report; retry later'});}finally{clearTimeout(timeout);pending--;}
    return true;
   }
-  if(!admin(req)){reply(res,401,{error:'Private reports. Sign in as teacher.'},{'WWW-Authenticate':'Basic realm="Crossroads private reports", charset="UTF-8"'});return true;}
+  if(!admin(req)){reply(res,401,{error:'Private reports. Sign in as admin.'},{'WWW-Authenticate':'Basic realm="Crossroads administration", charset="UTF-8"'});return true;}
   if(req.method!=='GET'){reply(res,405,{error:'GET required'});return true;}
   if(url.pathname==='/reports'||url.pathname==='/reports/'){
    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'",'X-Content-Type-Options':'nosniff'});res.end(dashboard);return true;

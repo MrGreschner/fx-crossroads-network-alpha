@@ -44,7 +44,7 @@ func setup(owner:Node,review:bool=false,received:Dictionary={})->void:
   var name=LineEdit.new();name.placeholder_text="Student display name / class alias";name.text=data.student;name.max_length=80;name.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(name);name.text_changed.connect(func(t:String):data.student=t);name.focus_exited.connect(func():S.save(data))
  var row=HBoxContainer.new();body.add_child(row);module_picker=OptionButton.new();module_picker.fit_to_longest_item=false;module_picker.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(module_picker)
  for code in S.catalog():
-  if S.catalog()[code].get("archived",false) and code!=module:continue
+  if S.catalog()[code].get("archived",false):continue
   module_picker.add_item(str(code)+" • "+str(S.catalog()[code].name));module_picker.set_item_metadata(module_picker.item_count-1,code);if code==module:module_picker.select(module_picker.item_count-1)
  module_picker.item_selected.connect(func(i:int):module=str(module_picker.get_item_metadata(i));data.active=module;selected_submission="";if not remote:S.save(data)
  )
@@ -220,7 +220,7 @@ func submit_page()->void:
 func review_home()->void:
  if not sample:UI.accent(button(content,"Example",func():
   var owner=legacy;finish();var dashboard=load("res://scripts/teacher_dashboard.gd").new();owner.add_child(dashboard);dashboard.setup(owner);dashboard.example_level=1;dashboard.show_examples()))
- label(content,"Student: "+data.student+" • "+str(data.submissions.size())+" saved submissions. Observed evidence = recorded actions or test data. Creator explanation = student intent. Teacher assessment = your outcome decision. Evaluate evidence, not time played or a readiness checkmark. Routine/safety/teamwork outcomes can require observation or discussion.",17)
+ label(content,"Student: "+data.student+" • "+str(data.submissions.size())+" saved submissions. Observed evidence = recorded actions or test data. Creator explanation = student intent. Teacher assessment = your outcome decision. Evaluate evidence, not time played or a readiness checkmark. General routines, competencies and pathway discussions are assessed in class outside this program.",17)
  for code in S.catalog():
   var latest_s={}
   for s in data.submissions:if s.module==code:latest_s=s

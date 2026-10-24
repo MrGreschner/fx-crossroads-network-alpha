@@ -276,7 +276,7 @@ func speed_factor(key:String)->float:
 	if key.begins_with("p:") and chain.moving(key.substr(2)):return 0
 	if stunned(key):return 0
 	var factor:=float(statuses.get(key,{}).get("slow",{}).get("value",.55)) if effect_time(key,"slow")>0 else 1.0
-	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.45
+	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.85 if twister.charges.has(key.substr(2)) else .45
 	if effect_time(key,"scout_stride")>0:factor*=float(statuses[key].scout_stride.value)
 	if effect_time(key,"rune_stride")>0:factor*=1.3
 	if key.begins_with("p:") and robot.transformed(key.substr(2)):factor*=.42

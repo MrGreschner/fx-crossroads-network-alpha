@@ -72,7 +72,7 @@ export function createRecordRepair({pool,accounts,admin=()=>false,invalidate=()=
  async function body(req){let n=0,chunks=[];for await(const c of req){n+=c.length;if(n>32768)fail(413,'Request too large');chunks.push(c);}return JSON.parse(Buffer.concat(chunks));}
  async function snapshot(db,id){const a=(await db.query('SELECT id,username,revision,save FROM crossroads_accounts WHERE id=$1',[id])).rows[0];if(!a)fail(404,'Account not found');const rows=(await db.query('SELECT scope,kind,key,value,extra FROM crossroads_named_records WHERE account=$1 ORDER BY scope,kind,key',[id])).rows;return {account:a,rows};}
  async function handle(req,res){const u=new URL(req.url,'http://localhost');if(!u.pathname.startsWith('/records/admin'))return false;
-  if(!admin(req)){res.setHeader('WWW-Authenticate','Basic realm="Crossroads private accounts"');send(res,401,{error:'Administrator sign-in required'});req.resume();return true;}
+  if(!admin(req)){res.setHeader('WWW-Authenticate','Basic realm="Crossroads administration"');send(res,401,{error:'Administrator sign-in required'});req.resume();return true;}
   try{
    if(req.method==='POST'&&req.headers.origin&&new URL(req.headers.origin).host!==req.headers.host)fail(403,'Origin rejected');
    if(u.pathname==='/records/admin'&&req.method==='GET'){res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store','content-security-policy':"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-ancestors 'none'"});res.end(await readFile(new URL('./record-repair.html',import.meta.url)));return true;}

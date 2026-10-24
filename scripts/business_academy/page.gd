@@ -37,6 +37,7 @@ var sent_hash=""
 var synced_work:Dictionary={}
 var sent_work:Dictionary={}
 var pending_submit=false
+var pending_enter=false
 var cache:Dictionary={}
 var nonce=""
 var board:Control
@@ -90,13 +91,19 @@ func received(result:int,http:int,_headers:PackedStringArray,bytes:PackedByteArr
  if result!=HTTPRequest.RESULT_SUCCESS or not data is Dictionary or http<200 or http>=300:
   if operation=="save":pending_submit=false
   if http==409 and operation=="save":conflicted=true
+  if operation=="save" and http in [403,409] and is_instance_valid(game) and is_instance_valid(game.business_district) and game.business_district.classroom:
+   game.business_district.pause_for_access("Classroom access or a newer district save needs attention. Trading paused. Return to your module; your device draft is retained.")
   message(str(data.get("error","Classroom connection unavailable. Your on-device draft is retained.")) if data is Dictionary else "Classroom connection unavailable. Your on-device draft is retained.");return
  match operation:
   "catalog":catalog=data.catalog;home()
   "student":student=data;render_home()
+  "venture_access":
+   attempt.venture_policy=data.venture_access
+   if data.get("district")!=null:work.sandbox=data.district.duplicate(true)
+   work.district_revision=int(data.get("district_revision",0));enter_simulation()
   "start":call_api("attempt?id="+str(data.id),null,"attempt")
   "attempt":
-   attempt=data.attempt;definition=attempt.definition;code=attempt.module;work=attempt.work.duplicate(true);synced_work=work.duplicate(true);feedback=data.feedback;dirty=false;conflicted=false;nonce=""
+   attempt=data.attempt;definition=preload("res://scripts/assessment_scope.gd").definition(attempt.get("assessment_definition",attempt.definition));code=attempt.module;work=attempt.work.duplicate(true);synced_work=work.duplicate(true);feedback=data.feedback;dirty=false;conflicted=false;nonce=""
    if cache.has(attempt.id) and cache[attempt.id].get("dirty",false):
     var local=cache[attempt.id]
     if int(local.get("revision",-1))==int(attempt.revision):work=local.work.duplicate(true);dirty=true;message("Recovered your unsynced on-device draft.")
@@ -105,8 +112,11 @@ func received(result:int,http:int,_headers:PackedStringArray,bytes:PackedByteArr
    if not work.has("artifacts"):work.artifacts=[]
    task_id=definition.tasks[0].id;screen="module";tab="Brief";render_module()
   "save":
+   if data.has("district_revision"):
+    work.district_revision=int(data.district_revision);sent_work.district_revision=int(data.district_revision);sent_hash=JSON.stringify(sent_work).sha256_text()
    synced_work=sent_work.duplicate(true);attempt.revision=int(data.revision);dirty=JSON.stringify(work).sha256_text()!=sent_hash;write_cache();message("Draft synced • revision "+str(attempt.revision))
    if pending_submit and not dirty:pending_submit=false;submit_work()
+   elif pending_enter and not dirty:pending_enter=false;open_simulation()
   "submit":
    attempt.status="submitted";attempt.latest_submission=data.submission;dirty=false;nonce="";write_cache();render_module();message("Frozen submission sent. Your teacher can return feedback or complete this module.")
 func home()->void:
@@ -162,7 +172,7 @@ func render_home()->void:
 func preview(value:String)->void:
  if busy:return
  if dirty:write_cache()
- definition=module_by_code(value);code=value;attempt={};feedback=[];work={"responses":{},"models":{},"sandbox":null,"evidence":[]};dirty=false;conflicted=false;task_id=definition.tasks[0].id;screen="module";tab="Brief";render_module()
+ definition=preload("res://scripts/assessment_scope.gd").definition(module_by_code(value));code=value;attempt={};feedback=[];work={"responses":{},"models":{},"sandbox":null,"evidence":[]};dirty=false;conflicted=false;task_id=definition.tasks[0].id;screen="module";tab="Brief";render_module()
 func load_attempt(id:String)->void:
  if dirty:write_cache()
  call_api("attempt?id="+id,null,"attempt")
@@ -194,6 +204,7 @@ func render_module()->void:
   task_pick.item_selected.connect(func(index:int):task_id=str(task_pick.get_item_metadata(index));render_module())
  if tab=="Brief":
   visual();para(body,definition.brief,21)
+  if definition.has("workflow"):workflow_strip()
   label(body,"What you will demonstrate",23)
   for o in definition.outcomes:para(body,o.id+" • "+o.title+"\nEvidence: "+o.evidence)
   para(body,"Work through the main-outcome assignments. Use the relevant creation tools or classroom business, then explain your reasoning where it adds evidence. Record sources and limitations. Class discussions, presentations and observed role-play can provide evidence when your teacher confirms it. Profit and play time do not award marks.")
@@ -207,7 +218,8 @@ func render_module()->void:
    var actions=HBoxContainer.new();body.add_child(actions)
    var play_button=button(actions,"▶ Enter classroom business",open_simulation);UI.accent(play_button);play_button.disabled=not editable()
    button(actions,"Capture this board",capture_image).disabled=not editable();button(actions,"Record evidence",func():tab="My evidence";render_module())
-   visual();studio_controls()
+   if definition.tool in ["opportunity","comparison"]:opportunity_controls()
+   else:visual();studio_controls()
    para(body,"This is a teaching model, not a market prediction. Other school subjects and adventure resources are optional.")
  elif tab=="My evidence":
   label(body,t.title,24);para(body,"Main outcome "+", ".join(t.outcomes)+" • "+t.required_evidence);para(body,t.prompt)
@@ -245,12 +257,19 @@ func sources()->void:
  for s in definition.get("sources",[]):
   var url:String=s.url;button(body,s.title+" ↗",func():OS.shell_open(url));para(body,s.use,15)
 func visual()->void:
+ if definition.tool in ["opportunity","comparison"]:
+  para(body,"INVESTIGATE → COMPARE → CONFIRM YOUR PLAN",22);return
  if definition.get("subject","Business")!="Business":
   creator_banner();return
  board=Board.new();board.custom_minimum_size.y=clampf((get_viewport().get_visible_rect().size.x-32)*300/860,150,420);body.add_child(board);board.set_data(definition.tool,work.models)
 func model()->Dictionary:
  if not work.models.has(definition.tool):work.models[definition.tool]=Board.defaults(definition.tool)
- return work.models[definition.tool]
+ var m=work.models[definition.tool]
+ if definition.tool in ["opportunity","comparison"] and m.get("confirmed",0)==1 and not m.has("planned_id"):
+  var previous=["kitchen","workshop","clothier","fishery","garden","mine","store","courier","rental","blank1","blank2","blank3"]
+  var index=int(m.get("planned",0));m.planned_id=previous[clampi(index,0,11)] if str(attempt.get("edition","academy-4"))!="academy-5" else C.ventures()[clampi(index,0,14)].id
+  m.original_id=previous[clampi(int(m.get("original_planned",index)),0,11)]
+ return m
 func choice(parent:Node,title:String,key:String,options:Array)->void:
  var box=UI.card(parent,title,"");box.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL;box.get_parent().custom_minimum_size.x=360 if get_viewport().get_visible_rect().size.x>900 else 260;var pick=OptionButton.new();pick.custom_minimum_size.y=40;box.add_child(pick)
  for option in options:pick.add_item(str(option))
@@ -291,10 +310,7 @@ func studio_controls()->void:
    para(body,"Model price = 10 × demand / available supply, clamped to 1–30. This deliberately simplified relationship is not a real pricing rule, a prediction, or a description of current Canadian regulation.")
   "planning":
    choice(grid,"Milestone to review","milestone",["Goal","Resources","Opening","Review"]);amount(grid,"Risk likelihood (1–5)","likelihood",1,5);amount(grid,"Risk impact (1–5)","impact",1,5);choice(grid,"Response focus","response",["Prevent the event","Reduce its impact","Prepare a contingency"])
-  _:
-   choice(grid,"Provisional venture choice","choice",["Food cart / kitchen","Workshop / repairs","Equipment hire"])
-   for key in ["first","second","third"]:amount(grid,"Your justified criteria score • "+key,key,1,5)
-   para(body,"Record your criteria and weights in the assignment. Compare needs, buyer/user perspectives, resource demands and uncertainty. These editable scores represent your judgement, not a hidden correct choice.")
+  _:para(body,"Explore the district, inspect opportunities and confirm your venture plan above.")
 func mark_dirty()->void:
  if not editable():return
  dirty=true;editing_clock=0;cache_clock=0
@@ -308,8 +324,9 @@ func save_draft()->void:
  if patch.is_empty():
   dirty=false;write_cache()
   if pending_submit:pending_submit=false;call_deferred("submit_work")
+  elif pending_enter:pending_enter=false;call_deferred("open_simulation")
   return
- call_api("save",{"id":attempt.id,"revision":int(attempt.revision),"patch":patch},"save")
+ call_api("save",{"id":attempt.id,"revision":int(attempt.revision),"patch":patch,"district_revision":int(work.get("district_revision",0))},"save")
 func submit_work()->void:
  if busy:return
  if dirty:pending_submit=true;save_draft();message("Saving your latest draft before preparing the submission…");return
@@ -320,12 +337,17 @@ func confirm(title:String,text:String,action:Callable)->void:
  var dialog=ConfirmationDialog.new();dialog.title=title;dialog.dialog_text=text;add_child(dialog);dialog.confirmed.connect(action);dialog.confirmed.connect(dialog.queue_free);dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(620,210))
 func open_simulation()->void:
  if not editable():return
+ if dirty and not attempt.is_empty():pending_enter=true;save_draft();return
+ if not attempt.is_empty():call_api("access?id="+str(attempt.id),null,"venture_access");return
+ enter_simulation()
+func enter_simulation()->void:
  var state=C.fresh() if work.sandbox==null else work.sandbox.duplicate(true)
- if state.businesses.is_empty():
-  var sim=preload("res://scripts/business_district/simulation.gd").new();sim.setup(state);sim.establish(str(definition.venture));state.selected=definition.venture
- if definition.tool=="marketing" and state.businesses.has(state.selected) and not state.businesses[state.selected].open:
-  var b=state.businesses[state.selected];var m=model();b.price=clampf(float(m.price),1,float(C.spec(state.selected).price)*3);b.layout=int(m.layout);b.ad=float(m.budget)
- root.hide();var view=preload("res://scripts/business_district/view.gd").new();game.business_district=view;game.add_child(view);view.setup(game,{"classroom":true,"state":state,"academy":self})
+ if state.businesses.is_empty() and definition.tool in ["opportunity","comparison"]:
+  var m=model()
+  if m.get("confirmed",0)==1:
+   var selected_id=str(m.get("planned_id","kitchen"))
+   if not C.spec(selected_id).is_empty() and not C.spec(selected_id).get("archived",false):state.selected=selected_id
+ root.hide();var view=preload("res://scripts/business_district/view.gd").new();game.business_district=view;game.add_child(view);view.setup(game,{"classroom":true,"state":state,"academy":self,"access":attempt.get("venture_policy",["kitchen"])})
 func capture_simulation(state:Dictionary)->void:
  if not editable() or not C.valid(state):return
  work.sandbox=state.duplicate(true);mark_dirty();write_cache()
@@ -405,7 +427,7 @@ func creator_controls()->void:
   button(row,"Vector Studio • editable SVG + PNG",open_vector)
   para(body,"The same creation tools are open to public players. Save your hero, spell, object or realm in the Studio, return here, then attach a frozen copy. Sources and layers remain available for review. Use external tools where the assignment requires an unsupported workflow.")
  button(row,"Record evidence",func():tab="My evidence";render_module())
- para(body,"One practical project can support several main outcomes. Smaller curriculum examples are teaching suggestions, not a mandatory task checklist. Teachers can confirm demonstrations, presentations and routines.")
+ para(body,"One practical project can support several main outcomes. Smaller curriculum examples are teaching suggestions, not a mandatory task checklist. Teachers can confirm the course-specific demonstrations and presentations. General routines, competencies and pathway discussions are handled in class outside this program.")
 func launch_creator(kind:String="")->void:
  if not editable():return
  write_cache();root.hide();creator_open=true;var studio=game.hero_workshop;creator_mode=studio.process_mode;studio.process_mode=Node.PROCESS_MODE_ALWAYS;studio.show();studio.open()
@@ -465,3 +487,42 @@ func show_artifact(parent:Node,artifact:Dictionary)->void:
 
 func open_vector()->void:
  root.hide();var vector=preload("res://scripts/vector_studio.gd").new();add_child(vector);vector.setup(game,func(value:Dictionary):attach_artifact("graphic",value,str(value.settings.title)));vector.tree_exited.connect(func():root.show();render_module())
+
+func workflow_strip()->void:
+ var steps:Array=definition.get("workflow",[])
+ if steps.is_empty():return
+ label(body,"YOUR PROJECT ROUTE",21)
+ var route=HFlowContainer.new();route.name="CourseProjectRoute";route.add_theme_constant_override("h_separation",10);route.add_theme_constant_override("v_separation",10);body.add_child(route)
+ for n in steps.size():
+  var step:Dictionary=steps[n];var frame=PanelContainer.new();frame.custom_minimum_size=Vector2(230,130);frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",UI.box("#163c47" if n%2==0 else "#243c50","#76b9b3",9,12));route.add_child(frame)
+  var col=VBoxContainer.new();frame.add_child(col);label(col,str(n+1)+"  "+str(step.title),21);para(col,str(step.action),16)
+  var target="Studio" if n>0 and n<steps.size()-1 else "Learn" if n==0 else "My evidence"
+  button(col,"Open tools" if target=="Studio" else "Learning support" if target=="Learn" else "Attach & explain",func():tab=target;render_module())
+ para(body,("Your business decisions and records support the main outcomes. Explain what caused the results; profit alone does not earn a mark." if definition.get("subject","Business")=="Business" else "Your creation is the main evidence. Use Learn for support, test and improve the work, then attach the source once. Classroom routines, basic competencies and career-pathway discussions do not add program assessment tasks."),16)
+
+func opportunity_controls()->void:
+ var m=model();var research={} if work.sandbox==null else work.sandbox.get("research",{})
+ para(body,"1 • Investigate. Enter the district and inspect at least two premises. Record their customer needs, equipment and costs. This is a comparison activity; there are no preset scores or hidden correct choice.",19)
+ button(body,"Explore & inspect premises",open_simulation).disabled=not editable()
+ para(body,"2 • Compare. These are the opportunities you inspected. Compare their assets, startup costs and trade-offs; use your own criteria in your explanation.",19)
+ for id in research:
+  var v=C.spec(id)
+  if v.is_empty():continue
+  var card=UI.card(body,v.name,"Customer need: "+v.need+"\nTrade-off: "+v.tradeoff+"\nAcquisition for an additional venture: %.0f. The first venture uses startup support." % float(research[id].acquisition))
+  if not v.starter_products.is_empty():
+   var art=TextureRect.new();art.texture=A.item_texture(v.starter_products[0],"product");art.custom_minimum_size=Vector2(88,88);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;card.add_child(art)
+ if research.is_empty():para(body,"Your inspection cards appear here after you visit the district and click Record premises inspection.")
+ para(body,"3 • Confirm your planned venture. This records your decision as evidence; it does not buy a business or change sales. When ready, enter the district and acquire the premises.",19)
+ var pick=OptionButton.new();pick.add_item("Choose an inspected opportunity");pick.set_item_metadata(0,-1)
+ for i in C.ventures().size():
+  var v=C.ventures()[i]
+  if research.has(v.id):pick.add_item(v.name);pick.set_item_metadata(pick.item_count-1,i)
+ body.add_child(pick);var reason=TextEdit.new();reason.custom_minimum_size.y=110;reason.placeholder_text="Which customer need will you meet? Compare costs, assets, risks and at least one alternative. Explain your choice.";reason.text=str(m.get("reason",""));body.add_child(reason)
+ var commit=button(body,"Confirm planned venture",func():
+  if research.size()<2 or pick.selected==0 or reason.text.strip_edges().length()<20:message("Inspect two premises, select one and explain your choice in at least 20 characters.");return
+  m.planned=int(pick.get_item_metadata(pick.selected));m.planned_id=C.ventures()[m.planned].id;m.reason=reason.text.left(2000);m.confirmed=1
+  if not m.has("original_planned"):m.original_planned=m.planned;m.original_id=m.planned_id;m.original_reason=m.reason
+  mark_dirty();write_cache();message("Venture plan confirmed. It is saved as evidence; enter the district when you are ready to buy.")
+  if not attempt.is_empty():save_draft())
+ commit.disabled=not editable() or research.size()<2;reason.editable=editable();pick.disabled=not editable()
+ if m.get("confirmed",0)==1:para(body,"Confirmed plan: "+C.spec(str(m.get("planned_id","kitchen"))).get("name","Earlier venture")+"\n"+str(m.reason))

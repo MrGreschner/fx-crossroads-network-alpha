@@ -76,7 +76,7 @@ export function createActivity({pool,admin,hashSecret=process.env.ACTIVITY_HASH_
   const permitted=/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)||(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)||(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin));
   if(origin&&permitted){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
   if(req.method==='OPTIONS'){if(!permitted){send(res,403,{error:'Origin rejected'});return true;}res.writeHead(204,{'Access-Control-Allow-Methods':'GET','Access-Control-Allow-Headers':'authorization'});res.end();return true;}
-  if(!admin?.(req)){send(res,401,{error:'Private dashboard. Sign in as teacher.'},{'WWW-Authenticate':'Basic realm="Crossroads private reports", charset="UTF-8"'});return true;}
+  if(!admin?.(req)){send(res,401,{error:'Private dashboard. Sign in as admin.'},{'WWW-Authenticate':'Basic realm="Crossroads administration", charset="UTF-8"'});return true;}
   if(req.method!=='GET'){send(res,405,{error:'GET required'});return true;}
   if(url.pathname==='/activity'||url.pathname==='/activity/'){
    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"});res.end(readFileSync(new URL('./activity.html',import.meta.url)));return true;

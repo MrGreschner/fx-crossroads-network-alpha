@@ -49,33 +49,6 @@
             "rights"
           ],
           "assets": []
-        },
-        {
-          "id": "5",
-          "title": "apply consistent and appropriate work station routines",
-          "stages": [
-            "routines"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "6",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "7",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -147,7 +120,38 @@
           "outcomes": [
             "4"
           ]
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "5",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "routines",
           "title": "Safe work & backups",
@@ -175,7 +179,8 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "DES1030": {
       "code": "DES1030",
@@ -244,33 +249,6 @@
             "rights"
           ],
           "assets": []
-        },
-        {
-          "id": "7",
-          "title": "apply consistent and appropriate work station routines",
-          "stages": [
-            "routines"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "8",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "9",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -326,7 +304,38 @@
           "outcomes": [
             "6"
           ]
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "7",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "8",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "9",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "routines",
           "title": "Safe work & backups",
@@ -354,7 +363,8 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "COM1005": {
       "code": "COM1005",
@@ -420,33 +430,6 @@
             "critique"
           ],
           "assets": []
-        },
-        {
-          "id": "7",
-          "title": "apply consistent and appropriate work station routines",
-          "stages": [
-            "routines"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "8",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "9",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -498,7 +481,38 @@
           "outcomes": [
             "4"
           ]
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "7",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "8",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "9",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "routines",
           "title": "Safe work & backups",
@@ -526,7 +540,8 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "COM1035": {
       "code": "COM1035",
@@ -583,33 +598,6 @@
             "graphic"
           ],
           "practical": true
-        },
-        {
-          "id": "6",
-          "title": "apply consistent and appropriate work station routines",
-          "stages": [
-            "routines"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "7",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "8",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -654,7 +642,38 @@
           "outcomes": [
             "4"
           ]
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "6",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "7",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "8",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "routines",
           "title": "Safe work & backups",
@@ -682,7 +701,8 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "ENT1010": {
       "code": "ENT1010",
@@ -725,24 +745,6 @@
             "market"
           ],
           "practical": true
-        },
-        {
-          "id": "5",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "6",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -773,12 +775,34 @@
         {
           "id": "feasibility",
           "title": "Feasibility test",
-          "prompt": "Use the Opportunity Board; attach its decision matrix. Explain where each 0\u20135 rating and weight came from. Define criteria, resources and timeline; recommend proceed, change or stop. A score based only on assumptions is not real market research.",
+          "prompt": "Use the Opportunity Board; attach its decision matrix. Explain where each 0–5 rating and weight came from. Define criteria, resources and timeline; recommend proceed, change or stop. A score based only on assumptions is not real market research.",
           "outcomes": [
             "4"
           ],
           "hidden": true
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "5",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "6",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "competencies",
           "title": "Skills & collaboration",
@@ -797,7 +821,8 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "ENT1020": {
       "code": "ENT1020",
@@ -850,24 +875,6 @@
             "critique"
           ],
           "assets": []
-        },
-        {
-          "id": "6",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "7",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -912,7 +919,29 @@
             "4",
             "5"
           ]
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "competencies",
           "title": "Skills & collaboration",
@@ -931,7 +960,8 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "MAM1010": {
       "code": "MAM1010",
@@ -967,24 +997,6 @@
             "market"
           ],
           "practical": true
-        },
-        {
-          "id": "4",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "5",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -1021,7 +1033,29 @@
             "2",
             "3"
           ]
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "4",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "5",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "competencies",
           "title": "Skills & collaboration",
@@ -1040,11 +1074,12 @@
           ],
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "DRAFT-CS1": {
       "code": "DRAFT-CS1",
-      "name": "Structured Programming 1 \u2022 draft",
+      "name": "Structured Programming 1 • draft",
       "brief": "Build an original ability or enemy behaviour program with variables, branching and a loop. Predict, test boundary cases and revise. Exact CTS course/outcomes must be supplied before credit assessment.",
       "kind": "ability",
       "prerequisite": "None",
@@ -1142,11 +1177,12 @@
           "hidden": true
         }
       ],
-      "archived": true
+      "archived": true,
+      "replacement": "CSE1110"
     },
     "DRAFT-ANIM1": {
       "code": "DRAFT-ANIM1",
-      "name": "Animation 1 \u2022 draft",
+      "name": "Animation 1 • draft",
       "brief": "Animate a readable action with anticipation, movement and recovery. Compare two timings, test at game size and present a frame sequence. Exact CTS course/outcomes must be supplied before credit assessment.",
       "kind": "hero",
       "prerequisite": "None",
@@ -1242,7 +1278,8 @@
           "hidden": true
         }
       ],
-      "archived": true
+      "archived": true,
+      "replacement": "COM1145"
     },
     "COM1145": {
       "code": "COM1145",
@@ -1290,33 +1327,6 @@
             "animation"
           ],
           "practical": true
-        },
-        {
-          "id": "5",
-          "title": "apply consistent and appropriate work station routines",
-          "stages": [
-            "routines"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "6",
-          "title": "demonstrate basic competencies",
-          "stages": [
-            "competencies"
-          ],
-          "assets": [],
-          "observation": true
-        },
-        {
-          "id": "7",
-          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
-          "stages": [
-            "pathway"
-          ],
-          "assets": [],
-          "observation": true
         }
       ],
       "stages": [
@@ -1351,7 +1361,38 @@
           "id": "presentation",
           "title": "Present your animation",
           "prompt": "Show the work. Add a short caption: one decision, one piece of feedback, and the change you made. Your artifact is the main evidence."
+        }
+      ],
+      "classroom_outcomes": [
+        {
+          "id": "5",
+          "title": "apply consistent and appropriate work station routines",
+          "stages": [
+            "routines"
+          ],
+          "assets": [],
+          "observation": true
         },
+        {
+          "id": "6",
+          "title": "demonstrate basic competencies",
+          "stages": [
+            "competencies"
+          ],
+          "assets": [],
+          "observation": true
+        },
+        {
+          "id": "7",
+          "title": "make personal connections to the cluster content and processes to inform possible pathway choices",
+          "stages": [
+            "pathway"
+          ],
+          "assets": [],
+          "observation": true
+        }
+      ],
+      "classroom_stages": [
         {
           "id": "routines",
           "title": "Workstation routines",
@@ -1370,12 +1411,13 @@
           "prompt": "Describe interests, strengths and resources. Connect your experience to an animation/design/media occupation and identify a next step.",
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "CSE1110": {
       "code": "CSE1110",
       "name": "Structured Programming 1",
-      "brief": "Write a SEQUENTIAL input \u2192 processing \u2192 output program in the IPO Workbench. Predict results, translate your algorithm, test success/failure data, debug and revise. Branching and loops are optional extensions, not required for this course.",
+      "brief": "Write a SEQUENTIAL input → processing → output program in the IPO Workbench. Predict results, translate your algorithm, test success/failure data, debug and revise. Branching and loops are optional extensions, not required for this course.",
       "kind": "ability",
       "prerequisite": "None",
       "draft": false,
@@ -1407,7 +1449,27 @@
             "tested_program"
           ],
           "practical": true
+        }
+      ],
+      "stages": [
+        {
+          "id": "plan",
+          "title": "Algorithm & IPO",
+          "prompt": "Describe an algorithm and analyze two simple examples. Define your problem, available data, user inputs, processing and outputs. Write pseudocode in the correct sequence before coding."
         },
+        {
+          "id": "code",
+          "title": "Translate & execute",
+          "prompt": "Attach an IPO program. Explain editor, translator/interpreter, executor and debugger. Compare an IDE with separate tools; describe variables/constants, data types, literals, assignment/arithmetic and text output. Crossroads interprets bounded instructions; it does not produce a standalone native executable.",
+          "hidden": true
+        },
+        {
+          "id": "tests",
+          "title": "Predict, test & debug",
+          "prompt": "Run normal, boundary and failure cases. Record predicted versus actual output, diagnose a syntax/runtime or logic error, revise and retest. Include the saved automated test cases and explain them."
+        }
+      ],
+      "classroom_outcomes": [
         {
           "id": "4",
           "title": "demonstrate basic competencies",
@@ -1427,23 +1489,7 @@
           "observation": true
         }
       ],
-      "stages": [
-        {
-          "id": "plan",
-          "title": "Algorithm & IPO",
-          "prompt": "Describe an algorithm and analyze two simple examples. Define your problem, available data, user inputs, processing and outputs. Write pseudocode in the correct sequence before coding."
-        },
-        {
-          "id": "code",
-          "title": "Translate & execute",
-          "prompt": "Attach an IPO program. Explain editor, translator/interpreter, executor and debugger. Compare an IDE with separate tools; describe variables/constants, data types, literals, assignment/arithmetic and text output. Crossroads interprets bounded instructions; it does not produce a standalone native executable.",
-          "hidden": true
-        },
-        {
-          "id": "tests",
-          "title": "Predict, test & debug",
-          "prompt": "Run normal, boundary and failure cases. Record predicted versus actual output, diagnose a syntax/runtime or logic error, revise and retest. Include the saved automated test cases and explain them."
-        },
+      "classroom_stages": [
         {
           "id": "competencies",
           "title": "Skills & teamwork",
@@ -1456,7 +1502,8 @@
           "prompt": "Update your interests, skills and resources. Connect this programming experience to an occupation and choose a next learning goal.",
           "hidden": true
         }
-      ]
+      ],
+      "assessment_scope": "Course-specific outcomes only. Classroom routines, competencies and pathway discussions are assessed by the teacher outside this program."
     },
     "DES2035": {
       "code": "DES2035",
@@ -1464,7 +1511,7 @@
       "kind": "realm",
       "prerequisite": "DES1030",
       "draft": false,
-      "source": "Teacher-supplied main outcomes \u2022 teacher confirms quality and any external technical requirements",
+      "source": "Teacher-supplied main outcomes • teacher confirms quality and any external technical requirements",
       "level": "Intermediate",
       "brief": "Build a NEW playable realm. First record its purpose, mood and route vision; then draw at least three coordinated props in Object Lab and place them with terrain and enemies in Realm Builder. Test the route, revise it and present the realm with a short critique.",
       "outcomes": [
@@ -1509,7 +1556,7 @@
         {
           "id": "vision",
           "title": "Record realm vision BEFORE production",
-          "prompt": "Before building: describe mood, audience and route goal in 2\u20134 sentences. Include one scale/layout constraint. Save this first; then build your objects and realm."
+          "prompt": "Before building: describe mood, audience and route goal in 2–4 sentences. Include one scale/layout constraint. Save this first; then build your objects and realm."
         },
         {
           "id": "presentation",
@@ -1524,7 +1571,7 @@
       "kind": "object",
       "prerequisite": "COM1035",
       "draft": false,
-      "source": "Teacher-supplied main outcomes \u2022 teacher confirms quality and any external technical requirements",
+      "source": "Teacher-supplied main outcomes • teacher confirms quality and any external technical requirements",
       "level": "Intermediate",
       "brief": "Create THREE related props for a realm (e.g. tree, lamp and bench). Use editable layers, a selection, a gradient/pattern and a mask. Keep readable filenames and screen output settings. Show the source and flattened exports; add credits and a short peer-feedback caption.",
       "outcomes": [
@@ -1577,7 +1624,7 @@
       "kind": "object",
       "prerequisite": "COM2035",
       "draft": false,
-      "source": "Teacher-supplied main outcomes \u2022 teacher confirms quality and any external technical requirements",
+      "source": "Teacher-supplied main outcomes • teacher confirms quality and any external technical requirements",
       "level": "Advanced",
       "brief": "Build an ADVANCED coordinated realm art pack of FOUR props: create and stamp a custom brush, correct tone/colour, use layered selections/masks and produce a web/mobile proof. Attach editable sources plus before/after snapshots. This in-game project covers screen raster work; your teacher can request external evidence for channels, CMYK, HDR and print workflows.",
       "outcomes": [

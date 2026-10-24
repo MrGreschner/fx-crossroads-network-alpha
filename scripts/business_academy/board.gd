@@ -17,7 +17,7 @@ static func defaults(kind:String)->Dictionary:
   "service":return {"customer":0,"response":0,"quantity":2,"price":19.0}
   "agriculture":return {"system":0,"supply":60.0,"demand":50.0,"quota":40.0}
   "planning":return {"likelihood":2,"impact":3,"response":0,"milestone":0}
-  _:return {"choice":0,"cost_weight":2,"quality_weight":2,"access_weight":1,"first":3,"second":4,"third":2}
+  _:return {"choice":0}
 static func finance(m:Dictionary)->Dictionary:
  var d=defaults("finance");d.merge(m,true)
  var principal=float(d.principal);var r=float(d.rate)/1200;var months=maxi(1,int(d.months));var payment=principal/months if is_zero_approx(r) else principal*r/(1-pow(1+r,-months))
@@ -92,5 +92,5 @@ func _draw()->void:
   _:
    text_at(Vector2(25,32),"NEEDS → ALTERNATIVES → A JUSTIFIED CHOICE",19)
    for i in 3:
-    var p=Vector2(150+i*280,147);card(p-Vector2(121,79),Vector2(242,172),Color("#476b60") if i==int(m.choice) else Color("#2d4c54"));A.goods(self,p-Vector2(27,18),["cook","artisan","rental"][i],3,1.7);text_at(p+Vector2(-95,35),["Quick meals","Useful repairs","Equipment hire"][i],17);text_at(p+Vector2(-95,66),"Criteria score "+str([m.first,m.second,m.third][i]),16)
-   text_at(Vector2(25,277),"Use observation, alternatives and criteria; the highest score needs an explanation.",14)
+    var p=Vector2(150+i*280,147);card(p-Vector2(121,79),Vector2(242,172),Color("#476b60") if i==int(m.choice) else Color("#2d4c54"));A.goods(self,p-Vector2(27,18),["cook","artisan","rental"][i],3,1.7);text_at(p+Vector2(-95,35),["Quick meals","Useful repairs","Equipment hire"][i],17);text_at(p+Vector2(-95,66),"Inspect before choosing",16)
+   text_at(Vector2(25,277),"Inspect customer needs, compare resources and confirm a reasoned plan.",14)

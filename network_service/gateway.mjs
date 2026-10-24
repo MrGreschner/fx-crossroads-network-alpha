@@ -1,3 +1,4 @@
+import {createAdminDashboard} from './admin-dashboard.mjs';
 import {createEducation} from './education.mjs';
 import {createCosmeticRankings} from './cosmetic-rankings.mjs';
 import {createAccounts} from './accounts.mjs';
@@ -44,8 +45,9 @@ const education=createEducation({pool:reporting.pool,accounts,admin:reporting.ad
 const community=createCommunity({pool:reporting.pool,accounts});
 const recordRepair=createRecordRepair({pool:reporting.pool,accounts,admin:reporting.admin,invalidate:()=>community.invalidate()});
 const heroes=createHeroes({pool:reporting.pool,accounts,admin:reporting.admin});
+const adminDashboard=createAdminDashboard({pool:reporting.pool,admin:reporting.admin,state:()=>({ready,active_rooms:Number(metrics.active_rooms||0),connections:wss.clients.size,authority_hz:metrics.actual_hz??null,uptime_seconds:Math.floor(process.uptime()),services:{accounts:accounts.status(),classroom:education.status(),records:community.status(),reporting:reporting.status(),heroes:heroes.status()}})});
 const server=http.createServer(async(req,res)=>{
- try{if(await recordRepair.handle(req,res))return;if(await education.handle(req,res))return;if(await heroes.handle(req,res))return;if(await accounts.handle(req,res))return;if(await community.handle(req,res))return;if(await rankings.handle(req,res))return;if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
+ try{if(await adminDashboard.handle(req,res))return;if(await recordRepair.handle(req,res))return;if(await education.handle(req,res))return;if(await heroes.handle(req,res))return;if(await accounts.handle(req,res))return;if(await community.handle(req,res))return;if(await rankings.handle(req,res))return;if(await activity.handle(req,res))return;if(await reporting.handle(req,res))return;}catch{if(!res.headersSent)res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'Reporting unavailable'}));req.resume();return;}
  if(req.url!=='/health'){res.writeHead(404);res.end('Not found');return;}
  res.writeHead(ready?200:503,{'content-type':'application/json','cache-control':'no-store'});
  res.end(JSON.stringify({game_name:"Crossroads: Realms Beyond",ready,public_rooms:true,crown_competition:true,ranked_cosmetics:rankings.status(),community_records:community.status(),community_heroes:heroes.status(),accounts:accounts.status(),classroom:education.status(),crown_stages:18,protocol:11,simulationHz:60,snapshotHz:20,build:BUILD,...metrics,...cpu,reporting:reporting.status(),activity:activity.status(),supported_realms:JSON.parse(readFileSync(resolve(root,"content/manifest.json"),"utf8")).regions.concat(["wayfarer","between","overcharge"]),supported_modes:["arena","defense","descent","coop","battlegrounds"],gateway_clients:wss.clients.size,gateway_coalesced_snapshots:coalesced,gateway_disconnects:reasons}));

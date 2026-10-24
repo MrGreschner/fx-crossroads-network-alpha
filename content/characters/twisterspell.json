@@ -12,7 +12,7 @@
     "damage": 6,
     "cooldown": 0.55,
     "range": 350,
-    "description": "Hold LMB, then release a curved funnel. Charge caps at 1.6s: 6\u201314.4 damage per 0.5s and 36\u201361 radius. Up to four funnels last 4.2s. All slow 30%; full charge strongly pulls foes from nearby. Lightning unlocks with the passive.",
+    "description": "Hold LMB, then release a curved funnel. Retain 85% movement speed while charging. Charge caps at 1.6s: 6\u201314.4 damage per 0.5s and 36\u201361 radius. Up to four funnels last 4.2s. All slow 30%; full charge strongly pulls foes from nearby. Lightning unlocks with the passive.",
     "radius": 36,
     "max_funnels": 4,
     "ui_brief": "Charged funnel \u2022 wider damage area \u2022 strong full-charge pull"

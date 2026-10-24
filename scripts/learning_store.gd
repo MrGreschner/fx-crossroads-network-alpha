@@ -42,7 +42,7 @@ static func valid_entries(entries:Variant,module:Dictionary)->bool:
  for e in entries:
   if not e is Dictionary or not e.has_all(["stage","text","time","order"]):return false
   if not text_ok(e.text,3000) or not text_ok(e.time,50) or not e.order is int and not e.order is float or not P.number(e.order,1,1000000):return false
-  if not module.stages.any(func(s):return s.id==e.stage):return false
+  if not (module.stages+module.get("classroom_stages",[])).any(func(s):return s.id==e.stage):return false
  return true
 static func valid_refs(refs:Variant,artifacts:Dictionary)->bool:
  if not refs is Array or refs.size()>16:return false
@@ -50,10 +50,10 @@ static func valid_refs(refs:Variant,artifacts:Dictionary)->bool:
   if not id is String or not artifacts.has(id):return false
  return true
 static func valid_marks(marks:Variant,module:Dictionary)->bool:
- if not marks is Dictionary or marks.size()>module.outcomes.size():return false
+ if not marks is Dictionary or marks.size()>module.outcomes.size()+module.get("classroom_outcomes",[]).size():return false
  for id in marks:
   var m=marks[id]
-  if not module.outcomes.any(func(o):return o.id==id) or not m is Dictionary or not m.has_all(["rating","feedback","score"]):return false
+  if not (module.outcomes+module.get("classroom_outcomes",[])).any(func(o):return o.id==id) or not m is Dictionary or not m.has_all(["rating","feedback","score"]):return false
   if not m.rating in RATINGS or not text_ok(m.feedback,1500) or not P.number(m.score,-1,100):return false
  return true
 static func valid(data:Variant)->bool:
@@ -82,6 +82,7 @@ static func load_data()->Dictionary:
  var store=preload("res://scripts/profile_store.gd");var data=store.read(PATH,valid)
  if data.is_empty():data=fresh()
  if not data.has("learner_id"):data.learner_id=Crypto.new().generate_random_bytes(16).hex_encode();save(data)
+ if catalog().get(data.active,{}).get("archived",false):data.active=str(catalog()[data.active].get("replacement","DES1020"))
  data.enabled=load("res://scripts/education_access.gd").student()
  return data
 static func save(data:Dictionary)->String:

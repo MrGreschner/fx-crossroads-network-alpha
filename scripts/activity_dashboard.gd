@@ -31,7 +31,7 @@ func load_data()->void:
  if not owner_node.game_dev() or is_instance_valid(request):return
  if secret.text.length()<24:status.text="Enter your private server key (at least 24 characters).";return
  status.text="Loading aggregate trends…";request=HTTPRequest.new();request.timeout=12;request.body_size_limit=262144;add_child(request);request.request_completed.connect(completed)
- if request.request(owner_node.endpoint+"/activity/api/summary?days="+str(period.get_selected_id()),["Authorization: Basic "+Marshalls.utf8_to_base64("teacher:"+secret.text),"Accept: application/json"])!=OK:request.queue_free();request=null;status.text="Could not connect. Gameplay remains available."
+ if request.request(owner_node.endpoint+"/activity/api/summary?days="+str(period.get_selected_id()),["Authorization: Basic "+Marshalls.utf8_to_base64("admin:"+secret.text),"Accept: application/json"])!=OK:request.queue_free();request=null;status.text="Could not connect. Gameplay remains available."
 func line(text:String,color:Color=Color.WHITE)->void:
  var label=Label.new();label.text=text;label.modulate=color;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;body.add_child(label)
 func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteArray)->void:
