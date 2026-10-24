@@ -3,6 +3,10 @@ const C=preload("res://scripts/business_district/catalog.gd")
 const A=preload("res://scripts/business_district/art.gd")
 const Sim=preload("res://scripts/business_district/simulation.gd")
 var supplier_choice=0
+var browse_category="Recommended"
+var browse_query=""
+var browse_page=0
+const PAGE_SIZE=10
 var classroom=false
 var academy:Node
 var game:Node
@@ -16,6 +20,7 @@ var lighting=Node2D.new()
 var top:VBoxContainer
 var status:Label
 var title:Label
+var day_clock:Label
 var toast:Label
 var panel:PanelContainer
 var panel_body:VBoxContainer
@@ -74,18 +79,15 @@ func setup(g:Node,options:Dictionary={})->void:
   if is_instance_valid(academy):academy.capture_image())
  else:button(row,"Learning Academy",func():game.open_business_academy())
  button(row,"?",func():show_panel("help"))
- var nav=ScrollContainer.new();nav.custom_minimum_size.y=43;nav.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;top.add_child(nav)
- var tabs=HBoxContainer.new();nav.add_child(tabs)
- for v in C.visible_ventures(state):
-  var id:String=v.id
-  button(tabs,v.name,func():select(id))
+ button(row,"Reserve • transfer",func():show_panel("reserve"))
+ day_clock=label(top,"",21);day_clock.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;day_clock.size_flags_horizontal=Control.SIZE_EXPAND_FILL;day_clock.add_theme_color_override("font_color",Color("#ffe0a1"))
  status=label(top,"",16);status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status.size_flags_horizontal=Control.SIZE_EXPAND_FILL;title.clip_text=true
  var bottom=PanelContainer.new();bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE);bottom.offset_left=14;bottom.offset_right=-14;bottom.offset_top=-94;bottom.offset_bottom=-12;root.add_child(bottom);style(bottom)
  var column=VBoxContainer.new();bottom.add_child(column)
  var sc=ScrollContainer.new();sc.custom_minimum_size.y=43;sc.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;column.add_child(sc)
  var actions=HBoxContainer.new();sc.add_child(actions)
  button(actions,"Open / Close",toggle_open)
- for entry in [["Products","products"],["Materials","supplies"],["People","people"],["Equipment","fitout"],["Strategy","strategy"],["Ledger","ledger"],["District map","map"]]:
+ for entry in [["Products","products"],["Materials","supplies"],["People","people"],["Equipment","fitout"],["Strategy","strategy"],["Ledger","ledger"],["Sales & trends","trends"],["District map","map"]]:
   var key:String=entry[1];button(actions,entry[0],func():show_panel(key))
  button(actions,"Prepare one • 2",func():act(func():return sim.stock_help(state.selected)))
  toast=label(column,"",15);toast.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
@@ -94,7 +96,8 @@ func setup(g:Node,options:Dictionary={})->void:
  var pr=HBoxContainer.new();col.add_child(pr);panel_title=label(pr,"",22);panel_title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;button(pr,"×",func():panel.hide();panel_kind="";update_camera())
  var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(scroll)
  panel_body=VBoxContainer.new();panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(panel_body)
- root.resized.connect(resize_ui);resize_ui();ready_ui=true;select(state.selected);refresh()
+ root.resized.connect(resize_ui);top.minimum_size_changed.connect(func():call_deferred("resize_ui"));resize_ui();ready_ui=true;select(state.selected);refresh()
+ if not state.get("welcome45",false):state.welcome45=true;save_state();show_panel("welcome")
  toast.text="Inspect a premises, choose products, match equipment and order the actual materials. Then open."
 func style(p:PanelContainer)->void:
  var skin=StyleBoxFlat.new();skin.bg_color=Color("#203a40",.97);skin.border_color=Color("#a3b39a");skin.set_border_width_all(1);skin.set_corner_radius_all(9);skin.content_margin_left=14;skin.content_margin_right=14;skin.content_margin_top=10;skin.content_margin_bottom=10;p.add_theme_stylebox_override("panel",skin)
@@ -107,7 +110,8 @@ func button(parent:Node,text:String,callback:Callable)->Button:
 func resize_ui()->void:
  if not is_instance_valid(root):return
  var size=root.size
- panel.position=Vector2(maxf(14,size.x-minf(620,size.x-28)-14),148);panel.size=Vector2(minf(620,size.x-28),maxf(140,size.y-255))
+ var top_edge=maxf(152,top.get_parent().position.y+top.get_parent().size.y+10)
+ panel.position=Vector2(maxf(14,size.x-minf(620,size.x-28)-14),top_edge);panel.size=Vector2(minf(620,size.x-28),maxf(140,size.y-top_edge-107))
  update_camera()
 func update_camera()->void:
  if not is_instance_valid(root):return
@@ -115,6 +119,7 @@ func update_camera()->void:
  var available=root.size.x-panel.size.x-28 if is_instance_valid(panel) and panel.visible and root.size.x>1050 else root.size.x
  world.scale=Vector2.ONE*zoom;world.position=Vector2(available*.5,root.size.y*.5+12)-centre*zoom;actors.queue_redraw()
 func select(id:String)->void:
+ browse_page=0;browse_category="Recommended";browse_query=""
  state.selected=id;sim.rebuild_workers();centre=C.plot(id)+Vector2(286,188);zoom=clampf((root.size.y-235)/570.0,.5,1.2);update_camera();buildings.queue_redraw();refresh()
  if not state.businesses.has(id):show_panel("premises")
  elif panel.visible:show_panel(panel_kind)
@@ -133,16 +138,34 @@ func toggle_open()->void:
 func refresh()->void:
  if not is_instance_valid(status):return
  var b=sim.business(state.selected);var v=C.spec(state.selected)
- title.text=("CLASSROOM • " if classroom else "")+str(b.get("name",v.name)).to_upper()
+ var passed=float(b.get("elapsed",0));var current_day=int(b.get("day",0))+1
+ day_clock.text="WORKDAY %d • %s • %d full days completed • district completed openings: %d" % [current_day,("%02d:%02d remaining" % [int(maxf(0,Sim.PERIOD-passed))/60,int(maxf(0,Sim.PERIOD-passed))%60]) if b.get("open",false) else "CLOSED • ready to open",int(b.get("summary",{}).get("full_days",0)),state.periods]
+ title.text=("CLASSROOM • " if classroom else "")+str(b.get("name",v.name)).to_upper()+" • Reserve %.0f" % state.reserve
  if b.is_empty():status.text="Available premises • Acquisition %.0f • Reserve %.0f" % [sim.acquisition(state.selected),state.reserve]
  else:status.text="%s • Cash %.0f • Supplies %d • Ready %d • Sold %d • Reputation %.0f%% • %s" % ["OPEN %d:%02d" % [int(maxf(0,Sim.PERIOD-b.elapsed))/60,int(maxf(0,Sim.PERIOD-b.elapsed))%60] if b.open else "CLOSED",b.cash,b.inputs,b.stock,b.served,b.reputation,["Market day","Food festival","Craft fair","Rainy market"][int(b.day)%4]]+" • %d/%d profitable full days" % [b.summary.profitable_days,b.summary.full_days]
 func show_panel(kind:String)->void:
+ if kind!=panel_kind:browse_page=0
  if not ready_ui and kind!="premises":return
  panel_kind=kind
  for n in panel_body.get_children():panel_body.remove_child(n);n.queue_free()
  panel.show();update_camera();var id:String=state.selected;var b=sim.business(id);var v=C.spec(id)
- panel_title.text={"premises":"Your next venture","products":"Your product line","supplies":"Materials & suppliers","people":"Your people","fitout":"Fit out your premises","strategy":"Plan the next period","ledger":"Business ledger","map":"Explore the district","help":"Welcome to Market Quarter","customer":"At your business"}.get(kind,kind)
+ panel_title.text={"premises":"Your next venture","products":"Your product line","supplies":"Materials & suppliers","people":"Your people","fitout":"Fit out your premises","strategy":"Plan the next period","ledger":"Business ledger","map":"Explore the district","welcome":"Welcome • your first workday","trends":"Sales & trends","reserve":"District reserve","help":"Welcome to Market Quarter","customer":"At your business"}.get(kind,kind)
  if kind=="products" and b.get("trade","") in ["salon","daycare","minigolf"]:panel_title.text="Your services"
+ if kind=="reserve":
+  paragraph("DISTRICT RESERVE • %.2f\nThis starts at 0. It is shared expansion money, separate from each business cash balance." % state.reserve)
+  if b.is_empty():paragraph("Select an owned business on the map to transfer its cash.");return
+  paragraph("Selected business cash: %.2f. Keep working cash for wages, stock, rent and loan coverage." % b.cash)
+  var amount=SpinBox.new();amount.min_value=1;amount.max_value=100000;amount.value=100;panel_body.add_child(amount)
+  button(panel_body,"Transfer to district reserve",func():act(func():return sim.transfer(id,amount.value,true)))
+  button(panel_body,"Fund this business from reserve",func():act(func():return sim.transfer(id,amount.value,false)))
+  return
+ if kind=="welcome":
+  paragraph("WELCOME • Choose a business on the map. Its name is its brand; the descriptions below tell you what it does. The empty premises has no equipment: build a mixed shop one product at a time.")
+  paragraph("START: choose one premises → inspect its inherited guide → pick products → buy the required equipment → order each ingredient → keep cash for costs → open. Watch customers and the Ledger, then change what is not working. Your first business gets startup support. Extra businesses cost reserve savings; public play allows five.")
+  paragraph("Your reserve starts at 0. Use Reserve • transfer at the top to save business cash for expansion. Recommended products are only a starting guide. Browse categories to change or mix your goods. Trend labels change every three trading days; they are estimates, not guaranteed sales.")
+  button(panel_body,"Got it • explore the map",func():panel.hide();panel_kind="";update_camera())
+  for place in C.ventures():paragraph(place.name+" • "+place.kind+"\n"+place.description)
+  return
  if kind=="help":
   paragraph("Take over a working business, or build an empty premises from scratch. Choose a menu or product range, inspect recipes and equipment, and order each material from a supplier.")
   paragraph("An opening is three active minutes. Products need every ingredient and the correct equipment. Customers request particular products, compare prices and leave if the queue is too slow. Unused perishable stock expires; wages, rent and utilities continue while trading.")
@@ -168,14 +191,15 @@ func show_panel(kind:String)->void:
   paragraph("First venture: inherited premises include 1,200 working cash, installed equipment and starter materials. Empty premises include 2,200 cash but no equipment or stock. Further acquisitions cost %.0f from your reserve and receive no free working capital. Reserve: %.0f." % [sim.acquisition(id),state.reserve])
   var model=OptionButton.new()
   if v.get("blank",false):
-   paragraph("Choose the business model for this empty shell. You will choose its name, equipment and products yourself.")
-   for base in C.ventures().filter(func(x):return not x.get("blank",false)):model.add_item(base.kind);model.set_item_metadata(model.item_count-1,base.id)
+   paragraph("Build from scratch: Mixed goods lets you choose food, produce, clothing and crafted products item by item. Specialist services need their own operating model. Nothing is installed or stocked for you.")
+   model.add_item("Mixed goods • build item by item");model.set_item_metadata(0,"kitchen")
+   for base in C.ventures().filter(func(x):return x.id in ["salon","daycare","minigolf","rental","courier"]):model.add_item(base.kind);model.set_item_metadata(model.item_count-1,base.id)
    panel_body.add_child(model)
   else:
    paragraph("Inherited equipment")
    for eq in v.base_equipment:item_card(eq,"equipment",C.ops().equipment[eq].name,"Installed • purchase new for %.0f" % C.ops().equipment[eq].cost)
    paragraph("Current menu: "+", ".join(v.starter_products.map(func(key):return C.ops().products[key].name)))
-  button(panel_body,"Take over first premises" if not state.started else "Buy premises • %.0f" % sim.acquisition(id),func():act(func():return sim.establish(id,str(model.get_item_metadata(model.selected)) if v.get("blank",false) else ""));show_panel("products"));return
+  button(panel_body,"Take over first premises" if not state.started else "Buy premises • %.0f" % sim.acquisition(id),func():act(func():return sim.establish(id,str(model.get_item_metadata(model.selected)) if v.get("blank",false) else ""));browse_category="All" if v.get("blank",false) else "Recommended";show_panel("products"));return
  if not sim.allowed(id):paragraph("This venture is currently locked by your teacher. Its previous results remain saved; trading and changes are disabled.");return
  match kind:
   "products":products_panel(id,b)
@@ -201,6 +225,9 @@ func show_panel(kind:String)->void:
    button(panel_body,"Save reasoning",func():act(func():
     if not sim.can_manage(id,true):return false
     b.note=note.text.left(1000);sim.log_action(id,"Reasoning",b.note);return true))
+  "trends":
+   paragraph("ACTUAL SALES • named products and completed-day results. Forecast demand is separate below. A full workday is 3 active minutes; early closures are marked partial in Ledger.")
+   sales_charts(b)
   "ledger":
    if not b.services.is_empty():paragraph("Work in progress: %d appointments • material cost %.2f" % [b.services.size(),sim.work_in_progress(b)])
    paragraph("Cash %.2f • Inventory at cost %.2f • Loan due %.2f\nDistrict reserve %.0f (separate from each venture)." % [b.cash,b.input_book+b.stock_book,b.loan,state.reserve])
@@ -237,13 +264,14 @@ func item_card(key:String,kind:String,name:String,detail:String)->VBoxContainer:
  var art=TextureRect.new();art.texture=A.item_texture(key,kind);art.custom_minimum_size=Vector2(78,78);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(art)
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(col);var heading=label(col,name,19);heading.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;var text=label(col,detail,15);text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;return col
 func products_panel(id:String,b:Dictionary)->void:
+ paragraph("Empty premises: no inherited menu or equipment. Choose individual goods from All or a category, then buy their required machines and ingredients. You may mix goods categories." if C.spec(id).get("blank",false) else "Starter guide: "+C.spec(b.trade).get("tip",C.spec(id).tip)+" Recommended shows the inherited menu; browse categories to change it.")
  if b.trade in ["salon","daycare","minigolf"]:paragraph("These are services, not goods to take away. Reception admits a customer only when capacity and time remain; payment is recorded when service finishes. Prepare a small buffer of supply kits to shorten waits. Early closure cancels unfinished work and writes off its materials.")
- if not b.trade in ["salon","daycare","minigolf"]:paragraph("Choose what this business actually sells. Every ingredient and required machine must be available. Recipe costs below are base material costs; supplier prices, freight, wages, rent and waste add to your actual cost. The ready-stock limit is how many prepared units to hold at once; production replenishes sold units. Lower limits reduce waste but can increase waiting.")
- for p in C.menu(b.trade):
+ if not b.trade in ["salon","daycare","minigolf"]:paragraph("Recipes show the ingredients and machines you need. Base cost excludes supplier fees, wages and waste. Keep a small ready-stock buffer to limit spoilage. Goods shops can mix categories.")
+ for p in browser_items(C.menu(b.trade),b):
   var key:String=p.id;var enabled=b.menu.has(key) and b.menu[key].enabled;var ingredients=[];var machines=[]
   for m in p.materials:ingredients.append("%d × %s" % [p.materials[m],C.ops().materials[m].name])
   for eq in p.equipment:machines.append(("✓ " if b.assets.has(eq) else "Missing: ")+C.ops().equipment[eq].name)
-  var col=item_card(key,"product",p.name,("ON YOUR MENU" if enabled else "Not offered")+" • ready %d • missed requests %d\n%s\nEquipment: %s\nBase recipe %.2f • %.0fs at 1× preparation • %s\n%s" % [sim.quantity(b.finished,key),int(b.get("missed",{}).get(key,0)),", ".join(ingredients),", ".join(machines),C.unit_cost(key),p.prep,("appointment • capacity limited" if p.get("service_duration",0)>0 else "durable stock") if p.life==0 else "%d market-day shelf life" % p.life,sim.ready_recipe(id,key)])
+  var col=item_card(key,"product",p.name,("ON YOUR MENU" if enabled else "Not offered")+" • ready %d • missed requests %d\n%s\nEquipment: %s\nBase recipe %.2f • %.0fs at 1× preparation • %s\n%s" % [sim.quantity(b.finished,key),int(b.get("missed",{}).get(key,0)),", ".join(ingredients),", ".join(machines),C.unit_cost(key),p.prep,("appointment • capacity limited" if p.get("service_duration",0)>0 else "durable stock") if p.life==0 else "%d market-day shelf life" % p.life,sim.ready_recipe(id,key)+"\n"+sim.trend_text(id,key)])
   var recipe=HFlowContainer.new();recipe.add_theme_constant_override("h_separation",5);col.add_child(recipe)
   for m in p.materials:
    var ingredient=VBoxContainer.new();recipe.add_child(ingredient);var icon=TextureRect.new();icon.texture=A.item_texture(m,"material");icon.custom_minimum_size=Vector2(38,38);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;ingredient.add_child(icon);label(ingredient,"×"+str(int(p.materials[m])),13)
@@ -301,11 +329,12 @@ func equipment_panel(id:String,b:Dictionary)->void:
  if b.equipment>0:paragraph("Earlier workstation improvements retained: level %d adds preparation efficiency." % b.equipment)
  paragraph("Inherited machines can be sold for 55% of their purchase value, adjusted for condition. New product lines may need different equipment. Close before installation, sale or maintenance.")
  var needed={}
- for product in C.menu(b.trade):
+ for product_key in b.menu:
+  var product=C.ops().products[product_key]
   for eq in product.equipment:needed[eq]=true
  for eq in b.assets:needed[eq]=true
- for eq in needed:
-  var key:String=eq;var info=C.ops().equipment[key];var owned=b.assets.has(key)
+ for info in browser_items(C.ops().equipment.values(),b,"equipment",needed):
+  var key:String=info.id;var owned=b.assets.has(key)
   var col=item_card(key,"equipment",info.name,"Installed %d • condition %.0f%% • resale per unit %.0f" % [int(b.assets[key].count),b.assets[key].condition*100,b.assets[key].paid/maxi(1,int(b.assets[key].count))*.55*b.assets[key].condition] if owned else "Not installed • purchase %.0f" % info.cost)
   if owned:button(col,"Buy another • %.0f" % info.cost,func():act(func():return sim.equipment(id,key,true)))
   button(col,"Sell one unit…" if owned else "Buy & install • %.0f" % info.cost,func():
@@ -454,3 +483,55 @@ func download_report()->void:
 
 func pause_for_access(message:String)->void:
  sim.restricted=true;sim.access=[];sim.last_notice="";toast.text=message;set_process(false)
+
+func browser_items(items:Array,b:Dictionary,kind:String="product",needed:Dictionary={})->Array:
+ var controls=HFlowContainer.new();panel_body.add_child(controls)
+ var categories=["Recommended","On my menu","All"] if kind=="product" else ["Recommended","Installed","All"]
+ if kind=="product":
+  for p in items:
+   var cat=str(p.get("category",p.trade.capitalize()))
+   if cat not in categories:categories.append(cat)
+ var pick=OptionButton.new();controls.add_child(pick)
+ for category in categories:pick.add_item(category)
+ pick.select(maxi(0,categories.find(browse_category)))
+ pick.item_selected.connect(func(i:int):browse_category=categories[i];browse_page=0;show_panel(panel_kind))
+ var search=LineEdit.new();search.placeholder_text="Search name • press Enter";search.text=browse_query;search.custom_minimum_size.x=210;controls.add_child(search);search.text_submitted.connect(func(text:String):browse_query=text.strip_edges();browse_page=0;show_panel(panel_kind))
+ var filtered=[]
+ for item in items:
+  var include=true
+  if browse_category=="Recommended":include=item.id in C.spec(b.trade).get("starter_products",[]) if kind=="product" else needed.has(item.id)
+  elif browse_category=="On my menu":include=b.menu.has(item.id)
+  elif browse_category=="Installed":include=b.assets.has(item.id)
+  elif browse_category!="All" and kind=="product":include=str(item.get("category",item.trade.capitalize()))==browse_category
+  if include and (browse_query.is_empty() or browse_query.to_lower() in str(item.name).to_lower()):filtered.append(item)
+ var pages=maxi(1,ceili(filtered.size()/float(PAGE_SIZE)));browse_page=clampi(browse_page,0,pages-1)
+ paragraph("%d matches • page %d/%d • %d shown at a time" % [filtered.size(),browse_page+1,pages,PAGE_SIZE])
+ var row=HBoxContainer.new();panel_body.add_child(row)
+ button(row,"Previous",func():browse_page=maxi(0,browse_page-1);show_panel(panel_kind)).disabled=browse_page==0
+ button(row,"Next",func():browse_page=mini(pages-1,browse_page+1);show_panel(panel_kind)).disabled=browse_page>=pages-1
+ return filtered.slice(browse_page*PAGE_SIZE,mini(filtered.size(),(browse_page+1)*PAGE_SIZE))
+
+func sales_charts(b:Dictionary)->void:
+ var totals={}
+ for report in b.history:
+  for key in report.get("products_sold",{}):totals[key]=int(totals.get(key,0))+int(report.products_sold[key])
+ if b.open:
+  for key in b.observations:totals[key]=int(totals.get(key,0))+int(b.observations[key])
+ var keys=totals.keys();keys.sort_custom(func(a,c):return totals[a]>totals[c])
+ paragraph("Top products • units sold across the retained last 24 reports plus this opening")
+ if keys.is_empty():paragraph("No sales yet. Open a business and serve customers; your actual sales chart will appear here.")
+ var maximum=1
+ for key in keys:maximum=maxi(maximum,int(totals[key]))
+ for key in keys.slice(0,10):
+  var latest=int(b.history[-1].get("products_sold",{}).get(key,0)) if not b.history.is_empty() else 0
+  var previous=int(b.history[-2].get("products_sold",{}).get(key,0)) if b.history.size()>1 else 0
+  paragraph(C.ops().products[key].name+" • "+str(totals[key])+" sold • last day %d vs %d before (%+d)" % [latest,previous,latest-previous])
+  var bar=ProgressBar.new();bar.min_value=0;bar.max_value=maximum;bar.value=totals[key];bar.show_percentage=false;bar.custom_minimum_size.y=16;panel_body.add_child(bar)
+ paragraph("Daily sales • last eight openings; bars are units, not revenue")
+ var recent=b.history.slice(maxi(0,b.history.size()-8))
+ for report in recent:
+  paragraph("Day %d%s • %d sold • profit %.2f" % [report.day," (partial)" if not report.get("full_day",false) else "",report.sold,report.profit])
+  var bar=ProgressBar.new();bar.max_value=maxi(1,recent.map(func(h):return h.sold).max());bar.value=report.sold;bar.show_percentage=false;bar.custom_minimum_size.y=14;panel_body.add_child(bar)
+ paragraph("OUTLOOK • seeded simulated demand; not a promise or an assessment mark. Refreshes every three workdays. Missing stock, price and queues can still prevent sales.")
+ for key in b.menu:
+  if b.menu[key].enabled:paragraph(C.ops().products[key].name+" • "+sim.trend_text(state.selected,key))

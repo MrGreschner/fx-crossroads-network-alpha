@@ -2,6 +2,7 @@ extends RefCounted
 static func open(legacy:Node)->void:
  var A=preload("res://scripts/education_access.gd")
  if not A.student() and not A.review_allowed():return
+ if A.student():legacy.game.open_business_academy();return
  var S=preload("res://scripts/learning_store.gd");var game=legacy.game;game.presentation.window("EDUCATION GUIDE • CHOOSE YOUR PROJECT","education_guide");var body=game.presentation.content;var d=S.load_data()
  game.presentation.label(body,"Build, test, reflect and submit. Progress shows evidence collected; a teacher decides outcome achievement.",17)
  for code in S.catalog():

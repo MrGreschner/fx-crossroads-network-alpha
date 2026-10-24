@@ -86,9 +86,11 @@ func rebrand(id:String,name:String)->bool:
 func select_product(id:String,key:String,enabled:bool)->bool:
  if not can_manage(id,true) or not C.ops().products.has(key):return false
  var b=business(id);var p=C.ops().products[key]
- if p.trade!=b.trade:return false
+ if not C.can_offer(b.trade,p):return false
+ if not b.menu.has(key) and b.menu.size()>=40:last_notice="Keep up to 40 product plans per business. Remove a product from the menu before adding more.";return false
  if not b.menu.has(key):b.menu[key]={"enabled":enabled,"price":float(p.price),"target":8}
  else:b.menu[key].enabled=enabled
+ if not enabled:b.menu.erase(key)
  log_action(id,"Product line",p.name+": "+("enabled" if enabled else "removed from menu"));return true
 func product_plan(id:String,key:String,price:float,target:int)->bool:
  if not can_manage(id,true):return false
@@ -229,11 +231,12 @@ func ready_recipe(id:String,key:String)->String:
  for m in p.materials:
   if quantity(b.materials,m)<p.materials[m]:return "Missing "+C.ops().materials[m].name
  return "Ready to prepare"
-func skill(id:String,role_name:String)->float:
+func skill(id:String,role_name:String,domain:String="")->float:
  var b=business(id);var total=.65 if role_name=="craft" else .8
+ var active_domain=domain if not domain.is_empty() else str(b.trade)
  for e in b.employees:
   if e.role!=role_name:continue
-  var p=C.person(int(e.id));var value=float(p.get("skills",{}).get(b.trade,p.get("craft",.8))) if role_name=="craft" else float(p.get("service",.8)) if role_name=="serve" else float(p.get("logistics",.8))
+  var p=C.person(int(e.id));var value=float(p.get("skills",{}).get(active_domain,p.get("craft",.8))) if role_name=="craft" else float(p.get("service",.8)) if role_name=="serve" else float(p.get("logistics",.8))
   var morale=float(e.get("morale",75))/100
   total+=value*(.7+morale*.3)*float(p.get("reliability",1.0))+.08*int(b.training)
  return total
@@ -265,7 +268,7 @@ func tick_business(id:String,dt:float)->void:
    if p.shop==id and p.get("product","") in choices and quantity(b.finished,p.product)==0:
     if b.production_key!=p.product:b.production_key=p.product;b.produce=0.0
     break
-  var product=C.ops().products[b.production_key];var speed=(skill(id,"craft")+.12*b.equipment)*(1+.08*b.training)
+  var product=C.ops().products[b.production_key];var speed=(skill(id,"craft",product.trade)+.12*b.equipment)*(1+.08*b.training)
   if b.trade=="courier":speed*=1+.15*b.route
   var parallel=12
   for eq in product.equipment:parallel=mini(parallel,int(b.assets[eq].get("count",1)))
@@ -282,7 +285,7 @@ func make_one(id:String,key:String)->bool:
  var b=business(id);var product=C.ops().products[key];var cost=0.0;var q=0.0
  for m in product.materials:
   var used=take(b.materials,m,int(product.materials[m]));cost+=used.cost;q+=used.quality
- q=q/maxi(1,product.materials.size());q*=clampf(.8+skill(id,"craft")*.13,.8,1.2)
+ q=q/maxi(1,product.materials.size());q*=clampf(.8+skill(id,"craft",product.trade)*.13,.8,1.2)
  add_lot(b.finished,key,1,cost,q)
  for eq in product.equipment:
   var asset=b.assets[eq];asset.condition=maxf(.1,asset.condition-(.004 if eq in ["stove","forge","oven","fryer","coffee_machine","saw"] else .002)/int(asset.get("count",1)));b.asset_use[eq]=float(b.asset_use.get(eq,0))+float(product.prep)
@@ -434,3 +437,12 @@ func divest(id:String)->bool:
  state.divestments.append({"id":id,"name":b.name,"days":int(b.day),"profit":float(b.summary.profit),"returned":value})
  if state.divestments.size()>20:state.divestments.pop_front()
  state.reserve+=value;state.businesses.erase(id);state.started=true;end_customers(id);rebuild_workers();changed=true;last_notice="Venture sold; %.2f returned to the expansion reserve. Startup support cannot be claimed again." % value;return true
+
+func demand_factor(id:String,key:String)->float:
+ var b=business(id);var cycle=int(b.day)/3;var token=str(state.seed)+":"+str(cycle)+":"+key
+ var value=posmod(token.hash(),100)
+ var seasonal=1.18 if (posmod(int(b.day),4)==1 and C.ops().products[key].trade in ["kitchen","cafe","dessert","garden","fishery"]) else .78 if posmod(int(b.day),4)==3 and C.ops().products[key].trade=="minigolf" else 1.0
+ return ([.55,.8,1.0,1.25,1.6][mini(4,value/20)])*seasonal
+func trend_text(id:String,key:String)->String:
+ var factor=demand_factor(id,key)
+ return ("Cooling" if factor<.85 else "Growing" if factor>1.2 else "Steady")+" • demand ×%.2f • outlook changes every 3 trading days" % factor

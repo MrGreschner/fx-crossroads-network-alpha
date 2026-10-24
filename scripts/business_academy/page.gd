@@ -143,23 +143,23 @@ func render_home()->void:
   var p=student.get("policy",{"slots":1,"placement":10})
   label(body,"%d / %d active slots • starting level %d" % [active_count,int(p.slots),int(p.placement)],21)
   para(body,"Submitted and revision work still uses a slot. A teacher can allow a second module or pause unfinished work. Completed modules remain recorded.")
-  if student.get("assignments",[]).is_empty():para(body,"No modules have been assigned yet. Your teacher can assign one to your class or whole student bin in Manage Class Pro. You can still read lessons and try an ungraded practice scenario.")
+  if student.get("assignments",[]).is_empty():para(body,"No modules have been assigned yet. Your teacher can assign one to your class or whole student bin in Manage Class Pro. Only modules assigned by your teacher appear here. You can still create freely in the public Studio.")
  var subjects=HBoxContainer.new();body.add_child(subjects)
  for name in ["All subjects","Business","Design","Graphics & Animation","Computer Science"]:
   var value:String=name;var b=button(subjects,name,func():subject=value;render_home())
   if subject==name:UI.accent(b)
- para(body,"23 assessed modules • drafts are not advertised as credit-ready • main numbered outcomes only; supporting examples are not separate compulsory tasks.",16)
+ para(body,"Choose an assigned module below. One module has several outcome parts; submit the parts together for teacher review. You can save and submit partial progress for feedback.",16)
  for level in [10,20,30]:
   label(body,"LEVEL "+str(level),24)
   for m in catalog.modules:
-   if int(m.level)!=level or (subject!="All subjects" and m.get("subject","Business")!=subject):continue
+   if (not teacher() and not student.get("assignments",[]).any(func(a):return a.module==m.code)) or int(m.level)!=level or (subject!="All subjects" and m.get("subject","Business")!=subject):continue
    var card=UI.card(body,m.code+" • "+m.name,str(m.get("subject","Business"))+" • "+("BUSINESS CORE" if m.core else "AVAILABLE MODULE")+" • "+m.scenario)
    var row=HBoxContainer.new();card.add_child(row)
    var picture=TextureRect.new();picture.texture=A.actor(posmod(m.code.hash(),8),0);picture.custom_minimum_size=Vector2(72,92);picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(picture)
    var info=para(row,m.brief);info.size_flags_horizontal=Control.SIZE_EXPAND_FILL
    if not m.get("requires",[]).is_empty():para(card,"Prerequisite: "+", ".join(m.requires)+" • teacher can confirm equivalent prior learning",15)
    var code_value:String=m.code
-   button(card,"Lessons & practice",func():preview(code_value))
+   if teacher():button(card,"Teacher lesson preview",func():preview(code_value))
    if teacher():continue
    for done in student.get("completions",[]):
     if done.module==m.code:para(card,("COMPLETED" if done.status=="completed" else "REOPENED FOR CORRECTION")+" • "+str(done.score)+"% • "+str(done.completed_at),16)
@@ -170,7 +170,7 @@ func render_home()->void:
     if assignment.module!=m.code:continue
     var id:String=assignment.id;button(card,"Start / open assigned module • "+assignment.title,func():call_api("start",{"assignment_id":id},"start"))
 func preview(value:String)->void:
- if busy:return
+ if busy or not teacher():return
  if dirty:write_cache()
  definition=preload("res://scripts/assessment_scope.gd").definition(module_by_code(value));code=value;attempt={};feedback=[];work={"responses":{},"models":{},"sandbox":null,"evidence":[]};dirty=false;conflicted=false;task_id=definition.tasks[0].id;screen="module";tab="Brief";render_module()
 func load_attempt(id:String)->void:
@@ -196,18 +196,19 @@ func render_module()->void:
  if not attempt.is_empty() and not attempt.get("link_active",true):para(body,"Your work is retained, but its previous teacher link is inactive. You can read or download it; ask your current teacher about a new assignment.")
  var t=task()
  var creative=definition.get("subject","Business")!="Business"
+ para(body,str(definition.get("submission_structure","One module submission; complete each outcome part below.")),17)
  if tab in ["Learn","My evidence"]:
-  var task_pick=OptionButton.new();task_pick.custom_minimum_size.y=42;body.add_child(task_pick)
-  for each in definition.tasks:task_pick.add_item(each.id.to_upper()+" • "+each.title);task_pick.set_item_metadata(task_pick.item_count-1,each.id)
-  for i in task_pick.item_count:
-   if task_pick.get_item_metadata(i)==task_id:task_pick.selected=i
-  task_pick.item_selected.connect(func(index:int):task_id=str(task_pick.get_item_metadata(index));render_module())
+  label(body,"CHOOSE AN OUTCOME PART • these are parts of this module",18)
+  var parts=HFlowContainer.new();body.add_child(parts)
+  for index in definition.tasks.size():
+   var each=definition.tasks[index];var target:String=each.id;var part_button=button(parts,"Part %d/%d • %s%s" % [index+1,definition.tasks.size(),each.title," ✓ draft" if not str(work.responses.get(each.id,"")).strip_edges().is_empty() else ""],func():task_id=target;render_module())
+   if target==task_id:UI.accent(part_button)
  if tab=="Brief":
   visual();para(body,definition.brief,21)
   if definition.has("workflow"):workflow_strip()
   label(body,"What you will demonstrate",23)
   for o in definition.outcomes:para(body,o.id+" • "+o.title+"\nEvidence: "+o.evidence)
-  para(body,"Work through the main-outcome assignments. Use the relevant creation tools or classroom business, then explain your reasoning where it adds evidence. Record sources and limitations. Class discussions, presentations and observed role-play can provide evidence when your teacher confirms it. Profit and play time do not award marks.")
+  para(body,"Work through the outcome parts of this module. Use the relevant creation tools or classroom business, then explain your reasoning where it adds evidence. Record sources and limitations. Class discussions, presentations and observed role-play can provide evidence when your teacher confirms it. Profit and play time do not award marks.")
   button(body,"Start learning",func():tab="Learn";render_module())
  elif tab=="Learn":
   visual();label(body,t.title,25);para(body,t.lesson,19);var example=UI.card(body,"Worked example",t.worked_example);para(example,"Think about it: "+t.check)
@@ -217,14 +218,22 @@ func render_module()->void:
   else:
    var actions=HBoxContainer.new();body.add_child(actions)
    var play_button=button(actions,"▶ Enter classroom business",open_simulation);UI.accent(play_button);play_button.disabled=not editable()
-   button(actions,"Capture this board",capture_image).disabled=not editable();button(actions,"Record evidence",func():tab="My evidence";render_module())
+   button(actions,"Attach image of this board",capture_image).disabled=not editable();button(actions,"Record evidence",func():tab="My evidence";render_module())
    if definition.tool in ["opportunity","comparison"]:opportunity_controls()
    else:visual();studio_controls()
    para(body,"This is a teaching model, not a market prediction. Other school subjects and adventure resources are optional.")
  elif tab=="My evidence":
-  label(body,t.title,24);para(body,"Main outcome "+", ".join(t.outcomes)+" • "+t.required_evidence);para(body,t.prompt)
+  label(body,t.title,24);para(body,"Alberta main outcome "+", ".join(t.outcomes),16)
+  var guide=t.get("guidance",{})
+  if not guide.is_empty():
+   UI.card(body,"1 • What to do",guide.steps)
+   UI.card(body,"2 • Where to find the tools/evidence",guide.where)
+   UI.card(body,"3 • What to hand in",guide.deliverable)
+   UI.card(body,"Example • a model of detail, not an answer to copy",guide.example)
+  else:para(body,t.prompt)
   if creative:artifact_picker()
-  var answer=TextEdit.new();answer.custom_minimum_size.y=220;answer.text=work.responses.get(t.id,"");answer.editable=editable();answer.placeholder_text="Explain your decisions, show the evidence and sources, and identify a limitation or revision. For an observed task, describe what you demonstrated so your teacher can confirm it.";body.add_child(answer)
+  else:button(body,"Open classroom to collect evidence",open_simulation).disabled=not editable();button(body,"Go to Studio board",func():tab="Studio";render_module())
+  var answer=TextEdit.new();answer.custom_minimum_size.y=220;answer.text=work.responses.get(t.id,"");answer.editable=editable();answer.placeholder_text=str(t.get("guidance",{}).get("response_starter","Write your response to the task above."));body.add_child(answer)
   answer.text_changed.connect(func():work.responses[t.id]=answer.text.left(8000);mark_dirty())
   if work.sandbox!=null:
    para(body,"Saved classroom business • %d completed trading periods • %d visitors" % [work.sandbox.periods,work.sandbox.visitors])
@@ -238,13 +247,14 @@ func render_module()->void:
     var index:int=n;button(box,"Remove this copy",func():work.artifacts.remove_at(index);mark_dirty();render_module())
   for image_index in work.get("evidence",[]).size():
    var image=work.evidence[image_index]
+   para(body,"Attached image %d • %s" % [image_index+1,image.title],16)
    var im=Image.new()
    if im.load_png_from_buffer(Marshalls.base64_to_raw(image.png))==OK:
     var picture=TextureRect.new();picture.texture=ImageTexture.create_from_image(im);picture.custom_minimum_size=Vector2(240,160);picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;body.add_child(picture)
    if editable():
     var index:int=image_index;button(body,"Remove this screenshot",func():work.evidence.remove_at(index);mark_dirty();render_module())
   var actions=HBoxContainer.new();body.add_child(actions);button(actions,"Save draft now",save_draft).disabled=attempt.is_empty() or not editable();button(actions,"Download my work",func():download({"module":definition,"attempt":attempt.get("id","practice"),"work":work}))
-  if not attempt.is_empty():button(actions,"Submit frozen work",submit_work).disabled=not editable()
+  if not attempt.is_empty():button(actions,"Submit module for review • all parts",submit_work).disabled=not editable()
   para(body,"Submissions freeze the current answers, visual models, screenshots and business records. Later revisions keep earlier submissions intact. Partial work may be submitted for feedback; your teacher decides whether each main outcome is demonstrated.")
  elif tab=="Feedback":
   if feedback.is_empty():para(body,"No returned feedback yet. Draft grades are private. Your teacher can return comments for revision or record completion after assessing every main outcome.")
@@ -356,15 +366,16 @@ func if_ready_render()->void:
  if screen=="module":render_module()
 func capture_image()->void:
  if not editable():return
- if work.get("evidence",[]).size()>=3:message("Three screenshots are attached. Keep the most relevant views; your data and answers are saved separately.");return
+ if work.get("evidence",[]).size()>=12:message("Twelve screenshots are attached. Remove an unnecessary image before adding another.");return
  await RenderingServer.frame_post_draw
  var image=get_viewport().get_texture().get_image()
  if image==null:return
  var factor=minf(1,minf(960.0/image.get_width(),720.0/image.get_height()));image.resize(maxi(1,int(image.get_width()*factor)),maxi(1,int(image.get_height()*factor)),Image.INTERPOLATE_LANCZOS)
  var bytes=image.save_png_to_buffer()
  if bytes.size()>650000:message("This image is too large. Use a simpler view.");return
+ if JSON.stringify(work).length()+ceili(bytes.size()*4.0/3)>5000000:message("Your evidence is near the upload limit. Remove unnecessary images or download a copy first.");return
  if not work.has("evidence"):work.evidence=[]
- work.evidence.append({"title":code+" • "+tab,"png":Marshalls.raw_to_base64(bytes)});mark_dirty();write_cache();message("Screenshot attached to your current module draft.")
+ work.evidence.append({"title":code+" • "+task_id+" • "+tab,"png":Marshalls.raw_to_base64(bytes)});mark_dirty();write_cache();message("Screenshot attached to your current module draft.")
 func cache_path()->String:
  var id=actor_id;var regex=RegEx.new();regex.compile("^[a-f0-9]{32}$")
  return "user://fx_business_draft_"+id+".json" if regex.search(id)!=null else ""

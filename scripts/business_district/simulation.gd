@@ -29,10 +29,10 @@ func spawn_customer(id:String)->void:
  if keys.is_empty():return
  next_id+=1
  var weights=0.0
- for key in keys:weights+=C.ops().products[key].demand
+ for key in keys:weights+=C.ops().products[key].demand*demand_factor(id,key)
  var pick=rng.randf()*weights;var product=keys[0]
  for key in keys:
-  pick-=C.ops().products[key].demand
+  pick-=C.ops().products[key].demand*demand_factor(id,key)
   if pick<=0:product=key;break
  var unavailable=C.menu(b.trade).filter(func(x):return not b.menu.has(x.id) or not b.menu[x.id].enabled)
  if rng.randf()<.2 and not unavailable.is_empty():product=unavailable[rng.randi_range(0,unavailable.size()-1)].id
@@ -50,7 +50,7 @@ func step(dt:float)->void:
    var probability=.34+float(b.ad)*.008+float(b.brand)*.035+float(b.reputation)*.0015
    var appeal=0.0
    for key in b.menu:
-    if b.menu[key].enabled:appeal+=C.ops().products[key].demand
+    if b.menu[key].enabled:appeal+=C.ops().products[key].demand*demand_factor(id,key)
    probability*=clampf(appeal/2.6,.45,1.4)
    var event=int(b.day)%4
    if event==1 and b.trade in ["kitchen","garden","fishery"]:probability*=1.3

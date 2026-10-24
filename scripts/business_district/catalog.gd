@@ -94,8 +94,12 @@ static func person(id:int)->Dictionary:
  var old=all().staff
  return old[posmod(id,old.size())]
 static func trade(id:String,b:Dictionary)->String:return str(b.get("trade","kitchen" if spec(id).get("blank",false) else id))
+static func can_offer(trade_id:String,p:Dictionary)->bool:
+ return p.trade==trade_id or (trade_id not in ["salon","daycare","minigolf","rental","courier"] and p.trade not in ["salon","daycare","minigolf","rental","courier"])
+static var menu_cache:Dictionary={}
 static func menu(trade_id:String)->Array:
- return ops().products.values().filter(func(p):return p.trade==trade_id)
+ if not menu_cache.has(trade_id):menu_cache[trade_id]=ops().products.values().filter(func(p):return can_offer(trade_id,p))
+ return menu_cache[trade_id]
 static func unit_cost(product_id:String)->float:
  var p=ops().products[product_id];var total=0.0
  for m in p.materials:total+=ops().materials[m].cost*p.materials[m]
@@ -154,12 +158,12 @@ static func clean_name(value:String)->String:
 static func valid_operations(b:Dictionary)->bool:
  if b.get("operations")!=2:return not b.has("operations")
  for key in ["menu","materials","finished","assets","observations"]:
-  if not b.get(key) is Dictionary or b[key].size()>80:return false
+  if not b.get(key) is Dictionary or b[key].size()>{"menu":40,"materials":400,"finished":400,"assets":250,"observations":560}[key]:return false
  if not b.get("trade") in ["kitchen","workshop","clothier","fishery","garden","mine","store","courier","rental","salon","daycare","minigolf","dessert","cafe"] or not clean_name(b.name).is_empty():return false
  if not b.get("failed") is bool or not whole(b.get("arrears"),0,1000000) or not b.get("production_key") is String:return false
  for key in b.menu:
   var m=b.menu[key]
-  if not ops().products.has(key) or ops().products[key].trade!=b.trade or not m is Dictionary or not m.get("enabled") is bool or not number(m.get("price"),1,ops().products[key].price*3) or not whole(m.get("target"),1,40):return false
+  if not ops().products.has(key) or not can_offer(b.trade,ops().products[key]) or not m is Dictionary or not m.get("enabled") is bool or not number(m.get("price"),1,ops().products[key].price*3) or not whole(m.get("target"),1,40):return false
  for kind in ["materials","finished"]:
   var definitions=ops().materials if kind=="materials" else ops().products;var units=0;var total=0.0
   for key in b[kind]:

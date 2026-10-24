@@ -244,11 +244,17 @@ func land()->void:
  phase="landed";catch_frame=PanelContainer.new();UI.apply(catch_frame);hud.add_child(catch_frame)
  catch_frame.position=Vector2(game.get_viewport_rect().size.x-365,205);catch_frame.custom_minimum_size=Vector2(340,0)
  var col=VBoxContainer.new();catch_frame.add_child(col);var spec:Dictionary=C.fish()[pending.species]
+ var rarity_colour=Color({"Legendary":"#ffd36f","Mystical":"#c59aff","Fabled":"#ff91c9"}.get(str(spec.rarity),"#e9dfc5"))
+ if str(spec.rarity) in ["Legendary","Mystical","Fabled"]:
+  var ribbon=label(col,"✦ "+str(spec.rarity).to_upper()+" CATCH!",24);ribbon.modulate=rarity_colour
+  label(col,"A remarkable find • "+str(spec.name),15).modulate=rarity_colour
+  var skin=UI.box("#173641","#"+rarity_colour.to_html(false),10,14);catch_frame.add_theme_stylebox_override("panel",skin)
+  ribbon.modulate.a=.2;var reveal=ribbon.create_tween();reveal.tween_property(ribbon,"modulate:a",1.0,.45)
  if C.is_trophy(pending):
   label(col,"★ TROPHY FISH! ★",25).modulate=Color("#ffdb7d")
   label(col,"250%+ of species average • +50% catch XP",15).modulate=Color("#ffdb7d")
  label(col,str(spec.name),23).modulate=Color(str(spec.color));picture(col,str(pending.species),Vector2(210,110))
- label(col,"%s • %.2f kg • %.1f cm%s" % [spec.rarity,pending.kg,pending.cm," • TROPHY SIZE" if C.is_trophy(pending) else ""],16)
+ label(col,"%s • %.2f kg • %.1f cm%s" % [spec.rarity,pending.kg,pending.cm," • TROPHY SIZE" if C.is_trophy(pending) else ""],16).modulate=rarity_colour
  label(col,C.size_summary(pending),16).modulate=Color("#ffe1a7")
  var previous:Dictionary=records().state().journal.get(str(pending.species),{})
  var record_text="First of this species — your first size record!" if previous.is_empty() else "Your largest before this catch: %.2f kg / %.1f cm" % [previous.kg,previous.cm]

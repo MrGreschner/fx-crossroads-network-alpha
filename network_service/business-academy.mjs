@@ -54,7 +54,7 @@ export function validArtifacts(list){return Array.isArray(list)&&list.length<=6&
 export function validWork(work,definition){
  if(!object(work)||!object(work.responses)||!object(work.models)||JSON.stringify(work).length>5200000)return false;
  if(!validArtifacts(work.artifacts||[]))return false;
- const images=work.evidence||[];if(!Array.isArray(images)||images.length>3)return false;
+ const images=work.evidence||[];if(!Array.isArray(images)||images.length>12)return false;
  for(const image of images){if(!object(image)||typeof image.title!=='string'||image.title.length>150||typeof image.png!=='string'||image.png.length>900000||!/^[A-Za-z0-9+/]*={0,2}$/.test(image.png))return false;const bytes=Buffer.from(image.png,'base64');if(bytes.length<33||bytes.length>650000||bytes.readUInt32BE(8)!==13||bytes.toString("ascii",12,16)!=="IHDR"||!bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))||bytes.readUInt32BE(16)>960||bytes.readUInt32BE(20)>720||!bytes.readUInt32BE(16)||!bytes.readUInt32BE(20))return false;}
  const keys=new Set([...definition.tasks,...(definition.classroom_tasks||[])].map(t=>t.id));
  if(!Object.entries(work.responses).every(([k,v])=>keys.has(k)&&typeof v==='string'&&v.length<=8000))return false;
@@ -72,8 +72,8 @@ export function createBusinessAcademy({pool,assignmentFor,ownClass,studentFor}={
  async function lockAccount(tx,student){const q=await tx.query("SELECT id FROM crossroads_accounts WHERE id=$1 AND role='student' AND NOT disabled FOR UPDATE",[student]);if(!q.rows.length)fail(403,'Student access is no longer active.');}
  async function findAttempt(tx,a,id,write=false){
   if(!/^[a-f0-9]{32}$/.test(String(id||'')))fail(400,'Choose a valid module attempt.');
-  const q=await tx.query(`SELECT b.*,x.archived assignment_archived,ba.settings,(${linked}) link_active FROM crossroads_business_attempts b JOIN crossroads_assignments x ON x.id=b.assignment_id JOIN crossroads_business_assignments ba ON ba.assignment_id=x.id WHERE b.id=$1 AND ${a.role==='teacher'?'b.teacher':'b.student'}=$2 ${a.role==='teacher'?`AND ${linked}`:''}${write?' FOR UPDATE OF b':''}`,[id,a.id]);
-  if(!q.rows.length)fail(404,'This module attempt is not available to your account.');return q.rows[0];
+  const q=await tx.query(`SELECT b.*,x.archived assignment_archived,x.class_id,ba.settings,(${linked}) link_active FROM crossroads_business_attempts b JOIN crossroads_assignments x ON x.id=b.assignment_id JOIN crossroads_business_assignments ba ON ba.assignment_id=x.id WHERE b.id=$1 AND ${a.role==='teacher'?'b.teacher':'b.student'}=$2 ${a.role==='teacher'?`AND ${linked}`:''}${write?' FOR UPDATE OF b':''}`,[id,a.id]);
+  if(!q.rows.length)fail(404,'This module attempt is not available to your account.');if(a.role==='student'&&(q.rows[0].assignment_archived||!q.rows[0].link_active||(q.rows[0].class_id&&!(await tx.query('SELECT 1 FROM crossroads_class_students WHERE class_id=$1 AND student=$2',[q.rows[0].class_id,a.id])).rows.length)))fail(403,'This module is no longer assigned to you. Your teacher retains your records.');return q.rows[0];
  }
  async function hydrate(q,attempt,work){
   let value={...work};if(work.evidence?.some(e=>e.hash)){const rows=await q.query('SELECT hash,png FROM crossroads_business_evidence WHERE attempt=$1 AND hash=ANY($2::text[])',[attempt,work.evidence.map(e=>e.hash).filter(Boolean)]),images=new Map(rows.rows.map(r=>[r.hash,r.png]));value.evidence=work.evidence.map(e=>({title:e.title,png:e.png||images.get(e.hash)||''}));}
@@ -100,7 +100,14 @@ export function createBusinessAcademy({pool,assignmentFor,ownClass,studentFor}={
    let district=shared?.state??null;if(!district){const legacy=await pool.query("SELECT work->'sandbox' state FROM crossroads_business_attempts WHERE student=$1 AND teacher=$2 AND work->'sandbox' IS NOT NULL AND work->'sandbox'<>'null'::jsonb ORDER BY updated_at DESC LIMIT 1",[b.student,b.teacher]);district=legacy.rows[0]?.state??null;}
    return {venture_access:(await policy(pool,b.student)).venture_access,district,district_revision:shared?.revision??0};
   }
-  if(path==='catalog'&&method==='GET')return {catalog:{...businessCatalog,premises:premises.map(p=>({id:p.id,name:p.name,kind:p.kind,blank:p.blank}))}};
+  if(path==='catalog'&&method==='GET'){
+   let visible=businessCatalog.modules;
+   if(a.role==='student'){
+    const q=await pool.query(`SELECT DISTINCT x.module FROM crossroads_assignments x JOIN crossroads_business_assignments ba ON ba.assignment_id=x.id JOIN crossroads_teacher_students l ON l.teacher=x.teacher AND l.student=$1 JOIN crossroads_accounts t ON t.id=x.teacher WHERE NOT x.archived AND t.role='teacher' AND NOT t.disabled AND t.school_id IS NOT DISTINCT FROM $2 AND (x.class_id IS NULL OR EXISTS(SELECT 1 FROM crossroads_class_students m WHERE m.class_id=x.class_id AND m.student=$1))`,[a.id,a.school_id]);
+    const allowed=new Set(q.rows.map(x=>x.module));visible=visible.filter(m=>allowed.has(m.code));
+   }
+   return {catalog:{...businessCatalog,modules:visible,core_sequence:a.role==='teacher'?businessCatalog.core_sequence:[],premises:premises.map(p=>({id:p.id,name:p.name,kind:p.kind,blank:p.blank}))}};
+  }
   if(path==='student'&&method==='GET'){
    if(a.role!=='student')fail(403,'Student access required.');
    const available=await pool.query(`SELECT x.id,x.title,x.module,x.instructions,x.due_at,x.class_id,t.username teacher_name,ba.edition,ba.settings FROM crossroads_assignments x JOIN crossroads_business_assignments ba ON ba.assignment_id=x.id JOIN crossroads_teacher_students l ON l.teacher=x.teacher AND l.student=$1 JOIN crossroads_accounts t ON t.id=x.teacher WHERE NOT x.archived AND t.role='teacher' AND NOT t.disabled AND t.school_id IS NOT DISTINCT FROM $2 AND (x.class_id IS NULL OR EXISTS(SELECT 1 FROM crossroads_class_students m WHERE m.class_id=x.class_id AND m.student=$1)) ORDER BY x.created_at`,[a.id,a.school_id]);
@@ -112,6 +119,16 @@ export function createBusinessAcademy({pool,assignmentFor,ownClass,studentFor}={
    if(a.role==='teacher')feedback=(await pool.query('SELECT s.id,g.score,g.feedback,g.ratings,g.status,g.revision FROM crossroads_business_packets p JOIN crossroads_submissions s ON s.id=p.submission LEFT JOIN crossroads_grades g ON g.submission=s.id AND g.teacher=$2 WHERE p.attempt=$1 ORDER BY s.created_at DESC',[b.id,b.teacher])).rows;
    else feedback=(await pool.query("SELECT DISTINCT ON(s.id) s.id,g.score,g.feedback,g.ratings,g.revision,g.created_at FROM crossroads_business_packets p JOIN crossroads_submissions s ON s.id=p.submission JOIN crossroads_grade_history g ON g.submission=s.id AND g.teacher=$2 WHERE p.attempt=$1 AND g.status='returned' ORDER BY s.id,g.revision DESC",[b.id,b.teacher])).rows;
    b.work=await hydrate(pool,b.id,b.work);b.assessment_definition=assessmentDefinition(b.definition);b.venture_policy=(await policy(pool,b.student)).venture_access;return {attempt:b,feedback};
+  }
+  if(path==='venture-dashboard'&&method==='GET'){
+   if(a.role!=='teacher')fail(403,'Teacher access required.');
+   const student=url.searchParams.get('student');
+   const own=await pool.query(`SELECT st.id FROM crossroads_teacher_students l JOIN crossroads_accounts st ON st.id=l.student WHERE l.teacher=$1 AND st.id=$2 AND st.role='student' AND NOT st.disabled AND st.school_id IS NOT DISTINCT FROM $3`,[a.id,student,a.school_id]);
+   if(!own.rows.length)fail(404,'This student is not linked to you.');
+   let row=(await pool.query('SELECT state,updated_at,revision FROM crossroads_classroom_districts WHERE student=$1 AND teacher=$2',[student,a.id])).rows[0];
+   if(!row)row=(await pool.query("SELECT work->'sandbox' state,updated_at,revision FROM crossroads_business_attempts WHERE student=$1 AND teacher=$2 AND work->'sandbox' IS NOT NULL AND work->'sandbox'<>'null'::jsonb ORDER BY updated_at DESC LIMIT 1",[student,a.id])).rows[0];
+   const state=row?.state,products=JSON.parse(readFileSync(new URL('../content/business-operations.json',import.meta.url))).products;
+   return {updated_at:row?.updated_at??null,revision:row?.revision??0,reserve:state?.reserve??0,periods:state?.periods??0,businesses:Object.entries(state?.businesses||{}).map(([id,b])=>({id,name:b.name,cash:b.cash,day:(b.day||0)+1,completed_days:b.summary?.full_days||0,open:b.open,employees:b.employees?.length||0,reputation:b.reputation,loan:b.loan,inventory:b.input_book+b.stock_book,summary:b.summary||{},served:b.served,lost:b.lost,menu:Object.entries(b.menu||{}).filter(([,v])=>v.enabled).map(([key,v])=>({key,name:products[key]?.name||key,price:v.price,sold:b.observations?.[key]||0,missed:b.missed?.[key]||0})),history:(b.history||[]).slice(-12).map(h=>({day:h.day,sold:h.sold,profit:h.profit,revenue:h.revenue,lost:h.lost,full_day:h.full_day,products_sold:h.products_sold||{}}))}))};
   }
   if(method!=='POST'&&!['workspace','grade-history'].includes(path))fail(405,'POST required.');
   if(path==='start'){

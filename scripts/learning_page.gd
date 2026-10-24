@@ -28,6 +28,7 @@ var previous_menu=""
 var test_panel:PanelContainer
 func setup(owner:Node,review:bool=false,received:Dictionary={})->void:
  if not (preload("res://scripts/education_access.gd").review_allowed() if review else preload("res://scripts/education_access.gd").student()):queue_free();return
+ if not review:owner.game.open_business_academy();queue_free();return
  legacy=owner;game=legacy.game;teacher=review;remote=not received.is_empty();data=received.duplicate(true) if remote else S.load_data();module=data.active;layer=108
  if teacher and not sample:add_to_group("fx_private_assessment")
  previous_menu=game.menu;game.menu="learning"
