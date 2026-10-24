@@ -150,24 +150,28 @@ func standard(area:Node)->void:
  text(left,"REALMS • scroll to browse",15)
  var scroll=ScrollContainer.new();scroll.name="RealmListScroll";scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;left.add_child(scroll);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
  var list=VBoxContainer.new();list.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(list)
- var active_index=0;var index=0
+ var active_index=0;var index=0;var previous_tier:=""
  for id in manager.game.manifest.regions:
   if id in ["town","practice","first_steps","mistglass_rift","between"]:continue
   var data=manager.game.realms.get(id,{})
   if data.is_empty():continue
+  var tier=preload("res://scripts/realm_difficulty.gd").tier(str(id))
+  if tier!=previous_tier:
+   var heading=text(list,preload("res://scripts/realm_difficulty.gd").title(str(id)).to_upper(),13);heading.name="Difficulty_"+tier;heading.modulate=preload("res://scripts/realm_difficulty.gd").color(str(id));previous_tier=tier
   var unlocked=preload("res://scripts/realm_access.gd").unlocked(manager.game.legacy,str(id))
   var entry=button(list,("" if unlocked else "○ ")+str(data.get("name",id)),func():realm_scroll=scroll.scroll_vertical;select_realm(str(id)));entry.name="Realm_"+str(id);entry.toggle_mode=true;entry.button_pressed=selected_realm==str(id);entry.add_theme_font_size_override("font_size",15);entry.custom_minimum_size.y=57
   if manager.game.legacy.fishing_records.caught_in_realm(str(id)):entry.icon=preload("res://scripts/realm_fishing_icon.gd").texture();entry.add_theme_constant_override("icon_max_width",22)
   entry.text+="\n"+preload("res://scripts/realm_speed_cards.gd").summary(manager.game.legacy,str(id));entry.add_theme_font_size_override("font_size",13)
   if not unlocked:entry.modulate=Color("#9cacaf")
-  if selected_realm==str(id):active_index=index;UI.accent(entry)
+  preload("res://scripts/realm_difficulty.gd").style(entry,str(id))
+  if selected_realm==str(id):active_index=index
   index+=1
  restore_realm_scroll.call_deferred(scroll)
  var details=ScrollContainer.new();details.name="RealmDetailsScroll";details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;area.add_child(details);preload("res://scripts/touch_list_scroll.gd").attach(details)
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_child(col)
  var data=manager.game.realms.get(selected_realm,{})
  text(col,str(data.get("name",selected_realm)),24)
- text(col,str(data.get("difficulty_label","Explore"))+" • Solo or 2-player co-op",16).modulate=Color("#e3cc95")
+ text(col,str(data.get("difficulty_label","Explore"))+" • Solo or 2-player co-op",16).modulate=preload("res://scripts/realm_difficulty.gd").color(selected_realm)
  var unlocked=preload("res://scripts/realm_access.gd").unlocked(manager.game.legacy,selected_realm)
  text(col,str(data.get("description","Discover its creatures and defeat its guardian.")) if unlocked else preload("res://scripts/realm_access.gd").reason(manager.game.legacy,selected_realm),16)
  preload("res://scripts/realm_speed_cards.gd").build(col,manager.game.legacy,selected_realm)

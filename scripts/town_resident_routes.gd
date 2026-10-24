@@ -19,8 +19,8 @@ const NIGHT_ERRANDS={2:0,14:2}
 const ERRANDS=[
  [{"at":Vector2(760,850),"task":"shop","label":"Morning provisions"},{"at":Vector2(1180,850),"task":"deliver","label":"Town deliveries"},{"at":Vector2(1470,1180),"task":"rest","label":"Service street"},{"at":Vector2(760,1180),"task":"lunch","label":"Food stand rounds"}],
  [{"at":Vector2(-180,900),"task":"shop","label":"Market errands"},{"at":Vector2(-580,775),"task":"deliver","label":"Market office parcels"},{"at":Vector2(-815,825),"task":"repair","label":"Exchange collection"},{"at":Vector2(-850,900),"task":"rest","label":"Western street"}],
- [{"at":Vector2(900,1740),"task":"deliver","label":"Seedhouse deliveries"},{"at":Vector2(1210,1685),"task":"rest","label":"Wayfarer’s Rest"},{"at":Vector2(1600,1740),"task":"shop","label":"Southern errands"},{"at":Vector2(1700,2080),"task":"deliver","label":"Marina parcels"}],
- [{"at":Vector2(1650,1180),"task":"shop","label":"Service street shopping"},{"at":Vector2(2110,1180),"task":"rest","label":"Riverside stroll"},{"at":Vector2(2510,1150),"task":"deliver","label":"East-bank parcels"},{"at":Vector2(1800,1645),"task":"rest","label":"Neighbourhood walk"}],
+ [{"at":Vector2(900,1740),"task":"deliver","label":"Seedhouse deliveries"},{"at":preload("res://scripts/town_refresh46.gd").REST,"task":"rest","label":"Wayfarer’s Rest"},{"at":Vector2(1600,1740),"task":"shop","label":"Southern errands"},{"at":Vector2(1700,2080),"task":"deliver","label":"Marina parcels"}],
+ [{"at":Vector2(1650,1180),"task":"shop","label":"Service street shopping"},{"at":Vector2(2110,1180),"task":"rest","label":"Riverside stroll"},{"at":Vector2(2510,1150),"task":"deliver","label":"East-bank parcels"},{"at":Vector2(1800,1790),"task":"read","label":"Town notices"}],
  [{"at":Vector2(1470,1180),"task":"shop","label":"Afternoon provisions"},{"at":Vector2(1180,850),"task":"deliver","label":"Civic square parcels"},{"at":Vector2(760,850),"task":"rest","label":"Civic square stroll"},{"at":Vector2(760,1180),"task":"lunch","label":"Food stand rounds"}]
 ]
 var circuits:Dictionary={}
@@ -133,14 +133,14 @@ func daily_plan(index:int,day:int,npc:Dictionary)->Dictionary:
  var extra={}
  if day in [1,3] and index<4:extra={"start":12.0,"end":14.0,"at":Vector2(350+index%2*55,660+int(index/2)*55),"task":"picnic","label":"Family picnic"}
  elif day in [0,3] and index in [4,5]:extra={"start":10.0,"end":15.0,"at":Vector2(1665+(index-4)*70,1165),"task":"market","label":"Faraway Flavours"}
- elif day==5 and index>=6 and index<12:extra={"start":11.0,"end":16.0,"at":Vector2(800+(index-6)*54,1360),"task":"market","label":"Makers' Fair"}
+ elif day==5 and index>=6 and index<12:extra={"start":11.0,"end":16.0,"at":preload("res://scripts/town_events.gd").EVENTS.fair.at+Vector2(-100+(index-6)*40,65),"task":"market","label":"Makers' Fair"}
  elif day==4 and index>=12 and index<17:extra={"start":20.0,"end":22.0,"at":Vector2(1640+(index-12)*30,1180),"task":"lanterns","label":"Lantern Walk"}
  elif day==5 and index in [2,7,10]:extra={"start":22.0,"end":23.9,"at":Vector2(2760+index%3*35,1350),"task":"stars","label":"Stories Under Stars"}
  if day in [1,3] and index in [4,5,13]:extra={"start":10.0,"end":12.0,"at":Vector2(1500+(index%3)*35,2380),"task":"harbour_trade","label":"Marina deliveries"}
  elif day==6 and index in [0,2,8,14]:extra={"start":15.0,"end":18.0,"at":Vector2(1710+[0,2,8,14].find(index)*110,2304),"task":"fish","label":"Marina fishing afternoon"}
- if index in [1,6,11] and day in [0,2,4]:extra={"start":12.0,"end":13.0,"at":Vector2(1160+(index/5)*32,1680),"task":"tea","label":"Wayfarer’s Rest lunch"}
- elif index in [3,9,15] and day in [1,3]:extra={"start":18.0,"end":20.0,"at":Vector2(1160+(index/6)*32,1680),"task":"games","label":"Wayfarer’s Rest games"}
- elif index in [1,6,11,16] and day==6:extra={"start":16.0,"end":19.0,"at":Vector2(1140+(index/5)*32,1680),"task":"stories","label":"Wayfarer’s Rest stories"}
+ if index in [1,6,11] and day in [0,2,4]:extra={"start":12.0,"end":13.0,"at":preload("res://scripts/town_refresh46.gd").REST+Vector2(-48+(index/5)*32,0),"task":"tea","label":"Wayfarer’s Rest lunch"}
+ elif index in [3,9,15] and day in [1,3]:extra={"start":18.0,"end":20.0,"at":preload("res://scripts/town_refresh46.gd").REST+Vector2(-48+(index/6)*32,0),"task":"games","label":"Wayfarer’s Rest games"}
+ elif index in [1,6,11,16] and day==6:extra={"start":16.0,"end":19.0,"at":preload("res://scripts/town_refresh46.gd").REST+Vector2(-64+(index/5)*32,0),"task":"stories","label":"Wayfarer’s Rest stories"}
  if not extra.is_empty():
   events=events.filter(func(e):return float(e.hour)<float(extra.start) or float(e.hour)>float(extra.end))
   events.append({"hour":extra.start,"stop":{"at":extra.at,"task":extra.task,"inside":false,"label":extra.label}})

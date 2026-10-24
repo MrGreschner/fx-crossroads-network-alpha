@@ -184,10 +184,10 @@ func refresh()->void:
    button("Load my cloud profile",func():call_api("save",null,"load"))
    var owner_copy=STORE.read("user://fx_cloud_owner.json")
    if str(owner_copy.get("id",""))==str(user.id) and int(owner_copy.get("revision",-1))==revision:
-    button("Recover this account’s newer local progress → save to cloud",func():loaded=true;conflict=false;backup_local(make_bundle(legacy()));save_cloud(true))
+    button("Recover this account’s newer local progress - save to cloud",func():loaded=true;conflict=false;backup_local(make_bundle(legacy()));save_cloud(true))
   else:
    label("Your account is ready! Now choose your starting point. You can bring this device’s progress into the cloud or begin a new adventure. We back up the local profile before replacing anything.")
-   button("Keep this device’s progress → create cloud save",func():
+   button("Keep this device’s progress - create cloud save",func():
     var current=legacy();guest=make_bundle(current);backup_local(guest);STORE.write("user://fx_cloud_guest.json",guest);loaded=true;revision=0;mark_owner();save_cloud(true))
    button("Start a fresh cloud profile",func():
     var current=legacy();guest=make_bundle(current);backup_local(guest);STORE.write("user://fx_cloud_guest.json",guest)

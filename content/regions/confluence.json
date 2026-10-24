@@ -12,6 +12,6 @@
   "boss_health": 1200,
   "xp_per_level": 3,
   "boss_secondary": "confluence",
-  "difficulty_label": "Medium\u2013Hard: twin sluices, copper relays and the Divided Heart",
-  "difficulty_tier": "hard"
+  "difficulty_label": "Moderate: twin sluices, copper relays and the Divided Heart",
+  "difficulty_tier": "moderate"
 }

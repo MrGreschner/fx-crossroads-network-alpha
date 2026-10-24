@@ -37,7 +37,7 @@ const ROADS=[
  [Vector2(-1000,2080),Vector2(-560,2080),Vector2(-560,1740),Vector2(-420,1740)],
  [Vector2(325,2030),Vector2(325,2120),Vector2(100,2120),Vector2(100,1740)],
  [Vector2(900,1615),Vector2(900,1740)],
- [Vector2(1375,1520),Vector2(1375,1740)],
+ [Vector2(1375,1520),Vector2(1375,1550),Vector2(1600,1550)],
  [Vector2(1800,1550),Vector2(1800,1645),Vector2(1600,1645),Vector2(1600,1740)],
  [Vector2(1600,1180),Vector2(1600,1645)],
  [Vector2(2175,1580),Vector2(2175,1645),Vector2(1800,1645)]

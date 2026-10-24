@@ -18,6 +18,8 @@ var old_process=true
 var old_visible=true
 var old_menu=""
 var catalog:Dictionary={}
+var project_progress:Dictionary={}
+var pending_checkpoint=""
 var pending_business_restart=""
 var pending_resets:Array=[]
 var student:Dictionary={}
@@ -106,7 +108,7 @@ func received(result:int,http:int,_headers:PackedStringArray,bytes:PackedByteArr
    work.district_revision=int(data.get("district_revision",0));enter_simulation()
   "start":call_api("attempt?id="+str(data.id),null,"attempt")
   "attempt":
-   attempt=data.attempt;definition=preload("res://scripts/assessment_scope.gd").definition(attempt.get("assessment_definition",attempt.definition));code=attempt.module;work=attempt.work.duplicate(true);synced_work=work.duplicate(true);feedback=data.feedback;dirty=false;conflicted=false;nonce=""
+   project_progress=data.get("project_progress",{});attempt=data.attempt;definition=preload("res://scripts/assessment_scope.gd").definition(attempt.get("assessment_definition",attempt.definition));code=attempt.module;work=attempt.work.duplicate(true);synced_work=work.duplicate(true);feedback=data.feedback;dirty=false;conflicted=false;nonce=""
    if cache.has(attempt.id) and cache[attempt.id].get("dirty",false):
     var local=cache[attempt.id]
     if int(local.get("revision",-1))==int(attempt.revision):work=local.work.duplicate(true);dirty=true;message("Recovered your unsynced on-device draft.")
@@ -121,6 +123,12 @@ func received(result:int,http:int,_headers:PackedStringArray,bytes:PackedByteArr
    if not pending_business_restart.is_empty() and not dirty:var key=pending_business_restart;pending_business_restart="";request_business_restart(key)
    elif pending_submit and not dirty:pending_submit=false;submit_work()
    elif pending_enter and not dirty:pending_enter=false;open_simulation()
+   elif not pending_checkpoint.is_empty() and not dirty:var phase=pending_checkpoint;pending_checkpoint="";record_checkpoint(phase)
+   elif tab=="Run & review" and root.visible and not dirty:call_api("project-progress?id="+str(attempt.id),null,"project_progress")
+  "project_progress":
+   project_progress=data.get("project_progress",{});render_module();message("Gameplay evidence refreshed from your account saves.")
+  "checkpoint":
+   project_progress=data.get("project_progress",{});render_module();message("Account-linked checkpoint saved. Later gameplay will not change this copy.")
   "restart_requested":
    message("Restart request sent. Your teacher can review your business statistics in Manage Class Pro. This business is paused until reviewed.");call_api("student",null,"student")
   "submit":
@@ -192,7 +200,8 @@ func render_module()->void:
  clear();heading.text=code+" • "+definition.name
  var tabs=ScrollContainer.new();tabs.custom_minimum_size.y=45;tabs.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;nav.add_child(tabs);tabs.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var choices=HBoxContainer.new();tabs.add_child(choices)
- for name in ["Brief","Learn","Studio","My evidence","Feedback"]:
+ if definition.get("subject","Business")=="Business" and tab=="Studio":tab="Run & review"
+ for name in (["Brief","Learn","Run & review","My evidence","Feedback"] if definition.get("subject","Business")=="Business" else ["Brief","Learn","Studio","My evidence","Feedback"]):
   var selected:String=name;var b=button(choices,("● " if tab==name else "")+name,func():tab=selected;render_module())
   if tab==name:UI.accent(b)
  para(body,"UNGRADED PRACTICE • separate from public progress" if attempt.is_empty() else "CLASSROOM ATTEMPT • "+str(attempt.status).to_upper()+" • revision "+str(attempt.revision),16)
@@ -211,24 +220,21 @@ func render_module()->void:
    var each=definition.tasks[index];var target:String=each.id;var part_button=button(parts,"Part %d/%d • %s%s" % [index+1,definition.tasks.size(),each.title," ✓ draft" if not str(work.responses.get(each.id,"")).strip_edges().is_empty() else ""],func():task_id=target;render_module())
    if target==task_id:UI.accent(part_button)
  if tab=="Brief":
-  visual();para(body,definition.brief,21)
+  if creative:visual()
+  para(body,definition.brief,21)
   if definition.has("workflow"):workflow_strip()
   label(body,"What you will demonstrate",23)
   for o in definition.outcomes:para(body,o.id+" • "+o.title+"\nEvidence: "+o.evidence)
   para(body,"Work through the outcome parts of this module. Use the relevant creation tools or classroom business, then explain your reasoning where it adds evidence. Record sources and limitations. Class discussions, presentations and observed role-play can provide evidence when your teacher confirms it. Profit and play time do not award marks.")
   button(body,"Start learning",func():tab="Learn";render_module())
  elif tab=="Learn":
-  visual();label(body,t.title,25);para(body,t.lesson,19);var example=UI.card(body,"Worked example",t.worked_example);para(example,"Think about it: "+t.check)
-  para(body,"Try: "+t.activity);sources();button(body,"Open the visual studio",func():tab="Studio";render_module())
+  if creative:visual()
+  label(body,t.title,25);para(body,t.lesson,19);var example=UI.card(body,"Worked example",t.worked_example);para(example,"Think about it: "+t.check)
+  para(body,"Try: "+t.activity);sources();button(body,"Open practical workspace",func():tab="Studio" if creative else "Run & review";render_module())
  elif tab=="Studio":
-  if creative:creator_controls()
-  else:
-   var actions=HBoxContainer.new();body.add_child(actions)
-   var play_button=button(actions,"▶ Enter classroom business",open_simulation);UI.accent(play_button);play_button.disabled=not editable()
-   button(actions,"Attach image of this board",capture_image).disabled=not editable();button(actions,"Record evidence",func():tab="My evidence";render_module())
-   if definition.tool in ["opportunity","comparison"]:opportunity_controls()
-   else:visual();studio_controls()
-   para(body,"This is a teaching model, not a market prediction. Other school subjects and adventure resources are optional.")
+  creator_controls()
+ elif tab=="Run & review":
+  gameplay_workspace()
  elif tab=="My evidence":
   label(body,t.title,24);para(body,"Alberta main outcome "+", ".join(t.outcomes),16)
   var guide=t.get("guidance",{})
@@ -239,7 +245,7 @@ func render_module()->void:
    UI.card(body,"Example • a model of detail, not an answer to copy",guide.example)
   else:para(body,t.prompt)
   if creative:artifact_picker()
-  else:button(body,"Open classroom to collect evidence",open_simulation).disabled=not editable();button(body,"Go to Studio board",func():tab="Studio";render_module())
+  else:button(body,"Open classroom to collect evidence",open_simulation).disabled=not editable();button(body,"View gameplay checkpoints",func():tab="Run & review";render_module())
   var answer=TextEdit.new();answer.custom_minimum_size.y=220;answer.text=work.responses.get(t.id,"");answer.editable=editable();answer.placeholder_text=str(t.get("guidance",{}).get("response_starter","Write your response to the task above."));body.add_child(answer)
   answer.text_changed.connect(func():work.responses[t.id]=answer.text.left(8000);mark_dirty())
   if work.sandbox!=null:
@@ -342,6 +348,7 @@ func save_draft()->void:
   dirty=false;write_cache()
   if pending_submit:pending_submit=false;call_deferred("submit_work")
   elif pending_enter:pending_enter=false;call_deferred("open_simulation")
+  elif not pending_checkpoint.is_empty():var phase=pending_checkpoint;pending_checkpoint="";call_deferred("record_checkpoint",phase)
   return
  call_api("save",{"id":attempt.id,"revision":int(attempt.revision),"patch":patch,"district_revision":int(work.get("district_revision",0))},"save")
 func submit_work()->void:
@@ -550,3 +557,46 @@ func request_business_restart(id:String)->void:
  if busy:pending_business_restart=id;return
  if dirty:pending_business_restart=id;save_draft();return
  call_api("restart-request",{"id":attempt.id,"business":id,"district_revision":int(work.get("district_revision",0))},"restart_requested")
+
+func gameplay_project()->Dictionary:
+ if definition.has("gameplay_project"):return definition.gameplay_project
+ var current=module_by_code(code)
+ return current.get("gameplay_project",{})
+func record_checkpoint(phase:String)->void:
+ if attempt.is_empty():message("Checkpoints belong to an assigned student attempt. Teachers may preview the workflow.");return
+ if busy or not editable():return
+ if dirty:pending_checkpoint=phase;save_draft();return
+ call_api("project-checkpoint",{"id":attempt.id,"phase":phase},"checkpoint")
+func gameplay_workspace()->void:
+ var project=gameplay_project()
+ label(body,"YOUR VENTURE • decisions, workdays and results",25)
+ para(body,"Run your venture, change real decisions and compare the results. Checkpoints save your own account records; use short explanations and research to show your reasoning.",18)
+ var actions=HFlowContainer.new();body.add_child(actions)
+ UI.accent(button(actions,"▶ Enter classroom business",open_simulation));button(actions,"Refresh saved workday evidence",func():
+  if not attempt.is_empty():call_api("project-progress?id="+str(attempt.id),null,"project_progress"))
+ button(actions,"Explain an outcome",func():tab="My evidence";render_module())
+ if project.is_empty():para(body,"Open your business to collect operating evidence, then discuss it with your teacher.");return
+ para(body,project.get("note","New full workdays after this investigation begins. Profit is not an automatic mark."))
+ var done=int(project_progress.get("completed_days",0));var target=int(project.get("days",12))
+ var bar=ProgressBar.new();bar.custom_minimum_size.y=28;bar.max_value=target;bar.value=done;bar.show_percentage=false;body.add_child(bar)
+ label(body,"%d / %d new full workdays in your focal venture recorded • partial openings excluded" % [done,target],20)
+ if not project_progress.get("started",false):
+  para(body,"Begin the investigation before collecting new workdays. Earlier venture progress stays intact.")
+  button(body,"Begin gameplay investigation",record_checkpoint.bind("begin")).disabled=not editable() or attempt.is_empty()
+ if work.sandbox!=null and not work.sandbox.businesses.is_empty():
+  for id in work.sandbox.businesses:
+   var b=work.sandbox.businesses[id];var card=UI.card(body,str(b.name),"Latest device draft • sync it before saving a checkpoint")
+   para(card,"Workday %d • cash %.2f • %d employees • %d / %d profitable full days" % [int(b.day)+1,float(b.cash),b.employees.size(),int(b.get("summary",{}).get("profitable_days",0)),int(b.get("summary",{}).get("full_days",0))],18)
+   var chart=preload("res://scripts/business_academy/results_chart.gd").new();chart.history=b.history.duplicate(true);chart.custom_minimum_size=Vector2(0,200);card.add_child(chart)
+   for decision in b.decisions.slice(maxi(0,b.decisions.size()-4)):para(card,"Day %d • %s • %s" % [int(decision.day),str(decision.action),str(decision.detail)],15)
+ var checkpoints=project_progress.get("checkpoints",[])
+ for stage in project.stages:
+  var saved=checkpoints.filter(func(c):return c.phase==stage.id)
+  var card=UI.card(body,("✓ SAVED • " if not saved.is_empty() else "NEXT EVIDENCE • ")+stage.title,"Checkpoint after %d new full workdays in your focal venture" % int(stage.days))
+  para(card,stage.action,18)
+  if saved.is_empty():button(card,"Save "+stage.title+" checkpoint",record_checkpoint.bind(str(stage.id))).disabled=not editable() or attempt.is_empty()
+  else:
+   para(card,"Saved to this student attempt • frozen account checkpoint",14)
+   for b in saved[0].snapshot.district.businesses:para(card,"%s • workday %d • cash %.2f • %d profitable full days • %d employees" % [b.name,int(b.day),float(b.cash),int(b.profitable_days),int(b.employees)],16)
+ if work.sandbox==null or work.sandbox.businesses.is_empty():para(body,"No venture saved yet. Enter the district, choose permitted premises and prepare your first opening.");return
+ para(body,"Use Products, Materials, People, Equipment and Strategy to change the business. The game then simulates customers, queues, costs, deliveries, spoilage and profit. Review Ledger and Sales & trends across several openings, not just a single lucky day.",17)

@@ -2,7 +2,7 @@ extends CanvasLayer
 ## A collapsible town guide. It never opens over combat or changes unlock rules.
 const A=preload("res://scripts/realm_access.gd")
 const UI=preload("res://scripts/studio_ui.gd")
-const ORDER=["grove","quarry","honeyglass","elementary","sunfield","ice","folded_coast","moonburrow","moonveil","petalbrook","clockwork_orchard","middle_school","space","zombie","lantern_marsh","silverfall","confluence","brasslock","high_school","neon_crucible","cinderheart","astral_rift","chimevault","ebonwake","shattered_oath"]
+const ORDER=["grove","quarry","honeyglass","elementary","sunfield","ice","confluence","folded_coast","moonburrow","moonveil","petalbrook","clockwork_orchard","middle_school","space","zombie","lantern_marsh","silverfall","brasslock","high_school","neon_crucible","cinderheart","astral_rift","chimevault","ebonwake","shattered_oath"]
 var panel:PanelContainer
 var rows:VBoxContainer
 var minimize:Button
@@ -45,7 +45,7 @@ func show_weather_help()->void:
  weather_help.popup_centered(Vector2i(mini(480,int(get_viewport().get_visible_rect().size.x)-32),300))
 func next_realm(legacy:Node)->String:
  # Follow the next unlock milestone first; optional uncleared branches can wait.
- var milestones=[[["grove"],1],[["quarry","honeyglass"],1],[["elementary"],1],[["sunfield","ice"],1],[["folded_coast","moonburrow","moonveil","petalbrook"],3],[["middle_school"],1],[["space","zombie"],1],[A.HARD,4],[A.EXPERT,2],[A.EXTREME,1]]
+ var milestones=[[["grove"],1],[["quarry","honeyglass"],1],[["elementary"],1],[A.INTRO_MODERATE,1],[A.MEDIUM.filter(func(id):return id!="middle_school"),3],[["middle_school"],1],[["space","zombie"],1],[A.HARD,4],[A.EXPERT,2],[A.EXTREME,1]]
  for milestone in milestones:
   if A.count(legacy,milestone[0])>=int(milestone[1]):continue
   for id in milestone[0]:
@@ -69,9 +69,9 @@ func render()->void:
  var tip="Clear this realm to continue your journey."
  if id=="grove":tip="Start here: reach the gate, defeat the guardian, then explore two new beginner realms."
  elif id in ["quarry","honeyglass"]:tip="A first clear here opens the elementary school adventure. Choose either route."
- elif id=="elementary":tip="A first clear opens Sunfield and the ice arena realm."
- elif id in ["sunfield","ice"]:tip="Clear either realm to open the medium realm routes."
- elif id in ["folded_coast","moonburrow","moonveil","petalbrook"]:tip="Clear three different medium realms to unlock Crossbell Middle School."
+ elif id=="elementary":tip="A first clear opens Sunfield, Frostbound Rink and Confluence Foundry."
+ elif id in A.INTRO_MODERATE:tip="Clear any Moderate realm to open the medium realm routes."
+ elif id in A.MEDIUM and id!="middle_school":tip="Clear three different medium realms to unlock Crossbell Middle School."
  label(tip,14)
  var b=Button.new();b.text="View realm routes";b.custom_minimum_size.y=34;b.pressed.connect(func():game.menu="portal";game.list_preview["portal"]=game.manifest.regions.find(id);game.list_scroll["portal"]=maxi(0,game.manifest.regions.find(id)-3));rows.add_child(b)
  label("Optional guide • minimise any time • hidden in combat",11)

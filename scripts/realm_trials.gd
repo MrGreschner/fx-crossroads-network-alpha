@@ -214,6 +214,8 @@ func interact(id: String) -> bool:
 	return false
 
 func spawn(kind: String, point: Vector2, hp: float, boss: bool, trial: int=-1, generation: int=0) -> void:
+	if between_guardians() and foes().size()>=48:return
+	if between_guardians() and not boss:kind=preload("res://scripts/between_actors.gd").type_for(kind)
 	var scale := 1.0+.55*maxi(0,points().size()-1)
 	var foe := {"pos":point,"hp":hp*scale,"max_hp":hp*scale,"type":kind,"boss":boss,"uid":randi(),"lane":0,"attack_timer":0.0,"secondary_timer":3.0,"windup":0.0,"expansion_boss":boss,"trial_index":trial,"generation":generation,"skill_timer":2.0,"skill_step":0}
 	foes().append(foe)
@@ -329,6 +331,9 @@ func hit_player(id: String, amount: float, source:String="",cause:Dictionary={})
 	if arcade: game._hurt(id,amount,"enemy",source,cause)
 	else: game.take_player_damage(amount,source,cause)
 
+func between_guardians()->bool:
+	return game.expedition.between() if arcade and game.get("expedition")!=null else game.waylight.between() if not arcade and game.get("waylight")!=null else false
+
 func step(delta: float) -> void:
 	warning_credit.clear()
 	if not authoritative(): return
@@ -360,7 +365,7 @@ func step(delta: float) -> void:
 	step_healing_zones(delta)
 	step_discs(delta)
 	polish.bosses(delta)
-	if not active and not combat.coast.active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id in ["moonveil","zombie"] if arcade else game.region_id in ["moonveil","zombie"]): return
+	if not between_guardians() and not active and not combat.coast.active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id in ["moonveil","zombie"] if arcade else game.region_id in ["moonveil","zombie"]): return
 	clock+=delta
 	for n in range(warnings.size()-1,-1,-1):
 		var warning: Dictionary = warnings[n]
@@ -483,8 +488,12 @@ func step(delta: float) -> void:
 			"briar_matron":
 				for k in 3: warn(target+Vector2((k-1)*130,0),72,15,1.05)
 			"kiln_knight":
-				var n:=int(enemy.get("trial_index",1));var origin:=vec(trials[n]["origin"])
-				var end := (point+(target-point).normalized()*600).clamp(origin+Vector2(1848,140),origin+Vector2(2660,2660))
+				var end:Vector2=point+(target-point).normalized()*600
+				if bool(enemy.get("between_guardian",false)):
+					end=immersive.advance(point,(target-point).normalized()*600)
+				else:
+					var n:=int(enemy.get("trial_index",1));var origin:=vec(trials[n]["origin"])
+					end=end.clamp(origin+Vector2(1848,140),origin+Vector2(2660,2660))
 				warn(point,48,22,.95,end)
 				warnings[-1]["charge_uid"]=int(enemy["uid"])
 			"mirror_oracle":
@@ -673,7 +682,7 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 		var point := vec(disc["pos"])-camera
 		canvas.draw_arc(point,17,float(disc["life"])*8,float(disc["life"])*8+TAU*.85,16,Color("#94eafa"),5,true)
 		canvas.draw_circle(point,7,Color("#e8f7ee"))
-	if not active and not marsh and not river and not clockwork and not astral:return
+	if not between_guardians() and not active and not marsh and not river and not clockwork and not astral:return
 	var font:=ThemeDB.fallback_font
 	if astral:
 		for n in 22:

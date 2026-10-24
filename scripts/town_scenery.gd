@@ -23,7 +23,7 @@ func _init()->void:
 	for y in [-350,-180,-20]:
 		trees.append(Vector2(65,y));trees.append(Vector2(3040,y))
 	routes.append([Vector2(1850,1000),Vector2(1850,1210),Vector2(2280,1210),Vector2(2280,1150),Vector2(2510,1150),Vector2(2890,1150)])
-	routes.append([Vector2(750,1700),Vector2(1330,1710),Vector2(1440,1910)])
+	routes.append([Vector2(750,1740),Vector2(1600,1740),Vector2(1700,1740),Vector2(1700,2080)])
 	for x in range(70,3100,125):
 		if abs(x-900)>130:trees.append(Vector2(x,100))
 		trees.append(Vector2(x,2190))

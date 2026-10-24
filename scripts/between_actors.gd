@@ -7,6 +7,7 @@ static func type_for(id:String)->String:
  if id=="boss":id="bramble"
  return "between_"+id if id in ORIGINALS else id
 static func install(g:Node,multi:bool)->void:
+ preload("res://scripts/between_guardians.gd").install(g,multi)
  var definitions:Dictionary=g.enemy_defs if multi else g.enemy_types
  for id in ORIGINALS:
   var alias=type_for(id);var def:Dictionary=definitions.get(id,{}).duplicate(true)

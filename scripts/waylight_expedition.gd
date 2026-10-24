@@ -137,11 +137,14 @@ func stream()->void:
   if maxi(absi(c.x-here.x),absi(c.y-here.y))>1:continue
   for entry in data.foes:
    var id=str(entry.id)
-   if dead.has(id) or g.enemies.size()>=48:continue
+   if dead.has(id):continue
    var exists=false
    for foe in g.enemies:
-    if str(foe.get("between_id",""))==id:exists=true;break
+    if str(foe.get("between_id",""))==id:
+     if bool(entry.boss):preload("res://scripts/between_guardians.gd").configure(foe,int(data.theme))
+     exists=true;break
    if exists:continue
+   if g.enemies.size()>=48:continue
    var p=Vector2(entry.pos[0],entry.pos[1])
    if not open(p):p=data.center
    var foe=manager.spawn(str(entry.type),p,1+data.ring*.18,bool(entry.boss))
@@ -149,9 +152,8 @@ func stream()->void:
    if id.ends_with(":seal"):
     foe["attunement_warden"]=true;foe["warden_name"]=WARDENS[SEAL_CELLS.find(c)]
     foe.hp*=1.6;foe.max_hp=foe.hp
-   if bool(entry.boss):
-    foe["sprite"]=["bramble_boss","kiln_knight","crowned_torrent","cryowarden","bellroot","eclipse_engine"][int(data.theme)];g.load_sprite_pair(str(foe.sprite))
    if sleeping.has(id):foe=manager.unpack(sleeping[id]);sleeping.erase(id)
+   if bool(entry.boss):preload("res://scripts/between_guardians.gd").configure(foe,int(data.theme))
    g.enemies.append(preload("res://scripts/between_actors.gd").normalize(foe))
 func reveal_map()->void:
  var g=manager.game;var cell=Vector2i(g.position_in_world/96)

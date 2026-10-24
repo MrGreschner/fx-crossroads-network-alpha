@@ -1470,6 +1470,7 @@ func update_enemies(delta: float) -> void:
 		if bool(enemy.get("roaming_actor",false)) or bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in adventure.additions.TYPES or str(enemy.get("type","")) in adventure.newcomers.TYPES:continue
 		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.clockfield.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		if enemy.get("expansion_boss",false): continue
+		if preload("res://scripts/between_guardians.gd").basic(self,enemy,delta):continue
 		if tutorial.active and tutorial.update_melee(enemy,delta):continue
 		var definition: Dictionary = enemy_types.get(enemy.get("type", ""), {}).duplicate()
 		definition["speed"]=float(definition.get("speed",65))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))

@@ -9,6 +9,8 @@ const remove=(o,k,v)=>{if(o&&equal(o[k],v))delete o[k];};
 export function scrubProfile(value,exclusions){
  if(!value||!exclusions.length)return value;
  const p=structuredClone(value),n=p.progress?.named_records;
+ const affectedDepth=exclusions.filter(e=>e.kind==='descent').map(e=>Number(e.value));
+ const fixCard=affectedDepth.some(v=>equal(p.progress?.card?.descent_best,v)),fixLocal=affectedDepth.some(v=>equal(p.saves?.['fx_descent_best.json']?.best,v));
  for(const e of exclusions){
   const v=Number(e.value),route=e.kind==='time_solo'?'solo':e.kind==='time_coop'?'coop':null;
   if(n){
@@ -30,6 +32,9 @@ export function scrubProfile(value,exclusions){
    if(e.kind==='time_coop'&&equal(p.saves?.[`fx_coop_${e.key}.json`]?.best,Math.floor(v)))p.saves[`fx_coop_${e.key}.json`].best=0;
   }
  }
+ const remaining=Math.max(Number(n?.descent?.solo)||0,Number(n?.descent?.coop)||0);
+ if(fixCard)p.progress.card.descent_best=remaining;
+ if(fixLocal)p.saves['fx_descent_best.json'].best=remaining;
  return p;
 }
 export async function exclusions(pool,account){return (await pool.query('SELECT scope,kind,key,value FROM crossroads_record_exclusions WHERE account=$1',[account])).rows;}

@@ -75,6 +75,7 @@ func floor_at(point:Vector2)->bool:
   elif Geometry2D.is_point_in_polygon(point,floor.polygon):return true
  return false
 func can_stand(point:Vector2)->bool:
+ if not active and adventure.between_guardians():return adventure.can_stand(point)
  if not floor_at(point):return false
  for fall in data.get("falls",[]):
   if r(fall).has_point(point):
@@ -137,6 +138,7 @@ func nearest_cell(c:Vector2i)->Vector2i:
     if grid.is_in_boundsv(p) and not grid.is_point_solid(p):return p
  return c
 func direction(enemy:Dictionary,target:Vector2,ranged:bool)->Vector2:
+ if not active and adventure.between_guardians():return (target-enemy.pos).normalized()
  if adventure.combat.path_clear(enemy.pos,target):
   if ranged and bool(enemy.boss) and enemy.pos.distance_to(target)<480:
    var heading:Vector2=(target-(enemy.pos as Vector2)).normalized();return (heading.orthogonal()*(1 if int(enemy.uid)%2 else -1)+heading*.15).normalized()
@@ -169,7 +171,7 @@ func shoot(enemy:Dictionary,target:Vector2,count:int=1,style:String="pellet")->v
   adventure.combat.launch_projectile("enemy",enemy.pos,(target-enemy.pos).normalized(),{"range":700,"speed":float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("shot_speed",275)),"thorn_arrow":true,"color":"#9ecb75"},float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("damage",9)))
   return
  var aim:Vector2=(target-enemy.pos).normalized();var damage:float=float(defs().get(enemy.type,{}).get("damage",10))
- for n in count:adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated((n-(count-1)*.5)*.23),{"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),"Projectile"),"range":850,"speed":255,"amplitude":24,"wavelength":150,"color":"#efd49a" if data.id=="honeyglass" else "#afe5db" if data.id=="silverfall" else "#deaed0"},damage,style)
+ for n in count:adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated((n-(count-1)*.5)*.23),{"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),"Projectile"),"range":850,"speed":255,"amplitude":24,"wavelength":150,"color":"#efd49a" if str(enemy.get("source_realm",data.get("id","")))=="honeyglass" else "#afe5db" if str(enemy.get("source_realm",data.get("id","")))=="silverfall" else "#deaed0"},damage,style)
 func skill(enemy:Dictionary,target:Vector2)->void:
  var turn:=int(enemy.imm_turn);enemy.imm_turn=turn+1
  match str(enemy.type):
@@ -221,6 +223,22 @@ func ensure_level(minimum:int)->void:
   for id in adventure.points():adventure.game.levels[id]=maxi(minimum,int(adventure.game.levels.get(id,1)))
  else:adventure.game.level=maxi(minimum,int(adventure.game.level))
 func step(delta:float)->void:
+ if not active and adventure.between_guardians():
+  if not adventure.authoritative():return
+  clock+=delta
+  for enemy in adventure.foes():
+   if not bool(enemy.get("between_guardian",false)) or str(enemy.type) not in ["crowned_torrent","bellroot"]:continue
+   if adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
+   var target=target_for(enemy);var distance=enemy.pos.distance_to(target)
+   if distance>1000:continue
+   var definition:Dictionary=defs().get(enemy.type,{})
+   if distance>45:enemy.pos=advance(enemy.pos,(target-enemy.pos).normalized()*float(definition.get("speed",80))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))*delta)
+   enemy.skill_timer=float(enemy.skill_timer)-delta;enemy.attack_timer=float(enemy.attack_timer)-delta
+   if float(enemy.skill_timer)<=0 and adventure.combat.path_clear(enemy.pos,target):enemy.skill_timer=2.3;skill(enemy,target)
+   if distance<65 and float(enemy.attack_timer)<=0:
+    enemy.attack_timer=1.15;var id=nearest(enemy.pos)
+    if not id.is_empty():hurt_player(id,float(definition.get("damage",12)),adventure.combat.npc_key(enemy))
+  step_attacks(delta);return
  if not active or not adventure.authoritative():return
  clock+=delta
  if not initialized:initialize()
@@ -472,7 +490,9 @@ func draw_conservatory(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_line(p+Vector2(-8,0),p+Vector2(8,0),Color("#f5df9a"),3,true)
 
 func draw_on(canvas:Node2D,camera:Vector2)->void:
- if not active:return
+ if not active:
+  if adventure.between_guardians():draw_attacks(canvas,camera)
+  return
  # Texture batches preserve concealment with a readable gap near players.
  grass_draws=0
  var players:Array=adventure.points().values()
@@ -498,11 +518,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   if not warned:
    canvas.draw_rect(Rect2(point-Vector2(radius,-0)+Vector2(0,-600),Vector2(radius*2,600)),Color(1,.9,.52,.13))
    for n in 7:canvas.draw_line(point+Vector2((n-3)*radius/4,-600),point+Vector2((n-3)*radius/4,0),Color(1,.96,.69,.23),4)
- for attack in attacks:
-  var point:=v(attack.pos)-camera;var tint:=Color("#d6efbd") if str(attack.style)=="heal" else Color("#edb198")
-  if str(attack.style)=="heal":preload("res://scripts/combat_cues.gd").enemy_healing(canvas,point,float(attack.radius))
-  elif str(attack.style)=="dash":preload("res://scripts/combat_cues.gd").corridor(canvas,v(attack.start)-camera,point,float(attack.radius))
-  else:preload("res://scripts/combat_cues.gd").danger(canvas,point,float(attack.radius),float(attack.time),float(attack.total),tint)
+ draw_attacks(canvas,camera)
  # Tree canopies fade near players so navigation remains readable under giant trees.
  for prop in data.props:
   if str(prop.kind) not in ["grand_tree","moss_tree"]:continue
@@ -737,3 +753,10 @@ func step_nurse(nurse:Dictionary,delta:float)->void:
   if gap.length()<240 and adventure.combat.path_clear(nurse.pos,queen.pos):
    queen.hp=minf(float(queen.max_hp),float(queen.hp)+6)
    warning(nurse,queen.pos,"heal",38,0,.3)
+
+func draw_attacks(canvas:Node2D,camera:Vector2)->void:
+ for attack in attacks:
+  var point:=v(attack.pos)-camera;var tint:=Color("#d6efbd") if str(attack.style)=="heal" else Color("#edb198")
+  if str(attack.style)=="heal":preload("res://scripts/combat_cues.gd").enemy_healing(canvas,point,float(attack.radius))
+  elif str(attack.style)=="dash":preload("res://scripts/combat_cues.gd").corridor(canvas,v(attack.start)-camera,point,float(attack.radius))
+  else:preload("res://scripts/combat_cues.gd").danger(canvas,point,float(attack.radius),float(attack.time),float(attack.total),tint)

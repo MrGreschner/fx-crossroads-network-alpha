@@ -76,6 +76,9 @@ func draw_ground_source(c:Node2D,camera:Vector2)->void:
   for x in [800,1080]:
    c.draw_line(Vector2(x,1790)-camera,Vector2(x,2110)-camera,Color("#a99068"),4)
    for y in range(1790,2111,64):c.draw_line(Vector2(x-10,y)-camera,Vector2(x+10,y)-camera,Color("#7f684c"),5)
+static func river_surface_visible(point:Vector2)->bool:
+ # Decks are already baked into the ground layer; live water must stay beneath them.
+ return not BRIDGE.grow(4).has_point(point) and not HOME_BRIDGE.grow(4).has_point(point)
 func draw_ground(c:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_art39.gd").draw(c,"chapter_ground",camera)
  var t:=Time.get_ticks_msec()/1000.0
@@ -83,8 +86,8 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
  if visible.intersects(RIVER.grow(20)):
   for n in 64:
    var world:=Vector2(2295+posmod(n*37,125),fposmod(n*37+t*45,RIVER.size.y)-560)
-   if visible.has_point(world):
-    var p:=world-camera;c.draw_line(p,p+Vector2(30,0),Color(.65,.9,.92,.4),2,true)
+   if visible.has_point(world) and river_surface_visible(world):
+    var p:=world-camera;c.draw_line(p,p+Vector2(minf(30,RIVER.end.x-3-world.x),0),Color(.65,.9,.92,.4),2,true)
  if visible.intersects(Rect2(800,1780,285,350)):
   var phase=fposmod(t*.006,1);var travel=phase*2 if phase<.5 else 2-phase*2
   var farmer=Vector2(1030,1890+travel*200)-camera

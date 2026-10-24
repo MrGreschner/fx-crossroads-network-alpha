@@ -6,7 +6,7 @@ static func fire(g:Node,enemy:Dictionary,aim:Vector2,definition:Dictionary,boss=
  for offset in [-.22,.22] if boss else [0.0]:g.adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated(offset),stats.duplicate(true),12.0 if boss else float(definition.get("damage",11)),"homing" if oracle else "pellet")
 static func step_boss(g:Node,enemy:Dictionary,dt:float)->void:
  var realm=str(g.realm_id) if g.get("realm_id")!=null else str(g.region_id)
- if realm!="ice" or not enemy.get("boss",false):return
+ if (realm!="ice" and str(enemy.get("source_realm",""))!="ice") or not enemy.get("boss",false):return
  enemy.ice_seek_timer=float(enemy.get("ice_seek_timer",5.0))-dt
  if enemy.ice_seek_timer>0:return
  var target:Vector2=g.position_in_world if g.get("position_in_world")!=null else enemy.pos+Vector2.LEFT*200

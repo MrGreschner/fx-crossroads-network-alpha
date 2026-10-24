@@ -1,16 +1,29 @@
 extends RefCounted
 ## Small culled props, shared collision footprints and a scheduled social destination.
-const PAVILION=Rect2(1100,1530,220,100)
-const REST=Vector2(1210,1685)
+const PAVILION=Rect2(1260,1615,220,100)
+const REST=Vector2(1370,1760)
+const FOUNTAIN=Vector2(1460,1880)
+const NOTICE=Vector2(1800,1740)
 const MASSIF=Rect2(-1650,465,450,870)
 const POSTS=[Vector2(-1210,1260),Vector2(-945,1260)]
-static func reserved(p:Vector2)->bool:return MASSIF.grow(100).has_point(p) or Rect2(1060,1460,310,255).has_point(p)
+static func reserved(p:Vector2)->bool:return MASSIF.grow(100).has_point(p) or Rect2(1220,1545,310,255).has_point(p) or p.distance_to(FOUNTAIN)<90 or p.distance_to(NOTICE)<65
 static func blocked(p:Vector2)->bool:
+ if p.distance_to(FOUNTAIN)<47 or Rect2(NOTICE-Vector2(28,20),Vector2(56,35)).has_point(p):return true
  if Rect2(-1700,360,500,990).has_point(p) or PAVILION.grow(6).has_point(p):return true
  for at in POSTS:
   if p.distance_to(at)<15:return true
  return false
 static func interact(g:Node)->bool:
+ if g.position_in_world.distance_to(NOTICE+Vector2(0,45))<65:
+  g.hint="E • Town notices • what’s happening today"
+  if Input.is_action_just_pressed("interact"):
+   g.presentation.window("TOWN NOTICES","town_notices")
+   g.presentation.label(g.presentation.content,g.town_life.calendar.label(),20)
+   var notices=["Faraway Flavours • 10 am–3 pm. Tea at Wayfarer’s Rest • noon–1 pm.","Marina deliveries • 10 am–noon. Board games at Wayfarer’s Rest • 6–8 pm.","Tea at Wayfarer’s Rest • noon–1 pm. Music in the civic square • 6–10 pm.","Marina deliveries • 10 am–noon. Board games at Wayfarer’s Rest • 6–8 pm.","Tea at Wayfarer’s Rest • noon–1 pm. Lantern walk • 8–10 pm.","Makers’ Fair • 11 am–4 pm. Stories Under Stars at the forest camp • 10 pm–midnight.","Marina fishing afternoon • 3–6 pm. Travellers’ stories at Wayfarer’s Rest • 4–7 pm."]
+   g.presentation.label(g.presentation.content,notices[g.town_life.calendar.weekday],18)
+   g.presentation.label(g.presentation.content,"Anglers’ notice: cast from the eastern marina finger dock. Different visitors emerge at night; a baited basket can collect freshwater mussels.",16)
+   g.presentation.button(g.presentation.content,"Back to town",g.presentation.close)
+  return true
  if g.position_in_world.distance_to(REST)>75:return false
  g.hint="E • Wayfarer’s Rest • tea, games & travellers’ stories"
  if Input.is_action_just_pressed("interact"):
@@ -61,6 +74,27 @@ static func draw(g:Node2D,camera:Vector2)->void:
   # An inexpensive chime supplies small motion without particles or simulation actors.
   var sway=sin(g.town_life.clock*1.3)*3
   for n in 3:g.draw_line(p+Vector2(199+n*6,11),p+Vector2(199+n*6+sway,24+n*3),Color("#d2bd86"),2)
+ if view.has_point(FOUNTAIN):
+  var p=FOUNTAIN-camera;var t=g.town_life.clock
+  g.draw_circle(p+Vector2(3,8),58,Color(0,0,0,.16));g.draw_circle(p,53,Color("#a6b5ac"));g.draw_circle(p,44,Color("#3d8491"));g.draw_arc(p,52,0,TAU,40,Color("#d3d2b6"),5,true)
+  for n in 3:g.draw_arc(p,12+fposmod(t*14+n*12,30),0,TAU,32,Color(.65,.94,.92,.5),1.5,true)
+  g.draw_rect(Rect2(p-Vector2(8,34),Vector2(16,38)),Color("#b7c6b5"));g.draw_circle(p-Vector2(0,38),13,Color("#a6ddd7"))
+  for side in [-1,1]:
+   var arc=PackedVector2Array()
+   for n in 20:
+    var u=float(n)/19;arc.append(p+Vector2(side*u*31,-39-24*sin(u*PI)+u*43))
+   g.draw_polyline(arc,Color("#b1e9e5"),2.5,true)
+   for n in 3:
+    var u=fposmod(t*.8+n*.3,1);g.draw_circle(p+Vector2(side*u*31,-39-24*sin(u*PI)+u*43),2,Color("#e0ffff"))
+ if view.has_point(NOTICE):
+  var p=NOTICE-camera
+  for x in [-25,25]:g.draw_line(p+Vector2(x,13),p+Vector2(x,-65),Color("#8d714e"),7)
+  g.draw_rect(Rect2(p-Vector2(37,66),Vector2(74,62)),Color("#9b7952"));g.draw_rect(Rect2(p-Vector2(32,61),Vector2(64,49)),Color("#3b5b55"))
+  for n in 3:
+   var q=p+Vector2(-25+n*19,-54+n%2*7);g.draw_rect(Rect2(q,Vector2(15,28)),Color("#eadcb6"))
+   for y in 3:g.draw_line(q+Vector2(3,8+y*5),q+Vector2(12,8+y*5),Color("#8b947d"),1)
+  g.draw_colored_polygon(PackedVector2Array([p+Vector2(-46,-66),p+Vector2(0,-91),p+Vector2(46,-66)]),Color("#486c68"))
+  g.draw_string(ThemeDB.fallback_font,p+Vector2(-53,35),"TOWN NOTICES",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#eee0b4"))
  if view.intersects(Rect2(-1240,1050,350,300)):
   for at in POSTS:
    var p=at-camera;g.draw_line(p,p-Vector2(0,105),Color("#c0ab7b"),4)

@@ -4402,6 +4402,67 @@
       ],
       "art_version": "198.37",
       "art_realm": "descent57"
+    },
+    "dockstripe_perch": {
+      "name": "Dockstripe Perch",
+      "rarity": "Uncommon",
+      "chance": 16,
+      "min_kg": 0.22,
+      "max_kg": 1.8,
+      "max_length": 36,
+      "habitat": "Marina timber pilings",
+      "color": "#acb76a",
+      "note": "Bold charcoal bands disappear into the shadows of the wooden pilings. Only found at the marina.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          6,
+          20
+        ]
+      ]
+    },
+    "lanternwake_burbot": {
+      "name": "Lanternwake Burbot",
+      "rarity": "Rare",
+      "chance": 5,
+      "min_kg": 0.65,
+      "max_kg": 5.5,
+      "max_length": 78,
+      "habitat": "Marina inlet after dark",
+      "color": "#788e83",
+      "note": "A mottled freshwater hunter with a long chin barbel, emerging after the lamps are lit. Only found at the marina.",
+      "group": "bottom",
+      "methods": [
+        "rod"
+      ],
+      "hours": [
+        [
+          20,
+          24
+        ],
+        [
+          0,
+          6
+        ]
+      ]
+    },
+    "marina_mussel": {
+      "name": "Marina Mussel",
+      "rarity": "Common",
+      "chance": 30,
+      "min_kg": 0.08,
+      "max_kg": 0.38,
+      "max_length": 12,
+      "habitat": "Marina inlet silty bottom",
+      "color": "#6a668d",
+      "note": "A freshwater mussel with a dark violet shell and pale growth rings. Collected only in a baited basket at the marina.",
+      "group": "bottom",
+      "methods": [
+        "pot"
+      ]
     }
   },
   "pools": {
@@ -5197,6 +5258,31 @@
         "midnight_crown_eel"
       ],
       "spring": true
+    },
+    "town_marina": {
+      "name": "Marina Pilings",
+      "region": "town",
+      "bank": [
+        2074,
+        2494
+      ],
+      "water": [
+        2074,
+        2562
+      ],
+      "fish": [
+        "river_sprat",
+        "rustfin_chub",
+        "ribbon_loach",
+        "brook_barbel",
+        "mint_grayling",
+        "lantern_catfish",
+        "bridge_shrimp",
+        "bridge_claw",
+        "dockstripe_perch",
+        "lanternwake_burbot",
+        "marina_mussel"
+      ]
     }
   },
   "legacy_pool_fish": {

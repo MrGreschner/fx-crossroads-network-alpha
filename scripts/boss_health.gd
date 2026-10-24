@@ -12,8 +12,15 @@ static func draw_on(g:Node2D)->void:
  var region:Dictionary=g.regions.get(g.realm_id,{}) if g.has_method("_attack_request") else g.region
  var defs:Dictionary=g.enemy_defs if g.has_method("_attack_request") else g.enemy_types
  var title=str(defs.get(str(list[0].type),{}).get("name",str(region.get("name","Realm"))+" Guardian"))
- if str(list[0].type) in ["boss","fragment"]:title="Quarry Guardians" if str(region.get("id",""))=="quarry" else "Plague Director" if str(region.get("id",""))=="zombie" else "Grove Rootwarden"
- if list.size()>1:title+=" ×"+str(list.size())
+ if str(list[0].type) in ["boss","fragment"]:title="Quarry Guardians" if str(region.get("id",""))=="quarry" else "Plague Director" if str(region.get("id",""))=="zombie" else "Cryowarden" if str(region.get("id",""))=="ice" else "Grove Rootwarden"
+ if list.size()>1:
+  if list.any(func(e):return bool(e.get("between_guardian",false))):
+   var names=[]
+   for e in list:
+    var name=str(defs.get(str(e.type),{}).get("name",str(e.get("sprite","Guardian")).capitalize()))
+    if name not in names:names.append(name)
+   title=" + ".join(names.slice(0,2))+(" +%d" % (names.size()-2) if names.size()>2 else "")
+  else:title+=" ×"+str(list.size())
  var has_objectives=g.adventure.cinder.active or g.adventure.immersive.active or g.adventure.school.active or g.adventure.tech.active or g.adventure.foundry.active or g.adventure.quests.active or g.adventure.expansion.active or g.adventure.city.active or g.adventure.hollow.active or g.mode=="defense"
  var width=minf(520,g.VIEW.x*.46);var p=Vector2((g.VIEW.x-width)*.5,190 if has_objectives else 112)
  g.draw_style_box(style(),Rect2(p-Vector2(8,22),Vector2(width+16,54)))

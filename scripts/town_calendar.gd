@@ -214,7 +214,7 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
  if moon_amount()>.01:
   for n in 10:
    var world=Vector2(2360+sin(c.town_life.clock*.2+n)*22,240+n*190)
-   if Rect2(camera,c.VIEW).grow(30).has_point(world):
+   if Rect2(camera,c.VIEW).grow(30).has_point(world) and preload("res://scripts/town_chapter.gd").river_surface_visible(world):
     var point:Vector2=world-camera
     c.draw_line(point-Vector2(14,0),point+Vector2(14,0),Color(.72,.84,1,moon_amount()*.17),1.5,true)
  # Fireflies follow the river after dark.

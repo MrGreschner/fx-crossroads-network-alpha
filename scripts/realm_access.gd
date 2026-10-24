@@ -2,10 +2,10 @@ extends RefCounted
 ## Distinct legitimate wins; repeat/practice clears never bypass the journey.
 const OPEN=["grove"]
 const BEGINNER=["grove","quarry","honeyglass","elementary"]
-const INTRO_MODERATE=["sunfield","ice"]
+const INTRO_MODERATE=["sunfield","ice","confluence"]
 const MEDIUM=["folded_coast","moonburrow","moonveil","petalbrook","middle_school","clockwork_orchard"]
 const CHALLENGING=["space","zombie"]
-const HARD=["lantern_marsh","silverfall","confluence","brasslock","high_school","neon_crucible","cinderheart"]
+const HARD=["lantern_marsh","silverfall","brasslock","high_school","neon_crucible","cinderheart"]
 const EXPERT=["astral_rift","chimevault","ebonwake"]
 const EXTREME=["shattered_oath"]
 static func cleared(legacy:Node,id:String)->bool:
@@ -37,7 +37,7 @@ static func reason(legacy:Node,id:String)->String:
  if id in INTRO_MODERATE:return "Clear Firstbell Elementary first"
  if id=="middle_school":return "Clear 3 different medium realms • %d / 3" % count(legacy,MEDIUM.filter(func(v):return v!="middle_school"))
  if id=="high_school":return "Clear 3 different hard realms • %d / 3" % count(legacy,HARD.filter(func(v):return v!="high_school"))
- if id in MEDIUM:return "Clear Sunfield Expanse OR Frostbound Rink • %d / 1" % count(legacy,INTRO_MODERATE)
+ if id in MEDIUM:return "Clear Sunfield Expanse, Frostbound Rink OR Confluence Foundry • %d / 1" % count(legacy,INTRO_MODERATE)
  if id in CHALLENGING:return "Clear Crossbell Middle School first"
  if id in HARD:return "Clear 1 challenging realm • %d / 1" % count(legacy,CHALLENGING)
  if id in EXPERT:return "Clear 4 different hard realms • %d / 4" % count(legacy,HARD)

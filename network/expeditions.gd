@@ -98,16 +98,22 @@ func stream(authority:bool)->void:
   var data:Dictionary=expedition.chunks[key]
   for entry in data.foes:
    var id=str(entry.id)
-   if expedition.dead.has(id) or present.has(id) or game.opponents.size()>=64:continue
+   if expedition.dead.has(id):continue
+   if present.has(id):
+    if bool(entry.boss):
+     for existing in game.opponents:
+      if str(existing.get("between_id",""))==id:preload("res://scripts/between_guardians.gd").configure(existing,int(data.theme));break
+    continue
+   if game.opponents.size()>=64:continue
    var foe:Dictionary=expedition.sleeping.get(id,{})
    if not foe.is_empty():expedition.sleeping.erase(id)
    else:
     var pos=Vector2(entry.pos[0],entry.pos[1]);var type=str(entry.type)
     if not expedition.open(pos):pos=data.center
-    if bool(entry.boss):type=preload("res://scripts/between_actors.gd").type_for(str(Layout.THEMES[int(data.theme)].foes[0]))
+    if bool(entry.boss):type=preload("res://scripts/between_guardians.gd").TYPES[int(data.theme)]
     var hp=(240.0 if entry.boss else float(game.enemy_defs.get(type,{}).get("health",65)))*(1+float(data.ring)*.18)*1.55
     foe={"pos":pos,"hp":hp,"max_hp":hp,"type":type,"boss":bool(entry.boss),"uid":abs(hash(str(config.id)+id)),"attack_timer":1.2,"secondary_timer":3.5,"windup":0.0,"skill_timer":2.0,"skill_step":0,"between_id":id,"ring":int(data.ring)}
-    if bool(entry.boss):foe.sprite=["bramble_boss","kiln_knight","crowned_torrent","cryowarden","bellroot","eclipse_engine"][int(data.theme)]
+   if bool(entry.boss):preload("res://scripts/between_guardians.gd").configure(foe,int(data.theme))
    game.opponents.append(foe);present[id]=true
 func nearest_cell(cell:Vector2i,centers:Array)->int:
  var nearest=100
