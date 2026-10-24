@@ -95,7 +95,9 @@ func capacity()->int:
  for lv in [5,15,30,50,75,90,100]:
   if level()>=lv:n+=1
  return mini(10,n+int(bonus("beds")))
-func xp_gain(amount:int)->void:state().xp=mini(1000000000,int(state().xp)+amount)
+func xp_gain(amount:int)->void:
+ var before=level();state().xp=mini(1000000000,int(state().xp)+maxi(0,amount))
+ if level()>before:preload("res://scripts/skill_celebration.gd").show_level(legacy.game,"Gardening",before,level(),0)
 func message(value:String)->void:note=value;legacy.game.message=value;legacy.game.message_time=5
 func save()->void:legacy.save()
 func seed_count(id:String)->int:return int(state().seeds.get(id,0))

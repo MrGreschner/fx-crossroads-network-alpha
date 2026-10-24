@@ -60,9 +60,9 @@ export async function namedSnapshot(pool,now=Date.now()){
  const names=new Map(ids.length?(await pool.query('SELECT id,username FROM crossroads_accounts WHERE NOT disabled AND id=ANY($1::text[])',[ids])).rows.map(a=>[a.id,a.username]):[]);
  const display=r=>{const extra={...r.extra};if(Array.isArray(extra.party))extra.party=extra.party.map(m=>({name:m.account?(names.get(m.account)||'Unavailable player'):m.name,hero:m.hero}));return {username:r.username,key:r.key,value:Number(r.value),...extra,...(r.kind==='time_coop'||r.kind==='descent'&&r.key==='coop'?{record_route:'coop'}:{})};};
  const select=(kind,scope,key,limit=5,asc=false)=>rows.filter(r=>r.kind===kind&&r.scope===scope&&(!key||r.key===key)).sort((a,b)=>(asc?a.value-b.value:b.value-a.value)||a.username.localeCompare(b.username)).slice(0,limit).map(display);
- const rareList=scope=>rows.filter(r=>r.kind==='fish'&&r.key==='rarest'&&r.scope===scope&&fish[r.extra.species]).sort(rareOrder).slice(0,5).map(r=>({username:r.username,key:r.key,value:Number(r.value),...r.extra}));
+ const rareList=scope=>rows.filter(r=>r.kind==='fish'&&r.key==='rarest'&&r.scope===scope&&fish[r.extra.species]).sort(rareOrder).slice(0,10).map(r=>({username:r.username,key:r.key,value:Number(r.value),...r.extra}));
  const rare=scope=>rareList(scope)[0]||null;
- const largestList=scope=>select('fish',scope,'largest',rows.length).filter(r=>fish[r.species]&&Number.isFinite(r.kg)&&r.kg>0).slice(0,5);
+ const largestList=scope=>select('fish',scope,'largest',rows.length).filter(r=>fish[r.species]&&Number.isFinite(r.kg)&&r.kg>0).slice(0,10);
  const buckets=(await pool.query(`SELECT a.username,d.buckets FROM crossroads_named_damage d JOIN crossroads_accounts a ON a.id=d.account WHERE NOT a.disabled`)).rows;
  const damageSince=(cutoff,inclusive=false)=>buckets.map(r=>({username:r.username,value:r.buckets.filter(b=>(inclusive?b[0]*60>=cutoff:b[0]*60>cutoff)&&b[0]*60<=now/1000).reduce((s,b)=>s+b[1],0)})).filter(r=>r.value>0).sort((a,b)=>b.value-a.value||a.username.localeCompare(b.username)).slice(0,10);
  const damage=damageSince(now/1000-604800),weekly=damageSince(rankWeek(now).start/1000,true);

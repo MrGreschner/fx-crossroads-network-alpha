@@ -30,6 +30,7 @@ static func light_sources(g:Node2D)->Array:
    lights.append({"at":landmark.pos+Vector2(0,landmark.size.y*.2),"radius":165.0,"strength":.95})
  for at in [Vector2(600,1035),Vector2(-820,1200),Vector2(-360,1200),Vector2(-1030,425),Vector2(-580,400),Vector2(1290,560),Vector2(1150,1095),Vector2(550,1440),Vector2(2000,1880),Vector2(1375,1430),Vector2(2800,520)]:lights.append({"at":at,"radius":160.0,"strength":1.0})
  for at in [Vector2(550,1310),Vector2(790,1565)]:lights.append({"at":at,"radius":165.0,"strength":1.0})
+ for at in [Vector2(1085,1620),Vector2(1335,1620)]:lights.append({"at":at-Vector2(0,30),"radius":155.0,"strength":1.0})
  for at in TORCHES:lights.append({"at":at-Vector2(0,26),"radius":185.0,"strength":1.1})
  return lights
 static func flame(g:Node2D,at:Vector2,t:float,night:float)->void:
@@ -58,6 +59,8 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
   g.draw_arc(acorn,9,0,PI,16,Color(1,.84,.48,night),3,true)
  var lantern_at=Vector2(790,1620)
  if view.has_point(lantern_at):preload("res://scripts/town_calendar.gd").draw_lantern(g,lantern_at-camera,night)
+ for at in [Vector2(1085,1620),Vector2(1335,1620)]:
+  if view.has_point(at):preload("res://scripts/town_calendar.gd").draw_lantern(g,at-camera,night)
  # Shop awnings carry their own small lantern strings, never more street poles.
  for shop in [[Vector2(1150,1040),138.0],[Vector2(1290,485),180.0]]:
   var at:Vector2=shop[0];var width:float=shop[1]

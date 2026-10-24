@@ -30,7 +30,7 @@ var stale=false
 var last_refresh=""
 func compatible(data:Dictionary)->bool:
  var limits=data.get("limits",{});var named=data.get("named",{})
- return int(data.get("record_policy",0))>=3 and named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=5 and int(limits.get("descent",0))>=10 and data.get("fish_boards") is Dictionary
+ return int(data.get("record_policy",0))>=3 and named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=10 and int(limits.get("descent",0))>=10 and data.get("fish_boards") is Dictionary
 func board_notice()->String:
  if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending older record lists. Deploy the matching server ZIP; your saved records are safe."
  if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
@@ -86,7 +86,7 @@ func payload()->Dictionary:
   if FISH.is_trophy(entry):trophies.append(entry)
   if weight>0 and rarer(entry,rare):rare=entry
   if weight>float(best.kg):best={"species":id,"kg":weight}
- return {"record_policy":3,"unofficial":false,"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
+ return {"catch_records":legacy.fishing_records.record_payload(),"record_policy":3,"unofficial":false,"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
 func cloud_identity()->String:
  var account=legacy.get_node("/root/FXAccount")
  return str(account.user.get("id","")) if account.loaded and not account.conflict else ""
@@ -202,7 +202,7 @@ func build(parent:Node)->void:
    var column=VBoxContainer.new();column.size_flags_horizontal=Control.SIZE_EXPAND_FILL;column.size_flags_stretch_ratio=1;columns.add_child(column)
    if n==0:clears_parent=column
    else:times_parent=column
- for entry in [["TOP 10 HEROES • TOTAL DAMAGE","heroes"],["TOP 5 REALMS • RECORDED CLEARS","realms"]]:
+ for entry in [["TOP 10 HEROES • TOTAL DAMAGE","heroes"],["TOP 10 REALMS • RECORDED CLEARS","realms"]]:
   if category!=entry[1]:continue
   var card=UI.card(clears_parent,entry[0],"Ranked by total damage across connected profiles • all time" if entry[1]=="heroes" else "Recorded clears across connected profiles • all time")
   if snapshot.get(entry[1],[]).is_empty():preload("res://scripts/garden_ui.gd").label(card,"No records submitted yet.")
@@ -308,20 +308,20 @@ const FISH_BOARD_KEYS=["fish_all","fish_week","rarest_all","rarest_week"]
 static func valid_fish_boards(boards:Variant)->bool:
  if not boards is Dictionary:return false
  for key in FISH_BOARD_KEYS:
-  if not boards.get(key) is Array or boards[key].size()>5:return false
+  if not boards.get(key) is Array or boards[key].size()>10:return false
   for row in boards[key]:
    if not row is Dictionary or not FISH.fish().has(row.get("species")) or not (row.get("kg") is float or row.get("kg") is int):return false
    if not is_finite(float(row.kg)) or float(row.kg)<=0 or float(row.kg)>minf(10000,float(FISH.fish()[row.species].max_kg)*4+.01):return false
    if row.has("username") and (not row.username is String or row.username.length()>96):return false
  return true
 func fish_leaders(key:String)->Array:
- if snapshot.get("fish_boards") is Dictionary and snapshot.fish_boards.get(key) is Array:return snapshot.fish_boards[key].slice(0,5)
+ if snapshot.get("fish_boards") is Dictionary and snapshot.fish_boards.get(key) is Array:return snapshot.fish_boards[key].slice(0,10)
  var best=preferred_fish(snapshot.get(key),snapshot.get("named",{}).get(key),key.begins_with("rarest"))
  return [best] if best is Dictionary and FISH.fish().has(best.get("species")) else []
 func fish_leaderboards(parent:Node)->void:
  var flow=HFlowContainer.new();flow.name="FishLeaderboards";flow.add_theme_constant_override("h_separation",12);flow.add_theme_constant_override("v_separation",12);parent.add_child(flow)
  for entry in [["LARGEST FISH • THIS WEEK","fish_week"],["LARGEST FISH • ALL TIME","fish_all"],["RAREST FISH • THIS WEEK","rarest_week"],["RAREST FISH • ALL TIME","rarest_all"]]:
-  var card=UI.card(flow,entry[0],"Top 5 anglers • best catch per angler");card.name="FishBoard_"+str(entry[1]);card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.get_parent().custom_minimum_size.x=clampf(legacy.game.get_viewport_rect().size.x-96,300,400)
+  var card=UI.card(flow,entry[0],"Top 10 individual catches • players can hold multiple places");card.name="FishBoard_"+str(entry[1]);card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.get_parent().custom_minimum_size.x=clampf(legacy.game.get_viewport_rect().size.x-96,300,400)
   var leaders:Array=fish_leaders(str(entry[1]))
   if leaders.is_empty():preload("res://scripts/garden_ui.gd").label(card,"No catches recorded for this period yet.",16)
   for i in leaders.size():fish_leader_row(card,leaders[i],i+1)

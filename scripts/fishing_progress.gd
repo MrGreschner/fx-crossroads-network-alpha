@@ -115,7 +115,9 @@ func quote_xp(catch:Dictionary,first:bool,record:bool,kept:bool=true)->int:
  if not kept:amount=ceili(amount*(1+release_bonus()))
  return amount
 func award(catch:Dictionary,first:bool,record:bool,kept:bool=true)->void:
+ var before=level()
  last_xp=quote_xp(catch,first,record,kept);state().xp=mini(1000000000,int(state().xp)+last_xp)
+ if level()>before:preload("res://scripts/skill_celebration.gd").show_level(records.legacy.game,"Fishing",before,level(),earned_points()-mini(MAX_POINTS,before/3))
 const BAIT_LEVELS={"basic":1,"worms":1,"dough":1,"insects":8,"scraps":12,"honeygrain":5,"moonmoth":10,"saltflash":12,"kelp_crumble":8,"roe":10}
 const GEAR={"net":{"level":5,"cost":60,"name":"River net"},"pot":{"level":10,"cost":90,"name":"Baited basket"}}
 func bait_unlocked(id:String)->bool:return id in BAIT_LEVELS and level()>=int(BAIT_LEVELS[id])

@@ -43,13 +43,13 @@ func open(kind:String)->void:
  game.mobile.reset_controls();page=kind;backdrop.visible=true
  gallery.visible=kind in ["main","clear","options","download"];backdrop.color=Color("#081b27") if gallery.visible else Color(.015,.04,.06,.88)
  for child in body.get_children():body.remove_child(child);child.queue_free()
- var heading:=text("DOWNLOAD GAME" if kind=="download" else "OPTIONS" if kind=="options" else "CROSSROADS" if kind=="main" else "NEW ADVENTURE" if kind=="clear" else "YOUR ADVENTURE",30);heading.modulate=Color("#f2d699");heading.add_theme_font_override("font",display_font)
+ var heading:=text("DOWNLOAD GAME" if kind=="download" else "OPTIONS" if kind=="options" else "CROSSROADS" if kind=="main" else "NEW ADVENTURE" if kind=="clear" else "KEEP YOUR ADVENTURE SAFE" if kind=="cloud_advice" else "YOUR ADVENTURE",30);heading.modulate=Color("#f2d699");heading.add_theme_font_override("font",display_font)
  if kind=="main":
   heading.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
   var sub:=text("REALMS BEYOND",15);sub.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;sub.modulate=Color("#b1d5d3")
   var rule:=HSeparator.new();body.add_child(rule)
   text("Find your path. Create what’s next.",17).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
- elif kind not in ["options","download","clear"]:
+ elif kind not in ["options","download","clear","cloud_advice"]:
   text("Live multiplayer continues while this menu is open." if arcade else "Take a moment. Your current adventure is paused.",18)
   button("Sound: OFF" if AudioServer.is_bus_mute(0) else "Sound: ON",func():game.presentation.toggle_sound();open(page))
  if kind=="download":
@@ -67,11 +67,19 @@ func open(kind:String)->void:
   text("Start with every hero available and a short, skippable tutorial. This replaces the profile on this device, including mastery, town progress, photo portfolio, custom music, your entire mine and ALL custom heroes, enemies, abilities and behaviours built on this device. Download the current profile first if it belongs to you; your downloaded files stay safe.")
   button("START • enter tutorial",clear_profile,"#3e7968").grab_focus()
   button("Back • keep this profile",func():open("main"))
+ elif kind=="cloud_advice":
+  var account=game.get_node("/root/FXAccount")
+  text("Take your adventure with you",26).modulate=Color("#f2d699")
+  text("We recommend creating a cloud account so you can save your progress and return on another device. You can also keep playing with the profile on this device.",18)
+  if not account.token.is_empty():text("You are signed in, but your cloud profile is not loaded yet. Choose Cloud account to load it, or continue with this device’s profile.",16)
+  button("Continue without cloud account" if account.token.is_empty() else "Continue with this device’s profile",resume,"#345866")
+  button("Create a cloud account" if account.token.is_empty() else "Open my cloud account",func():resume(false);account.open();account.mode="register" if account.token.is_empty() else "login";account.message="Welcome! Let’s make a home for your progress.";account.refresh(),"#416f91")
+  button("Back to main menu",func():open("main"))
  elif kind=="main":
-  var continue_button=button("CONTINUE • current profile",resume,"#345866");continue_button.grab_focus()
+  var continue_button=button("CONTINUE • current profile",continue_with_profile,"#345866");continue_button.grab_focus()
   for state in ["normal","hover","pressed"]:
    var border=continue_button.get_theme_stylebox(state).duplicate();border.border_color=Color("#f2d699");border.set_border_width_all(2);continue_button.add_theme_stylebox_override(state,border)
-  if not arcade:button("CLOUD ACCOUNT • sign in / save",func():resume(false);game.get_node("/root/FXAccount").open(),"#3e7968")
+  if not arcade:button("CLOUD ACCOUNT • sign in / save",func():resume(false);game.get_node("/root/FXAccount").open(),"#416f91")
   button("NEW GAME • start your adventure",func():request_clear(),"#3e7968")
   if not arcade:button("CROSSROADS STUDIO • create & test",func():resume(false);game.hero_workshop.open(),"#665e81")
   button("DOWNLOAD GAME • WINDOWS",func():open("download"),"#496681")
@@ -218,3 +226,9 @@ func layout_panel()->void:
   panel.size=Vector2(520,maxf(640,body.get_combined_minimum_size().y+52)) if page=="main" else Vector2(760,maxf(660,body.get_combined_minimum_size().y+52))
  var view:=get_viewport().get_visible_rect().size;var scale_factor:=minf(1,minf((view.x-24)/panel.size.x,(view.y-24)/panel.size.y));panel.scale=Vector2.ONE*scale_factor;panel.position=(view-panel.size*panel.scale)*.5
  panel.position.y=maxf(12,panel.position.y)
+
+func continue_with_profile()->void:
+ if arcade:resume();return
+ var account=game.get_node("/root/FXAccount")
+ if account.loaded and not account.token.is_empty():resume()
+ else:open("cloud_advice")

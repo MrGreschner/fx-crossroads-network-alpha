@@ -1,8 +1,8 @@
 {
   "ENT1010:o1": {
     "title": "Compare two customer needs",
-    "steps": "Inspect two premises using District map \u2192 click a building \u2192 Record premises inspection. Read Customer need and Trade-off. For each, write who needs help, what problem they have and which observation supports that idea. Compare cost, usefulness and risk before recommending one.",
-    "where": "Studio \u2192 Explore & inspect premises; District map \u2192 click a building; return to module \u2192 Studio.",
+    "steps": "Inspect two premises using District map  >  click a building  >  Record premises inspection. Read Customer need and Trade-off. For each, write who needs help, what problem they have and which observation supports that idea. Compare cost, usefulness and risk before recommending one.",
+    "where": "Studio  >  Explore & inspect premises; District map  >  click a building; return to module  >  Studio.",
     "deliverable": "Your two inspection cards (captured in Studio) and two short need/observation entries. Label any imagined customer reaction as an assumption.",
     "example": "At Hearth & Ladle, customers need a quick lunch. The inherited stove could make soup, but a long queue would reduce its usefulness. At Parcel & Post, delivery helps people who cannot carry purchases. I would test the lunch queue before buying another stove.",
     "response_starter": "My compare two customer needs:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -10,7 +10,7 @@
   "ENT1010:o2": {
     "title": "Propose three ways to meet one need",
     "steps": "Choose a need from Part 1. Write three genuinely different responses, not just three business names. Compare who each helps. Ask a classmate or teacher which response they prefer and why; record that feedback and one change you made.",
-    "where": "Studio \u2192 Explore & inspect premises; District map \u2192 click a building; return to module \u2192 Studio.",
+    "where": "Studio  >  Explore & inspect premises; District map  >  click a building; return to module  >  Studio.",
     "deliverable": "A three-option list or annotated sketch, the feedback you received and your revised choice. Capture your comparison board if you use it.",
     "example": "For faster lunches: prepacked sandwiches, a short soup menu, or advance collection. My partner preferred sandwiches because they can eat them quickly; I changed the plan to two fillings to reduce preparation.",
     "response_starter": "My propose three ways to meet one need:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -18,7 +18,7 @@
   "ENT1010:o3": {
     "title": "Build your first venture concept",
     "steps": "In Studio, confirm your planned venture after inspecting two premises. Describe what you will sell, who will buy it, its price, equipment, ingredients, staff jobs, ownership choice and one risk. Explain how the parts fit together. You do not need to purchase it yet.",
-    "where": "Studio \u2192 Explore & inspect premises; District map \u2192 click a building; return to module \u2192 Studio.",
+    "where": "Studio  >  Explore & inspect premises; District map  >  click a building; return to module  >  Studio.",
     "deliverable": "A captured confirmed venture plan plus a concise concept paragraph covering the offering, customers, resources, ownership and risk.",
     "example": "I propose a sole-owner lunch shop selling cheese sandwiches. It uses the inherited prep bench and fridge, needs bread and cheese, and keeps a small stock buffer because unsold sandwiches spoil.",
     "response_starter": "My build your first venture concept:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -26,7 +26,7 @@
   "ENT1010:o4": {
     "title": "Recommend proceed, revise or reject",
     "steps": "Use your inspection and concept from Parts 1\u20133. Compare at least two ideas against your own stated criteria, such as startup cost, customer benefit and risk. Give a proceed/revise/reject decision and name missing information that could change it.",
-    "where": "Studio \u2192 Explore & inspect premises; District map \u2192 click a building; return to module \u2192 Studio.",
+    "where": "Studio  >  Explore & inspect premises; District map  >  click a building; return to module  >  Studio.",
     "deliverable": "A small comparison table or bullet list with your criteria, evidence for each idea and a justified recommendation.",
     "example": "I would revise the pie idea: demand may be good, but the oven costs more and pies spoil. A sandwich pilot uses equipment already owned. I still need to observe how many customers leave the queue.",
     "response_starter": "My recommend proceed, revise or reject:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -34,7 +34,7 @@
   "ENT1020:o1": {
     "title": "Set goals and responsibilities",
     "steps": "Write a purpose for your selected business, one short-term goal and one longer-term goal. State who will do each job, what help or source you will use, and how you will respond to one likely obstacle.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A purpose statement and action table: goal, measure, deadline, person responsible and response to an obstacle.",
     "example": "By the third completed workday, reduce missed soup orders below five by lowering the stock buffer for slow sellers and assigning receiving work before deliveries arrive.",
     "response_starter": "My set goals and responsibilities:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -42,7 +42,7 @@
   "ENT1020:o2": {
     "title": "Prepare a risk register",
     "steps": "Inspect Products, Materials, People and Ledger for your venture. Identify a money risk, a people risk and an operating risk. Rate likelihood and impact in words, then give a prevention action and a backup response for each.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Three risk entries with evidence, likelihood/impact, prevention and fallback. Add a screenshot of the panel supporting your most serious risk.",
     "example": "Milk expires before enough drinks sell. Likelihood high, impact medium. Order five instead of twenty; if sales stay low, remove milk drinks until demand improves.",
     "response_starter": "My prepare a risk register:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -50,7 +50,7 @@
   "ENT1020:o3": {
     "title": "Choose resources and support",
     "steps": "Compare two supplier options for the same recipe, including price, delivery, minimum order and quality. Explain your target customers, competition and which resources/support fit the plan. Identify one assumption to check.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A supplier comparison, one resource choice and a paragraph connecting that choice to your market.",
     "example": "Local delivery costs more per unit but arrives quickly. For a small first day I would avoid a wholesale minimum that creates waste.",
     "response_starter": "My choose resources and support:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -58,7 +58,7 @@
   "ENT1020:o4": {
     "title": "Present and revise a connected plan",
     "steps": "Combine your product, customer, supply, staffing, equipment and cash plans. Present them to a peer or teacher. Record a specific comment, revise the plan and explain what changed.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Your venture plan, one before/after section and dated presentation feedback or an observed-presentation note.",
     "example": "Feedback showed I had bought an oven but left no money for ingredients. I delayed the oven and changed the first menu to sandwiches.",
     "response_starter": "My present and revise a connected plan:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -66,7 +66,7 @@
   "ENT1020:o5": {
     "title": "Document initiative and adaptation",
     "steps": "Choose one planning job you personally lead. Record the problem you noticed, the action you took without waiting for a solution, who helped and how you changed after feedback.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A brief dated action log and a revised planning artifact. For group work, name your own contribution.",
     "example": "I noticed the menu needed refrigeration. I checked equipment costs, asked our partner to compare shelf life, and revised our launch order.",
     "response_starter": "My document initiative and adaptation:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -74,7 +74,7 @@
   "MAM1010:o1": {
     "title": "Explain how your organization works",
     "steps": "Use one chosen business. Assign buying, making, selling, merchandising and management responsibilities, then compare two ownership options and choose one.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A labelled role chart and a short ownership comparison. Include People or premises evidence showing which tasks the business needs.",
     "example": "The owner plans cash and buys ingredients; a preparation worker makes food; a service worker handles customers. A partnership shares investment but needs an agreement about decisions.",
     "response_starter": "My explain how your organization works:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -82,7 +82,7 @@
   "MAM1010:o2": {
     "title": "Make a connected marketing mix",
     "steps": "Choose one product and a target customer. Set product features, price, place and promotion in Strategy and Products. Explain a competitor and one social/environmental effect of your choices.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Screenshots of your product plan and Strategy settings, with a reason for each marketing choice.",
     "example": "A warm lunch for travellers needs quick service. I set a small menu, a mid-range price and a modest campaign; reusable packaging would change cost and waste.",
     "response_starter": "My make a connected marketing mix:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -90,7 +90,7 @@
   "MAM1010:o3": {
     "title": "Run a merchandising comparison",
     "steps": "Complete a baseline trading day. Change one merchandising choice\u2014layout, assortment, display or service\u2014and run another day. Compare sales, lost customers and profit; explain weather/trends or stock shortages that make the comparison imperfect.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Before/after settings and two Ledger reports with a conclusion about the merchandising choice.",
     "example": "Sales rose after adding display space, but rain ended too. I cannot attribute the whole increase to the display and would repeat the test.",
     "response_starter": "My run a merchandising comparison:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -98,7 +98,7 @@
   "ENT2010:o1": {
     "title": "Select an analysis method",
     "steps": "Choose two ventures to compare. Use premises inspections, recipe costs and one external source or a clearly labelled supplied case. Explain how market, finance, staffing and product analysis help your decision and where the data is uncertain.",
-    "where": "Studio \u2192 Enter classroom business and the comparison board.",
+    "where": "Studio  >  Enter classroom business and the comparison board.",
     "deliverable": "Your sources/inspection captures and an analysis plan saying what you compared and why.",
     "example": "A bakery may have good margins but require an oven. I compare startup cash, waste risk and customer demand, separating simulated observations from real research.",
     "response_starter": "My select an analysis method:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -106,7 +106,7 @@
   "ENT2010:o2": {
     "title": "Define success criteria",
     "steps": "Set and justify success criteria for an owner, employee and customer. Apply the same criteria to both venture choices using costs, operating evidence and resource requirements.",
-    "where": "Studio \u2192 Enter classroom business and the comparison board.",
+    "where": "Studio  >  Enter classroom business and the comparison board.",
     "deliverable": "A criteria table with evidence for both ventures and an explanation of whose interests each measure represents.",
     "example": "Profit matters to the owner; manageable queues matter to customers; safe workload matters to staff. High sales alone does not satisfy all three.",
     "response_starter": "My define success criteria:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -114,15 +114,15 @@
   "ENT2010:o3": {
     "title": "Make a feasibility recommendation",
     "steps": "Use your comparison from Parts 1\u20132. Assess strengths and weaknesses of each venture, recommend the more feasible option and test one uncertain assumption by changing a cost or demand estimate.",
-    "where": "Studio \u2192 Enter classroom business and the comparison board.",
+    "where": "Studio  >  Enter classroom business and the comparison board.",
     "deliverable": "A written recommendation backed by your comparison and one sensitivity calculation.",
     "example": "The cafe needs less startup equipment, but milk waste could remove its advantage. If demand is one-third lower, I would start with tea and coffee only.",
     "response_starter": "My make a feasibility recommendation:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "ENT2020:o1": {
     "title": "Compare financing consequences",
-    "steps": "In Studio \u2192 finance model, compare two financing choices for a named equipment purchase. Explain cost, repayments, risk, control and relationships. Distinguish simulation options from real financing evidence.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "steps": "In Studio  >  finance model, compare two financing choices for a named equipment purchase. Explain cost, repayments, risk, control and relationships. Distinguish simulation options from real financing evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A captured finance comparison and your justified choice. Include the asset cost from Equipment.",
     "example": "Borrowing preserves reserve cash but requires repayment even on a quiet day. Equity avoids that repayment but shares ownership and decisions.",
     "response_starter": "My compare financing consequences:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -130,15 +130,15 @@
   "ENT2020:o2": {
     "title": "Classify financing sources",
     "steps": "Create examples of debt, equity and another source of support for your venture. Use a credible source to explain one real financing option, with its name, link/title and access date.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A classification table and one sourced financing explanation.",
     "example": "A repayable equipment loan is debt. Selling a share of ownership is equity. A supplier payment extension changes payment timing but does not make stock free.",
     "response_starter": "My classify financing sources:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "ENT2020:o3": {
     "title": "Match finance to cash timing",
-    "steps": "Use Studio \u2192 finance model and Ledger. Build a short cash forecast including opening cash, sales receipts, fixed/variable costs and repayments. Compare short/long funding for stock versus durable equipment and calculate break-even.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "steps": "Use Studio  >  finance model and Ledger. Build a short cash forecast including opening cash, sales receipts, fixed/variable costs and repayments. Compare short/long funding for stock versus durable equipment and calculate break-even.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Your forecast, break-even working and a captured finance model.",
     "example": "A stove lasts many periods, so matching it to a longer loan may be reasonable. Perishable stock should be funded over a shorter cycle; profit does not guarantee cash arrives before bills.",
     "response_starter": "My match finance to cash timing:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -146,7 +146,7 @@
   "ENT2030:o1": {
     "title": "Choose an audience and strategy",
     "steps": "Compare two customer groups using observations and a source or supplied research. Choose a product, message and channel that fit one group. Explain why the alternative fits less well.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Customer comparison and a proposed marketing mix with evidence sources.",
     "example": "Travellers may value a fast portable lunch more than a large sit-down menu. A short queue message fits them better than a luxury dining message.",
     "response_starter": "My choose an audience and strategy:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -154,7 +154,7 @@
   "ENT2030:o2": {
     "title": "Launch a planned campaign",
     "steps": "Record a baseline day, then set a campaign budget and matching product/price/service choices in Strategy. Run a full day without changing the plan midway.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "The campaign settings, planned objective/budget and its Ledger report.",
     "example": "I budgeted 15 to promote two fast drinks and kept enough cups ready. The objective was fewer lost orders and positive operating profit, not just more visitors.",
     "response_starter": "My launch a planned campaign:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -162,7 +162,7 @@
   "ENT2030:o3": {
     "title": "Evaluate and revise the campaign",
     "steps": "Compare the campaign to baseline. Use visitors, orders, stock, lost customers, expenses and profit to explain what happened. Change one part of the strategy, test again and account for trend/weather differences.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Before/after reports and a reasoned keep/change/stop decision for the campaign.",
     "example": "Advertising brought visitors but the queue could not serve them. I would improve capacity before increasing promotion.",
     "response_starter": "My evaluate and revise the campaign:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -170,7 +170,7 @@
   "ENT3010:o1": {
     "title": "Write operating procedures",
     "steps": "Turn your venture goals into a role chart and opening procedure. Allocate purchasing, preparation, service and money checks; identify who reports problems to whom.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A role chart and an ordered opening checklist connected to a measurable goal.",
     "example": "Before opening: check cash, inspect equipment, order stock, assign receiving and preparation, then verify ready products.",
     "response_starter": "My write operating procedures:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -178,7 +178,7 @@
   "ENT3010:o2": {
     "title": "Make and communicate a management decision",
     "steps": "Choose a real operating problem from your Ledger or a clearly labelled case. Compare options for money, labour, production and promotion. Explain ethical/safety responsibilities using an appropriate current source and write the message to staff.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Problem evidence, options, chosen response and a staff communication.",
     "example": "A busy stove needs service. I close for maintenance instead of hiding the fault; I explain the lost trading time and revised opening plan.",
     "response_starter": "My make and communicate a management decision:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -186,7 +186,7 @@
   "ENT3010:o3": {
     "title": "Select and develop employees",
     "steps": "Read at least two applicant resumes in People. Compare relevant previous work, pay and reliability clues. Hire/assign for a named job and propose onboarding, training, supervision and recognition.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Two resume captures, your hiring reason and an onboarding/training plan.",
     "example": "A former kitchen worker may prepare food well, but service experience matters for reception. I would train the new hire on our short menu before opening.",
     "response_starter": "My select and develop employees:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -194,7 +194,7 @@
   "ENT3010:o4": {
     "title": "Trace finance from records",
     "steps": "Use Ledger source entries to build a sample profit/loss, cash-flow and balance-sheet summary. Include a sample payroll/banking transaction and explain one receivable/payable timing example. Clearly label any data you construct.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Ledger capture and your worked financial summaries with calculations.",
     "example": "A stock purchase reduces cash before its cost becomes a sale expense. Wages affect both cash and profit; an unpaid customer invoice would affect their timing differently.",
     "response_starter": "My trace finance from records:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -202,7 +202,7 @@
   "ENT3010:o5": {
     "title": "Set people-review procedures",
     "steps": "Use a staffing situation or clearly labelled classroom case involving morale, attendance or conflict. Write a review schedule, a fair conversation and a specific improvement/recognition plan.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Your case response, review checklist and a performance-review example or teacher-confirmed role-play.",
     "example": "For repeated lateness I would listen, document the pattern, agree a change and review it next week, rather than cutting pay without discussion.",
     "response_starter": "My set people-review procedures:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -210,15 +210,15 @@
   "ENT3010:o6": {
     "title": "Monitor and revise the venture",
     "steps": "After several completed days, review cash, customer service, staff and inventory. State when each is checked, identify an external change, and justify a plan to adapt, downsize or close responsibly.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Dated monitoring table, Ledger evidence and a revised action/exit plan.",
     "example": "Three loss-making days with high waste suggest reducing the menu. I would preserve cash, explain changes to staff and clear obligations before closing.",
     "response_starter": "My monitor and revise the venture:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "MAM3050:o1": {
     "title": "Compare distribution routes",
-    "steps": "Choose one product. Draw two routes from producer to consumer, with intermediaries labelled. Compare two transport options for cost, access, reliability and time using Studio \u2192 distribution model and sourced examples.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "steps": "Choose one product. Draw two routes from producer to consumer, with intermediaries labelled. Compare two transport options for cost, access, reliability and time using Studio  >  distribution model and sourced examples.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Two labelled routes, a transport comparison and source details.",
     "example": "A bakery can sell directly or via a retailer. A retailer adds reach and margin costs; refrigerated transport matters for cream desserts.",
     "response_starter": "My compare distribution routes:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -226,7 +226,7 @@
   "MAM3050:o2": {
     "title": "Investigate community retailers",
     "steps": "Choose a local shop, a local service business and an online/nonstore retailer. Use observation or public sources to compare what they sell and how customers receive it. Link one idea to your venture.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Three named examples, source/observation notes and a short comparison.",
     "example": "A neighbourhood cafe serves on site; a mobile repair service travels to customers; an online shop uses delivery. These channels suit different offers.",
     "response_starter": "My investigate community retailers:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -234,7 +234,7 @@
   "MAM3050:o3": {
     "title": "Present one complete supply chain",
     "steps": "Trace a manufactured product through raw input, processing, storage, intermediaries and final customer. Label transport at each stage, justify choices and explain one newer transport/distribution development from a source.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A supply-chain diagram with costs/time trade-offs and a sourced improvement idea.",
     "example": "Timber becomes boards, then a stool, then a retail sale. Road transport provides local access while rail may suit long bulk movements.",
     "response_starter": "My present one complete supply chain:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -242,7 +242,7 @@
   "ENT3020:o1": {
     "title": "Decide whether growth is justified",
     "steps": "Use completed-day reports to assess cash, profit, service capacity and owner goals. Compare expansion with staying small; identify social effects and one reason to delay.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Recent Ledger reports and a supported grow/wait decision.",
     "example": "Demand is strong but the current queue already loses customers. Better operations may be wiser than a second premises immediately.",
     "response_starter": "My decide whether growth is justified:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -250,15 +250,15 @@
   "ENT3020:o2": {
     "title": "Compare growth options",
     "steps": "Compare at least two suitable strategies: more products, another location, supplier integration, diversification or a franchise case. Explain role changes, risks and benefits.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A comparison table and a selected strategy with realistic goals.",
     "example": "A pie line uses the current oven; a second shop duplicates rent and staffing. They have different capital and management demands.",
     "response_starter": "My compare growth options:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "ENT3020:o3": {
     "title": "Plan the expansion",
-    "steps": "Use Studio \u2192 expansion model and business costs. Plan milestones, finance, people, production and promotion; include a contingency and a stop/review point.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "steps": "Use Studio  >  expansion model and business costs. Plan milestones, finance, people, production and promotion; include a contingency and a stop/review point.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Captured expansion model and an implementation plan with costs and dates.",
     "example": "Save reserve first, buy equipment second, train before launch, and review waste after two full days before widening the menu.",
     "response_starter": "My plan the expansion:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -266,7 +266,7 @@
   "ENT3020:o4": {
     "title": "Evaluate expanded results",
     "steps": "Run a small approved expansion or use a labelled supplied case. Compare financial and social results against your Part 3 targets and decide whether to continue, revise or shrink.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Before/after reports or case data and your reasoned next step.",
     "example": "Sales grew but payroll grew faster. I would reduce opening capacity and retest rather than call higher revenue a success.",
     "response_starter": "My evaluate expanded results:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -274,7 +274,7 @@
   "MAM1020:o1": {
     "title": "Define your target market",
     "steps": "Choose one product in Products. Explain target market in your own words, then name the specific group you intend to serve and why this offer fits.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "The named product and a short target-market definition/application.",
     "example": "A target market is the group an offer is designed to serve. Fast takeaway soup could target travellers with little time.",
     "response_starter": "My define your target market:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -282,7 +282,7 @@
   "MAM1020:o2": {
     "title": "Describe buyers, users and influencers",
     "steps": "For your chosen offer, distinguish who pays, who uses it and who influences the choice. Include relevant budget, location, habits or preferences without stereotyping.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A three-role customer profile with reasons.",
     "example": "A parent pays for a family golf round, children play, and friends may influence the choice. These roles may overlap.",
     "response_starter": "My describe buyers, users and influencers:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -290,7 +290,7 @@
   "MAM1020:o3": {
     "title": "Match offers to customer groups",
     "steps": "Choose three products/services and match each to a different customer need. Use their price, features and service requirements to explain the fit.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Three product/customer matches with a Products capture or comparison table.",
     "example": "A small tea suits a quick stop, a family round suits a group outing, and daycare suits someone away for longer.",
     "response_starter": "My match offers to customer groups:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -298,7 +298,7 @@
   "MAM1020:o4": {
     "title": "Explain buying behaviour",
     "steps": "Describe two purchases or supplied customer cases. Distinguish need/want, rational/emotional motives, budget and advertising influences; explain how these affect your offer.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Two explained buying decisions and one implication for your marketing.",
     "example": "A buyer may need lunch but want a premium dessert because the display looks inviting. A limited budget can change the final purchase.",
     "response_starter": "My explain buying behaviour:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -306,7 +306,7 @@
   "MAM1020:o5": {
     "title": "Demonstrate customer service",
     "steps": "Perform or script a sale with a clear greeting, product advice and receipt, then a complaint/return using a stated policy. Use respectful communication and accurate totals.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A receipt and service dialogue, recording or teacher-confirmed demonstration note.",
     "example": "I would acknowledge the wrong order, check the receipt, explain our replacement policy and confirm the customer accepts the solution.",
     "response_starter": "My demonstrate customer service:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -314,7 +314,7 @@
   "ENT2040:o1": {
     "title": "Open your planned venture",
     "steps": "Use the classroom district to acquire an allowed premises, choose a menu, install required equipment, order supplies, assign jobs and run a complete day. Keep enough cash for costs.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Your launch plan, menu/equipment captures and first full-day Ledger report.",
     "example": "I delayed a second machine so the business retained ingredient and wage cash for the first opening.",
     "response_starter": "My open your planned venture:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -322,7 +322,7 @@
   "ENT2040:o2": {
     "title": "Document startup procedures",
     "steps": "Write the actual sequence you used to launch, who was responsible and which check prevents a problem. Compare it with your original plan.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "An ordered startup checklist with one correction based on the launch.",
     "example": "Checking refrigeration before ordering milk avoids paying for stock we cannot store safely.",
     "response_starter": "My document startup procedures:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -330,7 +330,7 @@
   "ENT2040:o3": {
     "title": "Show leadership during implementation",
     "steps": "Choose one launch obstacle. Describe your decision, how you communicated or coordinated work and what you would do differently. Refer to an actual event or observed task.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A dated incident/action/result note and supporting capture or teacher observation.",
     "example": "We ran out of cups. I reduced the menu, reassigned receiving and told the group why more promotion would not fix the shortage.",
     "response_starter": "My show leadership during implementation:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -338,7 +338,7 @@
   "ENT2040:o4": {
     "title": "Assess your venture against criteria",
     "steps": "Set your criteria, compare plan and results across money, resources, service and personal workload, then recommend improvements based on evidence.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Your assessment table, Ledger report and written critique.",
     "example": "Sales met the goal but waste exceeded the budget. I would lower the ready-stock limit before adding more products.",
     "response_starter": "My assess your venture against criteria:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -346,7 +346,7 @@
   "MAM3010:o1": {
     "title": "Compare organizational structures",
     "steps": "Research two real organizations, including a local example. Draw their authority and communication arrangements, then compare them with a suitable chart for your venture.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Two sourced structure diagrams and a venture role chart.",
     "example": "A small owner-led cafe has direct communication; a larger organization may separate finance, operations and marketing.",
     "response_starter": "My compare organizational structures:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -354,7 +354,7 @@
   "MAM3010:o2": {
     "title": "Evaluate management approaches",
     "steps": "Compare two named management approaches and a contemporary trend using sources. Explain how each could change decisions, communication and work in your venture.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A sourced comparison and a justified approach/trend recommendation.",
     "example": "Participative planning may use employee ideas, while a tightly standardized process may improve consistency. I would combine feedback with clear food-preparation procedures.",
     "response_starter": "My evaluate management approaches:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -362,7 +362,7 @@
   "MAM3010:o3": {
     "title": "Connect business functions",
     "steps": "Take one problem from your business and trace how purchasing, production, finance, marketing, administration and people management must respond together.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "An annotated functional map with responsibilities and communication links.",
     "example": "A promoted pie sells out: purchasing orders ingredients, production checks oven capacity, finance checks cash and marketing avoids promising unavailable stock.",
     "response_starter": "My connect business functions:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -370,7 +370,7 @@
   "MAM3010:o4": {
     "title": "Explain success and failure",
     "steps": "Compare financial and nonfinancial indicators for your venture and a sourced case. Explain why they disagree and how owners, staff and customers might judge success differently.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A balanced measures table and an explained success/failure judgement.",
     "example": "Profit can rise while customer waiting gets worse. Short-term savings are not the only measure of organizational health.",
     "response_starter": "My explain success and failure:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -378,15 +378,15 @@
   "MAM3010:o5": {
     "title": "Evaluate a current management challenge",
     "steps": "Research one current ethical/social or organizational challenge, compare realistic responses and recommend a policy for your venture. Cite your evidence and identify a limitation.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A sourced case analysis, alternatives and a proposed policy.",
     "example": "Automating ordering may save time but exclude some customers. I would retain an accessible alternative and review complaints.",
     "response_starter": "My evaluate a current management challenge:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "MAM3130:o1": {
     "title": "Investigate open-market changes",
-    "steps": "In Studio \u2192 agriculture model, change one supply or demand factor and record the price/quantity effect. Connect it to a sourced agriculture example and your own produce offering.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "steps": "In Studio  >  agriculture model, change one supply or demand factor and record the price/quantity effect. Connect it to a sourced agriculture example and your own produce offering.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "Before/after model captures, a cause/effect explanation and one source.",
     "example": "Poor weather reduces supply; price may rise, but a seller still needs enough product and transport to benefit.",
     "response_starter": "My investigate open-market changes:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -394,7 +394,7 @@
   "MAM3130:o2": {
     "title": "Explain supply management",
     "steps": "Use a clearly identified real commodity and credible sources to explain entry, production limits, marketing and regulation in a supply-managed system. Compare with the teaching model.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A sourced system diagram and explanation. Do not describe the fantasy market as real Canadian law.",
     "example": "A quota limits production rights; it is different from a normal shop deciding to make fewer pies because sales are weak.",
     "response_starter": "My explain supply management:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -402,7 +402,7 @@
   "MAM3130:o3": {
     "title": "Compare open and managed systems",
     "steps": "Use your earlier examples to compare effects on producers, customers, prices, stability and access. Support benefits and costs rather than declaring one system always best.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A stakeholder comparison table and supported conclusion.",
     "example": "Stability can help planning, while restricted entry may create costs for a new producer. Different stakeholders experience the trade-off differently.",
     "response_starter": "My compare open and managed systems:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -410,7 +410,7 @@
   "MAM3130:o4": {
     "title": "Choose a marketing route for perishables",
     "steps": "Select a perishable product. Compare timing, quality, finance and transport constraints for direct sale versus an intermediary. Explain relevant policies from a current source or labelled case.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A route/cost comparison, shelf-life evidence and justified decision.",
     "example": "Fresh berries may need fast local sale; preserving them adds equipment cost but changes shelf-life risk.",
     "response_starter": "My choose a marketing route for perishables:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -418,15 +418,15 @@
   "MAM3130:o5": {
     "title": "Present an agriculture marketing plan",
     "steps": "Choose one commodity/product and a defined marketing structure. Present market evidence, goals, distribution, pricing and promotion, explaining how the plan can adapt.",
-    "where": "Studio \u2192 Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
+    "where": "Studio  >  Enter classroom business; use Products, Materials, People, Equipment, Strategy and Ledger. Return to module for its visual model and evidence.",
     "deliverable": "A concise plan, supply-chain visual and presentation feedback or observation.",
     "example": "A seasonal vegetable basket uses direct sales, harvest-timed promotion and smaller batches; rain could change supply and require a revised offer.",
     "response_starter": "My present an agriculture marketing plan:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "DES1020:o1": {
     "title": "Map your design process",
-    "steps": "In Studio \u2192 hero creator, choose a gameplay/visual problem. Write a brief naming the player, need and constraints. Record research, ideas, selection, making, testing and revision in order.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "steps": "In Studio  >  hero creator, choose a gameplay/visual problem. Write a brief naming the player, need and constraints. Record research, ideas, selection, making, testing and revision in order.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A labelled process map and two initial concept sketches.",
     "example": "Players cannot distinguish a healer from a fighter. I compare silhouettes, sketch two alternatives and test recognition at normal game size.",
     "response_starter": "My map your design process:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -434,7 +434,7 @@
   "DES1020:o2": {
     "title": "Make and test a designed solution",
     "steps": "Build your selected hero in the creator. Test it in playtest, ask someone what they understand and revise one feature to address the brief.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable hero source, a before/after capture and one recorded test observation.",
     "example": "The staff disappeared at game scale. I enlarged its silhouette and retested without changing the hero power.",
     "response_starter": "My make and test a designed solution:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -442,7 +442,7 @@
   "DES1020:o3": {
     "title": "Present your design",
     "steps": "Attach your finished hero source in My evidence. Explain the need, selected idea and most important tested revision in a short presentation or written walkthrough.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Hero source, final image and a presentation note or explanation.",
     "example": "The wider staff solved the recognition problem; the original narrow detail is visible in my first sketch.",
     "response_starter": "My present your design:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -450,7 +450,7 @@
   "DES1020:o4": {
     "title": "Credit your sources",
     "steps": "List which images/ideas you made yourself and which came from others. For reused work, record creator, source and permission/licence; explain any changes.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A credits list attached to your project and source/permission notes.",
     "example": "I drew the sprite myself; a reference pose informed the stance. I identify that reference rather than claiming it as my own drawing.",
     "response_starter": "My credit your sources:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -458,7 +458,7 @@
   "DES1030:o1": {
     "title": "Produce concepts at game scale",
     "steps": "Write a brief for one 2-D hero graphic. Create two thumbnail concepts and show how each reads at its intended in-game size. Select one with reasons.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Two scaled concepts, brief and selection explanation.",
     "example": "The detailed face is unreadable at 48 pixels; the simpler horn silhouette remains clear.",
     "response_starter": "My produce concepts at game scale:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -466,7 +466,7 @@
   "DES1030:o2": {
     "title": "Use and compare drawing tools",
     "steps": "Use Studio drawing tools or an appropriate external editor to make your hero graphic. Record how two tools/material techniques affect the result.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable source and a tool comparison with an image of the result.",
     "example": "A hard-edge brush keeps pixel boundaries clear; a soft brush is better for a background glow than a tiny face.",
     "response_starter": "My use and compare drawing tools:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -474,7 +474,7 @@
   "DES1030:o3": {
     "title": "Apply design elements and principles",
     "steps": "Annotate your graphic to identify deliberate line, shape, colour and composition choices. Explain how contrast, balance or emphasis helps its purpose.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "An annotated image and a version with the intended game background.",
     "example": "A light edge separates the dark cloak from a dark realm; the bright hand draws attention to the spell.",
     "response_starter": "My apply design elements and principles:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -482,7 +482,7 @@
   "DES1030:o4": {
     "title": "Solve and revise a visual problem",
     "steps": "Test the graphic at intended scale and against a contrasting background. Identify a specific readability/composition problem, revise it and compare the results.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Before/after images and the test condition.",
     "example": "Two limbs merged into one shape. I separated them by one pixel and retested the walking frame.",
     "response_starter": "My solve and revise a visual problem:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -490,7 +490,7 @@
   "DES1030:o5": {
     "title": "Present finished 2-D work",
     "steps": "Attach source and exported art, explain how it meets your brief and discuss one limitation.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Final image, source and a concise presentation or teacher observation.",
     "example": "The hero reads well standing still; the next improvement would be clearer turning poses.",
     "response_starter": "My present finished 2-d work:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -498,15 +498,15 @@
   "DES1030:o6": {
     "title": "Record authorship",
     "steps": "Provide credits and permission details for external assets, fonts or references. Distinguish source material from your own changes.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A credits note naming creators, sources and licence/permission where relevant.",
     "example": "The sprite is mine; the reference photo is credited with its source and permitted use.",
     "response_starter": "My record authorship:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "DES2035:o1": {
     "title": "Plan and produce a realm solution",
-    "steps": "In Studio \u2192 realm creator, write a brief for a navigable realm. Make alternative layout sketches, select one and build a playable version.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "steps": "In Studio  >  realm creator, write a brief for a navigable realm. Make alternative layout sketches, select one and build a playable version.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Brief, alternative sketches, editable realm source and a top-down capture.",
     "example": "The brief requires clear routes and cover; I select a loop layout rather than a single narrow corridor.",
     "response_starter": "My plan and produce a realm solution:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -514,7 +514,7 @@
   "DES2035:o2": {
     "title": "Use visual design to guide play",
     "steps": "Apply composition, hierarchy, contrast and rhythm to the realm. Test navigation and revise a feature that misleads players.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Annotated realm image, before/after detail and playtest notes.",
     "example": "Repeated lights lead toward the exit; a brighter dead end distracted testers, so I reduced it.",
     "response_starter": "My use visual design to guide play:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -522,7 +522,7 @@
   "DES2035:o3": {
     "title": "Present and evaluate the realm",
     "steps": "Attach final source and show a walkthrough from entry to goal. Explain a design decision and its tested result.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Realm source, route capture and walkthrough/presentation notes.",
     "example": "Players found the goal after I used a larger landmark, but one side route still needs clearer contrast.",
     "response_starter": "My present and evaluate the realm:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -530,7 +530,7 @@
   "COM1005:o1": {
     "title": "Explain composition choices",
     "steps": "Create an annotated composition study for a game announcement or business poster. Identify design elements/principles and explain their effect on the message.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Annotated draft with specific observations about visual hierarchy and composition.",
     "example": "A large title creates emphasis; aligned panels help the reader follow the sale details.",
     "response_starter": "My explain composition choices:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -538,15 +538,15 @@
   "COM1005:o2": {
     "title": "Choose readable typography",
     "steps": "Compare two text treatments for the same message. Test at intended display size and explain font, scale, spacing and contrast choices.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Two typography samples and a chosen version with reasons.",
     "example": "Decorative text suits a title but makes the small opening hours hard to read, so I use a simpler body font.",
     "response_starter": "My choose readable typography:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "COM1005:o3": {
     "title": "Produce visual compositions",
-    "steps": "Use Studio \u2192 media tools or suitable external tools to make two versions of a promotional message in different media/formats. Apply the design choices deliberately.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "steps": "Use Studio  >  media tools or suitable external tools to make two versions of a promotional message in different media/formats. Apply the design choices deliberately.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable source, two final outputs and an explanation of how the medium changes the composition.",
     "example": "A poster uses a large image and short headline; a small on-screen card needs fewer words and stronger contrast.",
     "response_starter": "My produce visual compositions:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -554,7 +554,7 @@
   "COM1005:o4": {
     "title": "Credit visual materials",
     "steps": "Identify your own work and external images, fonts or audio. Record source and permission for each reused item.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A credits/source list linked to the submitted composition.",
     "example": "The photograph is licensed for reuse; I list its creator and keep the licence information.",
     "response_starter": "My credit visual materials:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -562,7 +562,7 @@
   "COM1005:o5": {
     "title": "Present your message",
     "steps": "Show the finished composition at intended size, explain the audience and message, and discuss one revision.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Final outputs, source and a short presentation or observation note.",
     "example": "The audience should notice the product before the small print; I reduced decorative clutter to achieve that.",
     "response_starter": "My present your message:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -570,7 +570,7 @@
   "COM1005:o6": {
     "title": "Use a peer critique",
     "steps": "Ask a peer what message they noticed first and what was unclear. Record their actual feedback, choose a response and revise or justify keeping the design.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Feedback note and before/after image or a reasoned decision not to change.",
     "example": "My partner missed the date. I moved it beneath the title and checked again.",
     "response_starter": "My use a peer critique:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -578,15 +578,15 @@
   "COM1035:o1": {
     "title": "Compare graphic programs",
     "steps": "Compare two graphic tools, including raster versus vector strengths. Use a small trial drawing in each and choose a tool for a stated purpose.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Two trial outputs, tool names and a comparison.",
     "example": "Vector shapes resize cleanly for a logo; raster brushes suit painted texture.",
     "response_starter": "My compare graphic programs:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "COM1035:o2": {
     "title": "Create vector and raster graphics",
-    "steps": "In Studio \u2192 graphics/vector tool and a raster editor, create a related pair such as a business mark and a textured game object. Use appropriate shapes, layers and export choices.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "steps": "In Studio  >  graphics/vector tool and a raster editor, create a related pair such as a business mark and a textured game object. Use appropriate shapes, layers and export choices.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable vector source, editable raster source and exported images.",
     "example": "The shop emblem uses simple vector curves; the crate surface uses raster brush texture.",
     "response_starter": "My create vector and raster graphics:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -594,7 +594,7 @@
   "COM1035:o3": {
     "title": "Organize and export files",
     "steps": "Save source and exported versions with clear names and folders. Explain dimensions, format and version naming, then demonstrate reopening the source.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A file-list/folder capture, source files and export-setting notes.",
     "example": "shop-mark_v02.svg is editable source; shop-mark_web.png is the transparent game export.",
     "response_starter": "My organize and export files:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -602,7 +602,7 @@
   "COM1035:o4": {
     "title": "Record permissions",
     "steps": "Credit reused assets and identify licence/permission for your chosen use.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A credits list accompanying both graphics.",
     "example": "The font licence allows the intended use; I retain its name and licence link.",
     "response_starter": "My record permissions:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -610,7 +610,7 @@
   "COM1035:o5": {
     "title": "Present graphic choices",
     "steps": "Show the two outputs in their intended context and explain why raster/vector and export settings fit each task.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Final context captures and a concise explanation.",
     "example": "The emblem remains sharp when enlarged; the raster texture uses fixed dimensions to control detail and size.",
     "response_starter": "My present graphic choices:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -618,15 +618,15 @@
   "COM1145:o1": {
     "title": "Compare three animation styles",
     "steps": "Study at least three animation styles used in industry. Name a sourced example of each and explain how successive images create movement. Relate timing to your planned game animation.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Three cited examples and a short comparison with a storyboard.",
     "example": "Stop motion photographs objects; drawn animation changes drawings; a rig moves parts. All depend on changing images over time.",
     "response_starter": "My compare three animation styles:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "COM1145:o2": {
     "title": "Make and test a short animation",
-    "steps": "Use Studio \u2192 animation creator or an external editor. Plan a short movement, make its frames/timing, play it and revise a visible timing or continuity problem.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "steps": "Use Studio  >  animation creator or an external editor. Plan a short movement, make its frames/timing, play it and revise a visible timing or continuity problem.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable animation source, playable/exported result, storyboard and a before/after timing note.",
     "example": "The jump lands too suddenly. I add a brief squash frame and shorten the airborne pause.",
     "response_starter": "My make and test a short animation:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -634,7 +634,7 @@
   "COM1145:o3": {
     "title": "Credit animation materials",
     "steps": "List authorship, source and permission for external art, sound and references.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A credits list tied to your animation.",
     "example": "I made the frames; the sound effect has a reuse licence recorded in the credits.",
     "response_starter": "My credit animation materials:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -642,15 +642,15 @@
   "COM1145:o4": {
     "title": "Present the animation",
     "steps": "Play the finished animation and explain style, timing and a tested improvement.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Animation source, result and presentation/observation note.",
     "example": "I slowed the anticipation frames so the action reads before the fast movement.",
     "response_starter": "My present the animation:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "COM2035:o1": {
     "title": "Create and revise a raster image",
-    "steps": "Use Studio \u2192 object/image tools or a raster editor to create a game asset. Plan dimensions, use layers/selections/colour deliberately, test it at game scale and revise.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "steps": "Use Studio  >  object/image tools or a raster editor to create a game asset. Plan dimensions, use layers/selections/colour deliberately, test it at game scale and revise.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable raster source, final export, before/after detail and tool/setting notes.",
     "example": "The object blends into the floor. I adjust its edge values on a separate layer and retest.",
     "response_starter": "My create and revise a raster image:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -658,7 +658,7 @@
   "COM2035:o2": {
     "title": "Credit raster sources",
     "steps": "List original and reused image elements, creators and permissions. For each reused texture or photograph, record its filename, source link, creator and licence or permission for this use.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A source/credits list for the submitted image.",
     "example": "The base texture is credited; the painted highlights and silhouette are mine.",
     "response_starter": "My credit raster sources:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -666,7 +666,7 @@
   "COM2035:o3": {
     "title": "Present the image",
     "steps": "Show the final asset in context and explain a technical choice and revision.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Source, export, context image and a concise explanation.",
     "example": "Transparency removes the background; a compact export keeps the asset suitable for the game.",
     "response_starter": "My present the image:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -674,7 +674,7 @@
   "COM3035:o1": {
     "title": "Produce an advanced raster solution",
     "steps": "Develop a coherent raster asset set for a stated purpose. Plan resolution and layers, combine suitable editing techniques, compare versions and validate consistent appearance in context.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Editable layered sources, final exports, test/context captures and a revision explanation.",
     "example": "I use controlled colour adjustment and masks to keep the item set consistent without flattening editable layers.",
     "response_starter": "My produce an advanced raster solution:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -682,7 +682,7 @@
   "COM3035:o2": {
     "title": "Document image rights",
     "steps": "Document original work, external source material, permissions and substantial changes.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "A complete asset credits list and relevant permission/licence records.",
     "example": "Each stock element is credited and its licence recorded; my edits do not erase the original authorship.",
     "response_starter": "My document image rights:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -690,15 +690,15 @@
   "COM3035:o3": {
     "title": "Present and critique the solution",
     "steps": "Show the finished set at intended scale, explain advanced technique choices and evaluate limitations against the brief.",
-    "where": "Studio \u2192 Open relevant creation tool; use Attach selected source in My evidence.",
+    "where": "Studio  >  Open relevant creation tool; use Attach selected source in My evidence.",
     "deliverable": "Asset set, source and a presentation/critique with evidence from testing.",
     "example": "The set is consistent on bright and dark floors; the small potion label still needs stronger contrast.",
     "response_starter": "My present and critique the solution:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
   },
   "CSE1110:o1": {
     "title": "Plan a sequential program",
-    "steps": "Open Studio \u2192 Code Playground. Choose an input-processing-output problem with no selection/loops. Write its input types, ordered calculations and outputs in pseudocode. Predict outputs for two input sets before running.",
-    "where": "Studio \u2192 Code Playground \u2192 run cases; My evidence \u2192 Attach selected source.",
+    "steps": "Open Studio  >  Code Playground. Choose an input-processing-output problem with no selection/loops. Write its input types, ordered calculations and outputs in pseudocode. Predict outputs for two input sets before running.",
+    "where": "Studio  >  Code Playground  >  run cases; My evidence  >  Attach selected source.",
     "deliverable": "Pseudocode, IPO table and two predicted test results.",
     "example": "Input price and quantity; calculate subtotal then a stated fee; output the total in that sequence.",
     "response_starter": "My plan a sequential program:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -706,7 +706,7 @@
   "CSE1110:o2": {
     "title": "Write and debug your program",
     "steps": "Translate Part 1 into source in Code Playground. Name variables/constants clearly, run both tests and document one error you found or intentionally introduced and repaired.",
-    "where": "Studio \u2192 Code Playground \u2192 run cases; My evidence \u2192 Attach selected source.",
+    "where": "Studio  >  Code Playground  >  run cases; My evidence  >  Attach selected source.",
     "deliverable": "Editable program source, test inputs/outputs and the error/fix note.",
     "example": "I used addition instead of multiplication. The predicted total exposed the error; I changed the operator and reran it.",
     "response_starter": "My write and debug your program:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -714,7 +714,7 @@
   "CSE1110:o3": {
     "title": "Compare and retest",
     "steps": "Compare actual outputs with each prediction. Explain any difference, revise the source/algorithm as needed and rerun the same tests. Include a boundary input.",
-    "where": "Studio \u2192 Code Playground \u2192 run cases; My evidence \u2192 Attach selected source.",
+    "where": "Studio  >  Code Playground  >  run cases; My evidence  >  Attach selected source.",
     "deliverable": "Expected/actual/retest table and final source.",
     "example": "A zero quantity should give only the stated fixed fee. I check that edge case rather than testing just a typical sale.",
     "response_starter": "My compare and retest:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -722,7 +722,7 @@
   "CSE1120:o1": {
     "title": "Plan decisions and repetition",
     "steps": "In Code Playground, plan a spell or another suitable IPO problem that uses selection and iteration. State inputs/types, decision rules, loop bounds, useful blocks and expected outputs. Predict normal, boundary and invalid-input cases.",
-    "where": "Studio \u2192 Code Playground \u2192 run cases; My evidence \u2192 Attach selected source.",
+    "where": "Studio  >  Code Playground  >  run cases; My evidence  >  Attach selected source.",
     "deliverable": "Pseudocode or structured chart, IPO/block plan and predicted cases.",
     "example": "Loop through targets; if a target is eligible, add its damage to a running total. A zero-target test should produce zero total.",
     "response_starter": "My plan decisions and repetition:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -730,7 +730,7 @@
   "CSE1120:o2": {
     "title": "Implement and debug the algorithm",
     "steps": "Write the planned source using appropriate variables, operators, selection and loops. Run it in Code Playground, inspect outputs/visual cast and record a syntax/runtime or logic fault and repair.",
-    "where": "Studio \u2192 Code Playground \u2192 run cases; My evidence \u2192 Attach selected source.",
+    "where": "Studio  >  Code Playground  >  run cases; My evidence  >  Attach selected source.",
     "deliverable": "Editable source, executed case outputs and a debugging note.",
     "example": "An off-by-one loop hit an extra target. I corrected its bound and compared the cast with my plan.",
     "response_starter": "My implement and debug the algorithm:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"
@@ -738,7 +738,7 @@
   "CSE1120:o3": {
     "title": "Validate and improve",
     "steps": "Run the same normal, boundary and failure tests from Part 1. Compare expected with actual outputs, explain differences and retest after changes. Do not use damage score alone as proof of correctness.",
-    "where": "Studio \u2192 Code Playground \u2192 run cases; My evidence \u2192 Attach selected source.",
+    "where": "Studio  >  Code Playground  >  run cases; My evidence  >  Attach selected source.",
     "deliverable": "Expected/actual/retest table, final source and one limitation.",
     "example": "I tested zero targets, one eligible target and a mixed group. Correct eligibility matters more than producing the largest total.",
     "response_starter": "My validate and improve:\nEvidence/source:\nMy decision and why:\nWhat I would check or improve next:"

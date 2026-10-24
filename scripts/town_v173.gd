@@ -2,7 +2,7 @@ extends RefCounted
 const ELDER=Vector2(535,810)
 const WILLOW=Vector2(220,1510)
 const LIGHTS=[Vector2(-1164,726),Vector2(-1097,726),Vector2(-1150,742),Vector2(-1114,745),Vector2(-359,662),Vector2(0,662),Vector2(-304,628),Vector2(-58,628),Vector2(535,705)]
-const TRACK=[Vector2(-1130,790),Vector2(-1090,830),Vector2(-570,830),Vector2(-570,740),Vector2(-360,740),Vector2(-360,700),Vector2(-341,700)]
+const TRACK=[Vector2(-1130,790),Vector2(-1090,852),Vector2(-975,852),Vector2(-975,764),Vector2(-945,764)]
 static var rails:PackedVector2Array=PackedVector2Array()
 static func route()->PackedVector2Array:
  if not rails.is_empty():return rails

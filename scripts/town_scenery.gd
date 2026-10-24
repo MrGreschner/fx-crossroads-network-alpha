@@ -17,8 +17,8 @@ var patrols:Array=[]
 var patrol_times:Array=[]
 var patrol_cycles:Array=[]
 func _init()->void:
-	routes.append([Vector2(-1210,1240),Vector2(-1210,1280),Vector2(-1160,1280),Vector2(-1160,1240)])
-	routes.append([Vector2(-940,1220),Vector2(-940,1280),Vector2(-1000,1280),Vector2(-1000,1220)])
+	routes.append([Vector2(-1150,1230),Vector2(-1150,1260),Vector2(-1180,1260),Vector2(-1180,1230)])
+	routes.append([Vector2(-980,1230),Vector2(-980,1260),Vector2(-1010,1260),Vector2(-1010,1230)])
 	for x in range(70,3100,125):trees.append(Vector2(x,-510))
 	for y in [-350,-180,-20]:
 		trees.append(Vector2(65,y));trees.append(Vector2(3040,y))
@@ -44,6 +44,7 @@ func _init()->void:
 	trees=trees.filter(func(p:Vector2):return not Rect2(300,520,130,125).has_point(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_plan.gd").reserved(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/marina_life.gd").reserved(p))
+	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_refresh46.gd").reserved(p))
 	for tree in trees:
 		var cell:=Vector2i(floori(tree.x/128),floori(tree.y/128))
 		if not tree_cells.has(cell):tree_cells[cell]=[]
@@ -192,7 +193,7 @@ func draw_patrols(c:Node2D,camera:Vector2)->void:
 	for index in routes.size():
 		var point:Vector2=guard_position(index)
 		if visible.has_point(point):guard(c,point-camera,point.distance_to(_guard_at_time(index,clock-.05))>0.1)
-		if index>=3:
+		if index>=5:
 			var partner:Vector2=_guard_at_time(index,clock-.85)+Vector2(0,18)
 			if visible.has_point(partner):guard(c,partner-camera,true)
 

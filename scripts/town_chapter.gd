@@ -18,6 +18,7 @@ func _init()->void:
    forest_trees.append(point)
  forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115 and not preload("res://scripts/town_neighborhood.gd").reserved(p))
 func blocked(p:Vector2)->bool:
+ if preload("res://scripts/town_refresh46.gd").blocked(p):return true
  if preload("res://scripts/marina_life.gd").blocked(p):return true
  if preload("res://scripts/town_marina.gd").blocked(p):return true
  for row in 3:
@@ -61,13 +62,8 @@ func draw_ground_source(c:Node2D,camera:Vector2)->void:
   for n in 9:
    var p:=Vector2(-290+n*85,1798)-camera
    c.draw_circle(p,4,Color("#99b977"));c.draw_circle(p+Vector2(6,-3),3,Color("#e0c997"))
- # Western cliff silhouettes support the cave instead of leaving it in a field.
- for n in 6:
-  var origin:=Vector2(-1310,550 if n==0 else 470+n*145)
-  if not visible.intersects(Rect2(origin+Vector2(-30,-100),Vector2(255,280))):continue
-  var p:=origin-camera
-  c.draw_colored_polygon(PackedVector2Array([p,p+Vector2(95,-100),p+Vector2(225,10),p+Vector2(170,180),p+Vector2(-30,180)]),Color("#5b6461") if n%2 else Color("#6a746a"))
-  c.draw_line(p+Vector2(95,-100),p+Vector2(130,65),Color("#929789"),5)
+ # Continuous western massif; the cave mouths sit on its accessible eastern apron.
+ preload("res://scripts/town_refresh46.gd").cliffs(c,camera)
  # A compact communal garden fits between the southern homes, leaving the central street clear.
  if visible.intersects(Rect2(800,1780,285,350)):
   for row in 3:

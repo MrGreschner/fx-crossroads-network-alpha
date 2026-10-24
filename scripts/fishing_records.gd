@@ -124,6 +124,7 @@ func complete(catch:Dictionary,keep:bool,to_storage:bool=false)->bool:
  legacy.gardening.find_seed("fishing")
  legacy.weekly.catch_fish(catch)
  legacy.cosmetics.rankings.catch_fish(catch)
+ remember_catch(catch)
  legacy.community.note_fish(catch)
  save();return true
 func release(id:String)->void:
@@ -162,6 +163,13 @@ static func valid_catch(v:Variant)->bool:
   if bool(v.trophy)!=C.is_trophy(v):return false
  return number(v.get("kg",null),float(C.fish()[v.species].max_kg)*4+.01) and number(v.get("cm",null),900)
 static func valid(v:Variant)->bool:
+ if v is Dictionary and v.has("record_catches"):
+  if not v.record_catches is Array or v.record_catches.size()>40:return false
+  var catch_ids=[]
+  for row in v.record_catches:
+   if not row is Dictionary or not row.get("id") is String or row.id.is_empty() or row.id.length()>64 or row.id in catch_ids or not C.fish().has(row.get("species")) or not number(row.get("kg"),float(C.fish()[row.species].max_kg)*4+.01) or float(row.kg)<=0:return false
+   if row.get("caught_at")!=null and not number(row.caught_at,1e12):return false
+   catch_ids.append(row.id)
  if v is Dictionary and v.has("aquarium") and not preload("res://scripts/aquarium_income.gd").valid(v.aquarium):return false
  if v is Dictionary and v.has("deep_sea_rod") and not v.deep_sea_rod is bool:return false
  if v is Dictionary and v.has("voyage") and not valid_voyage(v.voyage):return false
@@ -254,3 +262,30 @@ static func valid_voyage(v:Variant)->bool:
   var hp=v.camp_hp[id]
   if not id is String or id.length()>24 or not (hp is int or hp is float) or not is_finite(float(hp)) or hp<0 or hp>100000:return false
  return v.get("banking",false) is bool
+
+func remember_catch(catch:Dictionary)->void:
+ var history=state().get("record_catches",[])
+ if not history.any(func(c):return c.id==catch.id):history.append({"id":catch.id,"species":catch.species,"kg":catch.kg,"caught_at":catch.get("caught_at",null)})
+ var recent=history.filter(func(c):return c.get("caught_at")!=null and preload("res://scripts/cosmetic_rankings.gd").week_at(float(c.caught_at))==legacy.cosmetics.rankings.week())
+ var chosen={}
+ for pool in [history,recent]:
+  for rare in [false,true]:
+   var sorted=pool.duplicate();sorted.sort_custom(func(a,b):return preload("res://scripts/community_records.gd").rarer(a,b) if rare else float(a.kg)>float(b.kg))
+   for row in sorted.slice(0,10):chosen[str(row.id)]=row
+ state().record_catches=chosen.values()
+func record_payload()->Array:
+ var candidates={}
+ for catch in state().get("record_catches",[])+state().kept:
+  if float(catch.get("kg",0))>0:candidates[str(catch.id)]={"id":str(catch.id),"species":catch.species,"kg":catch.kg,"caught_at":catch.get("caught_at",null)}
+ # Older journals retain only one weight per species. Unknown dates never qualify for this week.
+ for id in state().journal:
+  var kg=float(state().journal[id].get("kg",0))
+  if kg<=0:continue
+  if not candidates.values().any(func(c):return c.species==id and is_equal_approx(float(c.kg),kg)):candidates["legacy:"+str(id)]={"id":"legacy:"+str(id),"species":id,"kg":kg,"caught_at":null}
+ var values=candidates.values();var chosen={}
+ for recent_only in [false,true]:
+  var eligible=values.filter(func(c):return not recent_only or c.caught_at!=null and preload("res://scripts/cosmetic_rankings.gd").week_at(float(c.caught_at))==legacy.cosmetics.rankings.week())
+  for rare in [false,true]:
+   var sorted=eligible.duplicate();sorted.sort_custom(func(a,b):return preload("res://scripts/community_records.gd").rarer(a,b) if rare else float(a.kg)>float(b.kg))
+   for row in sorted.slice(0,10):chosen[row.id]=row
+ return chosen.values()

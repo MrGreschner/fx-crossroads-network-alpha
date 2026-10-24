@@ -18,6 +18,8 @@ var old_process=true
 var old_visible=true
 var old_menu=""
 var catalog:Dictionary={}
+var pending_business_restart=""
+var pending_resets:Array=[]
 var student:Dictionary={}
 var attempt:Dictionary={}
 var definition:Dictionary={}
@@ -99,6 +101,7 @@ func received(result:int,http:int,_headers:PackedStringArray,bytes:PackedByteArr
   "student":student=data;render_home()
   "venture_access":
    attempt.venture_policy=data.venture_access
+   pending_resets=data.get("restart_requests",[]).map(func(r):return r.business)
    if data.get("district")!=null:work.sandbox=data.district.duplicate(true)
    work.district_revision=int(data.get("district_revision",0));enter_simulation()
   "start":call_api("attempt?id="+str(data.id),null,"attempt")
@@ -115,8 +118,11 @@ func received(result:int,http:int,_headers:PackedStringArray,bytes:PackedByteArr
    if data.has("district_revision"):
     work.district_revision=int(data.district_revision);sent_work.district_revision=int(data.district_revision);sent_hash=JSON.stringify(sent_work).sha256_text()
    synced_work=sent_work.duplicate(true);attempt.revision=int(data.revision);dirty=JSON.stringify(work).sha256_text()!=sent_hash;write_cache();message("Draft synced • revision "+str(attempt.revision))
-   if pending_submit and not dirty:pending_submit=false;submit_work()
+   if not pending_business_restart.is_empty() and not dirty:var key=pending_business_restart;pending_business_restart="";request_business_restart(key)
+   elif pending_submit and not dirty:pending_submit=false;submit_work()
    elif pending_enter and not dirty:pending_enter=false;open_simulation()
+  "restart_requested":
+   message("Restart request sent. Your teacher can review your business statistics in Manage Class Pro. This business is paused until reviewed.");call_api("student",null,"student")
   "submit":
    attempt.status="submitted";attempt.latest_submission=data.submission;dirty=false;nonce="";write_cache();render_module();message("Frozen submission sent. Your teacher can return feedback or complete this module.")
 func home()->void:
@@ -134,7 +140,7 @@ func render_home()->void:
  clear()
  para(body,"Design • Graphics & Animation • Computer Science • Business • each module is submitted, revised and completed independently. School credit reporting remains with your teacher.")
  if teacher():
-  UI.accent(button(body,"Manage Class Pro ↗ • assign modules, review work & record completion",func():get_tree().root.get_node("FXClassPro").launch("Learning Academy")))
+  UI.accent(button(body,"Manage Class Pro (opens browser) • assign modules, review work & record completion",func():get_tree().root.get_node("FXClassPro").launch("Learning Academy")))
   para(body,"This is a lesson and scenario preview. It never creates a student attempt or grants a grade.")
  else:
   var active_count=0
@@ -144,6 +150,7 @@ func render_home()->void:
   label(body,"%d / %d active slots • starting level %d" % [active_count,int(p.slots),int(p.placement)],21)
   para(body,"Submitted and revision work still uses a slot. A teacher can allow a second module or pause unfinished work. Completed modules remain recorded.")
   if student.get("assignments",[]).is_empty():para(body,"No modules have been assigned yet. Your teacher can assign one to your class or whole student bin in Manage Class Pro. Only modules assigned by your teacher appear here. You can still create freely in the public Studio.")
+ for restart in student.get("restart_requests",[]):para(body,"Business restart • "+str(C.spec(restart.business).get("name",restart.business))+" • "+str(restart.status).to_upper()+". Reopen the classroom district to load the latest state.",16)
  var subjects=HBoxContainer.new();body.add_child(subjects)
  for name in ["All subjects","Business","Design","Graphics & Animation","Computer Science"]:
   var value:String=name;var b=button(subjects,name,func():subject=value;render_home())
@@ -265,10 +272,10 @@ func render_module()->void:
   if not attempt.is_empty():button(body,"Refresh feedback",func():load_attempt(attempt.id))
 func sources()->void:
  for s in definition.get("sources",[]):
-  var url:String=s.url;button(body,s.title+" ↗",func():OS.shell_open(url));para(body,s.use,15)
+  var url:String=s.url;button(body,s.title+" (opens browser)",func():OS.shell_open(url));para(body,s.use,15)
 func visual()->void:
  if definition.tool in ["opportunity","comparison"]:
-  para(body,"INVESTIGATE → COMPARE → CONFIRM YOUR PLAN",22);return
+  para(body,"INVESTIGATE  >  COMPARE  >  CONFIRM YOUR PLAN",22);return
  if definition.get("subject","Business")!="Business":
   creator_banner();return
  board=Board.new();board.custom_minimum_size.y=clampf((get_viewport().get_visible_rect().size.x-32)*300/860,150,420);body.add_child(board);board.set_data(definition.tool,work.models)
@@ -300,7 +307,7 @@ func studio_controls()->void:
    for data in [["Funding amount","principal",0,5000],["Annual loan rate (%)","rate",0,30],["Loan term (months)","months",1,36],["Selling price","price",1,100],["Variable cost per unit","unit_cost",0,100],["Monthly fixed costs","fixed",0,2000],["Units per month","units",0,200],["Starting own cash","start",0,5000],["Equity share given (%)","share",1,90]]:amount(grid,data[0],data[1],data[2],data[3])
    para(body,"The Funding Desk is a separate planning case; it does not borrow money in your classroom business. The district has a simpler 90/100 loan mechanic. This chart uses an amortizing monthly payment and annual rate/12. Operating profit excludes financing, tax and depreciation in this simplified case. A delayed first collection creates receivables. Equity control shown is the retained ownership percentage; investor returns are not modelled.")
   "distribution":
-   choice(grid,"Distribution channel","channel",["Maker → customer","Maker → retailer → customer","Maker → wholesaler → retailer → customer"]);choice(grid,"Transport","transport",["Road","Rail","Water","Air"]);amount(grid,"Journey distance (model km)","distance",100,2000,100);choice(grid,"Product constraints","product",["Durable manufactured tools","Perishable produce"])
+   choice(grid,"Distribution channel","channel",["Maker  >  customer","Maker  >  retailer  >  customer","Maker  >  wholesaler  >  retailer  >  customer"]);choice(grid,"Transport","transport",["Road","Rail","Water","Air"]);amount(grid,"Journey distance (model km)","distance",100,2000,100);choice(grid,"Product constraints","product",["Durable manufactured tools","Perishable produce"])
    para(body,"Compare accessibility and reliability in your explanation as well as the model cost/time. The product constraint is part of your plan; it does not make an unsuitable route safe. Research real transport and community retailers for the assigned task.")
   "marketing":
    choice(grid,"Target group","target",["Traveller","Town resident","Collector"]);choice(grid,"Promotion channel (plan)","channel",["Market poster","Local message","Personal service"]);amount(grid,"Selling price","price",1,80,.5);choice(grid,"Floor layout","layout",["Compact","Open aisle","Display led"])
@@ -357,7 +364,7 @@ func enter_simulation()->void:
   if m.get("confirmed",0)==1:
    var selected_id=str(m.get("planned_id","kitchen"))
    if not C.spec(selected_id).is_empty() and not C.spec(selected_id).get("archived",false):state.selected=selected_id
- root.hide();var view=preload("res://scripts/business_district/view.gd").new();game.business_district=view;game.add_child(view);view.setup(game,{"classroom":true,"state":state,"academy":self,"access":attempt.get("venture_policy",["kitchen"])})
+ root.hide();var view=preload("res://scripts/business_district/view.gd").new();game.business_district=view;game.add_child(view);view.setup(game,{"classroom":true,"state":state,"academy":self,"access":attempt.get("venture_policy",["kitchen"]),"pending_resets":pending_resets})
 func capture_simulation(state:Dictionary)->void:
  if not editable() or not C.valid(state):return
  work.sandbox=state.duplicate(true);mark_dirty();write_cache()
@@ -424,7 +431,7 @@ func creator_banner()->void:
  for value in work.get("artifacts",[]).slice(0,3):show_artifact(row,value)
  if work.get("artifacts",[]).is_empty():
   var picture=TextureRect.new();picture.texture=preload("res://assets/ram_idle.png");picture.custom_minimum_size=Vector2(100,120);picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(picture)
-  para(row,"CREATE → TEST → REVISE → SHOW
+  para(row,"CREATE  >  TEST  >  REVISE  >  SHOW
 Your artwork, animation, realm or code is the main evidence. Use the short response to explain what the work cannot show on its own.",21)
 func creator_controls()->void:
  creator_banner()
@@ -492,7 +499,7 @@ func show_artifact(parent:Node,artifact:Dictionary)->void:
    var pic=TextureRect.new();pic.texture=ImageTexture.create_from_image(im);pic.custom_minimum_size=Vector2(160,120);pic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;pic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(pic)
  if value.get("code") is String:
   para(parent,str(value.code).left(500),15)
-  for row in value.get("cases",[]):para(parent,"Predicted "+JSON.stringify(row.expected)+" → "+JSON.stringify(row.get("actual",[]))+" • "+str(row.get("actual_error","")),15)
+  for row in value.get("cases",[]):para(parent,"Predicted "+JSON.stringify(row.expected)+"  >  "+JSON.stringify(row.get("actual",[]))+" • "+str(row.get("actual_error","")),15)
  elif artifact.kind=="realm":para(parent,"Editable realm • "+str(value.keys().size())+" source sections • test and critique evidence can reference this source.")
  else:para(parent,"Editable "+str(artifact.kind)+" source retained • "+str(JSON.stringify(value).length())+" characters. Your teacher can download the frozen source.",15)
 
@@ -537,3 +544,9 @@ func opportunity_controls()->void:
   if not attempt.is_empty():save_draft())
  commit.disabled=not editable() or research.size()<2;reason.editable=editable();pick.disabled=not editable()
  if m.get("confirmed",0)==1:para(body,"Confirmed plan: "+C.spec(str(m.get("planned_id","kitchen"))).get("name","Earlier venture")+"\n"+str(m.reason))
+
+func request_business_restart(id:String)->void:
+ if attempt.is_empty() or not editable():message("Open an active assigned module to request a restart.");return
+ if busy:pending_business_restart=id;return
+ if dirty:pending_business_restart=id;save_draft();return
+ call_api("restart-request",{"id":attempt.id,"business":id,"district_revision":int(work.get("district_revision",0))},"restart_requested")

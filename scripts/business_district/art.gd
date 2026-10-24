@@ -209,7 +209,9 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
  pot(c,p+Vector2(10,346));pot(c,p+Vector2(432,346))
  if owned:
   box(c,p+Vector2(35,332),Vector2(63,10),Color("#8b765a"),43);rect(c,p+Vector2(40,292),Vector2(53,34),Color("#304e50"));ink(c,p+Vector2(47,314),"OPEN" if b.open else "CLOSED",10,Color("#d7d7a6"))
- if selected:rounded(c,Rect2(p-Vector2(10,-315),Vector2(460,3)),Color("#edcd83"),1)
+ if selected:
+  rounded(c,Rect2(p+Vector2(-13,-66),Vector2(466,440)),Color(0,0,0,0),9,Color("#ffd87b"))
+  rounded(c,Rect2(p+Vector2(132,-91),Vector2(184,27)),Color("#243f43"),6,Color("#ffd87b"));ink(c,p+Vector2(149,-72),"SELECTED BUSINESS",14,Color("#ffd87b"))
  c.draw_set_transform(Vector2.ZERO)
 static func person(c:CanvasItem,p:Vector2,index:int,pose:int,scale:float=1,fade:float=1)->void:
  ellipse(c,p+Vector2(2,1),Vector2(12,5)*scale,Color(0,0,0,.16*fade))

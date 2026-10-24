@@ -48,6 +48,8 @@ func setup(g:Node,options:Dictionary={})->void:
  state=C.upgrade(state)
  if not C.valid(state):state=C.upgrade(C.fresh())
  sim.ownership_limit=0 if classroom else 5
+ sim.public_catalog=not classroom
+ sim.pending_resets=options.get("pending_resets",[])
  sim.setup(state)
  sim.restricted=classroom and is_instance_valid(academy) and not academy.attempt.is_empty()
  sim.access=options.get("access",["kitchen"])
@@ -67,6 +69,7 @@ func setup(g:Node,options:Dictionary={})->void:
  buildings.draw.connect(func():
   for v in C.visible_ventures(state):
    A.premises(buildings,v,state.businesses.get(v.id,{}),state.selected==v.id,state.night)
+   if not sim.allowed(v.id):buildings.draw_rect(Rect2(C.plot(v.id)+Vector2(-16,-86),Vector2(610,580)),Color("#163139",.62));A.ink(buildings,C.plot(v.id)+Vector2(120,268),"NOT AVAILABLE HERE",20,Color("#e0d9c5"))
    if state.businesses.has(v.id):preload("res://scripts/business_district/venue_art.gd").floor_plan(buildings,C.plot(v.id),state.businesses[v.id],state.night))
  actors.draw.connect(draw_actors)
  var hud=PanelContainer.new();hud.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE);hud.offset_left=14;hud.offset_right=-14;hud.offset_top=12
@@ -87,7 +90,7 @@ func setup(g:Node,options:Dictionary={})->void:
  var sc=ScrollContainer.new();sc.custom_minimum_size.y=43;sc.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;column.add_child(sc)
  var actions=HBoxContainer.new();sc.add_child(actions)
  button(actions,"Open / Close",toggle_open)
- for entry in [["Products","products"],["Materials","supplies"],["People","people"],["Equipment","fitout"],["Strategy","strategy"],["Ledger","ledger"],["Sales & trends","trends"],["District map","map"]]:
+ for entry in [["Products","products"],["Materials","supplies"],["People","people"],["Equipment","fitout"],["Name & restart","manage"],["Strategy","strategy"],["Ledger","ledger"],["Sales & trends","trends"],["District map","map"]]:
   var key:String=entry[1];button(actions,entry[0],func():show_panel(key))
  button(actions,"Prepare one • 2",func():act(func():return sim.stock_help(state.selected)))
  toast=label(column,"",15);toast.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
@@ -149,7 +152,7 @@ func show_panel(kind:String)->void:
  panel_kind=kind
  for n in panel_body.get_children():panel_body.remove_child(n);n.queue_free()
  panel.show();update_camera();var id:String=state.selected;var b=sim.business(id);var v=C.spec(id)
- panel_title.text={"premises":"Your next venture","products":"Your product line","supplies":"Materials & suppliers","people":"Your people","fitout":"Fit out your premises","strategy":"Plan the next period","ledger":"Business ledger","map":"Explore the district","welcome":"Welcome • your first workday","trends":"Sales & trends","reserve":"District reserve","help":"Welcome to Market Quarter","customer":"At your business"}.get(kind,kind)
+ panel_title.text={"premises":"Your next venture","manage":"Business name & restart","products":"Your product line","supplies":"Materials & suppliers","people":"Your people","fitout":"Fit out your premises","strategy":"Plan the next period","ledger":"Business ledger","map":"Explore the district","welcome":"Welcome • your first workday","trends":"Sales & trends","reserve":"District reserve","help":"Welcome to Market Quarter","customer":"At your business"}.get(kind,kind)
  if kind=="products" and b.get("trade","") in ["salon","daycare","minigolf"]:panel_title.text="Your services"
  if kind=="reserve":
   paragraph("DISTRICT RESERVE • %.2f\nThis starts at 0. It is shared expansion money, separate from each business cash balance." % state.reserve)
@@ -160,6 +163,7 @@ func show_panel(kind:String)->void:
   button(panel_body,"Fund this business from reserve",func():act(func():return sim.transfer(id,amount.value,false)))
   return
  if kind=="welcome":
+  if not classroom:paragraph("Six ventures are currently available in the public town market: Hearth & Ladle, Silverfin Exchange, Lantern & Ladder, Deepwell Foundry, Copperwick Works and Bramble & Bloom. Other premises are greyed out. Classroom venture access is chosen separately by your teacher.")
   paragraph("WELCOME • Choose a business on the map. Its name is its brand; the descriptions below tell you what it does. The empty premises has no equipment: build a mixed shop one product at a time.")
   paragraph("START: choose one premises → inspect its inherited guide → pick products → buy the required equipment → order each ingredient → keep cash for costs → open. Watch customers and the Ledger, then change what is not working. Your first business gets startup support. Extra businesses cost reserve savings; public play allows five.")
   paragraph("Your reserve starts at 0. Use Reserve • transfer at the top to save business cash for expansion. Recommended products are only a starting guide. Browse categories to change or mix your goods. Trend labels change every three trading days; they are estimates, not guaranteed sales.")
@@ -174,19 +178,19 @@ func show_panel(kind:String)->void:
   paragraph("Hire people after reading their resumes. Assign preparation, service or receiving duties yourself. Relevant experience affects work; training improves capacity. A new pool of 30 applicants arrives every three market days. Hired employees remain.")
   paragraph("Drag the ground to pan and scroll to zoom. Click a person to inspect their current order or work. All activity is local, active-time simulation; leaving suspends it. Classroom assignments, public game progress and submitted evidence remain separate.")
   button(panel_body,"Day / lantern evening",func():state.night=not state.night;update_camera();floor_layer.queue_redraw();buildings.queue_redraw();lighting.queue_redraw();save_state())
-  button(panel_body,"Start over…",confirm_restart)
+  if not classroom:button(panel_body,"Start district over…",confirm_restart)
   return
  if kind=="map":
   paragraph("Fourteen inherited businesses and one empty shell. Teacher permission and acquisition cash are both required for a new classroom venture.")
   for spec in C.visible_ventures(state):
    var sid:String=spec.id;button(panel_body,("🔒 " if not sim.allowed(sid) else "● " if state.businesses.has(sid) else "+ ")+spec.name+" • "+("Owned" if state.businesses.has(sid) else "%.0f" % sim.acquisition(sid)),func():panel.hide();panel_kind="";select(sid))
-  button(panel_body,"View whole district",func():panel.hide();panel_kind="";centre=Vector2(1100,1540);zoom=minf(root.size.x/2350,(root.size.y-240)/3300);update_camera())
+  button(panel_body,"View whole district",func():panel.hide();panel_kind="";centre=Vector2(1100,1670);zoom=minf(root.size.x/2350,(root.size.y-300)/3400);update_camera())
   return
  if b.is_empty():
   if v.get("archived",false):paragraph("This earlier empty premises has been retired from new acquisitions. Existing saved businesses remain available.");return
   paragraph(v.description+"\nCustomer need: "+v.need+"\nTrade-off: "+v.tradeoff)
   button(panel_body,"Record premises inspection",func():act(func():return sim.investigate(id)))
-  if not sim.allowed(id):paragraph("Your teacher has not unlocked this premises. You can inspect the district, but cannot purchase or operate it yet.");return
+  if not sim.allowed(id):paragraph("Your teacher has not unlocked this premises." if classroom else "This premises is not available in the public town market. Its saved contents are preserved.");return
   if not classroom:paragraph("Public districts start with one supported venture. Save profits to buy more; the current limit is five owned ventures and five trading at once.")
   paragraph("First venture: inherited premises include 1,200 working cash, installed equipment and starter materials. Empty premises include 2,200 cash but no equipment or stock. Further acquisitions cost %.0f from your reserve and receive no free working capital. Reserve: %.0f." % [sim.acquisition(id),state.reserve])
   var model=OptionButton.new()
@@ -200,8 +204,19 @@ func show_panel(kind:String)->void:
    for eq in v.base_equipment:item_card(eq,"equipment",C.ops().equipment[eq].name,"Installed • purchase new for %.0f" % C.ops().equipment[eq].cost)
    paragraph("Current menu: "+", ".join(v.starter_products.map(func(key):return C.ops().products[key].name)))
   button(panel_body,"Take over first premises" if not state.started else "Buy premises • %.0f" % sim.acquisition(id),func():act(func():return sim.establish(id,str(model.get_item_metadata(model.selected)) if v.get("blank",false) else ""));browse_category="All" if v.get("blank",false) else "Recommended";show_panel("products"));return
- if not sim.allowed(id):paragraph("This venture is currently locked by your teacher. Its previous results remain saved; trading and changes are disabled.");return
+ if not sim.allowed(id):
+  paragraph("Restart approval is pending. This business is paused; return to your module for updates." if id in sim.pending_resets else "This venture is unavailable in this market. Its existing progress remains saved.")
+  if not classroom and not b.is_empty():
+   paragraph("Saved cash %.2f • recorded day %d. You may retire this venture to free an ownership slot." % [b.cash,b.day])
+   button(panel_body,"Retire saved venture…",func():confirm_action("Retire saved venture?","Its normal net sale value returns to your reserve. The earlier summary is kept.",func():act(func():return sim.retire_unavailable(id))))
+  return
  match kind:
+  "manage":
+   paragraph("SELECTED: "+b.name+" • "+v.kind)
+   var name=LineEdit.new();name.text=b.name;name.placeholder_text="Your business name";panel_body.add_child(name)
+   button(panel_body,"Save new name • 25",func():act(func():return sim.rebrand(id,name.text)))
+   paragraph("Restart this business only. Its employees, stock, cash, equipment and operating days return to a fresh starting setup; its name and earlier audit summary remain. Other ventures and reserve savings stay as they are.")
+   button(panel_body,"Request teacher approval to restart" if classroom else "Restart business • free",confirm_business_restart)
   "products":products_panel(id,b)
   "supplies":materials_panel(id,b)
   "people":people_panel(id,b)
@@ -237,7 +252,7 @@ func show_panel(kind:String)->void:
    button(panel_body,"Move reserve into business",func():act(func():return sim.transfer(id,transfer.value,false)))
    if b.failed:button(panel_body,"Resume after recapitalising",func():act(func():return sim.recapitalise(id)))
    button(panel_body,"Sell this venture…",func():confirm_action("Sell this venture?","Its cash, used assets and half the inventory value, less its loan, return %.2f to the reserve. Its summary is retained; this is not sales revenue." % sim.divestment_quote(id),func():act(func():return sim.divest(id))))
-   button(panel_body,"Start over…",confirm_restart)
+   if not classroom:button(panel_body,"Start district over…",confirm_restart)
    paragraph("Successful trading days: %d profitable / %d full days • current streak %d • best %d\nCumulative operating result %.2f • spoiled stock at cost %.2f\nIdle equipment-unit days: %d" % [b.summary.profitable_days,b.summary.full_days,b.summary.streak,b.summary.best_streak,b.summary.profit,b.summary.spoilage_cost,b.summary.idle_equipment_days])
    paragraph("A full day is a completed three-minute opening. Closing early still records cash, costs and results, but does not count as a successful full day. An idle unit-day means one installed item had no work during a full day.")
    paragraph("Operating results • most recent first")
@@ -261,7 +276,7 @@ func show_panel(kind:String)->void:
     button(panel_body,"Attach district evidence to MAM1010",attach_evidence)
 func item_card(key:String,kind:String,name:String,detail:String)->VBoxContainer:
  var card=PanelContainer.new();style(card);panel_body.add_child(card);var row=HBoxContainer.new();row.add_theme_constant_override("separation",14);card.add_child(row)
- var art=TextureRect.new();art.texture=A.item_texture(key,kind);art.custom_minimum_size=Vector2(78,78);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(art)
+ var art=TextureRect.new();art.tooltip_text=name;art.mouse_filter=Control.MOUSE_FILTER_PASS;art.texture=A.item_texture(key,kind);art.custom_minimum_size=Vector2(78,78);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(art)
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(col);var heading=label(col,name,19);heading.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;var text=label(col,detail,15);text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;return col
 func products_panel(id:String,b:Dictionary)->void:
  paragraph("Empty premises: no inherited menu or equipment. Choose individual goods from All or a category, then buy their required machines and ingredients. You may mix goods categories." if C.spec(id).get("blank",false) else "Starter guide: "+C.spec(b.trade).get("tip",C.spec(id).tip)+" Recommended shows the inherited menu; browse categories to change it.")
@@ -274,10 +289,10 @@ func products_panel(id:String,b:Dictionary)->void:
   var col=item_card(key,"product",p.name,("ON YOUR MENU" if enabled else "Not offered")+" • ready %d • missed requests %d\n%s\nEquipment: %s\nBase recipe %.2f • %.0fs at 1× preparation • %s\n%s" % [sim.quantity(b.finished,key),int(b.get("missed",{}).get(key,0)),", ".join(ingredients),", ".join(machines),C.unit_cost(key),p.prep,("appointment • capacity limited" if p.get("service_duration",0)>0 else "durable stock") if p.life==0 else "%d market-day shelf life" % p.life,sim.ready_recipe(id,key)+"\n"+sim.trend_text(id,key)])
   var recipe=HFlowContainer.new();recipe.add_theme_constant_override("h_separation",5);col.add_child(recipe)
   for m in p.materials:
-   var ingredient=VBoxContainer.new();recipe.add_child(ingredient);var icon=TextureRect.new();icon.texture=A.item_texture(m,"material");icon.custom_minimum_size=Vector2(38,38);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;ingredient.add_child(icon);label(ingredient,"×"+str(int(p.materials[m])),13)
+   var ingredient=VBoxContainer.new();recipe.add_child(ingredient);var icon=TextureRect.new();icon.texture=A.item_texture(m,"material");icon.tooltip_text=C.ops().materials[m].name;icon.mouse_filter=Control.MOUSE_FILTER_PASS;icon.custom_minimum_size=Vector2(38,38);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;ingredient.add_child(icon);label(ingredient,"×"+str(int(p.materials[m])),13)
   label(recipe,"→",24)
   for eq in p.equipment:
-   var machine=TextureRect.new();machine.texture=A.item_texture(eq,"equipment");machine.custom_minimum_size=Vector2(40,48);machine.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;machine.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;machine.tooltip_text=C.ops().equipment[eq].name;recipe.add_child(machine)
+   var machine=TextureRect.new();machine.texture=A.item_texture(eq,"equipment");machine.custom_minimum_size=Vector2(40,48);machine.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;machine.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;machine.tooltip_text=C.ops().equipment[eq].name;machine.mouse_filter=Control.MOUSE_FILTER_PASS;recipe.add_child(machine)
   if p.get("service_duration",0)>0:
    var service_label=label(col,"In service %d • capacity %d • expected %.0fs" % [sim.occupied_slots(b),sim.service_capacity(b,key),sim.service_seconds(id,key)],15);service_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
   button(col,"Remove from menu" if enabled else "Add to product line",func():act(func():return sim.select_product(id,key,not enabled)))
@@ -535,3 +550,11 @@ func sales_charts(b:Dictionary)->void:
  paragraph("OUTLOOK • seeded simulated demand; not a promise or an assessment mark. Refreshes every three workdays. Missing stock, price and queues can still prevent sales.")
  for key in b.menu:
   if b.menu[key].enabled:paragraph(C.ops().products[key].name+" • "+sim.trend_text(state.selected,key))
+
+func confirm_business_restart()->void:
+ var id:String=state.selected;var b=sim.business(id)
+ if b.open:toast.text="Close the business before restarting or requesting approval.";return
+ if classroom:
+  if not is_instance_valid(academy) or academy.attempt.is_empty():toast.text="An assigned module and teacher approval are required for a classroom restart.";return
+  confirm_action("Ask your teacher to restart "+b.name+"?","Your latest statistics will be sent for review. This business will pause until your teacher approves or declines.",func():save_state();academy.request_business_restart(id);leave())
+ else:confirm_action("Restart "+b.name+"?","This resets only the selected business, free of charge. Its earlier summary is retained. Other ventures and reserve savings are kept.",func():act(func():return sim.restart_business(id)))

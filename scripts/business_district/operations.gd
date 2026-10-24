@@ -12,11 +12,14 @@ var effects:Array=[]
 var access:Array=[]
 var restricted=false
 var ownership_limit=5
+var public_catalog=false
+var pending_resets:Array=[]
+const PUBLIC_VENTURES=["kitchen","fishery","rental","mine","workshop","garden"]
 var scene_changed=false
 func setup(value:Dictionary)->void:
  state=C.upgrade(value);rng.seed=int(state.seed)+int(state.periods)*171;refresh_applicants();rebuild_workers()
 func business(id:String)->Dictionary:return state.businesses.get(id,{})
-func allowed(id:String)->bool:return not restricted or id in access
+func allowed(id:String)->bool:return id not in pending_resets and (not public_catalog or id in PUBLIC_VENTURES) and (not restricted or id in access)
 func can_manage(id:String,closed:bool=false)->bool:
  var b=business(id)
  if not allowed(id):last_notice="Your teacher has not unlocked this premises.";return false
@@ -252,6 +255,7 @@ func start(id:String)->bool:
  scene_changed=true;b.opening_cash=b.cash;b.opening_inventory=b.input_book+b.stock_book;b.open=true;b.elapsed=0.0;b.produce=0.0;b.production_key="";b.observations={};b.missed={};b.served=0;b.lost=0;b.revenue=0.0;b.cogs=0.0;b.wait_total=0.0;b.expenses=float(b.pending_expenses);b.pending_expenses=0.0;b.asset_use={};b.visitors=0
  transaction(id,"Promotion",-b.ad,"Campaign for this period");b.expenses+=b.ad;b.reason="Open: watch preparation, stock and queues.";log_action(id,"Open","180 active seconds; no offline trading");rebuild_workers();return true
 func tick_business(id:String,dt:float)->void:
+ if id in pending_resets or public_catalog and id not in PUBLIC_VENTURES:return
  var b=business(id)
  for o in b.orders:
   o.due=maxf(0,o.due-dt*(1+.12*skill(id,"stock")))
@@ -446,3 +450,22 @@ func demand_factor(id:String,key:String)->float:
 func trend_text(id:String,key:String)->String:
  var factor=demand_factor(id,key)
  return ("Cooling" if factor<.85 else "Growing" if factor>1.2 else "Steady")+" • demand ×%.2f • outlook changes every 3 trading days" % factor
+
+func restart_business(id:String)->bool:
+ if not can_manage(id,true):return false
+ var previous=business(id);var title=str(previous.name);var trade_id=str(previous.trade);var cost=float(previous.acquisition)
+ var before={"id":id,"name":title,"day":previous.day,"cash":previous.cash,"summary":previous.summary.duplicate(true),"employees":previous.employees.size()}
+ if not state.has("business_reset_history"):state.business_reset_history=[]
+ state.business_reset_history.append(before);if state.business_reset_history.size()>20:state.business_reset_history.pop_front()
+ var b=C.fresh_business(id);b.trade=trade_id;b.inputs=0;b.stock=0;b.input_book=0;b.stock_book=0;C.ensure_business(id,b);b.name=title;b.acquisition=cost;b.cash=2200.0 if C.spec(id).get("blank",false) else 1200.0;b.opening_cash=b.cash;b.reset_epoch=int(previous.get("reset_epoch",0))+1
+ if C.spec(id).get("blank",false):b.menu={};b.assets={}
+ else:
+  for key in C.spec(trade_id).starter_products:
+   for m in C.ops().products[key].materials:add_lot(b.materials,m,5*int(C.ops().products[key].materials[m]),C.ops().materials[m].cost*5*C.ops().products[key].materials[m],1)
+ state.businesses[id]=b;C.upgrade(state);sync(b);end_customers(id);rebuild_workers();scene_changed=true;last_notice="Business restarted. Other businesses, reserve savings and submitted work are preserved.";return true
+
+func retire_unavailable(id:String)->bool:
+ if not public_catalog or id in PUBLIC_VENTURES or not state.businesses.has(id):return false
+ public_catalog=false
+ if business(id).open:close(id)
+ var ok=divest(id);public_catalog=true;return ok

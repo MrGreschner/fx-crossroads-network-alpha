@@ -33,6 +33,7 @@ static func draw(c:Node2D,kind:String,camera:Vector2)->void:
 static func source(c:Node2D,kind:String,camera:Vector2)->void:
  match kind:
   "streets":c.town_plan.draw_ground_source(c,camera)
+  "merchants","merchants_night":c.commerce_town.draw_market_structure(c,camera)
   "rails":preload("res://scripts/town_v173.gd").draw_tracks_source(c,camera)
   "chapter_ground":c.town_chapter.draw_ground_source(c,camera)
   "studio":c.studio_town.draw_structure_source(c,camera)

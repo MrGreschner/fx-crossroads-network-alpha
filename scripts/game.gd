@@ -882,6 +882,7 @@ func handle_town_interactions() -> void:
 	if marina_life!=null and marina_life.interact():return
 	if voyage!=null and voyage.pier_interact():return
 	if fishing!=null and fishing.interact():return
+	if preload("res://scripts/town_refresh46.gd").interact(self):return
 	if town_life.events.interact(self):return
 	if commerce_town.interact(self):return
 	if idle_mine_town.interact(self):return
@@ -1804,6 +1805,7 @@ func draw_world() -> void:
 		journey.draw_town(self,camera)
 		town_life.neighborhood.draw_on(self,camera,town_life.clock)
 		preload("res://scripts/town_v173.gd").draw_trees(self,camera)
+		preload("res://scripts/town_refresh46.gd").draw(self,camera)
 		town_life.calendar.draw_props(self,camera)
 		town_life.draw_residents(self,camera)
 		town_scenery.draw_patrols(self,camera)

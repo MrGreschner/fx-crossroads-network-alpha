@@ -54,7 +54,7 @@ func interact(g:Node)->bool:
   if not state.visible or g.position_in_world.distance_to(state.pos)>48:continue
   g.hint="E • Say hello to "+str(state.name)
   if Input.is_action_just_pressed("interact"):
-   var sayings={"harbour_trade":"Fresh supplies for the marina! We meet the river traders here on Tuesday and Thursday mornings.","picnic":"We bring lunch here on Tuesdays and Thursdays. The river sounds different every day.","market":"Fresh fruit, handmade wares and fish bait for a good day by the water.","lanterns":"Walk with us. The little lanterns make the whole street feel warmer.","stars":"That constellation looks like a leaping fish, if you tilt your head.","shop":"A full shopping basket is my kind of treasure.","read":"One more page, then I really will head home.","guard":"Keeping the roads safe. My boots deserve a medal.","water":"A little water, a little patience. No shouting at seedlings.","deliver":"Special delivery! Mostly herbs. Probably no beetles.","repair":"Measure twice, hammer once. Usually.","fish":"Bramble says the big one is still out there.","rest":"Best seat in town. Listen to that fountain.","chat":"Just catching up with the neighbours.","lunch":"Moss makes a good lunch. Then it is back to work!","music":"Wednesday evenings belong to music. Come listen with us!","explore":"The forest is different every time I walk it.","camp":"A warm fire after a long walk. I fish at dawn, before the town wakes.","sleep":"Time for a good night’s sleep.","home":"Heading home. Even adventurers need a cosy doorstep."}
+   var sayings={"tea":"Lunch tastes better with company. We meet at Wayfarer’s Rest on Monday, Wednesday and Friday.","games":"Your move! Tuesday and Thursday evenings are for board games under the pavilion.","stories":"Sundays bring travellers and their stories. Sit down and listen awhile.","harbour_trade":"Fresh supplies for the marina! We meet the river traders here on Tuesday and Thursday mornings.","picnic":"We bring lunch here on Tuesdays and Thursdays. The river sounds different every day.","market":"Fresh fruit, handmade wares and fish bait for a good day by the water.","lanterns":"Walk with us. The little lanterns make the whole street feel warmer.","stars":"That constellation looks like a leaping fish, if you tilt your head.","shop":"A full shopping basket is my kind of treasure.","read":"One more page, then I really will head home.","guard":"Keeping the roads safe. My boots deserve a medal.","water":"A little water, a little patience. No shouting at seedlings.","deliver":"Special delivery! Mostly herbs. Probably no beetles.","repair":"Measure twice, hammer once. Usually.","fish":"Bramble says the big one is still out there.","rest":"Best seat in town. Listen to that fountain.","chat":"Just catching up with the neighbours.","lunch":"Moss makes a good lunch. Then it is back to work!","music":"Wednesday evenings belong to music. Come listen with us!","explore":"The forest is different every time I walk it.","camp":"A warm fire after a long walk. I fish at dawn, before the town wakes.","sleep":"Time for a good night’s sleep.","home":"Heading home. Even adventurers need a cosy doorstep."}
    g.message=str(state.name)+": "+str(sayings.get(state.task,"Lovely day in Crossroads!"))
    if not state.working:g.message+=" Next stop: "+str(state.destination)+"."
    g.message_time=5
@@ -131,6 +131,13 @@ func draw_residents(c:CanvasItem,camera:Vector2)->void:
      var facing=-1 if index==20 else 1
      c.draw_line(hand,hand+Vector2(facing*20,-30),Color("#c8ae7c"),2)
      c.draw_line(hand+Vector2(facing*20,-30),hand+Vector2(facing*42,14),Color(.8,.87,.83,.7),1)
+    "tea":
+     c.draw_rect(Rect2(hand-Vector2(3,3),Vector2(9,8)),Color("#d7e6d5"));c.draw_arc(hand+Vector2(7,0),3,-PI*.5,PI*.5,8,Color("#d7e6d5"),2)
+     c.draw_line(hand-Vector2(0,7),hand+Vector2(sin(clock*2+index)*2,-14),Color(.9,.9,.8,.45),1)
+    "games":
+     c.draw_rect(Rect2(hand-Vector2(4,4),Vector2(8,8)),Color("#e4d2a0"));c.draw_circle(hand,1.5,Color("#4e625d"))
+    "stories":
+     c.draw_line(hand,hand+Vector2(7,-8+sin(clock*2+index)*3),skin,3)
     "lunch":
      c.draw_rect(Rect2(hand+Vector2(-7,3),Vector2(22,3)),Color("#d5cfad"))
      c.draw_circle(hand+Vector2(4,0),5,Color("#d8a568"))

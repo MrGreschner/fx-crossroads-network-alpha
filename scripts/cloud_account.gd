@@ -15,7 +15,7 @@ var request:HTTPRequest
 var operation=""
 var panel:PanelContainer
 var col:VBoxContainer
-var message="Sign in to protect your progress across devices."
+var message="Welcome back. Your next adventure is waiting."
 var mode="login"
 var last_legacy:Node
 var launched=false
@@ -102,11 +102,14 @@ func open()->void:
  var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;margin.add_child(scroll)
  col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_theme_constant_override("separation",12);scroll.add_child(col);refresh()
 func label(text:String,size=19)->void:
- var n=Label.new();n.text=text;n.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;n.add_theme_font_size_override("font_size",size);col.add_child(n)
+ var n=Label.new();n.text=text;n.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;n.add_theme_font_size_override("font_size",size);
+ if size>=23:n.add_theme_color_override("font_color",Color("#ead3a2"))
+ col.add_child(n)
 func button(text:String,fn:Callable)->Button:
  var b=Button.new();b.text=text;b.custom_minimum_size.y=43;b.pressed.connect(fn)
- var style=StyleBoxFlat.new();style.bg_color=Color("#245867");style.border_color=Color("#609caa");style.set_border_width_all(1);style.set_corner_radius_all(6);b.add_theme_stylebox_override("normal",style);var hover=style.duplicate();hover.bg_color=Color("#337387");b.add_theme_stylebox_override("hover",hover);col.add_child(b);return b
+ var style=StyleBoxFlat.new();style.bg_color=Color("#437563") if text.begins_with("Create account") or text.begins_with("Sign in") or text.begins_with("Load my") else Color("#345663");style.border_color=Color("#d9bc7d") if text.begins_with("Create account") or text.begins_with("Load my") else Color("#70999e");style.set_border_width_all(1);style.set_corner_radius_all(6);b.add_theme_stylebox_override("normal",style);var hover=style.duplicate();hover.bg_color=Color("#337387");b.add_theme_stylebox_override("hover",hover);col.add_child(b);return b
 func field(hint:String,secret=false)->LineEdit:
+ label(hint,15)
  var f=LineEdit.new();f.placeholder_text=hint;f.secret=secret;f.custom_minimum_size.y=45;f.virtual_keyboard_enabled=true;col.add_child(f);var mobile=preload("res://scripts/mobile_text_entry.gd").new();f.add_child(mobile);mobile.setup(f);return f
 func notify(value:String)->void:
  message=value
@@ -119,7 +122,7 @@ func refresh()->void:
  var signed_header=loaded and not token.is_empty() and mode not in ["password","recovery"] and l!=null and not l.recovery_required
  if signed_header:build_signed_header(l)
  else:
-  label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17);status_label=col.get_child(col.get_child_count()-1)
+  label("WELCOME TO CROSSROADS" if mode=="register" else "YOUR CROSSROADS ADVENTURE",28);label("Your next adventure starts here." if mode=="register" and message=="Welcome back. Your next adventure is waiting." else message,17);status_label=col.get_child(col.get_child_count()-1)
  if l!=null and l.recovery_required:
   label("LOCAL PROFILE RECOVERY",24);label("An existing profile could not be validated. It has been preserved and automatic local/cloud saving is paused. Download these files before importing a backup or loading a cloud profile.")
   button("Download preserved local save",download_recovery)
@@ -127,9 +130,10 @@ func refresh()->void:
  if not token.is_empty() and bool(user.get("username_warning",false)):
   label("USERNAME CHANGE REQUEST",22);label("Your username has been flagged as inappropriate. Please kindly choose a different game username. Your private game ID, progress and records will stay the same.",17)
   button("Choose a new username",func():mode="rename";refresh())
- if not token.is_empty() and str(user.get("role",""))=="teacher":button("Teacher menu • Manage Class Pro",func():close();get_tree().root.get_node("FXClassPro").open_teacher())
  if token.is_empty():
-  label("Choose a game username. Please do not use your real name. Keep names appropriate. Create a new unique password and do not share it.")
+  label("A place to keep your adventures",23)
+  label("Create an account to carry your progress between devices, or sign in to pick up where you left off. Your current device profile is kept safe while you choose.",17)
+  label("Use a made-up game name, not your real name. Choose a private password that you do not use elsewhere.",15)
   username=field("Username • 3–20 letters / numbers / underscores");username.max_length=20
   password=field("Password • 9–128 characters",true);password.max_length=128
   if mode=="register":
@@ -173,15 +177,16 @@ func refresh()->void:
    call_api("recovery",{"current":username.text,"answer":recovery_answer.text},"recovery"))
   button("Cancel",func():mode="login";refresh())
  elif not loaded:
-  label("Signed in as "+str(user.username),23)
+  label("Welcome back, "+str(user.username)+"!",23)
   if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code)+" • keep this for account verification",18)
   if user.get("has_save",false):
+   label("Ready to return? Load your cloud profile below. Teacher and student tools appear in town after it loads.",17)
    button("Load my cloud profile",func():call_api("save",null,"load"))
    var owner_copy=STORE.read("user://fx_cloud_owner.json")
    if str(owner_copy.get("id",""))==str(user.id) and int(owner_copy.get("revision",-1))==revision:
     button("Recover this account’s newer local progress → save to cloud",func():loaded=true;conflict=false;backup_local(make_bundle(legacy()));save_cloud(true))
   else:
-   label("This account has no cloud save yet. Choose what to start with. Your current local profile is backed up before any replacement.")
+   label("Your account is ready! Now choose your starting point. You can bring this device’s progress into the cloud or begin a new adventure. We back up the local profile before replacing anything.")
    button("Keep this device’s progress → create cloud save",func():
     var current=legacy();guest=make_bundle(current);backup_local(guest);STORE.write("user://fx_cloud_guest.json",guest);loaded=true;revision=0;mark_owner();save_cloud(true))
    button("Start a fresh cloud profile",func():
@@ -204,7 +209,7 @@ func build_signed_header(l:Node)->void:
  var outer=col
  var header=GridContainer.new();header.name="SignedInHeader";header.columns=2 if get_viewport().get_visible_rect().size.x>=900 else 1;header.add_theme_constant_override("h_separation",28);header.add_theme_constant_override("v_separation",12);col.add_child(header)
  var details=VBoxContainer.new();details.name="AccountDetails";details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",12);header.add_child(details);col=details
- label("CROSSROADS • CLOUD ACCOUNT",28);label(message,17);status_label=col.get_child(col.get_child_count()-1)
+ label("WELCOME TO CROSSROADS" if mode=="register" else "YOUR CROSSROADS ADVENTURE",28);label("Your next adventure starts here." if mode=="register" and message=="Welcome back. Your next adventure is waiting." else message,17);status_label=col.get_child(col.get_child_count()-1)
  label(str(user.username)+" • "+str(user.role).capitalize(),24)
  if not str(user.get("school_code","")).is_empty():label("Private game ID: "+str(user.school_code),18)
  label("Cloud revision "+str(revision)+" • "+("SAVING PAUSED — resolve conflict" if conflict else "automatic save every 60 seconds")+"\nDownloadable profiles still work as backups.",17)

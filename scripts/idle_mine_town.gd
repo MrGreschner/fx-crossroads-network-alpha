@@ -14,6 +14,10 @@ func interact(g:Node)->bool:
  return true
 func draw_on(g:Node2D,camera:Vector2)->void:
  draw_exchange(g,camera)
+ if Rect2(camera,g.VIEW).grow(80).has_point(Vector2(-967,764)):
+  var bay=Vector2(-967,725)-camera
+  g.draw_rect(Rect2(bay,Vector2(30,65)),Color("#6f7362"));g.draw_line(bay,bay+Vector2(30,0),Color("#d0b57c"),5)
+  g.draw_string(font,bay+Vector2(-8,-9),"ORE BAY",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("#e7cd90"))
  var mine=Vector2(-1130,750)-camera
  if not Rect2(Vector2.ZERO,g.VIEW).grow(150).has_point(mine):return
  var t=Time.get_ticks_msec()/1000.0

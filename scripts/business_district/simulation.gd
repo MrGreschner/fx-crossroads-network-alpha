@@ -17,6 +17,7 @@ func station(id:String,kind:String)->Vector2:
 func rebuild_workers()->void:
  workers.clear()
  for id in state.businesses:
+  if not allowed(id):continue
   if not business(id).open and id!=state.selected:continue
   workers.append({"shop":id,"person":-1,"role":"serve","pos":station(id,"serve"),"prev":station(id,"serve"),"dest":station(id,"serve"),"owner":true,"phase":0.0})
   for e in business(id).employees:

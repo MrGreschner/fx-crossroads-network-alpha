@@ -75,7 +75,7 @@ func worker_body(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
  for side in [-1,1]:g.draw_line(p+Vector2(side*11,-26),p+Vector2(side*14,-17+sin(t*6+side)*3),Color("#c9c4ac"),5)
  if carrying:crate(g,p-Vector2(12,27),Vector2(24,19))
 func draw_market(g:Node2D,camera:Vector2)->void:
- preload("res://scripts/town_sprite_cache.gd").draw(g,"market_night" if g.town_life.calendar.night_amount()>.1 else "market",Rect2(Vector2(-550,440)-camera,Vector2(800,380)))
+ preload("res://scripts/town_art39.gd").draw(g,"merchants_night" if g.town_life.calendar.night_amount()>.1 else "merchants",camera)
  var t=Time.get_ticks_msec()*.001
  ram_worker(g,Vector2(-430+sin(t*.45)*25,715)-camera,t,true)
  ram_worker(g,Vector2(33+sin(t*.35)*22,751)-camera,t+1,false)
@@ -107,26 +107,30 @@ func draw_market_structure(g:Node2D,camera:Vector2)->void:
   var q=p+Vector2(x,132);g.draw_rect(Rect2(q-Vector2(5,9),Vector2(10,18)),Color("#43565b"));g.draw_rect(Rect2(q-Vector2(3,6),Vector2(6,12)),Color("#ffe4a2") if g.town_life.calendar.night_amount()>.1 else Color("#a6aa8a"))
  g.draw_rect(Rect2(p+Vector2(133,80),Vector2(74,115)),Color("#3e5056"))
  for n in 3:g.draw_line(p+Vector2(137+n*24,84),p+Vector2(137+n*24,191),Color("#9a8963"),4)
- # Loading opening aligns with the mine railway, below the west window.
- var bay=p+Vector2(-10,149)
- g.draw_rect(Rect2(bay,Vector2(46,46)),Color("#22343b"))
- g.draw_line(bay,bay+Vector2(46,0),Color("#b6a274"),5,true)
- for x in [0,46]:g.draw_line(bay+Vector2(x,0),bay+Vector2(x,46),Color("#8d7958"),3,true)
- for y in [11,31]:g.draw_line(bay+Vector2(0,y),bay+Vector2(23,y),Color("#b7c2ad"),2,true)
- # Supply piles to the west; mineral stall and gem counter to the east.
- for n in 5:crate(g,Vector2(-505+(n%3)*35,620-(n/3)*28)-camera,Vector2(32,30))
- for n in 8:
-  var rock=Vector2(-472+(n%4)*20,575+(n/4)*19)-camera
-  g.draw_colored_polygon(PackedVector2Array([rock+Vector2(-12,5),rock+Vector2(-7,-8),rock+Vector2(4,-13),rock+Vector2(13,0),rock+Vector2(8,10)]),Color("#758e92") if n%2 else Color("#a4afb0"));g.draw_line(rock-Vector2(6,5),rock+Vector2(5,-8),Color("#c2c8b1"),2)
- var stall=Vector2(65,560)-camera
- g.draw_rect(Rect2(stall+Vector2(0,75),Vector2(120,50)),Color("#9f7a4f"));g.draw_rect(Rect2(stall+Vector2(-7,5),Vector2(134,28)),Color("#9c6f7c"))
- for n in 6:g.draw_rect(Rect2(stall+Vector2(-7+n*22,5),Vector2(11,28)),Color("#d7c69b"))
- for x in [3,116]:g.draw_line(stall+Vector2(x,32),stall+Vector2(x,124),Color("#71583e"),4)
- for n in 6:
-  var q=stall+Vector2(13+n*18,70)
-  g.draw_colored_polygon(PackedVector2Array([q+Vector2(-6,0),q+Vector2(0,-12),q+Vector2(6,0),q+Vector2(0,7)]),Color("#aed5db") if n%2 else Color("#c3a7dd"))
- g.draw_string(font,stall+Vector2(9,111),"GEMS & ASSAY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#f0d8a4"))
- for n in 3:crate(g,Vector2(85+n*32,710)-camera,Vector2(28,25))
+ # A welcoming mixed-goods arcade replaces the former mineral depot.
+ for x in [-505,65]:
+  var q=Vector2(x,570)-camera
+  g.draw_rect(Rect2(q+Vector2(0,58),Vector2(120,67)),Color("#92704f"))
+  for post in [0,120]:g.draw_line(q+Vector2(post,8),q+Vector2(post,125),Color("#67583e"),5)
+  for n in 8:g.draw_rect(Rect2(q+Vector2(-5+n*16,0),Vector2(16,28)),Color("#658c78") if n%2 else Color("#ead9ae"))
+  for n in 3:
+   var key=["sandwich","veggie_basket","coffee"][n] if x<0 else ["shirt","bread","soup"][n]
+   var items=preload("res://scripts/business_district/catalog.gd").ops().products
+   if not items.has(key):key="sandwich"
+   var tex=preload("res://scripts/business_district/art.gd").item_texture(key,"product")
+   g.draw_texture_rect(tex,Rect2(q+Vector2(4+n*37,34),Vector2(37,37)),false)
+  g.draw_string(font,q+Vector2(6,105),"FRESH & LOCAL" if x<0 else "MAKERS & WARES",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("#f4e3b6"))
+ # Fabric swags, planters and a double glass door invite visitors into the district.
+ for x in [35,105,235,305]:
+  var q=p+Vector2(x,51)
+  g.draw_line(q,q+Vector2(0,65),Color("#d1b776"),3)
+  g.draw_colored_polygon(PackedVector2Array([q,q+Vector2(20,0),q+Vector2(20,58),q+Vector2(10,68),q+Vector2(0,58)]),Color("#617b71") if x<170 else Color("#aa7459"))
+ for x in [137,173]:
+  g.draw_rect(Rect2(p+Vector2(x,84),Vector2(30,106)),Color("#8d7552"))
+  g.draw_rect(Rect2(p+Vector2(x+4,90),Vector2(22,55)),Color("#b5d4c8"))
+  g.draw_circle(p+Vector2(x+23,158),2,Color("#edd194"))
+ for x in [80,246]:
+  var q=p+Vector2(x,186);g.draw_rect(Rect2(q,Vector2(24,25)),Color("#9e7651"));g.draw_circle(q+Vector2(12,-2),17,Color("#658a62"))
 
 func draw_office(g:Node2D,camera:Vector2)->void:
  var p=OFFICE.position-camera;var night=g.town_life.calendar.night_amount()
