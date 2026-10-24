@@ -34,6 +34,7 @@ func step(delta:float)->void:
  next_check-=delta
  if next_check<=0:next_check=1;refresh()
 func add_damage(value:float)->void:
+ if not preload("res://scripts/record_eligibility.gd").damage_allowed(legacy):return
  if value<=0 or not is_finite(value) or preload("res://scripts/profile_store.gd").progression_blocked() or bool(legacy.data.get("teacher",false)):return
  refresh();state().damage=minf(1e12,float(state().get("damage",0))+value)
 func tier()->int:

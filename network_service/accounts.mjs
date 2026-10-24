@@ -1,3 +1,4 @@
+import {allowedOrigin} from './origins.mjs';
 import {repairSchema,exclusions,scrubProfile} from './record-repair.mjs';
 import {randomInt,randomBytes,createHash,scrypt as derive,timingSafeEqual,createCipheriv,createDecipheriv} from 'node:crypto';
 import {promisify} from 'node:util';
@@ -76,7 +77,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
  async function handle(req,res){const url=new URL(req.url,'http://localhost'),path=url.pathname;if(!path.startsWith('/accounts/')&&path!=='/accounts')return false;
   const isAdmin=path==='/accounts'||path.startsWith('/accounts/admin')||path==='/accounts/control.js';
   if(isAdmin){if(!admin(req)){send(res,401,{error:'Private account controls'},{'WWW-Authenticate':'Basic realm="Crossroads private accounts"'});req.resume();return true;}if(req.method==='POST'&&req.headers.origin&&new URL(req.headers.origin).host!==req.headers.host){send(res,403,{error:'Origin rejected'});req.resume();return true;}}
-  else{const origin=req.headers.origin||'';if(origin&&!/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)&&!(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)&&!(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin))){send(res,403,{error:'Origin rejected'});req.resume();return true;}if(origin){res.setHeader('access-control-allow-origin',origin);res.setHeader('vary','Origin');}if(req.method==='OPTIONS'){send(res,204,{}, {'access-control-allow-methods':'GET,POST','access-control-allow-headers':'content-type,authorization'});return true;}}
+  else{const origin=req.headers.origin||'';if(!allowedOrigin(req)){send(res,403,{error:'Origin rejected'});req.resume();return true;}if(origin){res.setHeader('access-control-allow-origin',origin);res.setHeader('vary','Origin');}if(req.method==='OPTIONS'){send(res,204,{}, {'access-control-allow-methods':'GET,POST','access-control-allow-headers':'content-type,authorization'});return true;}}
   // Temporary reduced release: the browser account console is not shipped.
   if(['/accounts','/accounts/control.js','/accounts/admin/recovery','/accounts/admin/password'].includes(path)){send(res,503,{error:'Browser account controls and administrator password recovery are temporarily unavailable in this profile-core release. Player login and cloud saves remain available.'});req.resume();return true;}
   if(!ready&&pool&&encryption&&now()>retryAt)await initialize();if(!ready){send(res,503,{error:isAdmin?'Cloud accounts unavailable. Set CLOUD_SAVE_KEY (32 random bytes, base64) and DATABASE_URL, then redeploy.':'Cloud accounts are temporarily unavailable. You can keep playing on this device and download a profile backup. Please try again later.'});req.resume();return true;}

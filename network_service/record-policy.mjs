@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';
 const official=JSON.parse(readFileSync(new URL('../content/manifest.json',import.meta.url))).characters;
-export const RECORD_POLICY=2;
+export const RECORD_POLICY=3;
 export const combatEligible=raw=>raw?.record_policy===RECORD_POLICY&&raw.unofficial===false;
 export async function eligibleHeroes(pool){
  const ids=new Set(official);

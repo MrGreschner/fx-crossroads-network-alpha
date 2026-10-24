@@ -47,6 +47,7 @@ func refresh()->void:
  for b in buckets:if int(b[0])<=minute:cached_sum+=float(b[1])
  remember()
 func add_damage(amount:float)->void:
+ if not preload("res://scripts/record_eligibility.gd").damage_allowed(legacy):return
  if amount<=0 or not is_finite(amount) or preload("res://scripts/profile_store.gd").progression_blocked() or bool(legacy.data.get("teacher",false)):return
  var minute=int(now()/60);var buckets:Array=state().buckets
  if not buckets.is_empty() and int(buckets.back()[0])>minute:return

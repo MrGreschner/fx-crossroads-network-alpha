@@ -6,6 +6,7 @@ var keys:Array[String]=[]
 func setup_party(g:Node,id:String,p:Dictionary)->void:
  game=g;actor_id=id;hide();set_process(false);external=true;locked_player=true;hit_callback=contact;heal_callback=recover
  begin(p,[],"Multiplayer");foes.clear();keys.clear();last_hero=id;running=true
+func visual_hero()->String:return actor_id
 func active()->bool:return game.started and game.characters.get(str(game.hero_ids.get(actor_id,"")),{}).has("studio_project")
 func initialise()->void:pass
 func contact(index:int,amount:float,a:Dictionary)->void:

@@ -84,6 +84,7 @@ func setup(owner:Node,multi:bool=false)->void:
   if not backup.is_empty():data=backup.duplicate(true)
   data.teacher=false;data.erase("teacher_backup");data.erase("backup_saves")
  teacher_backup={}
+ preload("res://scripts/record_eligibility.gd").archive_custom_damage(data)
  glimmers.legacy=self;glimmers.state()
  weekly.legacy=self;fishing_records.legacy=self;fishing_records.state();lodge_economy.setup(self);daily.setup(self);cosmetics.setup(self);crowns.setup(self);mine.setup(self);commerce.setup(self);gardening.setup(self);community.setup(self)
  layer=35
@@ -224,7 +225,7 @@ func channel_speed(owner:String)->float:
  var effective:=stats(owner,"secondary",game.characters.get(hero_for(owner),{}).get("secondary",{}))
  return float(effective.get("channel_move",0))
 func add_damage(id:String,amount:float)->void:
- if amount<=0 or bool(data.teacher) or preload("res://scripts/profile_store.gd").progression_blocked():return
+ if amount<=0 or bool(data.teacher) or preload("res://scripts/profile_store.gd").progression_blocked() or not preload("res://scripts/record_eligibility.gd").damage_allowed(self,id):return
  cosmetics.add_damage(amount);crowns.add_damage(amount)
  record(id).damage=float(record(id).damage)+amount;data.tasks.damage=float(data.tasks.damage)+amount
 func clear_adventure(id:String,realm:String)->void:
@@ -855,6 +856,7 @@ func apply_import()->void:
  data.teacher=false;data.erase("teacher_backup");data.name=str(data.get("name","Traveler")).left(32)
  for id in data.heroes:
   var rec:Dictionary=data.heroes[id];rec.realms=rec.get("realms",[]);rec.technique=bool(rec.get("technique",false));rec.final_technique=bool(rec.get("final_technique",false));rec.points=clampi(int(rec.get("points",0)),0,6);rec.tuning=sanitize_build(rec).tuning;rec.damage=clampf(float(rec.get("damage",0)),0,1000000000);rec.clears=clampi(int(rec.get("clears",0)),0,1000000)
+ preload("res://scripts/record_eligibility.gd").archive_custom_damage(data)
  for name in save_names():
   preload("res://scripts/profile_store.gd").erase("user://"+name)
   if not fresh and pending.saves.has(name):

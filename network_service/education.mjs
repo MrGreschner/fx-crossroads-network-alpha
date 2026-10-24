@@ -1,3 +1,4 @@
+import {allowedOrigin} from './origins.mjs';
 import {createBusinessAcademy,businessCatalog} from './business-academy.mjs';
 import {randomBytes,createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
@@ -44,7 +45,7 @@ export function createEducation({pool,accounts,admin=()=>false,now=()=>Date.now(
   try{
    const origin=req.headers.origin||'';
    if(isAdmin){if(!admin(req)){send(res,401,{error:'Private administrator controls.'},{'www-authenticate':'Basic realm="Crossroads private reports"'});return true;}}
-   const allowed=!origin||origin===`https://${req.headers.host}`||origin===`http://${req.headers.host}`||(!isAdmin&&(/^https:\/\/([a-z0-9-]+\.)*(itch\.zone|itch\.io)$/.test(origin)||(process.env.REPORT_ALLOWED_ORIGIN||'').split(',').includes(origin)||(process.env.FX_LOCAL_TEST==='1'&&/^http:\/\/127\.0\.0\.1:\d+$/.test(origin))));
+   const allowed=allowedOrigin(req,{admin:isAdmin});
    if(!allowed)fail(403,'Origin rejected.');if(origin&&!isAdmin){res.setHeader('access-control-allow-origin',origin);res.setHeader('vary','Origin');}
    if(req.method==='OPTIONS'){send(res,204,{}, {'access-control-allow-methods':'GET,POST','access-control-allow-headers':'content-type,authorization'});return true;}
    if(['/accounts','/accounts/education-admin.js','/education/teacher','/education/teacher.js','/education/teacher.css'].includes(path)){

@@ -72,7 +72,6 @@ func open(kind:String)->void:
   for state in ["normal","hover","pressed"]:
    var border=continue_button.get_theme_stylebox(state).duplicate();border.border_color=Color("#f2d699");border.set_border_width_all(2);continue_button.add_theme_stylebox_override(state,border)
   if not arcade:button("CLOUD ACCOUNT • sign in / save",func():resume(false);game.get_node("/root/FXAccount").open(),"#3e7968")
-  if not arcade:button("LEARNING ACADEMY • lessons & assignments",func():resume(false);game.open_business_academy(),"#58796d")
   button("NEW GAME • start your adventure",func():request_clear(),"#3e7968")
   if not arcade:button("CROSSROADS STUDIO • create & test",func():resume(false);game.hero_workshop.open(),"#665e81")
   button("DOWNLOAD GAME • WINDOWS",func():open("download"),"#496681")

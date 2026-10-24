@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 export const repairSchema=`CREATE TABLE IF NOT EXISTS crossroads_record_repairs(id text PRIMARY KEY,account text NOT NULL REFERENCES crossroads_accounts(id),snapshot jsonb NOT NULL,reason text NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),restored boolean NOT NULL DEFAULT false);
 CREATE TABLE IF NOT EXISTS crossroads_record_exclusions(account text NOT NULL,scope text NOT NULL,kind text NOT NULL,key text NOT NULL,value double precision NOT NULL,repair text NOT NULL REFERENCES crossroads_record_repairs(id),PRIMARY KEY(account,scope,kind,key,value));`;
 const supported=new Set(['time','time_solo','time_coop','between','descent']);
-const digest=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+const digest=x=>createHash('sha256').update(JSON.stringify({account:x.account.id,rows:x.rows})).digest('hex');
 const equal=(a,b)=>typeof a==='number'&&Math.abs(a-Number(b))<1e-8;
 const remove=(o,k,v)=>{if(o&&equal(o[k],v))delete o[k];};
 export function scrubProfile(value,exclusions){
@@ -46,6 +46,25 @@ export async function scrubUpload(pool,account,raw){
  }
  return r;
 }
+// Expand duplicate views of one confirmed attempt; never cross from solo to co-op.
+export function matchingCopies(rows,selected){
+ const out=[...selected];
+ for(const item of selected){
+  if(!item.kind.startsWith('time'))continue;
+  let route=item.kind;
+  if(route==='time'){
+   const routes=[...new Set(rows.filter(r=>['time_solo','time_coop'].includes(r.kind)&&r.key===item.key&&equal(Number(r.value),item.value)&&!r.extra?.hero).map(r=>r.kind))];
+   if(routes.length===1)route=routes[0];
+   else if(routes.length>1)throw Object.assign(Error('Select the Solo or Co-op row to identify which attempt to repair.'),{status:400});
+  }
+  for(const r of rows){
+   if(![route,'time'].includes(r.kind)||r.key!==item.key||!equal(Number(r.value),item.value))continue;
+   if(r.extra?.hero&&r.extra.hero!==item.extra?.hero)continue;
+   if(!out.some(x=>x.scope===r.scope&&x.kind===r.kind&&x.key===r.key))out.push(r);
+  }
+ }
+ return out;
+}
 export function createRecordRepair({pool,accounts,admin=()=>false,invalidate=()=>{}}){
  let ready=false;const initialized=(async()=>{if(!pool)return;await accounts.initialized;await pool.query(repairSchema);ready=true;})();
  const send=(res,status,data)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(data));};
@@ -72,14 +91,16 @@ export function createRecordRepair({pool,accounts,admin=()=>false,invalidate=()=
     if(u.pathname==='/records/admin/repair'){
      const s=await snapshot(db,p.id);if(p.token!==digest(s))fail(409,'Data changed. Preview again before repairing.');
      if(!Array.isArray(p.rows)||!p.rows.length||p.rows.length>100||typeof p.reason!=='string'||p.reason.length<10||p.reason.length>500)fail(400,'Select exact records and explain the evidence for correction.');
-     const selected=[];for(const item of p.rows){const row=s.rows.find(r=>r.scope===item.scope&&r.kind===item.kind&&r.key===item.key&&Number(r.value)===item.value);if(!row||!supported.has(row.kind))fail(400,'Unsupported or changed record. Totals require a separate evidence-based review.');if(!selected.some(r=>r.scope===row.scope&&r.kind===row.kind&&r.key===row.key))selected.push(row);}
+     let selected=[];for(const item of p.rows){const row=s.rows.find(r=>r.scope===item.scope&&r.kind===item.kind&&r.key===item.key&&Number(r.value)===item.value);if(!row||!supported.has(row.kind))fail(400,'Unsupported or changed record. Totals require a separate evidence-based review.');if(!selected.some(r=>r.scope===row.scope&&r.kind===row.kind&&r.key===row.key))selected.push(row);}
+     selected=matchingCopies(s.rows,selected);
      const id=randomUUID();const save=s.account.save?accounts.unseal(s.account.save):null;const patched=scrubProfile(save,selected);
      // A recoverable encrypted snapshot is stored before any record changes.
      const snapshotData={account:s.account,rows:selected,after_revision:s.account.revision+(save?1:0)};
      await db.query('INSERT INTO crossroads_record_repairs(id,account,snapshot,reason) VALUES($1,$2,$3::jsonb,$4)',[id,p.id,JSON.stringify(snapshotData),p.reason]);
      for(const row of selected){await db.query('INSERT INTO crossroads_record_exclusions(account,scope,kind,key,value,repair) VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT DO NOTHING',[p.id,row.scope,row.kind,row.key,row.value,id]);await db.query('DELETE FROM crossroads_named_records WHERE account=$1 AND scope=$2 AND kind=$3 AND key=$4 AND value=$5',[p.id,row.scope,row.kind,row.key,row.value]);}
      if(save){await db.query('UPDATE crossroads_accounts SET save=$1,revision=revision+1,updated_at=now() WHERE id=$2',[accounts.seal(patched),p.id]);await db.query('INSERT INTO crossroads_save_history(account,revision,save) SELECT id,revision,save FROM crossroads_accounts WHERE id=$1',[p.id]);}
-     await db.query('INSERT INTO crossroads_account_audit(account,action) VALUES($1,$2)',[p.id,'record-repair:'+id]);await db.query('COMMIT');invalidate();send(res,200,{saved:true,repair:id,removed:selected.length,reload_cloud:!!save});return true;
+     for(const row of selected){const q=await db.query('SELECT value FROM crossroads_named_records WHERE account=$1 AND scope=$2 AND kind=$3 AND key=$4 AND value=$5',[p.id,row.scope,row.kind,row.key,row.value]);if(q.rows.length)fail(503,'Removal could not be verified; no repair was committed.');}
+     await db.query('INSERT INTO crossroads_account_audit(account,action) VALUES($1,$2)',[p.id,'record-repair:'+id]);await db.query('COMMIT');invalidate();send(res,200,{saved:true,repair:id,removed:selected.length,verified:true,reload_cloud:!!save});return true;
     }
     if(u.pathname==='/records/admin/restore'){
      const r=(await db.query('SELECT * FROM crossroads_record_repairs WHERE id=$1 AND account=$2 AND NOT restored',[p.repair,p.id])).rows[0];if(!r)fail(404,'Active repair not found');

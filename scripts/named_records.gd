@@ -37,7 +37,7 @@ static func died(l:Node)->void:
 static func payload(l:Node)->Dictionary:
  var s=state(l)
  for item in l.data.get("waylight",{}).get("relics",[]):note_relic(l,item)
- return {"hero_records":s.hero_records,"descent":s.descent,"routes":s.routes,"lifetime":minf(1e12,float(l.data.tasks.get("damage",0))),"buckets":l.crowns.state().buckets,"times":{"all":s.times_all,str(s.week):s.times_week},"streak":{"all":s.best,str(s.week):s.best_week},"relic":s.relic if not s.relic.is_empty() else null}
+ return {"hero_records":s.hero_records,"descent":s.descent,"routes":s.routes,"lifetime":preload("res://scripts/record_eligibility.gd").eligible_damage(l),"buckets":l.crowns.state().buckets,"times":{"all":s.times_all,str(s.week):s.times_week},"streak":{"all":s.best,str(s.week):s.best_week},"relic":s.relic if not s.relic.is_empty() else null}
 static func note_relic(l:Node,item:Dictionary)->void:
  var s=state(l);var rare=s.relic;var best=(10 if rare.get("conclave",false) else 0)+int(rare.get("tier",0))+float(rare.get("percentile",0)) if not rare.is_empty() else -1.0
  if preload("res://scripts/profile_store.gd").progression_blocked() or not C.valid_relic(item) or str(item.type)=="master_fisher":return

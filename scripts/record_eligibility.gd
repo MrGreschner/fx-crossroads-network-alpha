@@ -1,6 +1,6 @@
 extends RefCounted
 ## Approval comes from the downloaded public catalogue, never a local balance checkbox.
-const POLICY=2
+const POLICY=3
 const NOTICE="PLAYTEST • Custom hero in play. This entire run is unofficial: no personal or community records."
 static func hero_allowed(g:Node,id:String)->bool:
  if id.is_empty():return false
@@ -43,3 +43,33 @@ static func archive_custom_personal(profile:Dictionary)->void:
   if str(key).get_slice(":",str(key).get_slice_count(":")-1).begins_with("custom_"):
    archive[key]=records[key];records.erase(key)
  if not archive.is_empty():profile.playtest_records=archive
+
+static func damage_allowed(l:Node,id:String="")->bool:
+ var g=l.game
+ if bool(g.get_meta("records_unofficial",false)):return false
+ var actual=str(g.hero_ids.get(g.my_id,g.selected_hero)) if l.arcade else str(g.character_id)
+ if not hero_allowed(g,actual) or not id.is_empty() and not hero_allowed(g,id):return false
+ if l.arcade:
+  for hero in g.hero_ids.values():
+   if not hero_allowed(g,str(hero)):return false
+ return true
+static func eligible_damage(l:Node)->float:
+ var total=0.0
+ for id in l.data.get("heroes",{}):
+  if hero_allowed(l.game,str(id)):total+=maxf(0,float(l.data.heroes[id].get("damage",0)))
+ return minf(1e12,total)
+static func archive_custom_damage(data:Dictionary)->void:
+ var excluded=0.0;var archive:Dictionary=data.get("playtest_damage",{})
+ for id in data.get("heroes",{}):
+  if not str(id).begins_with("custom_"):continue
+  var amount=maxf(0,float(data.heroes[id].get("damage",0)))
+  if amount<=0:continue
+  archive[id]=float(archive.get(id,0))+amount;excluded+=amount;data.heroes[id].damage=0
+ if excluded>0:
+  data.playtest_damage=archive;data.tasks.damage=maxf(0,float(data.tasks.get("damage",0))-excluded)
+
+static func damage_ledger(l:Node)->Dictionary:
+ var result={}
+ for id in l.data.get("heroes",{}):
+  if hero_allowed(l.game,str(id)):result[id]=maxf(0,float(l.data.heroes[id].get("damage",0)))
+ return result
