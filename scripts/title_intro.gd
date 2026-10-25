@@ -68,13 +68,18 @@ func paint()->void:
  var foe_pos:=Vector2(lerpf(center.x+200,center.x+30,approach)+depart*250,lane_y)
  var striking:bool=elapsed>=1.65 and elapsed<2.25
  var pose:String="attack" if striking else "walk1" if int(elapsed*7)%2==0 else "walk2"
- var ram:Texture2D=art.get("ram_"+pose,art.get("ram_idle"))
+ var ram:Texture2D=preload("res://scripts/core_hero_art.gd").texture("ram","attack" if striking else "walk1" if int(elapsed*7)%2==0 else "walk2")
  var foe:Texture2D=art.get("bramble_"+("0" if int(elapsed*5)%2==0 else "1"),art.get("bramble"))
  var platform=PackedVector2Array([Vector2(center.x-265,lane_y+6),Vector2(center.x-230,lane_y-8),Vector2(center.x+230,lane_y-8),Vector2(center.x+265,lane_y+6),Vector2(center.x+243,lane_y+24),Vector2(center.x-243,lane_y+24)])
  frame.draw_colored_polygon(platform,Color(.18,.31,.33,alpha));frame.draw_polyline(platform,Color(.46,.60,.57,alpha*.5),1.5,true)
  frame.draw_line(Vector2(center.x-230,lane_y+6),Vector2(center.x+230,lane_y+6),Color(.55,.69,.63,alpha*.3),1,true)
  frame.draw_circle(ram_pos+Vector2(0,5),18,Color(0,0,0,alpha*.3))
  if ram!=null:frame.draw_texture_rect(ram,Rect2(ram_pos-Vector2(30,62),Vector2(60,72)),false,Color(1,1,1,alpha))
+ var elder=preload("res://scripts/core_hero_art.gd").texture("elder_ram","talk" if int(elapsed*2)%4==0 else "idle")
+ var cat=preload("res://scripts/core_hero_art.gd").texture("cat","idle")
+ var flank=minf(320,size.x*.43)
+ frame.draw_texture_rect(elder,Rect2(Vector2(center.x-flank,lane_y)-Vector2(27,61),Vector2(54,68)),false,Color(1,1,1,alpha))
+ frame.draw_texture_rect(cat,Rect2(Vector2(center.x+flank,lane_y)-Vector2(29,56),Vector2(58,62)),false,Color(1,1,1,alpha))
  var wobble:float=sin((elapsed-1.65)*17)*5 if striking else 0
  if foe!=null:frame.draw_texture_rect(foe,Rect2(foe_pos-Vector2(30,60)+Vector2(wobble,0),Vector2(60,68)),false,Color(1,1,1,alpha))
  if striking:

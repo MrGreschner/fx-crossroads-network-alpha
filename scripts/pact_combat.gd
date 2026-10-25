@@ -188,6 +188,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for owner in allies:
   var body:Dictionary=allies[owner];var p:Vector2=combat.vec(body.pos)-camera
   var texture:Texture2D=combat.adventure.game.art.get(str(body.sprite)+"_"+str(body.pose),combat.adventure.game.art.get(str(body.sprite)+"_0"))
+  if str(body.sprite).begins_with("ds_"):texture=preload("res://scripts/descent203_art.gd").companion_texture(str(body.sprite),str(body.pose))
   c.draw_ellipse_shadow(p) if combat.adventure.arcade else c.draw_circle(p+Vector2(0,15),18,Color(0,0,0,.2))
   c.draw_arc(p,26,0,TAU,32,Color("#9ce6ad"),2)
   if texture!=null:c.draw_texture_rect(texture,Rect2(p-Vector2(23,35),Vector2(46,50)),false)

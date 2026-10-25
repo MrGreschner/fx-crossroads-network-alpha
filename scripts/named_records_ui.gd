@@ -38,11 +38,13 @@ static func build(parent:Node,l:Node,n:Dictionary,category:String)->void:
    var card=UI.card(parent,e[0],"Realms completed without a defeat • counted from v188 onward")
    list(card,n.get(e[1],[])," realm clears")
  if category=="between":
-  for e in [["SOLO • TOP EXTRACTORS","between_solo"],["CO-OP • TOP EXTRACTORS","between_coop"]]:
+  for e in [["SOLO • TOP 10 RUNS","between_solo"],["CO-OP • TOP 10 RUNS","between_coop"]]:
    var card=UI.card(parent,e[0],"Successful solo extractions • raw shards before trial bonuses" if e[1]=="between_solo" else "Successful co-op extractions • shared haul listed for each participating account")
    var rows=n.get(e[1],[])
-   if rows.is_empty():G.label(card,"No named extractions yet.",16)
-   for i in rows.size():preload("res://scripts/records_hall_ui.gd").run_row(card,l,rows[i],str(i+1)+". Best extraction",String.num(float(rows[i].value),0)+" Waylight Shards")
+   var cols=preload("res://scripts/records_hall_ui.gd").columns(card)
+   for i in 10:
+    if i<rows.size():preload("res://scripts/records_hall_ui.gd").run_row(cols[i/5],l,rows[i],str(i+1)+". Best extraction",String.num(float(rows[i].value),0)+" Waylight Shards")
+    else:G.label(cols[i/5],str(i+1)+". No run yet",16)
  if category=="relic":
   var card=UI.card(parent,"RAREST RELIC FIND","Conclave finds, then overcharge tier, then natural roll quality. Upgrading a relic does not improve this record.")
   var row=n.get("relic")

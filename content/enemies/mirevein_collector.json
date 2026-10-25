@@ -1,0 +1,13 @@
+{
+  "id": "mirevein_collector",
+  "name": "Mirevein Collector",
+  "sprite": "mirevein_collector",
+  "health": 820,
+  "speed": 118,
+  "damage": 16,
+  "behaviour": "ranged",
+  "aggro_range": 950,
+  "expansion_only": true,
+  "description": "A roaming elite toad carrying a mosquito nursery. Homing brood latch and drain health back to the Collector. Its open maw catches five projectiles, then returns rolling mud; its heavy stomp stuns.",
+  "lore": "A roaming elite toad carrying a mosquito nursery. Homing brood latch and drain health back to the Collector. Its open maw catches five projectiles, then returns rolling mud; its heavy stomp stuns."
+}

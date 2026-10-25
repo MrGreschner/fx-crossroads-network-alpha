@@ -650,6 +650,7 @@ func _process(delta:float)->void:
   queue_redraw();client_perf.work("client_process",Time.get_ticks_usec()-frame_began);return
  ability_view.advance(delta,local_view.point(local_pos,Engine.get_physics_interpolation_fraction()))
  expedition.step(delta)
+ if descent.falling():descent.step_transition(delta)
  visual_time+=delta;motion_v85.advance(delta);skating_motion.advance(delta);actor_motion.advance(delta);actor_motion.prune(positions.keys())
  _advance_local_previews(delta)
  world_view.advance(delta)
@@ -690,8 +691,8 @@ func _process(delta:float)->void:
  missiles.assign(shots_view.samples(Time.get_ticks_msec()/1000.0))
  for shot in render_shots:
   if str(shot.owner)!=my_id and not bool(shot.get("custom",false)):missiles.append({"pos":shot.draw_pos,"owner":shot.owner,"color":shot.color})
- adventure.combat.held_cast.local_input(delta,not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
- if net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
+ adventure.combat.held_cast.local_input(delta,not descent.falling() and not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
+ if not descent.falling() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
   if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):_attack_request("primary")
   if Input.is_action_pressed("secondary"):_attack_request("secondary")
   if Input.is_action_just_pressed("special"):_attack_request("special")
@@ -717,6 +718,12 @@ func _physics_process(_delta:float)->void:
   if not started or room_paused:return
   var begin=Time.get_ticks_usec();authority_tick+=1
   if gateway!=null:gateway.simulation_steps+=1
+  if descent.falling():
+   descent.step_transition(Move.DT)
+   for id in positions:
+    server_inputs[id]=[];server_actions[id]=[];net_velocity[id]=Vector2.ZERO
+   if authority_tick%3==0 and gateway!=null:gateway.snapshot(self)
+   return
   var before_positions=positions.duplicate()
   set_meta("fx_network_previous_positions",before_positions)
   for id in positions:
@@ -753,7 +760,7 @@ func _physics_process(_delta:float)->void:
    var complete=(Time.get_ticks_usec()-begin)/1000.0
    gateway.step_work_ms=complete;gateway.work_window+=complete;gateway.step_work_max_ms=maxf(gateway.step_work_max_ms,complete)
   return
- if not started or not net_ready or recovery_active:return
+ if not started or not net_ready or recovery_active or descent.falling():return
  var physics_began=Time.get_ticks_usec()
  var direction:Vector2=mobile.movement if mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
  if not presentation.page.is_empty() or not shop_open.is_empty() or fishing.busy():direction=Vector2.ZERO

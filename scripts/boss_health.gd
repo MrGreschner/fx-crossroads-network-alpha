@@ -11,7 +11,7 @@ static func draw_on(g:Node2D)->void:
  for e in list:hp+=float(e.hp);maximum+=float(e.max_hp)
  var region:Dictionary=g.regions.get(g.realm_id,{}) if g.has_method("_attack_request") else g.region
  var defs:Dictionary=g.enemy_defs if g.has_method("_attack_request") else g.enemy_types
- var title=str(defs.get(str(list[0].type),{}).get("name",str(region.get("name","Realm"))+" Guardian"))
+ var title=str(list[0].get("name",defs.get(str(list[0].type),{}).get("name",str(region.get("name","Realm"))+" Guardian")))
  if str(list[0].type) in ["boss","fragment"]:title="Quarry Guardians" if str(region.get("id",""))=="quarry" else "Plague Director" if str(region.get("id",""))=="zombie" else "Cryowarden" if str(region.get("id",""))=="ice" else "Grove Rootwarden"
  if list.size()>1:
   if list.any(func(e):return bool(e.get("between_guardian",false))):

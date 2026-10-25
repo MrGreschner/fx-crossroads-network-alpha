@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V198.56-open-ocean"
+const BUILD="V206-core-hero-neutral-poses"
 const REPORT_SCHEMA=3

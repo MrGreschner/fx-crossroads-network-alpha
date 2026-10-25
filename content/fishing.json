@@ -4620,15 +4620,15 @@
       ]
     },
     "silverfall_spring": {
-      "name": "Ferryman\u2019s Spring",
+      "name": "The Hushed Spring",
       "region": "silverfall",
       "bank": [
-        1650,
-        6240
+        4200,
+        3420
       ],
       "water": [
-        1820,
-        6240
+        4440,
+        3440
       ],
       "fish": [
         "cascade_darter",
@@ -4645,15 +4645,15 @@
       ]
     },
     "silverfall_cascade": {
-      "name": "Moonwater Cascade",
+      "name": "Moonwater Lily Cove",
       "region": "silverfall",
       "bank": [
-        5720,
-        2200
+        5200,
+        1700
       ],
       "water": [
-        5940,
-        2200
+        5310,
+        1460
       ],
       "fish": [
         "cascade_darter",

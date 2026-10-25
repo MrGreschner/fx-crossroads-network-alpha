@@ -504,7 +504,7 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
  if str(data.get("type",""))=="rift":
   var handled=false
   if g.positions.has(id) and int(g.health.get(id,0))>0 and began>=int(g.get_meta("rift_ready_"+id,0)):
-   g.set_meta("rift_ready_"+id,began+150);handled=g.expedition.interact(id) if g.expedition.between() else g.adventure.interact(id)
+   g.set_meta("rift_ready_"+id,began+150);handled=g.descent.interact(id) if g.mode=="descent" else g.expedition.interact(id) if g.expedition.between() else g.adventure.interact(id)
   send_actor(id,{"type":"interaction_ack","seq":int(data.seq),"accepted":handled,"notice":g.status_label.text,"match_id":g.match_id});return
  if str(data.get("type","")) in ["bg_upgrade","purchase"]:
   var kind=str(data.type);var accepted=false

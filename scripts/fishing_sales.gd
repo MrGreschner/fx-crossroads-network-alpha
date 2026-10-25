@@ -85,7 +85,10 @@ func fish_row(c:Dictionary)->void:
   else:selection.erase(id)
   update_summary())
  fishing.picture(row,str(c.species),Vector2(76,47))
- var info=VBoxContainer.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(info);CARDS.text(info,str(spec.name),16);CARDS.text(info,"%s • %.2f kg • %s%s" % [spec.rarity,float(c.kg),str(c.date)," • Protected" if special else ""],13)
+ var info=VBoxContainer.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(info);CARDS.text(info,str(spec.name),16)
+ var facts=HFlowContainer.new();facts.add_theme_constant_override("h_separation",6);info.add_child(facts)
+ var rarity=CARDS.text(facts,str(spec.rarity),13,Color(CARDS.PALETTE.get(str(spec.rarity),"#d6e7e9")));rarity.name="FishRarity";rarity.autowrap_mode=TextServer.AUTOWRAP_OFF;rarity.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
+ var details=CARDS.text(facts,"• %.2f kg • %s%s" % [float(c.kg),str(c.date)," • Protected" if special else ""],13);details.autowrap_mode=TextServer.AUTOWRAP_OFF;details.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
  var mean=fishing.C.mean_kg(str(c.species))
  CARDS.text(info,("TROPHY SIZE" if fishing.C.is_trophy(c) else "Normal size • Not trophy")+" • %.0f%% of average (%.2f kg)" % [float(c.kg)/maxf(.001,mean)*100,mean],12,Color("#f0d38d"))
  var meter=preload("res://scripts/fish_size_meter.gd").new();meter.percentile=fishing.C.size_percentile(str(c.species),float(c.kg),float(c.get("trophy_rate",.025)));info.add_child(meter)

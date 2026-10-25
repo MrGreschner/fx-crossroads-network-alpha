@@ -1,0 +1,13 @@
+{
+  "id": "mistglass_skater",
+  "name": "Mistglass Skater",
+  "sprite": "mistglass_skater",
+  "health": 180,
+  "speed": 130,
+  "damage": 15,
+  "behaviour": "ranged",
+  "aggro_range": 950,
+  "expansion_only": true,
+  "lore": "A low-slung water strider armoured with river glass; skipping discs rebound from stone and bank walls.",
+  "description": "A low-slung water strider armoured with river glass; skipping discs rebound from stone and bank walls."
+}

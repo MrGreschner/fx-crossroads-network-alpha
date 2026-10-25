@@ -303,7 +303,13 @@
     "ratchet_keeper",
     "spark_scarab",
     "hinge_conjurer",
-    "latch_hound"
+    "latch_hound",
+    "bogpitch_newt",
+    "mireweaver",
+    "mirevein_collector",
+    "mistglass_skater",
+    "undertow_weaver",
+    "sluicewarden"
   ],
   "regions": [
     "grove",

@@ -8,6 +8,7 @@ const FRAMES={
  "walk2":{"region":Rect2(220,664,372,437),"centre":385.0},
  "attack":{"region":Rect2(771,664,420,435),"centre":949.0}}
 static func texture(sprite:String,pose:String)->Texture2D:
+ if sprite in ["ram","cat","book","elder_ram"]:return preload("res://scripts/core_hero_art.gd").texture(sprite,pose)
  if sprite in ["golfer","dawnblade","lumen","elara","echo_dancer","chronicle","hazel_hex"]:
   var pixel_pose="idle" if pose=="0" else "walk1" if pose=="1" else pose
   if pixel_pose in ["idle","walk1","walk2","attack","attack2","special"]:

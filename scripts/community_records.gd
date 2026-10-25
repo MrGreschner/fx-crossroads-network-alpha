@@ -9,6 +9,12 @@ var legacy:Node
 var sync_request:HTTPRequest
 var read_request:HTTPRequest
 var snapshot:Dictionary={}
+var rendered_signature=""
+var view_body:Node
+var navigation_status:Label
+var refresh_button:Button
+var body_status:Label
+var content_updates=0
 var category="heroes"
 var status="Connect to see community records"
 var delay:float=8
@@ -19,6 +25,7 @@ var endpoint=""
 var sync_status=""
 var claims:Array=[]
 var sent_claims:Array=[]
+var sent_extractions:Array=[]
 var refresh_after_sync=false
 var pending_sync=false
 var manual_cooldown=0.0
@@ -40,13 +47,14 @@ func board_notice()->String:
  return "Updated "+last_refresh+" • refreshes every 30 seconds" if not last_refresh.is_empty() else status
 func setup(owner:Node)->void:
  legacy=owner;state();endpoint=preload("res://scripts/brand.gd").insights_http().trim_suffix("/")
- sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=4096;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
+ sync_request=HTTPRequest.new();sync_request.timeout=8;sync_request.body_size_limit=16384;legacy.add_child(sync_request);sync_request.request_completed.connect(synced)
  read_request=HTTPRequest.new();read_request.timeout=8;read_request.body_size_limit=524288;legacy.add_child(read_request);read_request.request_completed.connect(received)
 func state()->Dictionary:
  if not legacy.data.has("community_records"):legacy.data.community_records={"version":1,"solo":0,"coop":0}
  return legacy.data.community_records
 static func valid(v:Variant)->bool:
- if not v is Dictionary or v.size()>4 or v.get("version")!=1:return false
+ if not v is Dictionary or v.size()>5 or v.get("version")!=1:return false
+ if v.has("extractions") and not preload("res://scripts/extraction_ledger.gd").valid(v.extractions):return false
  for key in ["solo","coop"]:
   if not (v.get(key) is int or v.get(key) is float) or not is_finite(float(v[key])) or float(v[key])<0 or float(v[key])>1000000 or float(v[key])!=floor(float(v[key])):return false
  if v.has("rare_week"):
@@ -54,8 +62,9 @@ static func valid(v:Variant)->bool:
   if not r is Dictionary or not r.get("week") is String or r.week.length()!=10 or not FISH.fish().has(r.get("species")) or not (r.get("kg") is int or r.get("kg") is float) or not is_finite(float(r.kg)) or float(r.kg)<=0 or float(r.kg)>float(FISH.fish()[r.species].max_kg)*4+.01:return false
  return true
 func allowed()->bool:return not bool(legacy.data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").progression_blocked() and not legacy.get_tree().root.has_meta("fx_dedicated_server")
-func record_between(amount:int,route:String)->void:
+func record_between(amount:int,route:String,run_id:String="")->void:
  if not allowed() or route not in ["solo","coop"]:return
+ if not run_id.is_empty():preload("res://scripts/extraction_ledger.gd").record(legacy,amount,route,run_id)
  var previous=int(state()[route]);var best=clampi(amount,0,1000000)
  if best>previous or best==previous and best>0:
   preload("res://scripts/named_records.gd").remember_hero(legacy,"between","all",route,best,best>previous)
@@ -88,7 +97,7 @@ func payload()->Dictionary:
   if FISH.is_trophy(entry):trophies.append(entry)
   if weight>0 and rarer(entry,rare):rare=entry
   if weight>float(best.kg):best={"species":id,"kg":weight}
- return {"catch_records":legacy.fishing_records.record_payload(),"record_policy":3,"unofficial":false,"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
+ return {"extractions":preload("res://scripts/extraction_ledger.gd").batch(legacy),"catch_records":legacy.fishing_records.record_payload(),"record_policy":3,"unofficial":false,"claims":claims.slice(-12),"trophies":trophies,"named":preload("res://scripts/named_records.gd").payload(legacy),"rarest_all":rare,"rarest_week":state().get("rare_week",{}) if state().get("rare_week",{}).get("week","")==scores.week else {},"garden_records":legacy.gardening.fair.payload(),"version":1,"profile":scores.profile,"hero_damage":hero_damage,"realm_clears":realm_clears,"fish_all":best,"week":scores.week,"fish_week":{"species":scores.fish_species,"kg":scores.fish},"between":{"solo":int(state().solo),"coop":int(state().coop)}}
 func cloud_identity()->String:
  var account=legacy.get_node("/root/FXAccount")
  return str(account.user.get("id","")) if account.loaded and not account.conflict else ""
@@ -100,7 +109,7 @@ func request_sync(refresh_board=false)->void:
  refresh_after_sync=refresh_after_sync or refresh_board
  if busy:pending_sync=true;return
  var account=legacy.get_node("/root/FXAccount")
- sent_claims=claims.duplicate(true)
+ sent_claims=claims.duplicate(true);sent_extractions=preload("res://scripts/extraction_ledger.gd").batch(legacy).duplicate(true)
  synced_identity=cloud_identity();busy=true;pending_sync=false;delay=120+randf()*15
  sync_status="Syncing your records"+(" as "+str(account.user.username) if not synced_identity.is_empty() else " anonymously")+"…"
  var error=sync_request.request(endpoint+"/community/sync",account.record_headers(),HTTPClient.METHOD_POST,JSON.stringify(payload()))
@@ -134,6 +143,7 @@ func synced(result:int,code:int,_headers:PackedStringArray,body:PackedByteArray)
   for claim in sent_claims:claims.erase(claim)
   var response=JSON.parse_string(body.get_string_from_utf8())
   if response is Dictionary:
+   preload("res://scripts/extraction_ledger.gd").acknowledge(legacy,response.get("extraction_receipts",[]),sent_extractions)
    for text in response.get("records_broken",[]):
     if text is String and text.length()<200:preload("res://scripts/record_toast.gd").show(legacy.game,text)
   generation+=1;read_delay=0
@@ -173,9 +183,37 @@ func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArra
   for row in parsed.get(key,[]):
    if not row is Dictionary or not preload("res://scripts/giant_garden.gd").record_valid(row,"all"):reject_response("Invalid crop response • keeping the last loaded records");return
  snapshot=parsed;stale=false;last_refresh=Time.get_time_string_from_system();status="Connected community • weekly records reset Mondays" if compatible(parsed) else "Older server connected • server update required";redraw()
+func view_signature()->String:
+ # Network status changes never replace the records currently being read.
+ var records=snapshot.duplicate();records.erase("updated_at")
+ return category+":"+JSON.stringify(JSON.parse_string(JSON.stringify(records)))
+func update_chrome()->void:
+ if is_instance_valid(navigation_status):
+  navigation_status.text=board_notice()
+  navigation_status.modulate=Color("#f0ca87") if stale or not snapshot.is_empty() and not compatible(snapshot) else Color("#b7d4d7")
+ if is_instance_valid(refresh_button):
+  refresh_button.text="Syncing…" if busy or reading else "Resync records"
+  refresh_button.disabled=reading or busy
+ if is_instance_valid(body_status):body_status.text=status+(" • "+sync_status if not sync_status.is_empty() else "")
+ for tab in legacy.community_navigation.find_children("RecordsTab_*","Button",true,false):
+  var selected=tab.name=="RecordsTab_"+category;tab.set_pressed_no_signal(selected)
+  var skin=UI.box("#32636c" if selected else "#102b34","#f1cd82" if selected else "#416b74",5,7)
+  tab.add_theme_stylebox_override("normal",skin);tab.add_theme_stylebox_override("pressed",skin)
 func redraw()->void:
- if legacy.page=="community" and legacy.game.menu=="legacy":
-  var position=legacy.profile_scroll.scroll_vertical;legacy.render();legacy.profile_scroll.set_deferred("scroll_vertical",position)
+ if legacy.page!="community" or legacy.game.menu!="legacy":return
+ if not is_instance_valid(view_body) or view_body!=legacy.body:
+  legacy.render();return
+ if rendered_signature!=view_signature():
+  var position=legacy.profile_scroll.scroll_vertical
+  # Construct replacement rows off-tree, then exchange them within one frame.
+  # The panel, pinned tabs, focus and ScrollContainer all retain their identity.
+  var replacement=VBoxContainer.new();build(replacement)
+  for child in legacy.body.get_children():legacy.body.remove_child(child);child.queue_free()
+  for child in replacement.get_children():replacement.remove_child(child);legacy.body.add_child(child)
+  replacement.free();view_body=legacy.body;content_updates+=1
+  legacy.profile_scroll.scroll_vertical=position
+  legacy.profile_scroll.set_deferred("scroll_vertical",position)
+ update_chrome()
 func choose_category(value:String)->void:
  category=value;redraw();legacy.profile_scroll.set_deferred("scroll_vertical",0)
 func build_navigation(parent:Node)->void:
@@ -184,18 +222,19 @@ func build_navigation(parent:Node)->void:
  var col=VBoxContainer.new();col.add_theme_constant_override("separation",7);panel.add_child(col)
  var heading=HBoxContainer.new();col.add_child(heading)
  var title=gui.label(heading,"COMMUNITY RECORDS  /  CHOOSE A BOARD",17);title.add_theme_color_override("font_color",Color("#f2d494"))
- var refresh=gui.button(heading,"Syncing…" if busy or reading else "Resync records",resync);refresh.name="ResyncRecords";refresh.custom_minimum_size=Vector2(155,34);refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.disabled=reading or busy
+ var refresh=gui.button(heading,"Syncing…" if busy or reading else "Resync records",resync);refresh_button=refresh;refresh.name="ResyncRecords";refresh.custom_minimum_size=Vector2(155,34);refresh.size_flags_horizontal=Control.SIZE_SHRINK_END;refresh.disabled=reading or busy
  refresh.tooltip_text="Upload the active profile, then refresh the community boards."
- var notice=gui.label(col,board_notice(),14);notice.name="RecordsSyncStatus";notice.modulate=Color("#f0ca87") if not snapshot.is_empty() and not compatible(snapshot) or stale else Color("#b7d4d7")
+ var notice=gui.label(col,board_notice(),14);navigation_status=notice;notice.custom_minimum_size.y=36;notice.max_lines_visible=2;notice.name="RecordsSyncStatus";notice.modulate=Color("#f0ca87") if not snapshot.is_empty() and not compatible(snapshot) or stale else Color("#b7d4d7")
  var tabs=HFlowContainer.new();tabs.name="RecordsCategoryTabs";tabs.add_theme_constant_override("h_separation",6);tabs.add_theme_constant_override("v_separation",5);col.add_child(tabs)
  for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Ram’s Descent","descent"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
   var tab=gui.button(tabs,entry[0],choose_category.bind(str(entry[1])));tab.name="RecordsTab_"+str(entry[1]);tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size=Vector2(126,36);tab.add_theme_font_size_override("font_size",15)
   var skin=UI.box("#32636c" if category==entry[1] else "#102b34","#f1cd82" if category==entry[1] else "#416b74",5,7)
   tab.add_theme_stylebox_override("normal",skin);tab.add_theme_stylebox_override("pressed",skin)
 func build(parent:Node)->void:
+ view_body=parent;rendered_signature=view_signature()
  var gui=preload("res://scripts/garden_ui.gd")
- gui.label(parent,status+(" • "+sync_status if not sync_status.is_empty() else ""),14)
- gui.label(parent,"Community play records • public game names for cloud accounts",14).tooltip_text="Combined portable-profile high-water records. Repeat uploads do not add totals again. Co-op clears count per profile. These are client-reported, not verified competition scores."
+ body_status=gui.label(parent,status+(" • "+sync_status if not sync_status.is_empty() else ""),14);body_status.custom_minimum_size.y=36;body_status.max_lines_visible=2
+ gui.label(parent,"Community play records • public game names for cloud accounts",14).tooltip_text="Best results use high-water values. Cumulative extractions count each successful run once per account. Co-op hauls count for each participating account. These are client-reported, not verified competition scores."
  if snapshot.is_empty():preload("res://scripts/garden_ui.gd").label(parent,"No community data loaded yet. An internet connection and the matching server update are needed.",19);return
  var clears_parent:Node=parent
  var times_parent:Node=parent
@@ -226,12 +265,18 @@ func build(parent:Node)->void:
  if category=="fish":species_records(parent)
  if category=="fish":gui.label(parent,"Rarest: species rarity first, then its base catalogue catch weight. Fish weight breaks ties within a species. Weekly records reset Monday.",15)
  if category!="between":return
- var expeditions=UI.card(parent,"THE BETWEEN • SINGLE-RUN SHARD RECORDS","Successful extractions only • raw carried shards, before trial bonus")
- for route in ["solo","coop"]:
-  var value=0
-  for row in snapshot.get("between",[]):
-   if row.get("id")==route:value=int(row.get("value",0))
-  preload("res://scripts/garden_ui.gd").label(expeditions,("Solo" if route=="solo" else "Co-op")+" • "+(str(value)+" Waylight Shards" if value>0 else "No successful extraction recorded yet"),20)
+ var expeditions=UI.card(parent,"THE BETWEEN • TOP 10 EXTRACTORS","Cumulative raw shards from successful solo and co-op returns • tracked from v202 • excludes bonuses and failed escapes")
+ var named=snapshot.get("named",{})
+ if not named.has("between_extractors"):
+  gui.label(expeditions,"Deploy the matching server update to load cumulative extractions.",16);return
+ var rows=named.get("between_extractors",[]);var cols=preload("res://scripts/records_hall_ui.gd").columns(expeditions)
+ for i in 10:
+  if i<rows.size():
+   var row=rows[i]
+   gui.label(cols[i/5],"%d. %s • %s shards" % [i+1,str(row.username),String.num(float(row.value),0)],18)
+   gui.label(cols[i/5],"%d successful returns • Solo %s / Co-op %s" % [int(row.get("runs",0)),String.num(float(row.get("solo",0)),0),String.num(float(row.get("coop",0)),0)],14)
+  else:gui.label(cols[i/5],str(i+1)+". No successful returns yet",16)
+
 static func preferred_fish(anonymous:Variant,named:Variant,rarest:bool)->Variant:
  if not named is Dictionary:return anonymous
  if anonymous==null:return named

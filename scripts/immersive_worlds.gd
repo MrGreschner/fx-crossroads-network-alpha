@@ -3,8 +3,12 @@ extends Node
 var grass_art:Array[Texture2D]=[preload("res://scripts/source_art.gd").texture("res://assets/tall_grass_v67_0.svg"),preload("res://scripts/source_art.gd").texture("res://assets/tall_grass_v67_1.svg"),preload("res://scripts/source_art.gd").texture("res://assets/tall_grass_v67_2.svg"),preload("res://scripts/source_art.gd").texture("res://assets/tall_grass_v67_3.svg")]
 var grass_draws:=0
 var floor_geometry:Array=[]
+var floor_bins:Dictionary={}
 var solid_bins:Dictionary={}
 var floor_layers:Array=[]
+var marsh_encounters=preload("res://scripts/lantern_marsh_encounters.gd").new()
+var silver_art=preload("res://scripts/silverfall_art.gd").new()
+var silver_encounters=preload("res://scripts/silverfall_encounters.gd").new()
 var adventure:Node
 var active:=false
 var data:Dictionary={}
@@ -40,8 +44,10 @@ func polygon(p:Array)->PackedVector2Array:
  for point in p:points.append(v(point))
  return points
 func setup(id:String)->void:
+ marsh_encounters.world=self;marsh_encounters.reset()
+ silver_art.world=self;silver_art.reset();silver_encounters.world=self;silver_encounters.reset()
  for layer in floor_layers:layer.queue_free()
- floor_layers.clear();floor_geometry.clear();solid_bins.clear();floor_stamps.clear()
+ floor_layers.clear();floor_geometry.clear();floor_bins.clear();solid_bins.clear();floor_stamps.clear()
  arrow_route.clear();arrow_until=0;guide_uid=-1;guide_ready=false
  active=id in IDS;data={};initialized=false;stage=0;boss_live=false;done=false;clock=0;routes.clear();beams.clear();attacks.clear();used.clear();boat.clear();grid=null
  if not active:return
@@ -53,6 +59,12 @@ func setup(id:String)->void:
  textures.path=load("res://assets/path.png")
  for floor in data.floors:
   floor_geometry.append({"bounds":floor_bounds(floor),"polygon":polygon(floor.poly) if floor.has("poly") else PackedVector2Array(),"rect":floor.has("rect")})
+  var bounds:Rect2=floor_bounds(floor)
+  for x in range(floori(bounds.position.x/256),floori(bounds.end.x/256)+1):
+   for y in range(floori(bounds.position.y/256),floori(bounds.end.y/256)+1):
+    var key=Vector2i(x,y)
+    if not floor_bins.has(key):floor_bins[key]=[]
+    floor_bins[key].append(floor_geometry.size()-1)
  for prop in data.get("props",[]):
   if float(prop.solid)<=0:continue
   var point:=v(prop.pos);var radius:=float(prop.solid)+16
@@ -68,7 +80,8 @@ func rebuild_grid()->void:
  preload("res://scripts/navigation_cache.gd").populate(grid,"immersive_"+str(data.id)+"_"+str(stage),JSON.stringify(data),func(point):return not can_stand(point))
  routes.clear();arrow_until=0;guide_uid=-1
 func floor_at(point:Vector2)->bool:
- for floor in floor_geometry:
+ for index in floor_bins.get(Vector2i(floori(point.x/256),floori(point.y/256)),[]):
+  var floor:Dictionary=floor_geometry[index]
   if not floor.bounds.has_point(point):continue
   if floor.rect:
    if floor.bounds.grow(-16).has_point(point):return true
@@ -106,6 +119,12 @@ func spawn(kind:String,point:Vector2,boss:bool=false)->Dictionary:
  if boss:hp=float((adventure.game.regions[data.id] if adventure.arcade else adventure.game.region).get("boss_health",1000))
  adventure.spawn(kind,point,hp,boss)
  var enemy:Dictionary=adventure.foes()[-1];enemy.immersive=true;enemy.skill_timer=1.5;enemy.attack_timer=1.0;enemy.imm_turn=0;enemy.imm_home=a(point)
+ if str(data.id)=="silverfall":
+  if not boss and kind not in silver_encounters.TYPES:enemy.hp*=1.35;enemy.max_hp=enemy.hp
+  if kind=="sluicewarden":enemy.hit_radius=30
+ if str(data.id)=="lantern_marsh":
+  if not boss and kind not in marsh_encounters.TYPES:enemy.hp*=1.18;enemy.max_hp=enemy.hp
+  if kind=="mirevein_collector":enemy.hit_radius=30
  return enemy
 func initialize()->void:
  initialized=true
@@ -170,7 +189,7 @@ func shoot(enemy:Dictionary,target:Vector2,count:int=1,style:String="pellet")->v
  if str(enemy.get("type",""))=="archer":
   adventure.combat.launch_projectile("enemy",enemy.pos,(target-enemy.pos).normalized(),{"range":700,"speed":float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("shot_speed",275)),"thorn_arrow":true,"color":"#9ecb75"},float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("damage",9)))
   return
- var aim:Vector2=(target-enemy.pos).normalized();var damage:float=float(defs().get(enemy.type,{}).get("damage",10))
+ var aim:Vector2=(target-enemy.pos).normalized();var damage:float=float(defs().get(enemy.type,{}).get("damage",10))*(1.2 if active and str(data.get("id",""))=="silverfall" else 1.0)
  for n in count:adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated((n-(count-1)*.5)*.23),{"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),"Projectile"),"range":850,"speed":255,"amplitude":24,"wavelength":150,"color":"#efd49a" if str(enemy.get("source_realm",data.get("id","")))=="honeyglass" else "#afe5db" if str(enemy.get("source_realm",data.get("id","")))=="silverfall" else "#deaed0"},damage,style)
 func skill(enemy:Dictionary,target:Vector2)->void:
  var turn:=int(enemy.imm_turn);enemy.imm_turn=turn+1
@@ -199,10 +218,12 @@ func skill(enemy:Dictionary,target:Vector2)->void:
     for n in 3:warning(enemy,target+Vector2((n-1)*100,0),"amber",75,17,1+n*.15)
    else:shoot(enemy,target,5)
   "bellroot":
+   if active and str(data.id)=="lantern_marsh":marsh_encounters.boss_skill(enemy,target,turn);return
    if turn%2==0:warning(enemy,target,"root",150,26,1.2)
    else:
     for n in 10:shoot(enemy,enemy.pos+Vector2.from_angle(TAU*n/10),1,"weaving")
   "crowned_torrent":
+   if active and str(data.id)=="silverfall":silver_encounters.boss_skill(enemy,target,turn);return
    if turn%3==0:warning(enemy,advance(enemy.pos,(target-enemy.pos).normalized()*380),"dash",72,30,1)
    elif turn%3==1:
     for n in 3:warning(enemy,target+Vector2((n-1)*140,0),"water",90,24,1+n*.2)
@@ -254,15 +275,17 @@ func step(delta:float)->void:
   if not bool(enemy.get("immersive",false)):continue
   if str(enemy.type)=="royal_nurse":step_nurse(enemy,delta);continue
   if not bool(enemy.boss):defenders+=1
+  if marsh_encounters.step_enemy(enemy,delta) or silver_encounters.step_enemy(enemy,delta):continue
   if adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
   var target:=target_for(enemy);var distance:float=enemy.pos.distance_to(target)
   if distance>1000:continue
-  var definition:Dictionary=defs().get(enemy.type,{})
+  var definition:Dictionary=defs().get(enemy.type,{}).duplicate()
+  if str(data.id)=="silverfall":definition.speed=float(definition.get("speed",80))*1.15;definition.damage=float(definition.get("damage",12))*1.2
   var ranged:bool=str(definition.get("behaviour","")) in ["ranged","homing","dual_ranged","burst_ranged"]
   var movement:Vector2=direction(enemy,target,ranged)*float(definition.get("speed",80))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))*delta
   if distance>45 or ranged:enemy.pos=advance(enemy.pos,movement)
   enemy.skill_timer=float(enemy.skill_timer)-delta;enemy.attack_timer=float(enemy.attack_timer)-delta
-  if float(enemy.skill_timer)<=0 and adventure.combat.path_clear(enemy.pos,target):enemy.skill_timer=2.3 if enemy.boss else 3.8;skill(enemy,target)
+  if float(enemy.skill_timer)<=0 and adventure.combat.path_clear(enemy.pos,target):enemy.skill_timer=(1.9 if str(data.id) in ["lantern_marsh","silverfall"] else 2.3) if enemy.boss else 3.8;skill(enemy,target)
   if not ranged and distance<65 and float(enemy.attack_timer)<=0:
    enemy.attack_timer=1.15
    var id:=nearest(enemy.pos)
@@ -271,7 +294,7 @@ func step(delta:float)->void:
   stage=1;ensure_level(6);rebuild_grid();spawn(str(data.boss_type),v(data.exit),true);boss_live=true
   if not adventure.arcade:adventure.game.boss_spawned=true
   adventure.announce(str(data.stages[1]))
- step_beams(delta);step_attacks(delta)
+ step_beams(delta);step_attacks(delta);marsh_encounters.step(delta);silver_encounters.step(delta)
  # Marsh thickets contain pulsing spore pools; warning is visible before every pulse.
  if data.id=="lantern_marsh" and fmod(clock,4)<1.2:
   for patch in data.mud:
@@ -312,7 +335,7 @@ func on_defeat(enemy:Dictionary)->bool:
  if not active or not bool(enemy.get("immersive",false)):return false
  routes.erase(str(enemy.uid))
  if not bool(enemy.boss):return false
- done=true;boss_live=false;attacks.clear();beams.clear()
+ done=true;boss_live=false;attacks.clear();beams.clear();marsh_encounters.reset();silver_encounters.reset()
  if not adventure.arcade:adventure.game.boss_defeated=true
  adventure.announce("Guardian defeated • E / Interact at the glowing exit. Optional treasures can still be explored.")
  return true
@@ -357,15 +380,20 @@ func step_boat(delta:float)->void:
    boat.boarding-=delta
    if float(boat.boarding)<=0:boat.moving=true;boat.progress=0.0
   return
- var start:=v(data.raft.docks[int(boat.dock)]);var end:=v(data.raft.docks[1-int(boat.dock)]);var distance:=start.distance_to(end)
- boat.progress=minf(1,float(boat.progress)+float(data.raft.speed)*delta/distance);boat.pos=a(start.lerp(end,float(boat.progress)))
+ var start:=v(data.raft.docks[int(boat.dock)]);var end:=v(data.raft.docks[1-int(boat.dock)]);var path:Array=data.raft.get("route",[a(start),a(end)]).duplicate(true)
+ if int(boat.dock)==1:path.reverse()
+ var distance=0.0
+ for n in range(1,path.size()):distance+=v(path[n-1]).distance_to(v(path[n]))
+ boat.progress=minf(1,float(boat.progress)+float(data.raft.speed)*delta/maxf(1,distance));boat.pos=a(silver_art.route_point(path,distance*float(boat.progress)).pos)
  for i in boat.passengers.size():adventure.combat.chain.move_owner(str(boat.passengers[i]),v(boat.pos)+Vector2((i%2)*35-17,(i/2)*30-15))
  if float(boat.progress)>=1:
   boat.dock=1-int(boat.dock);boat.moving=false
   for i in boat.passengers.size():adventure.combat.chain.move_owner(str(boat.passengers[i]),end+Vector2((i%2)*35-17,45+(i/2)*30))
   boat.passengers=[];adventure.announce("Silverfall crossing complete • explore the shore paths or call the raft from either jetty.")
-func snapshot()->Dictionary:return {"initialized":initialized,"stage":stage,"boss_live":boss_live,"done":done,"clock":clock,"beams":beams,"attacks":attacks,"used":used,"boat":boat}
+func snapshot()->Dictionary:return {"initialized":initialized,"stage":stage,"boss_live":boss_live,"done":done,"clock":clock,"beams":beams,"attacks":attacks,"used":used,"boat":boat,"marsh_encounters":marsh_encounters.snapshot(),"silver_encounters":silver_encounters.snapshot()}
 func receive(s:Dictionary)->void:
+ marsh_encounters.receive(s.get("marsh_encounters",{}))
+ silver_encounters.receive(s.get("silver_encounters",{}))
  var old:=stage;initialized=bool(s.get("initialized",false));stage=int(s.get("stage",0));boss_live=bool(s.get("boss_live",false));done=bool(s.get("done",false));clock=float(s.get("clock",0));beams=s.get("beams",[]);attacks=s.get("attacks",[]);used=s.get("used",{});boat=s.get("boat",{})
  if active and stage!=old:rebuild_grid()
 func floor_bounds(floor:Dictionary)->Rect2:
@@ -376,6 +404,11 @@ func floor_bounds(floor:Dictionary)->Rect2:
 func visible(bounds:Rect2,camera:Vector2)->bool:return bounds.intersects(Rect2(camera-Vector2(300,400),Vector2(1900,1250)))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
+ if data.id=="silverfall":
+  if floor_layers.is_empty():
+   var background=preload("res://scripts/retained_floor.gd").new();background.source=self;background.background=true;canvas.add_child(background);floor_layers.append(background)
+   var ground=preload("res://scripts/silverfall_ground.gd").new();ground.source=self;canvas.add_child(ground);floor_layers.append(ground)
+  silver_art.draw_world(canvas,camera);return
  var font:Font=ThemeDB.fallback_font
  if adventure.arcade and adventure.game.spectating():draw_water(canvas,camera)
  if floor_layers.is_empty():
@@ -386,6 +419,7 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   layer.position=-camera;layer.visible=not (adventure.arcade and adventure.game.spectating()) and (layer.background or visible(floor_bounds(layer.floor),camera))
  if adventure.arcade and adventure.game.spectating():
   for floor in data.floors:draw_floor(canvas,floor)
+ if data.id=="silverfall":silver_art.draw_world(canvas,camera);return
  for patch in data.mud:
   var bounds:=r(patch)
   if not visible(bounds,camera):continue
@@ -439,6 +473,7 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
     for x in range(int(clipped.position.x),int(clipped.end.x),36):canvas.draw_line(Vector2(x,clipped.position.y)-camera,Vector2(x,clipped.end.y)-camera,Color("#685c4d"),2)
     for y in [bounds.position.y+8,bounds.end.y-8]:canvas.draw_line(Vector2(clipped.position.x,y)-camera,Vector2(clipped.end.x,y)-camera,Color("#d7b388"),6)
  if data.id=="honeyglass":draw_conservatory(canvas,camera)
+ marsh_encounters.draw_ground(canvas,camera)
  # Draw trunks here, canopies later above actors.
  for prop in data.props:
   var p:=v(prop.pos)-camera;var scale:float=float(prop.scale)
@@ -493,6 +528,8 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
  if not active:
   if adventure.between_guardians():draw_attacks(canvas,camera)
   return
+ if data.id=="silverfall":
+  draw_attacks(canvas,camera);silver_encounters.draw(canvas,camera);silver_art.draw_on(canvas,camera);return
  # Texture batches preserve concealment with a readable gap near players.
  grass_draws=0
  var players:Array=adventure.points().values()
@@ -518,7 +555,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   if not warned:
    canvas.draw_rect(Rect2(point-Vector2(radius,-0)+Vector2(0,-600),Vector2(radius*2,600)),Color(1,.9,.52,.13))
    for n in 7:canvas.draw_line(point+Vector2((n-3)*radius/4,-600),point+Vector2((n-3)*radius/4,0),Color(1,.96,.69,.23),4)
- draw_attacks(canvas,camera)
+ draw_attacks(canvas,camera);marsh_encounters.draw(canvas,camera)
  # Tree canopies fade near players so navigation remains readable under giant trees.
  for prop in data.props:
   if str(prop.kind) not in ["grand_tree","moss_tree"]:continue
@@ -537,7 +574,7 @@ func draw_hud(canvas:Node2D)->void:
  for enemy in adventure.foes():
   if bool(enemy.get("immersive",false)) and not bool(enemy.boss) and str(enemy.type)!="royal_nurse":count+=1
  var text:= "Guardian defeated • interact at the exit" if done else str(data.stages[mini(stage,data.stages.size()-1)])+ (" • "+str(count)+" defenders left" if stage==0 else "")
- canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Orchard canopies conceal patrols. Golden meadows are open; move out of warning sunbeams!","lantern_marsh":"Black water blocks travel. Mud slows you; glowing spore pools pulse. E / Interact: discoveries.","silverfall":"E / Interact: treehouse doors, discoveries, board or call the raft. Both shore routes connect.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
+ canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Orchard canopies conceal patrols. Golden meadows are open; move out of warning sunbeams!","lantern_marsh":"Dodge to shed mosquitoes. Stop shooting into an open maw. Silk and mud slow; stomp warnings stun.","silverfall":"E: refuges, discoveries and ferry. Follow stone spans or the shore; hidden coves reward exploration.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
  canvas.draw_string(font,Vector2(33,top+43),str(tips.get(data.id,"Explore")),HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),14,Color("#b9dccc"))
  # Stable objective selection, route distance and a doorway prompt for separated interiors.
  var origin:Vector2=adventure.points().get(adventure.game.my_id if adventure.arcade else "solo",Vector2.ZERO)
@@ -615,12 +652,31 @@ func advance_guide(origin:Vector2)->void:
   if origin.distance_to(p)>=150:break
 
 func draw_floor(canvas:Node2D,floor:Dictionary,batched:bool=false)->void:
+ if data.id=="silverfall":silver_art.ground(canvas,floor);return
+ # Clip connecting paths at named banks so planks and borders do not cross arenas.
+ # This is retained geometry; collision continues to use the connected authored union.
+ if data.id=="lantern_marsh" and str(floor.name).is_empty() and not bool(floor.get("marsh_clipped",false)):
+  var pieces:Array=[floor_bounds(floor)]
+  for bank in data.floors:
+   if str(bank.name).is_empty():continue
+   var cut:Rect2=floor_bounds(bank);var next:Array=[]
+   for piece in pieces:
+    var overlap:Rect2=piece.intersection(cut)
+    if not overlap.has_area():next.append(piece);continue
+    for candidate in [Rect2(piece.position,Vector2(piece.size.x,overlap.position.y-piece.position.y)),Rect2(Vector2(piece.position.x,overlap.end.y),Vector2(piece.size.x,piece.end.y-overlap.end.y)),Rect2(Vector2(piece.position.x,overlap.position.y),Vector2(overlap.position.x-piece.position.x,overlap.size.y)),Rect2(Vector2(overlap.end.x,overlap.position.y),Vector2(piece.end.x-overlap.end.x,overlap.size.y))]:
+     if candidate.has_area():next.append(candidate)
+   pieces=next
+  for piece in pieces:
+   var clipped:Dictionary=floor.duplicate();clipped.rect=[piece.position.x,piece.position.y,piece.size.x,piece.size.y];clipped.marsh_clipped=true;draw_floor(canvas,clipped,batched)
+  return
  var camera:=Vector2.ZERO
  var font:=ThemeDB.fallback_font
  var bounds:Rect2=floor_bounds(floor)
  var kind:=str(floor.kind);var tint:=Color("#baab77") if kind=="glass" else Color("#598568") if kind in ["river","petal"] else Color("#658359") if kind=="meadow" else Color("#82795f") if kind=="marsh" else Color("#ab946e")
  if data.id=="honeyglass" and kind=="glass" and floor.has("poly"):
   tint=Color({"Prism Nursery":"#a4b8a2","Secret Nectar Cell":"#c4ab86","Glass Orchard":"#aab87d","Honeydew Junction":"#c0b775"}.get(str(floor.name),"#baab77"))
+ if data.id=="lantern_marsh" and kind=="marsh":tint=Color("#61745b")
+ if data.id=="lantern_marsh" and kind=="boardwalk":tint=Color("#9b8863")
  if data.id=="sunfield" and kind=="meadow":tint=Color("#a2a45c")
  if data.id=="petalbrook" and kind=="petal":tint=Color("#72937b")
  if floor.has("poly"):
@@ -660,6 +716,15 @@ func draw_floor(canvas:Node2D,floor:Dictionary,batched:bool=false)->void:
     for y in range(top,mini(int(bounds.end.y),int(bounds.end.y)),128):
      var clipped:=bounds.intersection(Rect2(x,y,128,128))
      if clipped.has_area():canvas.draw_texture_rect_region(textures.floor,Rect2(clipped.position-camera,clipped.size),Rect2(Vector2.ZERO,Vector2(64,64)),Color(tint,.23))
+ if data.id=="lantern_marsh" and kind=="marsh":
+  canvas.draw_texture_rect(marsh_encounters.texture("marsh_ground"),bounds,true,Color(1,1,1,.28))
+  if not str(floor.name).is_empty():
+   # Shaded reed banks and small corner root fans, retained with the terrain.
+   for y in [bounds.position.y+6,bounds.end.y-18]:canvas.draw_rect(Rect2(bounds.position.x+6,y,bounds.size.x-12,12),Color(.16,.3,.26,.25))
+   for corner in [bounds.position+Vector2(40,65),bounds.end-Vector2(65,45)]:
+    for n in 5:
+     var root_end=corner+Vector2(36+n*13,sin(n*1.4)*20+10)
+     canvas.draw_line(corner,root_end,Color("#4b5b42"),7,true);canvas.draw_line(corner+Vector2(0,-2),root_end+Vector2(0,-2),Color("#87926c"),2,true)
  if kind=="log":
   var p:=bounds.position-camera
   var wide:=bounds.size.x
@@ -719,6 +784,7 @@ func draw_floor(canvas:Node2D,floor:Dictionary,batched:bool=false)->void:
     if not floor.has("poly") or Geometry2D.is_point_in_polygon(Vector2(x,y),polygon(floor.poly)):canvas.draw_circle(Vector2(x,y)-camera,2,Color(tint.lightened(.18),.6))
 
 func draw_water(canvas:Node2D,camera:Vector2)->void:
+ if data.id=="silverfall":silver_art.water(canvas,camera);return
  canvas.draw_rect(Rect2(-camera,v(data.size)),Color(data.background))
  # Flowing water underneath the connected route network.
  if data.id in ["silverfall","lantern_marsh"]:

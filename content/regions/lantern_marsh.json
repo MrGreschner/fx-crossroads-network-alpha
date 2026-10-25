@@ -8,13 +8,13 @@
   "terrain": "marsh_floor",
   "scene": "res://scenes/realms/lantern_marsh.tscn",
   "boss_sprite": "bellroot",
-  "boss_health": 850,
+  "boss_health": 1450,
   "xp_per_level": 4,
   "boss_secondary": "sporeburst",
   "expansion": "marsh",
-  "difficulty_label": "Hard: explosive wisps and timed traps",
+  "difficulty_label": "Hard: mire snares, roaming elite and Bellroot",
   "immersive": true,
   "boss_enemy": "bellroot",
-  "description": "Explore the raised banks; black water is impassable, mud slows you. Optional treasures reward exploration; exit unlocks after its guardian falls.",
+  "description": "A hard step beyond the challenging realms. Lantern-lit crossings link haunted banks: newts spit slowing peat, Mireweavers snare lanes and the roaming Collector steals projectiles and health. Defeat every patrol, then Bellroot to open the exit.",
   "difficulty_tier": "hard"
 }

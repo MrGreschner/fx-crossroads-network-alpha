@@ -1,0 +1,13 @@
+{
+  "id": "undertow_weaver",
+  "name": "Undertow Weaver",
+  "sprite": "undertow_weaver",
+  "health": 205,
+  "speed": 100,
+  "damage": 18,
+  "behaviour": "ranged",
+  "aggro_range": 950,
+  "expansion_only": true,
+  "lore": "A fan-tailed river spirit weaving visible crosscurrents. Its three staggered upwellings drag and slow unwary travellers.",
+  "description": "A fan-tailed river spirit weaving visible crosscurrents. Its three staggered upwellings drag and slow unwary travellers."
+}

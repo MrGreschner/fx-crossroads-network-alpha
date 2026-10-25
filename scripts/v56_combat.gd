@@ -32,6 +32,7 @@ func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colo
  if combat.v98.catch_shot(start,finish,shot_owner):return true
  if combat.party_heroes.catch_shot(start,finish,shot_owner):return true
  if not combat.adventure.authoritative():return false
+ if combat.adventure.immersive.marsh_encounters.catch_shot(start,finish,shot_owner,moving):return true
  if moving and combat.adventure.expansion.catch_shot(start,finish,shot_owner,amount,colour,appearance):return true
  if combat.release_heroes.catch_shot(start,finish,shot_owner):return true
  if moving and combat.v75.catch_shot(start,finish,shot_owner,amount,colour):return true
@@ -53,6 +54,7 @@ func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colo
  return catch_intake(start,finish,shot_owner,amount,colour)
 func catch_travelling(start:Vector2,finish:Vector2,source:String,amount:float,colour:String,appearance:Dictionary={}) -> bool:
  if not combat.adventure.authoritative():return false
+ if combat.adventure.immersive.marsh_encounters.catch_shot(start,finish,source):return true
  if combat.adventure.expansion.catch_shot(start,finish,source,amount,colour,appearance):return true
  return catch_intake(start,finish,source,amount,colour)
 func catch_intake(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colour:String)->bool:

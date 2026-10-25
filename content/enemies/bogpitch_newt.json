@@ -1,0 +1,13 @@
+{
+  "id": "bogpitch_newt",
+  "name": "Bogpitch Newt",
+  "sprite": "bogpitch_newt",
+  "health": 165,
+  "speed": 104,
+  "damage": 14,
+  "behaviour": "ranged",
+  "aggro_range": 950,
+  "expansion_only": true,
+  "description": "A bog-dwelling newt that spits sticky peat in a three-shot fan. Peat splashes leave short-lived slowing puddles.",
+  "lore": "A bog-dwelling newt that spits sticky peat in a three-shot fan. Peat splashes leave short-lived slowing puddles."
+}

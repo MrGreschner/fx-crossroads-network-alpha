@@ -82,7 +82,7 @@ func settle(won:bool,carried:int,ring:int,guardian:bool,events:int,trial:Diction
   var bonus=trial_bonus(carried,float(trial.get("seconds",0))) if complete else 0
   var earned=(carried if won else floori(carried*.5))+bonus;state().shards=mini(1000000,int(state().shards)+earned)
   if won:
-   legacy.community.record_between(carried,"coop" if ticket.has("coop") else "solo")
+   legacy.community.record_between(carried,"coop" if ticket.has("coop") else "solo",str(ticket.id))
   if won:state().best_ring=maxi(int(state().best_ring),ring);state().best_extraction=maxi(int(state().best_extraction),carried)
   if won and carried>=20:state().expeditions=mini(1000000,int(state().expeditions)+1)
   text="Banked %d Waylight Shards%s." % [earned,"" if won else " (half of your haul)"]

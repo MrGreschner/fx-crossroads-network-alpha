@@ -1,0 +1,1282 @@
+{
+  "version": 203,
+  "enemies": {
+    "ds_nibbler": {
+      "id": "ds_nibbler",
+      "name": "Shale Nibbler",
+      "form": "nibbler",
+      "role": "flanker",
+      "health": 38,
+      "speed": 108,
+      "damage": 7.0,
+      "attacks": [
+        "bite"
+      ],
+      "color": "#b69786",
+      "unlock": 1,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_glimmerwing": {
+      "id": "ds_glimmerwing",
+      "name": "Glimmerwing",
+      "form": "glimmerwing",
+      "role": "ranged",
+      "health": 32,
+      "speed": 90,
+      "damage": 7.4,
+      "attacks": [
+        "bolt",
+        "charge"
+      ],
+      "color": "#91b9de",
+      "unlock": 1,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_ironback": {
+      "id": "ds_ironback",
+      "name": "Ironback Beetle",
+      "form": "ironback",
+      "role": "melee",
+      "health": 68,
+      "speed": 64,
+      "damage": 7.8,
+      "attacks": [
+        "slam",
+        "bite"
+      ],
+      "color": "#bd8d52",
+      "unlock": 1,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_sneak": {
+      "id": "ds_sneak",
+      "name": "Wickpinch Sneak",
+      "form": "sneak",
+      "role": "thief",
+      "health": 48,
+      "speed": 120,
+      "damage": 8.2,
+      "attacks": [
+        "steal",
+        "bite"
+      ],
+      "color": "#929eae",
+      "unlock": 3,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_mender": {
+      "id": "ds_mender",
+      "name": "Mossmender",
+      "form": "mender",
+      "role": "healer",
+      "health": 55,
+      "speed": 62,
+      "damage": 8.6,
+      "attacks": [
+        "heal",
+        "spores"
+      ],
+      "color": "#9cae68",
+      "unlock": 6,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_larva": {
+      "id": "ds_larva",
+      "name": "Chime Larva",
+      "form": "larva",
+      "role": "ranged",
+      "health": 48,
+      "speed": 74,
+      "damage": 9.0,
+      "attacks": [
+        "fan",
+        "bolt"
+      ],
+      "color": "#b6a2d0",
+      "unlock": 9,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_caller": {
+      "id": "ds_caller",
+      "name": "Hollow Caller",
+      "form": "caller",
+      "role": "summoner",
+      "health": 64,
+      "speed": 65,
+      "damage": 9.4,
+      "attacks": [
+        "summon",
+        "bolt"
+      ],
+      "color": "#91b8b1",
+      "unlock": 12,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_brute": {
+      "id": "ds_brute",
+      "name": "Basalt Brute",
+      "form": "brute",
+      "role": "berserker",
+      "health": 105,
+      "speed": 68,
+      "damage": 9.8,
+      "attacks": [
+        "sweep",
+        "slam"
+      ],
+      "color": "#b69c86",
+      "unlock": 15,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_crab": {
+      "id": "ds_crab",
+      "name": "Flintclaw Crab",
+      "form": "crab",
+      "role": "melee",
+      "health": 78,
+      "speed": 70,
+      "damage": 10.2,
+      "attacks": [
+        "pincer",
+        "sweep"
+      ],
+      "color": "#b88e7c",
+      "unlock": 18,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_slug": {
+      "id": "ds_slug",
+      "name": "Glassbelly Slug",
+      "form": "slug",
+      "role": "ranged",
+      "health": 72,
+      "speed": 48,
+      "damage": 10.6,
+      "attacks": [
+        "spores",
+        "trail"
+      ],
+      "color": "#8dbab0",
+      "unlock": 21,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_spider": {
+      "id": "ds_spider",
+      "name": "Threadvault Spider",
+      "form": "spider",
+      "role": "ranged",
+      "health": 63,
+      "speed": 101,
+      "damage": 11.0,
+      "attacks": [
+        "web",
+        "pincer"
+      ],
+      "color": "#b58ea9",
+      "unlock": 24,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_scorpion": {
+      "id": "ds_scorpion",
+      "name": "Coppersting",
+      "form": "scorpion",
+      "role": "flanker",
+      "health": 82,
+      "speed": 93,
+      "damage": 11.4,
+      "attacks": [
+        "sting",
+        "fan"
+      ],
+      "color": "#ba9a63",
+      "unlock": 27,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_mole": {
+      "id": "ds_mole",
+      "name": "Tunnelfist",
+      "form": "mole",
+      "role": "burrower",
+      "health": 95,
+      "speed": 82,
+      "damage": 11.8,
+      "attacks": [
+        "burrow",
+        "slam"
+      ],
+      "color": "#a19486",
+      "unlock": 30,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_salamander": {
+      "id": "ds_salamander",
+      "name": "Cinder Newt",
+      "form": "salamander",
+      "role": "flanker",
+      "health": 76,
+      "speed": 105,
+      "damage": 12.2,
+      "attacks": [
+        "trail",
+        "fan"
+      ],
+      "color": "#d2946a",
+      "unlock": 33,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_jelly": {
+      "id": "ds_jelly",
+      "name": "Lumen Jelly",
+      "form": "jelly",
+      "role": "ranged",
+      "health": 62,
+      "speed": 69,
+      "damage": 12.600000000000001,
+      "attacks": [
+        "pulse",
+        "drain"
+      ],
+      "color": "#91b7d8",
+      "unlock": 36,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_snail": {
+      "id": "ds_snail",
+      "name": "Vaultshell Snail",
+      "form": "snail",
+      "role": "shield",
+      "health": 142,
+      "speed": 40,
+      "damage": 13.0,
+      "attacks": [
+        "ward",
+        "bolt"
+      ],
+      "color": "#a49cba",
+      "unlock": 39,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_mimic": {
+      "id": "ds_mimic",
+      "name": "Orebox Mimic",
+      "form": "mimic",
+      "role": "ambush",
+      "health": 117,
+      "speed": 60,
+      "damage": 13.4,
+      "attacks": [
+        "bite",
+        "chain"
+      ],
+      "color": "#ac8b65",
+      "unlock": 42,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_rootling": {
+      "id": "ds_rootling",
+      "name": "Rootgrip",
+      "form": "rootling",
+      "role": "melee",
+      "health": 110,
+      "speed": 72,
+      "damage": 13.8,
+      "attacks": [
+        "prison",
+        "sweep"
+      ],
+      "color": "#8f9d72",
+      "unlock": 45,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_urchin": {
+      "id": "ds_urchin",
+      "name": "Prism Urchin",
+      "form": "urchin",
+      "role": "ranged",
+      "health": 96,
+      "speed": 44,
+      "damage": 14.2,
+      "attacks": [
+        "burst",
+        "ring"
+      ],
+      "color": "#a2b8ce",
+      "unlock": 48,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_shark": {
+      "id": "ds_shark",
+      "name": "Gravelmaw",
+      "form": "shark",
+      "role": "burrower",
+      "health": 128,
+      "speed": 120,
+      "damage": 14.600000000000001,
+      "attacks": [
+        "burrow",
+        "charge"
+      ],
+      "color": "#8d9fa7",
+      "unlock": 51,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_bell": {
+      "id": "ds_bell",
+      "name": "Mourning Bell",
+      "form": "bell",
+      "role": "ranged",
+      "health": 96,
+      "speed": 61,
+      "damage": 15.0,
+      "attacks": [
+        "pulse",
+        "pull"
+      ],
+      "color": "#b8ad79",
+      "unlock": 54,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_wisp": {
+      "id": "ds_wisp",
+      "name": "Pitch Wisp",
+      "form": "wisp",
+      "role": "ranged",
+      "health": 72,
+      "speed": 110,
+      "damage": 15.4,
+      "attacks": [
+        "drain",
+        "spores"
+      ],
+      "color": "#a78cbe",
+      "unlock": 57,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_tortoise": {
+      "id": "ds_tortoise",
+      "name": "Ironkiln Tortoise",
+      "form": "tortoise",
+      "role": "shield",
+      "health": 175,
+      "speed": 40,
+      "damage": 15.8,
+      "attacks": [
+        "ward",
+        "firewheel"
+      ],
+      "color": "#ad8267",
+      "unlock": 60,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_mantis": {
+      "id": "ds_mantis",
+      "name": "Shardblade Mantis",
+      "form": "mantis",
+      "role": "flanker",
+      "health": 109,
+      "speed": 116,
+      "damage": 16.200000000000003,
+      "attacks": [
+        "sweep",
+        "boomerang"
+      ],
+      "color": "#86aaa1",
+      "unlock": 63,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_owl": {
+      "id": "ds_owl",
+      "name": "Blindstone Owl",
+      "form": "owl",
+      "role": "ranged",
+      "health": 91,
+      "speed": 92,
+      "damage": 16.6,
+      "attacks": [
+        "volley",
+        "beam"
+      ],
+      "color": "#b7ada3",
+      "unlock": 66,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_hydra": {
+      "id": "ds_hydra",
+      "name": "Splitneck Wyrm",
+      "form": "hydra",
+      "role": "ranged",
+      "health": 154,
+      "speed": 67,
+      "damage": 17.0,
+      "attacks": [
+        "fan",
+        "pincer",
+        "heal"
+      ],
+      "color": "#839e97",
+      "unlock": 69,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_leech": {
+      "id": "ds_leech",
+      "name": "Caveheart Leech",
+      "form": "leech",
+      "role": "flanker",
+      "health": 100,
+      "speed": 102,
+      "damage": 17.4,
+      "attacks": [
+        "drain",
+        "bite"
+      ],
+      "color": "#ac7c92",
+      "unlock": 72,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_drake": {
+      "id": "ds_drake",
+      "name": "Sootwing Drake",
+      "form": "drake",
+      "role": "ranged",
+      "health": 172,
+      "speed": 80,
+      "damage": 17.8,
+      "attacks": [
+        "fan",
+        "charge",
+        "firewheel"
+      ],
+      "color": "#b08c76",
+      "unlock": 75,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_totem": {
+      "id": "ds_totem",
+      "name": "Fault Totem",
+      "form": "totem",
+      "role": "summoner",
+      "health": 170,
+      "speed": 42,
+      "damage": 18.200000000000003,
+      "attacks": [
+        "summon",
+        "quake",
+        "beam"
+      ],
+      "color": "#9ba2a9",
+      "unlock": 78,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_angel": {
+      "id": "ds_angel",
+      "name": "The Veinless",
+      "form": "angel",
+      "role": "ranged",
+      "health": 165,
+      "speed": 85,
+      "damage": 18.6,
+      "attacks": [
+        "prison",
+        "meteor",
+        "pull"
+      ],
+      "color": "#b6a8c3",
+      "unlock": 81,
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        128,
+        160
+      ],
+      "hit_radius": 24
+    },
+    "ds_mid_01": {
+      "id": "ds_mid_01",
+      "name": "Cragjaw Foreman",
+      "form": "foreman",
+      "role": "guardian",
+      "health": 340,
+      "speed": 75,
+      "damage": 13.0,
+      "attacks": [
+        "slam",
+        "summon",
+        "sweep"
+      ],
+      "color": "#b69c86",
+      "unlock": 5,
+      "rank": "mid",
+      "ornament": 1,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_02": {
+      "id": "ds_mid_02",
+      "name": "The Fungal Bailiff",
+      "form": "mender",
+      "role": "guardian",
+      "health": 405,
+      "speed": 77,
+      "damage": 13.9,
+      "attacks": [
+        "web",
+        "spores",
+        "fan"
+      ],
+      "color": "#9cae68",
+      "unlock": 15,
+      "rank": "mid",
+      "ornament": 2,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_03": {
+      "id": "ds_mid_03",
+      "name": "Coppersting Bailiff",
+      "form": "scorpion",
+      "role": "guardian",
+      "health": 470,
+      "speed": 79,
+      "damage": 14.8,
+      "attacks": [
+        "charge",
+        "sting",
+        "meteor"
+      ],
+      "color": "#ba9a63",
+      "unlock": 25,
+      "rank": "mid",
+      "ornament": 3,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_04": {
+      "id": "ds_mid_04",
+      "name": "The Rusted Toll",
+      "form": "snail",
+      "role": "guardian",
+      "health": 535,
+      "speed": 81,
+      "damage": 15.7,
+      "attacks": [
+        "pulse",
+        "ward",
+        "ring"
+      ],
+      "color": "#a49cba",
+      "unlock": 35,
+      "rank": "mid",
+      "ornament": 4,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_05": {
+      "id": "ds_mid_05",
+      "name": "The Last Cartographer",
+      "form": "owl",
+      "role": "guardian",
+      "health": 600,
+      "speed": 83,
+      "damage": 16.6,
+      "attacks": [
+        "pincer",
+        "volley",
+        "charge"
+      ],
+      "color": "#b7ada3",
+      "unlock": 45,
+      "rank": "mid",
+      "ornament": 5,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_06": {
+      "id": "ds_mid_06",
+      "name": "The Root Notary",
+      "form": "rootling",
+      "role": "guardian",
+      "health": 665,
+      "speed": 85,
+      "damage": 17.5,
+      "attacks": [
+        "fan",
+        "prison",
+        "drain"
+      ],
+      "color": "#8f9d72",
+      "unlock": 55,
+      "rank": "mid",
+      "ornament": 6,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_07": {
+      "id": "ds_mid_07",
+      "name": "The Lantern Collector",
+      "form": "sneak",
+      "role": "guardian",
+      "health": 730,
+      "speed": 87,
+      "damage": 18.4,
+      "attacks": [
+        "burst",
+        "steal",
+        "prison"
+      ],
+      "color": "#929eae",
+      "unlock": 65,
+      "rank": "mid",
+      "ornament": 7,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_08": {
+      "id": "ds_mid_08",
+      "name": "Ossuary Brewer",
+      "form": "caller",
+      "role": "guardian",
+      "health": 795,
+      "speed": 89,
+      "damage": 19.3,
+      "attacks": [
+        "pull",
+        "heal",
+        "burst"
+      ],
+      "color": "#91b8b1",
+      "unlock": 75,
+      "rank": "mid",
+      "ornament": 8,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_09": {
+      "id": "ds_mid_09",
+      "name": "Thornbound Surveyor",
+      "form": "mantis",
+      "role": "guardian",
+      "health": 860,
+      "speed": 91,
+      "damage": 20.2,
+      "attacks": [
+        "firewheel",
+        "boomerang",
+        "pull"
+      ],
+      "color": "#86aaa1",
+      "unlock": 85,
+      "rank": "mid",
+      "ornament": 9,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_mid_10": {
+      "id": "ds_mid_10",
+      "name": "The Coal Archivist",
+      "form": "totem",
+      "role": "guardian",
+      "health": 925,
+      "speed": 93,
+      "damage": 21.1,
+      "attacks": [
+        "beam",
+        "quake",
+        "firewheel"
+      ],
+      "color": "#9ba2a9",
+      "unlock": 95,
+      "rank": "mid",
+      "ornament": 10,
+      "body_scale": 1.45,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_01": {
+      "id": "ds_boss_01",
+      "name": "The Wick-Eater",
+      "form": "wickeater",
+      "role": "guardian",
+      "health": 700,
+      "speed": 75,
+      "damage": 13.0,
+      "attacks": [
+        "slam",
+        "summon",
+        "sweep",
+        "quake",
+        "meteor"
+      ],
+      "color": "#b69c86",
+      "unlock": 10,
+      "rank": "boss",
+      "ornament": 11,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_02": {
+      "id": "ds_boss_02",
+      "name": "Widow of the Vein",
+      "form": "spider",
+      "role": "guardian",
+      "health": 830,
+      "speed": 77,
+      "damage": 13.9,
+      "attacks": [
+        "web",
+        "spores",
+        "fan",
+        "quake",
+        "meteor"
+      ],
+      "color": "#b58ea9",
+      "unlock": 20,
+      "rank": "boss",
+      "ornament": 12,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_03": {
+      "id": "ds_boss_03",
+      "name": "The Hollow Excavator",
+      "form": "shark",
+      "role": "guardian",
+      "health": 960,
+      "speed": 79,
+      "damage": 14.8,
+      "attacks": [
+        "charge",
+        "sting",
+        "meteor",
+        "quake",
+        "meteor"
+      ],
+      "color": "#8d9fa7",
+      "unlock": 30,
+      "rank": "boss",
+      "ornament": 13,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_04": {
+      "id": "ds_boss_04",
+      "name": "The Sunken Oracle",
+      "form": "jelly",
+      "role": "guardian",
+      "health": 1090,
+      "speed": 81,
+      "damage": 15.7,
+      "attacks": [
+        "pulse",
+        "ward",
+        "ring",
+        "quake",
+        "meteor"
+      ],
+      "color": "#91b7d8",
+      "unlock": 40,
+      "rank": "boss",
+      "ornament": 14,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_05": {
+      "id": "ds_boss_05",
+      "name": "The Flint Tribunal",
+      "form": "crab",
+      "role": "guardian",
+      "health": 1220,
+      "speed": 83,
+      "damage": 16.6,
+      "attacks": [
+        "pincer",
+        "volley",
+        "charge",
+        "quake",
+        "meteor"
+      ],
+      "color": "#b88e7c",
+      "unlock": 50,
+      "rank": "boss",
+      "ornament": 15,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_06": {
+      "id": "ds_boss_06",
+      "name": "The Hundredth Mouth",
+      "form": "hydra",
+      "role": "guardian",
+      "health": 1350,
+      "speed": 85,
+      "damage": 17.5,
+      "attacks": [
+        "fan",
+        "prison",
+        "drain",
+        "quake",
+        "meteor"
+      ],
+      "color": "#839e97",
+      "unlock": 60,
+      "rank": "boss",
+      "ornament": 16,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_07": {
+      "id": "ds_boss_07",
+      "name": "The Facet Leviathan",
+      "form": "urchin",
+      "role": "guardian",
+      "health": 1480,
+      "speed": 87,
+      "damage": 18.4,
+      "attacks": [
+        "burst",
+        "steal",
+        "prison",
+        "quake",
+        "meteor"
+      ],
+      "color": "#a2b8ce",
+      "unlock": 70,
+      "rank": "boss",
+      "ornament": 17,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_08": {
+      "id": "ds_boss_08",
+      "name": "The Bell Below",
+      "form": "bell",
+      "role": "guardian",
+      "health": 1610,
+      "speed": 89,
+      "damage": 19.3,
+      "attacks": [
+        "pull",
+        "heal",
+        "burst",
+        "quake",
+        "meteor"
+      ],
+      "color": "#b8ad79",
+      "unlock": 80,
+      "rank": "boss",
+      "ornament": 18,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_09": {
+      "id": "ds_boss_09",
+      "name": "The Cinder Regent",
+      "form": "drake",
+      "role": "guardian",
+      "health": 1740,
+      "speed": 91,
+      "damage": 20.2,
+      "attacks": [
+        "firewheel",
+        "boomerang",
+        "pull",
+        "quake",
+        "meteor"
+      ],
+      "color": "#b08c76",
+      "unlock": 90,
+      "rank": "boss",
+      "ornament": 19,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_boss_10": {
+      "id": "ds_boss_10",
+      "name": "The King Beneath the Wick",
+      "form": "angel",
+      "role": "guardian",
+      "health": 1870,
+      "speed": 93,
+      "damage": 21.1,
+      "attacks": [
+        "firewheel",
+        "volley",
+        "charge",
+        "quake",
+        "prison",
+        "pull",
+        "meteor",
+        "beam"
+      ],
+      "color": "#b6a8c3",
+      "unlock": 100,
+      "rank": "boss",
+      "ornament": 20,
+      "body_scale": 1.8,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    },
+    "ds_lava_heart": {
+      "id": "ds_lava_heart",
+      "name": "The Unquenchable",
+      "form": "tortoise",
+      "role": "guardian",
+      "health": 18000,
+      "speed": 93,
+      "damage": 30,
+      "attacks": [
+        "firewheel",
+        "meteor",
+        "quake",
+        "cataclysm"
+      ],
+      "color": "#dc855b",
+      "unlock": 100,
+      "rank": "beyond",
+      "ornament": 21,
+      "body_scale": 2.0,
+      "cell": [
+        256,
+        320
+      ],
+      "hit_radius": 40
+    }
+  },
+  "ordinary": [
+    "ds_nibbler",
+    "ds_glimmerwing",
+    "ds_ironback",
+    "ds_sneak",
+    "ds_mender",
+    "ds_larva",
+    "ds_caller",
+    "ds_brute",
+    "ds_crab",
+    "ds_slug",
+    "ds_spider",
+    "ds_scorpion",
+    "ds_mole",
+    "ds_salamander",
+    "ds_jelly",
+    "ds_snail",
+    "ds_mimic",
+    "ds_rootling",
+    "ds_urchin",
+    "ds_shark",
+    "ds_bell",
+    "ds_wisp",
+    "ds_tortoise",
+    "ds_mantis",
+    "ds_owl",
+    "ds_hydra",
+    "ds_leech",
+    "ds_drake",
+    "ds_totem",
+    "ds_angel"
+  ],
+  "mid": [
+    "ds_mid_01",
+    "ds_mid_02",
+    "ds_mid_03",
+    "ds_mid_04",
+    "ds_mid_05",
+    "ds_mid_06",
+    "ds_mid_07",
+    "ds_mid_08",
+    "ds_mid_09",
+    "ds_mid_10"
+  ],
+  "boss": [
+    "ds_boss_01",
+    "ds_boss_02",
+    "ds_boss_03",
+    "ds_boss_04",
+    "ds_boss_05",
+    "ds_boss_06",
+    "ds_boss_07",
+    "ds_boss_08",
+    "ds_boss_09",
+    "ds_boss_10"
+  ]
+}

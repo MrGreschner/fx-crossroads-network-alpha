@@ -1,0 +1,13 @@
+{
+  "id": "sluicewarden",
+  "name": "Sluicewarden",
+  "sprite": "sluicewarden",
+  "health": 760,
+  "speed": 90,
+  "damage": 20,
+  "behaviour": "ranged",
+  "aggro_range": 950,
+  "expansion_only": true,
+  "lore": "An ancient masonry crab, its shell a working sluice of polished river stone. It guards the orchard with rebounding slate fans and a heavy hydraulic slam.",
+  "description": "An ancient masonry crab, its shell a working sluice of polished river stone. It guards the orchard with rebounding slate fans and a heavy hydraulic slam."
+}

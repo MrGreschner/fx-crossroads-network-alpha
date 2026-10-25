@@ -88,9 +88,9 @@ func setup(owner:Node,multi:bool=false)->void:
  glimmers.legacy=self;glimmers.state()
  weekly.legacy=self;fishing_records.legacy=self;fishing_records.state();lodge_economy.setup(self);daily.setup(self);cosmetics.setup(self);crowns.setup(self);mine.setup(self);commerce.setup(self);gardening.setup(self);community.setup(self)
  layer=35
- root=PanelContainer.new();root.position=Vector2(110,45);root.size=Vector2(1060,640);root.visible=false;add_child(root)
+ root=Panel.new();root.clip_contents=true;root.position=Vector2(110,45);root.size=Vector2(1060,640);root.visible=false;add_child(root)
  var style:=StyleBoxFlat.new();style.bg_color=Color("#142b32");style.border_color=Color("#c7ad78");style.set_border_width_all(2);style.set_corner_radius_all(8);root.add_theme_stylebox_override("panel",style)
- var margins:=MarginContainer.new();margins.add_theme_constant_override("margin_left",24);margins.add_theme_constant_override("margin_right",24);margins.add_theme_constant_override("margin_top",16);margins.add_theme_constant_override("margin_bottom",16);root.add_child(margins)
+ var margins:=MarginContainer.new();margins.add_theme_constant_override("margin_left",24);margins.add_theme_constant_override("margin_right",24);margins.add_theme_constant_override("margin_top",16);margins.add_theme_constant_override("margin_bottom",16);root.add_child(margins);margins.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
  var col:=VBoxContainer.new();col.add_theme_constant_override("separation",10);margins.add_child(col)
  heading=Label.new();heading.add_theme_font_size_override("font_size",27);col.add_child(heading)
  var tabs:=HFlowContainer.new();tabs.add_theme_constant_override("h_separation",6);col.add_child(tabs)
@@ -102,7 +102,7 @@ func setup(owner:Node,multi:bool=false)->void:
  var divider=HSeparator.new();divider.name="PlayerMenuDivider";divider.custom_minimum_size.y=9
  var divider_style=StyleBoxLine.new();divider_style.color=Color("#678b91");divider_style.thickness=2;divider.add_theme_stylebox_override("separator",divider_style);col.add_child(divider)
  community_navigation=VBoxContainer.new();community_navigation.name="PinnedRecordsNavigation";community_navigation.visible=false;col.add_child(community_navigation)
- var scroll:=ScrollContainer.new();profile_scroll=scroll;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
+ var scroll:=ScrollContainer.new();profile_scroll=scroll;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_ALWAYS;scroll.clip_contents=true;col.add_child(scroll)
  body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",12);scroll.add_child(body)
  notice=Label.new();notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;col.add_child(notice)
  var footer:=HBoxContainer.new();col.add_child(footer);button(footer,"Back to town",close);button(footer,"Cloud account",func():close();get_node("/root/FXAccount").open())
@@ -985,5 +985,5 @@ func tuning_text(axis:int,value:int)->String:
 func fit_profile_panel()->void:
  var view=get_viewport().get_visible_rect().size
  var base=Vector2(1060,640)
- if page in ["community","gardening"]:base=Vector2(clampf(view.x-40,400,1240),clampf(view.y-40,640,860))
+ if page in ["community","gardening"]:base=Vector2(clampf(view.x-40,720,1240),clampf(view.y-40,640,860))
  root.size=base;root.scale=Vector2.ONE*minf(1,minf((view.x-24)/base.x,(view.y-24)/base.y));root.position=(view-root.size*root.scale)*.5

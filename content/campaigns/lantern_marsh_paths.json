@@ -207,1271 +207,242 @@
     {
       "kind": "moss_tree",
       "pos": [
-        400,
+        330,
         4200
       ],
-      "scale": 1.65,
-      "solid": 55
+      "scale": 1.1,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        1270,
-        5000
+        1230,
+        5100
       ],
-      "scale": 1.65,
-      "solid": 55
+      "scale": 1.25,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        2380,
-        2770
+        510,
+        5300
       ],
-      "scale": 1.65,
-      "solid": 55
+      "scale": 1.0,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        3620,
-        3990
+        1160,
+        4220
       ],
-      "scale": 1.65,
-      "solid": 55
+      "scale": 1.1,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        3600,
-        2900
+        2350,
+        2800
       ],
-      "scale": 1.65,
-      "solid": 55
+      "scale": 1.2,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        4580,
-        2780
+        3610,
+        2830
       ],
-      "scale": 1.65,
-      "solid": 55
+      "scale": 1.15,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        5790,
+        2350,
+        4110
+      ],
+      "scale": 1.3,
+      "solid": 36
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3610,
+        4100
+      ],
+      "scale": 1.15,
+      "solid": 36
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        2700,
+        2910
+      ],
+      "scale": 0.95,
+      "solid": 36
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        3480,
+        3900
+      ],
+      "scale": 1.0,
+      "solid": 36
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        4600,
+        1680
+      ],
+      "scale": 1.2,
+      "solid": 36
+    },
+    {
+      "kind": "moss_tree",
+      "pos": [
+        5770,
         1700
       ],
-      "scale": 1.65,
-      "solid": 55
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4720,
-        4370
-      ],
-      "scale": 1.65,
-      "solid": 55
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5590,
-        5110
-      ],
-      "scale": 1.65,
-      "solid": 55
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6650,
-        630
-      ],
-      "scale": 1.65,
-      "solid": 55
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7780,
-        1800
-      ],
-      "scale": 1.65,
-      "solid": 55
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        1800,
-        2800
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4020,
-        3305
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6200,
-        3910
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3900,
-        5400
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        1920,
-        2905
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4140,
-        3410
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6320,
-        3700
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4020,
-        5505
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2040,
-        3010
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4260,
-        3200
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6440,
-        3805
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4140,
-        5610
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2160,
-        2800
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4380,
-        3305
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6560,
-        3910
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4260,
-        5400
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2280,
-        2905
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4500,
-        3410
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6680,
-        3700
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4380,
-        5505
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2400,
-        3010
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4620,
-        3200
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6800,
-        3805
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4500,
-        5610
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2520,
-        2800
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4740,
-        3305
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6920,
-        3910
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4620,
-        5400
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2640,
-        2905
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4860,
-        3410
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7040,
-        3700
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4740,
-        5505
-      ],
-      "scale": 1.1,
-      "solid": 35
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        260,
-        4030
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        260,
-        5425
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        500,
-        4030
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        500,
-        5425
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        740,
-        4030
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        740,
-        5425
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        980,
-        4030
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        980,
-        5425
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        1220,
-        4030
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        1220,
-        5425
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2280,
-        2630
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2280,
-        4275
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2520,
-        2630
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2520,
-        4275
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2760,
-        2630
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2760,
-        4275
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3000,
-        2630
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3000,
-        4275
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3240,
-        2630
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3240,
-        4275
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3480,
-        2630
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3480,
-        4275
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6580,
-        430
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6580,
-        2075
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6820,
-        430
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6820,
-        2075
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7060,
-        430
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7060,
-        2075
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7300,
-        430
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7300,
-        2075
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7540,
-        430
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7540,
-        2075
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7780,
-        430
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7780,
-        2075
-      ],
-      "scale": 0.8,
-      "solid": 0
+      "scale": 1.15,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
         4580,
-        4180
+        2940
       ],
-      "scale": 0.8,
-      "solid": 0
+      "scale": 1.2,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        4580,
-        5375
+        5780,
+        2920
       ],
-      "scale": 0.8,
-      "solid": 0
+      "scale": 1.1,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        4820,
-        4180
+        4730,
+        4310
       ],
-      "scale": 0.8,
-      "solid": 0
+      "scale": 1.2,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        4820,
-        5375
+        5640,
+        5210
       ],
-      "scale": 0.8,
-      "solid": 0
+      "scale": 1.1,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        5060,
-        4180
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5060,
-        5375
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5300,
-        4180
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5300,
-        5375
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5540,
-        4180
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5540,
-        5375
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4480,
-        1530
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4480,
-        3125
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4720,
-        1530
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4720,
-        3125
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4960,
-        1530
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4960,
-        3125
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5200,
-        1530
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5200,
-        3125
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5440,
-        1530
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5440,
-        3125
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5680,
-        1530
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5680,
-        3125
-      ],
-      "scale": 0.8,
-      "solid": 0
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        390,
-        4910
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        390,
+        4730,
         5240
       ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.15,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        690,
-        4250
+        5630,
+        4320
       ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.0,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        690,
-        4910
+        6700,
+        600
       ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.2,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        690,
-        5240
+        7750,
+        640
       ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.1,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        990,
-        4250
+        7740,
+        1820
       ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.2,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        990,
-        4910
+        6700,
+        1830
       ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.0,
+      "solid": 36
     },
     {
       "kind": "moss_tree",
       "pos": [
-        990,
-        5240
+        7470,
+        530
       ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2410,
-        3180
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2410,
-        3840
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        2710,
-        3840
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3310,
-        3510
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3610,
-        3180
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3610,
-        3510
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        3610,
-        3840
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6710,
-        980
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        6710,
-        1640
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7010,
-        650
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7310,
-        650
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7310,
-        1310
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7310,
-        1640
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7610,
-        650
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7610,
-        980
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        7610,
-        1310
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5010,
-        4400
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5010,
-        5060
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5310,
-        4400
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5310,
-        5060
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5610,
-        4400
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4610,
-        1750
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4610,
-        2410
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4910,
-        1750
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        4910,
-        2740
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5210,
-        1750
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5210,
-        2410
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5510,
-        1750
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5510,
-        2410
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5510,
-        2740
-      ],
-      "scale": 1.35,
-      "solid": 38
-    },
-    {
-      "kind": "moss_tree",
-      "pos": [
-        5810,
-        2410
-      ],
-      "scale": 1.35,
-      "solid": 38
+      "scale": 1.0,
+      "solid": 36
     }
   ],
   "grass": [],
   "mud": [
     [
-      2810,
-      4010,
-      570,
-      950
+      2820,
+      4050,
+      470,
+      590
     ],
     [
-      4870,
-      4540,
-      830,
-      390
+      4800,
+      4560,
+      530,
+      300
     ],
     [
-      6085,
-      2200,
-      230,
-      1850
+      6100,
+      2500,
+      200,
+      460
     ],
     [
-      4780,
-      1770,
-      500,
-      780
+      4760,
+      2490,
+      300,
+      400
+    ],
+    [
+      6900,
+      1420,
+      300,
+      280
     ]
   ],
   "falls": [],
@@ -1517,74 +488,306 @@
       "stage": 0
     },
     {
+      "type": "bogpitch_newt",
+      "pos": [
+        1170,
+        4710
+      ],
+      "stage": 0
+    },
+    {
       "type": "reed_stalker",
       "pos": [
-        2000,
-        3570
+        820,
+        4890
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        1800,
+        3870
       ],
       "stage": 0
     },
     {
       "type": "wick_wisp",
       "pos": [
-        2590,
-        3220
+        2170,
+        3550
       ],
       "stage": 0
     },
     {
-      "type": "bog_bellringer",
+      "type": "bogpitch_newt",
       "pos": [
-        3310,
-        3920
+        2550,
+        3470
+      ],
+      "stage": 0
+    },
+    {
+      "type": "mireweaver",
+      "pos": [
+        2810,
+        3180
       ],
       "stage": 0
     },
     {
       "type": "lantern_crab",
       "pos": [
-        3450,
-        2860
+        3210,
+        3180
       ],
       "stage": 0
     },
     {
-      "type": "reed_stalker",
+      "type": "bog_bellringer",
       "pos": [
-        3110,
-        2360
+        3400,
+        3550
       ],
       "stage": 0
     },
     {
       "type": "wick_wisp",
       "pos": [
-        4900,
-        2350
-      ],
-      "stage": 0
-    },
-    {
-      "type": "bog_bellringer",
-      "pos": [
-        5630,
-        2010
-      ],
-      "stage": 0
-    },
-    {
-      "type": "lantern_crab",
-      "pos": [
-        5100,
-        2840
+        2840,
+        3860
       ],
       "stage": 0
     },
     {
       "type": "reed_stalker",
       "pos": [
-        5210,
-        4700
+        3270,
+        3980
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        3490,
+        2940
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        3100,
+        2700
+      ],
+      "stage": 0
+    },
+    {
+      "type": "mireweaver",
+      "pos": [
+        3150,
+        2370
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        3730,
+        2100
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        4200,
+        2100
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        4750,
+        2300
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        5050,
+        2630
+      ],
+      "stage": 0
+    },
+    {
+      "type": "mireweaver",
+      "pos": [
+        5500,
+        2240
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bog_bellringer",
+      "pos": [
+        5650,
+        2750
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        4740,
+        2820
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        5570,
+        1860
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        5890,
+        2110
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        6410,
+        2110
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        6870,
+        2110
+      ],
+      "stage": 0
+    },
+    {
+      "type": "mireweaver",
+      "pos": [
+        7100,
+        1690
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bog_bellringer",
+      "pos": [
+        7430,
+        1520
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        7620,
+        1170
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        6930,
+        930
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        7430,
+        800
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        3100,
+        4370
+      ],
+      "stage": 0
+    },
+    {
+      "type": "mireweaver",
+      "pos": [
+        3660,
+        4750
+      ],
+      "stage": 0
+    },
+    {
+      "type": "wick_wisp",
+      "pos": [
+        4420,
+        4750
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        5050,
+        4560
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bog_bellringer",
+      "pos": [
+        5480,
+        4930
+      ],
+      "stage": 0
+    },
+    {
+      "type": "lantern_crab",
+      "pos": [
+        4970,
+        5100
+      ],
+      "stage": 0
+    },
+    {
+      "type": "reed_stalker",
+      "pos": [
+        6170,
+        4130
+      ],
+      "stage": 0
+    },
+    {
+      "type": "bogpitch_newt",
+      "pos": [
+        6210,
+        3380
+      ],
+      "stage": 0
+    },
+    {
+      "type": "mireweaver",
+      "pos": [
+        6200,
+        2680
       ],
       "stage": 0
     },
@@ -1592,51 +795,27 @@
       "type": "wick_wisp",
       "pos": [
         6200,
-        4030
+        1790
       ],
       "stage": 0
     },
     {
-      "type": "bog_bellringer",
+      "type": "mirevein_collector",
       "pos": [
-        6200,
-        2460
-      ],
-      "stage": 0
-    },
-    {
-      "type": "lantern_crab",
-      "pos": [
-        7110,
-        1920
-      ],
-      "stage": 0
-    },
-    {
-      "type": "reed_stalker",
-      "pos": [
-        6990,
-        1090
-      ],
-      "stage": 0
-    },
-    {
-      "type": "wick_wisp",
-      "pos": [
-        7660,
-        1550
+        3000,
+        3550
       ],
       "stage": 0
     }
   ],
   "stages": [
-    "Explore the raised banks; black water is impassable, mud slows you",
-    "Reach Bellroot Hollow and defeat its guardian"
+    "Clear the marsh patrols; watch for silk lanes and the roaming Collector",
+    "Bellroot awakens: dodge the roots and spore volleys"
   ],
   "gates": [],
   "lake": [],
   "raft": {},
-  "background": "#183d39",
+  "background": "#102d30",
   "checkpoints": [
     {
       "pos": [
@@ -1652,5 +831,116 @@
       ],
       "level": 5
     }
-  ]
+  ],
+  "marsh_lamps": [
+    [
+      1270,
+      4480
+    ],
+    [
+      1740,
+      3740
+    ],
+    [
+      2310,
+      3510
+    ],
+    [
+      3210,
+      2490
+    ],
+    [
+      3650,
+      2060
+    ],
+    [
+      4510,
+      2060
+    ],
+    [
+      5710,
+      2060
+    ],
+    [
+      6260,
+      1430
+    ],
+    [
+      7010,
+      1650
+    ],
+    [
+      7650,
+      960
+    ],
+    [
+      3020,
+      4510
+    ],
+    [
+      4690,
+      4740
+    ],
+    [
+      6150,
+      4380
+    ]
+  ],
+  "marsh_ruins": [
+    [
+      2570,
+      3010
+    ],
+    [
+      3540,
+      3680
+    ],
+    [
+      5560,
+      2500
+    ],
+    [
+      4920,
+      5030
+    ],
+    [
+      7450,
+      1710
+    ]
+  ],
+  "patrol": [
+    [
+      3000,
+      3500
+    ],
+    [
+      3150,
+      3500
+    ],
+    [
+      3150,
+      2110
+    ],
+    [
+      5100,
+      2110
+    ],
+    [
+      5550,
+      2700
+    ],
+    [
+      5100,
+      2110
+    ],
+    [
+      3150,
+      2110
+    ],
+    [
+      3150,
+      3500
+    ]
+  ],
+  "revision": 200
 }

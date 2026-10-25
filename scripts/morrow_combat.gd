@@ -272,6 +272,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for id in units:
   var body:Dictionary=units[id];var p:Vector2=combat.vec(body.pos)-camera
   var texture:Texture2D=combat.adventure.game.art.get(str(body.sprite)+"_"+str(body.pose),combat.adventure.game.art.get(str(body.sprite)+"_0"))
+  if str(body.sprite).begins_with("ds_"):texture=preload("res://scripts/descent203_art.gd").companion_texture(str(body.sprite),str(body.pose))
   if bool(body.get("healer",false)):texture=preload("res://scripts/source_art.gd").texture("res://assets/morrow_healer_"+str(body.pose)+".svg")
   c.draw_circle(p+Vector2(0,14),18,Color(0,0,0,.2));c.draw_arc(p,23,0,TAU,24,Color("#d899ca") if bool(body.ranged) else Color("#9bcdbb"),2,true)
   if texture!=null:

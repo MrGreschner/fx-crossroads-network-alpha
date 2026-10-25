@@ -8,13 +8,13 @@
   "terrain": "river_grass",
   "scene": "res://scenes/realms/silverfall.tscn",
   "boss_sprite": "crowned_torrent",
-  "boss_health": 950,
+  "boss_health": 1650,
   "xp_per_level": 4,
   "boss_secondary": "torrent",
   "expansion": "river",
-  "difficulty_label": "Hard: water crossings and explosive beetles",
+  "difficulty_label": "Hard: cascade currents, skaters and the Sluicewarden",
   "immersive": true,
   "boss_enemy": "crowned_torrent",
-  "description": "Explore bridges, treehouses and the lake; either shore route works. Optional treasures reward exploration; exit unlocks after its guardian falls.",
+  "description": "Explore a river kingdom of sculpted banks, stone spans, willow refuges and layered cascades. Both shore routes and the ferry connect. Hidden waters reward exploration; clear the defenders, then face the Crowned Torrent.",
   "difficulty_tier": "hard"
 }

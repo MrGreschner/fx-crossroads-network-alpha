@@ -770,6 +770,7 @@ func step_projectiles(delta:float)->void:
 						counts[key]=int(counts.get(key,0))+1;damage(key,4,str(shot.owner),"Ball Lightning")
 						if visuals.size()<64:visuals.append({"pos":point_array(end),"start":point_array(end),"end":point_array(f.pos),"width":2,"style":"ball_shock","radius":0,"time":.15,"color":"#b0ceff"})
 				shot["shock_counts"]=counts
+		adventure.immersive.marsh_encounters.projectile_step(shot,start,end if path_clear(start,end) else start)
 		var ratio:=clampf(float(shot["distance"])/float(shot["range"]),0,1)
 		if str(shot["style"])=="rolling_snow":shot["radius"]=12+ratio*34
 		var impact:="";var blocked:=not path_clear(start,end)
@@ -808,6 +809,7 @@ func step_projectiles(delta:float)->void:
 		if not impact.is_empty() or blocked or ratio>=1:
 			projectiles.remove_at(i)
 			var center:=vec(shot["pos"]);var owner:=str(shot["owner"])
+			if impact.is_empty() or blocked:adventure.immersive.marsh_encounters.impact(shot,"",center,false)
 			match str(shot["style"]):
 				"rolling_snow":
 					var blast:=70+ratio*55;var amount:=float(shot["damage"])+ratio*36
@@ -824,7 +826,10 @@ func step_projectiles(delta:float)->void:
 					if not impact.is_empty() and not blocked:
 						if bool(shot.get("stats",{}).get("star_mark",false)):starfield.mark_area(owner,center,float(shot.get("stats",{}).get("splash_radius",75)))
 						if bool(shot.get("stats",{}).get("pistol",false)):v90.pistol_hit(owner,impact)
+						var marsh_latch:bool=owner=="enemy" and str(shot.stats.get("marsh_visual",""))=="mosquito" and impact.begins_with("p:") and adventure.points().has(impact.substr(2))
+						var marsh_before:float=adventure.immersive.marsh_encounters.health(impact.substr(2)) if marsh_latch else 0.0
 						damage(impact,float(shot["damage"]),owner,"Projectile",shot.get("credit",{}));shot["hits"].append(impact)
+						adventure.immersive.marsh_encounters.impact(shot,impact,center,marsh_latch and adventure.immersive.marsh_encounters.health(impact.substr(2))<marsh_before)
 						v59.impact(shot,center)
 						var stats:Dictionary=shot.get("stats",{})
 						if float(stats.get("echo_brand",0))>0:adventure.expansion.brand(owner,impact,float(stats.echo_brand))
@@ -1152,6 +1157,9 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
 	if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
 	if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):return
+	if preload("res://scripts/descent203_art.gd").spell(canvas,shot,point,clock):return
+	if preload("res://scripts/lantern_marsh_encounters.gd").draw_projectile(canvas,shot,point,clock):return
+	if preload("res://scripts/silverfall_art.gd").draw_bolt(canvas,shot,point,clock):return
 	if shot["stats"].has("cinder_visual"):
 		var aim=vec(shot.aim);var side=aim.orthogonal();var tail=point-aim*(21+sin(clock*15)*5)
 		canvas.draw_colored_polygon(PackedVector2Array([point+aim*11,point+side*8,tail+side*4,tail-aim*8,point-side*8]),Color("#e56c37"));canvas.draw_circle(point,6,Color("#ffe2a0"));canvas.draw_line(tail,point,Color("#ffb95f"),3,true);return

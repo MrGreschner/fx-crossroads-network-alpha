@@ -1,0 +1,13 @@
+{
+  "id": "mireweaver",
+  "name": "Mireweaver",
+  "sprite": "mireweaver",
+  "health": 195,
+  "speed": 92,
+  "damage": 17,
+  "behaviour": "ranged",
+  "aggro_range": 950,
+  "expansion_only": true,
+  "description": "A reed-legged marsh spider. Its glowing silk warns where a snaring thread will sweep; crossing it slows rather than roots you.",
+  "lore": "A reed-legged marsh spider. Its glowing silk warns where a snaring thread will sweep; crossing it slows rather than roots you."
+}

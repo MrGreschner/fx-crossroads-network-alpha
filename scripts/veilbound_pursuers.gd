@@ -20,7 +20,10 @@ static func install(g:Node,multi:bool)->void:
   for pose in ["idle","walk1","walk2","attack","0","1"]:g.art[str(kit.id)+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+str(kit.id)+"_"+pose+".svg")
 func reset()->void:clock=0;next_visit=180;visits=0;serial=0;survivors.clear();marks.clear();portals.clear()
 func active()->bool:
- if adventure.arcade:return adventure.game.started and adventure.game.expedition.kind=="between"
+ if adventure.arcade:
+  # Local arcade modes have no network expedition controller.
+  var expedition=adventure.game.get("expedition")
+  return expedition!=null and adventure.game.started and adventure.game.mode=="coop" and expedition.kind=="between"
  return adventure.game.waylight.kind=="between" and adventure.game.waylight.active()
 func layout():return adventure.game.expedition.expedition if adventure.arcade else adventure.game.waylight.expedition
 func actors()->Array:return adventure.foes().filter(func(e):return bool(e.get("veilbound",false)))

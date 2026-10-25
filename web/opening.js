@@ -12,7 +12,7 @@ let started=false,sceneReady=false,failed=false,finished=false,last=performance.
 const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const ease=(a,b,x)=>{const u=clamp((x-a)/(b-a));return u*u*(3-2*u);};
 const attr=(id,key,value)=>document.getElementById(id).setAttribute(key,String(value));
-const pose=(id,time,strike=false)=>{const frames=document.querySelectorAll('#'+id+' .pose');frames.forEach((el,i)=>el.style.opacity=strike?(i===2?'1':'0'):(i===(Math.floor(time*7)%2)?'1':'0'));};
+const pose=(id,time,strike=false)=>{const all=[...document.querySelectorAll('#'+id+' .pose')],walk=all.filter(el=>!el.classList.contains('attack')),hasAttack=all.some(el=>el.classList.contains('attack')),chosen=strike&&hasAttack?all.find(el=>el.classList.contains('attack')):walk[Math.floor(time*7)%walk.length];all.forEach(el=>el.style.opacity=el===chosen?'1':'0');};
 try{const h=Number(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',hour:'numeric',hourCycle:'h23'}).format(new Date()));night=h>=21||h<6;}catch(_){}
 if(night){root.classList.add('night');document.getElementById('intro-fish').setAttribute('href',document.getElementById('intro-fish').dataset.night);}
 function resize(){const narrow=innerWidth/innerHeight<.82,vw=narrow?840:1280;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));const scale=Math.min(innerWidth/vw,innerHeight/720),boot=document.getElementById('boot-compositor');boot.style.width=200*scale+'px';boot.style.height=310*scale+'px';boot.style.left=(innerWidth/2-100*scale)+'px';boot.style.top=((innerHeight-720*scale)/2+230*scale)+'px';work.style.transformOrigin=(innerWidth/2)+'px '+((innerHeight-720*scale)/2+379*scale)+'px';}
@@ -84,7 +84,7 @@ function intro(){
   const approach=ease(.35,1.65,t),depart=ease(2.45,3.8,t),strike=t>=1.65&&t<2.25;
   attr('ram-actor','transform','translate('+(-180*(1-approach)+depart*175)+' 0)');
   attr('foe-actor','transform','translate('+(180*(1-approach)+depart*260+(strike?Math.sin((t-1.65)*17)*5:0))+' 0)');
-  pose('ram-actor',t,strike);pose('foe-actor',t);
+  pose('ram-actor',t,strike);pose('foe-actor',t);pose('cat-actor',t*.7);pose('elder-actor',t*.12);
   attr('impact','opacity',strike?1-ease(1.8,2.25,t):0);
   const leap=clamp((p-.28)/.47);
   attr('intro-fish','transform','translate('+(-195+390*leap)+' '+(-96*Math.sin(Math.PI*leap))+') rotate('+(-12+24*leap)+' 640 655)');

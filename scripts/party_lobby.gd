@@ -96,7 +96,7 @@ func _draw()->void:
  if game.mode=="battlegrounds":words(Vector2(377,158),"Personal barracks • Build armies • Break the enemy heart",19,Color("#efddb4"))
  elif game.mode=="coop":words(Vector2(377,155),"Choose your hero and the realm you’ll explore together.",18,Color("#efddb4"))
  elif game.mode=="defense":words(Vector2(377,158),"Three outposts. Marching guards. A rival hero. Wave-30 boss.",19,Color("#efddb4"))
- elif game.mode=="descent":words(Vector2(377,158),"Fight floor by floor. Survive together. No free wave heals.",19,Color("#efddb4"))
+ elif game.mode=="descent":words(Vector2(377,158),"100 floors • One shared lantern • Fixed guardians every five floors",19,Color("#efddb4"))
  words(Vector2(365,279),"IN PARTY",17,Color("#f2d49c"))
  words(Vector2(910,279),str(game.fighters().size())+" / "+str(game.player_limit())+" players"+(" + spectator host" if game.spectator_host and game.spectator_supported() else "") if not game.roster.is_empty() else "Practice • damage mastery only" if game.bot_count>0 else "Your hero is ready",15,Color("#a6c4c7"))
  if team_mode():

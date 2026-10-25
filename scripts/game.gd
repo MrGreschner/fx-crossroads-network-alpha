@@ -130,6 +130,7 @@ var town_life=preload("res://scripts/town_life.gd").new()
 var skating_motion=preload("res://scripts/skating_motion.gd").new()
 var wing_motion=preload("res://scripts/wing_motion.gd").new()
 var fish_motion=preload("res://scripts/fish_motion.gd").new()
+var core_art=preload("res://scripts/core_hero_art.gd").new()
 var basketball_motion=preload("res://scripts/basketball_motion.gd").new()
 var visual_clock := 0.0
 var dodge_time := 0.0
@@ -184,6 +185,7 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	for asset_name in ["grass", "forest", "ash", "path", "ice", "space", "quarantine", "tree", "crystal", "ice_pillar", "satellite", "barricade", "flower", "house", "merchant", "portal", "ram_0", "ram_1", "cat_0", "cat_1", "basketball_0", "basketball_1", "mini_basketball", "elder_ram", "warden_0", "warden_1", "bramble_0", "bramble_1", "bramble_boss", "potion", "character_hall", "supply_shop", "town_lamp", "town_banner", "sunfield_boss"]:
 		art[asset_name] = load("res://assets/" + asset_name + ".png")
+	art["elder_ram"]=core_art.texture("elder_ram","idle")
 	setup_inputs()
 	for key in ["oath_stone","briar_floor","cinder_floor","mirror_floor","storm_floor","marsh_floor"]: art[key] = load("res://assets/"+key+".png")
 	load_registry()
@@ -288,7 +290,7 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
-	if prefix=="lockdown_aberration" or prefix.begins_with("veil_") or prefix in preload("res://scripts/cinderheart.gd").TYPES+["ratchet_keeper","spark_scarab","hinge_conjurer","latch_hound"]:
+	if prefix=="lockdown_aberration" or prefix.begins_with("veil_") or prefix in preload("res://scripts/cinderheart.gd").TYPES+["ratchet_keeper","spark_scarab","hinge_conjurer","latch_hound","bogpitch_newt","mireweaver","mirevein_collector","mistglass_skater","undertow_weaver","sluicewarden"]:
 		for pose in ["idle","walk1","walk2","attack","0","1"]:art[prefix+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+prefix+"_"+pose+".svg")
 		return
 	for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin", "shell", "0", "1"]:
@@ -1051,6 +1053,7 @@ func fire(kind: String) -> void:
 		if str(cooldown_item.get("effect", "")) == "cooldown": delay *= 1.0 - float(cooldown_item.get("amount", 0)) / 100.0
 	delay=adventure.combat.v90.pistol_delay("solo",stats,delay)
 	cooldowns[kind] = delay
+	core_art.record("solo",kind,character_id)
 	var direction := aim_direction()
 	var damage := float(stats.get("damage", 15)) + bonus_damage
 	if upgrade == "primary" and kind == "primary":
@@ -1196,6 +1199,7 @@ func pulse() -> void:
 	if not adventure.combat.pact.prepare("solo",stats,aim_direction(),aimed_point(float(stats.get("range",650)))):
 		message="Aim at a visible non-boss enemy for Change of Heart.";message_time=3;return
 	cooldowns["special"] = float(stats.get("cooldown", 7.0)) * (0.7 if mastery == "special" else 1.0)
+	core_art.record("solo","special",character_id)
 	pulse_time = 0.28
 	pulse_position = position_in_world
 	special_direction = aim_direction()
@@ -1289,6 +1293,8 @@ func update_bullets(delta: float) -> void:
 		if not shot_path_clear(bullet["pos"], bullet_next):
 			bullets.remove_at(i)
 			continue
+		if adventure.immersive.marsh_encounters.catch_shot(bullet["pos"],bullet_next,"solo"):
+			bullets.remove_at(i);continue
 		bullet["pos"] = bullet_next
 		bullet["distance"] += travel
 		if not clear_of_obstacles(bullet["pos"], 5.0):
@@ -1708,6 +1714,9 @@ var ground_index=preload("res://scripts/terrain_patch_index.gd").new()
 var terrain_cache:Node2D
 var realm_props:Node2D
 func sync_terrain()->void:
+	if mode=="run" and region_id=="silverfall":
+		if terrain_cache!=null:terrain_cache.hide()
+		return
 	if terrain_cache==null:
 		terrain_cache=preload("res://scripts/ground_cache.gd").new();terrain_cache.game=self;terrain_cache.show_behind_parent=true;add_child(terrain_cache)
 	terrain_cache.sync()
@@ -1846,6 +1855,10 @@ func draw_world() -> void:
 			elif str(enemy.type) in adventure.school.TYPES:
 				var school_size:Vector2=adventure.school.body_size(str(enemy.type));draw_sprite(enemy_sprite,enemy.pos-school_size*Vector2(.5,.7),school_size)
 			elif float(enemy.get("down_time",0))>0:draw_sprite(enemy_sprite,enemy.pos-Vector2(35,14),Vector2(70,28))
+			elif str(enemy.type)=="sluicewarden":
+				draw_sprite(enemy_sprite,enemy.pos-Vector2(60,80),Vector2(120,120))
+			elif str(enemy.type)=="mirevein_collector":
+				draw_sprite(enemy_sprite,enemy.pos-Vector2(56,74),Vector2(112,112))
 			elif str(enemy.type)=="rootbound_keeper":
 				draw_sprite(enemy_sprite,enemy.pos-Vector2(54,64),Vector2(108,120))
 			else:draw_sprite(enemy_sprite, enemy["pos"] - (boss_size * 0.5 if is_boss else Vector2(28, 30)), boss_size if is_boss else Vector2(56, 56))
@@ -1931,6 +1944,9 @@ func draw_world() -> void:
 	if adventure.combat.classics.channeling("solo"):pose="open"
 	elif adventure.combat.classics.spinning("solo"):pose="spin"
 	if pose=="attack" and art.has(sprite+"_attack2") and int(visual_clock*12)%2==1:pose="attack2"
+	if sprite in core_art.HEROES:
+		art[sprite+"_core_frame"]=core_art.picture("solo",sprite,pose,position_in_world,walking and menu=="",visual_clock,adventure.combat.classics.channeling("solo"),charge_time>0 or adventure.combat.classics.moving("solo"))
+		pose="core_frame"
 	var hero_art := sprite + "_" + pose if art.has(sprite + "_" + pose) else sprite + "_" + str(frame)
 	if sprite=="goalie":skating_motion.draw_skates(self,"solo",position_in_world-camera)
 	adventure.combat.halloween.draw_mount(self,"solo",camera)
@@ -1939,6 +1955,7 @@ func draw_world() -> void:
 	hero_rect.position+=adventure.combat.stance_heroes.visual_offset("solo")+adventure.combat.release_heroes.visual_offset("solo")+adventure.combat.v79.visual_offset("solo")+motion_v85.offset(sprite)+adventure.combat.halloween.visual_offset("solo")
 	hero_rect.position+=adventure.combat.classics.body_offset("solo")
 	hero_rect=adventure.combat.v110.resize("solo",hero_rect)
+	hero_rect=core_art.body_rect(sprite,hero_rect,visual_clock)
 	if sprite=="basketball":draw_circle(position_in_world-camera+Vector2(0,20),13,Color(0,0,0,.23))
 	if adventure.combat.v90.pending_rebirth("solo"):pass
 	elif sprite=="snail" and adventure.combat.v79.moving("solo"):
@@ -1965,6 +1982,7 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if name=="elder_ram":art[name]=core_art.texture("elder_ram","talk" if menu=="elder" else "6" if fmod(visual_clock,5)>4.7 else "idle")
 	if mode=="town" and not Rect2(camera,VIEW).intersects(Rect2(world_pos,size)):return
 	if art.has(name) and art[name] != null:
 		draw_texture_rect(art[name], Rect2(world_pos - camera, size), false, tint)
