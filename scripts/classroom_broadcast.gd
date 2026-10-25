@@ -21,7 +21,10 @@ var connect_button:Button
 var view:Control
 var picture:TextureRect
 var viewer_status:Label
-var host_strip:HBoxContainer
+var host_strip:PanelContainer
+var host_status:Label
+var end_button:Button
+var leave_button:Button
 var was_paused=false
 var frame_timer=0.0
 var heartbeat=0.0
@@ -48,15 +51,24 @@ func _ready()->void:
   var seat=Label.new();seat.text=str(n+1)+"\nOpen seat";seat.custom_minimum_size=Vector2(100,48);seat.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;seat.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;seat.add_theme_font_size_override("font_size",14);card.add_child(seat)
  status=heading(body,"Enter the presenter's code to watch their game and editors live.",16)
  var bottom=HBoxContainer.new();body.add_child(bottom)
- start_button=button(bottom,"Start broadcast",func():send({"type":"class_start"}));start_button.hide()
- button(bottom,"Leave / close",leave)
+ start_button=button(bottom,"Start broadcast",start_or_return);start_button.hide()
+ leave_button=button(bottom,"Leave / close",leave)
  heading(body,"This shares ONLY Crossroads: Realms Beyond, including Studio panels. No microphone, webcam, desktop, player input or files are sent. Low-bandwidth 2 FPS view; use the projector for smooth action.",14)
  view=Control.new();view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);view.mouse_filter=Control.MOUSE_FILTER_STOP;add_child(view);view.hide()
  var background=ColorRect.new();background.color=Color("#071b26");background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);view.add_child(background)
  picture=TextureRect.new();picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;view.add_child(picture)
  var footer=PanelContainer.new();footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE);footer.offset_top=-54;view.add_child(footer);UI.apply(footer)
  var bar=HBoxContainer.new();footer.add_child(bar);viewer_status=heading(bar,"Waiting for presenter…",16);viewer_status.size_flags_horizontal=Control.SIZE_EXPAND_FILL;button(bar,"Leave broadcast",leave)
- host_strip=HBoxContainer.new();add_child(host_strip);UI.apply(host_strip);host_strip.hide();heading(host_strip,"BROADCAST • LIVE • 2 FPS",13);button(host_strip,"Viewer seats",func():panel.show();render());button(host_strip,"End",leave)
+ host_strip=PanelContainer.new();host_strip.name="PresenterBroadcastControls";add_child(host_strip);UI.apply(host_strip);host_strip.add_theme_stylebox_override("panel",UI.box("#102b38","#9bcdc5",10,10));host_strip.hide()
+ var host_content=VBoxContainer.new();host_content.add_theme_constant_override("separation",6);host_strip.add_child(host_content)
+ host_status=heading(host_content,"BROADCAST • LIVE • 2 FPS",16);host_status.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ var host_row=HBoxContainer.new();host_row.add_theme_constant_override("separation",12);host_content.add_child(host_row)
+ button(host_row,"Viewer seats",func():panel.show();render())
+ end_button=button(host_row,"End broadcast",leave);end_button.name="EndBroadcast";end_button.custom_minimum_size=Vector2(166,44);end_button.add_theme_stylebox_override("normal",UI.box("#7a3543","#e9a9b0",7,10));end_button.add_theme_stylebox_override("hover",UI.box("#984656","#ffe0dc",7,10));end_button.add_theme_color_override("font_color",Color("#ffffff"));end_button.add_theme_color_override("font_hover_color",Color("#ffffff"));end_button.add_theme_color_override("font_pressed_color",Color("#ffffff"))
+func start_or_return()->void:
+ if role=="host" and started:panel.hide();host_strip.show()
+ else:send({"type":"class_start"})
+
 func heading(parent:Node,text:String,size:int)->Label:
  var label=Label.new();label.text=text;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.add_theme_font_size_override("font_size",size);parent.add_child(label);return label
 func button(parent:Node,text:String,callback:Callable)->Button:
@@ -88,14 +100,19 @@ func open_socket(packet:Dictionary)->void:
 func send(packet:Dictionary)->void:
  if socket!=null and socket.get_ready_state()==WebSocketPeer.STATE_OPEN:socket.send_text(JSON.stringify(packet))
 func leave()->void:
+ var restore_pause=role=="guest" and view.visible
  send({"type":"class_leave"})
  if socket!=null:socket.close()
- socket=null;pending.clear();role="";started=false;code="";roster.clear();sequence=0;received_sequence=-1;capturing=false;picture.texture=null;panel.hide();view.hide();host_strip.hide();get_tree().paused=was_paused;was_paused=false
+ socket=null;pending.clear();role="";started=false;code="";roster.clear();sequence=0;received_sequence=-1;capturing=false;picture.texture=null;panel.hide();view.hide();host_strip.hide();
+ if restore_pause:get_tree().paused=was_paused
+ was_paused=false;leave_button.text="Leave / close"
 func render()->void:
  join_code.visible=role!="host";connect_button.visible=role!="host";name_field.editable=role.is_empty()
  teacher.text=("PRESENTER • "+name_field.text if role=="host" else "Live presenter")+" • code "+code+" • "+str(roster.size())+" / 31 viewers"
  for n in seats.get_child_count():
   var seat:Label=seats.get_child(n).get_child(0);seat.text=str(n+1)+"\n"+(str(roster[n].get("name","Viewer")) if n<roster.size() else "Open seat");seat.modulate=Color("#f2d387") if n<roster.size() else Color("#8cabb7")
+ leave_button.text="End broadcast" if role=="host" else "Leave / close"
+ host_status.text="LIVE • "+code+" • 2 FPS"
  start_button.disabled=role!="host";start_button.text="Return to broadcast" if started else "Start broadcast"
  status.text="Viewers watch without controlling the presenter's game. Leaving restores their own game."
 func packet(data:Dictionary)->void:
@@ -128,8 +145,8 @@ func start_view()->void:
  get_tree().paused=true;view.show();panel.hide()
 func capture()->void:
  if capturing or role!="host" or not started:return
- if not get_tree().get_nodes_in_group("fx_private_assessment").is_empty():host_strip.get_child(0).text="CLASSROOM • PRIVATE REVIEW • HELD";return
- host_strip.get_child(0).text="BROADCAST • LIVE • 2 FPS"
+ if not get_tree().get_nodes_in_group("fx_private_assessment").is_empty():host_status.text="CLASSROOM • PRIVATE REVIEW • HELD";return
+ host_status.text="LIVE • "+code+" • 2 FPS"
  capturing=true
  await RenderingServer.frame_post_draw
  if role!="host" or not started or not get_tree().get_nodes_in_group("fx_private_assessment").is_empty():capturing=false;return
@@ -141,7 +158,7 @@ func capture()->void:
   if bytes.size()<=80000:sequence+=1;send({"type":"class_frame","image":Marshalls.raw_to_base64(bytes),"seq":sequence})
  capturing=false
 func _process(delta:float)->void:
- var size=get_viewport().get_visible_rect().size;var factor=minf(1,minf((size.x-24)/1060,(size.y-24)/620));panel.size=Vector2(1060,620);panel.scale=Vector2.ONE*factor;panel.position=(size-panel.size*factor)*.5;host_strip.position=Vector2(18,size.y-48)
+ var size=get_viewport().get_visible_rect().size;var factor=minf(1,minf((size.x-24)/1060,(size.y-24)/620));panel.size=Vector2(1060,620);panel.scale=Vector2.ONE*factor;panel.position=(size-panel.size*factor)*.5;var pixels=Vector2(get_window().size);var readable_scale=maxf(1,minf(size.x/maxf(1,pixels.x),size.y/maxf(1,pixels.y)));var strip_scale=minf(readable_scale,maxf(.25,(size.x-24)/360));host_strip.size=Vector2(clampf((size.x-24)/strip_scale,360,500),100);host_strip.scale=Vector2.ONE*strip_scale;host_strip.position=Vector2((size.x-host_strip.size.x*strip_scale)*.5,minf(150,maxf(12,size.y-host_strip.size.y*strip_scale-12)));host_strip.visible=role=="host" and started and not panel.visible
  if socket==null:return
  socket.poll();connecting_timer+=delta
  if socket.get_ready_state()==WebSocketPeer.STATE_CLOSED:

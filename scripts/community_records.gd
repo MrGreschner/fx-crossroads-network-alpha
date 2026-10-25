@@ -3,6 +3,8 @@ const UI=preload("res://scripts/studio_ui.gd")
 const FISH=preload("res://scripts/fishing_catalog.gd")
 const ENTRY=Vector2(1035,600)
 const WALL=Rect2(957,403,156,192)
+# Aggregate realm popularity is a top-ten list too; named speed boards are separate.
+const SUMMARY_LIMITS={"heroes":10,"realms":10,"between":5}
 var legacy:Node
 var sync_request:HTTPRequest
 var read_request:HTTPRequest
@@ -33,7 +35,7 @@ func compatible(data:Dictionary)->bool:
  return int(data.get("record_policy",0))>=3 and named is Dictionary and named.get("damage_week") is Array and limits is Dictionary and int(limits.get("heroes",0))>=10 and int(limits.get("damage",0))>=10 and int(limits.get("fish",0))>=10 and int(limits.get("descent",0))>=10 and data.get("fish_boards") is Dictionary
 func board_notice()->String:
  if not snapshot.is_empty() and not compatible(snapshot):return "SERVER UPDATE REQUIRED • Render is still sending older record lists. Deploy the matching server ZIP; your saved records are safe."
- if stale:return "OFFLINE • Showing the last loaded records. Retrying automatically."
+ if stale:return "RECORDS UNAVAILABLE • Retrying automatically." if snapshot.is_empty() else "RECORDS UNAVAILABLE • Showing the last loaded records. Retrying automatically."
  if reading:return "Refreshing community records…"
  return "Updated "+last_refresh+" • refreshes every 30 seconds" if not last_refresh.is_empty() else status
 func setup(owner:Node)->void:
@@ -159,8 +161,9 @@ func received(result:int,code:int,_headers:PackedStringArray,body:PackedByteArra
  if result!=HTTPRequest.RESULT_SUCCESS or code!=200 or not parsed is Dictionary or parsed.get("version")!=1:
   stale=true;board_refresh=15;status="Community records unavailable • retrying automatically; saved records are safe";redraw();return
  if not parsed.get("named",{}) is Dictionary:reject_response("Invalid named records response");return
- for key in ["heroes","realms","between"]:
-  if not parsed.get(key) is Array or parsed[key].size()>(10 if key=="heroes" else 5):reject_response("Invalid community response • keeping the last loaded records");return
+ for key in SUMMARY_LIMITS:
+  if not parsed.get(key) is Array:reject_response("Invalid community %s list • expected a record list" % key);return
+  if parsed[key].size()>int(SUMMARY_LIMITS[key]):reject_response("Invalid community %s list • received %d entries, maximum %d; keeping the last loaded records" % [key,parsed[key].size(),int(SUMMARY_LIMITS[key])]);return
  for key in ["fish_all","fish_week","rarest_all","rarest_week"]:
   var f=parsed.get(key)
   if f!=null and (not f is Dictionary or not FISH.fish().has(f.get("species")) or not (f.get("kg") is float or f.get("kg") is int) or not is_finite(float(f.kg)) or float(f.kg)<=0 or float(f.kg)>10000):reject_response("Invalid fish response • keeping the last loaded records");return

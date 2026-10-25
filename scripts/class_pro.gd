@@ -46,17 +46,17 @@ func open_teacher()->void:
  if account().token.is_empty() or str(account().user.get("role",""))!="teacher":return
  shell("TEACHER WORKSPACE")
  UI.accent(button(content,"Manage Class Pro ↗",launch))
- label(content,"Open your professional class workspace in a separate browser tab. Your existing teacher workspace session is reused; otherwise sign in with your Crossroads teacher account. See students, classes, assignments, submitted work and your gradebook.",18)
+ label(content,"Open your professional class workspace in a separate browser tab. Your existing teacher workspace session is reused; otherwise sign in with your Crossroads teacher account. See students, classes, modules, submitted work and your gradebook.",18)
  button(content,"Learning Academy • course lessons & practice",func():close();account().legacy().game.open_business_academy())
- button(content,"Student progress",func():launch("Students"))
+ button(content,"Students & classes",func():launch("Students & classes"))
  button(content,"Submitted assignments • review & grade",func():launch("Submissions"))
  button(content,"Spotlight • harmless presentation marker",func():get_tree().root.get_node("FXEducationTools").spotlight=true;close())
- button(content,"Existing local class dashboard",func():
+ button(content,"Local class backups • legacy",func():
   if not preload("res://scripts/education_access.gd").review_allowed():set_status("Choose or load your cloud profile first to use local class records.");return
   close();load("res://scripts/teacher_dashboard.gd").open(account().legacy()))
- button(content,"Existing lesson broadcast",func():get_tree().root.get_node("FXClassroom").host())
+ button(content,"Broadcast lesson",func():close();get_tree().root.get_node("FXClassroom").host())
  label(content,"Teacher and Student access do not switch on Game Dev, unlock realms, change combat, or stop normal progress. Close this menu to keep playing.",16)
-const TEACHER_VIEWS=["Overview","Students","Assignments","Submissions","Gradebook","Learning Academy"]
+const TEACHER_VIEWS=["Overview","Students & classes","Students","Modules","Assignments","Submissions","Gradebook","Learning Academy","Venture access & progress"]
 func workspace_url(view:String="Overview")->String:
  var base=account().endpoint.trim_suffix("/")
  if not base.begins_with("https://") and not (OS.is_debug_build() and base.begins_with("http://127.0.0.1:")):return ""

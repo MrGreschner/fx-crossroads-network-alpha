@@ -3,8 +3,6 @@ const S=preload("res://scripts/learning_store.gd")
 const T=preload("res://scripts/teacher_store.gd")
 const UI=preload("res://scripts/studio_ui.gd")
 var previous_menu=""
-var example_level=-1
-var example_data:Dictionary={}
 var legacy:Node
 var panel:PanelContainer
 var content:VBoxContainer
@@ -16,8 +14,8 @@ static func open(owner:Node)->void:
 func setup(owner:Node)->void:
  add_to_group("fx_private_assessment")
  legacy=owner;previous_menu=legacy.game.menu;legacy.game.menu="teacher_dashboard";layer=107;panel=PanelContainer.new();panel.size=Vector2(1100,650);add_child(panel);UI.apply(panel)
- var col=VBoxContainer.new();panel.add_child(col);text(col,"TEACHER • CLASS VIEW",27);UI.accent(button(col,"Manage Class Pro ↗ • students, assignments & grades",func():get_tree().root.get_node("FXClassPro").launch()))
- var row=HBoxContainer.new();col.add_child(row);button(row,"Submission room • 31 seats",func():var r=get_tree().root.get_node("FXEducationRoom");r.dashboard=self;r.open());button(row,"Broadcast lesson",func():get_tree().root.get_node("FXClassroom").host());button(row,"Spotlight",func():get_tree().root.get_node("FXEducationTools").spotlight=true);button(row,"Local portfolio",func():preload("res://scripts/teacher_review.gd").open(legacy));UI.accent(button(row,"Example",func():example_level=1;show_examples()));button(row,"Close",finish)
+ var col=VBoxContainer.new();panel.add_child(col);text(col,"LOCAL CLASS BACKUPS • LEGACY",27);UI.accent(button(col,"Manage Class Pro ↗ • students, modules & grades",func():get_tree().root.get_node("FXClassPro").launch()))
+ var row=HBoxContainer.new();col.add_child(row);button(row,"Submission room • 31 seats",func():var r=get_tree().root.get_node("FXEducationRoom");r.dashboard=self;r.open());button(row,"Broadcast lesson",func():var cast=get_tree().root.get_node("FXClassroom");finish();cast.host());button(row,"Spotlight",func():get_tree().root.get_node("FXEducationTools").spotlight=true);button(row,"Local portfolio",func():preload("res://scripts/teacher_review.gd").open(legacy));button(row,"Close",finish)
  var sc=ScrollContainer.new();sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(sc);sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;preload("res://scripts/touch_list_scroll.gd").attach(sc).form_controls=true
  content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.add_child(content);status=text(col,"Class records are local. Download your profile before leaving a shared computer.",16)
  var bottom=HBoxContainer.new();col.add_child(bottom);button(bottom,"Download class records",func():legacy.game.hero_workshop.write_download(JSON.stringify(T.state()),"crossroads-class-records.json"));button(bottom,"Refresh",render);button(bottom,"Creation review & Showcase",func():load("res://scripts/studio_showcase.gd").open(legacy.game.hero_workshop))
@@ -29,10 +27,10 @@ func text(n:Node,t:String,size:int)->Label:
 func button(n:Node,t:String,f:Callable)->Button:
  var b=Button.new();b.text=t;b.custom_minimum_size.y=44;n.add_child(b);b.pressed.connect(f);return b
 func render()->void:
- if example_level>=0:show_examples();return
  content.add_theme_constant_override("separation",12)
  if not is_in_group("fx_private_assessment"):add_to_group("fx_private_assessment")
  for n in content.get_children():content.remove_child(n);n.queue_free()
+ text(content,"These are older device-local portfolios. Use Manage Class Pro for current modules, cloud submissions, main-outcome assessment and grades.",19)
  var state=T.state()
  if state.students.is_empty():text(content,"Host a Submit assignment room. Students join your code to send their current portfolio automatically.",20)
  for code in state.classes:
@@ -50,8 +48,6 @@ func render()->void:
    var bar=ProgressBar.new();bar.max_value=maxi(1,total);bar.value=ready;bar.custom_minimum_size.y=22;card.add_child(bar);text(card,str(ready)+" / "+str(total)+" outcomes have requested evidence • readiness is not a grade",16)
    for m in d.work:
     for check in preload("res://scripts/learning_auto.gd").checks(d,d.work[m]):text(card,str(check.passed)+" / "+str(check.total)+" • "+check.title,16)
-   for sub in d.submissions:
-    var advice=preload("res://scripts/assessment_advice.gd").module(d,sub.module,sub);text(card,sub.module+" • suggested "+str(advice.score)+" / 100 (provisional)",16)
    button(card,"Review work & mark outcomes",func():review(key));button(card,"Nominate a creation for Showcase",func():nominate_creation(key))
 func review(key:String)->void:
  var entry=T.state().students[key];var page=load("res://scripts/learning_page.gd").new();add_child(page);page.setup(legacy,true,entry.portfolio)
@@ -89,38 +85,6 @@ func finish()->void:
  queue_free()
 func _unhandled_input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:finish();get_viewport().set_input_as_handled()
-
-func show_examples()->void:
- if is_in_group("fx_private_assessment"):remove_from_group("fx_private_assessment")
- for n in content.get_children():content.remove_child(n);n.queue_free()
- content.add_theme_constant_override("separation",8)
- var E=preload("res://scripts/teacher_examples.gd");var definitions=E.definitions()
- text(content,"EXAMPLE • "+definitions.levels[example_level].label+" • FICTIONAL WORK",23).modulate=Color("#f1ce83")
- text(content,"Two submitted modules / two in progress. Scores are illustrative; teachers decide achievement.",16)
- var levels=HBoxContainer.new();content.add_child(levels)
- for i in 3:
-  var pick=button(levels,["1 • Fail","2 • Pass","3 • High grade"][i],func():example_level=i;show_examples())
-  if i==example_level:UI.accent(pick)
- button(levels,"Return to real class",func():example_level=-1;render())
- if not example_data.has(example_level):example_data[example_level]=E.portfolio(example_level)
- var d:Dictionary=example_data[example_level]
- var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_child(grid)
- for code in d.work:
-  var w:Dictionary=d.work[code];var answered=[]
-  for entry in w.entries:if not entry.text.strip_edges().is_empty() and not entry.stage in answered:answered.append(entry.stage)
-  var done=false
-  for sub in d.submissions:if sub.module==code:done=true
-  var card=UI.card(grid,code+" • "+S.catalog()[code].name,"Submitted for review" if done else "Work in progress • not submitted");card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.get_parent().custom_minimum_size.x=500;card.add_theme_constant_override("separation",6)
-  var bar=ProgressBar.new();bar.max_value=S.stages(code).size();bar.value=answered.size();bar.custom_minimum_size.y=22;card.add_child(bar)
-  var ready=S.readiness(d,code,w);var present=0
-  for o in S.assessed_outcomes(code):if ready[o.id].ready:present+=1
-  text(card,str(answered.size())+"/"+str(int(bar.max_value))+" prompts • "+str(present)+"/"+str(S.assessed_outcomes(code).size())+" project outcomes evidence-ready",15)
-  button(card,"Review submitted work" if done else "Inspect unfinished work",func():review_example(code)).custom_minimum_size.y=36
- status.text="Fictional work & scores • click a module to inspect • practice edits are session-only."
-func review_example(code:String)->void:
- var page=load("res://scripts/learning_page.gd").new();page.sample=true;add_child(page);page.setup(legacy,true,example_data[example_level]);page.module=code;page.data.active=code;page.tabs.current_tab=1;page.render()
- var selected=example_level
- page.on_review_save=func(value:Dictionary):example_data[selected]=value.duplicate(true);show_examples()
 
 func nominate_creation(key:String)->void:
  var entry=T.state().students[key]
