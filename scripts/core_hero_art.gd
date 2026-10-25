@@ -20,18 +20,19 @@ static func texture(sprite:String,pose:String="idle")->Texture2D:
   if not FileAccess.file_exists(path) or image.load_png_from_buffer(FileAccess.get_file_as_bytes(path))!=OK:return null
   textures[key]=ImageTexture.create_from_image(image)
  return textures[key]
-func record(id:String,kind:String,sprite:String)->void:
+func record(id:String,kind:String,sprite:String,interval:float=.35)->void:
  if sprite not in HEROES:return
- var duration=.72 if kind=="special" else .62 if kind=="secondary" else .24
- actions[id]={"kind":kind,"duration":duration,"until":Time.get_ticks_msec()+int(duration*1000)}
+ var duration=.72 if kind=="special" else .62 if kind=="secondary" else maxf(.24,minf(interval,1.0))
+ var strike=minf(.14,maxf(.025,interval*.5))
+ actions[id]={"kind":kind,"duration":duration,"strike":strike,"until":Time.get_ticks_msec()+int(duration*1000)}
 func packet(id:String)->Dictionary:
  var state:Dictionary=actions.get(id,{})
  if state.is_empty():return {}
  var left=maxi(0,int(state.until)-Time.get_ticks_msec())
- return {"kind":state.kind,"left":left,"duration":state.duration} if left>0 else {}
+ return {"kind":state.kind,"left":left,"duration":state.duration,"strike":state.get("strike",.12)} if left>0 else {}
 func receive(id:String,state:Dictionary)->void:
  if state.is_empty():actions.erase(id);return
- actions[id]={"kind":str(state.get("kind","")),"duration":clampf(float(state.get("duration",.24)),.1,1),"until":Time.get_ticks_msec()+clampi(int(state.get("left",0)),0,1000)}
+ actions[id]={"kind":str(state.get("kind","")),"duration":clampf(float(state.get("duration",.24)),.1,1),"strike":clampf(float(state.get("strike",.12)),.025,.14),"until":Time.get_ticks_msec()+clampi(int(state.get("left",0)),0,1000)}
 func index_for(id:String,sprite:String,pose:String,point:Vector2,walking:bool,clock:float,channel:bool=false,charging:bool=false)->int:
  var frames:Array=POSES.get(sprite,[0,1,2,5,5,7])
  if sprite=="book" and channel:return int(frames[4])
@@ -40,15 +41,24 @@ func index_for(id:String,sprite:String,pose:String,point:Vector2,walking:bool,cl
  if not state.is_empty() and Time.get_ticks_msec()<int(state.until):
   if state.kind=="special":return int(frames[5])
   if state.kind=="secondary":return int(frames[4])
-  return int(frames[3])
+  var elapsed=float(state.duration)-(int(state.until)-Time.get_ticks_msec())/1000.0
+  if elapsed<float(state.get("strike",.12)):return int(frames[3])
+  return movement_index(sprite,frames,walking,clock)
  if pose in ["attack","attack2"]:return int(frames[3])
  if pose in ["open","spin","secondary"]:return int(frames[4])
  if pose=="special":return int(frames[5])
- if walking:return int(frames[1] if int(clock*7)%2==0 else frames[2])
+ if walking:return movement_index(sprite,frames,walking,clock)
  return int(frames[0])
+static func movement_index(sprite:String,frames:Array,walking:bool,clock:float)->int:
+ if not walking:return int(frames[0])
+ if sprite=="book":return int(frames[1] if sin(clock*3.0)>=0 else frames[2])
+ return int(frames[1] if int(clock*7)%2==0 else frames[2])
 func picture(id:String,sprite:String,pose:String,point:Vector2,walking:bool,clock:float,channel:bool=false,charging:bool=false)->Texture2D:
  var index=index_for(id,sprite,pose,point,walking,clock,channel,charging)
  return texture(sprite,str(index))
 static func body_rect(sprite:String,rect:Rect2,clock:float)->Rect2:
- if sprite=="book":rect.position.y-=sin(clock*3)*1.5
+ if sprite=="book":
+  var smaller=rect.size*.78
+  rect.position+=(rect.size-smaller)*Vector2(.5,1);rect.size=smaller
+  rect.position.y-=6.0+sin(clock*3.0)*2.5
  return rect

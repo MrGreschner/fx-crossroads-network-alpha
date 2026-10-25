@@ -1268,7 +1268,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 	if mode=="descent":delay*=descent.cooldown(id)
 	delay=adventure.combat.v90.pistol_delay(id,stats,delay)
 	cd[kind] = now + int(1000.0*delay);cooldown_at[id] = cd;attack_pose_until[id] = now+240
-	core_art.record(id,kind,str(hero_ids.get(id,"ram")))
+	core_art.record(id,kind,str(hero_ids.get(id,"ram")),delay)
 	var style := str(stats.get("style","melee"))
 	var origin: Vector2 = positions[id]
 	var damage := float(stats.get("damage",20))* (descent.power(id) if mode=="descent" else 1.0)
@@ -2349,7 +2349,7 @@ func _draw() -> void:
 		if Time.get_ticks_msec() < int(stealth_until.get(id,0)): tint.a = 0.43
 		if Time.get_ticks_msec()<int(hit_flash.get(id,0)):tint=Color(1,.45,.4)
 		if hero_id=="goalie":skating_motion.draw_skates(self,str(id),pos)
-		draw_ellipse_shadow(pos)
+		draw_ellipse_shadow(pos,17.0 if hero_id=="book" else 16.0 if hero_id=="basketball" else 23.0)
 		adventure.combat.halloween.draw_mount(self,str(id),camera)
 		if custom_party.runtimes.has(str(id)) and custom_party.runtimes[str(id)].form_texture()!=null:texture=custom_party.runtimes[str(id)].form_texture()
 		var hero_rect:Rect2=adventure.combat.v78.visual_rect(str(id),pos) if hero_id=="gopher" else fish_motion.sprite_rect(str(id),pos) if hero_id=="ripplejaw" else wing_motion.sprite_rect(str(id),pos) if hero_id=="velvetwing" else basketball_motion.sprite_rect(str(id),pos) if hero_id=="basketball" else Rect2(pos+adventure.combat.v48.visual_offset(str(id))-Vector2(28,42),Vector2(56,64))
@@ -2453,9 +2453,9 @@ func _draw() -> void:
 
 	_profile_section("hud_draw",section_began)
 
-func draw_ellipse_shadow(pos: Vector2) -> void:
+func draw_ellipse_shadow(pos: Vector2, radius:float=23.0) -> void:
 	world_transform(pos+Vector2(0,18),0,Vector2(1,0.3))
-	draw_circle(Vector2.ZERO,23,Color(0.02,0.07,0.09,0.3))
+	draw_circle(Vector2.ZERO,radius,Color(0.02,0.07,0.09,0.3))
 	world_transform()
 
 var world_tile_cache:Dictionary={}

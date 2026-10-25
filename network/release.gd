@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V206-core-hero-neutral-poses"
+const BUILD="V207-core-hero-soft-poses"
 const REPORT_SCHEMA=3

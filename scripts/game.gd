@@ -1053,7 +1053,7 @@ func fire(kind: String) -> void:
 		if str(cooldown_item.get("effect", "")) == "cooldown": delay *= 1.0 - float(cooldown_item.get("amount", 0)) / 100.0
 	delay=adventure.combat.v90.pistol_delay("solo",stats,delay)
 	cooldowns[kind] = delay
-	core_art.record("solo",kind,character_id)
+	core_art.record("solo",kind,character_id,delay)
 	var direction := aim_direction()
 	var damage := float(stats.get("damage", 15)) + bonus_damage
 	if upgrade == "primary" and kind == "primary":
@@ -1956,7 +1956,9 @@ func draw_world() -> void:
 	hero_rect.position+=adventure.combat.classics.body_offset("solo")
 	hero_rect=adventure.combat.v110.resize("solo",hero_rect)
 	hero_rect=core_art.body_rect(sprite,hero_rect,visual_clock)
-	if sprite=="basketball":draw_circle(position_in_world-camera+Vector2(0,20),13,Color(0,0,0,.23))
+	if sprite=="basketball":draw_circle(position_in_world-camera+Vector2(0,20),11,Color(0,0,0,.23))
+	if sprite=="book":
+		world_transform(position_in_world-camera+Vector2(0,18),0,Vector2(1,.3));draw_circle(Vector2.ZERO,15,Color(0,0,0,.18));world_transform()
 	if adventure.combat.v90.pending_rebirth("solo"):pass
 	elif sprite=="snail" and adventure.combat.v79.moving("solo"):
 		adventure.combat.v79.draw_shell(self,"solo",position_in_world-camera,art.get(hero_art),Color.WHITE)

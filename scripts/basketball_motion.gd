@@ -1,5 +1,6 @@
 extends RefCounted
 ## Visual-only basketball gait. Ground position and collision are never changed.
+const DIAMETER=38.0
 var states:Dictionary={}
 func step(id:String,point:Vector2,delta:float,enabled:bool)->void:
  if not enabled:states.erase(id);return
@@ -17,5 +18,5 @@ func sprite_rect(id:String,point:Vector2)->Rect2:
  var height:=92*phase*(1-phase)
  var impact:=maxf(0,1-minf(phase,1-phase)/.1) if phase>0 else 0.0
  var stretch:=sin(phase*PI)*.035
- var size:=Vector2(46*(1+.15*impact-stretch),46*(1-.17*impact+stretch))
+ var size:=Vector2(DIAMETER*(1+.15*impact-stretch),DIAMETER*(1-.17*impact+stretch))
  return Rect2(point+Vector2(-size.x*.5,22-size.y-height),size)

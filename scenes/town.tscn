@@ -96,7 +96,7 @@ metadata/label = "CHOOSE A REALM"
 [node name="ElderRam" type="Sprite2D" parent="Landmarks"]
 position = Vector2(740, 660)
 texture = ExtResource("4")
-scale = Vector2(2, 2)
+scale = Vector2(0.9, 0.9)
 metadata/label = "ELDER RAM"
 
 [node name="Lamp1" type="Sprite2D" parent="Landmarks"]
