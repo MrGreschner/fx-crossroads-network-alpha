@@ -2,8 +2,8 @@
   "id": "voyage_coast",
   "name": "Coastal Water Voyage",
   "size": [
-    14000,
-    10000
+    28000,
+    20000
   ],
   "terrain": "river_water",
   "scene": "res://scenes/realms/voyage_coast.tscn",
@@ -13,6 +13,6 @@
   "xp_per_level": 4,
   "unlock_cost": 0,
   "difficulty_label": "Voyage \u2022 return alive",
-  "description": "Expanded offshore exploration: current belts, submerged wrecks, reefs and a night island that changes position each night.",
+  "description": "Vast offshore exploration: seven current belts, drifting debris, strong swells and an uncharted island in a new deep-water location each night.",
   "difficulty_tier": "medium"
 }

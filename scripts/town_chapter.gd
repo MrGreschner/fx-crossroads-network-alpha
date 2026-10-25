@@ -80,6 +80,12 @@ static func river_surface_visible(point:Vector2)->bool:
  # Decks are already baked into the ground layer; live water must stay beneath them.
  return not BRIDGE.grow(4).has_point(point) and not HOME_BRIDGE.grow(4).has_point(point)
 func draw_ground(c:Node2D,camera:Vector2)->void:
+ # Water and collision share RIVER even when a restored atlas has shorter bounds.
+ # Three inexpensive fills beneath the cached scenery prevent invisible river tails.
+ if Rect2(camera,c.VIEW).grow(20).intersects(RIVER.grow(20)):
+  c.draw_rect(Rect2(RIVER.position-camera,RIVER.size),Color("#347889"))
+  for x in [RIVER.position.x-12,RIVER.end.x]:
+   c.draw_rect(Rect2(Vector2(x,RIVER.position.y)-camera,Vector2(12,RIVER.size.y)),Color("#8b9a7c"))
  preload("res://scripts/town_art39.gd").draw(c,"chapter_ground",camera)
  var t:=Time.get_ticks_msec()/1000.0
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))

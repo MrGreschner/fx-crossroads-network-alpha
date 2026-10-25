@@ -409,10 +409,6 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
    var arc=sin(jump/1.4*PI);var t=C.texture(str(spot.fish[0]));canvas.draw_texture_rect(t,Rect2(p+Vector2((jump/.7-1)*35,-arc*52)-Vector2(24,13),Vector2(48,27)),false)
   # Small shore marker makes the interaction readable without covering the water.
   var shore=bank-camera
-  if region=="town":
-   canvas.draw_rect(Rect2(shore-Vector2(36,20),Vector2(72,42)),Color("#a08b68"))
-   canvas.draw_rect(Rect2(shore-Vector2(36,20),Vector2(72,42)),Color("#d2b78a"),false,2)
-   for plank in 5:canvas.draw_line(shore+Vector2(-34+plank*14,-18),shore+Vector2(-34+plank*14,20),Color("#75614f"),1)
   canvas.draw_line(shore+Vector2(-12,6),shore+Vector2(-12,-24),Color("#baa177"),3);canvas.draw_circle(shore+Vector2(-12,-27),6,Color("#96cbd4"));canvas.draw_arc(shore,23,0,PI,18,Color(.7,.88,.85,.35),2)
  if busy() and not cast_spot.is_empty() and region==cast_region:
   var water=Vector2(float(cast_spot.water[0]),float(cast_spot.water[1]))-camera;var hero=local_pos()-camera

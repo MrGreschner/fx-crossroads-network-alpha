@@ -46,6 +46,7 @@ func refresh(v:Node)->void:
  var predicted=p.level_for(mini(1000000000,int(p.state().xp)+xp))
  if predicted>level:pool_label.text+=" • Lv %d → %d" % [level,predicted]
  hazard.text=v.surf.warning_at(v.boat)
+ if hazard.text.is_empty() and v.debris.warning_at(v.boat):hazard.text="DRIFTING DEBRIS • steer clear"
  if hazard.text.is_empty() and v.night():hazard.text="Night • stay near the lantern"
  hazard.visible=not hazard.text.is_empty()
  v.anchor_button.text="Ashore" if v.ashore else "Sail" if v.anchored else "Anchor";v.anchor_button.disabled=v.ashore

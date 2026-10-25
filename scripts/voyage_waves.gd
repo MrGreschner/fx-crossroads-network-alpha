@@ -8,7 +8,7 @@ var serial=0
 func reset()->void:waves.clear();age=0;next_open=8;next_surf=5;serial=0
 func add_front(origin:Vector2,direction:Vector2,large:bool,shore:bool)->void:
  if waves.size()>=8:return
- waves.append({"origin":origin,"dir":direction.normalized(),"born":age,"large":large,"shore":shore,"lead":1.8,"life":8.0,"speed":220.0 if large else 165.0,"width":650.0 if large else 420.0,"power":520.0 if large else 340.0})
+ waves.append({"origin":origin,"dir":direction.normalized(),"born":age,"large":large,"shore":shore,"lead":1.8,"life":12.0 if large else 8.0,"speed":300.0 if large else 165.0,"width":650.0 if large else 420.0,"power":950.0 if large else 340.0,"depth":180.0 if large else 85.0})
 func crest(w:Dictionary)->Vector2:return Vector2(w.origin)+Vector2(w.dir)*maxf(0,age-float(w.born)-float(w.lead))*float(w.speed)
 func step(v:Node,dt:float)->void:
  if v.route!="coast":waves.clear();return
@@ -32,9 +32,9 @@ func force_at(p:Vector2)->Vector2:
  for w in waves:
   var t=age-float(w.born)-float(w.lead)
   if t<0:continue
-  var rel=p-crest(w);var across=absf(rel.dot(Vector2(w.dir).orthogonal()))/(float(w.width)*.5);var depth=absf(rel.dot(w.dir))/85.0
+  var rel=p-crest(w);var across=absf(rel.dot(Vector2(w.dir).orthogonal()))/(float(w.width)*.5);var depth=absf(rel.dot(w.dir))/float(w.get("depth",85.0))
   force+=Vector2(w.dir)*float(w.power)*maxf(0,1-depth)*clampf((1-across)*4,0,1)*clampf((float(w.life)-t)/1.3,0,1)
- return force.limit_length(620)
+ return force.limit_length(1100)
 func warning_at(p:Vector2)->String:
  for w in waves:
   var relative=p-crest(w)

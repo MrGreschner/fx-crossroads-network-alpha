@@ -75,7 +75,8 @@ func storage_count()->int:
  var s=state();return s.kept.filter(func(c):return c.id in s.stored_ids).size()
 func storage_capacity()->int:return 20+int(state().storage_upgrades)*10
 func storage_access()->bool:
- return legacy.game.mode=="town" and is_instance_valid(legacy.game.fishing.room)
+ var voyage=legacy.game.get("voyage")
+ return (legacy.game.mode=="town" and is_instance_valid(legacy.game.fishing.room)) or (voyage!=null and voyage.harbour_access())
 func transfer(id:String,to_storage:bool)->bool:
  if not storage_access() or specimen(id).is_empty() or stored(id)==to_storage:return false
  if to_storage and storage_count()>=storage_capacity() or not to_storage and bag_count()>=capacity():return false
@@ -226,7 +227,7 @@ static func valid_voyage(v:Variant)->bool:
  for key in ["night_seed","island_found_night"]:
   if v.has(key) and (not (v[key] is int or v[key] is float) or not is_finite(float(v[key])) or float(v[key])!=floor(float(v[key])) or float(v[key])<(-1 if key=="island_found_night" else 0) or float(v[key])>10000000):return false
  if not v.get("boat",null) is Array or v.boat.size()!=2:return false
- var bounds=[14000,10000] if v.route=="coast" else [9000,6800]
+ var bounds=[28000,20000] if v.route=="coast" else [9000,6800]
  for axis in 2:
   var n=v.boat[axis]
   if not (n is int or n is float) or not is_finite(float(n)) or n<0 or n>bounds[axis]:return false

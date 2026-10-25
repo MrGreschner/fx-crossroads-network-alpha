@@ -5,8 +5,8 @@ const UI=preload("res://scripts/studio_ui.gd")
 const PIER=Vector2(1860,2300)
 const HOME=Vector2(1100,5650)
 const WORLD=Vector2(9000,6800)
-const OCEAN_WORLD=Vector2(14000,10000)
-const NIGHT_SITES=[Vector2(11800,1700),Vector2(12800,4200),Vector2(11000,7700),Vector2(10800,2000),Vector2(12400,6500),Vector2(10500,4600)]
+const OCEAN_WORLD=Vector2(28000,20000)
+const CURRENT_BANDS=[3400.0,6100.0,8400.0,11500.0,15800.0,20500.0,24200.0]
 var night_seed=0
 var island_found_night=-1
 var cached_night=-999999
@@ -53,6 +53,7 @@ var darkness_key=""
 var darkness_builds=0
 var is_banking=false
 var surf=preload("res://scripts/voyage_waves.gd").new()
+var debris=preload("res://scripts/voyage_debris.gd").new()
 const ISLES=preload("res://scripts/voyage_islands.gd")
 func setup(g:Node)->void:
  game=g;rng.randomize();hud=CanvasLayer.new();hud.layer=57;add_child(hud)
@@ -69,11 +70,14 @@ func night()->bool:
  var hour=float(context().hour);return hour>=20 or hour<6
 func world_size()->Vector2:return OCEAN_WORLD if route=="coast" else WORLD
 func night_number()->int:return int(game.town_life.calendar.day_number)-(1 if float(context().hour)<20 else 0)
+static func night_site(number:int)->Vector2:
+ var random=RandomNumberGenerator.new();random.seed=number*7919+37
+ # Full deep-water search area, not a repeating circuit of six known sites.
+ return Vector2(random.randf_range(11000,26400),random.randf_range(1400,18600))
 func night_center()->Vector2:
  var number=night_number()
  if number==cached_night:return cached_night_center
- var random=RandomNumberGenerator.new();random.seed=number*7919+37
- cached_night=number;cached_night_center=NIGHT_SITES[posmod(number*5,6)]+Vector2(random.randf_range(-230,230),random.randf_range(-180,180))
+ cached_night=number;cached_night_center=night_site(number)
  return cached_night_center
 func safe_water_near(center:Vector2)->Vector2:
  for i in 16:
@@ -88,9 +92,9 @@ func safe_water_near(center:Vector2)->Vector2:
 func current_at(point:Vector2)->Vector2:
  var flow=Vector2(sin(point.y/850+elapsed*.05),cos(point.x/1100-elapsed*.04))*(55 if route=="coast" else 38)
  if route=="coast":
-  for band in [3400.0,6100.0,8400.0]:
+  for band in CURRENT_BANDS:
    var strength=maxf(0,1-absf(point.x-band)/650.0)
-   flow+=Vector2(sin(point.y/680+band*.001)*70,(-150 if band==6100 else 150))*strength
+   flow+=Vector2(sin(point.y/680+band*.001)*70,(-150 if int(band) in [6100,11500,20500] else 150))*strength
   var eddy=point-Vector2(10600,3400)
   if eddy.length()<1250 and eddy.length()>20:flow+=eddy.normalized().orthogonal()*90*(1-eddy.length()/1250)
  if str(context().weather)=="Storm":flow*=1.5
@@ -104,7 +108,7 @@ func rocks()->Array:
  var key=route+":"+str(night_number())+":"+str(night())
  if cached_rock_key==key:return cached_rocks
  var result:Array=[]
- for i in (78 if route=="coast" else 48):
+ for i in (312 if route=="coast" else 48):
   var p=Vector2(1650+fposmod(i*977,world_size().x-2400),650+fposmod(i*1327,world_size().y-1500))
   var near_island=false
   for isle in islands():
@@ -172,7 +176,7 @@ func launch(destination:String,resume:bool=false)->void:
   cages=previous.cages.duplicate(true);seen=previous.seen.duplicate();repairs=previous.repairs.duplicate()
  game.start_run(false,"voyage_"+route)
  if game.region_id!="voyage_"+route:return
- active=true;surf.reset();last_night=night();game.level=6;game.position_in_world=boat;game.update_camera();game.enemies=game.enemies.filter(func(e):return land_at(e.pos))
+ active=true;surf.reset();debris.reset();last_night=night();game.level=6;game.position_in_world=boat;game.update_camera();game.enemies=game.enemies.filter(func(e):return land_at(e.pos))
  if resume:
   game.health=minf(game.max_health(),maxf(1,float(previous.get("hero_hp",game.health))))
   var camp_hp:Dictionary=previous.get("camp_hp",{})
@@ -267,12 +271,36 @@ func abandon(after:Callable=Callable())->void:
   if after.is_valid():after.call()
   dialog.queue_free())
  dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(480,180))
+func harbour_access()->bool:
+ return active and not ashore and hull>0 and game.health>0 and game.mode=="run" and game.region_id=="voyage_"+route and boat.distance_to(HOME)<=260
+func sell_stored(id:String)->bool:
+ if not harbour_access() or not records().stored(id):return false
+ var catch=records().specimen(id)
+ if catch.is_empty():return false
+ var wallet=game.legacy.glimmers;var price=wallet.fish_price(catch)
+ if price<=0 or not wallet.credit(price):return false
+ records().release(id)
+ return true
+func stored_action(id:String,sell:bool)->void:
+ if not harbour_access() or not records().stored(id):return
+ var catch=records().specimen(id)
+ if catch.is_empty():return
+ var dialog=ConfirmationDialog.new();dialog.title=("Sell stored fish?" if sell else "Release stored fish?")
+ dialog.dialog_text=str(C.fish()[catch.species].name)+" • %.2f kg" % float(catch.kg)+(" • %d Glimmers" % game.legacy.glimmers.fish_price(catch) if sell else "")+"\nRemoves this older stored catch and any tank/favourite placement. Your current voyage cargo is untouched. Journal and records remain."
+ overlay.add_child(dialog)
+ dialog.confirmed.connect(func():
+  if harbour_access() and records().stored(id):
+   if sell:
+    game.fishing.status="Stored fish sold." if sell_stored(id) else "Could not sell this fish. No catch removed."
+   else:records().release(id);game.fishing.status="Older stored fish released."
+  dialog.queue_free();open_menu("storage"))
+ dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(520,220))
 func bank()->void:
- if not active or boat.distance_to(HOME)>260:return
+ if not harbour_access():return
  var keep_count=0
  for item in cargo:
   if item.keep and item.catch.id not in records().state().recent:keep_count+=1
- if keep_count>0 and records().storage_count()+keep_count>records().storage_capacity():game.fishing.status="Ripple & Reel storage is full. Release cargo to free space, then finish landing. Sell fish or upgrade storage before sailing again.";open_menu("landing");return
+ if keep_count>0 and records().storage_count()+keep_count>records().storage_capacity():game.fishing.status="Not enough storage room. Use Manage stored fish to sell older catches, move them to your bag or upgrade storage. Your voyage catch is safe while this session remains open.";open_menu("landing");return
  is_banking=true
  # Pop first, then complete() saves both reward and remaining queue together.
  var s=records().state();s.voyage=manifest_state(true);records().save()
@@ -289,13 +317,28 @@ func bank()->void:
   var activity=game.get_tree().root.get_node_or_null("FXActivity")
   if activity!=null:activity.event(game,"fish_catch","completed",0,{"species_id":str(item.catch.species),"fish_level":records().progress.level(),"fish_weight":float(item.catch.kg),"fish_xp_gain":records().progress.last_xp,"fish_trophy":1 if C.is_trophy(item.catch) else 0,"fish_kept":1 if item.keep else 0})
  s.erase("voyage");records().save();is_banking=false;active=false;cages.clear();hud.hide();close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=PIER-Vector2(80,0);game.update_camera();game.message="SAFE RETURN • %d catches recorded • fishing XP, discoveries and community records updated." % total;game.message_time=8
+func obstruction(from:Vector2,to:Vector2)->String:
+ # Sweep the boat path so a strong wave cannot skip a narrow obstacle.
+ for rock in rocks():
+  if Geometry2D.get_closest_point_to_segment(rock.p,from,to).distance_to(rock.p)<float(rock.r)+25:return "rock"
+ var samples=maxi(1,ceili(from.distance_to(to)/16))
+ for n in range(samples+1):
+  var point=from.lerp(to,float(n)/samples)
+  if point.x<520:return "shore"
+  for isle in islands():
+   if ISLES.distance_to_shore(isle,point)<40:return "shore"
+ return debris.hit(from,to)
+func strike(kind:String)->void:
+ if impact>0:return
+ hull-=8 if kind=="drifting debris" else 12;impact=1.2
+ game.message="Hull struck "+kind+"! Steer clear of hazards; waves can push you into them.";game.message_time=4
 func step(delta:float)->bool:
  hud.visible=active and game.menu.is_empty() and game.session_menu.page.is_empty() and game.presentation.page.is_empty()
  if not active:return false
  if not game.menu.is_empty() or not game.session_menu.page.is_empty() or not game.presentation.page.is_empty():return not ashore
  if not ashore:
   game.VIEW=game.get_viewport_rect().size;game.visual_clock+=delta;game.run_time+=delta;game.message_time=maxf(0,game.message_time-delta);game.hint="Anchor to fish • E near islands to land • bring catches home alive"
- elapsed+=minf(delta,.1);impact=maxf(0,impact-delta);surf.step(self,minf(delta,.1))
+ elapsed+=minf(delta,.1);impact=maxf(0,impact-delta);surf.step(self,minf(delta,.1));debris.step(self,minf(delta,.1))
  var now_night=night()
  if last_night and not now_night and route=="coast" and boat.distance_to(night_center())<1000:
   ashore=false;boat=safe_water_near(night_center());game.position_in_world=boat;game.fishing.cancel("Dawn • Night Island slips beneath the mist. You are back aboard.")
@@ -310,24 +353,17 @@ func step(delta:float)->bool:
   if not anchored:
    var current=current_at(boat)
    velocity=velocity.lerp(move*280+current+surf.force_at(boat),1-exp(-delta*3))
-   var next=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100));var blocked=next.x<520
-   for rock in rocks():
-    if next.distance_to(rock.p)<float(rock.r)+25:blocked=true
-   for isle in islands():
-    if ISLES.distance_to_shore(isle,next)<40:blocked=true
-   if blocked:
-    if impact<=0:hull-=12;impact=1.2;game.message="Hull struck a hazard! Approach shore slowly.";game.message_time=3
-    velocity=-velocity*.4
+   var next=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100))
+   var hit=obstruction(boat,next)
+   if not hit.is_empty():strike(hit);velocity=-velocity*.4
    else:boat=next
    if move.length()>.1:facing=lerp_angle(facing,velocity.angle(),minf(1,delta*6))
   else:
    velocity=surf.force_at(boat)*.18
-   var drift=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100));var safe=drift.x>=520
-   for isle in islands():
-    if ISLES.distance_to_shore(isle,drift)<40:safe=false
-   for rock in rocks():
-    if drift.distance_to(rock.p)<float(rock.r)+25:safe=false
-   if safe:boat=drift
+   var drift=(boat+velocity*minf(delta,.05)).clamp(Vector2(100,100),world_size()-Vector2(100,100))
+   var hit=obstruction(boat,drift)
+   if hit.is_empty():boat=drift
+   else:strike(hit)
   game.position_in_world=boat;game.update_camera()
   if str(context().weather)=="Storm":
    weather_timer+=delta
@@ -364,6 +400,7 @@ func close_menu()->void:
  overlay=null;chart=false
  if game.menu=="voyage":game.menu=""
 func open_menu(kind:String)->void:
+ if kind=="storage" and not harbour_access():return
  close_menu();game.fishing.cancel("");game.menu="voyage";game.mobile.reset_controls()
  overlay=CanvasLayer.new();overlay.layer=95;add_child(overlay)
  var shade=ColorRect.new();shade.color=Color(.015,.035,.06,.96);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);overlay.add_child(shade)
@@ -371,8 +408,10 @@ func open_menu(kind:String)->void:
  var scroll=ScrollContainer.new();panel.add_child(scroll);scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_theme_constant_override("separation",12);scroll.add_child(col)
  var f=game.fishing
- var row=HBoxContainer.new();col.add_child(row);f.label(row,"RIPPLE & REEL • "+("MARINA" if kind=="pier" else "SAFE HARBOUR" if kind=="landing" else "EXPEDITION CHART & CARGO"),22);f.button(row,"Close",close_menu)
- if kind=="pier":
+ var row=HBoxContainer.new();col.add_child(row);f.label(row,"RIPPLE & REEL • "+("MARINA" if kind=="pier" else "SAFE HARBOUR STORAGE" if kind=="storage" else "SAFE HARBOUR" if kind=="landing" else "EXPEDITION CHART & CARGO"),22);f.button(row,"Close",close_menu)
+ if kind=="storage":
+  preload("res://scripts/voyage_storage.gd").build(self,col)
+ elif kind=="pier":
   f.button(col,"Sell landed fish • Ripple & Reel",func():close_menu();game.fishing.open_sales())
   f.label(col,"Take the helm. Move with WASD / arrows or the touch stick. Drop anchor to fish. E or Land boards islands and returns at the harbour. Bring every voyage catch home alive before it earns XP or records. A voyage is one committed attempt. Sail back alive to bank rewards. Quitting, leaving or being KO’d ends it and loses every unbanked reward.",17)
   var saved:Dictionary=records().state().get("voyage",{})
@@ -386,14 +425,15 @@ func open_menu(kind:String)->void:
    var coast=UI.card(col,"DOWNSTREAM • COASTAL WATERS","Deep Sea Rod required • saltwater habitats, currents, surf and an island found only at night.")
    if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
    else:f.button(coast,"Buy Deep Sea Rod • 1,200 Glimmers",purchase)
-  f.label(col,"Lake, ocean and town share the same real 24-hour Edmonton clock and weather, throughout every voyage. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
+  f.label(col,"Lake, ocean and town share the same real 24-hour Edmonton clock and weather, throughout every voyage. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The ocean is four times its former area. Drifting logs, broken spars and floating cargo can damage the hull; the largest waves push much farther, even against an anchor. Night Island moves to an unpredictable deep-water location each night and is not charted until found. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
  else:
   f.label(col,"Released at sea: %d • Safe-return XP pool: +%d" % [release_log.size(),pending_xp()],16)
   f.label(col,"Unbanked cargo • %d/%d • Ripple & Reel storage space %d • %s" % [cargo.size(),capacity(),maxi(0,records().storage_capacity()-records().storage_count()),game.fishing.status],17)
   var map=Control.new();map.custom_minimum_size=Vector2(700,300);col.add_child(map);map.draw.connect(func():draw_chart(map))
-  f.label(col,"Chart: gold = harbour • cream = island • cyan = fishing habitat • orange = cage • arrows = currents. Night Island is shown only while it is above the water.",15)
+  f.label(col,"Chart: gold = harbour • cream = island • cyan = fishing habitat • orange = cage • arrows = currents. Night Island is charted only after you find it that night. Drifting debris is not marked: watch the water ahead.",15)
   if kind=="landing":
-   f.label(col,"Release any kept cargo below to free space. Kept catches and the separate release log earn XP only on safe landing. Unrecovered cages are left behind. Your existing collection is never at risk.",17)
+   f.label(col,"Manage older stored fish or upgrade storage here before unloading. You do not need to release your new catches. Kept catches and released catches earn XP only on safe landing. Unrecovered cages are left behind.",17)
+   f.button(col,"Manage stored fish • sell / move / upgrade",func():open_menu("storage"))
    f.button(col,"Land safely • record catches & earn XP",bank)
   else:
    if ashore:f.button(col,"Use island repair timber • +35 hull, once per island",repair)
@@ -407,9 +447,10 @@ func open_menu(kind:String)->void:
 func draw_chart(c:Control)->void:
  var size=Vector2(minf(800,c.size.x),300);c.draw_rect(Rect2(Vector2.ZERO,size),Color('#13384d'));var scale_xy=size/world_size()
  if route=="coast":
-  for band in [3400.0,6100.0,8400.0]:c.draw_rect(Rect2(Vector2(band-500,0)*scale_xy,Vector2(1000,world_size().y)*scale_xy),Color('#64b4bd',.13))
- for x in range(0,int(world_size().x),1000):
-  for y in range(0,int(world_size().y),1000):
+  for band in CURRENT_BANDS:c.draw_rect(Rect2(Vector2(band-500,0)*scale_xy,Vector2(1000,world_size().y)*scale_xy),Color('#64b4bd',.13))
+ var chart_step=2000 if route=="coast" else 1000
+ for x in range(0,int(world_size().x),chart_step):
+  for y in range(0,int(world_size().y),chart_step):
    var world_point=Vector2(x+500,y+500);var p=world_point*scale_xy;var direction=current_at(world_point).normalized()*11
    c.draw_line(p,p+direction,Color('#547e8f'),1);c.draw_line(p+direction,p+direction*.6+direction.orthogonal()*.3,Color('#547e8f'),1)
  for isle in islands():
@@ -470,6 +511,7 @@ func draw_ground(c:Node2D,cam:Vector2)->void:
  for y in range(0,int(world_size().y)+201,220):inland.append(Vector2(250+sin(y*.003)*65,y)-cam)
  inland.append(Vector2(0,world_size().y)-cam);c.draw_colored_polygon(inland,Color('#4b705b'))
  surf.draw_on(c,cam)
+ debris.draw_on(c,cam)
  for rock in rocks():
   if not view.has_point(rock.p):continue
   c.draw_circle(rock.p-cam,float(rock.r)+12,Color('#50747c'));c.draw_circle(rock.p-cam,float(rock.r),Color('#69797c'));c.draw_arc(rock.p-cam,float(rock.r)+20,0,TAU,22,Color('#b3c6c3'),3)
@@ -508,7 +550,7 @@ func draw_ground(c:Node2D,cam:Vector2)->void:
  draw_landmarks(c,cam,view)
  draw_boat(c,cam)
 func draw_landmarks(c:Node2D,cam:Vector2,view:Rect2)->void:
- var sites=[Vector2(1750,3200),Vector2(3850,2100),Vector2(6500,4400),Vector2(5700,1900)] if route=="lake" else [Vector2(3900,5200),Vector2(6000,2100),Vector2(8650,6100),Vector2(11300,5500),Vector2(12600,8500)]
+ var sites=[Vector2(1750,3200),Vector2(3850,2100),Vector2(6500,4400),Vector2(5700,1900)] if route=="lake" else [Vector2(3900,5200),Vector2(6000,2100),Vector2(8650,6100),Vector2(11300,5500),Vector2(12600,8500),Vector2(14500,2800),Vector2(17200,6900),Vector2(20400,12300),Vector2(24100,4500),Vector2(25300,16000),Vector2(13400,14700),Vector2(18200,17400)]
  for i in sites.size():
   var world:Vector2=sites[i]
   if not view.grow(260).has_point(world):continue
