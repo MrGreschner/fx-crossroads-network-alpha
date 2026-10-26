@@ -20,6 +20,13 @@ var cataclysm:=-1.0
 var navigation:AStarGrid2D
 var darkness:Texture2D
 var lamp_texture:Texture2D
+var room_darkness:Texture2D
+var room_darkness_floor:=-1
+var room_darkness_field:=Rect2()
+var light_uvs:=PackedVector2Array()
+var light_indices:=PackedInt32Array()
+const EDGE_PREVIEW_FLOORS=6.0
+const LIGHT_GRID=8
 var interact_at:Dictionary={}
 static func scaling(floor:int)->Dictionary:
  var d=maxi(0,mini(floor,100)-60)
@@ -259,13 +266,17 @@ func step(delta:float)->void:
   var speed=float(spec.speed)*float(scaling(game.floor_number).speed)
   if spec.role=="berserker" and float(e.hp)<float(e.max_hp)*.45:speed*=1.4
   if int(lamp.get("thief",0))==int(e.uid):
-   var retreat=Vector2(230,230) if int(e.uid)%2==0 else game.FIELD.size-Vector2(230,230)
+   var retreat=point(e.get("lantern_retreat",pack(Vector2(230,230) if int(e.uid)%2==0 else game.FIELD.size-Vector2(230,230))))
    if (e.pos as Vector2).distance_to(retreat)<80:retreat=game.FIELD.size-retreat
-   walk_to(e,retreat,delta,speed*.95);continue
-  if spec.role=="thief" and clock>float(interact_at.get("protection",0)):
+   e.lantern_retreat=pack(retreat)
+   walk_to(e,retreat,delta,speed*.95);lamp.pos=pack(e.pos);continue
+  if spec.role=="thief" and int(lamp.get("thief",0))==0 and clock>float(interact_at.get("protection",0)):
    goal=lamp_pos();distance=(e.pos as Vector2).distance_to(goal)
-   if distance<48:
-    lamp.holder="";lamp.thief=int(e.uid);lamp.pos=pack(e.pos);game.status_label.text="The Wickpinch has your lantern! Defeat it, then E to retrieve it.";continue
+   if distance<44 and segment_clear(e.pos,goal):
+    lamp.holder="";lamp.thief=int(e.uid);lamp.pos=pack(e.pos);e.erase("lantern_retreat")
+    game.status_label.text="The Wickpinch has your lantern! Defeat it, then E to retrieve it.";continue
+   # A lantern grab is not a melee attack: close the old48–65px dead zone.
+   walk_to(e,goal,delta,speed);continue
   var ranged=spec.role in ["ranged","healer","summoner","guardian","shield"]
   if ranged:
    var angle=float(posmod(int(e.uid),24))*TAU/24
@@ -430,16 +441,51 @@ func make_darkness()->void:
  darkness=ImageTexture.create_from_image(image)
  var svg=Image.new()
  if svg.load_svg_from_string(FileAccess.get_file_as_string("res://assets/descent203/lantern.svg"))==OK:lamp_texture=ImageTexture.create_from_image(svg)
+static func edge_factor(world:Vector2,field:Rect2)->float:
+ var normalized=(world-field.get_center())/(field.size*.5)
+ return smoothstep(.3,1.2,normalized.length())
+static func depth_opacity(floor:int,world:Vector2,field:Rect2)->float:
+ if floor<1 or floor>100:return 0.0
+ return clampf((floor-1+EDGE_PREVIEW_FLOORS*edge_factor(world,field))/34.0,0,1)*.99
+func ensure_room_darkness()->void:
+ if room_darkness!=null and room_darkness_floor==game.floor_number and room_darkness_field==game.FIELD:return
+ room_darkness_floor=game.floor_number;room_darkness_field=game.FIELD
+ var image=Image.create(128,96,false,Image.FORMAT_RGBA8)
+ for y in 96:
+  for x in 128:
+   var world=game.FIELD.position+game.FIELD.size*Vector2(float(x)/127,float(y)/95)
+   image.set_pixel(x,y,Color(.018,.023,.032,depth_opacity(game.floor_number,world,game.FIELD)))
+ room_darkness=ImageTexture.create_from_image(image)
+func draw_room_rect(c:Node2D,rect:Rect2,camera:Vector2)->void:
+ if rect.size.x<=0 or rect.size.y<=0:return
+ var tex_size=Vector2(room_darkness.get_size())
+ var source=Rect2((rect.position+camera-game.FIELD.position)/game.FIELD.size*tex_size,rect.size/game.FIELD.size*tex_size)
+ c.draw_texture_rect_region(room_darkness,rect,source,Color.WHITE,false,false)
+func prepare_light_grid()->void:
+ if not light_uvs.is_empty():return
+ for y in range(LIGHT_GRID+1):
+  for x in range(LIGHT_GRID+1):light_uvs.append(Vector2(float(x)/LIGHT_GRID,float(y)/LIGHT_GRID))
+ for y in LIGHT_GRID:
+  for x in LIGHT_GRID:
+   var a=y*(LIGHT_GRID+1)+x;var b=a+1;var d=a+LIGHT_GRID+1;var e=d+1
+   light_indices.append_array(PackedInt32Array([a,b,e,a,e,d]))
 func draw_darkness(c:Node2D,camera:Vector2)->void:
  if game.mode!="descent" or not game.started:return
  if darkness==null:make_darkness()
- var at=lamp_pos()-camera;var fuel=float(lamp.get("fuel",100));var radius=(310.0 if str(lamp.get("holder","")).is_empty() and int(lamp.get("thief",0))==0 else 248.0)*(0.42+.58*minf(1,fuel/30))
- var opacity=clampf((game.floor_number-1)/34.0,0,1)*.99 if game.floor_number<=100 else 0.0
- if opacity>0:
+ var world=lamp_pos();var at=world-camera;var fuel=float(lamp.get("fuel",100));var radius=(310.0 if str(lamp.get("holder","")).is_empty() and int(lamp.get("thief",0))==0 else 248.0)*(0.42+.58*minf(1,fuel/30))
+ if game.floor_number<=100:
+  ensure_room_darkness()
   var left=clampf(at.x-radius,0,game.VIEW.x);var right=clampf(at.x+radius,0,game.VIEW.x);var top=clampf(at.y-radius,0,game.VIEW.y);var bottom=clampf(at.y+radius,0,game.VIEW.y)
-  c.draw_rect(Rect2(0,0,left,game.VIEW.y),Color(.018,.023,.032,opacity));c.draw_rect(Rect2(right,0,maxf(0,game.VIEW.x-right),game.VIEW.y),Color(.018,.023,.032,opacity))
-  c.draw_rect(Rect2(left,0,maxf(0,right-left),top),Color(.018,.023,.032,opacity));c.draw_rect(Rect2(left,bottom,maxf(0,right-left),maxf(0,game.VIEW.y-bottom)),Color(.018,.023,.032,opacity))
-  c.draw_texture_rect(darkness,Rect2(at-Vector2.ONE*radius,Vector2.ONE*radius*2),false,Color(1,1,1,opacity))
+  draw_room_rect(c,Rect2(0,0,left,game.VIEW.y),camera);draw_room_rect(c,Rect2(right,0,maxf(0,game.VIEW.x-right),game.VIEW.y),camera)
+  draw_room_rect(c,Rect2(left,0,maxf(0,right-left),top),camera);draw_room_rect(c,Rect2(left,bottom,maxf(0,right-left),maxf(0,game.VIEW.y-bottom)),camera)
+  # One81-vertex batch modulates the original smooth lantern mask. No extra
+  # viewport, dynamic lights or per-frame image creation; HUD draws afterwards.
+  prepare_light_grid()
+  var vertices=PackedVector2Array();var colors=PackedColorArray()
+  for uv in light_uvs:
+   var offset=(uv*2-Vector2.ONE)*radius
+   vertices.append(at+offset);colors.append(Color(1,1,1,depth_opacity(game.floor_number,world+offset,game.FIELD)))
+  RenderingServer.canvas_item_add_triangle_array(c.get_canvas_item(),light_indices,vertices,colors,light_uvs,PackedInt32Array(),PackedFloat32Array(),darkness.get_rid())
  if lamp_texture!=null:c.draw_texture_rect(lamp_texture,Rect2(at-Vector2(12,32+sin(clock*5)),Vector2(24,38)),false)
 func hero_rect(rect:Rect2)->Rect2:
  if not falling():return rect

@@ -20,7 +20,7 @@ func render()->void:
   var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;panel.add_child(col)
   var art=TextureRect.new();art.custom_minimum_size=Vector2(64,72);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.texture=game.art.get(str(h.get("sprite",id))+"_idle",game.art.get(id+"_idle"));col.add_child(art)
   game.presentation.label(col,str(h.name),23)
-  game.presentation.label(col,"HP "+str(h.get("max_health",120))+" • Speed "+str(h.get("speed",230)),18)
+  preload("res://scripts/hero_stat_bars.gd").add_to(col,h)
   if h.has("studio_project"):game.presentation.label(col,"Checked custom budget" if preload("res://scripts/studio_balance.gd").hero_checked(h.studio_project) else "Experimental custom • private games",16)
   for slot in ["primary","secondary","special"]:
    var a:Dictionary=h.get(slot,{})

@@ -125,19 +125,21 @@ func render_details()->void:
   render_custom();return
  clear(details);ability_cards.clear();right_scroller.scroll_vertical=0
  var id:String=game.selected_character if not game.selected_character.begins_with("custom_") else "ram";var h:Dictionary=game.characters[id];var info:Dictionary=library.entry(id,h)
- var heading:=HBoxContainer.new();details.add_child(heading)
+ var overview=HBoxContainer.new();overview.name="HeroOverview";overview.add_theme_constant_override("separation",12);details.add_child(overview)
+ var intro=VBoxContainer.new();intro.name="HeroIdentity";intro.size_flags_horizontal=Control.SIZE_EXPAND_FILL;overview.add_child(intro)
+ var heading:=HBoxContainer.new();intro.add_child(heading)
  var texture:Texture2D=game.art.get(str(h.get("sprite",id))+"_idle")
  if texture!=null:
   var pic:=TextureRect.new();pic.texture=texture;pic.custom_minimum_size=Vector2(48,56);pic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;pic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;heading.add_child(pic)
  var names:=VBoxContainer.new();names.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(names);label(names,str(library.number(game,str(id)))+". "+str(h.name),22);label(names," • ".join(info.tags)+"  |  "+str(info.difficulty),14)
- var actions:=HBoxContainer.new();actions.add_theme_constant_override("separation",8);details.add_child(actions)
- var test:=button(actions,"Test hero",test_hero);test.custom_minimum_size=Vector2(140,38);test.tooltip_text="Try this hero at level 10 in the training yard"
+ var actions:=HFlowContainer.new();actions.add_theme_constant_override("separation",8);intro.add_child(actions)
+ var test:=button(actions,"Test hero",test_hero);test.custom_minimum_size=Vector2(120,38);test.tooltip_text="Try this hero at level 10 in the training yard"
  button(actions,"Compare heroes",func():var comparison=preload("res://scripts/hero_compare.gd").new();comparison.open(game))
  var story:=button(actions,"Story",func():show_story(id));story.custom_minimum_size=Vector2(90,38);story.tooltip_text="Who is "+str(h.name)+"?"
- label(details,"Health %s  •  Speed %s" % [h.max_health,h.speed],17)
+ preload("res://scripts/hero_stat_bars.gd").add_to(overview,h)
  var home:String=str(info.get("home_realm",""))
  if not home.is_empty():story.tooltip_text+=" • "+str(game.realms.get(home,{}).get("name",home))
- label(details,str(info.get("summary","")),17)
+ label(intro,str(info.get("summary","")),16)
  for kind in ["primary","secondary","passive","special"]:
   var tint:=Color({"primary":"#dda87c","secondary":"#8bbbd9","special":"#bba0df","passive":"#a8c99b"}[kind])
   var card:=VBoxContainer.new();card.add_theme_constant_override("separation",4);details.add_child(card)
@@ -194,6 +196,7 @@ func render_custom()->void:
  var id=game.selected_character if game.selected_character in shown else str(shown[0])
  var h:Dictionary=game.characters[id];var p:Dictionary=h.studio_project
  label(details,str(h.name)+(" • Community • by "+str(h.get("community_author","Creator")) if collection==2 else " • Custom"),24);label(details,str(p.hero.role)+" • "+str(p.hero.species)+"\n"+str(p.hero.lore),17)
+ preload("res://scripts/hero_stat_bars.gd").add_to(details,h)
  for kind in ["primary","secondary","passive","special"]:
   var text=preload("res://scripts/workshop_project.gd").PASSIVES.get(p.hero.passive,"") if kind=="passive" else str(p.hero[kind].name)+" • "+str(p.hero[kind].style)+" • "+str(p.hero[kind].damage)+" damage"
   label(details,kind.to_upper()+" • "+str(text),17)

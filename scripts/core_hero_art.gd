@@ -2,9 +2,10 @@ extends RefCounted
 ## Six poses per hero: idle, two movement, primary, secondary, special.
 ## Neutral front-facing poses in every travel direction; no sprite flipping.
 ## No combat, movement, camera or timing changes.
-const HEROES=["ram","cat","book"]
+const HEROES=["ram","cat","book","mosaic","vesper","morrow","ferryman"]
+const NEW_HEROES=["mosaic","vesper","morrow","ferryman"]
 const ROOT="res://assets/core204/"
-const POSES={"ram":[0,1,3,6,7,9],"cat":[0,1,3,6,7,10],"book":[0,2,4,6,7,10]}
+const POSES={"ram":[0,1,3,6,7,9],"cat":[0,1,3,6,7,10],"book":[0,2,4,6,7,10],"mosaic":[0,1,2,3,4,5],"vesper":[0,1,2,3,4,5],"morrow":[0,1,2,3,4,5],"ferryman":[0,1,2,3,4,5]}
 static var textures:Dictionary={}
 var actions:Dictionary={}
 static func texture(sprite:String,pose:String="idle")->Texture2D:
@@ -16,7 +17,7 @@ static func texture(sprite:String,pose:String="idle")->Texture2D:
   index=int(aliases.get(pose,0))
  var key=sprite+"_"+str(index).pad_zeros(2)
  if not textures.has(key):
-  var image=Image.new();var path=ROOT+key+".png"
+  var image=Image.new();var path=("res://assets/hero208/" if sprite in NEW_HEROES else ROOT)+key+".png"
   if not FileAccess.file_exists(path) or image.load_png_from_buffer(FileAccess.get_file_as_bytes(path))!=OK:return null
   textures[key]=ImageTexture.create_from_image(image)
  return textures[key]

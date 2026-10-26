@@ -939,9 +939,9 @@ func _draw()->void:
    if protected:draw_arc(ground-camera,23,0,TAU,32,Color("#70dfff"),3,true)
  draw_set_transform(Vector2.ZERO)
 
-func draw_ellipse_shadow(point:Vector2)->void:
- if balanced_graphics:ground_art.shadow(self,point)
- else:super.draw_ellipse_shadow(point)
+func draw_ellipse_shadow(point:Vector2,radius:float=23.0)->void:
+ if balanced_graphics and is_equal_approx(radius,23.0):ground_art.shadow(self,point)
+ else:super.draw_ellipse_shadow(point,radius)
 
 func draw_ground_patch(point:Vector2,radius:float,fade:float,clock:float,kind:String)->bool:
  if dedicated:return false
