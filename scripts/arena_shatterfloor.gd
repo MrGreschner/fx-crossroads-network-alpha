@@ -141,7 +141,7 @@ func draw_falling_hero(id:String,pos:Vector2,texture:Texture2D,tint:Color)->void
   var offset=Vector2((n-1.5)*16,-35-fmod(t*190+n*27,100))
   g.draw_line(pos+offset,pos+offset+Vector2(0,19),Color(.65,.85,.95,.55*sin(PI*t)),2)
  g.world_transform(pos,angle)
- if texture!=null:g.draw_texture_rect(texture,Rect2(-size*Vector2(.5,.66),size),false,tint)
+ if texture!=null:g.draw_texture_rect(texture,preload("res://scripts/hero_visual_scale.gd").apply(str(g.hero_ids.get(id,"ram")),Rect2(-size*Vector2(.5,.66),size)),false,tint)
  g.world_transform()
  g.draw_string(ThemeDB.fallback_font,pos+Vector2(-35,-55),"FALLING",HORIZONTAL_ALIGNMENT_LEFT,100,13,Color("#f6ce8b"))
 func group(id:String)->String:return "team:"+str(world.game.teams.get(id,0)) if world.game.pvp_rule=="teams" else id

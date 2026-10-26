@@ -596,7 +596,7 @@ func draw_boat(c:Node2D,cam:Vector2)->void:
  var lantern=p+dir*30;c.draw_circle(lantern,7,Color('#ffe2a0'));c.draw_line(lantern,lantern-Vector2(0,20),Color('#433f38'),3)
  if not ashore:
   var sprite=str(game.hero.get("sprite",game.selected_character));var tex=game.art.get(sprite+"_idle",game.art.get(sprite+"_0"))
-  if tex!=null:c.draw_texture_rect(tex,Rect2(p-dir*8-Vector2(14,27),Vector2(28,33)),false)
+  if tex!=null:c.draw_texture_rect(tex,preload("res://scripts/hero_visual_scale.gd").apply(sprite,Rect2(p-dir*8-Vector2(14,27),Vector2(28,33))),false)
   else:c.draw_circle(p-dir*7,11,Color('#584c62'));c.draw_circle(p-dir*7-Vector2(0,8),7,Color('#e5c29a'))
  if anchored:c.draw_string(ThemeDB.fallback_font,p+Vector2(-30,65),'ANCHORED',HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color('#e4dfc7'))
 func lighting_state()->Dictionary:

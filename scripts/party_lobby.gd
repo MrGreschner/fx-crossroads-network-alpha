@@ -115,7 +115,7 @@ func _draw()->void:
   draw_circle(p+Vector2(0,-6),20,Color(0,0,0,.35));draw_arc(p+Vector2(0,-6),21,0,TAU,32,colour,2)
   var texture:Texture2D=game.art.get(hero+"_"+("walk1" if int(clock*5+index)%2==0 else "walk2"),game.art.get(hero+"_idle"))
   if pending:draw_circle(p-Vector2(0,30),17,Color("#637c85"));draw_rect(Rect2(p-Vector2(17,10),Vector2(34,24)),Color("#637c85"))
-  elif texture!=null:draw_texture_rect(texture,Rect2(p-Vector2(24,47),Vector2(48,56)),false)
+  elif texture!=null:draw_texture_rect(texture,preload("res://scripts/hero_visual_scale.gd").apply(hero,Rect2(p-Vector2(24,47),Vector2(48,56))),false)
   if not pending and not id.begins_with("bot:"):preload("res://scripts/rolling_crowns.gd").draw_on(self,p,clock,preload("res://scripts/rolling_crowns.gd").remote_tier(game.local_cosmetic() if local else game.cosmetic_for(id)))
   if not pending:
    var appearance=game.local_cosmetic() if local else game.cosmetic_for(id)

@@ -569,7 +569,16 @@
       ]
     ],
     "scale": 0.1658878504672897,
-    "baseline": 74
+    "baseline": 74,
+    "movement_b_alignment_v214": {
+      "body_offset": [
+        7,
+        11
+      ],
+      "removed_isolated_pixels": 14,
+      "body_top": 15,
+      "target_centre_x": 39.5
+    }
   },
   "elder_ram": {
     "source": "elder_ram_source.png",

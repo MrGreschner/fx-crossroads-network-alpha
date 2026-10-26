@@ -1932,7 +1932,8 @@ func draw_world() -> void:
 	if mode=="town":preload("res://scripts/community_records.gd").draw_on(self,camera)
 	for trail in dodge_trails:
 		var trail_sprite := str(hero.get("sprite", "ram")) + "_walk1"
-		draw_sprite(trail_sprite, trail["pos"] - Vector2(28,42), Vector2(56,64), Color(0.7,0.9,1.0, float(trail["time"])*1.8))
+		var trail_rect:Rect2=preload("res://scripts/hero_visual_scale.gd").apply(str(hero.get("sprite","ram")),Rect2(trail["pos"]-Vector2(28,42),Vector2(56,64)))
+		draw_sprite(trail_sprite,trail_rect.position,trail_rect.size,Color(0.7,0.9,1.0,float(trail["time"])*1.8))
 	if voyage!=null and voyage.active and not voyage.ashore:return
 	var walking: bool = mobile.movement.length_squared() > 0 or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down")
 	var frame := int(visual_clock * 7.0) % 2 if walking and menu == "" else 0
