@@ -363,7 +363,7 @@
     },
     {
       "id": "descent_5_solo",
-      "title": "Ram Descent \u2022 clear 5 floors solo",
+      "title": "Cave Descent \u2022 clear 5 floors solo",
       "kind": "descent",
       "realm": "",
       "team": "solo",
@@ -373,7 +373,7 @@
     },
     {
       "id": "descent_5_party",
-      "title": "Ram Descent \u2022 clear 5 floors together",
+      "title": "Cave Descent \u2022 clear 5 floors together",
       "kind": "descent",
       "realm": "",
       "team": "party",
@@ -383,7 +383,7 @@
     },
     {
       "id": "descent_10_solo",
-      "title": "Ram Descent \u2022 clear 6 floors solo",
+      "title": "Cave Descent \u2022 clear 6 floors solo",
       "kind": "descent",
       "realm": "",
       "team": "solo",
@@ -393,7 +393,7 @@
     },
     {
       "id": "descent_10_party",
-      "title": "Ram Descent \u2022 clear 6 floors together",
+      "title": "Cave Descent \u2022 clear 6 floors together",
       "kind": "descent",
       "realm": "",
       "team": "party",
@@ -403,7 +403,7 @@
     },
     {
       "id": "descent_15_solo",
-      "title": "Ram Descent \u2022 clear 8 floors solo",
+      "title": "Cave Descent \u2022 clear 8 floors solo",
       "kind": "descent",
       "realm": "",
       "team": "solo",
@@ -413,7 +413,7 @@
     },
     {
       "id": "descent_15_party",
-      "title": "Ram Descent \u2022 clear 8 floors together",
+      "title": "Cave Descent \u2022 clear 8 floors together",
       "kind": "descent",
       "realm": "",
       "team": "party",
@@ -423,7 +423,7 @@
     },
     {
       "id": "descent_20_solo",
-      "title": "Ram Descent \u2022 clear 10 floors solo",
+      "title": "Cave Descent \u2022 clear 10 floors solo",
       "kind": "descent",
       "realm": "",
       "team": "solo",
@@ -433,7 +433,7 @@
     },
     {
       "id": "descent_20_party",
-      "title": "Ram Descent \u2022 clear 10 floors together",
+      "title": "Cave Descent \u2022 clear 10 floors together",
       "kind": "descent",
       "realm": "",
       "team": "party",

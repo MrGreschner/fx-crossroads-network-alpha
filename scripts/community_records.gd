@@ -226,7 +226,7 @@ func build_navigation(parent:Node)->void:
  refresh.tooltip_text="Upload the active profile, then refresh the community boards."
  var notice=gui.label(col,board_notice(),14);navigation_status=notice;notice.custom_minimum_size.y=36;notice.max_lines_visible=2;notice.name="RecordsSyncStatus";notice.modulate=Color("#f0ca87") if not snapshot.is_empty() and not compatible(snapshot) or stale else Color("#b7d4d7")
  var tabs=HFlowContainer.new();tabs.name="RecordsCategoryTabs";tabs.add_theme_constant_override("h_separation",6);tabs.add_theme_constant_override("v_separation",5);col.add_child(tabs)
- for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Ram’s Descent","descent"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
+ for entry in [["Hero damage","heroes"],["Fishing records","fish"],["Realm records","realms"],["Between runs","between"],["Cave Descent","descent"],["Garden fair","garden"],["Life streaks","streak"],["Relic finds","relic"]]:
   var tab=gui.button(tabs,entry[0],choose_category.bind(str(entry[1])));tab.name="RecordsTab_"+str(entry[1]);tab.toggle_mode=true;tab.set_pressed_no_signal(category==entry[1]);tab.custom_minimum_size=Vector2(126,36);tab.add_theme_font_size_override("font_size",15)
   var skin=UI.box("#32636c" if category==entry[1] else "#102b34","#f1cd82" if category==entry[1] else "#416b74",5,7)
   tab.add_theme_stylebox_override("normal",skin);tab.add_theme_stylebox_override("pressed",skin)

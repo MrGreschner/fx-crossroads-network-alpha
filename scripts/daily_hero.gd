@@ -20,7 +20,4 @@ static func open(hall:Node)->void:
  dialog.confirmed.connect(func():hall.collection=0;hall.custom_only=false;hall.collection_picker.select(0);hall.select(hero_id);dialog.queue_free());dialog.canceled.connect(dialog.queue_free);hall.add_child(dialog);dialog.popup_centered(Vector2i(520,300))
 
 static func portrait(g:Node,hero_id:String)->Texture2D:
- var sprite=str(g.characters.get(hero_id,{}).get("sprite",hero_id))
- var texture:Texture2D=g.art.get(sprite+"_idle",g.art.get(sprite+"_0"))
- if texture==null and ResourceLoader.exists("res://assets/"+sprite+"_idle.png"):texture=load("res://assets/"+sprite+"_idle.png")
- return texture
+ return preload("res://scripts/hero_portrait.gd").texture(g,hero_id)

@@ -52,7 +52,7 @@
   },
   "passive": "River Skipper: each Skipping Stone gains one extra bounce, with reduced damage on each bounce.",
   "passive_effect": "stone_bounce",
-  "lore": "An otter ferryman from Silverfall Reach, guiding lost travelers through the mist.",
+  "lore": "A capybara ferryman from Silverfall Reach, guiding lost travelers through the mist.",
   "mastery": {
     "title": "Silverfall Guardian",
     "technique": {

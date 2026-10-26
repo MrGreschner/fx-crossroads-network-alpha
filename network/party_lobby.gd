@@ -1,6 +1,6 @@
 extends RefCounted
 const MODE_ORDER=["Mode_coop","Destination_between","Destination_overcharge","Mode_descent","Mode_arena","Mode_defense","Mode_battlegrounds","Destination_wayfarer"]
-const MODES=[["Gate Defence","defense"],["Gladiator Arena","arena"],["Normal Realms","coop"],["Ram’s Descent","descent"],["Battlegrounds","battlegrounds"]]
+const MODES=[["Gate Defence","defense"],["Gladiator Arena","arena"],["Normal Realms","coop"],["Cave Descent","descent"],["Battlegrounds","battlegrounds"]]
 static func label(parent:Node,value:String,fs:int=16)->Label:
  var node=Label.new();node.text=value;node.add_theme_font_size_override("font_size",fs);parent.add_child(node);return node
 static func button(parent:Node,value:String,action:Callable)->Button:

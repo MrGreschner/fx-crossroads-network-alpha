@@ -67,7 +67,7 @@ func refresh()->void:
   shown.append(id)
   var tile=Button.new();tile.custom_minimum_size=Vector2(80,96)*tile_scale;tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.text="";tile.tooltip_text=str(hero.name);grid.add_child(tile)
   var contents=VBoxContainer.new();contents.mouse_filter=Control.MOUSE_FILTER_IGNORE;contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);contents.offset_left=6;contents.offset_right=-6;contents.offset_top=6;contents.offset_bottom=-6;tile.add_child(contents)
-  var picture=TextureRect.new();picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;picture.texture=source.art.get(str(hero.get("sprite",id))+"_idle");picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.custom_minimum_size=Vector2(56,56)*tile_scale;picture.size_flags_vertical=Control.SIZE_EXPAND_FILL;contents.add_child(picture)
+  var picture=TextureRect.new();picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;picture.texture=preload("res://scripts/hero_portrait.gd").texture(source,str(id));picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.custom_minimum_size=Vector2(56,56)*tile_scale;picture.size_flags_vertical=Control.SIZE_EXPAND_FILL;contents.add_child(picture)
   var caption=Label.new();caption.mouse_filter=Control.MOUSE_FILTER_IGNORE;caption.text="Community" if community else "Custom" if custom else str(number);caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;caption.add_theme_font_size_override("font_size",int(14*tile_scale));contents.add_child(caption)
   tile.pressed.connect(choose.bind(id));tiles[id]=tile
  if shown.is_empty():

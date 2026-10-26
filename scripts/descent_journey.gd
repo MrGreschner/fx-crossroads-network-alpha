@@ -425,13 +425,20 @@ func draw(c:Node2D,camera:Vector2)->void:
  for f in fuel_drops:
   var at=point(f.pos)-camera;c.draw_rect(Rect2(at-Vector2(8,10),Vector2(16,20)),Color("#bd9362"));c.draw_line(at-Vector2(0,8),at+Vector2(0,8),Color("#ffe19b"),4,true)
  for corpse in corpses:draw_boss(c,corpse,corpse.pos-camera)
+func visual_size(e:Dictionary)->Vector2:
+ var spec=Book.profile(str(e.type))
+ if spec.is_empty():return Vector2(52,58)
+ return Vector2(float(spec.cell[0]),float(spec.cell[1]))*float(spec.get("art_scale",1))
+func health_bar_y(e:Dictionary)->float:
+ var spec=Book.profile(str(e.type))
+ return float(spec.get("bar_y",-56))
 func draw_boss(c:Node2D,e:Dictionary,p:Vector2)->void:
  var spec=Book.profile(str(e.type))
  if spec.is_empty():return
  var art=e.duplicate();art.merge(spec,false);art.kind=str(e.type);art.pos=p;art.color=spec.color;art.cell=spec.cell
  Art.enemy(c,art,clock,1-float(e.get("collapse",0)))
  if bool(e.get("boss",false)):
-  c.draw_string(ThemeDB.fallback_font,p+Vector2(-150,-122),str(spec.name),HORIZONTAL_ALIGNMENT_CENTER,300,15,Color("#eadbb9"))
+  c.draw_string(ThemeDB.fallback_font,p+Vector2(-150,health_bar_y(e)-12),str(spec.name),HORIZONTAL_ALIGNMENT_CENTER,300,15,Color("#eadbb9"))
 func make_darkness()->void:
  var image=Image.create(256,256,false,Image.FORMAT_RGBA8)
  for y in 256:

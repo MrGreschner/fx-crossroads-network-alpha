@@ -160,7 +160,7 @@ position = Vector2(-1080, 1200)
 texture = ExtResource("11")
 visible = false
 metadata/menu = "descent_entrance"
-metadata/hint = "Enter Ram Descent"
+metadata/hint = "Enter Cave Descent"
 
 [node name="ArenaGate" type="Sprite2D" parent="Landmarks"]
 position = Vector2(130, 1100)
@@ -178,7 +178,7 @@ metadata/label = "NORTH GATE - DEFENCE"
 position = Vector2(-1080, 1170)
 texture = ExtResource("11")
 scale = Vector2(1.6, 1.6)
-metadata/label = "RAM DESCENT"
+metadata/label = "CAVE DESCENT"
 
 
 

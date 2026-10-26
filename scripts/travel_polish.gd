@@ -21,5 +21,5 @@ func render()->void:
  var panel=Rect2(Vector2((extent.x-width)*.5,extent.y*.22),Vector2(width,42))
  surface.draw_rect(panel,Color(.06,.13,.16,alpha*.4))
  surface.draw_line(panel.position+Vector2(36,41),panel.end-Vector2(36,1),Color(c,alpha*.35),1)
- var label="WELCOME TO CROSSROADS" if kind=="town" else "DOWN INTO RAM DESCENT" if kind=="descent" else "THROUGH THE CROSSROADS"
+ var label="WELCOME TO CROSSROADS" if kind=="town" else "DOWN INTO CAVE DESCENT" if kind=="descent" else "THROUGH THE CROSSROADS"
  surface.draw_string(ThemeDB.fallback_font,panel.position+Vector2(0,27),label,HORIZONTAL_ALIGNMENT_CENTER,width,18,Color(c,alpha*.75))

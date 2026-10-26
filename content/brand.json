@@ -3,9 +3,9 @@
   "short_title": "Crossroads",
   "subtitle": "Realms Beyond",
   "tagline": "Find your path. Create what\u2019s next.",
-  "build": 209,
+  "build": 212,
   "download_url": "",
   "room_service_url": "wss://fx-crossroads-rooms.onrender.com",
-  "revision": "v209-descent-lantern-edges",
+  "revision": "v212-coarse-hero-polish",
   "network_service_url": "wss://fx-crossroads-network-alpha.onrender.com"
 }

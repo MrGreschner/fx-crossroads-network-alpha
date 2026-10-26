@@ -2,10 +2,13 @@ extends RefCounted
 ## Six poses per hero: idle, two movement, primary, secondary, special.
 ## Neutral front-facing poses in every travel direction; no sprite flipping.
 ## No combat, movement, camera or timing changes.
-const HEROES=["ram","cat","book","mosaic","vesper","morrow","ferryman"]
+const HEROES=["sunflower","snowman","veyra","drum","harbor","magnet","pippa","spindle","patch","bracken","elara","aurel","rune_duelist","garrick","nera","dawnblade","stormscribe","bailiff","tempo","quill","cindervane","tova","dunecook","dustmarshal","wick","cobbleclaw","twisterspell","goalie", "baseball", "golfer", "soccer", "welder", "velvetwing", "gopher", "nullweaver", "kage", "agent", "thistlebond", "chronicle","ram","cat","book","mosaic","vesper","morrow","ferryman"]
 const NEW_HEROES=["mosaic","vesper","morrow","ferryman"]
+const LATEST=["dawnblade", "stormscribe", "bailiff", "tempo", "quill", "cindervane", "tova", "dunecook", "dustmarshal", "wick", "cobbleclaw", "twisterspell"]
+const UPGRADED=["goalie", "baseball", "golfer", "soccer", "welder", "velvetwing", "gopher", "nullweaver", "kage", "agent", "thistlebond", "chronicle", "ferryman", "elder_ram"]
+const POLISHED=["sunflower", "snowman", "veyra", "drum", "harbor", "magnet", "pippa", "spindle", "patch", "bracken", "elara", "aurel", "rune_duelist", "garrick", "nera", "twisterspell", "baseball"]
 const ROOT="res://assets/core204/"
-const POSES={"ram":[0,1,3,6,7,9],"cat":[0,1,3,6,7,10],"book":[0,2,4,6,7,10],"mosaic":[0,1,2,3,4,5],"vesper":[0,1,2,3,4,5],"morrow":[0,1,2,3,4,5],"ferryman":[0,1,2,3,4,5]}
+const POSES={"sunflower":[0,1,2,3,4,5],"snowman":[0,1,2,3,4,5],"veyra":[0,1,2,3,4,5],"drum":[0,1,2,3,4,5],"harbor":[0,1,2,3,4,5],"magnet":[0,1,2,3,4,5],"pippa":[0,1,2,3,4,5],"spindle":[0,1,2,3,4,5],"patch":[0,1,2,3,4,5],"bracken":[0,1,2,3,4,5],"elara":[0,1,2,3,4,5],"aurel":[0,1,2,3,4,5],"rune_duelist":[0,1,2,3,4,5],"garrick":[0,1,2,3,4,5],"nera":[0,1,2,3,4,5],"dawnblade":[0,1,2,3,4,5],"stormscribe":[0,1,2,3,4,5],"bailiff":[0,1,2,3,4,5],"tempo":[0,1,2,3,4,5],"quill":[0,1,2,3,4,5],"cindervane":[0,1,2,3,4,5],"tova":[0,1,2,3,4,5],"dunecook":[0,1,2,3,4,5],"dustmarshal":[0,1,2,3,4,5],"wick":[0,1,2,3,4,5],"cobbleclaw":[0,1,2,3,4,5],"twisterspell":[0,1,2,3,4,5],"ram":[0,1,3,6,7,9],"cat":[0,1,3,6,7,10],"book":[0,2,4,6,7,10],"mosaic":[0,1,2,3,4,5],"vesper":[0,1,2,3,4,5],"morrow":[0,1,2,3,4,5],"ferryman":[0,1,2,3,4,5],"goalie":[0,1,2,3,4,5],"baseball":[0,1,2,3,4,5],"golfer":[0,1,2,3,4,5],"soccer":[0,1,2,3,4,5],"welder":[0,1,2,3,4,5],"velvetwing":[0,1,2,3,4,5],"gopher":[0,1,2,3,4,5],"nullweaver":[0,1,2,3,4,5],"kage":[0,1,2,3,4,5],"agent":[0,1,2,3,4,5],"thistlebond":[0,1,2,3,4,5],"chronicle":[0,1,2,3,4,5],"elder_ram":[0,1,2,3,4,5]}
 static var textures:Dictionary={}
 var actions:Dictionary={}
 static func texture(sprite:String,pose:String="idle")->Texture2D:
@@ -13,11 +16,12 @@ static func texture(sprite:String,pose:String="idle")->Texture2D:
  if pose.is_valid_int():index=int(pose)
  else:
   var frames:Array=POSES.get(sprite,[0,1,2,5,5,7])
-  var aliases={"idle":frames[0],"0":frames[0],"1":frames[1],"2":frames[2],"walk1":frames[1],"walk2":frames[2],"walk3":frames[1],"walk4":frames[2],"attack":frames[3],"attack2":frames[3],"secondary":frames[4],"spin":frames[4],"open":frames[4],"special":frames[5],"talk":5}
+  var aliases={"idle":frames[0],"0":frames[0],"1":frames[1],"2":frames[2],"walk1":frames[1],"walk2":frames[2],"walk3":frames[1],"walk4":frames[2],"attack":frames[3],"attack2":frames[3],"secondary":frames[4],"spin":frames[4],"open":frames[4],"special":frames[5],"talk":4}
   index=int(aliases.get(pose,0))
+ if sprite=="elder_ram" and index>=6:index=1
  var key=sprite+"_"+str(index).pad_zeros(2)
  if not textures.has(key):
-  var image=Image.new();var path=("res://assets/hero208/" if sprite in NEW_HEROES else ROOT)+key+".png"
+  var image=Image.new();var path=("res://assets/hero212/" if sprite in POLISHED else "res://assets/hero211/" if sprite in LATEST else "res://assets/hero210/" if sprite in UPGRADED else "res://assets/hero208/" if sprite in NEW_HEROES else ROOT)+key+".png"
   if not FileAccess.file_exists(path) or image.load_png_from_buffer(FileAccess.get_file_as_bytes(path))!=OK:return null
   textures[key]=ImageTexture.create_from_image(image)
  return textures[key]

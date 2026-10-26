@@ -21,7 +21,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.46,
+      "bar_y": -27.78
     },
     "ds_glimmerwing": {
       "id": "ds_glimmerwing",
@@ -44,7 +46,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.46,
+      "bar_y": -31.92
     },
     "ds_ironback": {
       "id": "ds_ironback",
@@ -67,7 +71,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.7,
+      "bar_y": -42.3
     },
     "ds_sneak": {
       "id": "ds_sneak",
@@ -90,7 +96,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.66,
+      "bar_y": -41.0
     },
     "ds_mender": {
       "id": "ds_mender",
@@ -113,7 +121,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.6,
+      "bar_y": -41.6
     },
     "ds_larva": {
       "id": "ds_larva",
@@ -136,7 +146,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.5,
+      "bar_y": -39.0
     },
     "ds_caller": {
       "id": "ds_caller",
@@ -159,7 +171,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.74,
+      "bar_y": -56.1
     },
     "ds_brute": {
       "id": "ds_brute",
@@ -182,7 +196,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.94,
+      "bar_y": -59.7
     },
     "ds_crab": {
       "id": "ds_crab",
@@ -205,7 +221,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.59,
+      "bar_y": -38.68
     },
     "ds_slug": {
       "id": "ds_slug",
@@ -228,7 +246,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.52,
+      "bar_y": -45.96
     },
     "ds_spider": {
       "id": "ds_spider",
@@ -251,7 +271,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.57,
+      "bar_y": -42.77
     },
     "ds_scorpion": {
       "id": "ds_scorpion",
@@ -274,7 +296,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.58,
+      "bar_y": -59.04
     },
     "ds_mole": {
       "id": "ds_mole",
@@ -297,7 +321,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.73,
+      "bar_y": -48.88
     },
     "ds_salamander": {
       "id": "ds_salamander",
@@ -320,7 +346,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.58,
+      "bar_y": -50.34
     },
     "ds_jelly": {
       "id": "ds_jelly",
@@ -343,7 +371,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.56,
+      "bar_y": -37.68
     },
     "ds_snail": {
       "id": "ds_snail",
@@ -366,7 +396,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.77,
+      "bar_y": -64.21
     },
     "ds_mimic": {
       "id": "ds_mimic",
@@ -389,7 +421,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.77,
+      "bar_y": -45.73
     },
     "ds_rootling": {
       "id": "ds_rootling",
@@ -412,7 +446,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.7,
+      "bar_y": -52.1
     },
     "ds_urchin": {
       "id": "ds_urchin",
@@ -435,7 +471,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.5,
+      "bar_y": -34.5
     },
     "ds_shark": {
       "id": "ds_shark",
@@ -458,7 +496,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.87,
+      "bar_y": -74.12
     },
     "ds_bell": {
       "id": "ds_bell",
@@ -481,7 +521,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.69,
+      "bar_y": -44.57
     },
     "ds_wisp": {
       "id": "ds_wisp",
@@ -504,7 +546,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.48,
+      "bar_y": -33.44
     },
     "ds_tortoise": {
       "id": "ds_tortoise",
@@ -527,7 +571,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.94,
+      "bar_y": -60.64
     },
     "ds_mantis": {
       "id": "ds_mantis",
@@ -550,7 +596,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.77,
+      "bar_y": -56.51
     },
     "ds_owl": {
       "id": "ds_owl",
@@ -573,7 +621,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.62,
+      "bar_y": -45.2
     },
     "ds_hydra": {
       "id": "ds_hydra",
@@ -597,7 +647,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.9,
+      "bar_y": -73.7
     },
     "ds_leech": {
       "id": "ds_leech",
@@ -620,7 +672,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.48,
+      "bar_y": -43.04
     },
     "ds_drake": {
       "id": "ds_drake",
@@ -644,7 +698,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.95,
+      "bar_y": -71.65
     },
     "ds_totem": {
       "id": "ds_totem",
@@ -668,7 +724,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.8,
+      "bar_y": -65.6
     },
     "ds_angel": {
       "id": "ds_angel",
@@ -692,7 +750,9 @@
         128,
         160
       ],
-      "hit_radius": 24
+      "hit_radius": 24,
+      "art_scale": 0.82,
+      "bar_y": -53.1
     },
     "ds_mid_01": {
       "id": "ds_mid_01",
@@ -716,7 +776,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -114.0
     },
     "ds_mid_02": {
       "id": "ds_mid_02",
@@ -740,7 +801,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -122.0
     },
     "ds_mid_03": {
       "id": "ds_mid_03",
@@ -764,7 +826,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -131.0
     },
     "ds_mid_04": {
       "id": "ds_mid_04",
@@ -788,7 +851,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -114.0
     },
     "ds_mid_05": {
       "id": "ds_mid_05",
@@ -812,7 +876,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -122.0
     },
     "ds_mid_06": {
       "id": "ds_mid_06",
@@ -836,7 +901,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -105.0
     },
     "ds_mid_07": {
       "id": "ds_mid_07",
@@ -860,7 +926,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -114.0
     },
     "ds_mid_08": {
       "id": "ds_mid_08",
@@ -884,7 +951,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -122.0
     },
     "ds_mid_09": {
       "id": "ds_mid_09",
@@ -908,7 +976,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -105.0
     },
     "ds_mid_10": {
       "id": "ds_mid_10",
@@ -932,7 +1001,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -114.0
     },
     "ds_boss_01": {
       "id": "ds_boss_01",
@@ -958,7 +1028,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -178.0
     },
     "ds_boss_02": {
       "id": "ds_boss_02",
@@ -984,7 +1055,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -128.0
     },
     "ds_boss_03": {
       "id": "ds_boss_03",
@@ -1010,7 +1082,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -139.0
     },
     "ds_boss_04": {
       "id": "ds_boss_04",
@@ -1036,7 +1109,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -147.0
     },
     "ds_boss_05": {
       "id": "ds_boss_05",
@@ -1062,7 +1136,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -126.0
     },
     "ds_boss_06": {
       "id": "ds_boss_06",
@@ -1088,7 +1163,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -136.0
     },
     "ds_boss_07": {
       "id": "ds_boss_07",
@@ -1114,7 +1190,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -147.0
     },
     "ds_boss_08": {
       "id": "ds_boss_08",
@@ -1140,7 +1217,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -126.0
     },
     "ds_boss_09": {
       "id": "ds_boss_09",
@@ -1166,7 +1244,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -136.0
     },
     "ds_boss_10": {
       "id": "ds_boss_10",
@@ -1195,7 +1274,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -147.0
     },
     "ds_lava_heart": {
       "id": "ds_lava_heart",
@@ -1220,7 +1300,8 @@
         256,
         320
       ],
-      "hit_radius": 40
+      "hit_radius": 40,
+      "bar_y": -138.0
     }
   },
   "ordinary": [

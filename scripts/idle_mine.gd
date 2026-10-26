@@ -142,7 +142,7 @@ func next_requirement()->String:
  var target=depth()+1
  var cleared=int(legacy.data.get("card",{}).get("descent_best",0))
  var required=5 if target<=10 else 10 if target<=20 else 20 if target<=30 else 35 if target<40 else 50
- if target>=5 and not preload("res://scripts/realm_access.gd").unrestricted(legacy) and cleared<required:return "Clear Ram Descent floor %d to dig shafts %d–%d • best clear %d" % [required,target,target,cleared]
+ if target>=5 and not preload("res://scripts/realm_access.gd").unrestricted(legacy) and cleared<required:return "Clear Cave Descent floor %d to dig shafts %d–%d • best clear %d" % [required,target,target,cleared]
  if target>=5 and int(state().levels.smelter)==0:return "Needs Ramforge Smelter • forge bars for deeper construction"
  var needed_level=ceili(target/2.0) if target<=20 else target*2-20
  if level()<needed_level:return "Needs Mine level "+str(needed_level)+" • earn it through ore production"

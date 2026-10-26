@@ -209,7 +209,7 @@ var sent_effects: Array[Dictionary] = []
 var ice_walls: Array[Dictionary] = []
 var session_hero_sent := false
 var network_charge_target := Vector2.ZERO
-var notice := "Host or join a room, or play Gate Defense / Ram Descent solo."
+var notice := "Host or join a room, or play Gate Defense / Cave Descent solo."
 
 var pvp_scores: Dictionary = {}
 var shield_reduction: Dictionary = {}
@@ -356,10 +356,10 @@ func _ui() -> void:
 	control=CanvasLayer.new();add_child(control)
 	party_lobby=preload("res://scripts/party_lobby.gd").new();party_lobby.game=self;control.add_child(party_lobby)
 	mode_picker=OptionButton.new();control.add_child(mode_picker)
-	for title in ["Gate Defence","Gladiator Arena","Co-op Realms","Ram Descent","Battlegrounds"]:mode_picker.add_item(title)
+	for title in ["Gate Defence","Gladiator Arena","Co-op Realms","Cave Descent","Battlegrounds"]:mode_picker.add_item(title)
 	mode_picker.item_selected.connect(func(index:int):_set_mode(["defense","arena","coop","descent","battlegrounds"][index]))
 	for index in 5:
-		var title:String=["GATE DEFENCE\nProtect town • 1–4 heroes","GLADIATOR ARENA\nRivals & teams • 2–8 players","CO-OP REALMS\nExplore together • 2–4 players","RAM DESCENT\nSurvive the depths • 1–4 players","BATTLEGROUNDS\nBuild armies • 3v3 / 4v4"][index]
+		var title:String=["GATE DEFENCE\nProtect town • 1–4 heroes","GLADIATOR ARENA\nRivals & teams • 2–8 players","CO-OP REALMS\nExplore together • 2–4 players","CAVE DESCENT\nSurvive the depths • 1–4 players","BATTLEGROUNDS\nBuild armies • 3v3 / 4v4"][index]
 		var card:=_button(title,32,144+index*74,_set_mode.bind(["defense","arena","coop","descent","battlegrounds"][index]),292);card.size.y=68;mode_cards.append(card)
 	bg_map_picker=OptionButton.new();control.add_child(bg_map_picker);bg_map_picker.position=Vector2(700,173);bg_map_picker.size=Vector2(290,32)
 	for id in battlegrounds.MAPS:bg_map_picker.add_item(str(battlegrounds.MAPS[id]));bg_map_picker.set_item_metadata(bg_map_picker.item_count-1,id)
@@ -2315,12 +2315,14 @@ func _draw() -> void:
 		if float(foe.get("down_time",0))>0:size=Vector2(70,28)
 		if str(foe["type"]) in ["gongbreaker","silence_regent","rootbound_keeper"]: size=Vector2(120,128)
 		if str(foe["type"])=="gilded_usurper":size*=1.0 if int(foe.get("generation",0))==0 else .78 if int(foe.get("generation",0))==1 else .56
+		if bool(foe.get("depth_boss",false)):size=descent.visual_size(foe)
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
 		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
 		if bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
 		elif texture != null: draw_texture_rect(texture,Rect2(pos-size*Vector2(0.5,0.7),size),false)
 		else: draw_circle(pos,19,Color("#ffad7a"))
 		var hp_y:float=-size.y*.7-8 if bool(foe.get("veilbound",false)) or str(foe.type) in adventure.cinder.TYPES or str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
+		if bool(foe.get("depth_boss",false)):hp_y=descent.health_bar_y(foe)
 		if not (adventure.school.active and bool(foe.boss)):draw_rect(Rect2(pos+Vector2(-23,hp_y),Vector2(46,5)),Color("#382936"))
 		if not (adventure.school.active and bool(foe.boss)):draw_rect(Rect2(pos+Vector2(-23,hp_y),Vector2(46*clampf(float(foe["hp"])/float(foe["max_hp"]),0,1),5)),Color("#ee7c77"))
 	for missile in missiles:

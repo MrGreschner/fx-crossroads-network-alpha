@@ -24,7 +24,7 @@ static func build(parent:Node,l:Node,n:Dictionary,category:String)->void:
     var card=UI.card(parent,str(l.game.realms.get(id,{}).get("name",id)),"")
     for row in rows:preload("res://scripts/records_hall_ui.gd").run_row(card,l,row.record,row.title,clock(float(row.record.value)))
  if category=="descent":
-  G.label(parent,"RAM’S DESCENT • TOP 10 FLOORS CLEARED",23)
+  G.label(parent,"CAVE DESCENT • TOP 10 FLOORS CLEARED",23)
   G.label(parent,"Completed floors, not merely entered • separate solo/co-op records • signed-in accounts • no developer/practice records",15)
   var boards=n.get("descent",{})
   for route in ["solo","coop"]:

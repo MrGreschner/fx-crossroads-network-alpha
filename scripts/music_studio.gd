@@ -26,7 +26,7 @@ func setup(owner:Node,studio:Node=null)->void:
  var scroll=ScrollContainer.new();scroll.custom_minimum_size.y=340;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll);body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(body)
  notice=Label.new();notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;col.add_child(notice)
  var footer=HBoxContainer.new();col.add_child(footer);button(footer,"Listen",func():if data.tracks.has(selected):game.music.preview(data.tracks[selected]));button(footer,"Stop listening",func():game.music.stop_preview());button(footer,"Play realm",test_realm);button(footer,"Save & return",close)
- targets=[["Town","mode:town"],["Training Yard","mode:training"],["Ram Descent","mode:descent"],["North Gate Defence","mode:defense"],["Gladiator Arena","mode:arena"],["Battlegrounds","mode:battlegrounds"]]
+ targets=[["Town","mode:town"],["Training Yard","mode:training"],["Cave Descent","mode:descent"],["North Gate Defence","mode:defense"],["Gladiator Arena","mode:arena"],["Battlegrounds","mode:battlegrounds"]]
  var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json"))
  for id in manifest.get("regions",[]):
   if id=="town":continue

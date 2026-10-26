@@ -178,7 +178,7 @@ func receive(key:int,data:Dictionary)->void:
    var candidate:Dictionary=rooms[code];var game:Node=candidate.game
    if not bool(candidate.get("public",false)) or game.started or not candidate.get("preparation",{}).is_empty() or candidate.members.size()+game.bot_plan.size()>=int(candidate.seats):continue
    if not identities.has(candidate.host) or int(identities[candidate.host].connection)<0:continue
-   var title:String={"arena":"Gladiator Arena","defense":"Gate Defence","descent":"Ram’s Descent","coop":"Realm co-op","battlegrounds":"Battlegrounds"}.get(game.mode,"Adventure")
+   var title:String={"arena":"Gladiator Arena","defense":"Gate Defence","descent":"Cave Descent","coop":"Realm co-op","battlegrounds":"Battlegrounds"}.get(game.mode,"Adventure")
    if game.mode=="coop":title+=" • "+str(candidate.get("expedition_choice","")) if not str(candidate.get("expedition_choice","")).is_empty() else " • "+str(game.regions.get(game.realm_id,{}).get("name",game.realm_id))
    if bool(game.get_meta("crown_competition",false)):title+=" • Competition"
    listing.append({"room":code,"host":str(candidate.members.get(candidate.host,{}).get("name","Party")),"title":title,"mode":game.mode,"realm":game.realm_id,"players":candidate.members.size()+game.bot_plan.size(),"seats":int(candidate.seats)})

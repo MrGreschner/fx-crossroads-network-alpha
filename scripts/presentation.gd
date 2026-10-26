@@ -197,7 +197,7 @@ func adventures()->void:
   ["CHALLENGE LODGE","Fresh trials and weekly rewards","challenge"],
   ["REALMS","Themed adventures and bosses • solo or co-op","realms"],
   ["QUESTS","Meet residents and explore a larger story world","quests"],
-  ["RAM DESCENT","Fight your way through deeper dungeon floors","descent"],
+  ["CAVE DESCENT","Fight your way through deeper dungeon floors","descent"],
   ["NORTH GATE DEFENCE","Protect three roads • solo or with friends","defense"],
   ["GLADIATOR ARENA","Battle friends or practise against AI opponents","arena"],
   ["BATTLEGROUNDS","Build armies and fight for control • team battles","battlegrounds"],

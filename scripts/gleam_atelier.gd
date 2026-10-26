@@ -102,7 +102,7 @@ func scroll_area(parent:Node,heading:String,hint:String,accent:bool)->ScrollCont
  return scroll
 func catalogue()->Array:
  var list=[{"id":"auto","name":"Automatic daily reward","need":"Show today’s completed Daily Mission effect."},{"id":"none","name":"No extra effect","need":"A clean look for your selected hero."},{"id":"daily","name":legacy.daily.reward_name(),"need":"Complete today’s Daily Mission. Available until local midnight."}]
- for n in 3:list.append({"id":C.IDS[n],"name":C.NAMES[n],"need":["Remain undefeated this week across solo and multiplayer adventures. Everyone starts the week eligible; your first death removes it until Monday.","Reach floor 50 in Ram’s Descent. Permanent unlock.","Clear Astral Rift and complete Attunement. Permanent unlock."][n]})
+ for n in 3:list.append({"id":C.IDS[n],"name":C.NAMES[n],"need":["Remain undefeated this week across solo and multiplayer adventures. Everyone starts the week eligible; your first death removes it until Monday.","Reach floor 50 in Cave Descent. Permanent unlock.","Clear Astral Rift and complete Attunement. Permanent unlock."][n]})
  for id in W.REWARDS:list.append({"id":id,"name":str(W.REWARDS[id].name),"need":legacy.weekly.goal_text(id)+(". No weekly reset; retain a top place to display it. Lobby only." if id in ["week_descent","week_market"] else ". Server comparison; lobby only. Weekly rankings reset Monday." if id in R.IDS else ". Resets Sunday on this device.")})
  for n in 3:list.append({"id":C.LODGE_IDS[n],"name":["Bronze Laurel","Silver Laurel","Golden Laurel"][n],"need":"Earn %d Challenge Lodge medal points. Permanent unlock." % [15,30,50][n]})
  list.append({"id":"lodge_week","name":"Weekly Lantern","need":"Complete all three featured Challenge Lodge trials this week."})

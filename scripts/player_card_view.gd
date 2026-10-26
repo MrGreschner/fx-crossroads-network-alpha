@@ -92,7 +92,7 @@ func depth_badge(p:Vector2)->void:
  draw_arc(p,27,PI,TAU,24,metal,3);star(p+Vector2(0,-8),10,metal)
  if tier>=4:
   for n in [-1,1]:star(p+Vector2(n*38,-18),7,metal)
- label(p+Vector2(55,-8),"RAM’S DESCENT • FLOOR "+str(floor)+" CLEARED",18,metal)
+ label(p+Vector2(55,-8),"CAVE DESCENT • FLOOR "+str(floor)+" CLEARED",18,metal)
  label(p+Vector2(55,16),["First descent","Cavern Bronze","Depth Silver","Deep Gold","Sovereign Crystal","Abyss Crown"][tier],14)
 func style()->StyleBoxFlat:
  var s:=StyleBoxFlat.new();s.bg_color=Color("#10262e");s.border_color=Color("#b9a574");s.set_border_width_all(2);s.set_corner_radius_all(10);return s

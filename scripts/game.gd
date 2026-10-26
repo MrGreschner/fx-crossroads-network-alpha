@@ -2136,7 +2136,7 @@ func elder_lines() -> Array[String]:
 		"Co-op: share an adventure. Stay near a fallen teammate and hold Interact to revive.",
 		"Arena: battle other players; choose free-for-all or teams in the lobby.",
 		"Gate Defence: protect town, cover three routes, and visit guard/upgrade buildings.",
-		"Ram Descent: survive deeper floors. There is no free heal between floors.",
+		"Cave Descent: survive deeper floors. There is no free heal between floors.",
 		"Wayfarer Wilds: enter beyond Training, talk to villagers; Q / Journal shows quests.",
 		"Level 3: secondary. Level 5: passive. Level 6: special. Levels 8/10: upgrades.",
 		"Use room codes or Join Random to meet teammates. Everyone needs the same build.",
