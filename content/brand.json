@@ -3,9 +3,9 @@
   "short_title": "Crossroads",
   "subtitle": "Realms Beyond",
   "tagline": "Find your path. Create what\u2019s next.",
-  "build": 221,
+  "build": 224,
   "download_url": "",
   "room_service_url": "wss://fx-crossroads-rooms.onrender.com",
-  "revision": "v221-intro-path-fish",
+  "revision": "v224-fixed-opening-camera",
   "network_service_url": "wss://fx-crossroads-network-alpha.onrender.com"
 }

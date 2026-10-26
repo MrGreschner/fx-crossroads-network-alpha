@@ -144,8 +144,8 @@ func step(delta:float)->void:
   if float(e.time)<=0:
    if str(e.style) in ["travel","kicks"]:combat.adventure.teleport(owner,combat.owner_pos(owner))
    effects.remove_at(i)
-func visual_offset(owner:String)->Vector2:
- return Vector2(0,-maxf(0,sin(float(combat.adventure.game.motion_v85.clock)*TAU/.8))*12) if combat.v78.hero(owner)=="quill" and bool(tracks.get(owner,{}).get("moving",false)) else Vector2.ZERO
+func visual_offset(_owner:String)->Vector2:
+ return Vector2.ZERO
 func snapshot()->Dictionary:return {"states":states,"effects":effects,"tracks":tracks,"clock":clock}
 func receive(d:Dictionary)->void:states=d.get("states",{});effects=d.get("effects",[]);tracks=d.get("tracks",{});clock=float(d.get("clock",0))
 func draw_on(c:Node2D,camera:Vector2)->void:

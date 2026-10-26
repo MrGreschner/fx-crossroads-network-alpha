@@ -1,0 +1,20 @@
+{
+  "navigator": {
+    "source": "exec-01405e4c-d0d7-432e-84e8-191c45079daf.png",
+    "old_height": 59,
+    "new_height": 64,
+    "factor": 1.106771
+  },
+  "hazel_hex": {
+    "source": "exec-bc1f7881-bdce-4229-b16a-85ad952e296a.png",
+    "old_height": 64,
+    "new_height": 64,
+    "factor": 1.210938
+  },
+  "hearth_herald": {
+    "source": "exec-a3f4aa97-3018-474f-b0ba-f86f2127054c.png",
+    "old_height": 64,
+    "new_height": 64,
+    "factor": 1.191406
+  }
+}

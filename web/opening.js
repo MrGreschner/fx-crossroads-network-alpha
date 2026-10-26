@@ -4,7 +4,7 @@ const root=document.getElementById('loading'),work=document.getElementById('work
 const canvas=document.getElementById('canvas'),status=document.getElementById('load-status'),detail=document.getElementById('load-detail');
 const stone=[...document.querySelectorAll('.arch-stone')],crew=[...document.querySelectorAll('.crew')],portal=document.getElementById('portal-energy');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const BUILD_SECONDS=3.4,HOLD_SECONDS=.35,OPEN_SECONDS=1.05,PULSE_SECONDS=.9,INTRO_SECONDS=7.2,JOURNEY_SECONDS=1.35;
+const BUILD_SECONDS=3.4,HOLD_SECONDS=.35,OPEN_SECONDS=1.05,PULSE_SECONDS=.9,INTRO_SECONDS=22.5,JOURNEY_SECONDS=1.35;
 let releaseEngine;const engineGate=new Promise(resolve=>{releaseEngine=resolve;});
 let completedPulses=0;
 let phase='building',phaseTime=0,age=0,buildProgress=0,introProgress=0,download=0,knownTotal=false;
@@ -14,7 +14,7 @@ const ease=(a,b,x)=>{const u=clamp((x-a)/(b-a));return u*u*(3-2*u);};
 const attr=(id,key,value)=>document.getElementById(id).setAttribute(key,String(value));
 const pose=(id,time,strike=false)=>{const all=[...document.querySelectorAll('#'+id+' .pose')],walk=all.filter(el=>!el.classList.contains('attack')),hasAttack=all.some(el=>el.classList.contains('attack')),chosen=strike&&hasAttack?all.find(el=>el.classList.contains('attack')):walk[Math.floor(time*7)%walk.length];all.forEach(el=>el.style.opacity=el===chosen?'1':'0');};
 try{const h=Number(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',hour:'numeric',hourCycle:'h23'}).format(new Date()));night=h>=21||h<6;}catch(_){}
-if(night){root.classList.add('night');document.getElementById('intro-fish').setAttribute('href',document.getElementById('intro-fish').dataset.night);}
+if(night)root.classList.add('night');
 function resize(){const narrow=innerWidth/innerHeight<.82,vw=narrow?840:1280;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));const scale=Math.min(innerWidth/vw,innerHeight/720),boot=document.getElementById('boot-compositor');boot.style.width=352*scale+'px';boot.style.height=408*scale+'px';boot.style.left=(innerWidth/2-176*scale)+'px';boot.style.top=((innerHeight-720*scale)/2+150*scale)+'px';work.style.transformOrigin=(innerWidth/2)+'px '+((innerHeight-720*scale)/2+379*scale)+'px';}
 resize();addEventListener('resize',resize);
 function construction(){
@@ -67,25 +67,9 @@ function charge(){
  if(pulsing){status.textContent='The way is open';detail.textContent='Your adventure awaits';}
 }
 function intro(){
- introProgress=clamp(phaseTime/INTRO_SECONDS);const t=phaseTime;
- const approach=ease(.7,2.2,t),leave=ease(3.4,5.8,t),strike=t>=2.25&&t<2.8;
- attr('ram-actor','transform','translate('+(140*approach+310*leave)+' 0)');
- attr('ram-actor','opacity',1-ease(5.55,6.1,t));
- attr('foe-actor','transform','translate('+((148*(1-approach))*(1-ease(2.9,4.25,t))+208*ease(2.9,4.25,t)+(strike&&!reduced?Math.sin(t*27)*5:0))+' 0)');
- attr('foe-actor','opacity',1-ease(4.02,4.4,t));
- attr('cat-actor','transform','translate('+(210*ease(4,6.1,t))+' 0)');
- pose('ram-actor',reduced?0:t,strike);pose('foe-actor',reduced?0:t,strike);pose('cat-actor',reduced?0:t);pose('elder-actor',reduced?0:t*.12);
- attr('impact','opacity',strike&&!reduced?1-ease(2.4,2.8,t):0);
- const on=ease(3.1,4,t);attr('scene-portal-energy','opacity',on);attr('scene-portal-glow','opacity',on*.65);
- attr('scene-portal-flow','transform','rotate('+(reduced?0:t*14)+' 960 435)');
- const jumpTime=t<4.5?t-1:t-4.8,swim=clamp(jumpTime/1.7);
- attr('intro-fish','transform','translate('+(190*swim)+' '+(reduced?0:-88*Math.sin(Math.PI*swim))+') rotate('+(reduced?0:(swim-.5)*63)+' 540 656)');
- attr('intro-fish','opacity',jumpTime>=0&&jumpTime<1.7?ease(0,.1,jumpTime)*(1-ease(1.58,1.7,jumpTime)):0);
- const splashTime=jumpTime<.5?jumpTime:jumpTime-1.7,splashX=jumpTime<.5?540:730;
- attr('fish-splash','transform','translate('+splashX+' 656) scale('+(1+Math.max(0,splashTime)*2)+')');
- attr('fish-splash','opacity',reduced?0:splashTime>=0&&splashTime<.45?(1-splashTime/.45)*.8:0);
- attr('title-block','opacity',ease(4.6,5.35,t));
- attr('intro-veil','opacity',ease(6.65,7.2,t));
+ introProgress=clamp(phaseTime/INTRO_SECONDS);
+ window.fxCinematic.draw(phaseTime,{night,reduced});
+ document.getElementById('skip-intro').style.visibility=phaseTime>.75&&phaseTime<21.7?'visible':'hidden';
 }
 
 function enter(next){
@@ -97,12 +81,12 @@ function enter(next){
  if(next==='intro'){
   document.getElementById('journey-wash').style.transition='opacity .45s ease-out';
   document.getElementById('journey-wash').style.opacity='0';
-  work.style.opacity='0';cinema.style.opacity='1';cinema.setAttribute('aria-hidden','false');
+  work.style.opacity='0';work.style.visibility='hidden';document.getElementById('boot-compositor').style.display='none';cinema.style.visibility='visible';cinema.style.opacity='1';cinema.setAttribute('aria-hidden','false');
   root.setAttribute('role','status');root.setAttribute('aria-label','Crossroads opening cinematic');root.removeAttribute('aria-valuenow');
  }
 }
 function finish(){
- finished=true;phase='done';root.dataset.phase='done';root.dataset.complete='true';
+ finished=true;window.fxCinematic.dispose();phase='done';root.dataset.phase='done';root.dataset.complete='true';
  root.classList.add('done');setTimeout(()=>{root.remove();canvas.removeAttribute('inert');canvas.focus();removeEventListener('resize',resize);document.removeEventListener('keydown',blockKeys,true);document.removeEventListener('keyup',blockKeys,true);},240);
 }
 function tick(now){
@@ -113,7 +97,7 @@ function tick(now){
  if(phase==='building'){
   construction();if(phaseTime>=BUILD_SECONDS)enter('built');
  }else if(phase==='built'&&phaseTime>=HOLD_SECONDS){enter('charging');}
- else if(phase==='charging'&&started&&sceneReady)enter('opening');
+ else if(phase==='charging'&&started&&sceneReady&&window.fxCinematic.readyFlag)enter('opening');
  else if(phase==='opening'&&phaseTime>=OPEN_SECONDS)enter('pulsing');
  else if(phase==='pulsing'&&phaseTime>=PULSE_SECONDS*2){completedPulses=2;enter('journey');}
  else if(phase==='journey'&&phaseTime>=JOURNEY_SECONDS)enter('intro');
@@ -122,7 +106,7 @@ function tick(now){
   workers();charge();
   if(phase==='journey'){
    const u=ease(0,1,phaseTime/JOURNEY_SECONDS);
-   work.style.transform='scale('+(reduced?1:1+u*12)+')';
+   work.style.transform='none';
    document.getElementById('journey-wash').style.opacity=String(ease(.65,1,u));
    status.textContent='Entering the Crossroads…';detail.textContent='';
    attr('portal-energy','opacity',1);attr('portal-rim','opacity',1);attr('boot-light','opacity',1);
@@ -130,7 +114,7 @@ function tick(now){
  }else intro();
  raf=requestAnimationFrame(tick);
 }
-function blockKeys(event){if(failed&&event.target===document.getElementById('retry'))return;if(!finished&&!(failed&&event.key==='Tab')){event.stopImmediatePropagation();if([' ','Enter','Escape','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Tab'].includes(event.key))event.preventDefault();}}
+function blockKeys(event){if(phase==='intro'&&event.key==='Escape'){event.preventDefault();finish();return;}if(event.target===document.getElementById('skip-intro'))return;if(failed&&event.target===document.getElementById('retry'))return;if(!finished&&!(failed&&event.key==='Tab')){event.stopImmediatePropagation();if([' ','Enter','Escape','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Tab'].includes(event.key))event.preventDefault();}}
 document.addEventListener('keydown',blockKeys,true);document.addEventListener('keyup',blockKeys,true);
 document.addEventListener('visibilitychange',()=>{hidden=document.hidden;last=performance.now();});
 canvas.setAttribute('inert','');
@@ -142,5 +126,7 @@ window.fxSunLoading={
  error(error){failed=true;cancelAnimationFrame(raf);root.classList.add('failed');status.textContent='The portal could not open';detail.textContent='Please try loading the game again';document.getElementById('error').textContent=String(error);document.getElementById('retry').style.display='block';},
  inspect(){return {phase,phaseTime,age,value:introProgress,buildProgress,introProgress,download,knownTotal,started,sceneReady,failed,finished,night,minimumSeconds:INTRO_SECONDS,buildSeconds:BUILD_SECONDS,openingSeconds:OPEN_SECONDS,holdSeconds:HOLD_SECONDS,pulseSeconds:PULSE_SECONDS,journeySeconds:JOURNEY_SECONDS,completedPulses};}
 };
+document.getElementById('skip-intro').addEventListener('click',()=>{if(phase==='intro')finish();});
+window.fxCinematic.ready.catch(error=>window.fxSunLoading.error(error));
 construction();charge();raf=requestAnimationFrame(tick);
 })();

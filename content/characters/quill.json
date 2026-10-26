@@ -3,9 +3,9 @@
   "name": "Quill Prowler",
   "sprite": "quill",
   "max_health": 140,
-  "speed": 220,
+  "speed": 210,
   "run_cost": 0,
-  "lore": "A brave porcupine who crouches into short springing bounds, then fights at claw distance. Mastery can exchange direct attacks for a pack of living quill companions.",
+  "lore": "A brave porcupine who walks with low, steady steps, then fights at claw distance. Mastery can exchange direct attacks for a pack of living quill companions.",
   "primary": {
     "name": "Briar Claw",
     "style": "quill_claw",
@@ -30,7 +30,7 @@
     "range": 340,
     "description": "Rush forward in three visible stages, hitting each enemy once for 42 damage and pushing them outward."
   },
-  "passive": "Prickle Guard: a successful claw or lunge gives 10% damage reduction for 1s.",
+  "passive": "Prickle Guard: a successful claw or lunge gives 10% damage reduction for 1s. Thorns deal 6 damage back to an enemy that hits you in melee.",
   "passive_effect": "prickle_guard",
   "mastery": {
     "title": "Master of the Quillpack",

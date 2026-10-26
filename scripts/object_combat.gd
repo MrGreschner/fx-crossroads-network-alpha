@@ -56,6 +56,7 @@ var orbits:Array=[]
 var vortices:Array=[]
 var shot_turn:Dictionary={}
 var mines:Array=[]
+var thorn_returns222:Array=[]
 var received_at:=0
 var coast:Node
 var reflection217:Node
@@ -101,6 +102,7 @@ func _ready()->void:
 	variants=preload("res://scripts/hero_variants.gd").new();add_child(variants);variants.combat=self
 	coast=preload("res://scripts/folded_coast.gd").new();add_child(coast);coast.combat=self
 func setup(id:String)->void:
+	thorn_returns222.clear()
 	reflection217.reset()
 	golf.balls.clear()
 	starfield.reset()
@@ -357,6 +359,9 @@ func effective_stats(owner:String,kind:String,stats:Dictionary)->Dictionary:
 	if support_aura(owner,"telescope_aura") and float(result.get("range",0))>0:result["range"]=float(result.range)*1.15
 	return held_cast.effective(owner,kind,result)
 func melee_received(id:String,attacker:String)->void:
+	# Flat retaliation cannot recursively trigger another melee response.
+	if adventure.authoritative() and passive(id,"prickle_guard") and not attacker.is_empty():
+		if thorn_returns222.size()<128:thorn_returns222.append({"target":attacker,"owner":id})
 	if effect_time(player_key(id),"silk_guard")>0:
 		apply_status(attacker,"poison",3,id,2)
 		if statuses.has(attacker) and statuses[attacker].has("poison"):statuses[attacker].poison["interval"]=.5
@@ -603,6 +608,8 @@ func step(delta:float)->void:
 	encounter_book.step(self,delta)
 	if not adventure.authoritative():
 		halloween.client_step(delta);return
+	var pending_thorns:Array=thorn_returns222.duplicate();thorn_returns222.clear()
+	for hit in pending_thorns:damage(str(hit.target),6.0,str(hit.owner),"Prickle Guard thorns")
 	starfield.step(delta)
 	golf.step(delta)
 	v112.step(delta)
