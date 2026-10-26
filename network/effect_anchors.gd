@@ -1,8 +1,7 @@
 extends RefCounted
 ## Explicit attachment policy. Unlisted records retain their authored world point.
 const ATTACHED={
- "v90":["muzzle"],
- "root":["attached_ring"],
+ "v90":["muzzle","chop"],
  "mantis":["parry","scissor_feint"],
  "v110":["jabs","saber","charge"],
  "v112":["oar","light","tap","kindle","march"],
@@ -11,7 +10,9 @@ const ATTACHED={
  "v78":["gopher_claw"],
  "v75":["hammer_arc"],
  "robot":["jab"],
- "v48":["tail_slap"],
+ "v48":["tail_slap","beaver_bite"],
+ "v98":["face"],
+ "root":["attached_ring","brush_crush"],
  "ninja":["cut","cut_first","cut_second"]
 }
 static func attached(module:String,kind:String)->bool:

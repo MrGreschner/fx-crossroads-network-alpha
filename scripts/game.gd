@@ -1232,7 +1232,7 @@ func pulse() -> void:
 		return
 	if special_style == "summon":
 		for ally_index in int(stats.get("count", 1)):
-			allies.append({"pos": position_in_world + Vector2(45 + ally_index * 25, 30), "time": float(stats.get("duration", 12.0)) + (2 if adventure.combat.passive("solo","long_buddies") else 0), "attack_timer": 0.3, "damage": float(stats.get("damage", 20)), "speed": float(stats.get("minion_speed", 270)), "sprite": str(stats.get("minion_sprite", "mini_basketball"))})
+			allies.append({"visual_uid":Time.get_ticks_usec()+ally_index,"pos": position_in_world + Vector2(45 + ally_index * 25, 30), "time": float(stats.get("duration", 12.0)) + (2 if adventure.combat.passive("solo","long_buddies") else 0), "attack_timer": 0.3, "damage": float(stats.get("damage", 20)), "speed": float(stats.get("minion_speed", 270)), "sprite": str(stats.get("minion_sprite", "mini_basketball"))})
 		return
 	if special_style == "block":
 		activate_block(stats)
@@ -1884,7 +1884,7 @@ func draw_world() -> void:
 		for wall in ice_walls:
 			draw_circle(wall["pos"] - camera, float(wall["radius"]), Color("#a9eaff",0.65))
 		for ally in allies:
-			draw_sprite(str(ally["sprite"]), ally["pos"] - Vector2(19, 19), Vector2(38, 38))
+			if not preload("res://scripts/minion_art215.gd").draw_legacy(self,ally,ally["pos"]-camera,"solo:"+str(ally.get("visual_uid",allies.find(ally)))):draw_sprite(str(ally["sprite"]), ally["pos"] - Vector2(19, 19), Vector2(38, 38))
 		for effect in attack_effects:
 			if effect.get("visual","")=="medic_pulse":
 				preload("res://scripts/medic_visuals.gd").pulse(self,effect.center-camera,float(effect.radius),1-float(effect.time)/.5);continue
@@ -1944,6 +1944,7 @@ func draw_world() -> void:
 	elif sprite=="snail" and adventure.combat.v79.moving("solo"):pose="shell"
 	if adventure.combat.classics.channeling("solo"):pose="open"
 	elif adventure.combat.classics.spinning("solo"):pose="spin"
+	if sprite=="sunflower" and adventure.combat.charging_sun("solo"):pose="special"
 	if pose=="attack" and art.has(sprite+"_attack2") and int(visual_clock*12)%2==1:pose="attack2"
 	if sprite in core_art.HEROES:
 		art[sprite+"_core_frame"]=core_art.picture("solo",sprite,pose,position_in_world,walking and menu=="",visual_clock,adventure.combat.classics.channeling("solo"),charge_time>0 or adventure.combat.classics.moving("solo"))

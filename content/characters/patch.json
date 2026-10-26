@@ -21,10 +21,11 @@
     "style": "pulse_wave",
     "damage": 18,
     "cooldown": 6,
-    "radius": 135,
+    "radius": 300,
     "clear_projectiles": true,
     "color": "#b9a7ec",
-    "description": "Send a short expanding pulse for 18 damage and erase hostile projectiles within 135 units."
+    "description": "Send a 300-unit expanding pulse for 18 damage. Erase hostile projectiles, cleanse negative temporary effects from allies and remove positive temporary effects from enemies. Walls block cleansing and dispelling.",
+    "reset_purge": true
   },
   "special": {
     "name": "Player Two",
@@ -36,11 +37,11 @@
     "minion_speed": 255,
     "minion_sprite": "bit_buddy",
     "color": "#84e1dd",
-    "description": "Summon two targetable 45-HP Bit Buddies for 9s (11s with passive). Each deals 10 damage per hit. Partners stay separated while following and attacking.",
+    "description": "Summon two targetable 45-HP Bit Buddies for 9s. Each deals 10 damage per hit. Partners stay separated while following and attacking.",
     "range": 90
   },
-  "passive": "Extra Credits: Bit Buddies stay for two additional seconds.",
-  "passive_effect": "long_buddies",
+  "passive": "Combo Buffer: every fourth D-Pad Volley fires an extra 14-damage seeking Confirm bolt and grants 15% movement speed for 2 seconds.",
+  "passive_effect": "combo_buffer",
   "mastery": {
     "title": "Player One Legend",
     "technique": {

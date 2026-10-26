@@ -1,12 +1,13 @@
 extends RefCounted
 ## Lightweight vector cues; authoritative hitboxes and timing remain in combat modules.
 static func katana(c:Node2D,p:Vector2,aim:Vector2,reach:float,t:float,side:float)->void:
- var age:=clampf(t,0,1);var fade:=1-age;var angle:=aim.angle()+side*lerpf(-.72,.72,age)
+ var age:=clampf(t,0,1);var fade:=1-age;var angle:=aim.angle()+side*lerpf(-.87,.87,age)
  var ribbon:=PackedVector2Array()
- for n in 13:ribbon.append(p+Vector2.from_angle(angle-side*n*.055)*(reach-4))
- for n in range(12,-1,-1):ribbon.append(p+Vector2.from_angle(angle-side*n*.055)*(reach-12-n*.65))
+ for n in 13:ribbon.append(p+Vector2.from_angle(aim.angle()+clampf(angle-aim.angle()-side*n*.035,-.87,.87))*(reach-4))
+ for n in range(12,-1,-1):ribbon.append(p+Vector2.from_angle(aim.angle()+clampf(angle-aim.angle()-side*n*.035,-.87,.87))*(reach-10-n*.35))
  c.draw_colored_polygon(ribbon,Color(.72,.77,1,fade*.55))
- c.draw_arc(p,reach-3,minf(angle,angle-side*.64),maxf(angle,angle-side*.64),20,Color(.92,.94,1,fade),2,true)
+ var prior:float=aim.angle()+clampf(angle-aim.angle()-side*.42,-.87,.87)
+ c.draw_arc(p,reach-3,minf(angle,prior),maxf(angle,prior),20,Color(.92,.94,1,fade),2,true)
  var dir:=Vector2.from_angle(angle);var tangent:=dir.orthogonal()
  c.draw_line(p+dir*24,p+dir*(reach-7),Color(.88,.94,.98,fade),3,true)
  c.draw_line(p+dir*23-tangent*6,p+dir*23+tangent*6,Color(.66,.55,.84,fade),3,true)

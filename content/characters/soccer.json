@@ -12,7 +12,8 @@
     "cooldown": 0.7,
     "range": 420,
     "speed": 610,
-    "color": "#e8f3ed"
+    "color": "#e8f3ed",
+    "visual215": "soccer"
   },
   "secondary": {
     "name": "Slide Tackle",

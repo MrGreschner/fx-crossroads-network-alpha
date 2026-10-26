@@ -1,0 +1,197 @@
+{
+  "soccer": {
+    "columns": 3,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      474,
+      1036,
+      1536
+    ],
+    "grid_rows": [
+      0,
+      493,
+      1024
+    ],
+    "factor": 0.12686567164179105,
+    "body_anchors": [
+      268,
+      268,
+      268,
+      251,
+      236,
+      342
+    ]
+  },
+  "caelum": {
+    "columns": 3,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      518,
+      1041,
+      1536
+    ],
+    "grid_rows": [
+      0,
+      520,
+      1024
+    ],
+    "factor": 0.16623376623376623,
+    "body_anchors": [
+      381,
+      385,
+      385,
+      381,
+      386,
+      382
+    ]
+  },
+  "mini_basketball": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      762,
+      1536
+    ],
+    "grid_rows": [
+      0,
+      498,
+      1024
+    ],
+    "factor": 0.19525065963060687,
+    "body_anchors": [
+      233,
+      208,
+      242,
+      219
+    ]
+  },
+  "bit_buddy": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      764,
+      1536
+    ],
+    "grid_rows": [
+      0,
+      510,
+      1024
+    ],
+    "factor": 0.2962962962962963,
+    "body_anchors": [
+      215,
+      216,
+      219,
+      207
+    ]
+  },
+  "puppet_a": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      700,
+      1402
+    ],
+    "grid_rows": [
+      0,
+      561,
+      1122
+    ],
+    "factor": 0.17391304347826086,
+    "body_anchors": [
+      368,
+      362,
+      368,
+      354
+    ]
+  },
+  "puppet_b": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      744,
+      1536
+    ],
+    "grid_rows": [
+      0,
+      507,
+      1024
+    ],
+    "factor": 0.18181818181818182,
+    "body_anchors": [
+      352,
+      354,
+      350,
+      354
+    ]
+  },
+  "ram_guard": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      635,
+      1278
+    ],
+    "grid_rows": [
+      0,
+      618,
+      1230
+    ],
+    "factor": 0.14780600461893764,
+    "body_anchors": [
+      434,
+      416,
+      433,
+      406
+    ]
+  },
+  "ram_miner": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      760,
+      1536
+    ],
+    "grid_rows": [
+      0,
+      500,
+      1024
+    ],
+    "factor": 0.1553398058252427,
+    "body_anchors": [
+      405,
+      412,
+      417,
+      409
+    ]
+  },
+  "bramble": {
+    "columns": 2,
+    "rows": 2,
+    "grid_columns": [
+      0,
+      626,
+      1224
+    ],
+    "grid_rows": [
+      0,
+      629,
+      1285
+    ],
+    "factor": 0.14678899082568808,
+    "body_anchors": [
+      433,
+      436,
+      442,
+      424
+    ]
+  }
+}

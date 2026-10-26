@@ -31,6 +31,12 @@ func paint()->void:
  for n in range(14,0,-1):
   var radius=minf(size.x,size.y)*(.15+n*.075)
   frame.draw_circle(orbit,radius,Color(.62,.78,1,alpha*altitude*.004) if is_night else Color(1,.81,.43,alpha*altitude*.013))
+ var second:=Vector2(size.x*(.23 if is_night else .78),size.y*.16)
+ frame.draw_circle(second,15,Color(1,.79,.43,alpha*.6) if is_night else Color(.70,.83,.89,alpha*.7))
+ if not is_night:frame.draw_circle(second+Vector2(6,-4),13,Color(.055,.13,.18,alpha))
+ else:
+  for n in 8:
+   var ray:=Vector2.from_angle(n*TAU/8);frame.draw_line(second+ray*19,second+ray*23,Color(1,.8,.48,alpha*.45),1.5,true)
  var celestial=Color(.72,.85,1,alpha) if is_night else Color(1,.79,.40,alpha)
  for n in range(10,0,-1):frame.draw_circle(orbit,19+n*9,Color(celestial,(.012+.02*altitude)*alpha))
  frame.draw_circle(orbit,19,celestial)
@@ -69,7 +75,7 @@ func paint()->void:
  var striking:bool=elapsed>=1.65 and elapsed<2.25
  var pose:String="attack" if striking else "walk1" if int(elapsed*7)%2==0 else "walk2"
  var ram:Texture2D=preload("res://scripts/core_hero_art.gd").texture("ram","attack" if striking else "walk1" if int(elapsed*7)%2==0 else "walk2")
- var foe:Texture2D=art.get("bramble_"+("0" if int(elapsed*5)%2==0 else "1"),art.get("bramble"))
+ var foe:Texture2D=preload("res://scripts/minion_art215.gd").frame("bramble",3 if striking else 1+int(elapsed*5)%2)
  var platform=PackedVector2Array([Vector2(center.x-265,lane_y+6),Vector2(center.x-230,lane_y-8),Vector2(center.x+230,lane_y-8),Vector2(center.x+265,lane_y+6),Vector2(center.x+243,lane_y+24),Vector2(center.x-243,lane_y+24)])
  frame.draw_colored_polygon(platform,Color(.18,.31,.33,alpha));frame.draw_polyline(platform,Color(.46,.60,.57,alpha*.5),1.5,true)
  frame.draw_line(Vector2(center.x-230,lane_y+6),Vector2(center.x+230,lane_y+6),Color(.55,.69,.63,alpha*.3),1,true)
@@ -79,7 +85,7 @@ func paint()->void:
  var cat=preload("res://scripts/core_hero_art.gd").texture("cat","idle")
  var flank=minf(320,size.x*.43)
  frame.draw_texture_rect(elder,Rect2(Vector2(center.x-flank,lane_y)-Vector2(27,61),Vector2(54,68)),false,Color(1,1,1,alpha))
- frame.draw_texture_rect(cat,Rect2(Vector2(center.x+flank,lane_y)-Vector2(29,56),Vector2(58,62)),false,Color(1,1,1,alpha))
+ frame.draw_texture_rect(cat,Rect2(Vector2(center.x-220,size.y-36)-Vector2(27,56),Vector2(54,62)),false,Color(1,1,1,alpha))
  var wobble:float=sin((elapsed-1.65)*17)*5 if striking else 0
  if foe!=null:frame.draw_texture_rect(foe,Rect2(foe_pos-Vector2(30,60)+Vector2(wobble,0),Vector2(60,68)),false,Color(1,1,1,alpha))
  if striking:
@@ -94,7 +100,7 @@ func paint()->void:
  var fish=preload("res://scripts/fishing_catalog.gd").texture("reedlight_minnow" if is_night else "sunspot_koi")
  if fish!=null:frame.draw_texture_rect(fish,Rect2(fish_pos-Vector2(31,18),Vector2(62,36)),false,Color(1,1,1,alpha))
  for n in 3:frame.draw_arc(Vector2(center.x-70+n*65,water_y),8+fposmod(elapsed*8+n*4,16),0,PI,16,Color(.55,.85,.88,alpha*.25),1,true)
- var caption="A LIVING TOWN • WATERS TO DISCOVER"
+ var caption="DAY & NIGHT • DIFFERENT WATERS TO DISCOVER"
  var caption_width=ui_font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,10).x
  frame.draw_string(ui_font,Vector2(center.x-caption_width*.5,water_y-53),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,10,Color(.7,.85,.83,alpha))
 

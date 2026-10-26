@@ -58,8 +58,10 @@ var shot_turn:Dictionary={}
 var mines:Array=[]
 var received_at:=0
 var coast:Node
+var polish:Node
 const STYLES=["golf_drive","navigator_bolt","meteor_shower","split_lance","manual_mines","ground_sequence","cross_shot","charged_beam","chill_aura","rolling_snow","pulse_wave","pulse_burst","magnet_pin","magnet_pull","magnet_wire","waterfall_wave","ricochet_projectile","burst_projectile","spiral_shot","orbit_shards","vortex_field"]
 func _ready()->void:
+	polish=preload("res://scripts/combat215.gd").new();add_child(polish);polish.combat=self
 	golf=preload("res://scripts/golf_chain.gd").new();add_child(golf);golf.combat=self
 	starfield=preload("res://scripts/starfield.gd").new();add_child(starfield);starfield.combat=self
 	feedback=preload("res://scripts/combat_feedback.gd").new();add_child(feedback);feedback.combat=self
@@ -133,7 +135,7 @@ func setup(id:String)->void:
 	chain.reset()
 	courier.reset()
 	variants.reset()
-	mines.clear();orbits.clear();vortices.clear();shot_turn.clear();statuses.clear();projectiles.clear();rings.clear();casts.clear();auras.clear();anchors.clear();wires.clear();pools.clear();visuals.clear();remote_indicators.clear()
+	polish.reset();mines.clear();orbits.clear();vortices.clear();shot_turn.clear();statuses.clear();projectiles.clear();rings.clear();casts.clear();auras.clear();anchors.clear();wires.clear();pools.clear();visuals.clear();remote_indicators.clear()
 	coast.setup(id)
 func vec(value:Array)->Vector2:return Vector2(float(value[0]),float(value[1]))
 func point_array(point:Vector2)->Array:return [point.x,point.y]
@@ -276,7 +278,7 @@ func speed_factor(key:String)->float:
 	if key.begins_with("p:") and chain.moving(key.substr(2)):return 0
 	if stunned(key):return 0
 	var factor:=float(statuses.get(key,{}).get("slow",{}).get("value",.55)) if effect_time(key,"slow")>0 else 1.0
-	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.85 if twister.charges.has(key.substr(2)) else .45
+	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.85 if twister.charges.has(key.substr(2)) else .65 if casts.any(func(e):return str(e.owner)==key.substr(2) and str(e.style)=="charged_beam") else .45
 	if effect_time(key,"scout_stride")>0:factor*=float(statuses[key].scout_stride.value)
 	if effect_time(key,"rune_stride")>0:factor*=1.3
 	if key.begins_with("p:") and robot.transformed(key.substr(2)):factor*=.42
@@ -330,6 +332,7 @@ func busy(id:String)->bool:
 	for cast in casts:
 		if str(cast["owner"])==id and str(cast["style"])=="charged_beam":return true
 	return false
+func charging_sun(owner:String)->bool:return casts.any(func(e):return str(e.owner)==owner and str(e.style)=="charged_beam")
 func owner_pos(owner:String)->Vector2:
 	if adventure.game.get_meta("fx_drawing_world",false) and adventure.game.has_method("melee_visual_position"):
 		return adventure.game.melee_visual_position(owner,adventure.points().get(owner,Vector2.ZERO))
@@ -384,7 +387,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 	if ninja.cast(owner,stats,aim,amount):return true
 	if v59.cast(owner,stats,aim,amount):return true
 	if v58.cast(owner,stats,aim,amount):return true
-	if style=="projectile" and float(stats.get("stun_duration",0))>0:
+	if style=="projectile" and (float(stats.get("stun_duration",0))>0 or stats.has("visual215")):
 		if adventure.authoritative() and adventure.alive(owner):
 			for n in int(stats.get("count",1)):
 				var direction:Vector2=aim.rotated((n-(int(stats.get("count",1))-1)*.5)*float(stats.get("spread",0)))
@@ -439,6 +442,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 				if not path_clear(origin,location):break
 				casts.append({"owner":owner,"style":style,"pos":point_array(location),"time":.25+n*float(stats.get("interval",.24)),"stats":stats,"damage":amount})
 		"cross_shot":
+			polish.combo(owner,amount,aim)
 			for n in 4:
 				var direction:=aim.rotated(n*PI*.5)
 				launch_projectile(owner,origin+direction*26,direction,stats,amount)
@@ -505,7 +509,7 @@ func launch_projectile(owner:String,origin:Vector2,aim:Vector2,stats:Dictionary,
 	shot_turn[owner]=int(shot_turn.get(owner,0))+1
 func add_ring(owner:String,origin:Vector2,stats:Dictionary,amount:float)->void:
 	if rings.size()>=32:return
-	rings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Sound wave"))),"kind":"attached_ring" if bool(stats.get("follow_owner",false)) else "world_ring","follow_owner":bool(stats.get("follow_owner",false)),"tempo_id":str(stats.get("tempo_id","")),"style":str(stats.get("style","pulse_wave")),"prism_bloom":bool(stats.get("prism_bloom",false)),"owner":owner,"pos":point_array(origin),"radius":0.0,"max_radius":float(stats.get("radius",105)),"speed":float(stats.get("wave_speed",260)),"damage":amount,"slow":float(stats.get("slow_duration",0)),"slow_factor":float(stats.get("slow",.55)),"knockback":float(stats.get("knockback",0)),"stun":float(stats.get("stun",0)),"clear":bool(stats.get("clear_projectiles",false)),"hits":[],"color":str(stats.get("color","#eed395"))})
+	rings.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,owner,str(stats.get("name","Sound wave"))),"kind":"attached_ring" if bool(stats.get("follow_owner",false)) else "world_ring","follow_owner":bool(stats.get("follow_owner",false)),"tempo_id":str(stats.get("tempo_id","")),"style":str(stats.get("style","pulse_wave")),"prism_bloom":bool(stats.get("prism_bloom",false)),"owner":owner,"pos":point_array(origin),"radius":0.0,"max_radius":float(stats.get("radius",105)),"speed":float(stats.get("wave_speed",260)),"damage":amount,"slow":float(stats.get("slow_duration",0)),"slow_factor":float(stats.get("slow",.55)),"knockback":float(stats.get("knockback",0)),"stun":float(stats.get("stun",0)),"reset_purge":bool(stats.get("reset_purge",false)),"clear":bool(stats.get("clear_projectiles",false)),"hits":[],"color":str(stats.get("color","#eed395"))})
 func owner_anchors(owner:String)->Array:
 	var result:Array=[]
 	for pin in anchors:
@@ -655,6 +659,7 @@ func step(delta:float)->void:
 	for i in range(casts.size()-1,-1,-1):
 		var entry:Dictionary=casts[i];var owner:=str(entry["owner"])
 		if not adventure.alive(owner) or stunned(player_key(owner)):casts.remove_at(i);continue
+		if str(entry.style)=="charged_beam":entry.aim=point_array(polish.steer(owner,vec(entry.aim),PI/3,delta))
 		entry["time"]=float(entry["time"])-delta
 		if float(entry["time"])>.00001:continue
 		casts.remove_at(i)
@@ -699,6 +704,7 @@ func step_rings(delta:float)->void:
 			if not adventure.alive(owner):rings.remove_at(i);continue
 			ring.pos=point_array(owner_pos(owner))
 		var center:=vec(ring["pos"])
+		if bool(ring.get("reset_purge",false)):polish.pulse(ring)
 		# Teleports relocate the wave; they cannot sweep damage across the map.
 		if before.distance_to(center)>128:before=center
 		for key in hostile(owner):
@@ -885,7 +891,7 @@ func indicators()->Array:
 			if effect_time(key,kind)>0:flags.append(kind)
 		if not flags.is_empty():result.append({"key":str(key),"pos":point_array(target["pos"]),"flags":flags})
 	return result
-func snapshot()->Dictionary:return {"golf":golf.balls,"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
+func snapshot()->Dictionary:return {"combo215":polish.combos,"golf":golf.balls,"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
 func receive(data:Dictionary)->void:
 	golf.balls=data.get("golf",[]).duplicate(true)
 	starfield.marks=data.get("starfield",{})
@@ -921,7 +927,7 @@ func receive(data:Dictionary)->void:
 	chain.receive(data.get("chain",{}))
 	courier.receive(data.get("courier",{}))
 	variants.receive(data.get("variants",{}))
-	mines=data.get("mines",[]);orbits=data.get("orbits",[]);vortices=data.get("vortices",[]);statuses=data.get("statuses",{});projectiles=data.get("projectiles",[]);rings=data.get("rings",[]);casts=data.get("casts",[]);auras=data.get("auras",[]);anchors=data.get("anchors",[]);wires=data.get("wires",[]);pools=data.get("pools",[]);visuals=data.get("visuals",[]);remote_indicators=data.get("indicators",[]);received_at=Time.get_ticks_msec();coast.receive(data.get("coast",{}))
+	polish.combos=data.get("combo215",{});mines=data.get("mines",[]);orbits=data.get("orbits",[]);vortices=data.get("vortices",[]);statuses=data.get("statuses",{});projectiles=data.get("projectiles",[]);rings=data.get("rings",[]);casts=data.get("casts",[]);auras=data.get("auras",[]);anchors=data.get("anchors",[]);wires=data.get("wires",[]);pools=data.get("pools",[]);visuals=data.get("visuals",[]);remote_indicators=data.get("indicators",[]);received_at=Time.get_ticks_msec();coast.receive(data.get("coast",{}))
 func playing()->bool:
 	return adventure.game.started if adventure.arcade else adventure.game.mode=="run"
 func draw_on(canvas:Node2D,camera:Vector2)->void:
@@ -1009,7 +1015,8 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 	for entry in casts:
 		if str(entry["style"])!="charged_beam" or not adventure.points().has(str(entry["owner"])):continue
 		var point:=owner_pos(str(entry["owner"]));var direction:=vec(entry["aim"]);var progress:=1-float(entry["time"])/float(entry["total"])
-		canvas.draw_line(point-camera,point+direction*float(entry["range"])-camera,Color(1,.9,.3,.08),float(entry["width"]),true);canvas.draw_arc(point-camera,35,-PI*.5,-PI*.5+TAU*progress,40,Color("#ffe37a"),5,true)
+		canvas.draw_line(point-camera,point+direction*float(entry["range"])-camera,Color(1,.9,.3,.06),float(entry["width"]),true)
+		preload("res://scripts/combat_art215.gd").sunlight(canvas,point-camera,direction,progress,clock)
 	for pool in pools:
 		var p:=vec(pool["pos"])-camera;var r:=float(pool["radius"])
 		if canvas.has_method("draw_ground_patch") and canvas.draw_ground_patch(p,r,1,clock,"poison"):continue
@@ -1020,12 +1027,8 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 			var a:Vector2=vec(effect.start)-camera;var b:Vector2=vec(effect.end)-camera;var side:Vector2=(b-a).normalized().orthogonal()*5
 			canvas.draw_polyline(PackedVector2Array([a,a.lerp(b,.3)+side,a.lerp(b,.5)-side,a.lerp(b,.7)+side,b]),Color("#c8e5ff"),2,true);continue
 		if str(effect.get("style",""))=="brush_crush":
-			var center:Vector2=vec(effect.pos)-camera
-			var angle:float=vec(effect.aim).angle()
-			var progress:float=clampf(1-float(effect.time)/.35,0,1)
-			canvas.draw_arc(center,100,angle-.96,angle+.96,24,Color(.9,.78,.5,(1-progress)*.4),2,true)
-			var sweep:float=angle-.96+progress*1.92
-			canvas.draw_line(center+Vector2.from_angle(sweep)*35,center+Vector2.from_angle(sweep)*100,Color(1,.88,.57,1-progress),8,true)
+			var center:Vector2=draw_effect_position("root",effect,owner_pos(str(effect.get("owner",""))))-camera
+			preload("res://scripts/combat_art215.gd").brush(canvas,center,vec(effect.aim),clampf(1-float(effect.time)/.35,0,1))
 			continue
 		if str(effect.get("style",""))=="fern_bloom":
 			var center:Vector2=vec(effect["pos"])-camera
@@ -1165,6 +1168,10 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 		canvas.draw_colored_polygon(PackedVector2Array([point+aim*11,point+side*8,tail+side*4,tail-aim*8,point-side*8]),Color("#e56c37"));canvas.draw_circle(point,6,Color("#ffe2a0"));canvas.draw_line(tail,point,Color("#ffb95f"),3,true);return
 	if bool(shot["stats"].get("prism_glass",false)):
 		preload("res://scripts/hero_visuals1987.gd").prism(canvas,point,vec(shot.aim));return
+	var fresh:String=str(shot.get("stats",{}).get("visual215",""))
+	if fresh in ["soccer","snow"]:preload("res://scripts/combat_art215.gd").ball(canvas,point,fresh,float(shot.get("distance",0))*.08);return
+	if fresh=="velvet":preload("res://scripts/combat_art215.gd").thread(canvas,point,vec(shot.aim),clock);return
+	if fresh=="confirm":canvas.draw_circle(point,5,Color("#7ddbd2"));canvas.draw_line(point-Vector2(3,0),point-Vector2(1,-2),Color("#e9ffe8"),2,true);canvas.draw_line(point-Vector2(1,-2),point+Vector2(3,2),Color("#e9ffe8"),2,true);return
 	if bool(shot["stats"].get("golf_ball",false)):
 		preload("res://scripts/hero_visuals1984.gd").ball(canvas,point,vec(shot.aim));return
 	if bool(shot["stats"].get("river_stone",false)):

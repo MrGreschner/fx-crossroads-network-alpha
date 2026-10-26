@@ -272,11 +272,13 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for id in units:
   var body:Dictionary=units[id];var p:Vector2=combat.vec(body.pos)-camera
   var texture:Texture2D=combat.adventure.game.art.get(str(body.sprite)+"_"+str(body.pose),combat.adventure.game.art.get(str(body.sprite)+"_0"))
+  var updated:Texture2D=preload("res://scripts/minion_art215.gd").unit_texture(body,str(id),p)
+  if updated!=null:texture=updated
   if str(body.sprite).begins_with("ds_"):texture=preload("res://scripts/descent203_art.gd").companion_texture(str(body.sprite),str(body.pose))
   if bool(body.get("healer",false)):texture=preload("res://scripts/source_art.gd").texture("res://assets/morrow_healer_"+str(body.pose)+".svg")
   c.draw_circle(p+Vector2(0,14),18,Color(0,0,0,.2));c.draw_arc(p,23,0,TAU,24,Color("#d899ca") if bool(body.ranged) else Color("#9bcdbb"),2,true)
   if texture!=null:
-   var scale_factor:float=1+.18*(int(body.get("weight",1))-1);c.draw_texture_rect(texture,Rect2(p-Vector2(23,35)*scale_factor,Vector2(46,52)*scale_factor),false,Color.WHITE if body.has("family") else Color(.68,.85,.78,.85))
+   var scale_factor:float=1+.18*(int(body.get("weight",1))-1);var shape:Vector2=Vector2(32,36) if str(body.sprite)=="bit_buddy" else Vector2(38,44) if str(body.get("family",""))=="puppet" else Vector2(46,52);c.draw_texture_rect(texture,Rect2(p-shape*Vector2(.5,.7)*scale_factor,shape*scale_factor),false,Color.WHITE if body.has("family") else Color(.68,.85,.78,.85))
    if int(body.get("weight",1))>1:c.draw_string(ThemeDB.fallback_font,p+Vector2(-6,-53),"×"+str(body.weight),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#ebc9fa"))
   else:
    c.draw_circle(p-Vector2(0,15),9,Color("#d6dbba"));c.draw_rect(Rect2(p-Vector2(10,5),Vector2(20,24)),Color("#718b81"))

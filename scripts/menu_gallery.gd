@@ -29,6 +29,8 @@ func setup(owner:Node,multi:bool=false)->void:
 func entry(data:Dictionary,id:String,hero:bool)->Dictionary:
  var sprite:=str(data.get("sprite",id));var first:Texture2D=game.art.get(sprite+"_walk1",game.art.get(sprite+"_0",game.art.get(sprite+"_idle")))
  var second:Texture2D=game.art.get(sprite+"_walk2",game.art.get(sprite+"_1",first))
+ if not hero and id=="bramble":
+  first=preload("res://scripts/minion_art215.gd").frame("bramble",1);second=preload("res://scripts/minion_art215.gd").frame("bramble",2)
  var caption_name:String=str(data.get("name",id.capitalize()))
  var lines:Array[String]=[];var line:=""
  for word in caption_name.split(" "):
@@ -48,10 +50,13 @@ func _draw()->void:
  var view:=get_viewport_rect().size;var factor:=minf(view.x/1280,view.y/720);var offset:Vector2=(view-Vector2(1280,720)*factor)*.5
  draw_rect(Rect2(Vector2.ZERO,view),Color("#081b27"))
  draw_set_transform(offset,0,Vector2.ONE*factor)
+ var backdrop:Texture2D=preload("res://scripts/title_art215.gd").background()
+ if backdrop!=null:draw_texture_rect(backdrop,Rect2(0,0,1280,720),false,Color(1,1,1,.67))
+ draw_rect(Rect2(370,95,540,540),Color(.025,.07,.1,.36))
  # Architectural lines, distant portal arcs, and slow drifting fireflies.
  for side in [-1,1]:
   var center:=Vector2(640+side*470,335)
-  draw_circle(center,250,Color("#102c3a"));draw_arc(center,246,.15,TAU-.15,72,Color("#284452"),2,true)
+  draw_circle(center,250,Color(.06,.17,.22,.38));draw_arc(center,246,.15,TAU-.15,72,Color("#284452"),2,true)
   draw_arc(center,213,clock*.035,clock*.035+PI*1.45,56,Color("#365659"),1,true)
  for n in 32:
   var p:=Vector2(fposmod(n*173+sin(clock*.12+n)*18,1260)+10,35+fposmod(n*97-clock*(3+n%3),660))

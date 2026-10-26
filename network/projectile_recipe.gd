@@ -5,7 +5,7 @@ static func seeds(stats:Dictionary,aim:Vector2,origin:Vector2,combat:Node,owner:
  var style=str(stats.get("style",""));var s:Dictionary=stats.duplicate(true)
  var supported=["golf_drive","navigator_bolt","projectile","ranged","homing","apiary_needle","ricochet_projectile","spiral_shot","split_lance","cross_shot","rolling_snow","magnet_pin","corkscrew_key","latchline","echo_brand","facet_spear","lantern_comet","rune_hammer","tea_shot","threaded_needles","time_dart","v91_pistol","wick_fire","mirror_fan"]
  if style not in supported:return []
- var custom=style not in ["projectile","ranged"] or bool(s.get("released_hold",false))
+ var custom=style not in ["projectile","ranged"] or bool(s.get("released_hold",false)) or s.has("visual215")
  var count=clampi(int(s.get("count",1)),1,8)
  if style=="homing" and combat.passive(owner,"twin_orbs"):count=2
  if style=="cross_shot":count=4

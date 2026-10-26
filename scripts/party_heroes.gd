@@ -129,7 +129,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
    flash(end,90,"#f4cb72")
   "honey_court":field(owner,end,"honey",4,140,amount)
   "bailiff_thread","twin_threads":
-   for n in (2 if style=="twin_threads" else 1):combat.launch_projectile(owner,p+aim*18,aim.rotated((n-.5)*.13 if style=="twin_threads" else 0),{"range":reach,"speed":330,"color":"#d6a7f2","slow_duration":1.2,"slow":.6},amount)
+   for n in (2 if style=="twin_threads" else 1):combat.launch_projectile(owner,p+aim*18,aim.rotated((n-.5)*.13 if style=="twin_threads" else 0),{"range":reach,"speed":330,"color":"#d6a7f2","visual215":"velvet","slow_duration":1.2,"slow":.6},amount)
   "traffic_order","inward_order":
    field(owner,end,"inward" if style=="inward_order" else "order",3,145,amount,aim)
    if combat.passive(owner,"due_process"):combat.apply_status(combat.player_key(owner),"guard",2,owner,.2)
@@ -258,6 +258,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   if bool(s.get("ground",false)):c.draw_arc(p,18,0,TAU,20,Color(.6,.92,.8,.4*alpha),1,true)
  for f in fields:
   var p:Vector2=combat.vec(f.pos)-camera;var r:=float(f.radius);var tint:=Color("#d6a7f2") if str(f.style) in ["order","inward","court"] else Color("#f4cb72") if str(f.style)=="honey" else Color("#94ead2")
+  if str(f.style)=="court":preload("res://scripts/combat_art215.gd").court(c,p,r,clampf(1-float(f.time)/.8,0,1));continue
   if str(f.style)=="bubble_pool":
    for n in 5:c.draw_circle(p+Vector2.from_angle(n*TAU/5)*r*.35,r*.5,Color(.5,.8,.94,.15*minf(1,float(f.time))))
    continue

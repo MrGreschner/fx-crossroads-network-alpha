@@ -14,6 +14,7 @@ const STYLES=["vacuum_intake","brush_crush","grand_draw","pocket_rain","tailwind
 func reset()->void:
  intakes.clear();held.clear();faults.clear();hoists.clear();ramps.clear();clouds.clear();lanes.clear();storms.clear();draws.clear();clock=0
 func holding(owner:String,pressed:bool,aim:Vector2)->void:
+ combat.polish.aim(owner,aim)
  combat.twister.holding(owner,pressed,aim)
  if not combat.adventure.authoritative():return
  held[owner]=.45 if pressed else 0.0
@@ -104,7 +105,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
     held[owner]=.45
   "brush_crush":
    hit_cone(owner,aim,100,110,amount)
-   combat.visuals.append({"style":"brush_crush","pos":combat.point_array(origin),"aim":combat.point_array(aim),"radius":100,"time":.35,"color":"#e0ba78"})
+   combat.visuals.append({"style":"brush_crush","owner":owner,"pos":combat.point_array(origin),"aim":combat.point_array(aim),"radius":100,"time":.35,"color":"#e0ba78"})
   "grand_draw":
    if draws.size()<8:draws.append({"owner":owner,"aim":combat.point_array(aim),"time":2.5})
   "pocket_rain":
@@ -147,6 +148,7 @@ func step(delta:float)->void:
   var entry:Dictionary=draws[n]
   if not combat.adventure.alive(entry.owner):draws.remove_at(n);continue
   var used:float=minf(delta,float(entry.time));entry.time-=delta
+  entry.aim=combat.point_array(combat.polish.steer(str(entry.owner),combat.vec(entry.aim),2.8,used))
   var origin:Vector2=combat.owner_pos(entry.owner);var aim:Vector2=combat.vec(entry.aim)
   for key in combat.hostile(entry.owner):
    var actor:Dictionary=combat.actor(key)

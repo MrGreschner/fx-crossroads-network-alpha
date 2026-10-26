@@ -47,7 +47,7 @@ func summon(owner:String,family:String,hp:float,damage:float,time:float)->void:
  var cap:=4 if family=="puppet" else 1 if family=="stage" else 2
  if units(owner).filter(func(id):return str(combat.morrow.units[id].family)==family).size()>=cap:return
  serial+=1;var id:="risen:v90:"+str(serial);var offset:=Vector2.from_angle(serial*2.4)*35
- combat.morrow.units[id]={"owner":owner,"pos":combat.point_array(combat.v75.clip(combat.owner_pos(owner),offset,35)),"sprite":"stagelet" if family in ["puppet","stage"] else "lanternling" if family=="guide" else "deputyling","hp":hp,"max_hp":hp,"time":time,"ranged":false,"attack":.6,"contacts":{},"pose":"idle","family":family,"weight":1,"damage":damage,"speed":150,"reach":55,"interval":1.0,"guide_tick":0.0}
+ combat.morrow.units[id]={"owner":owner,"pos":combat.point_array(combat.v75.clip(combat.owner_pos(owner),offset,35)),"sprite":"stagelet" if family in ["puppet","stage"] else "lanternling" if family=="guide" else "deputyling","hp":hp,"max_hp":hp,"time":time,"ranged":false,"attack":.6,"contacts":{},"pose":"idle","family":family,"visual_variant":serial%2,"weight":1,"damage":damage,"speed":150,"reach":55,"interval":1.0,"guide_tick":0.0}
 func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
  var style:=str(stats.get("style",""))
  if style not in STYLES:return false
@@ -64,7 +64,9 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
   "v90_wing":effect(owner,"wing",.38,p,aim,amount,reach)
   "v90_reed","v90_hook","v90_chop","v90_rope":
    var type:="reed" if style=="v90_reed" else "hook" if style=="v90_hook" else "chop" if style=="v90_chop" else "rope"
-   if type=="reed":
+   if type=="chop":
+    effect(owner,"chop",.32,p,aim,amount,reach)
+   elif type=="reed":
     var e:=effect(owner,type,REED_TIME,p,aim,amount,reach);e.stats=stats
    else:hit(owner,p,aim,reach,amount,type,stats);effect(owner,type,.4,p,aim,0,reach)
   "v90_ascent","v90_stampede":
@@ -123,6 +125,13 @@ func step(delta:float)->void:
    if tracked.is_empty() or not bool(tracked.alive):effects.remove_at(i);continue
    e.last_pos=combat.point_array(tracked.pos)
   match str(e.style):
+   "chop":
+    if elapsed>=.04 and elapsed<=.18:
+     e.pos=combat.point_array(p)
+     for key in combat.hostile(owner):
+      if key in e.hits:continue
+      var f:Dictionary=combat.actor(key)
+      if not f.is_empty() and bool(f.alive) and primary_contains("chop",p,aim,f.pos,float(e.range)) and combat.path_clear(p,f.pos):e.hits.append(key);combat.damage(key,float(e.damage),owner)
    "reed":
     if int(e.stage)==0 and elapsed>=REED_IMPACT:
      e.stage=1;hit(owner,origin,aim,float(e.range),float(e.damage),"reed",e.get("stats",{}))

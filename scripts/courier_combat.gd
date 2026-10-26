@@ -42,11 +42,9 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   if float(tram.windup)>0:
    for offset in [-36,36]:canvas.draw_line(origin+side*offset,origin+side*offset+direction*float(tram.range),Color(.3,.85,.85,.25),2,true)
    continue
-  var hull:=PackedVector2Array([origin+direction*50+side*42,origin+direction*50-side*42,origin-direction*65-side*42,origin-direction*65+side*42])
-  canvas.draw_colored_polygon(hull,Color(.25,.75,.75,.65));hull.append(hull[0]);canvas.draw_polyline(hull,Color("#baf8e1"),3,true)
-  for n in 3:canvas.draw_line(origin-direction*(n*23)+side*28,origin-direction*(n*23)-side*28,Color("#ecffbd"),9,true)
-  canvas.draw_circle(origin+direction*48,9,Color("#ffdf99"))
-  for n in 5:canvas.draw_circle(origin-direction*(70+n*18)+side*sin(n*1.4)*12,12-n,Color(.5,.9,.8,.2))
+  preload("res://scripts/combat_art215.gd").tram(canvas,origin,direction)
+  for n in 4:canvas.draw_circle(origin-direction*(75+n*17),7-n,Color(.55,.86,.81,.16))
+
  # Hook chains and spinning key teeth use the shared replicated projectile state.
  for shot in combat.projectiles:
   if str(shot.style) not in ["latchline","corkscrew_key"]:continue

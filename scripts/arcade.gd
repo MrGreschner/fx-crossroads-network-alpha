@@ -2291,7 +2291,7 @@ func _draw() -> void:
 		_sprite(str(trail.get("hero",hero_ids.get(my_id,selected_hero)))+"_walk1",trail["pos"]+trail_rect.position,trail_rect.size,Color(0.7,0.9,1.0,float(trail["time"])*1.8))
 	for guard in guards:
 		var sprite := str(guard.get("sprite","mini_basketball")) if str(guard["type"]) == "summoned" else "guard_"+str(guard["type"])
-		_sprite(sprite,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-Vector2(24,44),Vector2(48,56))
+		if not preload("res://scripts/minion_art215.gd").draw_legacy(self,guard,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-camera,"guard:"+str(guard.get("net_uid",0))):_sprite(sprite,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-Vector2(24,44),Vector2(48,56))
 		if str(guard.get("type",""))=="summoned" and float(guard.get("hp",0))>0:
 			var bar:Vector2=visual_actor("g:"+str(guard.get("net_uid",0)),guard.pos)-camera+Vector2(-20,14)
 			draw_rect(Rect2(bar,Vector2(40,4)),Color("#26343a"))
@@ -2345,6 +2345,7 @@ func _draw() -> void:
 		elif adventure.combat.classics.spinning(id):pose="spin"
 		if adventure.combat.v90.pending_rebirth(str(id)):pass
 		elif hero_id=="snail" and adventure.combat.v79.moving(str(id)):pose="shell"
+		if hero_id=="sunflower" and adventure.combat.charging_sun(str(id)):pose="special"
 		if pose=="attack" and art.has(hero_id+"_attack2") and int(visual_time*12)%2==1:pose="attack2"
 		var texture: Texture2D = core_art.picture(str(id),hero_id,pose,_player_draw_position(str(id),pos+camera),walking,visual_time,adventure.combat.classics.channeling(str(id)),charges.has(id) or adventure.combat.classics.moving(str(id))) if hero_id in core_art.HEROES else art.get(hero_id+"_"+pose)
 		var tint := Color.WHITE if int(health.get(id,0)) > 0 else Color(0.5,0.5,0.5,0.45)

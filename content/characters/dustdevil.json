@@ -27,7 +27,7 @@
     "style": "grand_draw",
     "damage": 0,
     "cooldown": 16,
-    "description": "Channel a visible 320-unit vacuum cone for 2.5 seconds, pulling enemies towards the nozzle for a follow-up Brush Crush. Walls stop pulling; bosses are pulled less.",
+    "description": "Channel a visible 320-unit vacuum cone for 2.5 seconds, pulling enemies towards the nozzle for a follow-up Brush Crush. Walls stop pulling; bosses are pulled less. Turn your aim during the channel to steer the cone.",
     "range": 320
   },
   "passive": "Overload: every 6 seconds, release a 145-radius poison pulse. Nearby enemies take 3 poison damage per second for 4 seconds.",

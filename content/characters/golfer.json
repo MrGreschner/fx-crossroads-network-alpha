@@ -19,6 +19,7 @@
   "secondary": {
     "name": "Chip Shot",
     "style": "target_aoe",
+    "cast_visual": "golf_chip",
     "damage": 28,
     "cooldown": 4.0,
     "range": 330,

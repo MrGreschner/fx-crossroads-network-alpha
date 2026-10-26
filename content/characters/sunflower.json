@@ -41,7 +41,7 @@
     "charge": 2.5,
     "width": 140,
     "range": 620,
-    "description": "Charge for 2.5 seconds, then fire a wide beam for 120 damage. Move slowly while charging; stunning interrupts it."
+    "description": "Absorb sunlight for 2.5 seconds, then fire a wide beam for 120 damage. Aim can turn at 60 degrees per second; move at 65% speed while charging. Stuns interrupt the charge."
   },
   "passive": "Sun-fed: recover 4 health after defeating an enemy.",
   "passive_effect": "heal_on_kill",

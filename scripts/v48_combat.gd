@@ -23,6 +23,9 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
  match style:
   "beaver_bite","tail_slap":
    var reach:=90.0 if style=="beaver_bite" else 120.0
+   if style=="beaver_bite":
+    var bite:Dictionary={"owner":owner,"pos":combat.point_array(origin),"aim":combat.point_array(aim),"style":style,"time":.24,"damage":amount,"hits":[]}
+    flashes.append(bite);bite_contact(bite);return true
    for key in combat.hostile(owner):
     var target:Dictionary=combat.actor(key)
     if target.is_empty() or not target.get("alive",false):continue
@@ -77,6 +80,7 @@ func step(delta:float)->void:
    armour[owner][key]-=delta
    if float(armour[owner][key])<=0:armour[owner].erase(key)
  for i in range(flashes.size()-1,-1,-1):
+  if str(flashes[i].get("style",""))=="beaver_bite" and float(flashes[i].time)>.10:bite_contact(flashes[i])
   flashes[i].time-=delta
   if float(flashes[i].time)<=0:flashes.remove_at(i)
  for i in range(trees.size()-1,-1,-1):
@@ -122,12 +126,8 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_line(start,end,Color(.9,.8,.3,.5),2,true)
   var progress:=clampf((elapsed-.35)/.75,0,1);progress*=progress
   var tip:=start.lerp(end,progress)+Vector2(sin(elapsed*35)*3*(1-progress),-135*(1-progress))
-  var tint:=Color("#785333");tint.a=clampf((1.8-elapsed)/.5,0,1)
-  canvas.draw_line(start,tip,tint,16+progress*12,true)
-  for n in 4:
-   var leaf:=start.lerp(tip,.55+n*.13)+Vector2((n%2*2-1)*18,0)
-   canvas.draw_circle(leaf,27,Color(.24,.45,.23,tint.a))
-  canvas.draw_circle(start,13,Color("#b68854"))
+  preload("res://scripts/combat_art215.gd").falling_tree(canvas,start,tip,progress,clampf((1.8-elapsed)/.5,0,1))
+
  for brew in brews:
   var point:Vector2=combat.vec(brew.pos)-camera
   canvas.draw_arc(point,150,0,TAU,40,Color(.6,.8,.3,.4),2,true)
@@ -142,14 +142,21 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   var point:Vector2=combat.draw_effect_position("v48",flash,combat.vec(flash.pos))-camera;var aim:Vector2=combat.vec(flash.aim);var phase:=1-float(flash.time)/(.6 if flash.style=="bloom" else .35)
   if flash.style=="bloom":canvas.draw_arc(point,150*phase,0,TAU,48,Color(.65,.9,.3,1-phase),8,true)
   elif flash.style=="tail_slap":
-   var angle:=aim.angle()-1.2+phase*2.4;var tip:=point+Vector2.from_angle(angle)*65
-   canvas.draw_line(point,tip,Color("#795238"),18,true);canvas.draw_arc(point,115,angle-.45,angle,16,Color(.85,.75,.45,1-phase),4,true)
-  else:
-   var side:=aim.rotated(PI*.5)
-   for sign in [-1,1]:canvas.draw_line(point+aim*35+side*sign*(16*(1-phase)),point+aim*75+side*sign*4,Color("#fff0c9"),5,true)
+   preload("res://scripts/combat_art215.gd").tail(canvas,point,aim,phase)
+  elif flash.style=="beaver_bite":preload("res://scripts/combat_art215.gd").bite(canvas,point,aim,clampf(1-float(flash.time)/.24,0,1))
 
  for owner in armour:
   if defence(str(owner))<=0:continue
   var point:Vector2=combat.owner_pos(str(owner))-camera
   canvas.draw_arc(point,34,PI*.15,PI*.85,20,Color("#8fc395"),3,true)
   canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-22,53),str(roundi(defence(str(owner))*100))+"% ward",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("#b4ddb5"))
+
+func bite_contact(entry:Dictionary)->void:
+ var owner:String=str(entry.owner)
+ if not combat.adventure.alive(owner) or combat.stunned(combat.player_key(owner)):return
+ var origin:Vector2=combat.owner_pos(owner);entry.pos=combat.point_array(origin)
+ for key in combat.hostile(owner):
+  if key in entry.hits:continue
+  var f:Dictionary=combat.actor(key)
+  if f.is_empty() or not bool(f.alive) or not combat.v56.cone(origin,combat.vec(entry.aim),f.pos,90,.7):continue
+  entry.hits.append(key);combat.damage(key,float(entry.damage),owner)

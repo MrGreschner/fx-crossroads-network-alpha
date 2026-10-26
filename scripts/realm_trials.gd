@@ -649,6 +649,8 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 			canvas.draw_arc(landing,float(shot["radius"])*.85,-PI*.5,-PI*.5+TAU*progress,32,Color(tint,.9),3,true)
 		canvas.draw_circle(point,6,Color(0,0,0,.3))
 		point.y -= sin(progress*PI)*70
+		if str(shot.get("cast_visual","")) in ["golf_chip","golf_fragment"]:
+			preload("res://scripts/combat_art215.gd").ball(canvas,point,"golf");continue
 		if str(shot.get("cast_visual",""))=="fragment":
 			canvas.draw_rect(Rect2(point-Vector2(5,5),Vector2(10,10)),Color("#bfd49b"))
 			canvas.draw_line(point+Vector2(0,-5),point+Vector2(4,-10),Color("#f3dfa0"),2,true)
@@ -666,6 +668,14 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 		var progress := 1-float(blast["time"])/.45
 		var point := vec(blast["pos"])-camera
 		var tint := Color(str(blast["color"]))
+		if str(blast.get("cast_visual","")) in ["golf_chip","golf_fragment"]:
+			canvas.draw_circle(point,float(blast["radius"]),Color("#d6e3bd",.1*(1-progress)))
+			canvas.draw_arc(point,maxf(3,float(blast["radius"])*progress),0,TAU,40,Color("#eaf0ce",.7*(1-progress)),2,true)
+			for n in 8:
+				var dir:=Vector2.from_angle(TAU*n/8+.3)
+				var dust:=point+dir*float(blast["radius"])*progress
+				canvas.draw_line(dust,dust+Vector2(-2,-6)*(1-progress),Color("#9eaf77",1-progress),2,true)
+			continue
 		if str(blast.get("cast_visual",""))=="storm":
 			for n in 6:
 				var end:=point+Vector2.from_angle(TAU*n/6)*float(blast["radius"])*maxf(.2,progress)
@@ -837,7 +847,7 @@ func step_lobs(delta: float) -> void:
 		for n in int(shot.get("fragments",0)):
 			var direction:=Vector2.from_angle(TAU*n/int(shot.fragments))
 			var landing:Vector2=combat.chain.clip(center,direction,float(shot.get("fragment_distance",95)))
-			launch_lob(owner,center,landing,{"travel_speed":180,"blast_radius":shot.fragment_radius,"color":"#e6f3b3","cast_visual":"fragment"},float(shot.fragment_damage))
+			launch_lob(owner,center,landing,{"travel_speed":180,"blast_radius":shot.fragment_radius,"color":"#e6f3b3","cast_visual":"golf_fragment" if str(shot.get("cast_visual",""))=="golf_chip" else "fragment"},float(shot.fragment_damage))
 		if float(shot.get("stun",0))>0:
 			for key in combat.hostile(owner):
 				var victim=combat.actor(str(key))

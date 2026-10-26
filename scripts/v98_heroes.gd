@@ -54,6 +54,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
    for key in combat.hostile(owner):
     var f:Dictionary=combat.actor(key)
     if f.is_empty() or not bool(f.alive) or not combat.v56.cone(p,aim,f.pos,reach,cos(PI*.35)) or not combat.path_clear(p,f.pos):continue
+    e.hits.append(key)
     var stun:float=float(stats.get("stun_duration",1.1));combat.apply_status(key,"stun",stun,owner);combat.apply_status(key,"slow",stun+3,owner,.65)
   "wick_treats":
    var e:Dictionary=add(owner,"volley",p,aim,2,amount);e.range=reach;e.count=int(stats.get("count",20));e.good=bool(stats.get("goodies",false));e.seed=randi_range(0,4)
@@ -83,6 +84,14 @@ func step(delta:float)->void:
   if not combat.adventure.alive(owner):effects.remove_at(i);continue
   var elapsed:float=float(e.duration)-float(e.time);var origin:Vector2=combat.vec(e.pos);var aim:Vector2=combat.vec(e.aim);var p:Vector2=combat.owner_pos(owner)
   match str(e.kind):
+   "face":
+    e.pos=combat.point_array(p)
+    if elapsed<.18:
+     for key in combat.hostile(owner):
+      if key in e.hits:continue
+      var f:Dictionary=combat.actor(key)
+      if f.is_empty() or not bool(f.alive) or not combat.v56.cone(p,aim,f.pos,float(e.range),cos(PI*.35)):continue
+      e.hits.append(key);combat.apply_status(key,"stun",.85,owner);combat.apply_status(key,"slow",3.85,owner,.65)
    "volley":
     while int(e.stage)<int(e.count) and elapsed>=int(e.stage)*(2.0/int(e.count)):treat(e,int(e.stage));e.stage=int(e.stage)+1
    "treat":
@@ -146,9 +155,9 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   if not visible.has_point(point+camera):continue
   c.draw_line(point-direction*18,point,Color(1,.4,.13,.4),9,true);c.draw_circle(point,8,Color("#ef8b3e"));c.draw_circle(point+direction*2,4,Color("#ffe09a"))
  for e in effects:
-  var origin:Vector2=combat.vec(e.pos)
+  var origin:Vector2=combat.owner_pos(str(e.owner)) if str(e.kind)=="face" else combat.vec(e.pos)
   if not visible.has_point(origin):continue
-  var p:Vector2=origin-camera;var aim:Vector2=combat.vec(e.aim);var age:float=float(e.duration)-float(e.time)
+  var p:Vector2=combat.draw_effect_position("v98",e,origin)-camera;var aim:Vector2=combat.vec(e.aim);var age:float=float(e.duration)-float(e.time)
   match str(e.kind):
    "treat":
     var t:float=clampf(age/.75,0,1);var floor_pos:Vector2=combat.vec(e.start).lerp(combat.vec(e.first),t);var height:float=sin(t*PI)*90

@@ -198,7 +198,7 @@
     "difficulty": "Technical",
     "home_realm": "ebonwake",
     "summary": "Aim, distance and attack timing.",
-    "lore": "An exile of Ebonwake who stole the Citadel’s forbidden ledger and learned to turn cruel magic against its masters.",
+    "lore": "An exile of Ebonwake who stole the Citadel\u2019s forbidden ledger and learned to turn cruel magic against its masters.",
     "passive_brief": "Returned snared bolts slow for 1s."
   },
   "drum": {
@@ -257,7 +257,7 @@
     "home_realm": "",
     "summary": "Aim, distance and attack timing.",
     "lore": "A forgotten arcade controller awakened by Crossroads magic.",
-    "passive_brief": "Bit Buddies last two extra seconds."
+    "passive_brief": "Every fourth D-Pad Volley adds a seeking Confirm bolt and grants a short speed boost."
   },
   "bracken": {
     "role": "Ranged",
@@ -279,7 +279,7 @@
     "difficulty": "Some practice",
     "home_realm": "moonveil",
     "summary": "Aim, distance and attack timing.",
-    "lore": "A human prism mage who guards Moonveil’s mirrors from the jealous Marquis.",
+    "lore": "A human prism mage who guards Moonveil\u2019s mirrors from the jealous Marquis.",
     "passive_brief": "Spiral shards travel 60 farther."
   },
   "aurel": {
@@ -793,7 +793,7 @@
     "home_realm": "lantern_marsh",
     "summary": "Keep allies together with stepping lights and a lantern refuge.",
     "lore": "A lantern newt who guides lost travellers through Lanternmarsh. Her reed tongue and waylights keep nearby companions fighting together.",
-    "passive_brief": "Aura • nearby allies gain 2 HP on hit"
+    "passive_brief": "Aura \u2022 nearby allies gain 2 HP on hit"
   },
   "merrymask": {
     "role": "Summoner",
@@ -866,8 +866,8 @@
     "difficulty": "Technical",
     "home_realm": "silverfall",
     "summary": "Shape curving funnels, become a tornado and control the fight with Galeforce.",
-    "lore": "A cheerful weather apprentice who collects river mist in her hat. She tends Crossroads’ new Mistglass Spire, turning unruly breezes into carefully bottled spells.",
-    "passive_brief": "Lightning links at 3 funnels • full-charge zaps"
+    "lore": "A cheerful weather apprentice who collects river mist in her hat. She tends Crossroads\u2019 new Mistglass Spire, turning unruly breezes into carefully bottled spells.",
+    "passive_brief": "Lightning links at 3 funnels \u2022 full-charge zaps"
   },
   "hollow_rider": {
     "role": "Melee",
@@ -878,7 +878,7 @@
     "difficulty": "Some practice",
     "home_realm": "moonveil",
     "summary": "Wind up a scythe, slam a spectral lantern and ride a ghostly horse.",
-    "lore": "An empty suit of armour carries a pumpkin lantern through Moonveil’s midnight roads. His spectral mare remembers every traveller he has guided home.",
+    "lore": "An empty suit of armour carries a pumpkin lantern through Moonveil\u2019s midnight roads. His spectral mare remembers every traveller he has guided home.",
     "passive_brief": "Lantern Courage: hitting an enemy with Lantern Toll grants 12% damage reduction for 2 seconds."
   },
   "hazel_hex": {
@@ -891,7 +891,7 @@
     "difficulty": "Technical",
     "home_realm": "lantern_marsh",
     "summary": "Spin poison shots, bomb a broom route and brew a helpful cauldron.",
-    "lore": "Lantern Marsh’s kindly witch ties glowing embers to spinning spell-chains. Her broom delivers remedies—and a few surprises—to friends along the swamp roads.",
+    "lore": "Lantern Marsh\u2019s kindly witch ties glowing embers to spinning spell-chains. Her broom delivers remedies\u2014and a few surprises\u2014to friends along the swamp roads.",
     "passive_brief": "Ember Infusion: Broom Express bomb burns last one extra second."
   },
   "echo_dancer": {
@@ -928,6 +928,6 @@
     "home_realm": "quarry",
     "summary": "Enchant ally attacks with fire, share protective warmth and plant a healing banner.",
     "lore": "An armadillo firekeeper from Ember Quarry carries the first coal of her village in a brass lantern. Her shell shelters travellers; her songs lend their weapons a little borrowed warmth.",
-    "passive_brief": "Nearby allies • 10% damage reduction • 170 reach"
+    "passive_brief": "Nearby allies \u2022 10% damage reduction \u2022 170 reach"
   }
 }

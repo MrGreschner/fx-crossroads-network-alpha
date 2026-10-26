@@ -36,9 +36,6 @@ func sample(id:String,hero:String,p:Vector2,enabled:bool)->void:
  tracks[id]=old
 func displacement(id:String,hero:String,direction:Vector2,speed:float,delta:float)->Vector2:
  if speed<=0:velocities.erase(id);return Vector2.ZERO
- if hero=="quill":
-  var rate:=TAU/.8;var travel:=delta+.8*(cos((clock-delta)*rate)-cos(clock*rate))/rate
-  return direction*speed*maxf(0,travel)
  if hero=="cobbleclaw":return direction.rotated(sin(clock*9)*.07)*speed*delta
  if hero=="spindle":return direction.rotated(sin(clock*7)*.19)*speed*delta
  if hero!="snowman":return direction*speed*delta
