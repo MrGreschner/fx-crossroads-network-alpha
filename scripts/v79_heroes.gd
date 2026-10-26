@@ -300,6 +300,6 @@ func draw_shell(c:CanvasItem,owner:String,point:Vector2,texture:Texture2D,tint:C
   if str(e.owner)==owner and str(e.style)=="shell_lob":angle=TAU*clampf(float(e.age)/float(e.time),0,1);break
  if combat.adventure.arcade:c.world_transform(point+visual_offset(owner)+Vector2(0,-10),angle)
  else:c.world_transform(point+visual_offset(owner)+Vector2(0,-10),angle)
- c.draw_texture_rect(texture,Rect2(-28,-32,56,64),false,tint)
+ c.draw_texture_rect(texture,preload("res://scripts/hero_visual_scale.gd").apply("snail",Rect2(-28,-32,56,64)),false,tint)
  if combat.adventure.arcade:c.world_transform()
  else:c.world_transform(Vector2.ZERO)

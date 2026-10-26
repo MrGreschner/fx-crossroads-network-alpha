@@ -4,7 +4,7 @@ const root=document.getElementById('loading'),work=document.getElementById('work
 const canvas=document.getElementById('canvas'),status=document.getElementById('load-status'),detail=document.getElementById('load-detail');
 const stone=[...document.querySelectorAll('.arch-stone')],crew=[...document.querySelectorAll('.crew')],portal=document.getElementById('portal-energy');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const BUILD_SECONDS=3.4,HOLD_SECONDS=.35,OPEN_SECONDS=1.05,PULSE_SECONDS=.9,INTRO_SECONDS=5.6,JOURNEY_SECONDS=1.35;
+const BUILD_SECONDS=3.4,HOLD_SECONDS=.35,OPEN_SECONDS=1.05,PULSE_SECONDS=.9,INTRO_SECONDS=7.2,JOURNEY_SECONDS=1.35;
 let releaseEngine;const engineGate=new Promise(resolve=>{releaseEngine=resolve;});
 let completedPulses=0;
 let phase='building',phaseTime=0,age=0,buildProgress=0,introProgress=0,download=0,knownTotal=false;
@@ -15,11 +15,12 @@ const attr=(id,key,value)=>document.getElementById(id).setAttribute(key,String(v
 const pose=(id,time,strike=false)=>{const all=[...document.querySelectorAll('#'+id+' .pose')],walk=all.filter(el=>!el.classList.contains('attack')),hasAttack=all.some(el=>el.classList.contains('attack')),chosen=strike&&hasAttack?all.find(el=>el.classList.contains('attack')):walk[Math.floor(time*7)%walk.length];all.forEach(el=>el.style.opacity=el===chosen?'1':'0');};
 try{const h=Number(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',hour:'numeric',hourCycle:'h23'}).format(new Date()));night=h>=21||h<6;}catch(_){}
 if(night){root.classList.add('night');document.getElementById('intro-fish').setAttribute('href',document.getElementById('intro-fish').dataset.night);}
-function resize(){const narrow=innerWidth/innerHeight<.82,vw=narrow?840:1280;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));const scale=Math.min(innerWidth/vw,innerHeight/720),boot=document.getElementById('boot-compositor');boot.style.width=200*scale+'px';boot.style.height=310*scale+'px';boot.style.left=(innerWidth/2-100*scale)+'px';boot.style.top=((innerHeight-720*scale)/2+230*scale)+'px';work.style.transformOrigin=(innerWidth/2)+'px '+((innerHeight-720*scale)/2+379*scale)+'px';}
+function resize(){const narrow=innerWidth/innerHeight<.82,vw=narrow?840:1280;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));const scale=Math.min(innerWidth/vw,innerHeight/720),boot=document.getElementById('boot-compositor');boot.style.width=352*scale+'px';boot.style.height=408*scale+'px';boot.style.left=(innerWidth/2-176*scale)+'px';boot.style.top=((innerHeight-720*scale)/2+150*scale)+'px';work.style.transformOrigin=(innerWidth/2)+'px '+((innerHeight-720*scale)/2+379*scale)+'px';}
 resize();addEventListener('resize',resize);
 function construction(){
  buildProgress=clamp(phaseTime/BUILD_SECONDS);
  stone.forEach((el,i)=>{const u=ease(i*.82/stone.length,i*.82/stone.length+.16,buildProgress);el.style.opacity=String(u);el.setAttribute('transform',reduced?'':'translate(0 '+(-28*(1-u))+')');});
+ document.getElementById('portal-art').style.clipPath='inset('+(100*(1-buildProgress))+'% 0 0 0)';
  attr('scaffold','opacity',1-.8*ease(.86,1,buildProgress));
  attr('keystone-rope','opacity',1-ease(.86,1,buildProgress));
  attr('foundation-rune','opacity',.1+.5*buildProgress);
@@ -46,12 +47,12 @@ function charge(){
  const beat=pulsing?Math.pow(Math.sin(Math.PI*clamp(phaseTime/PULSE_SECONDS,0,2)),2):0;
  if(pulsing)completedPulses=Math.min(2,Math.floor(phaseTime/PULSE_SECONDS));
  attr('portal-rim','opacity',active?1:waiting?.35+boot*.45:buildProgress*.18);
- attr('portal-rim','stroke-width',pulsing?7+beat*4:opening?4+u*3:3);
+ attr('portal-rim','stroke-width',pulsing?3+beat*2:opening?2+u*2:3);
  attr('boot-light','opacity',pulsing?.4+beat*.6:opening?.3+.7*u:waiting?.12+boot*.15:0);
  attr('portal-energy','opacity',pulsing?.8+beat*.2:opening?ease(0,.65,u):0);
  const scale=pulsing?1+(reduced?0:beat*.025):opening?.07+.93*ease(0,.8,u):1;
  attr('portal-aperture','transform','translate(640 379) scale('+scale+') translate(-640 -379)');
- attr('portal-flow','transform','rotate('+(reduced?0:t*19)+' 640 379)');
+ attr('portal-flow','transform','rotate('+(reduced?0:t*14)+' 640 379)');
  attr('boot-arcs','transform','rotate('+(reduced?0:t*47)+' 640 373)');
  attr('boot-arcs','opacity',opening?1-u:waiting?.45+boot*.3:0);
  attr('boot-seam','opacity',waiting?.12+.45*Math.pow((1+Math.sin(t*2.6))/2,3):0);
@@ -66,33 +67,27 @@ function charge(){
  if(pulsing){status.textContent='The way is open';detail.textContent='Your adventure awaits';}
 }
 function intro(){
- introProgress=clamp(phaseTime/INTRO_SECONDS);const p=introProgress,t=phaseTime,altitude=Math.sin(Math.PI*p);
- root.style.setProperty('--daylight',String(night?altitude*.3:altitude));
- const x=110+1060*p,y=360-1120*p*(1-p);
- attr('sun','transform','translate('+x+' '+y+')');
- attr('sun-rays','transform','rotate('+(reduced?0:t*5)+')');
- attr('intro-warmth','opacity',night?altitude*.12:altitude*.68);
- attr('intro-cool','opacity',night?.55:1-altitude*.68);
- attr('sunbeams','opacity',reduced?0:altitude*(night?.08:.19));
- attr('sunbeams','transform','translate('+x+' '+y+')');
- attr('title-block','opacity',ease(0,.55,t));
- attr('title-block','transform','translate(0 '+(reduced?0:10*(1-ease(0,.8,t)))+')');
- document.getElementById('intro-title').style.filter='drop-shadow('+((.5-p)*15)+'px '+(7+altitude*5)+'px 2px #0008)';
- attr('intro-title-glint','opacity',Math.sin(Math.PI*clamp((p-.15)/.55))*.25);
- attr('intro-emblem','transform','translate(640 240) rotate('+(reduced?0:Math.sin(t*.65)*4)+')');
- if(!reduced){
-  const approach=ease(.35,1.65,t),depart=ease(2.45,3.8,t),strike=t>=1.65&&t<2.25;
-  attr('ram-actor','transform','translate('+(-180*(1-approach)+depart*175)+' 0)');
-  attr('foe-actor','transform','translate('+(180*(1-approach)+depart*260+(strike?Math.sin((t-1.65)*17)*5:0))+' 0)');
-  pose('ram-actor',t,strike);pose('foe-actor',t);pose('cat-actor',t*.7);pose('elder-actor',t*.12);
-  attr('impact','opacity',strike?1-ease(1.8,2.25,t):0);
-  const leap=clamp((p-.28)/.47);
-  attr('intro-fish','transform','translate('+(-195+390*leap)+' '+(-96*Math.sin(Math.PI*leap))+') rotate('+(-12+24*leap)+' 640 655)');
-  attr('fish-splash','opacity',(1-ease(.79,.94,p))*ease(.70,.76,p));
- }
- attr('intro-reflection','opacity',.15+altitude*.18);
- attr('intro-veil','opacity',ease(5.08,5.6,t));
+ introProgress=clamp(phaseTime/INTRO_SECONDS);const t=phaseTime;
+ const approach=ease(.7,2.2,t),leave=ease(3.4,5.8,t),strike=t>=2.25&&t<2.8;
+ attr('ram-actor','transform','translate('+(140*approach+310*leave)+' 0)');
+ attr('ram-actor','opacity',1-ease(5.55,6.1,t));
+ attr('foe-actor','transform','translate('+((148*(1-approach))*(1-ease(2.9,4.25,t))+208*ease(2.9,4.25,t)+(strike&&!reduced?Math.sin(t*27)*5:0))+' 0)');
+ attr('foe-actor','opacity',1-ease(4.02,4.4,t));
+ attr('cat-actor','transform','translate('+(210*ease(4,6.1,t))+' 0)');
+ pose('ram-actor',reduced?0:t,strike);pose('foe-actor',reduced?0:t,strike);pose('cat-actor',reduced?0:t);pose('elder-actor',reduced?0:t*.12);
+ attr('impact','opacity',strike&&!reduced?1-ease(2.4,2.8,t):0);
+ const on=ease(3.1,4,t);attr('scene-portal-energy','opacity',on);attr('scene-portal-glow','opacity',on*.65);
+ attr('scene-portal-flow','transform','rotate('+(reduced?0:t*14)+' 960 435)');
+ const jumpTime=t<4.5?t-1:t-4.8,swim=clamp(jumpTime/1.7);
+ attr('intro-fish','transform','translate('+(190*swim)+' '+(reduced?0:-88*Math.sin(Math.PI*swim))+') rotate('+(reduced?0:(swim-.5)*63)+' 540 656)');
+ attr('intro-fish','opacity',jumpTime>=0&&jumpTime<1.7?ease(0,.1,jumpTime)*(1-ease(1.58,1.7,jumpTime)):0);
+ const splashTime=jumpTime<.5?jumpTime:jumpTime-1.7,splashX=jumpTime<.5?540:730;
+ attr('fish-splash','transform','translate('+splashX+' 656) scale('+(1+Math.max(0,splashTime)*2)+')');
+ attr('fish-splash','opacity',reduced?0:splashTime>=0&&splashTime<.45?(1-splashTime/.45)*.8:0);
+ attr('title-block','opacity',ease(4.6,5.35,t));
+ attr('intro-veil','opacity',ease(6.65,7.2,t));
 }
+
 function enter(next){
  phase=next;phaseTime=0;root.dataset.phase=phase;
  if(next==='charging'){

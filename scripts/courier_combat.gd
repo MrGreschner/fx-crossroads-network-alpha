@@ -27,6 +27,7 @@ func step(delta:float)->void:
    var side:=Vector2(-direction.y,direction.x)*40
    if not combat.path_clear(end,next) or not combat.path_clear(end+side,next+side) or not combat.path_clear(end-side,next-side):break
    end=next
+  if combat.v56.catch_travelling(origin,end,str(tram.owner),float(tram.damage),"#8ecac2",{"stolen_visual":"tram","radius":40,"speed":420}):trams.remove_at(i);continue
   for key in combat.hostile(str(tram.owner)):
    if (tram.hits as Array).has(key):continue
    var target:Dictionary=combat.actor(key)

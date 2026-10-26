@@ -20,7 +20,7 @@
     "damage": 0,
     "cooldown": 4.5,
     "range": 0,
-    "description": "A 0.45s timing window blocks one hit of at least 5 damage. Gain one Poise, up to three. Holding the button does not extend the window."
+    "description": "A 0.45s timing window parries one moving hostile projectile back along its incoming path, or blocks one direct hit of at least 5 damage. A successful parry gains one Poise, up to three. Holding does not extend the window. Damage-over-time cannot charge it."
   },
   "special": {
     "name": "Glass Verdict",

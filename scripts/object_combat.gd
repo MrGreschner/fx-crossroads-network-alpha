@@ -58,9 +58,11 @@ var shot_turn:Dictionary={}
 var mines:Array=[]
 var received_at:=0
 var coast:Node
+var reflection217:Node
 var polish:Node
 const STYLES=["golf_drive","navigator_bolt","meteor_shower","split_lance","manual_mines","ground_sequence","cross_shot","charged_beam","chill_aura","rolling_snow","pulse_wave","pulse_burst","magnet_pin","magnet_pull","magnet_wire","waterfall_wave","ricochet_projectile","burst_projectile","spiral_shot","orbit_shards","vortex_field"]
 func _ready()->void:
+	reflection217=preload("res://scripts/projectile_reflection217.gd").new();add_child(reflection217);reflection217.combat=self
 	polish=preload("res://scripts/combat215.gd").new();add_child(polish);polish.combat=self
 	golf=preload("res://scripts/golf_chain.gd").new();add_child(golf);golf.combat=self
 	starfield=preload("res://scripts/starfield.gd").new();add_child(starfield);starfield.combat=self
@@ -99,6 +101,7 @@ func _ready()->void:
 	variants=preload("res://scripts/hero_variants.gd").new();add_child(variants);variants.combat=self
 	coast=preload("res://scripts/folded_coast.gd").new();add_child(coast);coast.combat=self
 func setup(id:String)->void:
+	reflection217.reset()
 	golf.balls.clear()
 	starfield.reset()
 	feedback.contacts.clear()
@@ -675,7 +678,7 @@ func step(delta:float)->void:
 			for key in hostile(owner):
 				var target:=actor(key)
 				if not target.is_empty() and Geometry2D.get_closest_point_to_segment(target["pos"],start,end).distance_to(target["pos"])<=float(entry["width"])*.5 and path_clear(start,target["pos"]):damage(key,float(entry["damage"]),owner)
-	step_rings(delta);step_projectiles(delta);step_orbits(delta);step_vortices(delta)
+	step_rings(delta);step_projectiles(delta);reflection217.flush();step_orbits(delta);step_vortices(delta)
 	for i in range(anchors.size()-1,-1,-1):
 		anchors[i]["time"]=float(anchors[i]["time"])-delta
 		if float(anchors[i]["time"])<=0:anchors.remove_at(i)
@@ -1146,6 +1149,8 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 		if not custom.is_empty():
 			if adventure.arcade and adventure.game.has_method("object_projectile_display"):p=adventure.game.object_projectile_display(shot,p+camera)-camera
 			if not preload("res://scripts/combat_cues.gd").visible(canvas,p,maxf(float(replica.radius),48)):return
+		if custom=="tram":preload("res://scripts/combat_art215.gd").tram(canvas,p,aim);return
+		if custom=="disc":canvas.draw_arc(p,17,t*8,t*8+TAU*.85,20,Color(replica.color),5,true);return
 		if custom=="windwheel":preload("res://scripts/hero_visuals1987.gd").windwheel(canvas,p,t*20,false);return
 		if custom=="rocket":
 			var side:Vector2=aim.orthogonal();canvas.draw_colored_polygon(PackedVector2Array([p+aim*15,p-aim*10+side*6,p-aim*7,p-aim*10-side*6]),Color("#c8dcdb"));canvas.draw_line(p-aim*6,p+aim*6,Color("#526a72"),4,true);return

@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V215-combat-polish"
+const BUILD="V216-hero-sizing"
 const REPORT_SCHEMA=3

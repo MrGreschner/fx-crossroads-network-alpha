@@ -11,3 +11,8 @@
 #journey-wash{position:absolute;inset:0;background:#a0e9da;opacity:0;pointer-events:none;will-change:opacity}
 @media(prefers-reduced-motion:reduce){.boot-whirl,.boot-glow,.boot-spark{animation:none}.boot-whirl{transform:rotate(35deg)}#worksite{will-change:auto}}
 
+
+/* V220: scene first, title only at the end; bounded compositor-only motion. */
+#scene-background{image-rendering:auto}.night #scene-background{filter:brightness(.63) saturate(.8)}.scene-moon{opacity:.45}.night .scene-moon{opacity:.9}#portal-art{image-rendering:auto;pointer-events:none}.arch-stone{display:none}.crew .loading215{image-rendering:pixelated}
+
+#boot-window{border-radius:0;mask-image:url(v220-portal-window.png);mask-size:100% 100%;-webkit-mask-image:url(v220-portal-window.png);-webkit-mask-size:100% 100%;background:#123342}

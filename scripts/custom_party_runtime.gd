@@ -65,3 +65,9 @@ func step(delta:float)->void:
  for n in range(shots.size()-1,-1,-1):
   if not game._clear_path(shots[n].pos-shots[n].direction*8,shots[n].pos):shots.remove_at(n)
  if shots.is_empty() and fields.is_empty() and minions.is_empty() and foes.size()>120:foes.clear();keys.clear()
+
+func intercept_projectile(start:Vector2,finish:Vector2,shot:Dictionary)->bool:
+ if game==null or game.role!="host" or bool(shot.get("hostile",false)):return false
+ var a:Dictionary=shot.ability
+ if str(a.get("style",""))=="target_aoe":return false
+ return game.adventure.combat.v56.catch_travelling(start,finish,actor_id,float(a.get("damage",0)),str(a.get("color","#ffffff")),{"speed":float(a.get("speed",300)),"stats":{}})

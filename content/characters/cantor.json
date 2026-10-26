@@ -5,7 +5,7 @@
   "max_health": 105,
   "speed": 250,
   "run_cost": 0,
-  "lore": "One of Confluence Foundry\u2019s twin otter keepers, wearing the same copper-trimmed engineer uniform as Tide Keeper. A human conductor who once powered the Foundry with Tide Keeper. Lightning marks meet friendly water marks to discharge; shots, fields and specials all participate. An enemy Spark Keeper cannot trigger your marks.",
+  "lore": "One of Confluence Foundry\u2019s twin otter keepers, wearing the same copper-trimmed engineer uniform as Tide Keeper. An otter conductor who once powered the Foundry with Tide Keeper. Lightning marks meet friendly water marks to discharge; shots, fields and specials all participate. An enemy Spark Keeper cannot trigger your marks.",
   "primary": {
     "name": "Copper Note",
     "style": "volt_note",

@@ -366,6 +366,7 @@ func tick(delta:float)->void:
   var travel=float(a.speed)*delta;shot.pos+=shot.direction*travel;shot.distance+=travel
   if a.get("projectile_motion")=="wave" and not shot.returning:
    shot.pos=shot.origin+shot.base_direction*shot.distance+Vector2(-shot.base_direction.y,shot.base_direction.x)*sin(shot.distance/35)*18
+  if intercept_projectile(old,shot.pos,shot):shots.remove_at(n);continue
   var remove=shot.life<=0 or not bounds.has_point(shot.pos)
   if shot.hostile:
    if Geometry2D.get_closest_point_to_segment(player,old,shot.pos).distance_to(player)<22:take_hit(float(a.damage));remove=true
@@ -543,3 +544,6 @@ func activate_form(a:Dictionary)->void:
  var id=str(a.get("form_id",""))
  if form_textures.has(id):active_form=id;form_left=float(a.get("form_duration",3))
 func form_texture()->Texture2D:return form_textures.get(active_form)
+
+func intercept_projectile(_start:Vector2,_finish:Vector2,_shot:Dictionary)->bool:
+ return false

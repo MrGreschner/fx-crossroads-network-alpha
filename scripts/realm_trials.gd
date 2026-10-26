@@ -771,6 +771,7 @@ func step_discs(delta: float) -> void:
 		if not path_clear:
 			if returning:discs.remove_at(n);continue
 			disc["leg"]=1;continue
+		if combat.v56.catch_travelling(point,next,id,float(disc.damage),"#94eafa",{"stolen_visual":"disc","radius":17,"speed":disc.speed}):discs.remove_at(n);continue
 		disc["distance"]+=float(disc["speed"])*disc_delta
 		for k in range(foes().size()-1,-1,-1):
 			var foe: Dictionary = foes()[k]
@@ -831,7 +832,7 @@ func step_lobs(delta: float) -> void:
 		var flight_delta:float=combat.clock_delta(str(shot.owner),delta)
 		var prior:Vector2=combat.vec(shot.start).lerp(combat.vec(shot.end),clampf(float(shot.elapsed)/float(shot.flight),0,1))
 		var next:Vector2=combat.vec(shot.start).lerp(combat.vec(shot.end),clampf((float(shot.elapsed)+flight_delta)/float(shot.flight),0,1))
-		if combat.v56.catch_shot(prior,next,str(shot.owner),float(shot.damage),str(shot.color),false):lob_shots.remove_at(i);continue
+		if combat.v56.catch_shot(prior,next,str(shot.owner),float(shot.damage),str(shot.color),false,shot):lob_shots.remove_at(i);continue
 		shot["elapsed"] = float(shot["elapsed"])+flight_delta
 		if float(shot["elapsed"]) < float(shot["flight"]): continue
 		var center := vec(shot["end"])

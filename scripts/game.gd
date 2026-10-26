@@ -1592,14 +1592,8 @@ func update_enemy_shots(delta: float) -> void:
 			enemy_shots.remove_at(shot_index)
 			continue
 		if shot["pos"].distance_to(position_in_world) < (12 if shot.get("fireball", false) else 6)+adventure.combat.v110.target_radius("p:solo",18):
-			if block_time > 0 and block_reflect:
-				for target_index in enemies.size():
-					if shot["pos"].distance_to(enemies[target_index]["pos"]) < 340:
-						damage_enemy(target_index, float(shot["damage"]) * 1.5)
-						break
-			else:
-				take_player_damage(float(shot["damage"]),"",shot.get("credit",{}))
-				if not combat_frame_active(epoch): return
+			take_player_damage(float(shot["damage"]),"",shot.get("credit",{}))
+			if not combat_frame_active(epoch): return
 			enemy_shots.remove_at(shot_index)
 			if not combat_frame_active(epoch):
 				return
@@ -1954,7 +1948,7 @@ func draw_world() -> void:
 	adventure.combat.halloween.draw_mount(self,"solo",camera)
 	var hero_rect:Rect2=adventure.combat.v78.visual_rect("solo",position_in_world) if sprite=="gopher" else fish_motion.sprite_rect("solo",position_in_world) if sprite=="ripplejaw" else wing_motion.sprite_rect("solo",position_in_world) if sprite=="velvetwing" else basketball_motion.sprite_rect("solo",position_in_world) if sprite=="basketball" else Rect2(position_in_world+adventure.combat.v48.visual_offset("solo")-Vector2(28,42),Vector2(56,64))
 	if sprite=="navigator":hero_rect.position.y-=3+sin(visual_clock*2.8)*2.5
-	hero_rect.position+=adventure.combat.stance_heroes.visual_offset("solo")+adventure.combat.release_heroes.visual_offset("solo")+adventure.combat.v79.visual_offset("solo")+motion_v85.offset(sprite)+adventure.combat.halloween.visual_offset("solo")
+	hero_rect.position+=adventure.combat.stance_heroes.visual_offset("solo")+adventure.combat.release_heroes.visual_offset("solo")+adventure.combat.v79.visual_offset("solo")+motion_v85.offset(sprite)+motion_v85.actor_offset("solo",sprite)+adventure.combat.halloween.visual_offset("solo")
 	hero_rect.position+=adventure.combat.classics.body_offset("solo")
 	hero_rect=adventure.combat.v110.resize("solo",hero_rect)
 	hero_rect=core_art.body_rect(sprite,hero_rect,visual_clock)

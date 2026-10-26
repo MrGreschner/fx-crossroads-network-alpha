@@ -31,6 +31,9 @@ func sample(id:String,hero:String,p:Vector2,enabled:bool)->void:
   if float(old.distance)>=(8 if hero=="snail" else 22):
    old.distance=0;old.side=-int(old.side)
    trace(hero,p if hero=="snail" else p+shift.normalized().orthogonal()*int(old.side)*6,shift.normalized())
+ if hero=="briar":
+  var hopping:bool=shift.length()>.1 and shift.length()<=180
+  old.hop_phase=fposmod(float(old.get("hop_phase",0))+shift.length()/72.0,1) if hopping else 0.0
  old.hero=hero;old.seen=clock
  if shift.length()>.1:old.last_move=clock
  tracks[id]=old
@@ -43,6 +46,9 @@ func displacement(id:String,hero:String,direction:Vector2,speed:float,delta:floa
  velocity=velocity.move_toward(direction*speed,(185.0 if direction.is_zero_approx() else 420.0)*delta)
  velocity=velocity.limit_length(speed);velocities[id]=velocity
  return velocity*delta
+func actor_offset(id:String,hero:String)->Vector2:
+ if hero!="briar":return Vector2.ZERO
+ return Vector2(0,-7.0*sin(float(tracks.get(id,{}).get("hop_phase",0))*PI))
 func offset(hero:String)->Vector2:
  return Vector2(0,-8+sin(clock*3)*3) if hero=="magnet" else Vector2.ZERO
 func draw_trails(c:Node2D,camera:Vector2)->void:

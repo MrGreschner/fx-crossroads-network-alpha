@@ -29,6 +29,7 @@ func release(owner:String)->void:
   combat.launch_projectile(owner,combat.owner_pos(owner)+combat.vec(entry.aim)*35,combat.vec(entry.aim),{"range":500,"speed":570,"color":entry.captured.color},amount,"vacuum_return")
  intakes.erase(owner)
 func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colour:String,moving:bool=true,appearance:Dictionary={})->bool:
+ if combat.reflection217.catch_shot(start,finish,shot_owner,amount,colour,appearance):return true
  if combat.v112.catch_shot(start,finish,shot_owner):return true
  if combat.v98.catch_shot(start,finish,shot_owner):return true
  if combat.party_heroes.catch_shot(start,finish,shot_owner):return true
@@ -54,6 +55,7 @@ func catch_shot(start:Vector2,finish:Vector2,shot_owner:String,amount:float,colo
   return true
  return catch_intake(start,finish,shot_owner,amount,colour)
 func catch_travelling(start:Vector2,finish:Vector2,source:String,amount:float,colour:String,appearance:Dictionary={}) -> bool:
+ if combat.reflection217.catch_shot(start,finish,source,amount,colour,appearance):return true
  if not combat.adventure.authoritative():return false
  if combat.adventure.immersive.marsh_encounters.catch_shot(start,finish,source):return true
  if combat.adventure.expansion.catch_shot(start,finish,source,amount,colour,appearance):return true

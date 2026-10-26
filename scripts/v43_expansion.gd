@@ -106,7 +106,7 @@ func spell_record(amount:float,colour:String,appearance:Dictionary={}) -> Dictio
  # brands, bleed, item procs or an enemy's ownership onto a returned bolt.
  var original:Dictionary=appearance.get("stats",appearance)
  var art_stats:Dictionary={}
- for key in ["ice_visual","prism_glass","golf_ball","river_stone","pistol","mirror_shard","lantern_comet","navigator_star","thorn_arrow","tea_drop","rune_hammer","flying_page","chalk_shard","flame_orb","ball_lightning","released_hold","element","amplitude","wavelength"]:
+ for key in ["visual215","cinder_visual","ice_visual","prism_glass","golf_ball","river_stone","pistol","mirror_shard","lantern_comet","navigator_star","thorn_arrow","tea_drop","rune_hammer","flying_page","chalk_shard","flame_orb","ball_lightning","released_hold","element","amplitude","wavelength"]:
   if original.has(key):art_stats[key]=original[key]
   elif appearance.has(key):art_stats[key]=appearance[key]
  if bool(appearance.get("fireball",false)):art_stats["flame_orb"]=true

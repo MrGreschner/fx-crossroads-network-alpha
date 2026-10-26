@@ -24,7 +24,8 @@
     "duration": 1.1,
     "reduction": 0.5,
     "reflect": true,
-    "color": "#c1e8f5"
+    "color": "#c1e8f5",
+    "description": "For 1.1s, reduce other incoming damage by 50% and reflect every moving hostile projectile back along its incoming path. Returning shots deal the original projectile damage. Does not reflect beams or placed fields."
   },
   "special": {
     "name": "Crease Wall",

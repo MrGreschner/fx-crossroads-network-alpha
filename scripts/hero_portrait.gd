@@ -3,7 +3,7 @@ static var cache:Dictionary={}
 static func texture(g:Node,hero_id:String)->Texture2D:
  var sprite=str(g.characters.get(hero_id,{}).get("sprite",hero_id))
  var base:Texture2D=g.art.get(sprite+"_idle",g.art.get(sprite+"_0"))
- var correction:float=preload("res://scripts/hero_visual_scale.gd").factor(sprite)
+ var correction:float=preload("res://scripts/hero_visual_scale.gd").portrait_factor(sprite)
  if base==null or (sprite not in ["basketball","book"] and is_equal_approx(correction,1.0)):return base
  var key=sprite+":"+str(base.get_instance_id())
  if not cache.has(key):

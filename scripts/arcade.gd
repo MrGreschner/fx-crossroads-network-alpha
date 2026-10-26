@@ -1731,10 +1731,7 @@ func _simulate(delta: float) -> void:
 				if int(health.get(id,0))>0 and _projectile_near_player(origin,next,str(id),7+adventure.combat.v110.target_radius("p:"+str(id),20)):
 					if mode=="defense" and float(bullet.get("explode",0))>0:
 						north_gate.blast(next,float(bullet.explode),float(bullet.damage),str(bullet.get("npc_source","enemy")),0,bullet.get("credit",{}));hit=true;break
-					if Time.get_ticks_msec()<int(shield_until.get(id,0)) and (bool(characters.get(str(hero_ids.get(id,"ram")),{}).get("secondary",{}).get("reflect",false)) or (inventory.get(id,[]) as Array).has("mirror_shard")):
-						for foe_index in range(opponents.size()-1,-1,-1):
-							if next.distance_to(opponents[foe_index]["pos"])<350: _hit_enemy(foe_index,float(bullet["damage"])*1.5,str(id));break
-					else: _hurt(str(id),float(bullet["damage"]),str(bullet.get("npc_source","enemy")),"",bullet.get("credit",{}))
+					_hurt(str(id),float(bullet["damage"]),str(bullet.get("npc_source","enemy")),"",bullet.get("credit",{}))
 					hit=true;break
 		else:
 			for j in range(opponents.size()-1,-1,-1):
@@ -2356,7 +2353,7 @@ func _draw() -> void:
 		adventure.combat.halloween.draw_mount(self,str(id),camera)
 		if custom_party.runtimes.has(str(id)) and custom_party.runtimes[str(id)].form_texture()!=null:texture=custom_party.runtimes[str(id)].form_texture()
 		var hero_rect:Rect2=adventure.combat.v78.visual_rect(str(id),pos) if hero_id=="gopher" else fish_motion.sprite_rect(str(id),pos) if hero_id=="ripplejaw" else wing_motion.sprite_rect(str(id),pos) if hero_id=="velvetwing" else basketball_motion.sprite_rect(str(id),pos) if hero_id=="basketball" else Rect2(pos+adventure.combat.v48.visual_offset(str(id))-Vector2(28,42),Vector2(56,64))
-		hero_rect.position+=adventure.combat.stance_heroes.visual_offset(str(id))+adventure.combat.release_heroes.visual_offset(str(id))+adventure.combat.v79.visual_offset(str(id))+motion_v85.offset(hero_id)+adventure.combat.halloween.visual_offset(str(id))
+		hero_rect.position+=adventure.combat.stance_heroes.visual_offset(str(id))+adventure.combat.release_heroes.visual_offset(str(id))+adventure.combat.v79.visual_offset(str(id))+motion_v85.offset(hero_id)+motion_v85.actor_offset(str(id),hero_id)+adventure.combat.halloween.visual_offset(str(id))
 		hero_rect.position+=adventure.combat.classics.body_offset(str(id))
 		if hero_id=="navigator":hero_rect.position.y-=3+sin(visual_time*2.8)*2.5
 		hero_rect=adventure.combat.v110.resize(str(id),hero_rect)
