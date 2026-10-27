@@ -231,7 +231,8 @@ func adventure_tile(parent:Node,entry:Array)->void:
  var icon=TextureRect.new();icon.custom_minimum_size=Vector2(72,76);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;icon.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;row.add_child(icon)
  var paths={"realms":"portal.png","quests":"ram_idle.png","descent":"bramble_idle.png","defense":"guard_melee.svg","arena":"arena_stadium.svg","battlegrounds":"guard_area.svg","training":"training_dummy.svg","spire":"mistglass_v109.svg","starter":"ram_idle.png","gather":"lodges/gather.svg","apothecary":"lodges/apothecary.svg","challenge":"lodges/challenge.svg","daily":"portal.png","fishing":"fishing/shop.svg","mine":"star_mine_idle.png","market":"studio_cart_v148.svg","studio":"studio_archway_v148.svg","showcase":"training_hero_book.svg","academy":"studio_bookshelf_v148.svg"}
  var path="res://assets/"+str(paths.get(destination,"portal.png"))
- if ResourceLoader.exists(path):icon.texture=load(path)
+ if destination in ["defense","battlegrounds"]:icon.texture=preload("res://scripts/unit_art231.gd").texture("guard_melee" if destination=="defense" else "guard_area")
+ elif ResourceLoader.exists(path):icon.texture=load(path)
  var copy=VBoxContainer.new();copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL;copy.add_theme_constant_override("separation",7);row.add_child(copy)
  label(copy,str(entry[0]),18).modulate=Color("#f0dbac")
  label(copy,str(entry[1]),15).modulate=Color("#c1d9de")

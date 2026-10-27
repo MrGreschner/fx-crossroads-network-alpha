@@ -29,8 +29,6 @@ func setup(owner:Node,multi:bool=false)->void:
 func entry(data:Dictionary,id:String,hero:bool)->Dictionary:
  var sprite:=str(data.get("sprite",id));var first:Texture2D=game.art.get(sprite+"_walk1",game.art.get(sprite+"_0",game.art.get(sprite+"_idle")))
  var second:Texture2D=game.art.get(sprite+"_walk2",game.art.get(sprite+"_1",first))
- if not hero and id=="bramble":
-  first=preload("res://scripts/minion_art215.gd").frame("bramble",1);second=preload("res://scripts/minion_art215.gd").frame("bramble",2)
  var caption_name:String=str(data.get("name",id.capitalize()))
  var lines:Array[String]=[];var line:=""
  for word in caption_name.split(" "):

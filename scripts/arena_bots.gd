@@ -13,7 +13,7 @@ func setup(g:Node)->void:
  game=g
  for n in IDS.size():
   game.characters[IDS[n]]=game._json("res://content/npc_heroes/"+IDS[n]+".json")
-  for pose in ["idle","walk1","walk2","attack"]:game.art[IDS[n]+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+IDS[n]+"_"+pose+".svg")
+  for pose in ["idle","walk1","walk2","attack"]:game.art[IDS[n]+"_"+pose]=preload("res://scripts/unit_art231.gd").texture(IDS[n],pose)
 static func clean_plan(value:Variant)->Array:
  if not value is Array or value.size()>7:return []
  var result=[]

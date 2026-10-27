@@ -1,0 +1,1091 @@
+{
+  "npc_sable": {
+    "group": "ai",
+    "row": 0,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      0,
+      141
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 52,
+    "world_height": 56.0,
+    "npc_factor": 1.346153846153846,
+    "index": 0
+  },
+  "npc_bastion": {
+    "group": "ai",
+    "row": 1,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      141,
+      266
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "visible_height": 55,
+    "world_height": 56.0,
+    "npc_factor": 1.2727272727272727,
+    "index": 1
+  },
+  "npc_cinder": {
+    "group": "ai",
+    "row": 2,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      266,
+      388
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 57.6,
+    "npc_factor": 1.2,
+    "index": 2
+  },
+  "npc_lumen": {
+    "group": "ai",
+    "row": 3,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      388,
+      514
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 54.4,
+    "npc_factor": 1.1333333333333333,
+    "index": 3
+  },
+  "npc_thorn": {
+    "group": "ai",
+    "row": 4,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      514,
+      643
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 56.0,
+    "npc_factor": 1.1666666666666667,
+    "index": 4
+  },
+  "npc_iona": {
+    "group": "ai",
+    "row": 5,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      643,
+      768
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "visible_height": 59,
+    "world_height": 55.2,
+    "npc_factor": 1.1694915254237288,
+    "index": 5
+  },
+  "npc_flint": {
+    "group": "ai",
+    "row": 6,
+    "columns": [
+      0,
+      561,
+      772,
+      969,
+      1536
+    ],
+    "rows": [
+      768,
+      885
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "visible_height": 55,
+    "world_height": 52.8,
+    "npc_factor": 1.2,
+    "index": 6
+  },
+  "guard_melee": {
+    "group": "guards",
+    "row": 0,
+    "columns": [
+      0,
+      374,
+      720,
+      1065,
+      1448
+    ],
+    "rows": [
+      0,
+      368
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 48.0,
+    "npc_factor": 1.0,
+    "index": 7
+  },
+  "guard_ranged": {
+    "group": "guards",
+    "row": 1,
+    "columns": [
+      0,
+      374,
+      720,
+      1065,
+      1448
+    ],
+    "rows": [
+      368,
+      682
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 52.0,
+    "npc_factor": 1.0,
+    "index": 8
+  },
+  "guard_area": {
+    "group": "guards",
+    "row": 2,
+    "columns": [
+      0,
+      374,
+      720,
+      1065,
+      1448
+    ],
+    "rows": [
+      682,
+      1086
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 48.0,
+    "npc_factor": 1.0,
+    "index": 9
+  },
+  "bg_0_0": {
+    "group": "team0_0",
+    "row": 0,
+    "columns": [
+      0,
+      419,
+      684,
+      956,
+      1377
+    ],
+    "rows": [
+      0,
+      203
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "visible_height": 46,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 10
+  },
+  "bg_0_1": {
+    "group": "archerfix",
+    "row": 0,
+    "columns": [
+      0,
+      541,
+      1071,
+      1595,
+      2172
+    ],
+    "rows": [
+      0,
+      724
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 78.09375,
+    "npc_factor": 1.0,
+    "index": 11
+  },
+  "bg_0_2": {
+    "group": "team0_0",
+    "row": 2,
+    "columns": [
+      0,
+      419,
+      684,
+      956,
+      1377
+    ],
+    "rows": [
+      397,
+      579
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 69.5625,
+    "npc_factor": 1.0,
+    "index": 12
+  },
+  "bg_0_3": {
+    "group": "team0_0",
+    "row": 3,
+    "columns": [
+      0,
+      419,
+      684,
+      956,
+      1377
+    ],
+    "rows": [
+      579,
+      751
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        -4,
+        -2
+      ]
+    ],
+    "visible_height": 45,
+    "world_height": 61.03125,
+    "npc_factor": 1.0,
+    "index": 13
+  },
+  "bg_0_4": {
+    "group": "team0_0",
+    "row": 4,
+    "columns": [
+      0,
+      419,
+      684,
+      956,
+      1377
+    ],
+    "rows": [
+      751,
+      940
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 76.78125,
+    "npc_factor": 1.0,
+    "index": 14
+  },
+  "bg_0_5": {
+    "group": "team0_0",
+    "row": 5,
+    "columns": [
+      0,
+      419,
+      684,
+      956,
+      1377
+    ],
+    "rows": [
+      940,
+      1142
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 45,
+    "world_height": 64.3125,
+    "npc_factor": 1.0,
+    "index": 15
+  },
+  "bg_0_6": {
+    "group": "team0_1",
+    "row": 0,
+    "columns": [
+      0,
+      465,
+      769,
+      1061,
+      1536
+    ],
+    "rows": [
+      0,
+      216
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 51,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 16
+  },
+  "bg_0_7": {
+    "group": "team0_1",
+    "row": 1,
+    "columns": [
+      0,
+      465,
+      769,
+      1061,
+      1536
+    ],
+    "rows": [
+      216,
+      406
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        -1,
+        1
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 77.4375,
+    "npc_factor": 1.0,
+    "index": 17
+  },
+  "bg_0_8": {
+    "group": "team0_1",
+    "row": 2,
+    "columns": [
+      0,
+      465,
+      769,
+      1061,
+      1536
+    ],
+    "rows": [
+      406,
+      600
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 52,
+    "world_height": 78.09375,
+    "npc_factor": 1.0,
+    "index": 18
+  },
+  "bg_0_9": {
+    "group": "team0_1",
+    "row": 3,
+    "columns": [
+      0,
+      465,
+      769,
+      1061,
+      1536
+    ],
+    "rows": [
+      600,
+      803
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 53,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 19
+  },
+  "bg_0_10": {
+    "group": "team0_1",
+    "row": 4,
+    "columns": [
+      0,
+      465,
+      769,
+      1061,
+      1536
+    ],
+    "rows": [
+      803,
+      1024
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 57,
+    "world_height": 76.78125,
+    "npc_factor": 1.0,
+    "index": 20
+  },
+  "bg_1_0": {
+    "group": "team1_0",
+    "row": 0,
+    "columns": [
+      0,
+      415,
+      732,
+      1052,
+      1448
+    ],
+    "rows": [
+      0,
+      194
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 21
+  },
+  "bg_1_1": {
+    "group": "team1_0",
+    "row": 1,
+    "columns": [
+      0,
+      415,
+      732,
+      1052,
+      1448
+    ],
+    "rows": [
+      194,
+      363
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ]
+    ],
+    "visible_height": 54,
+    "world_height": 64.3125,
+    "npc_factor": 1.0,
+    "index": 22
+  },
+  "bg_1_2": {
+    "group": "team1_0",
+    "row": 2,
+    "columns": [
+      0,
+      415,
+      732,
+      1052,
+      1448
+    ],
+    "rows": [
+      363,
+      530
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 64.3125,
+    "npc_factor": 1.0,
+    "index": 23
+  },
+  "bg_1_3": {
+    "group": "team1_0",
+    "row": 3,
+    "columns": [
+      0,
+      415,
+      732,
+      1052,
+      1448
+    ],
+    "rows": [
+      530,
+      716
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 61.03125,
+    "npc_factor": 1.0,
+    "index": 24
+  },
+  "bg_1_4": {
+    "group": "team1_0",
+    "row": 4,
+    "columns": [
+      0,
+      415,
+      732,
+      1052,
+      1448
+    ],
+    "rows": [
+      716,
+      896
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 76.78125,
+    "npc_factor": 1.0,
+    "index": 25
+  },
+  "bg_1_5": {
+    "group": "team1_0",
+    "row": 5,
+    "columns": [
+      0,
+      415,
+      732,
+      1052,
+      1448
+    ],
+    "rows": [
+      896,
+      1086
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "visible_height": 51,
+    "world_height": 69.5625,
+    "npc_factor": 1.0,
+    "index": 26
+  },
+  "bg_1_6": {
+    "group": "team1_1",
+    "row": 0,
+    "columns": [
+      0,
+      359,
+      669,
+      984,
+      1378
+    ],
+    "rows": [
+      0,
+      249
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        -1
+      ]
+    ],
+    "visible_height": 49,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 27
+  },
+  "bg_1_7": {
+    "group": "team1_1",
+    "row": 1,
+    "columns": [
+      0,
+      359,
+      669,
+      984,
+      1378
+    ],
+    "rows": [
+      249,
+      466
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 69.5625,
+    "npc_factor": 1.0,
+    "index": 28
+  },
+  "bg_1_8": {
+    "group": "team1_1",
+    "row": 2,
+    "columns": [
+      0,
+      359,
+      669,
+      984,
+      1378
+    ],
+    "rows": [
+      466,
+      686
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 52,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 29
+  },
+  "bg_1_9": {
+    "group": "team1_1",
+    "row": 3,
+    "columns": [
+      0,
+      359,
+      669,
+      984,
+      1378
+    ],
+    "rows": [
+      686,
+      894
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 52,
+    "world_height": 67.59375,
+    "npc_factor": 1.0,
+    "index": 30
+  },
+  "bg_1_10": {
+    "group": "team1_1",
+    "row": 4,
+    "columns": [
+      0,
+      359,
+      669,
+      984,
+      1378
+    ],
+    "rows": [
+      894,
+      1142
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 76.78125,
+    "npc_factor": 1.0,
+    "index": 31
+  },
+  "tollbreaker": {
+    "group": "tollbreaker",
+    "row": 0,
+    "columns": [
+      0,
+      543,
+      1085,
+      1623,
+      2172
+    ],
+    "rows": [
+      0,
+      724
+    ],
+    "offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "visible_height": 60,
+    "world_height": 132.0441176470588,
+    "npc_factor": 1.2058823529411764,
+    "index": 32
+  }
+}

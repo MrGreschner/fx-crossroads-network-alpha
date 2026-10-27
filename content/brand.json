@@ -3,9 +3,9 @@
   "short_title": "Crossroads",
   "subtitle": "Realms Beyond",
   "tagline": "Find your path. Create what\u2019s next.",
-  "build": 230,
+  "build": 231,
   "download_url": "",
   "room_service_url": "wss://fx-crossroads-rooms.onrender.com",
-  "revision": "V230-town-cast-and-open-arch",
+  "revision": "V231-armies-ai-and-cinematic-gait",
   "network_service_url": "wss://fx-crossroads-network-alpha.onrender.com"
 }

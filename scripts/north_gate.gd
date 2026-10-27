@@ -61,8 +61,8 @@ func setup(owner:Node)->void:
  for n in RIVALS.size():
   var id:String=RIVALS[n];rival_state(id)
   game.enemy_defs[id]={"name":rival_name(id),"health":260,"speed":235,"damage":15,"behaviour":"chase" if rival_kit(id) in ["npc_bastion","npc_thorn"] else "ranged","expansion_only":true}
-  for pose in ["walk1","walk2"]:game.art[id+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+rival_kit(id)+"_"+pose+".svg")
- for pose in ["walk1","walk2"]:game.art["tollbreaker_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/tollbreaker_"+pose+".svg")
+  for pose in ["idle","walk1","walk2","attack"]:game.art[id+"_"+pose]=preload("res://scripts/unit_art231.gd").texture(rival_kit(id),pose)
+ for pose in ["idle","walk1","walk2","attack"]:game.art["tollbreaker_"+pose]=preload("res://scripts/unit_art231.gd").texture("tollbreaker",pose)
 func factor(key:String)->float:return float(config.get(key,[1,1,1,1])[party_size-1])
 func wave_count(number:int)->int:return roundi((18.0+minf(24,number*.8))*factor("party_count_scale"))
 func creep_health(number:int)->float:return (0.95+number*.055)*factor("party_health_scale")
@@ -299,7 +299,7 @@ func step_rival(foe:Dictionary,delta:float)->void:
  if target.is_empty() or retreat or distance>580 or not game._clear_path(origin,goal):return
  if melee:
   if float(foe.attack_timer)<=0 and distance<125:
-   foe.attack_timer=1.2;blast(origin+toward*45,85,20+level*1.4,source)
+   foe.v143_pose=game.adventure.newcomers.clock+.35;foe.attack_timer=1.2;blast(origin+toward*45,85,20+level*1.4,source)
   if level>=3 and float(foe.secondary_cd)<=0 and distance<260:
    foe.secondary_cd=8;combat.apply_status(combat.npc_key(foe),"guard",1.5,"enemy",.45)
    game._emit_effect({"pos":foe.pos,"radius":40.0,"time":1.5,"color":"#ecc781"})
@@ -308,6 +308,7 @@ func step_rival(foe:Dictionary,delta:float)->void:
    warn(goal,115,.65,30+level,"bastion_stomp",source)
   return
  if float(foe.attack_timer)<=0:
+  foe.v143_pose=game.adventure.newcomers.clock+.35
   foe.attack_timer=1.8 if kit=="npc_flint" else 1.25
   var predicted:Vector2=Brain.lead(origin,goal,(foe.get("target_velocity",Vector2.ZERO) as Vector2)*(.95 if hard else .5),390)
   var aim:Vector2=(predicted-origin).normalized().rotated(sin(clock*2+int(foe.uid))*(.025 if hard else .11))
@@ -370,7 +371,7 @@ func step_boss(foe:Dictionary,delta:float)->void:
   game.gate_hp-=30;foe.gate_timer=2.5
   if game.gate_hp<=0:game.end_match("The Tollbreaker shattered the north gate.")
  if float(foe.attack_timer)>0:return
- foe.attack_timer=3.7
+ foe.v143_pose=game.adventure.newcomers.clock+.4;foe.attack_timer=3.7
  var skill:int=int(foe.skill)%3;foe.skill=int(foe.skill)+1
  if skill==0:
   # Triple delayed bellfall: distinct rings, not an instant invisible hit.
@@ -562,4 +563,4 @@ func draw_base(canvas:Node2D,camera:Vector2)->void:
  # Watch guards patrol rather than standing motionless beside shops.
  for n in 2:
   var pos:Vector2=BASE+Vector2(-340+n*680,300+sin(clock*.2+n*PI)*170)
-  if bounds.has_point(pos):canvas._sprite("guard_melee",pos-Vector2(20,42),Vector2(40,48))
+  if bounds.has_point(pos):preload("res://scripts/unit_art231.gd").draw(canvas,"guard_melee",pos+Vector2(0,4),1+int(clock*5.5)%2,48)

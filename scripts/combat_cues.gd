@@ -8,7 +8,7 @@ static func danger_markers_enabled(c:Node2D)->bool:
  if mode==null:
   var game=c.get("game")
   if is_instance_valid(game):mode=game.get("mode")
- return str(mode)!="descent"
+ return str(mode) not in ["descent","defense"]
 static func danger(c:Node2D,p:Vector2,radius:float,left:float,total:float=1,colour:Color=Color("#ffc075"))->void:
  if not danger_markers_enabled(c) or not visible(c,p,radius):return
  radius=maxf(8,radius)

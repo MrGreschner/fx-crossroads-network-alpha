@@ -1,0 +1,134 @@
+{
+  "npc_sable": {
+    "world_height": 56.0,
+    "ratio": 0.875
+  },
+  "npc_bastion": {
+    "world_height": 56.0,
+    "ratio": 0.875
+  },
+  "npc_cinder": {
+    "world_height": 57.6,
+    "ratio": 0.9
+  },
+  "npc_lumen": {
+    "world_height": 54.4,
+    "ratio": 0.85
+  },
+  "npc_thorn": {
+    "world_height": 56.0,
+    "ratio": 0.875
+  },
+  "npc_iona": {
+    "world_height": 55.2,
+    "ratio": 0.8625
+  },
+  "npc_flint": {
+    "world_height": 52.8,
+    "ratio": 0.825
+  },
+  "guard_melee": {
+    "world_height": 48.0,
+    "ratio": 0.75
+  },
+  "guard_ranged": {
+    "world_height": 52.0,
+    "ratio": 0.75
+  },
+  "guard_area": {
+    "world_height": 48.0,
+    "ratio": 0.75
+  },
+  "bg_0_0": {
+    "world_height": 67.59375,
+    "ratio": 0.575
+  },
+  "bg_0_1": {
+    "world_height": 78.09375,
+    "ratio": 0.75
+  },
+  "bg_0_2": {
+    "world_height": 69.5625,
+    "ratio": 0.75
+  },
+  "bg_0_3": {
+    "world_height": 61.03125,
+    "ratio": 0.5625
+  },
+  "bg_0_4": {
+    "world_height": 76.78125,
+    "ratio": 0.75
+  },
+  "bg_0_5": {
+    "world_height": 64.3125,
+    "ratio": 0.5625
+  },
+  "bg_0_6": {
+    "world_height": 67.59375,
+    "ratio": 0.6375
+  },
+  "bg_0_7": {
+    "world_height": 77.4375,
+    "ratio": 0.75
+  },
+  "bg_0_8": {
+    "world_height": 78.09375,
+    "ratio": 0.65
+  },
+  "bg_0_9": {
+    "world_height": 67.59375,
+    "ratio": 0.6625
+  },
+  "bg_0_10": {
+    "world_height": 76.78125,
+    "ratio": 0.7125
+  },
+  "bg_1_0": {
+    "world_height": 67.59375,
+    "ratio": 0.75
+  },
+  "bg_1_1": {
+    "world_height": 64.3125,
+    "ratio": 0.675
+  },
+  "bg_1_2": {
+    "world_height": 64.3125,
+    "ratio": 0.75
+  },
+  "bg_1_3": {
+    "world_height": 61.03125,
+    "ratio": 0.75
+  },
+  "bg_1_4": {
+    "world_height": 76.78125,
+    "ratio": 0.75
+  },
+  "bg_1_5": {
+    "world_height": 69.5625,
+    "ratio": 0.6375
+  },
+  "bg_1_6": {
+    "world_height": 67.59375,
+    "ratio": 0.6125
+  },
+  "bg_1_7": {
+    "world_height": 69.5625,
+    "ratio": 0.75
+  },
+  "bg_1_8": {
+    "world_height": 67.59375,
+    "ratio": 0.65
+  },
+  "bg_1_9": {
+    "world_height": 67.59375,
+    "ratio": 0.65
+  },
+  "bg_1_10": {
+    "world_height": 76.78125,
+    "ratio": 0.75
+  },
+  "tollbreaker": {
+    "world_height": 132.0441176470588,
+    "ratio": 0.9044117647058822
+  }
+}

@@ -74,6 +74,7 @@ var opponents: Array[Dictionary] = []
 var enemy_motion229=preload("res://scripts/enemy_motion229.gd").new()
 var missiles: Array[Dictionary] = []
 var guards: Array[Dictionary] = []
+var guard_motion231=preload("res://scripts/enemy_motion229.gd").new()
 var effects: Array[Dictionary] = []
 var mode := "defense"
 var realm_id := "grove"
@@ -304,7 +305,7 @@ func _ready() -> void:
 	for sprite in ["grass","forest","path","ash","ice","space","quarantine","tree","rock","crystal","ice_pillar","satellite","barricade","flower","house","character_hall","supply_shop","town_gate","town_banner","town_lamp","mini_basketball"]:
 		if ResourceLoader.exists("res://assets/" + sprite + ".png"): art[sprite] = load("res://assets/" + sprite + ".png")
 	art["arena_hall"] = preload("res://scripts/source_art.gd").texture("res://assets/arena_hall.svg")
-	for guard_type in ["melee","ranged","area"]: art["guard_"+guard_type] = preload("res://scripts/source_art.gd").texture("res://assets/guard_"+guard_type+".svg")
+	for guard_type in ["melee","ranged","area"]: art["guard_"+guard_type] = preload("res://scripts/unit_art231.gd").texture("guard_"+guard_type,"idle")
 	preload("res://scripts/studio_library.gd").install(self)
 	selected_hero = str(get_tree().root.get_meta("fx_hero", "ram"))
 	if not characters.has(selected_hero):selected_hero="ram";get_tree().root.set_meta("fx_hero","ram")
@@ -1848,6 +1849,7 @@ func _simulate_guards(delta: float) -> void:
 				if str(guard["type"]) == "ranged": _emit_effect({"pos":guard["pos"],"end":opponents[target]["pos"],"style":"line","time":0.18,"color":"#e5d6ab"})
 				_hit_enemy(target,float(guard["damage"]),str(guard.get("owner","lane_guard" if mode=="defense" and not summoned else "")))
 			guard["attack_timer"] = 1.6 if str(guard["type"]) == "area" else 1.0
+			guard["visual_attack_at"]=run_time
 		elif (guard["pos"] as Vector2).distance_to(destination) > (reach*0.8 if target >= 0 else 70.0):
 			guard["pos"] = _move_actor(guard["pos"],(destination-(guard["pos"] as Vector2)).normalized()*float(guard.get("speed",110))*delta)
 		if mode == "defense" and not summoned:
@@ -1871,7 +1873,7 @@ func _snapshot() -> Dictionary:
 	var sent_guards: Array = []
 	for guard in guards:
 		if not guard.has("net_uid"):guard.net_uid=transport.next()
-		sent_guards.append({"net_uid":guard.net_uid,"pos":[roundi(guard["pos"].x),roundi(guard["pos"].y)],"type":guard["type"],"sprite":str(guard.get("sprite","")),"owner":str(guard.get("owner","")),"hp":float(guard.get("hp",0)),"max_hp":float(guard.get("max_hp",70))})
+		sent_guards.append({"net_uid":guard.net_uid,"visual_attack_at":float(guard.get("visual_attack_at",-10)),"pos":[roundi(guard["pos"].x),roundi(guard["pos"].y)],"type":guard["type"],"sprite":str(guard.get("sprite","")),"owner":str(guard.get("owner","")),"hp":float(guard.get("hp",0)),"max_hp":float(guard.get("max_hp",70))})
 	return {"type":"state","unofficial":bool(get_meta("records_unofficial",false)),"studio":custom_party.snapshot(),"dev_magic":dev_magic.snapshot(),"descent":descent.snapshot(),"battlegrounds":battlegrounds.snapshot() if mode=="battlegrounds" else {},"match_id":match_id,"party_size":match_party_size,"arena_random":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"arena_no_items":arena_no_items,"arena_records":arena_records,"arena_outcomes":arena_outcomes,"defense_cleared_wave":defense_cleared_wave,"arena_world":arena_world.snapshot(),"north_gate":north_gate.snapshot() if mode=="defense" else {},"pvp_scores":pvp_scores,"contributions":contributions,"downed":downed,"results":results_reason,"notice":status_label.text,"adventure":adventure.snapshot(),"players":players,"enemies":foes,"shots":shots,"guards":sent_guards,"effects":sent_effects,"walls":_wall_packet(),"wave":wave,"floor":floor_number,"gate":gate_hp,"upgrades":upgrade_level,"active":started,"timer":run_time}
 
 func _packet(remote_id: String, data: Dictionary) -> void:
@@ -2056,7 +2058,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			for bullet in data.get("shots",[]): missiles.append({"pos":Vector2(float(bullet["pos"][0]),float(bullet["pos"][1])),"owner":str(bullet["owner"]),"color":str(bullet.get("color","#ffd985"))})
 			guards.clear()
 			for guard in data.get("guards",[]):
-				guards.append({"pos":Vector2(float(guard["pos"][0]),float(guard["pos"][1])),"type":str(guard["type"]),"sprite":str(guard.get("sprite","")),"net_uid":int(guard.get("net_uid",0)),"owner":str(guard.get("owner","")),"hp":float(guard.get("hp",0)),"max_hp":float(guard.get("max_hp",70))})
+				guards.append({"visual_attack_at":float(guard.get("visual_attack_at",-10)),"pos":Vector2(float(guard["pos"][0]),float(guard["pos"][1])),"type":str(guard["type"]),"sprite":str(guard.get("sprite","")),"net_uid":int(guard.get("net_uid",0)),"owner":str(guard.get("owner","")),"hp":float(guard.get("hp",0)),"max_hp":float(guard.get("max_hp",70))})
 				var key:="g:"+str(guard.get("net_uid",0));smoothing.push(key,guards[-1].pos,Time.get_ticks_msec()/1000.0)
 			var active_tracks:Dictionary={}
 			for player in players:active_tracks["p:"+str(player)]=true
@@ -2296,7 +2298,12 @@ func _draw() -> void:
 	for trail in trails:
 		var trail_rect:Rect2=trail.get("rect",Rect2(Vector2(-28,-42),Vector2(56,64)))
 		_sprite(str(trail.get("hero",hero_ids.get(my_id,selected_hero)))+"_walk1",trail["pos"]+trail_rect.position,trail_rect.size,Color(0.7,0.9,1.0,float(trail["time"])*1.8))
+	for guard in guards:guard["uid"]=int(guard.get("net_uid",0))
+	guard_motion231.sample(guards,visual_time)
 	for guard in guards:
+		if str(guard.type)!="summoned":
+			var pose="attack" if run_time-float(guard.get("visual_attack_at",-10))>=0 and run_time-float(guard.get("visual_attack_at",-10))<.32 else guard_motion231.locomotion(guard)
+			preload("res://scripts/unit_art231.gd").draw(self,"guard_"+str(guard.type),visual_actor("g:"+str(guard.get("net_uid",0)),guard.pos)-camera+Vector2(0,5),preload("res://scripts/unit_art231.gd").pose_index(pose),42);continue
 		var sprite := str(guard.get("sprite","mini_basketball")) if str(guard["type"]) == "summoned" else "guard_"+str(guard["type"])
 		if not preload("res://scripts/minion_art215.gd").draw_legacy(self,guard,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-camera,"guard:"+str(guard.get("net_uid",0))):_sprite(sprite,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-Vector2(24,44),Vector2(48,56))
 		if str(guard.get("type",""))=="summoned" and float(guard.get("hp",0))>0:
@@ -2327,7 +2334,11 @@ func _draw() -> void:
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
 		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
 		if bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
-		elif texture != null: draw_texture_rect(texture,preload("res://scripts/enemy_visual227.gd").adjusted(id,Rect2(pos-size*Vector2(0.5,0.7),size)),false)
+		elif texture != null:
+			var rect=preload("res://scripts/enemy_visual227.gd").adjusted(id,Rect2(pos-size*Vector2(0.5,0.7),size))
+			if str(foe.type) in north_gate.RIVALS:rect=preload("res://scripts/unit_art231.gd").npc_rect(north_gate.rival_kit(str(foe.type)),rect)
+			elif str(foe.type)=="tollbreaker":rect=preload("res://scripts/unit_art231.gd").npc_rect("tollbreaker",rect)
+			draw_texture_rect(texture,rect,false)
 		else: draw_circle(pos,19,Color("#ffad7a"))
 		var hp_y:float=-size.y*.7-8 if bool(foe.get("veilbound",false)) or str(foe.type) in adventure.cinder.TYPES or str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
 		if bool(foe.get("depth_boss",false)):hp_y=descent.health_bar_y(foe)
@@ -2370,6 +2381,7 @@ func _draw() -> void:
 		hero_rect=adventure.combat.v110.resize(str(id),hero_rect)
 		hero_rect=core_art.body_rect(hero_id,hero_rect,visual_time)
 		if mode=="descent":hero_rect=descent.hero_rect(hero_rect)
+		hero_rect=preload("res://scripts/unit_art231.gd").npc_rect(hero_id,hero_rect)
 		if adventure.combat.v90.pending_rebirth(str(id)):pass
 		elif hero_id=="snail" and adventure.combat.v79.moving(str(id)):
 			adventure.combat.v79.draw_shell(self,str(id),pos,texture,tint)

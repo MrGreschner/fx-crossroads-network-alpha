@@ -8,12 +8,10 @@ static func pose(u:Dictionary,clock:float)->int:
  return posmod(int(float(u.get("walk",0))*4/TAU),4) if bool(u.get("moving",false)) else 4
 static func draw_unit(c:Node2D,u:Dictionary,p:Vector2,clock:float)->void:
  var kind=clampi(int(u.kind),0,10);var side=clampi(int(u.team),0,1);var frame=pose(u,clock)
- var texture=preload("res://scripts/source_art.gd").texture("res://assets/battlegrounds/%d_%d_%d.svg" % [side,kind,frame])
- var facing=1 if int(u.get("facing",1 if side==0 else -1))>=0 else -1
- c.draw_set_transform(p,0,Vector2(facing,1))
+ var id="bg_%d_%d" % [side,kind]
+ var phase=3 if frame in [5,6,7] else 1+posmod(frame,2) if frame<4 else 0
  var scale=1.15 if kind==6 else 1.1 if kind in [3,9] else 1.0
- if texture!=null:c.draw_texture_rect(texture,Rect2(Vector2(-35,-46)*scale,Vector2(70,84)*scale),false)
- c.draw_set_transform(Vector2.ZERO)
+ preload("res://scripts/unit_art231.gd").draw(c,id,p+Vector2(0,32*scale),phase,preload("res://scripts/unit_art231.gd").world_height(id)*scale)
  var ratio=clampf(float(u.hp)/maxf(1,float(u.max_hp)),0,1)
  c.draw_rect(Rect2(p+Vector2(-16,38*scale),Vector2(32,3)),Color("#283a42"));c.draw_rect(Rect2(p+Vector2(-16,38*scale),Vector2(32*ratio,3)),Color("#79cdd7") if side==0 else Color("#e9a48a"))
 static func capital(c:Node2D,p:Vector2,side:int,hp:float)->void:

@@ -1986,6 +1986,8 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if mode=="town" and name in ["guard_melee","guard_ranged"]:
+		preload("res://scripts/town_cast230.gd").draw(self,name,world_pos+size*Vector2(.5,.875)-camera,visual_clock,false);return
 	if name=="elder_ram":art[name]=core_art.texture("elder_ram","talk" if menu=="elder" else "6" if fmod(visual_clock,5)>4.7 else "idle")
 	if mode=="town" and not Rect2(camera,VIEW).intersects(Rect2(world_pos,size)):return
 	if art.has(name) and art[name] != null:
