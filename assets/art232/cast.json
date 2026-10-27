@@ -1,0 +1,1540 @@
+{
+  "ds_nibbler": {
+    "name": "Shale Nibbler",
+    "group": "cave0",
+    "index": 0,
+    "visible_height": 47,
+    "world_height": 29.900000000000002,
+    "offset": [
+      -5.29,
+      11.040000000000001
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        1
+      ],
+      [
+        3,
+        1
+      ]
+    ]
+  },
+  "ds_glimmerwing": {
+    "name": "Glimmerwing",
+    "group": "cave0",
+    "index": 1,
+    "visible_height": 36,
+    "world_height": 29.44,
+    "offset": [
+      0.0,
+      10.120000000000001
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -3,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_ironback": {
+    "name": "Ironback Beetle",
+    "group": "cave0",
+    "index": 2,
+    "visible_height": 46,
+    "world_height": 57.4,
+    "offset": [
+      0.0,
+      24.5
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_sneak": {
+    "name": "Wickpinch Sneak",
+    "group": "cave0",
+    "index": 3,
+    "visible_height": 58,
+    "world_height": 46.2,
+    "offset": [
+      -1.6500000000000001,
+      14.520000000000001
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        1
+      ]
+    ]
+  },
+  "ds_mender": {
+    "name": "Mossmender",
+    "group": "cave0",
+    "index": 4,
+    "visible_height": 57,
+    "world_height": 45.6,
+    "offset": [
+      0.3,
+      13.2
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_larva": {
+    "name": "Chime Larva",
+    "group": "cave0",
+    "index": 5,
+    "visible_height": 61,
+    "world_height": 41.0,
+    "offset": [
+      0.75,
+      11.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        3,
+        -3
+      ]
+    ]
+  },
+  "ds_caller": {
+    "name": "Hollow Caller",
+    "group": "cave1",
+    "index": 6,
+    "visible_height": 48,
+    "world_height": 62.9,
+    "offset": [
+      0.0,
+      16.28
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  "ds_brute": {
+    "name": "Basalt Brute",
+    "group": "cave1",
+    "index": 7,
+    "visible_height": 41,
+    "world_height": 80.83999999999999,
+    "offset": [
+      0.0,
+      31.02
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_crab": {
+    "name": "Flintclaw Crab",
+    "group": "cave1",
+    "index": 8,
+    "visible_height": 34,
+    "world_height": 45.43,
+    "offset": [
+      0.0,
+      18.29
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  "ds_slug": {
+    "name": "Glassbelly Slug",
+    "group": "cave1",
+    "index": 9,
+    "visible_height": 62,
+    "world_height": 48.36,
+    "offset": [
+      0.0,
+      11.440000000000001
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        3,
+        -3
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_spider": {
+    "name": "Threadvault Spider",
+    "group": "cave1",
+    "index": 10,
+    "visible_height": 42,
+    "world_height": 51.3,
+    "offset": [
+      0.0,
+      17.669999999999998
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        -2,
+        0
+      ]
+    ]
+  },
+  "ds_scorpion": {
+    "name": "Coppersting",
+    "group": "cave1",
+    "index": 11,
+    "visible_height": 62,
+    "world_height": 67.86,
+    "offset": [
+      0.0,
+      17.98
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        2,
+        -1
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  },
+  "ds_mole": {
+    "name": "Tunnelfist",
+    "group": "cave2",
+    "index": 12,
+    "visible_height": 39,
+    "world_height": 55.48,
+    "offset": [
+      0.0,
+      16.06
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_salamander": {
+    "name": "Cinder Newt",
+    "group": "cave2",
+    "index": 13,
+    "visible_height": 45,
+    "world_height": 53.94,
+    "offset": [
+      0.29,
+      12.76
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        -3
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "ds_jelly": {
+    "name": "Lumen Jelly",
+    "group": "cave2",
+    "index": 14,
+    "visible_height": 56,
+    "world_height": 41.440000000000005,
+    "offset": [
+      0.0,
+      13.440000000000001
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        3,
+        0
+      ],
+      [
+        -3,
+        0
+      ]
+    ]
+  },
+  "ds_snail": {
+    "name": "Vaultshell Snail",
+    "group": "cave2",
+    "index": 15,
+    "visible_height": 62,
+    "world_height": 71.61,
+    "offset": [
+      0.0,
+      16.94
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_mimic": {
+    "name": "Orebox Mimic",
+    "group": "cave2",
+    "index": 16,
+    "visible_height": 51,
+    "world_height": 53.13,
+    "offset": [
+      0.0,
+      16.94
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_rootling": {
+    "name": "Rootgrip",
+    "group": "cave2",
+    "index": 17,
+    "visible_height": 44,
+    "world_height": 58.099999999999994,
+    "offset": [
+      0.0,
+      15.399999999999999
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        -1
+      ]
+    ]
+  },
+  "ds_urchin": {
+    "name": "Prism Urchin",
+    "group": "cave3",
+    "index": 18,
+    "visible_height": 60,
+    "world_height": 39.0,
+    "offset": [
+      0.25,
+      14.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_shark": {
+    "name": "Gravelmaw",
+    "group": "cave3",
+    "index": 19,
+    "visible_height": 44,
+    "world_height": 83.52,
+    "offset": [
+      0.0,
+      19.14
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        3,
+        -1
+      ],
+      [
+        3,
+        -1
+      ]
+    ]
+  },
+  "ds_bell": {
+    "name": "Mourning Bell",
+    "group": "cave3",
+    "index": 20,
+    "visible_height": 62,
+    "world_height": 50.37,
+    "offset": [
+      0.345,
+      15.87
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "ds_wisp": {
+    "name": "Pitch Wisp",
+    "group": "cave3",
+    "index": 21,
+    "visible_height": 62,
+    "world_height": 35.519999999999996,
+    "offset": [
+      0.0,
+      11.52
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -3,
+        -2
+      ],
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  "ds_tortoise": {
+    "name": "Ironkiln Tortoise",
+    "group": "cave3",
+    "index": 22,
+    "visible_height": 49,
+    "world_height": 71.44,
+    "offset": [
+      0.0,
+      20.68
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "ds_mantis": {
+    "name": "Shardblade Mantis",
+    "group": "cave3",
+    "index": 23,
+    "visible_height": 48,
+    "world_height": 70.84,
+    "offset": [
+      0.0,
+      23.87
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -2,
+        -2
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  "ds_owl": {
+    "name": "Blindstone Owl",
+    "group": "cave4",
+    "index": 24,
+    "visible_height": 37,
+    "world_height": 47.12,
+    "offset": [
+      0.0,
+      13.64
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_hydra": {
+    "name": "Splitneck Wyrm",
+    "group": "cave4",
+    "index": 25,
+    "visible_height": 41,
+    "world_height": 83.7,
+    "offset": [
+      0.0,
+      19.8
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_leech": {
+    "name": "Caveheart Leech",
+    "group": "cave4",
+    "index": 26,
+    "visible_height": 62,
+    "world_height": 44.64,
+    "offset": [
+      0.0,
+      10.559999999999999
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        -1
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  },
+  "ds_drake": {
+    "name": "Sootwing Drake",
+    "group": "cave4",
+    "index": 27,
+    "visible_height": 36,
+    "world_height": 82.64999999999999,
+    "offset": [
+      0.0,
+      20.9
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        -1
+      ]
+    ]
+  },
+  "ds_totem": {
+    "name": "Fault Totem",
+    "group": "cave4",
+    "index": 28,
+    "visible_height": 45,
+    "world_height": 73.60000000000001,
+    "offset": [
+      0.0,
+      17.6
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ]
+    ]
+  },
+  "ds_angel": {
+    "name": "The Veinless",
+    "group": "cave4",
+    "index": 29,
+    "visible_height": 44,
+    "world_height": 68.06,
+    "offset": [
+      0.0,
+      24.599999999999998
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        -3
+      ],
+      [
+        1,
+        -3
+      ]
+    ]
+  },
+  "ds_mid_01": {
+    "name": "Cragjaw Foreman",
+    "group": "mid0",
+    "index": 30,
+    "visible_height": 62,
+    "world_height": 156,
+    "offset": [
+      9.0,
+      52.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "ds_mid_02": {
+    "name": "The Fungal Bailiff",
+    "group": "mid0",
+    "index": 31,
+    "visible_height": 59,
+    "world_height": 146,
+    "offset": [
+      0.0,
+      34.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -2,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_mid_03": {
+    "name": "Coppersting Bailiff",
+    "group": "mid0",
+    "index": 32,
+    "visible_height": 62,
+    "world_height": 170,
+    "offset": [
+      0.0,
+      49.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        -1
+      ],
+      [
+        -3,
+        -1
+      ]
+    ]
+  },
+  "ds_mid_04": {
+    "name": "The Rusted Toll",
+    "group": "mid0",
+    "index": 33,
+    "visible_height": 57,
+    "world_height": 130,
+    "offset": [
+      1.0,
+      26.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_mid_05": {
+    "name": "The Last Cartographer",
+    "group": "mid0",
+    "index": 34,
+    "visible_height": 62,
+    "world_height": 143,
+    "offset": [
+      1.0,
+      31.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -2,
+        1
+      ],
+      [
+        -2,
+        1
+      ]
+    ]
+  },
+  "ds_mid_06": {
+    "name": "The Root Notary",
+    "group": "mid1",
+    "index": 35,
+    "visible_height": 56,
+    "world_height": 126,
+    "offset": [
+      0.0,
+      31.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_mid_07": {
+    "name": "The Lantern Collector",
+    "group": "mid1",
+    "index": 36,
+    "visible_height": 50,
+    "world_height": 139,
+    "offset": [
+      0.0,
+      35.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        2,
+        1
+      ],
+      [
+        -1,
+        1
+      ]
+    ]
+  },
+  "ds_mid_08": {
+    "name": "Ossuary Brewer",
+    "group": "mid1",
+    "index": 37,
+    "visible_height": 62,
+    "world_height": 148,
+    "offset": [
+      1.0,
+      36.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "ds_mid_09": {
+    "name": "Thornbound Surveyor",
+    "group": "mid1",
+    "index": 38,
+    "visible_height": 62,
+    "world_height": 144,
+    "offset": [
+      1.0,
+      49.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_mid_10": {
+    "name": "The Coal Archivist",
+    "group": "mid1",
+    "index": 39,
+    "visible_height": 55,
+    "world_height": 130,
+    "offset": [
+      0.0,
+      26.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_boss_01": {
+    "name": "The Wick-Eater",
+    "group": "boss0",
+    "index": 40,
+    "visible_height": 44,
+    "world_height": 245,
+    "offset": [
+      0.0,
+      79.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -3,
+        -2
+      ],
+      [
+        -3,
+        -3
+      ]
+    ]
+  },
+  "ds_boss_02": {
+    "name": "Widow of the Vein",
+    "group": "boss0",
+    "index": 41,
+    "visible_height": 43,
+    "world_height": 180,
+    "offset": [
+      0.0,
+      62.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        -2
+      ]
+    ]
+  },
+  "ds_boss_03": {
+    "name": "The Hollow Excavator",
+    "group": "boss0",
+    "index": 42,
+    "visible_height": 44,
+    "world_height": 160,
+    "offset": [
+      0.5,
+      31.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -2
+      ],
+      [
+        -3,
+        -1
+      ]
+    ]
+  },
+  "ds_boss_04": {
+    "name": "The Sunken Oracle",
+    "group": "boss0",
+    "index": 43,
+    "visible_height": 54,
+    "world_height": 186,
+    "offset": [
+      0.0,
+      49.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "ds_boss_05": {
+    "name": "The Flint Tribunal",
+    "group": "boss0",
+    "index": 44,
+    "visible_height": 38,
+    "world_height": 178,
+    "offset": [
+      0.0,
+      62.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "ds_boss_06": {
+    "name": "The Hundredth Mouth",
+    "group": "boss1",
+    "index": 45,
+    "visible_height": 54,
+    "world_height": 160,
+    "offset": [
+      0.5,
+      34.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        3,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_boss_07": {
+    "name": "The Facet Leviathan",
+    "group": "boss1",
+    "index": 46,
+    "visible_height": 45,
+    "world_height": 194,
+    "offset": [
+      0.5,
+      57.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "ds_boss_08": {
+    "name": "The Bell Below",
+    "group": "boss1",
+    "index": 47,
+    "visible_height": 40,
+    "world_height": 164,
+    "offset": [
+      0.0,
+      48.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        -1
+      ]
+    ]
+  },
+  "ds_boss_09": {
+    "name": "The Cinder Regent",
+    "group": "boss1",
+    "index": 48,
+    "visible_height": 38,
+    "world_height": 167,
+    "offset": [
+      0.0,
+      41.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  "ds_boss_10": {
+    "name": "The King Beneath the Wick",
+    "group": "boss1",
+    "index": 49,
+    "visible_height": 44,
+    "world_height": 199,
+    "offset": [
+      0.0,
+      62.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "ds_lava_heart": {
+    "name": "The Unquenchable",
+    "group": "boss1",
+    "index": 50,
+    "visible_height": 48,
+    "world_height": 174,
+    "offset": [
+      1.0,
+      46.0
+    ],
+    "old_normalized": null,
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "quest_edda": {
+    "name": "Edda",
+    "group": "questnpc",
+    "index": 51,
+    "visible_height": 62,
+    "world_height": 64.5,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.1875,
+      0.0625,
+      1.0,
+      0.9583333333333334
+    ],
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "quest_orrin": {
+    "name": "Orrin",
+    "group": "questnpc",
+    "index": 52,
+    "visible_height": 62,
+    "world_height": 64.5,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.1875,
+      0.0625,
+      0.875,
+      0.9583333333333334
+    ],
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "quest_sable": {
+    "name": "Sable",
+    "group": "questnpc",
+    "index": 53,
+    "visible_height": 62,
+    "world_height": 64.5,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.1875,
+      0.0625,
+      1.0,
+      0.9583333333333334
+    ],
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  "quest_tamsin": {
+    "name": "Tamsin",
+    "group": "questnpc",
+    "index": 54,
+    "visible_height": 62,
+    "world_height": 69.0,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.125,
+      0.041666666666666664,
+      0.96875,
+      1.0
+    ],
+    "walk_offsets": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "quest_fenna": {
+    "name": "Fenna",
+    "group": "questnpc",
+    "index": 55,
+    "visible_height": 62,
+    "world_height": 61.5,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.125,
+      0.14583333333333334,
+      0.96875,
+      1.0
+    ],
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "briar_bandit": {
+    "name": "Briar Bandit",
+    "group": "quest0",
+    "index": 56,
+    "visible_height": 62,
+    "world_height": 66.85714285714286,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.0625,
+      0.017857142857142856,
+      0.8125,
+      0.9464285714285714
+    ],
+    "walk_offsets": [
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "glowcap_slinger": {
+    "name": "Glowcap Slinger",
+    "group": "quest0",
+    "index": 57,
+    "visible_height": 48,
+    "world_height": 64.28571428571429,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.041666666666666664,
+      0.07142857142857142,
+      0.9791666666666666,
+      0.9642857142857143
+    ],
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "rootbound_keeper": {
+    "name": "Rootbound Keeper",
+    "group": "quest0",
+    "index": 58,
+    "visible_height": 51,
+    "world_height": 70.71428571428571,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.020833333333333332,
+      0.0,
+      1.0,
+      0.9821428571428571
+    ],
+    "walk_offsets": [
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "rootwarden": {
+    "name": "Rootwarden",
+    "group": "quest0",
+    "index": 59,
+    "visible_height": 41,
+    "world_height": 37.800000000000004,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.15,
+      0.4125,
+      0.8375,
+      0.9375
+    ],
+    "walk_offsets": [
+      [
+        -1,
+        -2
+      ],
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  "frostling": {
+    "name": "Frostling",
+    "group": "quest0",
+    "index": 60,
+    "visible_height": 58,
+    "world_height": 48.6,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.275,
+      0.2625,
+      0.8125,
+      0.9375
+    ],
+    "walk_offsets": [
+      [
+        3,
+        0
+      ],
+      [
+        -3,
+        1
+      ]
+    ]
+  },
+  "ice_archer": {
+    "name": "Ice Archer",
+    "group": "quest1",
+    "index": 61,
+    "visible_height": 62,
+    "world_height": 52.199999999999996,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.2875,
+      0.2125,
+      0.8,
+      0.9375
+    ],
+    "walk_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "summit_golem": {
+    "name": "Summit Golem",
+    "group": "quest1",
+    "index": 62,
+    "visible_height": 50,
+    "world_height": 66.85714285714286,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.0,
+      0.05357142857142857,
+      1.0,
+      0.9821428571428571
+    ],
+    "walk_offsets": [
+      [
+        -2,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ]
+  },
+  "sluice_beetle": {
+    "name": "Sluice Beetle",
+    "group": "quest1",
+    "index": 63,
+    "visible_height": 53,
+    "world_height": 70.5,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.08333333333333333,
+      0.0,
+      0.9166666666666666,
+      0.9791666666666666
+    ],
+    "walk_offsets": [
+      [
+        -2,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ]
+  },
+  "tidebinder": {
+    "name": "Tidebinder",
+    "group": "quest1",
+    "index": 64,
+    "visible_height": 61,
+    "world_height": 55.28571428571429,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.08333333333333333,
+      0.14285714285714285,
+      0.9166666666666666,
+      0.9107142857142857
+    ],
+    "walk_offsets": [
+      [
+        -3,
+        -1
+      ],
+      [
+        -3,
+        -2
+      ]
+    ]
+  },
+  "inkfin": {
+    "name": "Inkfin",
+    "group": "quest1",
+    "index": 65,
+    "visible_height": 52,
+    "world_height": 35.1,
+    "offset": [
+      0,
+      7
+    ],
+    "old_normalized": [
+      0.1875,
+      0.45,
+      0.8125,
+      0.9375
+    ],
+    "walk_offsets": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "miner": {
+    "name": "Ram miner",
+    "group": "mine",
+    "index": 66,
+    "visible_height": 60,
+    "world_height": 39,
+    "offset": [
+      0,
+      0
+    ]
+  }
+}

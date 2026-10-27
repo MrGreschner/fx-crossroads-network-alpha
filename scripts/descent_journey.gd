@@ -446,8 +446,7 @@ func make_darkness()->void:
    var d=Vector2(x-127.5,y-127.5).length()/127.5
    image.set_pixel(x,y,Color(.018,.023,.032,smoothstep(.28,1,d)))
  darkness=ImageTexture.create_from_image(image)
- var svg=Image.new()
- if svg.load_svg_from_string(FileAccess.get_file_as_string("res://assets/descent203/lantern.svg"))==OK:lamp_texture=ImageTexture.create_from_image(svg)
+ lamp_texture=preload("res://scripts/cast_art232.gd").prop("lantern0")
 static func edge_factor(world:Vector2,field:Rect2)->float:
  var normalized=(world-field.get_center())/(field.size*.5)
  return smoothstep(.3,1.2,normalized.length())
@@ -493,7 +492,9 @@ func draw_darkness(c:Node2D,camera:Vector2)->void:
    var offset=(uv*2-Vector2.ONE)*radius
    vertices.append(at+offset);colors.append(Color(1,1,1,depth_opacity(game.floor_number,world+offset,game.FIELD)))
   RenderingServer.canvas_item_add_triangle_array(c.get_canvas_item(),light_indices,vertices,colors,light_uvs,PackedInt32Array(),PackedFloat32Array(),darkness.get_rid())
- if lamp_texture!=null:c.draw_texture_rect(lamp_texture,Rect2(at-Vector2(12,32+sin(clock*5)),Vector2(24,38)),false)
+ if lamp_texture!=null:
+  var lamp_frame=2 if fuel<30 else posmod(int(clock*5),2)
+  preload("res://scripts/cast_art232.gd").draw_prop(c,"lantern"+str(lamp_frame),Rect2(at-Vector2(11,34+sin(clock*5)),Vector2(22,36)))
 func hero_rect(rect:Rect2)->Rect2:
  if not falling():return rect
  var t=clampf((fall_time-.65)/1.05,0,1) if not fall_swapped else 1-clampf((fall_time-2.1)/.65,0,1)

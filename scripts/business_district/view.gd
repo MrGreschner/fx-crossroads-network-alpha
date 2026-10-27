@@ -359,7 +359,7 @@ func equipment_panel(id:String,b:Dictionary)->void:
  for entry in [["display","Display capacity & customer patience"],["cold","Storage capacity & shelf life"],["quality","Quality presentation"],["brand","Shopfront recognition"],["training","Staff development"]]:
   var key:String=entry[0];paragraph(entry[1]+" • level %d/3" % b[key]);button(panel_body,"Improve • %.0f" % (60+b[key]*45),func():act(func():return sim.improve(id,key)))
 func staff_card(index:int,_applicant:bool)->void:
- var info=C.person(index);var row=HBoxContainer.new();panel_body.add_child(row);var portrait=TextureRect.new();portrait.texture=A.actor(index,0);portrait.custom_minimum_size=Vector2(78,104);portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(portrait)
+ var info=C.person(index);var row=HBoxContainer.new();panel_body.add_child(row);var portrait=TextureRect.new();portrait.texture=A.actor(index,0);portrait.custom_minimum_size=Vector2(128,128);portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(portrait)
  var resume="%s\nRequested pay %.1f / period\n%s" % [info.name,info.wage,info.bio]
  for job in info.get("experience",[]):resume+="\n• %s — %d year(s), %s" % [job.job,job.years,"most recent role" if job.ago==0 else "ended %d year(s) ago" % job.ago]
  resume+="\n"+str(info.get("reference","Earlier employee profile retained."));var text=label(row,resume,16);text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;text.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -374,7 +374,7 @@ func draw_actors()->void:
  var begin=Time.get_ticks_usec();var visible_world=Rect2((Vector2.ZERO-world.position)/zoom,root.size/zoom).grow(100);var all_people=sim.workers+sim.people;all_people.sort_custom(func(a,b):return a.pos.y<b.pos.y)
  for p in all_people:
   if not visible_world.has_point(p.pos):continue
-  var moving=p.pos.distance_to(p.prev)>.1;var pose=int(sim.clock*8)%4 if moving else 8+int(sim.clock*3)%2 if (p.get("role","")=="craft" or p.get("owner",false) and not sim.business(p.shop).production_key.is_empty()) and sim.business(p.shop).open else 0
+  var moving=p.pos.distance_to(p.prev)>.1;var pose=1+int(sim.clock*8)%2 if moving else 8+int(sim.clock*3)%2 if (p.get("role","")=="craft" or p.get("owner",false) and not sim.business(p.shop).production_key.is_empty()) and sim.business(p.shop).open else 0
   var point=p.prev.lerp(p.pos,clampf(accumulator/.1,0,1));A.person(actors,point,int(p.person),pose,1.0,p.get("fade",1.0))
   if p.has("role") and p.role in ["stock","craft"] and moving:
    var materials=sim.business(p.shop).materials.keys()
@@ -453,7 +453,7 @@ func inspect(point:Vector2)->void:
    if p.get("owner",false):
     paragraph("Your proprietor • prepares goods and serves customers. Dedicated employees increase capacity; each is paid separately.")
    elif p.has("budget"):
-    var portrait=TextureRect.new();portrait.texture=A.actor(int(p.person),0);portrait.custom_minimum_size=Vector2(72,96);portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;panel_body.add_child(portrait)
+    var portrait=TextureRect.new();portrait.texture=A.actor(int(p.person),0);portrait.custom_minimum_size=Vector2(112,112);portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;panel_body.add_child(portrait)
     paragraph(p.name+"\nShopping for "+C.ops().products.get(p.get("product",""),{"name":"goods"}).name.to_lower())
    else:staff_card(int(p.person),false)
    paragraph(p.get("thought","Working at "+C.spec(p.shop).name+" • "+p.get("role","proprietor")))

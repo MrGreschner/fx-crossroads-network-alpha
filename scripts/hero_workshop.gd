@@ -159,7 +159,8 @@ func render()->void:
    number(content,"Defence (0.1 = 10%)",project.hero,"defence",0,.25,.01)
    number(content,"Health",project.hero,"max_health",70,200,5);number(content,"Movement speed",project.hero,"speed",100,300,5)
   1:
-   label(content,"2 • Bring your hero to life",24);label(content,"Upload four PNG poses, each at least 30% filled (half opacity or higher). Maximum 256 × 256 pixels and 128 KB each. Transparent 64 × 64 pixel art works well. Artwork travels inside your project file.")
+   label(content,"2 • Bring your hero to life",24);label(content,"Upload four PNG poses, each at least 30% filled (half opacity or higher). Maximum 256 × 256 pixels and 128 KB each. New hero art uses 80 × 80 transparent pixels, matching our refreshed sprites. Existing PNGs keep their dimensions. Artwork travels inside your project file.")
+   button(content,"Graphic style explanation",func():preload("res://scripts/studio_art233.gd").open_guide(self))
    var row=HBoxContainer.new();content.add_child(row)
    for pose in ["idle","walk1","walk2","attack"]:
     var frame=PanelContainer.new();frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",UI.box("#183945","#355b68",10,12));row.add_child(frame);var box=VBoxContainer.new();frame.add_child(box);label(box,pose.capitalize())
@@ -167,6 +168,11 @@ func render()->void:
     if project.hero.art.has(pose):
      var image=Image.new();image.load_png_from_buffer(Marshalls.base64_to_raw(project.hero.art[pose]));pic.texture=ImageTexture.create_from_image(image)
     label(box,"%d%% filled" % roundi(preload("res://scripts/community_validation.gd").coverage(str(project.hero.art.get(pose,"")))*100),14)
+    button(box,"Copy pose",func():
+     if preload("res://scripts/studio_art233.gd").copy_picture(str(project.hero.art.get(pose,"")),pose):render();notice.text="Pose copied. Use Paste / edit in a destination, or Paste picture in Ability Lab."
+     else:notice.text="Draw and save this pose first, or copy unsaved work from inside its pixel editor."
+    )
+    button(box,"Paste / edit",func():var e=edit_pixels(pose);e.paste_picture())
     button(box,"Edit pixels",edit_pixels.bind(pose));button(box,"Upload PNG",choose_file.bind(pose));button(box,"Remove",func():project.hero.art.erase(pose);edited();render())
    var animated=preload("res://scripts/studio_animation.gd").new();content.add_child(animated);animated.setup([project.hero.art.get("walk1",project.hero.art.get("idle","")),project.hero.art.get("walk2",project.hero.art.get("idle",""))])
    label(content,"LIVE WALK • alternates Walk 1 / Walk 2. Keep the face and contact point aligned; change feet, wings or body tilt by a few pixels.")
@@ -451,6 +457,7 @@ func _notification(what:int)->void:
   touch_direction=Vector2.ZERO
   if is_instance_valid(arena):arena.cancel_holds()
 func _input(event:InputEvent)->void:
+ if not get_tree().get_nodes_in_group("studio_style_guide233").is_empty():return
  if not active:return
  if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_ESCAPE:
   if test_panel.visible:finish_test()
@@ -484,9 +491,10 @@ func publish()->void:
  var issue=preload("res://scripts/studio_library.gd").add_hero(project)
  if not issue.is_empty():notice.text=issue;return
  preload("res://scripts/studio_library.gd").install(game);notice.text="Added to Character Hall → Custom. Download this project to share it."
-func edit_pixels(pose:String)->void:
+func edit_pixels(pose:String)->Node:
  var editor=preload("res://scripts/studio_pixel_editor.gd").new();add_child(editor);editor.setup(project.hero.art.get(pose,""),pose.capitalize(),project.hero.art);editor.bind_live(["value","hero","art",pose])
  editor.saved.connect(func(encoded:String):read_art(encoded,pose))
+ return editor
 func design_lesson()->void:
  UI.lesson(self,"DESIGN FIELD NOTES","Small, thoughtful choices make a clear and memorable hero.",preload("res://scripts/studio_lessons.gd").design())
 func show_hub()->void:
@@ -500,6 +508,7 @@ func show_hub()->void:
  var hub_scroll=ScrollContainer.new();hub_scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;hub_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(hub_scroll)
  var cards=VBoxContainer.new();cards.size_flags_horizontal=Control.SIZE_EXPAND_FILL;hub_scroll.add_child(cards);preload("res://scripts/touch_list_scroll.gd").attach(hub_scroll).form_controls=true
  var hero_card=UI.card(cards,"01  HERO WORKSHOP","Create a role, draw four poses and tune a complete playable hero.")
+ button(hero_card,"Graphic style explanation",func():preload("res://scripts/studio_art233.gd").open_guide(self))
  UI.accent(button(hero_card,"Build your hero",func():hub.hide();panel.show();render();UI.enter(panel)))
  var lab_card=UI.card(cards,"02  ABILITY LAB","Explore code and animation with a live attack replay.")
  button(lab_card,"Create an ability",func():hub.hide();open_lab())

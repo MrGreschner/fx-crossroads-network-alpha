@@ -1988,6 +1988,10 @@ func draw_world() -> void:
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
 	if mode=="town" and name in ["guard_melee","guard_ranged"]:
 		preload("res://scripts/town_cast230.gd").draw(self,name,world_pos+size*Vector2(.5,.875)-camera,visual_clock,false);return
+	if adventure!=null and adventure.quests.active:
+		var quest_key=preload("res://scripts/cast_art232.gd").quest_key(name)
+		if not quest_key.is_empty():
+			preload("res://scripts/cast_art232.gd").draw_in_rect(self,quest_key[0],quest_key[1],preload("res://scripts/enemy_visual227.gd").adjusted(name,Rect2(world_pos-camera,size)),tint);return
 	if name=="elder_ram":art[name]=core_art.texture("elder_ram","talk" if menu=="elder" else "6" if fmod(visual_clock,5)>4.7 else "idle")
 	if mode=="town" and not Rect2(camera,VIEW).intersects(Rect2(world_pos,size)):return
 	if art.has(name) and art[name] != null:

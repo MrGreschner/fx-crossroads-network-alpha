@@ -18,7 +18,7 @@ func setup(owner:Node,source:Dictionary)->void:
  var shade=ColorRect.new();shade.color=Color("#071c27");shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(shade)
  panel=PanelContainer.new();panel.size=Vector2(1090,700);add_child(panel);UI.apply(panel)
  var col=VBoxContainer.new();panel.add_child(col);workshop.label(col,"RASTER STUDIO • editable layers",25)
- var top=HBoxContainer.new();col.add_child(top);workshop.button(top,"Apply artwork & source",finish);workshop.button(top,"Cancel",queue_free)
+ var top=HBoxContainer.new();col.add_child(top);workshop.button(top,"Apply artwork & source",finish);workshop.button(top,"Cancel",queue_free);workshop.button(top,"Graphic style explanation",func():preload("res://scripts/studio_art233.gd").open_guide(self))
  var split=HBoxContainer.new();split.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(split)
  canvas=preload("res://scripts/studio_pixel_canvas.gd").new();canvas.size_flags_horizontal=Control.SIZE_EXPAND_FILL;split.add_child(canvas);canvas.load_png(value.layers[active].image);load_mask()
  if not str(value.get("brush","")).is_empty():brush=Image.new();brush.load_png_from_buffer(Marshalls.base64_to_raw(value.brush))
@@ -90,7 +90,7 @@ func settings()->void:
  workshop.label(col,"RGBA8 • RGB • square pixels • lossless PNG\nEditable layers are included in the JSON project.",18)
  var name=LineEdit.new();name.text=str(value.settings.get("filename",value.name.validate_filename()+".png"));col.add_child(name);name.text_changed.connect(func(t:String):value.settings.filename=t.left(100))
  var credits=LineEdit.new();credits.text=value.source;credits.placeholder_text="Creator / source / licence";col.add_child(credits);credits.text_changed.connect(func(t:String):value.source=t.left(200))
- for side in [32,64,128]:workshop.button(col,"Resize document to "+str(side)+" × "+str(side),func():
+ for side in [80,32,64,128]:workshop.button(col,"Resize document to "+str(side)+" × "+str(side),func():
   sync()
   for l in value.layers:
    var img=Image.new();img.load_png_from_buffer(Marshalls.base64_to_raw(l.image));img.resize(side,side,Image.INTERPOLATE_NEAREST);l.image=Marshalls.raw_to_base64(img.save_png_to_buffer())

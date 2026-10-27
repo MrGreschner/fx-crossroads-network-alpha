@@ -14,7 +14,7 @@ var painting=false
 var last=Vector2i(-1,-1)
 func _ready()->void:
  custom_minimum_size=Vector2(430,430);mouse_filter=Control.MOUSE_FILTER_STOP;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
-func load_png(encoded:String,side:int=32)->void:
+func load_png(encoded:String,side:int=80)->void:
  image=Image.create(side,side,false,Image.FORMAT_RGBA8);image.fill(Color.TRANSPARENT)
  if not encoded.is_empty():
   var imported=Image.new()
@@ -94,7 +94,7 @@ func _draw()->void:
  if remote_cell.x>=0:
   var at=start+(Vector2(remote_cell)+Vector2.ONE*.5)*step
   draw_circle(at,maxf(4,step*.65),Color("#76e5ee"),false,2);draw_line(at-Vector2(6,0),at+Vector2(6,0),Color("#76e5ee"),1)
- if step>=6:
+ if step>=4:
   for x in image.get_width()+1:draw_line(start+Vector2(x*step,0),start+Vector2(x*step,image.get_height()*step),Color(0,0,0,.16))
   for y in image.get_height()+1:draw_line(start+Vector2(0,y*step),start+Vector2(image.get_width()*step,y*step),Color(0,0,0,.16))
 
@@ -105,3 +105,15 @@ func _notification(what:int)->void:
 
 func _process(_delta:float)->void:
  if remote_cell.x>=0 and Time.get_ticks_msec()-remote_stamp>1200:remote_cell=Vector2i(-1,-1);queue_redraw()
+
+func replace_picture(encoded:String)->bool:
+ if not preload("res://scripts/studio_art233.gd").valid_encoding(encoded):return false
+ var issue=preload("res://scripts/workshop_project.gd").png_error(Marshalls.base64_to_raw(encoded))
+ if not issue.is_empty():return false
+ var incoming=Image.new()
+ if incoming.load_png_from_buffer(Marshalls.base64_to_raw(encoded))!=OK:return false
+ incoming.convert(Image.FORMAT_RGBA8);snapshot();image=incoming;mask_image=null;selection=Rect2i();painting=false;last=Vector2i(-1,-1);queue_redraw();changed.emit();return true
+func fit_hero_canvas()->void:
+ if image.get_size()==Vector2i(80,80):return
+ snapshot();var original=image.duplicate();var factor=minf(72.0/original.get_width(),72.0/original.get_height());var target=Vector2i(maxi(1,roundi(original.get_width()*factor)),maxi(1,roundi(original.get_height()*factor)))
+ original.resize(target.x,target.y,Image.INTERPOLATE_NEAREST);image=Image.create(80,80,false,Image.FORMAT_RGBA8);image.fill(Color.TRANSPARENT);image.blit_rect(original,Rect2i(Vector2i.ZERO,target),Vector2i(40-target.x/2,74-target.y));mask_image=null;selection=Rect2i();painting=false;last=Vector2i(-1,-1);queue_redraw();changed.emit()

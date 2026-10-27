@@ -4,18 +4,7 @@ const FONT=preload("res://assets/fonts/CrossroadsUI.ttf")
 static var actor_sources:Dictionary={}
 static var actor_textures:Dictionary={}
 static func actor(index:int,pose:int)->Texture2D:
- var key=str(index)+":"+str(clampi(pose,0,9))
- if actor_textures.has(key):return actor_textures[key]
- if actor_sources.is_empty():actor_sources=JSON.parse_string(FileAccess.get_file_as_string("res://content/business-actors.json"))
- var info=C.person(index) if index>=0 else {};var base=8 if index==-1 else posmod(-index-2,8) if index<0 else ["ram","badger","cat","newt","human","fox","hare","owl"].find(info.species)
- var svg:String=actor_sources[str(maxi(0,base))+":"+str(clampi(pose,0,9))]
- if index>=100:
-  var original=C.all().staff[maxi(0,base)];svg=svg.replace(original.coat,"#"+str(info.coat).trim_prefix("#").left(6)).replace(original.skin,"#"+str(info.skin).trim_prefix("#").left(6))
-  var badge='<circle cx="'+str(12+posmod(index,8))+'" cy="24" r="2" fill="#e8d3a0"/>'
-  svg=svg.replace('</svg>',badge+'</svg>')
- var im=Image.new();im.load_svg_from_string(svg);var texture=ImageTexture.create_from_image(im);actor_textures[key]=texture
- if actor_textures.size()>900:actor_textures.clear();actor_textures[key]=texture
- return texture
+ return preload("res://scripts/market_art233.gd").texture(index,pose)
 static func ink(c:CanvasItem,p:Vector2,t:String,size:int=15,col:Color=Color("#e9dfc5"))->void:c.draw_string(FONT,p,t,HORIZONTAL_ALIGNMENT_LEFT,-1,size,col)
 static func rect(c:CanvasItem,p:Vector2,s:Vector2,col:Color)->void:c.draw_rect(Rect2(p,s),col)
 static func rounded(c:CanvasItem,r:Rect2,col:Color,radius:int=6,border:Color=Color(0,0,0,0))->void:
@@ -116,6 +105,7 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
  for y in range(15,304,21):
   c.draw_line(p+Vector2(10,y),p+Vector2(430,y),Color("#897c65",.38),1)
   for x in range(20+(y%3)*12,430,80):c.draw_line(p+Vector2(x,y),p+Vector2(x,y+20),Color("#897c65",.25),1)
+ for x in range(14,430,52):rect(c,p+Vector2(x,20),Vector2(2,278),Color("#dbcaab",.12))
  rect(c,p+Vector2(0,-45),Vector2(440,72),Color("#d9cdb2"));rect(c,p+Vector2(-4,15),Vector2(12,290),dark);rect(c,p+Vector2(432,15),Vector2(12,290),dark)
  c.draw_colored_polygon(PackedVector2Array([p+Vector2(-16,-45),p+Vector2(18,-95),p+Vector2(421,-95),p+Vector2(457,-45)]),dark)
  for x in range(25,430,27):c.draw_line(p+Vector2(x,-88),p+Vector2(x-12,-48),accent.lightened(.18),2)
@@ -126,6 +116,8 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
  for y in [-39,-9]:
   for x in range(5,433,65):c.draw_line(p+Vector2(x,y),p+Vector2(x,y+24),Color("#a89d82",.4),1)
  rect(c,p+Vector2(0,14),Vector2(440,7),dark.lightened(.12))
+ for x in range(22,426,48):
+  rect(c,p+Vector2(x,-83),Vector2(29,5),dark.lightened(.10));rect(c,p+Vector2(x-10,-63),Vector2(27,4),dark.darkened(.10))
  # Back windows and receiving bay.
  for x in [22,370]:
   rect(c,p+Vector2(x,-30),Vector2(45,46),Color("#657a77"));rect(c,p+Vector2(x+4,-26),Vector2(37,38),Color("#d8bb7a") if night else Color("#9db9b2"));c.draw_line(p+Vector2(x+22,-26),p+Vector2(x+22,13),pale,2)
@@ -215,7 +207,7 @@ static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:
  c.draw_set_transform(Vector2.ZERO)
 static func person(c:CanvasItem,p:Vector2,index:int,pose:int,scale:float=1,fade:float=1)->void:
  ellipse(c,p+Vector2(2,1),Vector2(12,5)*scale,Color(0,0,0,.16*fade))
- c.draw_texture_rect(actor(index,pose),Rect2(p-Vector2(24,62)*scale,Vector2(48,64)*scale),false,Color(1,1,1,fade))
+ c.draw_texture_rect(actor(index,pose),Rect2(p-Vector2(40,74)*scale,Vector2(80,80)*scale),false,Color(1,1,1,fade))
 
 static var glow:Texture2D
 static func night_lights(c:CanvasItem)->void:
@@ -230,7 +222,10 @@ static func night_lights(c:CanvasItem)->void:
 static var icon_sources:Dictionary={}
 static var icon_cache:Dictionary={}
 static func item_texture(key:String,kind:String)->Texture2D:
+ if kind=="equipment":
+  var refreshed=preload("res://scripts/market_art233.gd").prop(key)
+  if refreshed!=null:return refreshed
  var id=kind+":"+key
  if icon_cache.has(id):return icon_cache[id]
  if icon_sources.is_empty():icon_sources=JSON.parse_string(FileAccess.get_file_as_string("res://content/business-icons.json"))
- var im=Image.new();im.load_svg_from_string(icon_sources.get(id,icon_sources.values()[0]));var texture=ImageTexture.create_from_image(im);icon_cache[id]=texture;return texture
+ var im=Image.new();im.load_svg_from_string(preload("res://scripts/market_art233.gd").matte_svg(icon_sources.get(id,icon_sources.values()[0])));im.resize(80,80,Image.INTERPOLATE_NEAREST);var texture=ImageTexture.create_from_image(im);icon_cache[id]=texture;return texture

@@ -256,6 +256,7 @@ static func enemy(c:CanvasItem,e:Dictionary,clock:float,alpha:float=1)->void:
  transform(c,Vector2.ZERO)
 
 static func cached_enemy(c:CanvasItem,e:Dictionary,clock:float,alpha:float)->bool:
+ if preload("res://scripts/cast_art232.gd").draw_cave(c,e,alpha):return true
  var kind:=str(e.kind)
  if not atlases.has(kind):
   var path="res://assets/descent203/"+kind+".png"
@@ -308,6 +309,8 @@ static func spell(c:Node2D,shot:Dictionary,p:Vector2,clock:float)->bool:
  return true
 
 static func companion_texture(kind:String,pose:String)->Texture2D:
+ var refreshed=preload("res://scripts/cast_art232.gd").texture(kind,pose)
+ if refreshed!=null:return refreshed
  var spec=preload("res://scripts/descent203_book.gd").profile(kind)
  if spec.is_empty():return null
  if not atlases.has(kind):

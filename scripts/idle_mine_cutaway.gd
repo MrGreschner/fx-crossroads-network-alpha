@@ -2,7 +2,7 @@ extends Control
 const Catalog=preload("res://scripts/idle_mine_catalog.gd")
 var mine:RefCounted
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
-var ram:Texture2D=preload("res://assets/ram_walk1.png")
+const Art=preload("res://scripts/cast_art232.gd")
 var clock=0.0
 var redraw_clock=0.0
 func _ready()->void:
@@ -18,21 +18,14 @@ func text(p:Vector2,value:String,colour:Color=Color("#d7d3c5"),sz:int=14)->void:
 func building(p:Vector2,title:String,kind:String,colour:Color)->void:
  var lv=int(mine.state().levels[kind])
  if lv<=0:return
- draw_rect(Rect2(p,Vector2(80,48)),colour);draw_rect(Rect2(p+Vector2(3,3),Vector2(74,42)),Color(colour,.6),false,2)
- draw_colored_polygon(PackedVector2Array([p+Vector2(-5,2),p+Vector2(40,-20),p+Vector2(85,2)]),Color("#a0957f"))
- draw_rect(Rect2(p+Vector2(12,15),Vector2(14,16)),Color("#91bbbd"));draw_rect(Rect2(p+Vector2(49,17),Vector2(20,31)),Color("#263b40"))
+ Art.draw_prop(self,kind,Rect2(p+Vector2(-4,-25),Vector2(88,75)))
  text(p+Vector2(0,67),title+" "+str(lv),Color("#dcc69c"),12)
  if kind=="vent":
   var center=p+Vector2(40,15)
   for n in 4:
-   var a=clock*2+n*PI*.5;draw_line(center,center+Vector2(cos(a),sin(a))*17,Color("#b4d6d5"),4,true)
-  draw_circle(center,4,Color("#536d73"))
- if kind=="drill":
-  for n in 3:draw_line(p+Vector2(30,15+n*5),p+Vector2(50,15+n*5+sin(clock*6)*3),Color("#c3d1d1"),3,true)
+   var a=clock*2+n*PI*.5;draw_line(center,center+Vector2(cos(a),sin(a))*10,Color("#a2b6b4"),2)
  if kind=="smelter":
-  draw_rect(Rect2(p+Vector2(30,-26),Vector2(12,22)),Color("#59585b"))
-  for n in 3:draw_circle(p+Vector2(36+sin(clock+n)*5,-28-fposmod(clock*12+n*12,35)),5,Color(.7,.67,.62,.2))
- if kind=="assay":draw_colored_polygon(PackedVector2Array([p+Vector2(36,27),p+Vector2(45,10),p+Vector2(53,27),p+Vector2(44,37)]),Color("#bba0db"))
+  for n in 2:draw_circle(p+Vector2(61+sin(clock+n)*3,-20-fposmod(clock*8+n*12,22)),3,Color(.7,.67,.62,.15))
 func _draw()->void:
  var clip=visible_area();var width=630.0
  draw_rect(Rect2(Vector2.ZERO,custom_minimum_size),Color("#14252e"))
@@ -41,7 +34,7 @@ func _draw()->void:
   for n in 12:draw_line(Vector2(n*53,125),Vector2(n*53+14,142),Color("#534b3f"),3)
   building(Vector2(20,56),"Fresh air","vent",Color("#567b80"));building(Vector2(115,56),"Tools","tools",Color("#826653"));building(Vector2(212,56),"Smelter","smelter",Color("#806659"));building(Vector2(308,56),"Drill","drill",Color("#536f7e"));building(Vector2(405,56),"Depot","depot",Color("#746e54"));building(Vector2(512,56),"Assay","assay",Color("#686783"))
   if int(mine.state().levels.pump)>0:
-   draw_rect(Rect2(316,142,57,26),Color("#467a86"));draw_circle(Vector2(342,140),18,Color("#79a7a6"));draw_arc(Vector2(342,140),12,0,TAU,18,Color("#253e48"),3);text(Vector2(311,185),"Pump "+str(mine.state().levels.pump),Color("#bccfd1"),12)
+   Art.draw_prop(self,"pump",Rect2(410,129,68,41));text(Vector2(410,185),"Pump "+str(mine.state().levels.pump),Color("#bccfd1"),12)
   text(Vector2(18,25),"RAM-RUN INDUSTRY • surface camp",Color("#dde4cd"),17)
  for index in mine.depth():
   var y=190+index*125
@@ -65,19 +58,11 @@ func _draw()->void:
   for n in 16:draw_line(Vector2(30+n*35,y+87),Vector2(30+n*35,y+96),Color("#7b725e"),3)
   text(Vector2(15,y+17),"SHAFT "+str(index+1)+" • "+str((index+1)*30)+"m • "+str(biome.name),accent,15)
   for n in mini(4,int(mine.state().shafts[index].crew)):
-   var p=Vector2(92+n*48 if n<2 else 427+(n-2)*48,y+77);var swing=sin(clock*3+n+index)
-   draw_circle(p+Vector2(0,6),13,Color(0,0,0,.18));draw_texture_rect(ram,Rect2(p+Vector2(-16,-37+swing),Vector2(32,39)),false)
-   draw_arc(p+Vector2(0,-33+swing),10,PI,TAU,12,Color("#d6b15e"),4);draw_circle(p+Vector2(0,-37),3,Color("#f7e4a2"))
-   var hand=p+Vector2(14,-13);var tip=hand+Vector2(16+swing*4,-14+swing*8)
-   draw_line(hand,tip,Color("#b89465"),3);draw_line(tip+Vector2(-8,-3),tip+Vector2(9,4),Color("#c9d1cd"),3)
-   if swing>.5:draw_circle(p+Vector2(26,-9),2,Color(accent,.7))
-  var cart=Vector2(170+fposmod(clock*24+index*49,93),y+74)
-  draw_rect(Rect2(cart+Vector2(-17,-8),Vector2(35,18)),Color("#749198"))
-  for x in [-11,11]:draw_circle(cart+Vector2(x,14),5,Color("#283139"))
-  for n in 4:draw_circle(cart+Vector2(-12+n*8,-7),5,accent)
-  for n in 5:
-   var gem=Vector2(600,y+28+n*13);draw_colored_polygon(PackedVector2Array([gem,gem+Vector2(7,-9),gem+Vector2(13,0),gem+Vector2(7,6)]),Color(accent,.8))
+   var p=Vector2(92+n*48 if n<2 else 427+(n-2)*48,y+84);var working=fposmod(clock*1.3+n*.3+index,1)>.55
+   Art.draw(self,"miner",p,3 if working else 0,39)
+   if working:draw_rect(Rect2(p+Vector2(22,-7),Vector2(2,2)),Color(accent,.7))
+  var cart=Vector2(170+fposmod(clock*24+index*49,93),y+91)
+  Art.draw_prop(self,"cart",Rect2(cart-Vector2(20,28),Vector2(40,28)))
+  Art.draw_prop(self,"ore",Rect2(575,y+43,38,43),Color(accent))
  var cage_y=160+fposmod(clock*38,maxf(30,mine.depth()*125))
- if clip.intersects(Rect2(303,cage_y,50,45)):
-  draw_rect(Rect2(308,cage_y,40,35),Color("#68898d"));draw_rect(Rect2(312,cage_y+4,32,26),Color("#b5c3a9"),false,2)
-  for n in 3:draw_line(Vector2(316+n*11,cage_y),Vector2(316+n*11,cage_y+35),Color("#263b45"),2)
+ if clip.intersects(Rect2(303,cage_y,50,45)):Art.draw_prop(self,"lift",Rect2(303,cage_y,50,45))

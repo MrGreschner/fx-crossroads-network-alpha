@@ -350,7 +350,9 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
  for npc in data.npcs:
   var point:=v(npc.pos)-camera
   if bounds.has_point(v(npc.pos)):
-   canvas.draw_texture_rect(npc_art.get(str(npc.id),NPC_TEXTURES.quest_edda),Rect2(point-Vector2(24,62),Vector2(48,72)),false);label(canvas,point+Vector2(-95,35),str(npc.name),Color("#f1ddb0"),16)
+   var close=Vector2(adventure.points().get(str(adventure.game.my_id) if adventure.arcade else "solo",Vector2.ZERO)).distance_to(v(npc.pos))<115
+   preload("res://scripts/cast_art232.gd").draw(canvas,str(npc.sprite),point+Vector2(0,7),"talk" if close else "idle",64)
+   label(canvas,point+Vector2(-95,35),str(npc.name),Color("#f1ddb0"),16)
    var mark:="+"
    for quest in data.quests:
     if str(quest.npc)!=str(npc.id) or bool(states[str(quest.id)].done):continue

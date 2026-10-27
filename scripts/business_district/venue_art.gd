@@ -20,9 +20,9 @@ static func floor_plan(c:CanvasItem,o:Vector2,b:Dictionary,night:bool)->void:
    for dx in [-43,43]:A.ellipse(c,p+Vector2(dx,9),Vector2(11,8),Color("#a78683"))
   A.rounded(c,Rect2(o+Vector2(250,52),Vector2(115,61)),Color("#345351"),5);A.ink(c,o+Vector2(259,74),"DAILY TREATS" if b.trade=="dessert" else "COFFEE & TEA",12,Color("#ead9b2"));A.ink(c,o+Vector2(262,95),"MADE HERE",11,Color("#a8c9b7"))
 static func dog(c:CanvasItem,p:Vector2,index:int,t:float)->void:
- var color=[Color("#c39b70"),Color("#e0cdb1"),Color("#777f86"),Color("#a87a62")][posmod(index,4)]
- A.ellipse(c,p+Vector2(0,3),Vector2(20,7),Color(0,0,0,.12));A.ellipse(c,p-Vector2(0,7),Vector2(22,13),color);A.ellipse(c,p+Vector2(-17,-17),Vector2(12,13),color.lightened(.1));A.ellipse(c,p+Vector2(-24,-20),Vector2(5,10),color.darkened(.35));c.draw_circle(p+Vector2(-22,-18),2,Color("#304748"));c.draw_circle(p+Vector2(-29,-12),3,Color("#304748"));c.draw_line(p+Vector2(18,-9),p+Vector2(29+sin(t*8)*4,-24),color,6,true)
- for x in [-11,13]:c.draw_line(p+Vector2(x,0),p+Vector2(x,9),color.darkened(.15),5,true)
+ var pose=1+posmod(int(t*6),2)
+ var tex=preload("res://scripts/market_art233.gd").dog(index,pose)
+ c.draw_texture_rect(tex,Rect2(p-Vector2(27,49),Vector2(54,54)),false)
 static func live(c:CanvasItem,o:Vector2,b:Dictionary,t:float)->void:
  if b.trade=="daycare":
   for job in b.services:

@@ -2338,7 +2338,10 @@ func _draw() -> void:
 			var rect=preload("res://scripts/enemy_visual227.gd").adjusted(id,Rect2(pos-size*Vector2(0.5,0.7),size))
 			if str(foe.type) in north_gate.RIVALS:rect=preload("res://scripts/unit_art231.gd").npc_rect(north_gate.rival_kit(str(foe.type)),rect)
 			elif str(foe.type)=="tollbreaker":rect=preload("res://scripts/unit_art231.gd").npc_rect("tollbreaker",rect)
-			draw_texture_rect(texture,rect,false)
+			if adventure.quests.active and str(foe.type) in ["briar_bandit","glowcap_slinger","rootbound_keeper","rootwarden","frostling","ice_archer","summit_golem","sluice_beetle","tidebinder","inkfin"]:
+				var quest_pose="attack" if float(foe.get("melee_warning",0))>0 or float(foe.get("v143_pose",0))>adventure.newcomers.clock or float(foe.get("ice_windup",0))>0 else enemy_motion229.locomotion(foe)
+				preload("res://scripts/cast_art232.gd").draw_in_rect(self,str(foe.type),quest_pose,rect)
+			else:draw_texture_rect(texture,rect,false)
 		else: draw_circle(pos,19,Color("#ffad7a"))
 		var hp_y:float=-size.y*.7-8 if bool(foe.get("veilbound",false)) or str(foe.type) in adventure.cinder.TYPES or str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
 		if bool(foe.get("depth_boss",false)):hp_y=descent.health_bar_y(foe)

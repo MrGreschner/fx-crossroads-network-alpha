@@ -1,0 +1,67 @@
+{
+  "0": {
+    "height": 60,
+    "coat": "8d684f",
+    "world_height": 59
+  },
+  "1": {
+    "height": 60,
+    "coat": "506c77",
+    "world_height": 59
+  },
+  "2": {
+    "height": 60,
+    "coat": "92739c",
+    "world_height": 59
+  },
+  "3": {
+    "height": 60,
+    "coat": "678a66",
+    "world_height": 59
+  },
+  "4": {
+    "height": 60,
+    "coat": "a5795e",
+    "world_height": 59
+  },
+  "5": {
+    "height": 60,
+    "coat": "777196",
+    "world_height": 59
+  },
+  "6": {
+    "height": 60,
+    "coat": "719a9c",
+    "world_height": 59
+  },
+  "7": {
+    "height": 60,
+    "coat": "807c66",
+    "world_height": 59
+  },
+  "8": {
+    "height": 60,
+    "coat": "428079",
+    "world_height": 59
+  },
+  "9": {
+    "height": 58,
+    "coat": "428079",
+    "world_height": 40
+  },
+  "10": {
+    "height": 60,
+    "coat": "428079",
+    "world_height": 40
+  },
+  "11": {
+    "height": 57,
+    "coat": "428079",
+    "world_height": 40
+  },
+  "12": {
+    "height": 53,
+    "coat": "428079",
+    "world_height": 40
+  }
+}

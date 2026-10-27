@@ -1,0 +1,9 @@
+# V232 art refresh
+
+Original built-in ImageGen artwork created for Crossroads: Realms Beyond. No purchased or external asset pack is embedded. Sources are preserved under assets/art232/*_source.png; repeatable extraction, normalization and upper-body registration are in tools/prepare_art232.py, with the exact row ordering in tools/art232_groups.json.
+
+The common generation brief was: “Match the soft coloured edges, matte shading and neutral poses of our V207/V208 sprites. Keep this hero's own design.” Each sheet requested four columns: idle, walk A, walk B, attack (talk/work for civilian quest-givers). Real transparency, generous gutters, no labels/scenery/ground shadows, coloured selective contours, coarse pixel clusters, matte storybook shading, restrained material colours, front-facing head and torso, alternate feet or species-appropriate wing/tentacle/leg motion, nondirectional contained attacks, established equipment retained. Original enemy contact sheets and the V231 guard sheet supplied identity/style references.
+
+51 Cave Descent designs retain existing species, colours, ornaments and encounter names: 30 ordinary cave species, ten unique midbosses, ten unique main bosses, and the post-100 Unquenchable. Large boss presentation sizes remain intentional. Five Wayfarer civilians keep their work identities; ten Wayfarer enemy types retain their existing species and colours. The mine sheet includes the original orange hardhat ram miner in four poses and sixteen separate equipment/building props. The physical brass/slate lantern strip has two warm-flame frames, one low-fuel frame and one unlit frame; no backing tile.
+
+Runtime sheets are cast.png (640×2720; 67 designs/268 poses) and mine.png (512×640; 16 mine props + four lantern frames). Nearest sampling and one-time raw PNG loading avoid per-frame image processing. Original source sheets are retained only in Editable, not shipped in the Web PCK.
