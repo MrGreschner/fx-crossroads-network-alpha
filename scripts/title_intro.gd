@@ -80,7 +80,7 @@ func paint()->void:
  var rp:=Vector2(s.ram_pos[0],s.ram_pos[1]);var fp:=Vector2(s.foe_pos[0],s.foe_pos[1])
  var rs:=Vector2(d.cast_size.ram[0],d.cast_size.ram[1])*float(s.ram_scale)
  var fs:=Vector2(d.cast_size.bramble[0],d.cast_size.bramble[1])*float(s.foe_scale)
- var ram_stretch:=Vector2(1.035,.97) if t>=9.5 and t<10.08 else Vector2.ONE
+ var ram_stretch:=Vector2(1.035,.97) if t>=9.98 and t<10.35 else Vector2.ONE
  actor(textures["ram"+str(s.ram_frame)],rp,rs,float(s.ram_opacity),ram_stretch)
  var stomp:float=maxf(0,sin(clampf((t-7.12)/.55,0,1)*PI))
  var fstretch:=Vector2(1+stomp*.12,1-stomp*.1)
@@ -101,6 +101,11 @@ func paint()->void:
    frame.draw_arc(p,9+a*43,0,TAU,24,Color(.75,.95,.98,(1-a/.65)*.7),1.5,true)
    for n in 6:
     var q:=p+Vector2((n-2.5)*a*25,-sin(a/.65*PI)*(16+n%3*6));frame.draw_circle(q,1.8,Color(.86,.97,1,(1-a/.65)*.7))
+ if float(s.foe_attack)>0:
+  for n in 3:
+   var claw:=rp+Vector2(21+n*5,-43)
+   frame.draw_line(claw+Vector2(8,-11),claw+Vector2(-2,0),Color(.69,.79,.45,s.foe_attack*.85),2,true)
+   frame.draw_line(claw+Vector2(-2,0),claw+Vector2(-10,10),Color(.69,.79,.45,s.foe_attack*.85),2,true)
  if float(s.impact)>0:
   for n in 7:
    var dir:=Vector2.from_angle(n*TAU/7);var p:=Vector2(d.impact[0],d.impact[1])+dir*float(s.impact)*22*depth
