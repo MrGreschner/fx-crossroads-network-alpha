@@ -71,8 +71,10 @@ func step(dt:float)->void:
   if melee:
    if nearest<64:
     foe.skill_timer=1.3;adventure.warn(foe.pos+aim*25,45,7,.35)
+    preload("res://scripts/enemy_visual227.gd").mark(adventure,foe,.35)
   elif combat.path_clear(foe.pos,adventure.points()[target]):
    foe.skill_timer=2.6
+   preload("res://scripts/enemy_visual227.gd").mark(adventure,foe,.65)
    for angle in [-.24,0,.24]:combat.launch_projectile("enemy",foe.pos,aim.rotated(angle),{"range":590,"speed":225,"color":"#ead397"},9,"plain")
  for n in range(blasts.size()-1,-1,-1):
   var blast=blasts[n];blast.time=float(blast.time)-dt
@@ -114,7 +116,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  for b in blasts:
   var p=Vector2(b.pos[0],b.pos[1])-camera;var hit=bool(b.hit)
   if not hit:
-   var shell=preload("res://scripts/source_art.gd").texture("res://assets/spark_scarab_idle.svg")
+   var shell:Texture2D=adventure.game.art.get("spark_scarab_idle")
    if shell!=null:c.draw_texture_rect(shell,Rect2(p-Vector2(25,28),Vector2(50,50)),false,Color("#edb681"))
   else:
    var progress=clampf(-float(b.time)/.25,0,1)

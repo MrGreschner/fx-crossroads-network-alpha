@@ -154,6 +154,7 @@ func step(delta:float)->void:
   foe.skill_timer=float(foe.skill_timer)-delta
   if float(foe.skill_timer)>0 or not combat.path_clear(p,adventure.points()[target]):continue
   foe.skill_step=int(foe.skill_step)+1
+  preload("res://scripts/enemy_visual227.gd").mark(adventure,foe,.65)
   if boss:
    foe.skill_timer=2.5 if float(foe.hp)>float(foe.max_hp)*.5 else 1.9
    match int(foe.skill_step)%3:

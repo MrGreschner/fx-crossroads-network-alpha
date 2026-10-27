@@ -71,6 +71,7 @@ var respawn_at: Dictionary = {}
 var dodge_at: Dictionary = {}
 var local_pos := Vector2(300, 390)
 var opponents: Array[Dictionary] = []
+var enemy_motion229=preload("res://scripts/enemy_motion229.gd").new()
 var missiles: Array[Dictionary] = []
 var guards: Array[Dictionary] = []
 var effects: Array[Dictionary] = []
@@ -278,6 +279,9 @@ func _ready() -> void:
 	for entry in manifest.get("enemies", []):
 		var data := _json("res://content/enemies/" + str(entry) + ".json")
 		enemy_defs[str(entry)] = data
+		if str(data.get("sprite",entry)) in preload("res://scripts/enemy_visual227.gd").FACTORS:
+			for pose in ["idle","walk1","walk2","attack","attack2","special"]:art[str(entry)+"_"+pose]=load("res://assets/"+str(data.get("sprite",entry))+"_"+pose+".png")
+			continue
 		if str(entry) in preload("res://scripts/cinderheart.gd").TYPES+["ratchet_keeper","spark_scarab","hinge_conjurer","latch_hound","bogpitch_newt","mireweaver","mirevein_collector","mistglass_skater","undertow_weaver","sluicewarden"]:
 			for pose in ["idle","walk1","walk2","attack"]:art[str(entry)+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+str(entry)+"_"+pose+".svg")
 			continue
@@ -287,6 +291,11 @@ func _ready() -> void:
 			if refreshed!=null:art[str(entry)+"_"+pose]=refreshed
 			elif ResourceLoader.exists(path): art[str(entry) + "_" + pose] = load(path)
 			elif ResourceLoader.exists(path.replace(".png",".svg")):art[str(entry)+"_"+pose]=preload("res://scripts/source_art.gd").texture(path.replace(".png",".svg"))
+	for pose in ["idle","walk1","walk2","attack"]:art["cryowarden_"+pose]=load("res://assets/cryowarden_"+pose+".png")
+	# Some realm boss sprites have no standalone manifest enemy entry.
+	for sprite in preload("res://scripts/enemy_visual227.gd").FACTORS:
+		if not art.has(sprite+"_idle"):
+			for pose in ["idle","walk1","walk2","attack"]:art[sprite+"_"+pose]=load("res://assets/"+sprite+"_"+pose+".png")
 	for entry in manifest.get("regions", [])+manifest.get("quest_regions",[]): regions[str(entry)] = _json("res://content/regions/" + str(entry) + ".json")
 	for entry in manifest.get("items", []):
 		items[str(entry)] = _json("res://content/items/" + str(entry) + ".json")
@@ -1510,6 +1519,7 @@ func _spawn_wave(amount: int) -> void:
 		opponents.append({"pos":pos,"hp":hp,"max_hp":hp,"type":id,"lane":lane,"boss":false,"attack_timer":0.0,"uid":randi()})
 	if mode == "defense" and wave%5 == 0 or mode == "coop" and wave == 3:
 		opponents.append({"pos":APPROACHES[0] if mode == "defense" else FIELD.size * Vector2(0.78,0.5),"hp":180.0+floor_number*28.0 if mode == "descent" else 230.0+wave*75.0+floor_number*50.0,"max_hp":180.0+floor_number*28.0 if mode == "descent" else 230.0+wave*75.0+floor_number*50.0,"type":str(regions[realm_id]["boss_enemy"]) if mode=="coop" and regions.get(realm_id,{}).has("boss_enemy") else "cartographer" if adventure.combat.coast.active else "eclipse_engine" if adventure.astral else "hourglass_hart" if adventure.clockwork else "crowned_torrent" if adventure.river else "bellroot" if adventure.marsh else enemy_pool[0],"lane":0,"boss":true,"expansion_boss":(mode=="coop" and regions.get(realm_id,{}).has("boss_enemy")) or adventure.combat.coast.active or adventure.marsh or adventure.river or adventure.clockwork or adventure.astral,"skill_timer":2.0,"skill_step":0,"attack_timer":0.0,"uid":randi()})
+		if mode=="coop" and realm_id=="ice":opponents[-1].sprite="cryowarden"
 		if authored:
 			var last:Array=regions[realm_id].route_points[-1];opponents[-1].pos=Vector2(last[0],last[1]);opponents[-1].hp=float(regions[realm_id].boss_health)*(1+.25*maxi(0,positions.size()-1));opponents[-1].max_hp=opponents[-1].hp
 		if mode=="coop" and regions.get(realm_id,{}).has("boss_enemy"):
@@ -2086,7 +2096,7 @@ func dict_with_start(data:Dictionary)->Dictionary:
 
 func foes_from_packet(value: Dictionary) -> void:
 	var point:=Vector2(float(value["pos"][0]),float(value["pos"][1]));smoothing.push("e:"+str(value.get("uid",0)),point,Time.get_ticks_msec()/1000.0)
-	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"veilbound":bool(value.get("veilbound",false)),"veil_pose":float(value.get("veil_pose",0)),"cinder_pose":float(value.get("cinder_pose",0)),"melee_warning":float(value.get("melee_warning",0)),"melee_x":float(value.get("melee_x",0)),"melee_y":float(value.get("melee_y",1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false)),"action":str(value.get("action","")),"hurt":float(value.get("hurt",0)),"strike":float(value.get("strike",0)),"total":float(value.get("total",0)),"left":float(value.get("left",0)),"facing":float(value.get("facing",0)),"moving":float(value.get("moving",0)),"gait":float(value.get("gait",0)),"between_guardian":bool(value.get("between_guardian",false)),"source_realm":str(value.get("source_realm","")),"name":str(value.get("name",enemy_defs.get(str(value.type),{}).get("name",""))),"sprite":str(value.get("sprite",value.type)),"windup":float(value.get("windup",0))})
+	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"veilbound":bool(value.get("veilbound",false)),"veil_pose":float(value.get("veil_pose",0)),"cinder_pose":float(value.get("cinder_pose",0)),"v143_pose":float(value.get("v143_pose",0)), "melee_warning":float(value.get("melee_warning",0)),"melee_x":float(value.get("melee_x",0)),"melee_y":float(value.get("melee_y",1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false)),"action":str(value.get("action","")),"hurt":float(value.get("hurt",0)),"strike":float(value.get("strike",0)),"total":float(value.get("total",0)),"left":float(value.get("left",0)),"facing":float(value.get("facing",0)),"moving":float(value.get("moving",0)),"gait":float(value.get("gait",0)),"between_guardian":bool(value.get("between_guardian",false)),"source_realm":str(value.get("source_realm","")),"name":str(value.get("name",enemy_defs.get(str(value.type),{}).get("name",""))),"sprite":str(value.get("sprite",value.type)),"windup":float(value.get("windup",0))})
 
 func _consume(id: String, slot: int) -> void:
 	if arena_world.shatter.active():return
@@ -2293,13 +2303,14 @@ func _draw() -> void:
 			var bar:Vector2=visual_actor("g:"+str(guard.get("net_uid",0)),guard.pos)-camera+Vector2(-20,14)
 			draw_rect(Rect2(bar,Vector2(40,4)),Color("#26343a"))
 			draw_rect(Rect2(bar,Vector2(40*clampf(float(guard.hp)/maxf(1,float(guard.get("max_hp",70))),0,1),4)),Color("#a8d47c"))
+	enemy_motion229.sample(opponents,visual_time)
 	for foe in opponents:
 		if bool(foe.get("buried",false)):continue
 		var id := str(foe.get("sprite",foe["type"]))
 		var pos: Vector2 = visual_actor("e:"+str(foe.get("uid",0)),foe["pos"])-camera
 		if bool(foe.get("health_gem",false)):pos.y-=8+sin(descent.clock*2+int(foe.uid)%7)*5
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
-		var texture: Texture2D = art.get(id+"_"+("attack" if mode=="descent" and float(foe.get("warning",-1))>0 or float(foe.get("melee_warning",0))>0 or float(foe.get("v143_pose",0))>adventure.newcomers.clock or float(foe.get("veil_pose",0))>adventure.pursuers.clock or float(foe.get("cinder_pose",0))>adventure.cinder.clock else "walk1" if int(visual_time*5)%2==0 else "walk2"))
+		var texture: Texture2D = art.get(id+"_"+("attack" if mode=="descent" and float(foe.get("warning",-1))>0 or float(foe.get("melee_warning",0))>0 or (str(foe.type) in preload("res://scripts/enemy_visual227.gd").FACTORS and float(foe.get("windup",0))>0) or float(foe.get("v143_pose",0))>adventure.newcomers.clock or float(foe.get("veil_pose",0))>adventure.pursuers.clock or float(foe.get("cinder_pose",0))>adventure.cinder.clock else enemy_motion229.locomotion(foe)))
 		var size := Vector2(130,146) if str(foe.type)=="tollbreaker" else Vector2(54,68) if str(foe.type) in north_gate.RIVALS else Vector2(82,88) if bool(foe["boss"]) else Vector2(46,50)
 		if bool(foe.get("depth_boss",false)) and str(foe.type) in ["cavern_warden","basalt_ram","garnet_widow"]:size=Vector2(150,175)
 		if str(foe.type)=="sluicewarden":size=Vector2(120,120)
@@ -2316,7 +2327,7 @@ func _draw() -> void:
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
 		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
 		if bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
-		elif texture != null: draw_texture_rect(texture,Rect2(pos-size*Vector2(0.5,0.7),size),false)
+		elif texture != null: draw_texture_rect(texture,preload("res://scripts/enemy_visual227.gd").adjusted(id,Rect2(pos-size*Vector2(0.5,0.7),size)),false)
 		else: draw_circle(pos,19,Color("#ffad7a"))
 		var hp_y:float=-size.y*.7-8 if bool(foe.get("veilbound",false)) or str(foe.type) in adventure.cinder.TYPES or str(foe.type) in adventure.tech.TYPES or str(foe.type)=="tollbreaker" else -56 if str(foe.type) in north_gate.RIVALS else -size.y*.7-8 if bool(foe.get("depth_boss",false)) else -48
 		if bool(foe.get("depth_boss",false)):hp_y=descent.health_bar_y(foe)
@@ -2530,7 +2541,7 @@ func _draw_world() -> void:
 
 func _sprite(key: String, point: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
 	var texture: Texture2D = art.get(key)
-	if texture != null and Rect2(camera-size,VIEW+size*2).has_point(point): draw_texture_rect(texture,Rect2(point-camera,size),false,tint)
+	if texture != null and Rect2(camera-size,VIEW+size*2).has_point(point): draw_texture_rect(texture,preload("res://scripts/enemy_visual227.gd").adjusted(key,Rect2(point-camera,size)),false,tint)
 
 func _draw_effect(effect: Dictionary) -> void:
 	if str(effect.get("style",""))=="heal_contact":return

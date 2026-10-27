@@ -186,12 +186,14 @@ func add_beam(point:Vector2,radius:float=145,source:String="")->void:
 func warning(enemy:Dictionary,target:Vector2,style:String,radius:float,damage:float,delay:float=.85)->void:
  if attacks.size()<40:attacks.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),style.replace("_"," ").capitalize()),"uid":int(enemy.uid),"start":a(enemy.pos),"pos":a(target),"style":style,"radius":radius,"damage":damage,"time":delay,"total":delay})
 func shoot(enemy:Dictionary,target:Vector2,count:int=1,style:String="pellet")->void:
+ preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy)
  if str(enemy.get("type",""))=="archer":
   adventure.combat.launch_projectile("enemy",enemy.pos,(target-enemy.pos).normalized(),{"range":700,"speed":float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("shot_speed",275)),"thorn_arrow":true,"color":"#9ecb75"},float((adventure.game.enemy_defs if adventure.arcade else adventure.game.enemy_types).get("archer",{}).get("damage",9)))
   return
  var aim:Vector2=(target-enemy.pos).normalized();var damage:float=float(defs().get(enemy.type,{}).get("damage",10))*(1.2 if active and str(data.get("id",""))=="silverfall" else 1.0)
  for n in count:adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated((n-(count-1)*.5)*.23),{"credit":preload("res://scripts/defeat_credit.gd").resolve(adventure.game,adventure.combat.npc_key(enemy),"Projectile"),"range":850,"speed":255,"amplitude":24,"wavelength":150,"color":"#efd49a" if str(enemy.get("source_realm",data.get("id","")))=="honeyglass" else "#afe5db" if str(enemy.get("source_realm",data.get("id","")))=="silverfall" else "#deaed0"},damage,style)
 func skill(enemy:Dictionary,target:Vector2)->void:
+ preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy)
  var turn:=int(enemy.imm_turn);enemy.imm_turn=turn+1
  match str(enemy.type):
   "saffron_hopper":warning(enemy,advance(enemy.pos,(target-enemy.pos).normalized()*160),"dash",28,11,.8)

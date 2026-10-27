@@ -60,19 +60,9 @@ func crate(g:Node2D,p:Vector2,size:Vector2)->void:
  g.draw_line(p+Vector2(size.x-4,4),p+Vector2(4,size.y-4),Color("#d1ad74"),3)
 func ram_worker(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
  if not Rect2(Vector2.ZERO,g.VIEW).grow(65).has_point(p):return
- var bob=sin(t*6)*1.5
- worker_body(g,p+Vector2(0,bob),t,carrying)
+ worker_body(g,p,t,carrying)
 func worker_body(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
- g.draw_circle(p+Vector2(0,0),13,Color(.15,.23,.22,.2))
- for side in [-1,1]:
-  var leg=p+Vector2(side*6,-3+sin(t*6+side)*3)
-  g.draw_rect(Rect2(leg-Vector2(4,8),Vector2(8,12)),Color("#47565e"))
- g.draw_rect(Rect2(p-Vector2(12,30),Vector2(24,24)),Color("#719499"));g.draw_rect(Rect2(p-Vector2(8,27),Vector2(16,18)),Color("#b9aa7f"))
- var head=p-Vector2(0,40)
- g.draw_circle(head,12,Color("#e5dcc2"));g.draw_circle(head-Vector2(12,1),6,Color("#b7aa88"));g.draw_circle(head+Vector2(12,-1),6,Color("#b7aa88"))
- for side in [-1,1]:g.draw_circle(head+Vector2(side*4,-1),1.7,Color("#354b50"))
- g.draw_rect(Rect2(head+Vector2(-9,-15),Vector2(18,6)),Color("#536d79"));g.draw_circle(head+Vector2(0,5),3,Color("#c4b38d"))
- for side in [-1,1]:g.draw_line(p+Vector2(side*11,-26),p+Vector2(side*14,-17+sin(t*6+side)*3),Color("#c9c4ac"),5)
+ preload("res://scripts/town_cast230.gd").draw(g,"exchange_worker",p+Vector2(0,5),t,true)
  if carrying:crate(g,p-Vector2(12,27),Vector2(24,19))
 func draw_market(g:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_art39.gd").draw(g,"merchants_night" if g.town_life.calendar.night_amount()>.1 else "merchants",camera)

@@ -112,18 +112,14 @@ func draw_residents(c:CanvasItem,camera:Vector2)->void:
   if not bool(state.visible) or not visible.has_point(state.pos):continue
   var point:Vector2=state.pos-camera
   var working:bool=state.working
-  var bob:float=0 if working else sin(clock*9+index)*1.5
+  var bob:float=0
   if working and state.task in ["rest","camp"]:bob=5
-  if working and state.task=="music":bob=sin(clock*6+index)*2.5
   c.draw_circle(point+Vector2(0,3),12,Color(0,0,0,.18))
   point.y+=bob
-  var phase=0 if working else 1+posmod(int(floorf((clock*9+index)/TAU*16)),16)
-  var atlas=preload("res://scripts/town_sprite_cache.gd").texture("residents")
-  c.draw_texture_rect_region(atlas,Rect2(point-Vector2(24,56),Vector2(48,72)),Rect2(phase*48,index*72,48,72))
+  preload("res://scripts/town_cast230.gd").draw(c,str(state.name),point+Vector2(0,4),clock+index*.17,not working)
   var skin:Color=Color("#e7dac4") if state.kind!="human" else Color("#c99970")
   if state.task in ["deliver","harbour_trade","shop","read","guard","repair"] or working:
    var hand:Vector2=point+Vector2(14,-17+sin(clock*4)*3)
-   c.draw_line(point+Vector2(8,-20),hand,skin,4)
    match str(state.task):
     "fish":
      if str(state.get("destination",""))=="Marina fishing afternoon":

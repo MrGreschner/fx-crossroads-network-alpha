@@ -1,0 +1,27 @@
+{
+  "twisterspell": {
+    "columns": [
+      0,
+      506,
+      1011,
+      1536
+    ],
+    "rows": [
+      0,
+      511,
+      1024
+    ],
+    "source_body_heights": [
+      456,
+      461,
+      463,
+      450,
+      455,
+      457
+    ],
+    "factor": 0.14035087719298245,
+    "target_world_height": 55.2,
+    "world_factor": 0.980114,
+    "portrait_factor": 0.980114
+  }
+}

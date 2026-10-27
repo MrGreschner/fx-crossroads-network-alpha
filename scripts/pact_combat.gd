@@ -155,6 +155,7 @@ func step(delta:float)->void:
    if marks.get(str(owner),{}).has(key):d*=.7
    if d<distance:target=key;distance=d
   body.attack=float(body.attack)-delta
+  body.pose="idle"
   if not combat.stunned("p:bond:"+str(owner)):
    if target.is_empty():
     var home:Vector2=combat.owner_pos(str(owner))
@@ -170,7 +171,8 @@ func step(delta:float)->void:
      body.attack=1.0;body.pose="attack"
      if bool(body.ranged):combat.launch_projectile(str(owner),p+offset.normalized()*25,offset.normalized(),{"range":400,"speed":330,"color":"#9be1b1"},14+bonus)
      else:combat.damage(target,18+bonus,str(owner))
-    else:body.pose="walk1" if int(clock*5)%2==0 else "walk2"
+    elif p.distance_squared_to(combat.vec(body.pos))>.0025:body.pose="walk1" if int(clock*5)%2==0 else "walk2"
+  if body.pose=="idle" and p.distance_squared_to(combat.vec(body.pos))>.0025:body.pose="walk1" if int(clock*5)%2==0 else "walk2"
   # Nearby hostile melee strikes also hit this independent summon.
   for foe in combat.adventure.foes():
    var definition:Dictionary=(combat.adventure.game.enemy_defs if combat.adventure.arcade else combat.adventure.game.enemy_types).get(str(foe.type),{})

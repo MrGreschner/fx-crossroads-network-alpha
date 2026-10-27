@@ -5,7 +5,7 @@
   "max_health": 110,
   "speed": 220,
   "run_cost": 0,
-  "lore": "A bright-eyed weather mage who bottles river mist and wears a storm in her hat. Lyra keeps the Mistglass Spire breezy, insists every forecast needs a little charm, and has never admitted that her best spell began as a sneeze.",
+  "lore": "A daring weather mage who bottles river mist and keeps a storm turning around her wind-carved staff. Lyra keeps the Mistglass Spire breezy, insists every forecast needs a little charm, and has never admitted that her best spell began as a sneeze.",
   "primary": {
     "name": "Pocket Twister",
     "style": "twister_charge",

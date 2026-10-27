@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V224-fixed-opening-camera"
+const BUILD="V230-town-cast-and-open-arch"
 const REPORT_SCHEMA=3

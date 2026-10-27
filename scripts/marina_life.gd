@@ -106,17 +106,8 @@ func interact()->bool:
    return true
  return false
 static func person(c:Node2D,at:Vector2,coat:Color,guard:bool,t:float,walking:bool)->void:
- var bob=sin(t*7)*1.4 if walking else sin(t*1.6)*.5;at.y+=bob
- c.draw_circle(at+Vector2(0,5),13,Color(0,0,0,.18));c.draw_line(at+Vector2(-5,-1),at+Vector2(-5+sin(t*7)*(3 if walking else 0),10),Color('#4b433d'),5);c.draw_line(at+Vector2(5,-1),at+Vector2(5-sin(t*7)*(3 if walking else 0),10),Color('#4b433d'),5)
- c.draw_colored_polygon(PackedVector2Array([at+Vector2(-12,-23),at+Vector2(12,-23),at+Vector2(14,1),at+Vector2(-14,1)]),coat)
- c.draw_circle(at+Vector2(0,-31),10,Color('#d8bb8f'));c.draw_circle(at+Vector2(-3,-32),1.3,Color('#293b42'));c.draw_circle(at+Vector2(4,-32),1.3,Color('#293b42'))
- if guard:
-  for side in [-1,1]:c.draw_arc(at+Vector2(side*10,-37),6,0,PI*1.8,10,Color('#d4ccaa'),3,true)
-  c.draw_rect(Rect2(at+Vector2(-10,-43),Vector2(20,8)),Color('#82949b'));c.draw_line(at+Vector2(17,-42),at+Vector2(17,7),Color('#c4a87b'),3)
-  c.draw_colored_polygon(PackedVector2Array([at+Vector2(-18,-22),at+Vector2(-5,-22),at+Vector2(-6,-6),at+Vector2(-12,0),at+Vector2(-19,-6)]),Color('#b6c5bd'));c.draw_line(at+Vector2(-12,-20),at+Vector2(-12,-3),coat,3)
- else:
-  c.draw_arc(at+Vector2(0,-36),12,PI,TAU,16,coat.lightened(.2),7,true);c.draw_line(at+Vector2(-12,-35),at+Vector2(13,-35),coat.lightened(.3),4)
-  c.draw_rect(Rect2(at+Vector2(-8,-18),Vector2(16,20)),Color('#d3bc88'));c.draw_line(at+Vector2(6,-20),at+Vector2(13,-12),Color('#d8bb8f'),5)
+ var id="guard_melee" if guard else "Lio" if coat==Color("#7d719d") else "Brin"
+ preload("res://scripts/town_cast230.gd").draw(c,id,at+Vector2(0,8),t,walking)
 func draw_cottage_source(c:Node2D,cam:Vector2)->void:
  var night=game.town_life.calendar.night_amount()
  # Tidekeeper cottage: irregular shingles, chimney, window boxes, front porch.

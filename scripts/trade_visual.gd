@@ -2,7 +2,7 @@ extends Control
 ## Bounded animated storefront. Shares product icons with the mining interface.
 var market:RefCounted
 const WALKERS=[preload("res://assets/ram_idle.png"),preload("res://assets/cat_idle.png"),preload("res://assets/medic_idle.png")]
-const CLERK=preload("res://assets/merchant.png")
+var clerk=preload("res://scripts/town_cast230.gd").texture("supply_keeper")
 var clock=0.0
 var elapsed=0.0
 static func icon(c:CanvasItem,p:Vector2,index:int,scale:float=1)->void:
@@ -32,8 +32,7 @@ func _process(delta:float)->void:
  clock+=delta;elapsed+=delta
  if elapsed>=.067:elapsed=0;queue_redraw()
 func person(p:Vector2,tint:Color,phase:float)->void:
- draw_circle(p-Vector2(0,24),8,Color("#dfcca6"));draw_rect(Rect2(p-Vector2(7,17),Vector2(14,19)),tint)
- for side in [-1,1]:draw_line(p+Vector2(side*4,0),p+Vector2(side*5,9+sin(phase)*side*3),Color("#d3cbb5"),4)
+ preload("res://scripts/town_cast230.gd").draw(self,"exchange_worker",p,phase,true,.7)
 func _draw()->void:
  if market==null:return
  var w=size.x;var font=preload("res://assets/fonts/CrossroadsUI.ttf")
@@ -42,7 +41,7 @@ func _draw()->void:
  var counter=Vector2(w*.42,77)
  draw_rect(Rect2(counter-Vector2(135,10),Vector2(270,58)),Color("#a07f57"));draw_rect(Rect2(counter-Vector2(141,10),Vector2(282,12)),Color("#c6ac76"))
  for n in 6:icon(self,counter+Vector2(-110+n*44,-22),n,.75)
- draw_texture_rect(CLERK,Rect2(counter+Vector2(-22,-68+sin(clock*2)),Vector2(44,52)),false)
+ draw_texture_rect(clerk,Rect2(counter+Vector2(-22,-68),Vector2(44,52)),false)
  var running=market.busy()
  for n in 5:
   var progress=fposmod(clock*(.07 if running else .025)+n*.2,1)

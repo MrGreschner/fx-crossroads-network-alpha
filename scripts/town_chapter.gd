@@ -7,7 +7,6 @@ const GUIDE=Vector2(290,400)
 const FOREST=Rect2(2490,940,650,780)
 const CAMP_CLEARING=Rect2(2760,1330,300,230)
 var forest_trees:Array[Vector2]=[]
-var farmer_art:Texture2D=preload("res://assets/ox_farmer.svg")
 func _init()->void:
  for y in range(1000,1670,95):
   for x in range(2500,3130,90):
@@ -98,7 +97,7 @@ func draw_ground(c:Node2D,camera:Vector2)->void:
   var phase=fposmod(t*.006,1);var travel=phase*2 if phase<.5 else 2-phase*2
   var farmer=Vector2(1030,1890+travel*200)-camera
   c.draw_circle(farmer+Vector2(0,1),19,Color(0,0,0,.18))
-  c.draw_texture_rect(farmer_art,Rect2(farmer-Vector2(38,94+sin(t*3)*1.5),Vector2(76,95)),false)
+  preload("res://scripts/town_cast230.gd").draw(c,"ox_farmer",farmer,t,true)
  for spot in [Vector2(2540,980),Vector2(2850,1080)]:
   if visible.has_point(spot):preload("res://scripts/town_calendar.gd").draw_lantern(c,spot-camera,c.town_life.calendar.night_amount())
 func draw_pads(c:Node2D,camera:Vector2)->void:

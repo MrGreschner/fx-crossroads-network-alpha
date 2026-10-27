@@ -1,0 +1,1291 @@
+{
+  "cartographer": {
+    "realm": "folded_coast",
+    "columns": [
+      0,
+      366,
+      742,
+      1099,
+      1461
+    ],
+    "row": [
+      0,
+      312
+    ],
+    "source_body_heights": [
+      221,
+      206,
+      206,
+      208
+    ],
+    "factor": 0.21846719457013575,
+    "ratios": [
+      1.0,
+      1.0728155339805825,
+      1.0728155339805825,
+      1
+    ],
+    "old_canvas": [
+      48,
+      48
+    ],
+    "old_bounds": [
+      5,
+      0,
+      44,
+      40
+    ],
+    "target_height": 53.333333333333336,
+    "visual_factor": 1.111111
+  },
+  "inkfin": {
+    "realm": "folded_coast",
+    "columns": [
+      0,
+      366,
+      742,
+      1099,
+      1461
+    ],
+    "row": [
+      312,
+      557
+    ],
+    "source_body_heights": [
+      200,
+      192,
+      190,
+      174
+    ],
+    "factor": 0.1952054794520548,
+    "ratios": [
+      1.0,
+      1.0416666666666667,
+      1.0526315789473684,
+      1
+    ],
+    "old_canvas": [
+      48,
+      48
+    ],
+    "old_bounds": [
+      3,
+      6,
+      45,
+      44
+    ],
+    "target_height": 50.666666666666664,
+    "visual_factor": 1.299145
+  },
+  "foldwing": {
+    "realm": "folded_coast",
+    "columns": [
+      0,
+      366,
+      742,
+      1099,
+      1461
+    ],
+    "row": [
+      557,
+      802
+    ],
+    "source_body_heights": [
+      196,
+      169,
+      196,
+      179
+    ],
+    "factor": 0.16167091836734696,
+    "ratios": [
+      1.0,
+      1.1597633136094674,
+      1.0,
+      1
+    ],
+    "old_canvas": [
+      48,
+      48
+    ],
+    "old_bounds": [
+      1,
+      5,
+      48,
+      42
+    ],
+    "target_height": 49.333333333333336,
+    "visual_factor": 1.541667
+  },
+  "crease_sentry": {
+    "realm": "folded_coast",
+    "columns": [
+      0,
+      366,
+      742,
+      1099,
+      1461
+    ],
+    "row": [
+      802,
+      1076
+    ],
+    "source_body_heights": [
+      187,
+      192,
+      192,
+      193
+    ],
+    "factor": 0.23622047244094488,
+    "ratios": [
+      1.0,
+      0.9739583333333334,
+      0.9739583333333334,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      5,
+      13,
+      54,
+      59
+    ],
+    "target_height": 46.0,
+    "visual_factor": 1.045455
+  },
+  "flintroot": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      0,
+      236
+    ],
+    "source_body_heights": [
+      160,
+      166,
+      166,
+      152
+    ],
+    "factor": 0.22988505747126436,
+    "ratios": [
+      1.0,
+      0.963855421686747,
+      0.963855421686747,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      5,
+      0,
+      61,
+      65
+    ],
+    "target_height": 57.77777777777778,
+    "visual_factor": 1.256039
+  },
+  "burrowfang": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      236,
+      393
+    ],
+    "source_body_heights": [
+      126,
+      130,
+      130,
+      129
+    ],
+    "factor": 0.21818181818181817,
+    "ratios": [
+      1.0,
+      0.9692307692307692,
+      0.9692307692307692,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      12,
+      12,
+      54,
+      61
+    ],
+    "target_height": 43.55555555555556,
+    "visual_factor": 1.613169
+  },
+  "shardspitter": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      393,
+      570
+    ],
+    "source_body_heights": [
+      114,
+      115,
+      121,
+      115
+    ],
+    "factor": 0.3,
+    "ratios": [
+      1.0,
+      0.991304347826087,
+      0.9421487603305785,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      8,
+      0,
+      62,
+      61
+    ],
+    "target_height": 54.22222222222222,
+    "visual_factor": 1.12963
+  },
+  "fusehare": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      570,
+      758
+    ],
+    "source_body_heights": [
+      166,
+      169,
+      168,
+      173
+    ],
+    "factor": 0.3352601156069364,
+    "ratios": [
+      1.0,
+      0.9822485207100592,
+      0.9880952380952381,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      6,
+      0,
+      49,
+      64
+    ],
+    "target_height": 56.888888888888886,
+    "visual_factor": 1.015873
+  },
+  "rootwarden": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      758,
+      951
+    ],
+    "source_body_heights": [
+      170,
+      161,
+      159,
+      165
+    ],
+    "factor": 0.24793388429752067,
+    "ratios": [
+      1.0,
+      1.0559006211180124,
+      1.069182389937107,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      0,
+      6,
+      58,
+      65
+    ],
+    "target_height": 52.44444444444444,
+    "visual_factor": 1.248677
+  },
+  "echo_bat": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      951,
+      1100
+    ],
+    "source_body_heights": [
+      125,
+      126,
+      113,
+      125
+    ],
+    "factor": 0.24106666666666668,
+    "ratios": [
+      1.0,
+      0.9920634920634921,
+      1.1061946902654867,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      2,
+      14,
+      63,
+      56
+    ],
+    "target_height": 37.333333333333336,
+    "visual_factor": 1.244444
+  },
+  "sap_nurse": {
+    "realm": "moonburrow",
+    "columns": [
+      0,
+      322,
+      610,
+      890,
+      1225
+    ],
+    "row": [
+      1100,
+      1284
+    ],
+    "source_body_heights": [
+      140,
+      147,
+      142,
+      148
+    ],
+    "factor": 0.34285714285714286,
+    "ratios": [
+      1.0,
+      0.9523809523809523,
+      0.9859154929577465,
+      1
+    ],
+    "old_canvas": [
+      64,
+      72
+    ],
+    "old_bounds": [
+      12,
+      10,
+      53,
+      64
+    ],
+    "target_height": 48.0,
+    "visual_factor": 1.0
+  },
+  "mirror_marquis": {
+    "realm": "moonveil",
+    "columns": [
+      0,
+      259,
+      511,
+      758,
+      1024
+    ],
+    "row": [
+      0,
+      299
+    ],
+    "source_body_heights": [
+      224,
+      214,
+      217,
+      218
+    ],
+    "factor": 0.2564102564102564,
+    "ratios": [
+      1.0,
+      1.0467289719626167,
+      1.032258064516129,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      12,
+      0,
+      57,
+      61
+    ],
+    "target_height": 58.0,
+    "visual_factor": 1.017544
+  },
+  "mask_duelist": {
+    "realm": "moonveil",
+    "columns": [
+      0,
+      259,
+      511,
+      758,
+      1024
+    ],
+    "row": [
+      299,
+      565
+    ],
+    "source_body_heights": [
+      213,
+      214,
+      217,
+      210
+    ],
+    "factor": 0.272300469483568,
+    "ratios": [
+      1.0,
+      0.9953271028037384,
+      0.9815668202764977,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      7,
+      0,
+      57,
+      61
+    ],
+    "target_height": 58.0,
+    "visual_factor": 1.0,
+    "attack_source": "mask_duelist_attack_source.png",
+    "attack_correction": "Two hands only: sword left, staff right, neutral front stance"
+  },
+  "prism_acolyte": {
+    "realm": "moonveil",
+    "columns": [
+      0,
+      259,
+      511,
+      758,
+      1024
+    ],
+    "row": [
+      565,
+      804
+    ],
+    "source_body_heights": [
+      197,
+      196,
+      196,
+      200
+    ],
+    "factor": 0.29,
+    "ratios": [
+      1.0,
+      1.0051020408163265,
+      1.0051020408163265,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      12,
+      0,
+      57,
+      61
+    ],
+    "target_height": 58.0,
+    "visual_factor": 1.017544
+  },
+  "lunar_usher": {
+    "realm": "moonveil",
+    "columns": [
+      0,
+      259,
+      511,
+      758,
+      1024
+    ],
+    "row": [
+      804,
+      1063
+    ],
+    "source_body_heights": [
+      215,
+      210,
+      214,
+      202
+    ],
+    "factor": 0.2558139534883721,
+    "ratios": [
+      1.0,
+      1.0238095238095237,
+      1.0046728971962617,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      12,
+      6,
+      61,
+      61
+    ],
+    "target_height": 55.0,
+    "visual_factor": 1.0
+  },
+  "velvet_dancer": {
+    "realm": "moonveil",
+    "columns": [
+      0,
+      259,
+      511,
+      758,
+      1024
+    ],
+    "row": [
+      1063,
+      1277
+    ],
+    "source_body_heights": [
+      167,
+      175,
+      175,
+      175
+    ],
+    "factor": 0.281437125748503,
+    "ratios": [
+      1.0,
+      0.9542857142857143,
+      0.9542857142857143,
+      1
+    ],
+    "old_canvas": [
+      48,
+      64
+    ],
+    "old_bounds": [
+      8,
+      12,
+      41,
+      59
+    ],
+    "target_height": 47.0,
+    "visual_factor": 1.0
+  },
+  "moonlit_puppeteer": {
+    "realm": "moonveil",
+    "columns": [
+      0,
+      259,
+      511,
+      758,
+      1024
+    ],
+    "row": [
+      1277,
+      1536
+    ],
+    "source_body_heights": [
+      176,
+      180,
+      182,
+      182
+    ],
+    "factor": 0.2702702702702703,
+    "ratios": [
+      1.0,
+      0.9777777777777777,
+      0.967032967032967,
+      1
+    ],
+    "old_canvas": [
+      48,
+      64
+    ],
+    "old_bounds": [
+      1,
+      7,
+      46,
+      58
+    ],
+    "target_height": 51.0,
+    "visual_factor": 1.0625
+  },
+  "bloomtail_regent": {
+    "realm": "petalbrook",
+    "columns": [
+      0,
+      272,
+      527,
+      770,
+      1024
+    ],
+    "row": [
+      0,
+      276
+    ],
+    "source_body_heights": [
+      226,
+      225,
+      225,
+      223
+    ],
+    "factor": 0.23904382470119523,
+    "ratios": [
+      1.0,
+      1.0044444444444445,
+      1.0044444444444445,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      10,
+      1,
+      62,
+      61
+    ],
+    "target_height": 58.0,
+    "visual_factor": 1.074074
+  },
+  "petal_ducker": {
+    "realm": "petalbrook",
+    "columns": [
+      0,
+      272,
+      527,
+      770,
+      1024
+    ],
+    "row": [
+      276,
+      512
+    ],
+    "source_body_heights": [
+      188,
+      201,
+      196,
+      184
+    ],
+    "factor": 0.29850746268656714,
+    "ratios": [
+      1.0,
+      0.9353233830845771,
+      0.9591836734693877,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      12,
+      3,
+      62,
+      60
+    ],
+    "target_height": 57.0,
+    "visual_factor": 1.017857
+  },
+  "briar_tail": {
+    "realm": "petalbrook",
+    "columns": [
+      0,
+      272,
+      527,
+      770,
+      1024
+    ],
+    "row": [
+      512,
+      766
+    ],
+    "source_body_heights": [
+      199,
+      209,
+      205,
+      200
+    ],
+    "factor": 0.2864321608040201,
+    "ratios": [
+      1.0,
+      0.9521531100478469,
+      0.9707317073170731,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      12,
+      3,
+      64,
+      60
+    ],
+    "target_height": 57.0,
+    "visual_factor": 1.0
+  },
+  "nectar_keeper": {
+    "realm": "petalbrook",
+    "columns": [
+      0,
+      272,
+      527,
+      770,
+      1024
+    ],
+    "row": [
+      766,
+      1011
+    ],
+    "source_body_heights": [
+      192,
+      196,
+      192,
+      187
+    ],
+    "factor": 0.2604166666666667,
+    "ratios": [
+      1.0,
+      0.9795918367346939,
+      1.0,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      8,
+      9,
+      58,
+      59
+    ],
+    "target_height": 50.0,
+    "visual_factor": 1.0
+  },
+  "silk_spinner": {
+    "realm": "petalbrook",
+    "columns": [
+      0,
+      272,
+      527,
+      770,
+      1024
+    ],
+    "row": [
+      1011,
+      1246
+    ],
+    "source_body_heights": [
+      181,
+      179,
+      178,
+      178
+    ],
+    "factor": 0.2541436464088398,
+    "ratios": [
+      1.0,
+      1.011173184357542,
+      1.0168539325842696,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      7,
+      9,
+      57,
+      55
+    ],
+    "target_height": 46.0,
+    "visual_factor": 1.0
+  },
+  "dewcap_guard": {
+    "realm": "petalbrook",
+    "columns": [
+      0,
+      272,
+      527,
+      770,
+      1024
+    ],
+    "row": [
+      1246,
+      1536
+    ],
+    "source_body_heights": [
+      182,
+      188,
+      185,
+      184
+    ],
+    "factor": 0.24175824175824176,
+    "ratios": [
+      1.0,
+      0.9680851063829787,
+      0.9837837837837838,
+      1
+    ],
+    "old_canvas": [
+      64,
+      64
+    ],
+    "old_bounds": [
+      9,
+      13,
+      55,
+      57
+    ],
+    "target_height": 44.0,
+    "visual_factor": 1.0
+  },
+  "hourglass_hart": {
+    "realm": "clockwork_orchard",
+    "columns": [
+      0,
+      266,
+      513,
+      753,
+      1024
+    ],
+    "row": [
+      0,
+      328
+    ],
+    "source_body_heights": [
+      265,
+      266,
+      265,
+      225
+    ],
+    "factor": 0.21635220125786164,
+    "ratios": [
+      1.0,
+      0.9962406015037594,
+      1.0,
+      1
+    ],
+    "old_canvas": [
+      48,
+      48
+    ],
+    "old_bounds": [
+      5,
+      3,
+      46,
+      46
+    ],
+    "target_height": 57.333333333333336,
+    "visual_factor": 1.005848
+  },
+  "pendulum_moth": {
+    "realm": "clockwork_orchard",
+    "columns": [
+      0,
+      266,
+      513,
+      753,
+      1024
+    ],
+    "row": [
+      328,
+      572
+    ],
+    "source_body_heights": [
+      179,
+      205,
+      179,
+      182
+    ],
+    "factor": 0.27906976744186046,
+    "ratios": [
+      1.0,
+      0.8731707317073171,
+      1.0,
+      1
+    ],
+    "old_canvas": [
+      48,
+      48
+    ],
+    "old_bounds": [
+      3,
+      8,
+      46,
+      47
+    ],
+    "target_height": 52.0,
+    "visual_factor": 1.04
+  },
+  "tick_acorn": {
+    "realm": "clockwork_orchard",
+    "columns": [
+      0,
+      266,
+      513,
+      753,
+      1024
+    ],
+    "row": [
+      572,
+      795
+    ],
+    "source_body_heights": [
+      184,
+      187,
+      188,
+      185
+    ],
+    "factor": 0.3076923076923077,
+    "ratios": [
+      1.0,
+      0.983957219251337,
+      0.9787234042553191,
+      1
+    ],
+    "old_canvas": [
+      48,
+      48
+    ],
+    "old_bounds": [
+      3,
+      1,
+      46,
+      45
+    ],
+    "target_height": 58.0,
+    "visual_factor": 1.017544
+  },
+  "gearhorn_runner": {
+    "realm": "clockwork_orchard",
+    "columns": [
+      0,
+      266,
+      513,
+      753,
+      1024
+    ],
+    "row": [
+      795,
+      1028
+    ],
+    "source_body_heights": [
+      176,
+      184,
+      179,
+      191
+    ],
+    "factor": 0.22727272727272727,
+    "ratios": [
+      1.0,
+      0.9565217391304348,
+      0.9832402234636871,
+      1
+    ],
+    "old_canvas": [
+      48,
+      64
+    ],
+    "old_bounds": [
+      10,
+      14,
+      39,
+      54
+    ],
+    "target_height": 40.0,
+    "visual_factor": 1.0
+  },
+  "ratchet_keeper": {
+    "realm": "clockwork_orchard",
+    "columns": [
+      0,
+      266,
+      513,
+      753,
+      1024
+    ],
+    "row": [
+      1028,
+      1270
+    ],
+    "source_body_heights": [
+      177,
+      177,
+      178,
+      182
+    ],
+    "factor": 0.24691358024691357,
+    "ratios": [
+      1.0,
+      1.0,
+      0.9943820224719101,
+      1
+    ],
+    "old_canvas": [
+      96,
+      96
+    ],
+    "old_bounds": [
+      4,
+      13,
+      85,
+      80
+    ],
+    "target_height": 44.666666666666664,
+    "visual_factor": 1.015152
+  },
+  "spark_scarab": {
+    "realm": "clockwork_orchard",
+    "columns": [
+      0,
+      266,
+      513,
+      753,
+      1024
+    ],
+    "row": [
+      1270,
+      1536
+    ],
+    "source_body_heights": [
+      163,
+      171,
+      171,
+      177
+    ],
+    "factor": 0.25766871165644173,
+    "ratios": [
+      1.0,
+      0.9532163742690059,
+      0.9532163742690059,
+      1
+    ],
+    "old_canvas": [
+      96,
+      96
+    ],
+    "old_bounds": [
+      12,
+      16,
+      84,
+      79
+    ],
+    "target_height": 42.0,
+    "visual_factor": 1.0
+  },
+  "bellwork_colossus": {
+    "realm": "middle_school",
+    "columns": [
+      0,
+      369,
+      723,
+      1077,
+      1448
+    ],
+    "row": [
+      0,
+      344
+    ],
+    "source_body_heights": [
+      248,
+      255,
+      255,
+      254
+    ],
+    "factor": 0.2283464566929134,
+    "ratios": [
+      1.0,
+      0.9725490196078431,
+      0.9725490196078431,
+      1
+    ],
+    "old_canvas": [
+      96,
+      96
+    ],
+    "old_bounds": [
+      10,
+      4,
+      87,
+      92
+    ],
+    "target_height": 58.0,
+    "visual_factor": 1.017544
+  },
+  "hall_monitor": {
+    "realm": "middle_school",
+    "columns": [
+      0,
+      369,
+      723,
+      1077,
+      1448
+    ],
+    "row": [
+      344,
+      603
+    ],
+    "source_body_heights": [
+      203,
+      214,
+      212,
+      208
+    ],
+    "factor": 0.25944170771756975,
+    "ratios": [
+      1.0,
+      0.9485981308411215,
+      0.9575471698113207,
+      1
+    ],
+    "old_canvas": [
+      96,
+      96
+    ],
+    "old_bounds": [
+      7,
+      10,
+      89,
+      89
+    ],
+    "target_height": 52.666666666666664,
+    "visual_factor": 0.993711
+  },
+  "culture_blob": {
+    "realm": "middle_school",
+    "columns": [
+      0,
+      369,
+      723,
+      1077,
+      1448
+    ],
+    "row": [
+      603,
+      791
+    ],
+    "source_body_heights": [
+      152,
+      139,
+      139,
+      149
+    ],
+    "factor": 0.20689655172413793,
+    "ratios": [
+      1.0,
+      1.0935251798561152,
+      1.0935251798561152,
+      1
+    ],
+    "old_canvas": [
+      96,
+      96
+    ],
+    "old_bounds": [
+      15,
+      17,
+      83,
+      77
+    ],
+    "target_height": 40.0,
+    "visual_factor": 1.290323
+  },
+  "lunchline_leviathan": {
+    "realm": "middle_school",
+    "columns": [
+      0,
+      369,
+      723,
+      1077,
+      1448
+    ],
+    "row": [
+      791,
+      1086
+    ],
+    "source_body_heights": [
+      175,
+      180,
+      184,
+      177
+    ],
+    "factor": 0.23255813953488372,
+    "ratios": [
+      1.0,
+      0.9722222222222222,
+      0.9510869565217391,
+      1
+    ],
+    "old_canvas": [
+      96,
+      96
+    ],
+    "old_bounds": [
+      1,
+      10,
+      96,
+      82
+    ],
+    "target_height": 48.0,
+    "visual_factor": 1.170732
+  }
+}

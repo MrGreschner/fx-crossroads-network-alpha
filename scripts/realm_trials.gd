@@ -435,6 +435,7 @@ func step(delta: float) -> void:
 		if float(enemy["skill_timer"])>0:continue
 		enemy["skill_timer"]=(1.8 if int(enemy.get("generation",0))==0 else 2.5) if str(enemy["type"])=="gilded_usurper" else 2.8 if active else 3.4 if int(enemy.get("generation",0))==0 else 4.6
 		var point: Vector2 = enemy["pos"]
+		preload("res://scripts/enemy_visual227.gd").mark(self,enemy,.65)
 		if custom in ["tide_cross","bell_echo","rootbound"]:
 			if not combat.path_clear(point,target):continue
 			var aim:Vector2=(target-point).normalized()

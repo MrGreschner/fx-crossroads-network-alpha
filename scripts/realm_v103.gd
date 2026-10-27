@@ -22,6 +22,7 @@ func step(delta:float)->void:
   enemy.v103_timer=float(enemy.get("v103_timer",1.8))-delta
   if float(enemy.v103_timer)>0:continue
   enemy.v103_timer=3.3
+  preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy,.65)
   var origin:Vector2=enemy.pos
   if enemy.type=="crease_sentry":
    for side in [-1,1]:combat.launch_projectile("enemy",origin+aim.orthogonal()*side*22,aim,{"range":800,"speed":230,"amplitude":36,"wavelength":220,"color":"#93dcca"},10,"weaving")

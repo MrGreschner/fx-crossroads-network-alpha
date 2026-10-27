@@ -244,6 +244,7 @@ func damage_player(id:String,amount:float,stats:Dictionary={},source:String="",c
  if not protected and adventure.alive(id) and float(stats.get("slow_duration",0))>0:adventure.combat.apply_status("p:"+id,"slow",float(stats.slow_duration),"enemy",float(stats.get("slow_factor",.65)))
 func telegraph(enemy:Dictionary,point:Vector2,radius:float,damage:float,delay:float=.85,stats:Dictionary={},end:Vector2=Vector2.ZERO,life:float=.15,shape:String="circle",size:Vector2=Vector2.ZERO,velocity:Vector2=Vector2.ZERO)->void:
  if hazards.size()>=70:return
+ preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy,minf(delay,.8))
  hazards.append({"uid":int(enemy.uid),"pos":a(point),"end":a(end),"radius":radius,"damage":damage,"warn":delay,"total":delay,"life":life,"tick":0.0,"stats":stats,"shape":shape,"size":a(size),"velocity":a(velocity),"hits":[]})
 func dash(enemy:Dictionary,aim:Vector2,length:float,damage:float,width:float,speed:float=700)->void:
  var start:Vector2=enemy.pos;var end:=advance(start,aim,length,70 if str(enemy.type)=="yellow_bus" else 0)

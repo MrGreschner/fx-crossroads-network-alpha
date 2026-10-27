@@ -79,6 +79,7 @@ var cooldowns := {"primary": 0.0, "secondary": 0.0, "special": 0.0}
 var bullets: Array[Dictionary] = []
 var enemy_shots: Array[Dictionary] = []
 var enemies: Array[Dictionary] = []
+var enemy_motion229=preload("res://scripts/enemy_motion229.gd").new()
 var allies: Array[Dictionary] = []
 var attack_effects: Array[Dictionary] = []
 var next_enemy_uid := 2000000
@@ -290,6 +291,9 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
+	if prefix in preload("res://scripts/enemy_visual227.gd").FACTORS:
+		for pose in ["idle","walk1","walk2","attack","attack2","special","0","1"]:art[prefix+"_"+pose]=load("res://assets/"+prefix+"_"+pose+".png")
+		art[prefix]=art[prefix+"_idle"];return
 	if prefix=="lockdown_aberration" or prefix.begins_with("veil_") or prefix in preload("res://scripts/cinderheart.gd").TYPES+["ratchet_keeper","spark_scarab","hinge_conjurer","latch_hound","bogpitch_newt","mireweaver","mirevein_collector","mistglass_skater","undertow_weaver","sluicewarden"]:
 		for pose in ["idle","walk1","walk2","attack","0","1"]:art[prefix+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+prefix+"_"+pose+".svg")
 		return
@@ -1552,6 +1556,7 @@ func update_enemies(delta: float) -> void:
 					enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos": enemy["pos"], "direction": diff.normalized(), "damage": float(definition.get("damage", 9)), "speed": float(definition.get("shot_speed", 275)), "distance": 0.0, "homing": str(definition.get("behaviour", "")) == "homing", "flying": bool(definition.get("flying", false))})
 					if str(definition.get("behaviour", "")) == "dual_ranged":
 						enemy_shots.append({"credit":preload("res://scripts/defeat_credit.gd").resolve(self,adventure.combat.npc_key(enemy),"Projectile"),"pos": enemy["pos"], "direction": diff.normalized().rotated(0.2), "damage": float(definition.get("damage", 9)) * 0.8, "speed": 200.0, "distance": 0.0})
+				preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy)
 				enemy["attack_timer"] = float(definition.get("shot_cooldown", 2.3))
 		else:
 			var enemy_speed := (145.0 if str(enemy["type"]) == "fragment" else 108.0) if enemy["boss"] else float(definition.get("speed", 72))
@@ -1824,6 +1829,7 @@ func draw_world() -> void:
 			draw_sprite("portal", pair(region["boss"]) - Vector2(40, 76), Vector2(80, 120))
 		if fishing!=null:fishing.draw_on(self,camera)
 		if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.draw_on(self,camera)
+		enemy_motion229.sample(enemies,visual_clock)
 		for enemy in enemies:
 			if waylight!=null and waylight.between() and enemy.pos.distance_to(position_in_world)>365:continue
 			if bool(enemy.get("buried",false)):continue
@@ -1834,8 +1840,8 @@ func draw_world() -> void:
 			var sprite_prefix := str(definition.get("sprite", "bramble"))
 			var boss_size := Vector2(72, 72) if str(enemy["type"]) == "fragment" else Vector2(100, 100)
 			if str(enemy["type"]) in ["gongbreaker","silence_regent"]: boss_size=Vector2(120,120)
-			var enemy_pose := "attack" if (float(enemy.get("melee_warning",0))>0 or float(enemy.get("strike_flash",0))>0 or float(enemy.get("v143_pose",0))>adventure.newcomers.clock or float(enemy.get("veil_pose",0))>adventure.pursuers.clock or float(enemy.get("cinder_pose",0))>adventure.cinder.clock) else ("walk1" if int(visual_clock * 3.0) % 2 == 0 else "walk2")
-			var enemy_sprite := sprite_prefix + "_" + enemy_pose if art.has(sprite_prefix + "_" + enemy_pose) else sprite_prefix + "_" + str(int(visual_clock * 3.0) % 2)
+			var enemy_pose := "attack" if (float(enemy.get("melee_warning",0))>0 or float(enemy.get("strike_flash",0))>0 or float(enemy.get("v143_pose",0))>adventure.newcomers.clock or float(enemy.get("veil_pose",0))>adventure.pursuers.clock or float(enemy.get("cinder_pose",0))>adventure.cinder.clock) else enemy_motion229.locomotion(enemy)
+			var enemy_sprite := sprite_prefix + "_" + enemy_pose if art.has(sprite_prefix + "_" + enemy_pose) else sprite_prefix + "_0"
 			if is_boss:
 				var boss_prefix := "bramble_boss" if str(enemy["type"]) == "fragment" else str(enemy.get("type")) if enemy.get("expansion_boss",false) else str(enemy.get("sprite",region.get("boss_sprite", "bramble_boss")))
 				enemy_sprite = boss_prefix + "_attack" if float(enemy.get("windup",0.0)) > 0 and art.has(boss_prefix+"_attack") else boss_prefix + "_" + enemy_pose if art.has(boss_prefix+"_"+enemy_pose) else boss_prefix
@@ -1983,7 +1989,7 @@ func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = 
 	if name=="elder_ram":art[name]=core_art.texture("elder_ram","talk" if menu=="elder" else "6" if fmod(visual_clock,5)>4.7 else "idle")
 	if mode=="town" and not Rect2(camera,VIEW).intersects(Rect2(world_pos,size)):return
 	if art.has(name) and art[name] != null:
-		draw_texture_rect(art[name], Rect2(world_pos - camera, size), false, tint)
+		draw_texture_rect(art[name], preload("res://scripts/enemy_visual227.gd").adjusted(name,Rect2(world_pos - camera, size)), false, tint)
 
 func draw_world_label(world_pos: Vector2, label: String) -> void:
 	draw_string(font, world_pos - camera + Vector2(-48, -83), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)

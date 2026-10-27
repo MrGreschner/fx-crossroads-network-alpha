@@ -55,6 +55,7 @@ func step(delta:float)->void:
   if nearest>650 or float(foe["paper_timer"])>0:continue
   foe["paper_timer"]=3.8 if kind=="cartographer" else 3.2
   var phase:=int(foe.get("paper_phase",0));foe["paper_phase"]=phase+1
+  preload("res://scripts/enemy_visual227.gd").mark(combat.adventure,foe,.65)
   if kind=="inkfin" or (kind=="cartographer" and phase%3==0):
    for offset in ([Vector2.ZERO,Vector2(110,0),Vector2(-110,0)] if kind=="cartographer" else [Vector2.ZERO]):
     if pending.size()<16:pending.append({"kind":"ink","pos":combat.point_array(target+offset),"time":1.0,"source":combat.npc_key(foe)})

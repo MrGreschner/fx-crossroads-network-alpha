@@ -151,6 +151,7 @@ func step(delta:float)->void:
   enemy["dig_attack"]=float(enemy.get("dig_attack",1.2))-delta
   if float(enemy.dig_attack)>0 or not adventure.combat.path_clear(enemy.pos,point):continue
   enemy.dig_attack=3.2
+  if str(enemy.type)!="burrowfang" or distance<105:preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy,.65)
   var origin:Vector2=enemy.pos
   match str(enemy.type):
    "burrowfang":

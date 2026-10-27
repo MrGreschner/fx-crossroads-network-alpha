@@ -1,0 +1,127 @@
+{
+  "hazel_hex": {
+    "columns": [
+      0,
+      511,
+      1023,
+      1536
+    ],
+    "rows": [
+      0,
+      509,
+      1024
+    ],
+    "source_body_heights": [
+      370,
+      370,
+      371,
+      362,
+      366,
+      364
+    ],
+    "factor": 0.17297297297297298,
+    "target_world_height": 57,
+    "world_factor": 1.150084,
+    "portrait_factor": 1.09375
+  },
+  "hearth_herald": {
+    "columns": [
+      0,
+      511,
+      1023,
+      1536
+    ],
+    "rows": [
+      0,
+      511,
+      1024
+    ],
+    "source_body_heights": [
+      351,
+      355,
+      355,
+      352,
+      352,
+      352
+    ],
+    "factor": 0.18233618233618235,
+    "target_world_height": 56,
+    "world_factor": 1.104798,
+    "portrait_factor": 1.09375
+  },
+  "cat": {
+    "columns": [
+      0,
+      511,
+      1023,
+      1536
+    ],
+    "rows": [
+      0,
+      513,
+      1024
+    ],
+    "source_body_heights": [
+      327,
+      327,
+      327,
+      319,
+      298,
+      277
+    ],
+    "factor": 0.19571865443425077,
+    "target_world_height": 49,
+    "world_factor": 0.957031,
+    "portrait_factor": 0.957031
+  },
+  "echo_dancer": {
+    "columns": [
+      0,
+      511,
+      1023,
+      1536
+    ],
+    "rows": [
+      0,
+      511,
+      1024
+    ],
+    "source_body_heights": [
+      345,
+      349,
+      347,
+      342,
+      342,
+      342
+    ],
+    "factor": 0.1855072463768116,
+    "target_world_height": 59.8,
+    "world_factor": 1.06179,
+    "portrait_factor": 1.06179
+  },
+  "twisterspell": {
+    "columns": [
+      0,
+      497,
+      998,
+      1536
+    ],
+    "rows": [
+      0,
+      516,
+      1024
+    ],
+    "source_body_heights": [
+      417,
+      432,
+      427,
+      431,
+      439,
+      441
+    ],
+    "factor": 0.15347721822541965,
+    "target_world_height": 60,
+    "world_factor": 1.065341,
+    "portrait_factor": 1.065341
+  }
+}

@@ -10,7 +10,7 @@ var hud:PanelContainer
 var dialogue:PanelContainer
 var sprite:Texture2D
 var keeper=Vector2(860,510)
-var keeper_art:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/bramble_fishing_keeper.svg")
+var keeper_art:Texture2D=preload("res://scripts/town_cast230.gd").texture("fishing_keeper")
 func setup(owner:Node)->void:
  fishing=owner;set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);mouse_filter=Control.MOUSE_FILTER_STOP
  hud=PanelContainer.new();UI.apply(hud);add_child(hud)
@@ -99,7 +99,7 @@ func _draw()->void:
   var q=Vector2(778+(n%2)*86,451+int(n/2)*35)
   draw_style_box(UI.box("#617e77","#a7b09a",3,1),Rect2(q,Vector2(72,28)))
   draw_arc(q+Vector2(36,14),7,0,PI,12,Color("#e3c686"),2)
- draw_texture_rect(keeper_art,Rect2(keeper-Vector2(30,88),Vector2(60,83)),false)
+ preload("res://scripts/town_cast230.gd").draw(self,"fishing_keeper",keeper-Vector2(0,5),clock,false)
  text(keeper+Vector2(-38,25),"BRAMBLE",15,Color("#ffe1a7"))
  # Desk lamp, reel display, tackle wall and freshwater plants.
  draw_line(Vector2(779,417),Vector2(779,388),Color("#c9ad75"),3)

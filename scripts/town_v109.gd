@@ -4,8 +4,6 @@ const BARRACKS=Vector2(1375,1520)
 const BUILDINGS={"fellowship":Rect2(1670,1390,260,130),"relay":Rect2(210,1850,230,125),"tower":Rect2(1960,950,260,155),"barracks":Rect2(1240,1290,270,165)}
 const ENTRIES={"fellowship":Vector2(1800,1550),"relay":Vector2(325,2030),"tower":TOWER,"barracks":BARRACKS}
 var textures:Dictionary={"fellowship":preload("res://scripts/source_art.gd").texture("res://assets/fellowship_v109.svg"),"relay":preload("res://scripts/source_art.gd").texture("res://assets/relay_v109.svg"),"tower":preload("res://scripts/source_art.gd").texture("res://assets/mistglass_v109.svg"),"barracks":preload("res://scripts/source_art.gd").texture("res://assets/barracks_v109.svg"),"mill":preload("res://scripts/source_art.gd").texture("res://assets/mill_v109.svg")}
-var guard:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/guard_melee.svg")
-var archer:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/guard_ranged.svg")
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 func solid_rect(id:String)->Rect2:
  var r:Rect2=BUILDINGS[id]
@@ -55,8 +53,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
  if visible.has_point(BARRACKS):
   for n in 3:
    var world:=Vector2(1245+n*112+sin(t*.2+n)*25,1500+cos(t*.2+n)*10)
-   var texture:Texture2D=archer if n==1 else guard
-   c.draw_texture_rect(texture,Rect2(world-camera-Vector2(22,53),Vector2(44,58)),false)
+   preload("res://scripts/town_cast230.gd").draw(c,"guard_ranged" if n==1 else "guard_melee",world-camera+Vector2(0,5),t,true)
    if n==2:c.draw_arc(world-camera-Vector2(0,50),10,PI,TAU,12,Color("#e9c67c"),3,true)
   for x in [1225,1510]:
    var p:=Vector2(x,1490)-camera;c.draw_line(p,p-Vector2(0,80),Color("#8c7860"),4);c.draw_colored_polygon(PackedVector2Array([p-Vector2(0,80),p+Vector2(29,-70),p+Vector2(0,-46)]),Color("#7cabc5"))

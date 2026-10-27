@@ -93,9 +93,7 @@ func draw_post(c:Node2D,camera:Vector2,font:Font)->void:
  preload("res://scripts/town_sprite_cache.gd").draw(c,"post",Rect2(Vector2(350,1220)-camera,Vector2(420,390)))
  for n in 2:
   var phase:=fposmod(t*.12+n*.5,1);var p:=origin+Vector2(-70+140*phase,52+sin(phase*PI)*10)
-  c.draw_circle(p+Vector2(-12,-15),13,Color("#9a6548"));c.draw_circle(p+Vector2(-10,-20),8,Color("#ba8555"));c.draw_rect(Rect2(p+Vector2(-7,-20),Vector2(16,24)),Color("#618687"));c.draw_circle(p+Vector2(1,-28),10,Color("#ba8555"));c.draw_circle(p+Vector2(-4,-38),4,Color("#ba8555"));c.draw_circle(p+Vector2(8,-38),4,Color("#ba8555"));c.draw_circle(p+Vector2(6,-30),2,Color("#28323a"))
-  for side in [-1,1]:c.draw_rect(Rect2(p+Vector2(side*5-2,2+sin(t*6+n)*2),Vector2(5,6)),Color("#473e38"))
-  c.draw_rect(Rect2(p+Vector2(5,-15),Vector2(15,14)),Color("#c69d68"));c.draw_line(p+Vector2(12,-15),p+Vector2(12,-1),Color("#e2cc9c"),2)
+  preload("res://scripts/town_cast230.gd").draw(c,"postal_worker",p+Vector2(0,6),t+n*.2,true)
 
 func draw_post_structure(c:Node2D,camera:Vector2,font:Font)->void:
  var origin:Vector2=Vector2(550,1490)-camera

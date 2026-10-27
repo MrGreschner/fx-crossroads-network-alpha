@@ -27,7 +27,7 @@ static func unlocked(legacy:Node,id:String)->bool:
  if id in MEDIUM:return count(legacy,INTRO_MODERATE)>=1
  if id in CHALLENGING:return cleared(legacy,"middle_school")
  if id in HARD:return count(legacy,CHALLENGING)>=1
- if id in EXPERT:return count(legacy,HARD)>=4
+ if id in EXPERT:return cleared(legacy,"high_school")
  if id in EXTREME:return count(legacy,EXPERT)>=2
  return true
 static func reason(legacy:Node,id:String)->String:
@@ -40,6 +40,6 @@ static func reason(legacy:Node,id:String)->String:
  if id in MEDIUM:return "Clear Sunfield Expanse, Frostbound Rink OR Confluence Foundry • %d / 1" % count(legacy,INTRO_MODERATE)
  if id in CHALLENGING:return "Clear Crossbell Middle School first"
  if id in HARD:return "Clear 1 challenging realm • %d / 1" % count(legacy,CHALLENGING)
- if id in EXPERT:return "Clear 4 different hard realms • %d / 4" % count(legacy,HARD)
+ if id in EXPERT:return "Clear Crossroads High first"
  return "Clear 2 different expert realms • %d / 2" % count(legacy,EXPERT)
 static func hint(legacy:Node,id:String)->String:return reason(legacy,id)

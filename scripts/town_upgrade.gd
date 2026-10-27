@@ -53,8 +53,8 @@ func npc(c:Node2D,p:Vector2,coat:Color,kind:String)->void:
  for n in NPC_STYLES.size():
   if coat==Color(NPC_STYLES[n][0]) and kind==NPC_STYLES[n][1]:index=n;break
  if index<0:npc_source(c,p,coat,kind,clock*2);return
- var phase=posmod(int(floorf(clock*2/TAU*16)),16)
- c.draw_texture_rect_region(preload("res://scripts/town_sprite_cache.gd").texture("keepers"),Rect2(p-Vector2(24,68),Vector2(48,88)),Rect2(phase*48,index*88,48,88))
+ var identities=["supply_keeper","Moss","Tessa","Scout_Alden","Rowan","carpenter","guide"]
+ preload("res://scripts/town_cast230.gd").draw(c,identities[index],p+Vector2(0,6),clock,false)
 func npc_source(c:Node2D,p:Vector2,coat:Color,kind:String,phase:float)->void:
  c.draw_circle(p+Vector2(0,4),13,Color(0,0,0,.22))
  c.draw_rect(Rect2(p+Vector2(-11,-26),Vector2(22,27)),Color("#314049"));c.draw_rect(Rect2(p+Vector2(-9,-25),Vector2(18,25)),coat)

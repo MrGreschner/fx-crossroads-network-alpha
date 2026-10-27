@@ -1,6 +1,7 @@
 extends RefCounted
 static func matches(kind:String)->bool:return kind in ["ice_archer","snow_oracle"]
 static func fire(g:Node,enemy:Dictionary,aim:Vector2,definition:Dictionary,boss=false)->void:
+ preload("res://scripts/enemy_visual227.gd").mark(g.adventure,enemy)
  var oracle=boss or str(enemy.get("type",""))=="snow_oracle"
  var stats={"name":"Seeking Ice" if oracle else "Ice Spear","range":850,"speed":220.0 if oracle else float(definition.get("shot_speed",315)),"ice_visual":"orb" if oracle else "spear","projectile_radius":9.0 if oracle else 6.0,"color":"#a4e9ff","credit":preload("res://scripts/defeat_credit.gd").resolve(g,g.adventure.combat.npc_key(enemy),"Seeking Ice" if oracle else "Ice Spear")}
  for offset in [-.22,.22] if boss else [0.0]:g.adventure.combat.launch_projectile("enemy",enemy.pos,aim.rotated(offset),stats.duplicate(true),12.0 if boss else float(definition.get("damage",11)),"homing" if oracle else "pellet")

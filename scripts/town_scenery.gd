@@ -7,7 +7,6 @@ const TOWER=Vector2(1720,420)
 var trees:Array[Vector2]=[]
 var tree_cells:Dictionary={}
 var clock:float=0
-var guard_texture:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/guard_melee.svg")
 var routes:Array=[
 	[Vector2(800,295),Vector2(800,550),Vector2(790,585),Vector2(420,585),Vector2(300,550),Vector2(160,500)],
 	[Vector2(1000,295),Vector2(1200,330),Vector2(1500,310),Vector2(1620,500),Vector2(1810,500),Vector2(1810,750),Vector2(1900,900)],
@@ -84,8 +83,7 @@ func guard_position(index:int)->Vector2:
 	return route[0]
 func guard(c:CanvasItem,point:Vector2,moving:bool)->void:
 	c.draw_circle(point+Vector2(0,4),13,Color(0,0,0,.2))
-	var bob:float=sin(clock*8)*1.2 if moving else 0
-	c.draw_texture_rect(guard_texture,Rect2(point+Vector2(-20,-42+bob),Vector2(40,48)),false)
+	preload("res://scripts/town_cast230.gd").draw(c,"guard_melee",point+Vector2(0,6),clock,moving)
 func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	var visible:Rect2=Rect2(camera,c.get_viewport_rect().size).grow(210)
 	for tree in trees:
