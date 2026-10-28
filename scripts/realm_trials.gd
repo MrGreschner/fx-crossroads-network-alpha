@@ -1,5 +1,6 @@
 extends Node
 ## Shared solo/co-op four-realm adventure; authority stays with the multiplayer host.
+var finale=preload("res://scripts/oath_finale236.gd").new()
 var polish:Node
 var newcomers:Node
 var additions:Node
@@ -46,6 +47,7 @@ var hub_populated:=false
 
 func _ready() -> void:
 	game = get_parent()
+	finale.adventure=self
 	polish=preload("res://scripts/realm_polish.gd").new();add_child(polish);polish.adventure=self
 	newcomers=preload("res://scripts/realm_v143.gd").new();add_child(newcomers);newcomers.adventure=self
 	additions=preload("res://scripts/realm_v103.gd").new();add_child(additions);additions.adventure=self
@@ -69,6 +71,7 @@ func _ready() -> void:
 	school=preload("res://scripts/school_world.gd").new();add_child(school);school.adventure=self
 
 func setup(id: String) -> void:
+	finale.setup(id)
 	newcomers.setup()
 	additions.setup()
 	immersive.setup(id)
@@ -124,6 +127,7 @@ func alive(id: String) -> bool:
 func authoritative() -> bool:
 	return not arcade or game.role == "host"
 func can_stand(point: Vector2) -> bool:
+	if finale.owns(point):return finale.can_stand(point)
 	if clockfield.active and not clockfield.can_stand(point):return false
 	if cinder.active:return cinder.can_stand(point)
 	if str(game.realm_id if arcade else game.region_id)=="moonveil":return preload("res://scripts/moon_castle.gd").open(point)
@@ -183,6 +187,7 @@ func portals() -> Array:
 	return result
 
 func interact(id: String) -> bool:
+	if authoritative() and finale.interact(id):return true
 	if immersive.active:return immersive.interact(id)
 	if cinder.active:return cinder.interact(id)
 	if foundry.active:return foundry.interact(id)
@@ -228,6 +233,7 @@ func spawn_trial(n: int) -> void:
 	spawn(str(trial["boss"]),origin+Vector2(2324,1400),850+n*130,true,n)
 
 func on_defeat(enemy: Dictionary) -> bool:
+	if finale.on_defeat(enemy):return true
 	if arcade and game.get("expedition")!=null and game.expedition.special():game.expedition.defeated(enemy)
 	clockfield.on_defeat(enemy)
 	if newcomers.on_defeat(enemy):return true
@@ -255,9 +261,7 @@ func on_defeat(enemy: Dictionary) -> bool:
 		for foe in foes():
 			if bool(foe.get("expansion_boss",false)) and int(foe.get("trial_index",-1))==4: bosses=true
 		if not bosses:
-			complete = true
-			restore_xp()
-			announce("The Usurper is gone. Stolen XP restored! Use the glowing exit seal near the arena entrance.")
+			finale.open_gate()
 	return true
 
 func clear_trial(n: int) -> void:
@@ -367,6 +371,7 @@ func step(delta: float) -> void:
 	polish.bosses(delta)
 	if not between_guardians() and not active and not combat.coast.active and not marsh and not river and not clockwork and not astral and not vault.active and not city.active and not hollow.active and not quests.active and not expansion.active and not school.active and not tech.active and not (game.realm_id in ["moonveil","zombie"] if arcade else game.region_id in ["moonveil","zombie"]): return
 	clock+=delta
+	finale.step(delta)
 	for n in range(warnings.size()-1,-1,-1):
 		var warning: Dictionary = warnings[n]
 		warning["time"]-=delta
@@ -396,6 +401,7 @@ func step(delta: float) -> void:
 			if alive(str(id)) and bounds.has_point(points()[id]) and clock-float(last_trap_hit.get(id,-2.0))>.8:
 				hit_player(str(id),18 if active else 12,"",preload("res://scripts/defeat_credit.gd").hazard("Realm trap"));last_trap_hit[id]=clock
 	for enemy in foes().duplicate():
+		if bool(enemy.get("finale_actor",false)):continue
 		if bool(enemy.get("immersive",false)) or str(enemy.get("type","")) in newcomers.TYPES or str(enemy.get("type","")) in clockfield.TYPES:continue
 		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in cinder.TYPES or str(enemy.get("type","")) in foundry.TYPES or str(enemy.get("type","")) in tech.TYPES or str(enemy.get("type","")) in school.TYPES or str(enemy.get("type","")) in expansion.TYPES or str(enemy.get("type","")) in hollow.TYPES or str(enemy.get("type","")) in city.TYPES or bool(enemy.get("vault_actor",false)) or combat.stunned(combat.npc_key(enemy)):continue
 		var definitions: Dictionary = game.enemy_defs if arcade else game.enemy_types
@@ -584,8 +590,9 @@ func step(delta: float) -> void:
 	warning_credit.clear()
 
 func snapshot() -> Dictionary:
-	return {"pursuers":pursuers.snapshot(),"cinder":cinder.snapshot(),"newcomers":newcomers.snapshot(),"additions":additions.snapshot(),"clockfield":clockfield.snapshot(),"foundry":foundry.snapshot(),"immersive":immersive.snapshot(),"tech":tech.snapshot(),"school":school.snapshot(),"expansion":expansion.snapshot(),"quests":quests.snapshot(),"hollow":hollow.snapshot(),"city":city.snapshot(),"combat":combat.snapshot() if combat != null else {},"waves":waves,"vault":vault.snapshot() if vault != null else {},"lob_shots":lob_shots,"lob_blasts":lob_blasts,"healing_zones":healing_zones,"discs":discs,"active":active,"visited":visited,"cleared":cleared,"final":final_started,"complete":complete,"clock":clock,"warnings":warnings,"stolen":stolen}
+	return {"finale236":finale.snapshot(),"pursuers":pursuers.snapshot(),"cinder":cinder.snapshot(),"newcomers":newcomers.snapshot(),"additions":additions.snapshot(),"clockfield":clockfield.snapshot(),"foundry":foundry.snapshot(),"immersive":immersive.snapshot(),"tech":tech.snapshot(),"school":school.snapshot(),"expansion":expansion.snapshot(),"quests":quests.snapshot(),"hollow":hollow.snapshot(),"city":city.snapshot(),"combat":combat.snapshot() if combat != null else {},"waves":waves,"vault":vault.snapshot() if vault != null else {},"lob_shots":lob_shots,"lob_blasts":lob_blasts,"healing_zones":healing_zones,"discs":discs,"active":active,"visited":visited,"cleared":cleared,"final":final_started,"complete":complete,"clock":clock,"warnings":warnings,"stolen":stolen}
 func receive(data: Dictionary) -> void:
+	finale.receive(data.get("finale236",{}))
 	newcomers.receive(data.get("newcomers",{}))
 	additions.receive(data.get("additions",{}))
 	immersive.receive(data.get("immersive",{}))
@@ -613,6 +620,7 @@ func receive(data: Dictionary) -> void:
 
 
 func draw_on(canvas: Node2D, camera: Vector2) -> void:
+	finale.draw_on(canvas,camera)
 	newcomers.draw_on(canvas,camera)
 	additions.draw_on(canvas,camera)
 	immersive.draw_on(canvas,camera)
@@ -740,7 +748,7 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 		canvas.draw_string(font,point+Vector2(-95,-58),str(portal["label"]),HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e9dca9"))
 		var player:Vector2=game.local_pos if arcade else game.position_in_world
 		if player.distance_to(portal["pos"])<115:canvas.draw_string(font,Vector2(400,550),"Interact to enter • four seals "+str(cleared.size())+"/4",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("#e9dca9"))
-	if active:canvas.draw_string(font,Vector2(35,175 if not arcade else 108),"OATH SEALS "+str(cleared.size())+"/4 • traps cycle: red wait / green cross",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ddd6ee"))
+	if active and not finale.in_depth():canvas.draw_string(font,Vector2(35,175 if not arcade else 108),"OATH SEALS "+str(cleared.size())+"/4 • traps cycle: red wait / green cross",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ddd6ee"))
 	if complete:
 		var exit_point:=OATH_EXIT-camera
 		canvas.draw_circle(exit_point,65,Color(.35,.9,.65,.2));canvas.draw_arc(exit_point,55,clock,clock+TAU*.9,40,Color("#9bf0bc"),6,true)

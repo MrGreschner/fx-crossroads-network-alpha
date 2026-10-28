@@ -18,4 +18,4 @@ static func adjusted(key:String,rect:Rect2)->Rect2:
 static func mark(adventure:Node,enemy:Dictionary,duration:float=.45)->void:
  var kind=str(enemy.get("sprite",enemy.get("type","")))
  if kind=="boss" and not adventure.arcade:kind=str(adventure.game.region.get("boss_sprite",""))
- if kind in FACTORS:enemy.v143_pose=adventure.newcomers.clock+duration
+ if kind in FACTORS or preload("res://scripts/enemy_art235.gd").texture(kind)!=null:enemy.v143_pose=adventure.newcomers.clock+duration

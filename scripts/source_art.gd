@@ -4,6 +4,8 @@ extends RefCounted
 static var cache:Dictionary={}
 static var sources:Dictionary={}
 static func texture(path:String)->Texture2D:
+ var updated=preload("res://scripts/enemy_art235.gd").legacy_path(path)
+ if updated!=null:return updated
  if cache.has(path):return cache[path]
  if sources.is_empty():
   var parsed=JSON.parse_string(FileAccess.get_file_as_string("res://content/source-art.json"))

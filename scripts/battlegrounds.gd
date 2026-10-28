@@ -101,6 +101,7 @@ func damage(key:String,amount:float,source:String)->void:
    if not bool(u.get("converted",false)):game.adventure.combat.morrow.fallen({"pos":u.pos,"type":"bramble","corpse_sprite":"ram" if int(u.team)==0 else "bramble"})
    var owner:=str(units.get(source,{}).get("owner",source)).trim_prefix("bgarmy:");
    if not bool(u.get("converted",false)):
+    preload("res://scripts/ko_item_heal239.gd").party(game,owner)
     reward(owner,12+int(u.kind)*2,8)
     if game.kills.has(owner):game.kills[owner]=int(game.kills[owner])+1
     if game.arena_records.has(owner):game.arena_records[owner].npc_kills+=1

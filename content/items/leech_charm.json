@@ -2,7 +2,7 @@
   "id": "leech_charm",
   "name": "Leech Charm",
   "cost": 70,
-  "effect": "lifesteal",
-  "amount": 6,
-  "description": "Heal 6% of damage dealt while carried."
+  "effect": "heal_on_ko",
+  "amount": 8,
+  "description": "Restore 8 HP when credited with an enemy KO while carried. Cannot exceed maximum health."
 }

@@ -4,24 +4,24 @@ var game:Node
 const SET_SECONDS=7.0
 var clock:=0.0
 var redraw_tick:=0.0
+var bounds:Dictionary={}
 var heroes:Array=[]
 var creatures:Array=[]
 var display:Font=preload("res://assets/fonts/CrossroadsDisplay.ttf")
 var ui:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 func setup(owner:Node,multi:bool=false)->void:
+ bounds=JSON.parse_string(FileAccess.get_file_as_string("res://assets/runtime237/menu_bounds.json"))
  game=owner;mouse_filter=Control.MOUSE_FILTER_IGNORE;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
  for id in ["ram","book","cat","ferryman","sunflower","robot","pippa","stormscribe","snail","monk","teacher","basketball","patch","beaver","ripplejaw","dustdevil","harbor","mosaic","bracken","gopher","cindervane","dustmarshal","teapot","cloudloom"]:
   if game.characters.has(id):heroes.append(entry(game.characters[id],str(id),true))
  # Fill from the full roster if a curated id is absent in a future expansion.
  for id in game.characters:
-  if heroes.size()>=24:break
   if not heroes.any(func(e):return e.id==id):heroes.append(entry(game.characters[id],str(id),true))
  var enemies:Dictionary=game.enemy_defs if multi else game.enemy_types
  var curated:Array=["bramble","imp","lantern_moth","archer","warlock","rusher","frostling","ice_archer","snow_oracle","glacier_hound","spore_thrower","hazmat_raider","honey_beetle","glass_queen","cascade_heron","ripple_eel","lantern_crab","reed_stalker","mask_duelist","mirror_marquis","rift_weaver","comet_urchin","gongbreaker","silence_regent"]
  for id in enemies:
   if id not in curated:curated.append(id)
  for id in curated:
-  if creatures.size()>=24:break
   if not enemies.has(id):continue
   if str(id).begins_with("training"):continue
   var e:Dictionary=entry(enemies[id],str(id),false)
@@ -29,6 +29,18 @@ func setup(owner:Node,multi:bool=false)->void:
 func entry(data:Dictionary,id:String,hero:bool)->Dictionary:
  var sprite:=str(data.get("sprite",id));var first:Texture2D=game.art.get(sprite+"_walk1",game.art.get(sprite+"_0",game.art.get(sprite+"_idle")))
  var second:Texture2D=game.art.get(sprite+"_walk2",game.art.get(sprite+"_1",first))
+ if hero and sprite in preload("res://scripts/core_hero_art.gd").HEROES:
+  first=preload("res://scripts/core_hero_art.gd").texture(sprite,"walk1");second=preload("res://scripts/core_hero_art.gd").texture(sprite,"walk2")
+ elif not hero:
+  var updated=preload("res://scripts/enemy_art235.gd").texture(sprite,"walk1")
+  if updated!=null:first=updated;second=preload("res://scripts/enemy_art235.gd").texture(sprite,"walk2")
+ var visible=Vector2(.8,.8)
+ if first!=null:
+  if hero and sprite in preload("res://scripts/core_hero_art.gd").HEROES:visible=preload("res://scripts/core_hero_art.gd").visible_size(sprite)
+  elif preload("res://scripts/enemy_art235.gd").metadata.has(sprite):
+   var size_data:Array=preload("res://scripts/enemy_art235.gd").metadata[sprite].menu_visible;visible=Vector2(size_data[0],size_data[1])
+  else:
+   var size_data:Array=bounds.get(sprite,[.8,.8]);visible=Vector2(size_data[0],size_data[1])
  var caption_name:String=str(data.get("name",id.capitalize()))
  var lines:Array[String]=[];var line:=""
  for word in caption_name.split(" "):
@@ -37,9 +49,9 @@ func entry(data:Dictionary,id:String,hero:bool)->Dictionary:
   else:line=candidate
  if not line.is_empty():lines.append(line)
  if lines.size()>2:lines=[lines[0],lines[1]+"…"]
- return {"caption_lines":lines,"caption":caption_name,"id":id,"name":str(data.get("name",id.capitalize())),"first":first,"second":second,"hero":hero}
+ return {"sprite":sprite,"visible":visible,"caption_lines":lines,"caption":caption_name,"id":id,"name":str(data.get("name",id.capitalize())),"first":first,"second":second,"hero":hero}
 func _process(delta:float)->void:
- if not is_visible_in_tree():return
+ if not is_visible_in_tree() or game.has_node("FXIntro") or bool(game.get("web_intro_covered")):return
  clock+=delta;redraw_tick+=delta
  if redraw_tick>=1.0/30.0:redraw_tick=0;queue_redraw()
 func caption(p:Vector2,value:String,fs:int,width:float,col:Color)->void:
@@ -78,7 +90,7 @@ func _draw()->void:
    draw_line(p+Vector2(16,117),p+Vector2(116,117),Color("#536b68"),1,true)
    draw_circle(p+Vector2(66,102),25,Color(0,0,0,.23))
    var art:Texture2D=e.first if int(clock*4+index)%2==0 else e.second
-   if art!=null:draw_texture_rect(art,Rect2(p+Vector2(28,20+sin(clock*2+index)*2),Vector2(76,84)),false)
+   if art!=null:draw_texture_rect(art,display_rect(e,p),false)
    for n in e.caption_lines.size():caption(p+Vector2(4,128+n*12 if e.caption_lines.size()>1 else 135),str(e.caption_lines[n]),11,124,Color("#e1e5d5"))
  caption(Vector2(52,664),"Every hero starts unlocked",13,277,Color("#a1b9b9"))
  caption(Vector2(950,664),"Realms • Parties • Battlegrounds",12,277,Color("#a1b9b9"))
@@ -92,3 +104,14 @@ func card_skin(side:int)->StyleBoxFlat:
  if not skins.has(side):
   var s:=StyleBoxFlat.new();s.bg_color=Color("#18353d") if side==0 else Color("#263239");s.border_color=Color("#506d6c");s.set_border_width_all(1);s.set_corner_radius_all(10);skins[side]=s
  return skins[side]
+
+func display_rect(e:Dictionary,p:Vector2)->Rect2:
+ var foot=p+Vector2(66,107);var size=Vector2(56,64)*1.4
+ if e.hero and str(e.sprite)=="basketball":size=Vector2.ONE*preload("res://scripts/basketball_motion.gd").DIAMETER*1.4
+ var rect=Rect2(foot-size*Vector2(.5,.925),size)
+ if e.hero:rect=preload("res://scripts/core_hero_art.gd").body_rect(str(e.sprite),rect,clock)
+ elif preload("res://scripts/enemy_art235.gd").texture(str(e.sprite))!=null:rect=preload("res://scripts/enemy_art235.gd").fitted(str(e.sprite),rect)
+ else:rect=preload("res://scripts/enemy_visual227.gd").adjusted(str(e.sprite),rect)
+ var amount=minf(1,minf(100/maxf(1,rect.size.x*float(e.visible.x)),86/maxf(1,rect.size.y*float(e.visible.y))))
+ var anchor=rect.position+rect.size*Vector2(.5,.925);rect.size*=amount;rect.position=anchor-rect.size*Vector2(.5,.925)
+ return rect

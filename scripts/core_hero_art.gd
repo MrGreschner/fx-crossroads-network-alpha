@@ -17,8 +17,27 @@ const REFRESHED226=["twisterspell"]
 const ROOT="res://assets/core204/"
 const POSES={"teapot":[0,1,2,3,4,5],"rook":[0,1,2,3,4,5],"beaver":[0,1,2,3,4,5],"iris":[0,1,2,3,4,5],"robot":[0,1,2,3,4,5],"cloudloom":[0,1,2,3,4,5],"cairnheart":[0,1,2,3,4,5],"caelum":[0,1,2,3,4,5],"dustdevil":[0,1,2,3,4,5],"merrymask":[0,1,2,3,4,5],"sunflower":[0,1,2,3,4,5],"snowman":[0,1,2,3,4,5],"veyra":[0,1,2,3,4,5],"drum":[0,1,2,3,4,5],"harbor":[0,1,2,3,4,5],"magnet":[0,1,2,3,4,5],"pippa":[0,1,2,3,4,5],"spindle":[0,1,2,3,4,5],"patch":[0,1,2,3,4,5],"bracken":[0,1,2,3,4,5],"elara":[0,1,2,3,4,5],"aurel":[0,1,2,3,4,5],"rune_duelist":[0,1,2,3,4,5],"garrick":[0,1,2,3,4,5],"nera":[0,1,2,3,4,5],"dawnblade":[0,1,2,3,4,5],"stormscribe":[0,1,2,3,4,5],"bailiff":[0,1,2,3,4,5],"tempo":[0,1,2,3,4,5],"quill":[0,1,2,3,4,5],"cindervane":[0,1,2,3,4,5],"tova":[0,1,2,3,4,5],"dunecook":[0,1,2,3,4,5],"dustmarshal":[0,1,2,3,4,5],"wick":[0,1,2,3,4,5],"cobbleclaw":[0,1,2,3,4,5],"twisterspell":[0,1,2,3,4,5],"ram":[0,1,3,6,7,9],"cat":[0,1,2,3,4,5],"book":[0,2,4,6,7,10],"mosaic":[0,1,2,3,4,5],"vesper":[0,1,2,3,4,5],"morrow":[0,1,2,3,4,5],"ferryman":[0,1,2,3,4,5],"goalie":[0,1,2,3,4,5],"baseball":[0,1,2,3,4,5],"golfer":[0,1,2,3,4,5],"soccer":[0,1,2,3,4,5],"welder":[0,1,2,3,4,5],"velvetwing":[0,1,2,3,4,5],"gopher":[0,1,2,3,4,5],"nullweaver":[0,1,2,3,4,5],"kage":[0,1,2,3,4,5],"agent":[0,1,2,3,4,5],"thistlebond":[0,1,2,3,4,5],"chronicle":[0,1,2,3,4,5],"elder_ram":[0,1,2,3,4,5],"medic":[0,1,2,3,4,5],"navigator":[0,1,2,3,4,5],"wanderlight":[0,1,2,3,4,5],"ripplejaw":[0,1,2,3,4,5],"hearthwarden":[0,1,2,3,4,5],"snail":[0,1,2,3,4,5],"kite":[0,1,2,3,4,5],"tidewright":[0,1,2,3,4,5],"cantor":[0,1,2,3,4,5],"shuttle":[0,1,2,3,4,5],"regent":[0,1,2,3,4,5],"apiary":[0,1,2,3,4,5],"mantis":[0,1,2,3,4,5],"recess":[0,1,2,3,4,5],"votary":[0,1,2,3,4,5],"teacher":[0,1,2,3,4,5],"lumen":[0,1,2,3,4,5],"briar":[0,1,2,3,4,5],"hollow_rider":[0,1,2,3,4,5],"hazel_hex":[0,1,2,3,4,5],"echo_dancer":[0,1,2,3,4,5],"little_menace":[0,1,2,3,4,5],"hearth_herald":[0,1,2,3,4,5]}
 static var textures:Dictionary={}
-var actions:Dictionary={}
-static func texture(sprite:String,pose:String="idle")->Texture2D:
+static var atlas:Texture2D
+static var atlas_frames:Dictionary={}
+static var portrait_frames:Dictionary={}
+static var portraits:Dictionary={}
+static func prepare_atlas()->void:
+ if atlas!=null:return
+ portrait_frames=JSON.parse_string(FileAccess.get_file_as_string("res://assets/runtime237/portraits.json"))
+ atlas_frames=JSON.parse_string(FileAccess.get_file_as_string("res://assets/runtime237/heroes.json"))
+ var image=Image.new();image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/runtime237/heroes.png"));atlas=ImageTexture.create_from_image(image)
+static func portrait_texture(sprite:String)->Texture2D:
+ prepare_atlas()
+ if not portrait_frames.has(sprite):return null
+ if not portraits.has(sprite):
+  var box:Array=portrait_frames[sprite];var frame=AtlasTexture.new();frame.atlas=atlas;frame.region=Rect2(box[0],box[1],box[2],box[3]);portraits[sprite]=frame
+ return portraits[sprite]
+static func visible_size(sprite:String,pose:String="walk1")->Vector2:
+ var tex=texture(sprite,pose)
+ if tex==null:return Vector2(.8,.8)
+ var key=sprite+"_"+str(frame_index(sprite,pose)).pad_zeros(2);var bounds:Array=atlas_frames[key].bounds
+ return Vector2(bounds[2],bounds[3])/80.0
+static func frame_index(sprite:String,pose:String)->int:
  var index=0
  if pose.is_valid_int():index=int(pose)
  else:
@@ -26,17 +45,16 @@ static func texture(sprite:String,pose:String="idle")->Texture2D:
   var aliases={"idle":frames[0],"0":frames[0],"1":frames[1],"2":frames[2],"walk1":frames[1],"walk2":frames[2],"walk3":frames[1],"walk4":frames[2],"attack":frames[3],"attack2":frames[3],"secondary":frames[4],"spin":frames[4],"open":frames[4],"special":frames[5],"shell":frames[4],"talk":4}
   index=int(aliases.get(pose,0))
  if sprite=="elder_ram" and index>=6:index=1
- var key=sprite+"_"+str(index).pad_zeros(2)
+ return index
+var actions:Dictionary={}
+static func texture(sprite:String,pose:String="idle")->Texture2D:
+ prepare_atlas()
+ var key=sprite+"_"+str(frame_index(sprite,pose)).pad_zeros(2)
+ if not atlas_frames.has(key):return null
  if not textures.has(key):
-  if index in [1,2] and preload("res://scripts/hero_walk222.gd").RIGS.has(sprite):
-   var idle=texture(sprite,"idle")
-   if idle!=null:
-    textures[key]=preload("res://scripts/hero_walk222.gd").make_frame(sprite,idle,index)
-    return textures[key]
-  var image=Image.new();var path=("res://assets/hero226/" if sprite in REFRESHED226 else "res://assets/hero225/" if sprite in REFRESHED225 else "res://assets/hero222/" if sprite in REFRESHED222 else "res://assets/hero218/" if sprite in REFRESHED218 else "res://assets/hero217/" if sprite in REFRESHED217 else "res://assets/hero215/" if sprite in REFRESHED215 else "res://assets/hero214/" if sprite in REFRESHED214 else "res://assets/hero212/" if sprite in POLISHED else "res://assets/hero211/" if sprite in LATEST else "res://assets/hero210/" if sprite in UPGRADED else "res://assets/hero208/" if sprite in NEW_HEROES else ROOT)+key+".png"
-  if not FileAccess.file_exists(path) or image.load_png_from_buffer(FileAccess.get_file_as_bytes(path))!=OK:return null
-  textures[key]=ImageTexture.create_from_image(image)
+  var box:Array=atlas_frames[key].rect;var frame=AtlasTexture.new();frame.atlas=atlas;frame.region=Rect2(box[0],box[1],box[2],box[3]);textures[key]=frame
  return textures[key]
+
 func record(id:String,kind:String,sprite:String,interval:float=.35)->void:
  if sprite not in HEROES:return
  var duration=.72 if kind=="special" else .62 if kind=="secondary" else maxf(.24,minf(interval,1.0))

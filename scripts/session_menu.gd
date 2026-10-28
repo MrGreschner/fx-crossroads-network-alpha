@@ -193,7 +193,7 @@ func clear_profile()->void:
  if get_tree().root.has_meta("fx_show_main"):get_tree().root.remove_meta("fx_show_main")
  get_tree().root.set_meta("fx_start_tutorial",true)
  # Do not save stale in-memory progress after the reset.
- game.set_process(false);game.legacy.set_process(false);game.presentation.set_process(false)
+ game.loadout.clear();game.loadout_paid.clear();game.set_process(false);game.legacy.set_process(false);game.presentation.set_process(false)
  get_tree().reload_current_scene()
 func _input(event:InputEvent)->void:
  var dev:Node=get_tree().root.get_node_or_null("FXDevSession")

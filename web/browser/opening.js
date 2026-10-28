@@ -11,8 +11,13 @@ let phase='building',phaseTime=0,age=0,buildProgress=0,introProgress=0,download=
 let started=false,sceneReady=false,failed=false,finished=false,last=performance.now(),lastEvidence=last,raf,night=false,hidden=document.hidden;
 const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const ease=(a,b,x)=>{const u=clamp((x-a)/(b-a));return u*u*(3-2*u);};
-const attr=(id,key,value)=>document.getElementById(id).setAttribute(key,String(value));
-const pose=(id,time,strike=false)=>{const all=[...document.querySelectorAll('#'+id+' .pose')],walk=all.filter(el=>!el.classList.contains('attack')),hasAttack=all.some(el=>el.classList.contains('attack')),chosen=strike&&hasAttack?all.find(el=>el.classList.contains('attack')):walk[Math.floor(time*7)%walk.length];all.forEach(el=>el.style.opacity=el===chosen?'1':'0');};
+const elements=new Map(),attributes=new Map(),poseGroups=new Map();
+const element=id=>{if(!elements.has(id))elements.set(id,document.getElementById(id));return elements.get(id);};
+const attr=(id,key,value)=>{const k=id+":"+key,v=String(value);if(attributes.get(k)===v)return;attributes.set(k,v);element(id).setAttribute(key,v);};
+const pose=(id,time,strike=false)=>{let group=poseGroups.get(id);if(!group){const all=[...document.querySelectorAll('#'+id+' .pose')];group={all,walk:all.filter(el=>!el.classList.contains('attack')),attack:all.find(el=>el.classList.contains('attack')),chosen:null};poseGroups.set(id,group);}const chosen=strike&&group.attack?group.attack:group.walk[Math.floor(time*7)%group.walk.length];if(chosen===group.chosen)return;group.chosen=chosen;group.all.forEach(el=>el.style.opacity=el===chosen?'1':'0');};
+let resumeGame=null,visualLast=-Infinity;const animationBudget=1000/30;
+function releaseCoveredGame(){if(!resumeGame)return;const callback=resumeGame;resumeGame=null;callback();}
+
 try{const h=Number(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Edmonton',hour:'numeric',hourCycle:'h23'}).format(new Date()));night=h>=21||h<6;}catch(_){}
 if(night)root.classList.add('night');
 function resize(){const narrow=innerWidth/innerHeight<.82,vw=narrow?840:1280;document.querySelectorAll('.scene').forEach(s=>s.setAttribute('viewBox',narrow?'220 0 840 720':'0 0 1280 720'));const scale=Math.min(innerWidth/vw,innerHeight/720),boot=document.getElementById('boot-compositor');boot.style.width=352*scale+'px';boot.style.height=408*scale+'px';boot.style.left=(innerWidth/2-176*scale)+'px';boot.style.top=((innerHeight-720*scale)/2+150*scale)+'px';work.style.transformOrigin=(innerWidth/2)+'px '+((innerHeight-720*scale)/2+379*scale)+'px';}
@@ -81,17 +86,18 @@ function enter(next){
  if(next==='intro'){
   document.getElementById('journey-wash').style.transition='opacity .45s ease-out';
   document.getElementById('journey-wash').style.opacity='0';
-  work.style.opacity='0';work.style.visibility='hidden';document.getElementById('boot-compositor').style.display='none';cinema.style.visibility='visible';cinema.style.opacity='1';cinema.setAttribute('aria-hidden','false');
+  work.style.opacity='0';work.style.visibility='hidden';work.style.display='none';document.getElementById('boot-compositor').style.display='none';cinema.style.visibility='visible';cinema.style.opacity='1';cinema.setAttribute('aria-hidden','false');
   root.setAttribute('role','status');root.setAttribute('aria-label','Crossroads opening cinematic');root.removeAttribute('aria-valuenow');
  }
 }
 function finish(){
- finished=true;window.fxCinematic.dispose();phase='done';root.dataset.phase='done';root.dataset.complete='true';
+ finished=true;releaseCoveredGame();window.fxCinematic.dispose();phase='done';root.dataset.phase='done';root.dataset.complete='true';
  root.classList.add('done');setTimeout(()=>{root.remove();canvas.removeAttribute('inert');canvas.focus();removeEventListener('resize',resize);document.removeEventListener('keydown',blockKeys,true);document.removeEventListener('keyup',blockKeys,true);},240);
 }
 function tick(now){
  // Never skip visible construction or pulses after a main-thread startup stall.
- const dt=hidden?0:Math.min(.05,Math.max(0,(now-last)/1000));last=now;
+ const gap=Math.max(0,(now-last)/1000),dt=hidden?0:(phase==='intro'?gap:Math.min(.25,gap));last=now;
+ if(hidden){raf=requestAnimationFrame(tick);return;}
  if(failed||finished)return;
  age+=dt;phaseTime+=dt;
  if(phase==='building'){
@@ -102,6 +108,8 @@ function tick(now){
  else if(phase==='pulsing'&&phaseTime>=PULSE_SECONDS*2){completedPulses=2;enter('journey');}
  else if(phase==='journey'&&phaseTime>=JOURNEY_SECONDS)enter('intro');
  else if(phase==='intro'&&phaseTime>=INTRO_SECONDS){introProgress=1;intro();finish();return;}
+ if(now-visualLast<animationBudget-1){raf=requestAnimationFrame(tick);return;}
+ visualLast=now;
  if(phase!=='intro'){
   workers();charge();
   if(phase==='journey'){
@@ -120,11 +128,12 @@ document.addEventListener('visibilitychange',()=>{hidden=document.hidden;last=pe
 canvas.setAttribute('inert','');
 window.fxSunLoading={
  engineGate,
+ cover_game(callback){if(finished||failed)return false;resumeGame=callback;return true;},
  progress(current,total){if(failed||finished)return;if(total>0){knownTotal=true;const next=clamp(current/total);if(next>download){download=next;lastEvidence=performance.now();}root.setAttribute('aria-valuenow',String(Math.round(download*95)));}},
  started(){started=true;lastEvidence=performance.now();},
  ready(){sceneReady=true;lastEvidence=performance.now();},
- error(error){failed=true;cancelAnimationFrame(raf);root.classList.add('failed');status.textContent='The portal could not open';detail.textContent='Please try loading the game again';document.getElementById('error').textContent=String(error);document.getElementById('retry').style.display='block';},
- inspect(){return {phase,phaseTime,age,value:introProgress,buildProgress,introProgress,download,knownTotal,started,sceneReady,failed,finished,night,minimumSeconds:INTRO_SECONDS,buildSeconds:BUILD_SECONDS,openingSeconds:OPEN_SECONDS,holdSeconds:HOLD_SECONDS,pulseSeconds:PULSE_SECONDS,journeySeconds:JOURNEY_SECONDS,completedPulses};}
+ error(error){failed=true;releaseCoveredGame();cancelAnimationFrame(raf);root.classList.add('failed');status.textContent='The portal could not open';detail.textContent='Please try loading the game again';document.getElementById('error').textContent=String(error);document.getElementById('retry').style.display='block';},
+ inspect(){return {phase,phaseTime,age,value:introProgress,buildProgress,introProgress,download,knownTotal,started,sceneReady,failed,finished,night,minimumSeconds:INTRO_SECONDS,buildSeconds:BUILD_SECONDS,openingSeconds:OPEN_SECONDS,holdSeconds:HOLD_SECONDS,pulseSeconds:PULSE_SECONDS,journeySeconds:JOURNEY_SECONDS,completedPulses,gameCovered:!!resumeGame,cinematic:window.fxCinematic.stats?window.fxCinematic.stats():{}};}
 };
 document.getElementById('skip-intro').addEventListener('click',()=>{if(phase==='intro')finish();});
 window.fxCinematic.ready.catch(error=>window.fxSunLoading.error(error));

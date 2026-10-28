@@ -51,7 +51,7 @@ func _input(event:InputEvent)->void:
  if event is InputEventKey and skip.has_focus():return
  get_viewport().set_input_as_handled()
 func _process(delta:float)->void:
- elapsed+=minf(delta,.05)
+ elapsed+=maxf(delta,0.0)
  var size:Vector2=get_viewport().get_visible_rect().size;var fit:=minf(size.x/1280,size.y/720);var s:=Story.sample(elapsed)
  stage.scale=Vector2.ONE*fit;stage.position=(size-Vector2(1280,720)*fit)*.5
  water_material.set_shader_parameter("film_time",elapsed);water_material.set_shader_parameter("night",1.0 if night else 0.0);energy_material.set_shader_parameter("film_time",elapsed);energy_material.set_shader_parameter("strength",s.portal)

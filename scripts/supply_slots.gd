@@ -14,7 +14,7 @@ static func index(pack:Array,logical:int,items:Dictionary)->int:
 static func can_add(pack:Array,id:String,items:Dictionary)->bool:
  if not items.has(id):return false
  var bottle=consumable(items[id])
- return indices(pack,items,bottle).size()<(1 if bottle else 3) and (bottle or not pack.has(id) or str(items[id].get("effect","")) not in ["bonus_damage","bonus_speed","lifesteal","armor","bonus_health","cooldown"])
+ return indices(pack,items,bottle).size()<(1 if bottle else 3) and (bottle or not pack.has(id) or str(items[id].get("effect","")) not in ["bonus_damage","bonus_speed","lifesteal","heal_on_ko","armor","bonus_health","cooldown"])
 static func price(spec:Dictionary,legacy:Node=null)->int:
  var base=maxi(0,int(spec.get("cost",0)))
  return legacy.discount(base) if legacy!=null else base

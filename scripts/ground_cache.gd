@@ -6,6 +6,8 @@ const LIMIT=48
 var game:Node2D
 var chunks:Dictionary={}
 var age:=0
+var coverage_key=""
+var visibility_updates:=0
 static var atlas:Texture2D
 static var regions:Dictionary={}
 static func prepare_atlas()->void:
@@ -28,13 +30,17 @@ class Chunk extends Node2D:
    else:draw_texture_rect(tile[0],tile[1],false)
 func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
- chunks.clear()
+ chunks.clear();coverage_key=""
 func sync()->void:
  visible=not game.region.is_empty() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
  if not visible:return
  position=game.media.offset()-game.camera*game.media.factor();scale=Vector2.ONE*game.media.factor()
- prepare_atlas();age+=1
  var bounds:=Rect2(game.camera,game.VIEW)
+ var first:=Vector2i(floori(bounds.position.x/EDGE),floori(bounds.position.y/EDGE));var last:=Vector2i(floori(bounds.end.x/EDGE),floori(bounds.end.y/EDGE))
+ var next_key=str(first)+str(last)+str(game.region_id)+str(game.mode)
+ if next_key==coverage_key:return
+ coverage_key=next_key;visibility_updates+=1
+ prepare_atlas();age+=1
  for chunk in chunks.values():chunk.visible=false
  var base:String="grass" if game.mode=="town" else str(game.region.get("terrain","forest"))
  for x in range(int(floor(bounds.position.x/EDGE)),int(floor(bounds.end.x/EDGE))+1):

@@ -26,6 +26,9 @@ var frame_shade=Color(0,0,0,0)
 var mesh_key=""
 var mesh_origin=Vector2.ZERO
 var lighting_rebuilds=0
+var light_collections=0
+var lights_camera=Vector2.ZERO
+var current_camera=Vector2.ZERO
 var grid_extent=Vector2.ZERO
 var grid_vertices=PackedVector3Array()
 var grid_indices=PackedInt32Array()
@@ -130,7 +133,7 @@ func draw_props(c:Node2D,camera:Vector2)->void:
    var note=p+Vector2(-30+n*26+sin(t*4)*10,-46-t*42)
    c.draw_circle(note,3,Color(1,.86,.5,1-t));c.draw_line(note,note-Vector2(0,10),Color(1,.86,.5,1-t),2)
 func collect_lights(c:Node2D,camera:Vector2)->void:
- lights.clear()
+ lights.clear();lights_camera=camera;current_camera=camera;light_collections+=1
  var view=Rect2(camera,c.VIEW).grow(450)
  for spot in LAMPS:
   if view.has_point(spot):lights.append({"pos":spot-camera-Vector2(0,55),"radius":150.0,"strength":1.0})
@@ -152,19 +155,14 @@ func collect_lights(c:Node2D,camera:Vector2)->void:
 func shade_at(p:Vector2,night:float,twilight:float)->Color:
  var light=0.0
  for lamp in lights:
-  var falloff=1.0-smoothstep(0.0,float(lamp.radius),p.distance_to(lamp.pos))
+  var falloff=1.0-smoothstep(0.0,float(lamp.radius),p.distance_to(lamp.pos+lights_camera-current_camera))
   light=maxf(light,falloff*float(lamp.strength))
  var ambient=frame_shade
  var shade=ambient
  shade.a=ambient.a*(1.0-light*.95)
  return shade
-func draw_lighting(c:Node2D,camera:Vector2)->void:
- draw_weather(c,camera)
- var night=night_amount()
- var twilight=sin(PI*night)*.6
- # Daylight also changes subtly across morning, noon and afternoon.
- collect_lights(c,camera)
- frame_shade=ambient_shade()
+func prepare_lighting(c:Node2D,camera:Vector2)->void:
+ current_camera=camera
  # Keep the spatial light field separate from the ambient tint. Time/weather modulate
  # its draw colour without rebuilding thousands of vertices twice per second.
  # The expanded source margin covers every light influencing the retained grid.
@@ -172,6 +170,7 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
  var origin=Vector2(floorf(camera.x/128)*128-64,floorf(camera.y/128)*128-64)
  var key=str(origin)+str(c.VIEW)+str(roundi(fire_strength()*64))
  if mesh_key!=key:
+  collect_lights(c,camera)
   mesh_key=key;mesh_origin=origin;lighting_rebuilds+=1
   var extent=c.VIEW+Vector2(256,256)
   var columns=ceili(extent.x/32.0);var rows=ceili(extent.y/32.0)
@@ -201,10 +200,17 @@ func draw_lighting(c:Node2D,camera:Vector2)->void:
    colours[i]=Color(1,1,1,1.0-strengths[i]*.95)
   var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=grid_vertices;arrays[Mesh.ARRAY_COLOR]=colours;arrays[Mesh.ARRAY_INDEX]=grid_indices
   mesh.clear_surfaces();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+func draw_lighting(c:Node2D,camera:Vector2)->void:
+ draw_weather(c,camera)
+ var night=night_amount()
+ var twilight=sin(PI*night)*.6
+ # Daylight also changes subtly across morning, noon and afternoon.
+ frame_shade=ambient_shade()
+ prepare_lighting(c,camera)
  c.draw_mesh(mesh,null,Transform2D(0,mesh_origin-camera),frame_shade)
  for lamp in lights:
   if float(lamp.strength)<.1:continue
-  var p:Vector2=lamp.pos
+  var p:Vector2=lamp.pos+lights_camera-camera
   if not Rect2(Vector2.ZERO,c.VIEW).grow(100).has_point(p):continue
   if lamp.get("portal",false):
    for radius in [95,70,45]:c.draw_circle(p,radius,Color(.24,.55,1,night*.025))

@@ -1,0 +1,11 @@
+{
+  "id": "unwritten_sovereign",
+  "name": "The Unwritten Sovereign",
+  "sprite": "unwritten_sovereign",
+  "health": 6200,
+  "speed": 0,
+  "damage": 0,
+  "behaviour": "boss",
+  "expansion_only": true,
+  "lore": "The final Oath given form. A sealed crown, an unbound heart, and a world-breaking promise."
+}

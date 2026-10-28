@@ -58,13 +58,21 @@ func save_settings()->void:
 func capture()->void:
  var scene:=get_tree().current_scene
  var sample:Dictionary={"time":Time.get_datetime_string_from_system(true),"fps":Engine.get_frames_per_second(),"memory_bytes":int(Performance.get_monitor(Performance.MEMORY_STATIC)),"objects":int(Performance.get_monitor(Performance.OBJECT_COUNT)),"draw_calls":int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)),"video_memory_bytes":int(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED)),"school_mode":school_mode,"fps_limit":fps_limit,"diagnostics_enabled":diagnostics_enabled,"packet_bytes":last_packet_bytes,"packets_sent":packets_sent,"max_buffered_bytes":buffered_bytes,"deferred_states":deferred_states,"send_errors":send_errors}
+ sample.build=preload("res://network/release.gd").BUILD
+ var core=preload("res://scripts/core_hero_art.gd")
+ sample.hero_frame_views=core.textures.size();sample.hero_gpu_textures=1 if core.atlas!=null else 0
+ if OS.has_feature("web"):
+  var opening_json=JavaScriptBridge.eval("JSON.stringify(window.fxSunLoading?window.fxSunLoading.inspect():{})",true)
+  if opening_json is String:sample.opening=JSON.parse_string(opening_json)
  sample.process_ms=Performance.get_monitor(Performance.TIME_PROCESS)*1000.0
  sample.physics_ms=Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000.0
  sample.canvas_objects=int(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
  sample.viewport_size=[get_tree().root.get_visible_rect().size.x,get_tree().root.get_visible_rect().size.y]
  if scene!=null:
   var cache:Variant=scene.get("terrain_cache")
-  if cache!=null:sample.terrain_chunks=cache.chunks.size()
+  if cache!=null:
+   sample.terrain_chunks=cache.chunks.size()
+   if cache.get("visibility_updates")!=null:sample.terrain_visibility_updates=cache.visibility_updates
   sample.scene=scene.scene_file_path
   if scene.has_method("_close_link"):
    sample.network_links=scene.links.size();sample.incoming_backlog=scene.incoming_backlog;sample.received_packets=scene.received_packets
@@ -83,11 +91,11 @@ func capture()->void:
  samples.append(sample)
  if samples.size()>120:samples.pop_front()
  var f:=FileAccess.open(LAST,FileAccess.WRITE)
- if f!=null:f.store_string(JSON.stringify({"version":"v169","ended":false,"sample":sample}))
+ if f!=null:f.store_string(JSON.stringify({"version":preload("res://network/release.gd").BUILD,"ended":false,"sample":sample}))
  if OS.has_feature("web"):JavaScriptBridge.eval("window.fxDiagnostics && window.fxDiagnostics.sample("+JSON.stringify(sample)+");",true)
 func report()->String:
  var engine_log:=FileAccess.get_file_as_string("user://logs/godot.log") if FileAccess.file_exists("user://logs/godot.log") else ""
- return JSON.stringify({"engine_log_tail":engine_log.right(16000),"version":"v169","platform":OS.get_name(),"previous_session_interrupted":interrupted,"previous_session":previous,"samples":samples},"  ")
+ return JSON.stringify({"engine_log_tail":engine_log.right(16000),"version":preload("res://network/release.gd").BUILD,"platform":OS.get_name(),"previous_session_interrupted":interrupted,"previous_session":previous,"samples":samples},"  ")
 func download()->void:
  capture()
  if OS.has_feature("web"):JavaScriptBridge.eval("window.fxDiagnostics.download();",true);return
@@ -100,4 +108,4 @@ func download()->void:
  );native_dialog.popup_centered(Vector2i(900,520))
 func _exit_tree()->void:
  var f:=FileAccess.open(LAST,FileAccess.WRITE)
- if f!=null:f.store_string(JSON.stringify({"version":"v169","ended":true,"sample":samples.back() if not samples.is_empty() else {}}))
+ if f!=null:f.store_string(JSON.stringify({"version":preload("res://network/release.gd").BUILD,"ended":true,"sample":samples.back() if not samples.is_empty() else {}}))

@@ -3,7 +3,7 @@ extends RefCounted
 static func bosses(g:Node)->Array:
  var multi=g.has_method("_attack_request");var foes:Array=g.opponents if multi else g.enemies
  var player:Vector2=g.local_pos if multi else g.position_in_world
- return foes.filter(func(e):return bool(e.get("boss",false)) and float(e.get("hp",0))>0 and (e.pos as Vector2).distance_to(player)<1500)
+ return foes.filter(func(e):return not bool(e.get("finale_actor",false)) and bool(e.get("boss",false)) and float(e.get("hp",0))>0 and (e.pos as Vector2).distance_to(player)<1500)
 static func draw_on(g:Node2D)->void:
  var list=bosses(g)
  if list.is_empty():return

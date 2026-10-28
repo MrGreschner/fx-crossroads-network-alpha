@@ -47,7 +47,7 @@ func bosses(delta:float)->void:
  clock+=delta
  var live:Dictionary={}
  for enemy in adventure.foes():
-  if not bool(enemy.get("boss",false)) or float(enemy.get("hp",0))<=0 or float(enemy.get("down_time",0))>0 or bool(enemy.get("buried",false)):continue
+  if bool(enemy.get("finale_actor",false)) or not bool(enemy.get("boss",false)) or float(enemy.get("hp",0))<=0 or float(enemy.get("down_time",0))>0 or bool(enemy.get("buried",false)):continue
   var key:String=adventure.combat.npc_key(enemy);live[key]=true
   if adventure.combat.stunned(key):boss_tracks.erase(key);continue
   var target:Vector2=enemy.pos;var distance:=INF

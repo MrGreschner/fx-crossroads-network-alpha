@@ -53,7 +53,7 @@ func call_api(path:String,payload:Variant=null,op:String="")->void:
 func _process(delta:float)->void:
  var l=legacy()
  if l==null:return
- shortcut.visible=not l.arcade and l.game.mode=="town" and l.game.menu=="main" and not is_instance_valid(panel)
+ shortcut.visible=not l.arcade and l.game.mode=="town" and l.game.menu=="main" and not is_instance_valid(panel) and not (l.game.get("session_menu")!=null and l.game.session_menu.page in ["main","clear","options","download"])
  if l!=last_legacy:
   last_legacy=l
   if not launched and not STORE.testing():

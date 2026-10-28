@@ -1,0 +1,1882 @@
+{
+  "drone": {
+    "index": 0,
+    "realm": "space",
+    "old_factor": 1,
+    "old_normalized": [
+      0.041666666666666664,
+      0.16666666666666666,
+      1.0,
+      0.9375
+    ],
+    "visible_height": 55,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.825,
+      0.6875
+    ]
+  },
+  "rift_skitter": {
+    "index": 1,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.28125,
+      0.9583333333333334,
+      0.84375
+    ],
+    "visible_height": 51,
+    "walk_x_offsets": [
+      0,
+      3
+    ],
+    "menu_visible": [
+      0.7875,
+      0.6375
+    ]
+  },
+  "signal_core": {
+    "index": 2,
+    "realm": "space",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.0625,
+      1.0,
+      0.9583333333333334
+    ],
+    "visible_height": 56,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.7625,
+      0.7
+    ]
+  },
+  "star_mine": {
+    "index": 3,
+    "realm": "space",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.020833333333333332,
+      1.0,
+      1.0
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7625,
+      0.75
+    ]
+  },
+  "antiseptic_drone": {
+    "index": 4,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.10416666666666667,
+      0.234375,
+      0.9375,
+      0.78125
+    ],
+    "visible_height": 50,
+    "walk_x_offsets": [
+      0,
+      2
+    ],
+    "menu_visible": [
+      0.775,
+      0.625
+    ]
+  },
+  "hazmat_raider": {
+    "index": 5,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.041666666666666664,
+      1.0,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      -1
+    ],
+    "menu_visible": [
+      0.725,
+      0.75
+    ]
+  },
+  "lockdown_aberration": {
+    "index": 6,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.03125,
+      0.041666666666666664,
+      0.96875,
+      0.9236111111111112
+    ],
+    "visible_height": 58,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.6875,
+      0.725
+    ]
+  },
+  "plague_director": {
+    "index": 7,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.0625,
+      1.0,
+      1.0
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -2
+    ],
+    "menu_visible": [
+      0.7125,
+      0.75
+    ]
+  },
+  "quarantine_hound": {
+    "index": 8,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.041666666666666664,
+      0.328125,
+      0.9166666666666666,
+      0.90625
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.8125,
+      0.75
+    ]
+  },
+  "quarantine_warden": {
+    "index": 9,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.14583333333333334,
+      0.125,
+      0.8958333333333334,
+      0.96875
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      1
+    ],
+    "menu_visible": [
+      0.6,
+      0.75
+    ]
+  },
+  "shambler": {
+    "index": 10,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.125,
+      0.9583333333333334,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      1
+    ],
+    "menu_visible": [
+      0.775,
+      0.75
+    ]
+  },
+  "spore_orderly": {
+    "index": 11,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.109375,
+      0.875,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.575,
+      0.75
+    ]
+  },
+  "bellroot": {
+    "index": 12,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.0625,
+      0.9583333333333334,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      -1
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "bog_bellringer": {
+    "index": 13,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.125,
+      0.03571428571428571,
+      0.875,
+      0.9821428571428571
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.5625,
+      0.75
+    ]
+  },
+  "bogpitch_newt": {
+    "index": 14,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.06875,
+      0.25,
+      0.825,
+      0.91875
+    ],
+    "visible_height": 47,
+    "walk_x_offsets": [
+      1,
+      3
+    ],
+    "menu_visible": [
+      0.7875,
+      0.5875
+    ]
+  },
+  "lantern_crab": {
+    "index": 15,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0,
+      0.125,
+      1.0,
+      0.9791666666666666
+    ],
+    "visible_height": 49,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.8,
+      0.6125
+    ]
+  },
+  "mirevein_collector": {
+    "index": 16,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.075,
+      0.01875,
+      0.925,
+      0.91875
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.75
+    ]
+  },
+  "mireweaver": {
+    "index": 17,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.04375,
+      0.09375,
+      0.9375,
+      0.91875
+    ],
+    "visible_height": 53,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.7875,
+      0.6625
+    ]
+  },
+  "reed_stalker": {
+    "index": 18,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.14583333333333334,
+      0.08333333333333333,
+      0.875,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      1
+    ],
+    "menu_visible": [
+      0.6125,
+      0.75
+    ]
+  },
+  "wick_wisp": {
+    "index": 19,
+    "realm": "lantern_marsh",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.041666666666666664,
+      0.875,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      -1
+    ],
+    "menu_visible": [
+      0.7375,
+      0.75
+    ]
+  },
+  "cascade_heron": {
+    "index": 20,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.10416666666666667,
+      1.0,
+      0.9791666666666666
+    ],
+    "visible_height": 58,
+    "walk_x_offsets": [
+      1,
+      3
+    ],
+    "menu_visible": [
+      0.55,
+      0.725
+    ]
+  },
+  "crowned_torrent": {
+    "index": 21,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.0,
+      1.0,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      2
+    ],
+    "menu_visible": [
+      0.675,
+      0.75
+    ]
+  },
+  "mistglass_skater": {
+    "index": 22,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05625,
+      0.15625,
+      0.94375,
+      0.9625
+    ],
+    "visible_height": 54,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.675
+    ]
+  },
+  "ripple_eel": {
+    "index": 23,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.10416666666666667,
+      0.9166666666666666,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      3,
+      3
+    ],
+    "menu_visible": [
+      0.675,
+      0.75
+    ]
+  },
+  "sluice_beetle": {
+    "index": 24,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.0,
+      0.9166666666666666,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.7375,
+      0.75
+    ]
+  },
+  "sluicewarden": {
+    "index": 25,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0125,
+      0.16875,
+      0.95625,
+      0.9625
+    ],
+    "visible_height": 46,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.575
+    ]
+  },
+  "tidebinder": {
+    "index": 26,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.14285714285714285,
+      0.9166666666666666,
+      0.9107142857142857
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      1
+    ],
+    "menu_visible": [
+      0.65,
+      0.75
+    ]
+  },
+  "undertow_weaver": {
+    "index": 27,
+    "realm": "silverfall",
+    "old_factor": 1,
+    "old_normalized": [
+      0.11875,
+      0.16875,
+      0.88125,
+      0.9625
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "brass_bailiff": {
+    "index": 28,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.1875,
+      0.140625,
+      0.9375,
+      0.921875
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.625,
+      0.75
+    ]
+  },
+  "brass_sapper": {
+    "index": 29,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.140625,
+      0.1875,
+      0.90625,
+      0.96875
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      1
+    ],
+    "menu_visible": [
+      0.7625,
+      0.75
+    ]
+  },
+  "copper_constable": {
+    "index": 30,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.125,
+      1.0,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.625,
+      0.75
+    ]
+  },
+  "grate_witch": {
+    "index": 31,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.015625,
+      1.0,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.6,
+      0.75
+    ]
+  },
+  "hinge_conjurer": {
+    "index": 32,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.07291666666666667,
+      0.14583333333333334,
+      0.9583333333333334,
+      0.8958333333333334
+    ],
+    "visible_height": 53,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.85,
+      0.6625
+    ]
+  },
+  "keywing_courier": {
+    "index": 33,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.140625,
+      0.140625,
+      0.875,
+      0.96875
+    ],
+    "visible_height": 56,
+    "walk_x_offsets": [
+      -2,
+      2
+    ],
+    "menu_visible": [
+      0.8125,
+      0.7
+    ]
+  },
+  "latch_hound": {
+    "index": 34,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.041666666666666664,
+      0.10416666666666667,
+      0.9375,
+      0.8958333333333334
+    ],
+    "visible_height": 55,
+    "walk_x_offsets": [
+      3,
+      -2
+    ],
+    "menu_visible": [
+      0.7375,
+      0.6875
+    ]
+  },
+  "lockmaster_regent": {
+    "index": 35,
+    "realm": "brasslock",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.0,
+      0.9583333333333334,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -3,
+      2
+    ],
+    "menu_visible": [
+      0.65,
+      0.75
+    ]
+  },
+  "ashglass_alchemist": {
+    "index": 36,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05714285714285714,
+      0.11585365853658537,
+      0.9142857142857143,
+      0.8170731707317073
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "brandbound_chain": {
+    "index": 37,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.10714285714285714,
+      0.1524390243902439,
+      0.8642857142857143,
+      0.8719512195121951
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.6625,
+      0.75
+    ]
+  },
+  "calderax": {
+    "index": 38,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05,
+      0.07317073170731707,
+      0.9571428571428572,
+      0.9085365853658537
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      2,
+      0
+    ],
+    "menu_visible": [
+      0.8,
+      0.75
+    ]
+  },
+  "castellan_varr": {
+    "index": 39,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.1357142857142857,
+      0.06707317073170732,
+      0.9142857142857143,
+      0.8902439024390244
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      1
+    ],
+    "menu_visible": [
+      0.65,
+      0.75
+    ]
+  },
+  "cinder_page": {
+    "index": 40,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.14285714285714285,
+      0.22560975609756098,
+      0.85,
+      0.7621951219512195
+    ],
+    "visible_height": 46,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.6,
+      0.575
+    ]
+  },
+  "cinderbell_wisp": {
+    "index": 41,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.20714285714285716,
+      0.1524390243902439,
+      0.8,
+      0.8292682926829268
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.5875,
+      0.75
+    ]
+  },
+  "coalwing_gargoyle": {
+    "index": 42,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.07857142857142857,
+      0.07317073170731707,
+      0.9285714285714286,
+      0.8719512195121951
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -2,
+      1
+    ],
+    "menu_visible": [
+      0.7625,
+      0.75
+    ]
+  },
+  "crucible_scuttler": {
+    "index": 43,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.09285714285714286,
+      0.22560975609756098,
+      0.9142857142857143,
+      0.8658536585365854
+    ],
+    "visible_height": 56,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.75,
+      0.7
+    ]
+  },
+  "furnace_sentinel": {
+    "index": 44,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08571428571428572,
+      0.13414634146341464,
+      0.9142857142857143,
+      0.8841463414634146
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.75
+    ]
+  },
+  "gatebreaker_korr": {
+    "index": 45,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05714285714285714,
+      0.07317073170731707,
+      0.9428571428571428,
+      0.8536585365853658
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      1
+    ],
+    "menu_visible": [
+      0.6875,
+      0.75
+    ]
+  },
+  "glass_matron": {
+    "index": 46,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.04285714285714286,
+      0.08536585365853659,
+      0.95,
+      0.8963414634146342
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      1
+    ],
+    "menu_visible": [
+      0.6875,
+      0.75
+    ]
+  },
+  "kiln_slug": {
+    "index": 47,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.11428571428571428,
+      0.1524390243902439,
+      0.9,
+      0.8414634146341463
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      -2
+    ],
+    "menu_visible": [
+      0.7625,
+      0.75
+    ]
+  },
+  "backpack_biter": {
+    "index": 48,
+    "realm": "high_school",
+    "old_factor": 1.3333337,
+    "old_normalized": [
+      0.2625,
+      0.3125,
+      0.7875,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.6625,
+      0.75
+    ]
+  },
+  "culture_blob": {
+    "index": 49,
+    "realm": "high_school",
+    "old_factor": 1.6129038,
+    "old_normalized": [
+      0.2625,
+      0.55,
+      0.7375,
+      0.9375
+    ],
+    "visible_height": 49,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.825,
+      0.6125
+    ]
+  },
+  "exam_english": {
+    "index": 50,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.03125,
+      0.13541666666666666,
+      0.9270833333333334,
+      0.9583333333333334
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -2
+    ],
+    "menu_visible": [
+      0.775,
+      0.75
+    ]
+  },
+  "exam_history": {
+    "index": 51,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.07291666666666667,
+      0.13541666666666666,
+      0.96875,
+      0.9583333333333334
+    ],
+    "visible_height": 54,
+    "walk_x_offsets": [
+      -1,
+      -2
+    ],
+    "menu_visible": [
+      0.7875,
+      0.675
+    ]
+  },
+  "exam_math": {
+    "index": 52,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.07291666666666667,
+      0.13541666666666666,
+      0.9791666666666666,
+      0.9583333333333334
+    ],
+    "visible_height": 50,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.625
+    ]
+  },
+  "exam_science": {
+    "index": 53,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.041666666666666664,
+      0.13541666666666666,
+      0.9583333333333334,
+      0.9583333333333334
+    ],
+    "visible_height": 53,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.8,
+      0.6625
+    ]
+  },
+  "gravel_skater": {
+    "index": 54,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.125,
+      0.0625,
+      0.9166666666666666,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.7375,
+      0.75
+    ]
+  },
+  "hall_monitor": {
+    "index": 55,
+    "realm": "high_school",
+    "old_factor": 1.2421388,
+    "old_normalized": [
+      0.125,
+      0.275,
+      0.875,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      -1
+    ],
+    "menu_visible": [
+      0.875,
+      0.75
+    ]
+  },
+  "iron_barbell": {
+    "index": 56,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.052083333333333336,
+      0.16666666666666666,
+      0.9479166666666666,
+      0.8645833333333334
+    ],
+    "visible_height": 43,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.5375
+    ]
+  },
+  "layercake_golem": {
+    "index": 57,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.13541666666666666,
+      0.052083333333333336,
+      0.8541666666666666,
+      0.9583333333333334
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.6,
+      0.75
+    ]
+  },
+  "paper_sprite": {
+    "index": 58,
+    "realm": "high_school",
+    "old_factor": 1.2962962,
+    "old_normalized": [
+      0.1875,
+      0.375,
+      0.875,
+      0.9375
+    ],
+    "visible_height": 51,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.8375,
+      0.6375
+    ]
+  },
+  "pencil_scrapper": {
+    "index": 59,
+    "realm": "high_school",
+    "old_factor": 1.2414962,
+    "old_normalized": [
+      0.3125,
+      0.325,
+      0.7375,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      -1
+    ],
+    "menu_visible": [
+      0.475,
+      0.75
+    ]
+  },
+  "void_seeker": {
+    "index": 60,
+    "realm": "space",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.14583333333333334,
+      0.9375,
+      1.0
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7,
+      0.75
+    ]
+  },
+  "spore_thrower": {
+    "index": 61,
+    "realm": "zombie",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.0625,
+      0.9583333333333334,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "pyrewing_bellkeeper": {
+    "index": 62,
+    "realm": "cinderheart",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05714285714285714,
+      0.11585365853658537,
+      0.95,
+      0.823170731707317
+    ],
+    "visible_height": 57,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.8375,
+      0.7125
+    ]
+  },
+  "spotlight_sovereign": {
+    "index": 63,
+    "realm": "high_school",
+    "old_factor": 1,
+    "old_normalized": [
+      0.14583333333333334,
+      0.09375,
+      0.8645833333333334,
+      0.9479166666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.6,
+      0.75
+    ]
+  },
+  "comet_urchin": {
+    "index": 64,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.0625,
+      0.9791666666666666,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -3,
+      3
+    ],
+    "menu_visible": [
+      0.7375,
+      0.75
+    ]
+  },
+  "eclipse_engine": {
+    "index": 65,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      1
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "gravity_husk": {
+    "index": 66,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0,
+      0.09722222222222222,
+      0.90625,
+      0.9861111111111112
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -2,
+      3
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "prism_kite": {
+    "index": 67,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.10416666666666667,
+      0.041666666666666664,
+      0.9166666666666666,
+      1.0
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -3,
+      2
+    ],
+    "menu_visible": [
+      0.5375,
+      0.75
+    ]
+  },
+  "rift_weaver": {
+    "index": 68,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.1875,
+      1.0,
+      0.9791666666666666
+    ],
+    "visible_height": 58,
+    "walk_x_offsets": [
+      1,
+      -2
+    ],
+    "menu_visible": [
+      0.85,
+      0.725
+    ]
+  },
+  "singularity_oracle": {
+    "index": 69,
+    "realm": "astral_rift",
+    "old_factor": 1,
+    "old_normalized": [
+      0.109375,
+      0.125,
+      0.875,
+      0.9444444444444444
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.7375,
+      0.75
+    ]
+  },
+  "gongbreaker": {
+    "index": 70,
+    "realm": "chimevault",
+    "old_factor": 1,
+    "old_normalized": [
+      0.03125,
+      0.046875,
+      0.96875,
+      0.953125
+    ],
+    "visible_height": 56,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7375,
+      0.7
+    ]
+  },
+  "resonance_beetle": {
+    "index": 71,
+    "realm": "chimevault",
+    "old_factor": 1,
+    "old_normalized": [
+      0.140625,
+      0.125,
+      0.875,
+      0.828125
+    ],
+    "visible_height": 56,
+    "walk_x_offsets": [
+      -2,
+      0
+    ],
+    "menu_visible": [
+      0.7625,
+      0.7
+    ]
+  },
+  "silence_regent": {
+    "index": 72,
+    "realm": "chimevault",
+    "old_factor": 1,
+    "old_normalized": [
+      0.109375,
+      0.046875,
+      0.921875,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7,
+      0.7375
+    ]
+  },
+  "tuning_wraith": {
+    "index": 73,
+    "realm": "chimevault",
+    "old_factor": 1,
+    "old_normalized": [
+      0.203125,
+      0.09375,
+      0.859375,
+      0.90625
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      -2
+    ],
+    "menu_visible": [
+      0.6375,
+      0.75
+    ]
+  },
+  "ashen_revenant": {
+    "index": 74,
+    "realm": "ebonwake",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.06944444444444445,
+      0.8125,
+      0.9722222222222222
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "menu_visible": [
+      0.575,
+      0.75
+    ]
+  },
+  "brood_reliquary": {
+    "index": 75,
+    "realm": "ebonwake",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.19444444444444445,
+      0.953125,
+      0.9305555555555556
+    ],
+    "visible_height": 59,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.725,
+      0.7375
+    ]
+  },
+  "chrysalis_knight": {
+    "index": 76,
+    "realm": "ebonwake",
+    "old_factor": 1,
+    "old_normalized": [
+      0.15625,
+      0.05555555555555555,
+      0.984375,
+      0.9722222222222222
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "menu_visible": [
+      0.7625,
+      0.75
+    ]
+  },
+  "last_creditor": {
+    "index": 77,
+    "realm": "ebonwake",
+    "old_factor": 1,
+    "old_normalized": [
+      0.015625,
+      0.0,
+      0.984375,
+      0.9583333333333334
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      1
+    ],
+    "menu_visible": [
+      0.7875,
+      0.75
+    ]
+  },
+  "mercy_cantor": {
+    "index": 78,
+    "realm": "ebonwake",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0,
+      0.013888888888888888,
+      0.890625,
+      0.9444444444444444
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -2
+    ],
+    "menu_visible": [
+      0.6875,
+      0.75
+    ]
+  },
+  "briar_matron": {
+    "index": 79,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.0625,
+      0.9583333333333334,
+      0.9791666666666666
+    ],
+    "visible_height": 53,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.55,
+      0.6625
+    ]
+  },
+  "cinder_salamander": {
+    "index": 80,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.08333333333333333,
+      0.22916666666666666,
+      0.9583333333333334,
+      0.9791666666666666
+    ],
+    "visible_height": 49,
+    "walk_x_offsets": [
+      2,
+      2
+    ],
+    "menu_visible": [
+      0.7875,
+      0.6125
+    ]
+  },
+  "kiln_knight": {
+    "index": 81,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.041666666666666664,
+      0.9375,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -2,
+      0
+    ],
+    "menu_visible": [
+      0.6625,
+      0.75
+    ]
+  },
+  "mirror_moth": {
+    "index": 82,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.041666666666666664,
+      0.14583333333333334,
+      0.9791666666666666,
+      0.9791666666666666
+    ],
+    "visible_height": 50,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7125,
+      0.625
+    ]
+  },
+  "mirror_oracle": {
+    "index": 83,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.0625,
+      0.9791666666666666,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      1
+    ],
+    "menu_visible": [
+      0.7875,
+      0.7375
+    ]
+  },
+  "storm_archon": {
+    "index": 84,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.020833333333333332,
+      0.08333333333333333,
+      0.9375,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -2,
+      0
+    ],
+    "menu_visible": [
+      0.7125,
+      0.75
+    ]
+  },
+  "storm_rook": {
+    "index": 85,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.10416666666666667,
+      0.875,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -2,
+      0
+    ],
+    "menu_visible": [
+      0.5875,
+      0.75
+    ]
+  },
+  "thorn_sentinel": {
+    "index": 86,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.0625,
+      0.875,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "menu_visible": [
+      0.575,
+      0.75
+    ]
+  },
+  "gilded_usurper": {
+    "index": 87,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.041666666666666664,
+      0.041666666666666664,
+      0.9583333333333334,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      2
+    ],
+    "menu_visible": [
+      0.725,
+      0.7375
+    ]
+  },
+  "oath_shade": {
+    "index": 88,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.16666666666666666,
+      0.10416666666666667,
+      0.875,
+      0.9791666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      1,
+      2
+    ],
+    "menu_visible": [
+      0.5375,
+      0.75
+    ]
+  },
+  "unwritten_sovereign": {
+    "index": 89,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05,
+      0.02,
+      0.95,
+      0.925
+    ],
+    "visible_height": 61,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7625,
+      0.775
+    ]
+  },
+  "unwritten_ascendant": {
+    "index": 90,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05,
+      0.02,
+      0.95,
+      0.925
+    ],
+    "visible_height": 66,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.775,
+      0.825
+    ]
+  },
+  "unwritten_worldbreaker": {
+    "index": 91,
+    "realm": "shattered_oath",
+    "old_factor": 1,
+    "old_normalized": [
+      0.05,
+      0.02,
+      0.95,
+      0.925
+    ],
+    "visible_height": 66,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.7625,
+      0.825
+    ]
+  },
+  "exalted_wraith": {
+    "index": 92,
+    "realm": "ebonwake",
+    "old_factor": 1,
+    "old_normalized": [
+      0.015625,
+      0.1111111111111111,
+      1.0,
+      0.9166666666666666
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      -1,
+      -1
+    ],
+    "menu_visible": [
+      0.75,
+      0.75
+    ]
+  },
+  "cinderling": {
+    "index": 93,
+    "realm": "ebonwake",
+    "old_factor": 1.25,
+    "old_normalized": [
+      0.1875,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "visible_height": 60,
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "menu_visible": [
+      0.625,
+      0.75
+    ]
+  }
+}

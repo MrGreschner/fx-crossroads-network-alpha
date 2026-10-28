@@ -56,6 +56,8 @@
       "attack": "beam"
     }
   ],
-  "difficulty_label": "Extreme: expanded trials, ranged guardians and a mobile XP-stealing Usurper",
-  "difficulty_tier": "extreme"
+  "difficulty_label": "Extreme: four trials and the final Oath",
+  "difficulty_tier": "extreme",
+  "finale_enemy": "unwritten_sovereign",
+  "description": "Four seals, a fractured Usurper, and a last promise beyond the exit."
 }

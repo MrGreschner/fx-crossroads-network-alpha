@@ -1,4 +1,16 @@
 extends Node2D
+var prepared_equipment_owner="offline"
+var web_intro_covered:=false
+var web_intro_callback:JavaScriptObject
+var web_intro_previous_process:=Node.PROCESS_MODE_INHERIT
+var web_intro_previous_render:=true
+func cover_web_intro()->void:
+	if web_intro_covered:return
+	web_intro_covered=true;web_intro_previous_process=process_mode;web_intro_previous_render=RenderingServer.render_loop_enabled
+	process_mode=Node.PROCESS_MODE_DISABLED;RenderingServer.render_loop_enabled=false
+func uncover_web_intro(_args:Array=[])->void:
+	if not web_intro_covered:return
+	web_intro_covered=false;process_mode=web_intro_previous_process;RenderingServer.render_loop_enabled=web_intro_previous_render;queue_redraw()
 var waylight:Node
 var music=preload("res://scripts/music_player.gd").new()
 var media=preload("res://scripts/media_mode.gd").new()
@@ -169,7 +181,11 @@ func media_mouse_world()->Vector2:
 	return media.world_mouse() if media.game!=null else get_global_mouse_position()+camera
 var marina_life:Node
 var voyage:Node
+func _exit_tree()->void:
+	preload("res://scripts/prepared_equipment238.gd").capture(self)
+
 func _ready() -> void:
+	prepared_equipment_owner=preload("res://scripts/prepared_equipment238.gd").owner(self)
 	var travel=preload("res://scripts/travel_polish.gd").new();travel.name="TravelPolish";add_child(travel);travel.play("town")
 	call_deferred("setup_media")
 	dev_magic=preload("res://scripts/dev_magic.gd").new();add_child(dev_magic);dev_magic.setup(self)
@@ -203,6 +219,7 @@ func _ready() -> void:
 	respawn_clinic=bool(get_tree().root.get_meta("fx_clinic",false));get_tree().root.set_meta("fx_clinic",false)
 	legacy=preload("res://scripts/legacy.gd").new();add_child(legacy);legacy.setup(self)
 	preload("res://scripts/prepared_supply.gd").restore(self)
+	preload("res://scripts/prepared_equipment238.gd").restore(self)
 	hero_workshop=preload("res://scripts/hero_workshop.gd").new();add_child(hero_workshop);hero_workshop.setup(self)
 	preload("res://scripts/studio_library.gd").install(self)
 	studio_live=preload("res://scripts/studio_live.gd").new();add_child(studio_live);studio_live.setup(self)
@@ -246,6 +263,9 @@ func _finish_web_sun_loading()->void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
+	web_intro_callback=JavaScriptBridge.create_callback(uncover_web_intro)
+	var loader=JavaScriptBridge.get_interface("fxSunLoading")
+	if loader!=null and bool(loader.cover_game(web_intro_callback)):cover_web_intro()
 	JavaScriptBridge.eval("if(window.fxSunLoading)window.fxSunLoading.ready();",true)
 
 func load_json(path: String) -> Dictionary:
@@ -291,6 +311,9 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
+	if preload("res://scripts/enemy_art235.gd").texture(prefix)!=null:
+		for pose in ["idle","walk1","walk2","attack","attack2","special","0","1","2"]:art[prefix+"_"+pose]=preload("res://scripts/enemy_art235.gd").texture(prefix,pose)
+		art[prefix]=art[prefix+"_idle"];return
 	if prefix in preload("res://scripts/enemy_visual227.gd").FACTORS:
 		for pose in ["idle","walk1","walk2","attack","attack2","special","0","1"]:art[prefix+"_"+pose]=load("res://assets/"+prefix+"_"+pose+".png")
 		art[prefix]=art[prefix+"_idle"];return
@@ -437,7 +460,7 @@ func move_player(displacement: Vector2) -> void:
 			position_in_world = vertical
 
 func region_size() -> Vector2:
-	return pair(region.get("size", [1280, 720]))
+	return pair(region.get("size", [1280, 720])).max(adventure.finale.EXTENT) if adventure!=null and adventure.finale.enabled and adventure.finale.mode!="dormant" else pair(region.get("size", [1280, 720]))
 
 func update_camera() -> void:
 	if mistglass_rift!=null and mistglass_rift.active:camera=Vector2.ZERO;return
@@ -1260,7 +1283,7 @@ func use_item_slot(slot: int) -> void:
 		return
 	var item: Dictionary = items.get(inventory[slot], {})
 	var effect := str(item.get("effect", ""))
-	if effect in ["bonus_damage", "bonus_speed", "lifesteal", "armor", "bonus_health", "block_boost", "reflect", "cooldown", "bounty", "thorns", "revive"]:
+	if effect in ["bonus_damage", "bonus_speed", "lifesteal", "heal_on_ko", "armor", "bonus_health", "block_boost", "reflect", "cooldown", "bounty", "thorns", "revive"]:
 		return
 	if effect == "heal" and health >= max_health():
 		return
@@ -1383,6 +1406,8 @@ func damage_enemy(index: int, amount: float) -> void:
 		enemy["hp"] = float(enemy["hp"]) - amount
 		if float(enemy["hp"]) <= 0: enemy["hp"] = enemy["max_hp"]
 		return
+	amount=adventure.finale.adjust_damage(enemy,amount)
+	if amount<=0:return
 	var actual_damage := 0.0 if bool(enemy.get("converted",false)) else minf(amount, maxf(0.0, float(enemy["hp"])))
 	adventure.combat.v112.on_hit("solo",adventure.combat.npc_key(enemy),actual_damage)
 	adventure.combat.v90.on_hit("solo",actual_damage)
@@ -1416,6 +1441,7 @@ func damage_enemy(index: int, amount: float) -> void:
 		return
 	if float(enemy["hp"]) <= 0:
 		if adventure.expansion.revive_intercept(enemy):return
+		preload("res://scripts/ko_item_heal239.gd").solo(self,enemy)
 		adventure.combat.morrow.fallen(enemy)
 		adventure.combat.robot.on_kill("solo")
 		var was_boss: bool = enemy["boss"]
@@ -1669,8 +1695,8 @@ var town_perf=preload("res://network/performance_view.gd").new()
 func _draw() -> void:
 	var draw_began=Time.get_ticks_usec()
 	var aquarium_open:bool=fishing!=null and is_instance_valid(fishing.room)
-	if terrain_cache!=null:terrain_cache.visible=menu!="workshop" and not aquarium_open and not (session_menu!=null and session_menu.page in ["main","clear","options"])
-	if menu=="workshop" or aquarium_open:return
+	if terrain_cache!=null:terrain_cache.visible=not has_node("FXIntro") and menu!="workshop" and not aquarium_open and not (session_menu!=null and session_menu.page in ["main","clear","options"])
+	if menu=="workshop" or aquarium_open or has_node("FXIntro"):return
 	if session_menu!=null and session_menu.page in ["main","clear","options"]:return
 	if region.is_empty():
 		return
@@ -1692,9 +1718,11 @@ func _draw() -> void:
 		render_work["lighting"]=Time.get_ticks_usec()-light_began
 		preload("res://scripts/town_afterglow.gd").draw_on(self,camera)
 	if voyage!=null and voyage.active:voyage.draw_lighting(self,camera)
+	adventure.finale.draw_fog(self,camera,VIEW)
 	VIEW=screen;draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 	if (media.clean_view or media.capturing) and menu.is_empty():return
 	draw_hud()
+	adventure.finale.draw_hud(self)
 	if waylight!=null:waylight.draw_hud(self)
 	journey.draw_hud(self)
 	tutorial.draw_on(self)
@@ -1729,7 +1757,10 @@ func ground_tile_at(tx:int,ty:int,base:String)->String:
 	return tile
 
 func draw_world() -> void:
-	if voyage!=null and voyage.active:
+	if adventure.finale.in_depth():
+		if terrain_cache!=null:terrain_cache.hide()
+		adventure.finale.draw_ground(self,camera)
+	elif voyage!=null and voyage.active:
 		if terrain_cache!=null:terrain_cache.hide()
 		voyage.draw_ground(self,camera)
 	elif waylight!=null and waylight.between() and mode=="run":
@@ -1845,6 +1876,8 @@ func draw_world() -> void:
 			if is_boss:
 				var boss_prefix := "bramble_boss" if str(enemy["type"]) == "fragment" else str(enemy.get("type")) if enemy.get("expansion_boss",false) else str(enemy.get("sprite",region.get("boss_sprite", "bramble_boss")))
 				enemy_sprite = boss_prefix + "_attack" if float(enemy.get("windup",0.0)) > 0 and art.has(boss_prefix+"_attack") else boss_prefix + "_" + enemy_pose if art.has(boss_prefix+"_"+enemy_pose) else boss_prefix
+			if bool(enemy.get("finale_actor",false)):
+				enemy_sprite=str(enemy.sprite)+"_"+enemy_pose;boss_size=Vector2(230,238)
 			if enemy.get("expansion_boss",false): boss_size *= (1.0 if int(enemy.get("generation",0)) == 0 else .78 if int(enemy.get("generation",0)) == 1 else .56)
 			if bool(enemy.get("veilbound",false)):
 				var veil_size:Vector2=adventure.pursuers.body_size(enemy);draw_sprite(enemy_sprite,enemy.pos-veil_size*Vector2(.5,.7),veil_size)
@@ -1874,7 +1907,7 @@ func draw_world() -> void:
 					preload("res://scripts/combat_cues.gd").corridor(self,ep,position_in_world-camera,14)
 			preload("res://scripts/starter_boss.gd").draw_warning(self,enemy,ep)
 			var hp_y:float=-adventure.pursuers.body_size(enemy).y*.7-8 if bool(enemy.get("veilbound",false)) else -adventure.cinder.body_size(str(enemy.type)).y*.7-8 if str(enemy.type) in adventure.cinder.TYPES else -adventure.tech.body_size(str(enemy.type)).y*.7-8 if str(enemy.type) in adventure.tech.TYPES else -47 if is_boss else -32
-			if not (adventure.school.active and is_boss) and not (media.clean_view or media.capturing):draw_rect(Rect2(ep + Vector2(-27,hp_y), Vector2(54 * float(enemy["hp"]) / float(enemy["max_hp"]), 5)), Color("#e8d586"))
+			if not bool(enemy.get("finale_actor",false)) and not (adventure.school.active and is_boss) and not (media.clean_view or media.capturing):draw_rect(Rect2(ep + Vector2(-27,hp_y), Vector2(54 * float(enemy["hp"]) / float(enemy["max_hp"]), 5)), Color("#e8d586"))
 		for bullet in bullets:
 			draw_circle(bullet["pos"] - camera, 9, Color.html(str(bullet["stats"].get("color", "#ffffff"))))
 		for enemy_shot in enemy_shots:
@@ -1986,6 +2019,7 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if preload("res://scripts/enemy_art235.gd").draw_key(self,name,Rect2(world_pos-camera,size),tint):return
 	if mode=="town" and name in ["guard_melee","guard_ranged"]:
 		preload("res://scripts/town_cast230.gd").draw(self,name,world_pos+size*Vector2(.5,.875)-camera,visual_clock,false);return
 	if adventure!=null and adventure.quests.active:
@@ -2085,7 +2119,7 @@ func confirm_list_entry() -> void:
 	var price:int = preload("res://scripts/supply_slots.gd").price(item,legacy)
 	var packed: Array = inventory if menu == "merchant" else loadout
 	if not preload("res://scripts/supply_slots.gd").can_add(packed,id,items) or gold < price: return
-	if packed.has(id) and str(item.get("effect","")) in ["bonus_damage","bonus_speed","lifesteal","armor","bonus_health","cooldown"]: return
+	if packed.has(id) and str(item.get("effect","")) in ["bonus_damage","bonus_speed","lifesteal","heal_on_ko","armor","bonus_health","cooldown"]: return
 	gold -= price
 	packed.append(id)
 	if menu=="supplies":
