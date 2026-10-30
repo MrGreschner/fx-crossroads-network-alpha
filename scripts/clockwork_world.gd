@@ -62,7 +62,8 @@ func step(dt:float)->void:
   for id in adventure.points():
    if adventure.alive(str(id)) and foe.pos.distance_to(adventure.points()[id])<nearest:nearest=foe.pos.distance_to(adventure.points()[id]);target=str(id)
   if target.is_empty() or nearest>760:continue
-  var aim:Vector2=(adventure.points()[target]-foe.pos).normalized();var melee=str(foe.type)=="spark_scarab"
+  var goal:Vector2=combat.fern.redirect(foe,adventure.points()[target]);nearest=foe.pos.distance_to(goal)
+  var aim:Vector2=(goal-foe.pos).normalized();var melee=str(foe.type)=="spark_scarab"
   var direction=aim if melee else aim if nearest>340 else -aim if nearest<190 else Vector2.ZERO
   var move:Vector2=direction*(185 if melee else 85)*dt*combat.speed_factor(combat.npc_key(foe))
   if combat.path_clear(foe.pos,foe.pos+move):foe.pos+=move
@@ -72,7 +73,7 @@ func step(dt:float)->void:
    if nearest<64:
     foe.skill_timer=1.3;adventure.warn(foe.pos+aim*25,45,7,.35)
     preload("res://scripts/enemy_visual227.gd").mark(adventure,foe,.35)
-  elif combat.path_clear(foe.pos,adventure.points()[target]):
+  elif combat.path_clear(foe.pos,goal):
    foe.skill_timer=2.6
    preload("res://scripts/enemy_visual227.gd").mark(adventure,foe,.65)
    for angle in [-.24,0,.24]:combat.launch_projectile("enemy",foe.pos,aim.rotated(angle),{"range":590,"speed":225,"color":"#ead397"},9,"plain")

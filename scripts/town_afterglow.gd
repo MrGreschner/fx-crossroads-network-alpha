@@ -1,6 +1,6 @@
 extends RefCounted
 ## Bounded, culled facade accents; emissive details render after the ambient tint.
-const TORCHES=[Vector2(-1205,1210),Vector2(-955,1210),Vector2(-1198,430),Vector2(-862,430)]
+const TORCHES=[Vector2(-1205,1210),Vector2(-955,1210),Vector2(-1105,430),Vector2(-955,430)]
 const WINDOWS={
  "character_hall_v65":[Vector2(360,255),[Rect2(72,126,16,41),Rect2(283,126,16,41)]],
  "healer_shack":[Vector2(290,220),[Rect2(52,117,44,33),Rect2(212,117,25,33)]],
@@ -8,31 +8,15 @@ const WINDOWS={
  "arena_hall":[Vector2(160,128),[Rect2(25,77,14,22),Rect2(121,77,14,22)]],
 }
 static func panes(g:Node2D)->Array:
- var result:Array=[]
- for landmark in g.town_art:
-  var key=str(landmark.sprite)
-  if not WINDOWS.has(key):continue
-  var spec=WINDOWS[key];var scale:Vector2=landmark.size/spec[0];var origin:Vector2=landmark.pos-landmark.size*.5
-  for rect in spec[1]:result.append(Rect2(origin+rect.position*scale,rect.size*scale))
- # Atelier display windows, academy studio and lodge windows follow their real facade coordinates.
- for rect in [Rect2(529,1018,39,37),Rect2(630,1018,39,37)]:result.append(rect)
- var studio=preload("res://scripts/studio_town.gd").WALL.position
- for y in [52,134]:
-  for x in [28,110,374,456]:result.append(Rect2(studio+Vector2(x,y),Vector2(36,48)))
- for n in 3:result.append(Rect2(studio+Vector2(204+n*44,118),Vector2(24,42)))
- for x in [48,90,132,346,388,430]:result.append(Rect2((preload("res://scripts/lodges.gd").CHALLENGE-Vector2(250,325))+Vector2(x+2,169),Vector2(18,42)))
- # Squirrel Post and the aquarium welcome passing anglers after sunset.
- return result
+ # V242 window masks exclude frames/mullions and are drawn after the ambient tint.
+ return []
 static func light_sources(g:Node2D)->Array:
  var lights:Array=[]
- for landmark in g.town_art:
-  if WINDOWS.has(str(landmark.sprite)) or str(landmark.sprite)=="pond_food_stand":
-   lights.append({"at":landmark.pos+Vector2(0,landmark.size.y*.2),"radius":165.0,"strength":.95})
- for at in [Vector2(600,1035),Vector2(-820,1200),Vector2(-360,1200),Vector2(-1030,425),Vector2(-580,400),Vector2(1290,560),Vector2(1150,1095),Vector2(550,1440),Vector2(2000,1880),Vector2(1375,1430),Vector2(2800,520)]:lights.append({"at":at,"radius":160.0,"strength":1.0})
- for at in [Vector2(550,1310),Vector2(790,1565)]:lights.append({"at":at,"radius":165.0,"strength":1.0})
  for at in [Vector2(1245,1705),Vector2(1495,1705)]:lights.append({"at":at-Vector2(0,30),"radius":155.0,"strength":1.0})
  lights.append({"at":Vector2(1460,1860),"radius":125.0,"strength":.85})
  for at in TORCHES:lights.append({"at":at-Vector2(0,26),"radius":185.0,"strength":1.1})
+ lights.append_array(preload("res://scripts/town_landmarks241.gd").light_sources())
+ lights.append_array(preload("res://scripts/town_shops242.gd").light_sources(g))
  return lights
 static func flame(g:Node2D,at:Vector2,t:float,night:float)->void:
  var p=at;g.draw_line(p+Vector2(-5,5),p+Vector2(5,5),Color("#52616a"),5)
@@ -53,34 +37,21 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
    g.draw_line(screen.position+Vector2(screen.size.x*.5,0),screen.position+Vector2(screen.size.x*.5,screen.size.y),Color(.38,.31,.21,night*.75),2)
    g.draw_line(screen.position+Vector2(0,screen.size.y*.48),screen.position+Vector2(screen.size.x,screen.size.y*.48),Color(.38,.31,.21,night*.65),2)
    g.draw_rect(screen.grow(3),Color(1,.75,.36,night*.06))
- # The acorn itself casts light; the greenhouse uses one small front lantern.
- if night>.01 and view.has_point(Vector2(550,1310)):
-  var acorn=Vector2(550,1310)-camera
-  for n in range(3,0,-1):g.draw_circle(acorn,n*9,Color(1,.74,.35,night*.04))
-  g.draw_arc(acorn,9,0,PI,16,Color(1,.84,.48,night),3,true)
- var lantern_at=Vector2(790,1620)
- if view.has_point(lantern_at):preload("res://scripts/town_calendar.gd").draw_lantern(g,lantern_at-camera,night)
+ preload("res://scripts/town_landmarks241.gd").draw_emission(g,camera,night)
+ preload("res://scripts/town_shops242.gd").draw_emission(g,camera,night)
+ preload("res://scripts/town_nature243.gd").draw_emission(g,camera,night)
  for at in [Vector2(1245,1705),Vector2(1495,1705)]:
   if view.has_point(at):preload("res://scripts/town_calendar.gd").draw_lantern(g,at-camera,night)
  var fountain=Vector2(1460,1880)
  if night>.01 and view.has_point(fountain):
   var p=fountain-camera;var glow=night*(.65+.2*sin(t*1.2))
-  g.draw_arc(p,40,0,TAU,40,Color(.4,.9,1,glow*.7),2,true)
-  g.draw_circle(p-Vector2(0,38),11,Color(.6,.93,1,glow*.65))
+  var rim=PackedVector2Array()
+  for k in 33:rim.append(p+Vector2(cos(k*TAU/32)*32,2+sin(k*TAU/32)*13))
+  g.draw_polyline(rim,Color(.4,.9,1,glow*.45),1.2,true)
+  g.draw_circle(p-Vector2(0,48),7,Color(.6,.93,1,glow*.65))
   for n in 5:
-   var a=t*.25+n*TAU/5;var star=p+Vector2.from_angle(a)*28
+   var a=t*.25+n*TAU/5;var star=p+Vector2(cos(a)*24,2+sin(a)*10)
    g.draw_line(star-Vector2(2,0),star+Vector2(2,0),Color(.9,1,1,glow),2)
- # Shop awnings carry their own small lantern strings, never more street poles.
- for shop in [[Vector2(1150,1040),138.0],[Vector2(1290,485),180.0]]:
-  var at:Vector2=shop[0];var width:float=shop[1]
-  if not view.has_point(at):continue
-  var y:float=at.y-26 if width<150 else at.y-55
-  g.draw_line(Vector2(at.x-width*.42,y)-camera,Vector2(at.x+width*.42,y)-camera,Color("#7d6b49"),1.5)
-  for n in 5:
-   var q=Vector2(at.x-width*.4+width*.2*n,y+5+sin(float(n)*PI/4)*3)-camera
-   g.draw_line(q-Vector2(0,5),q,Color("#8c7752"),1)
-   g.draw_circle(q,3.5,Color(1,.83,.47,.45+night*.55))
-   if night>.1:g.draw_circle(q,11,Color(1,.70,.29,night*.08))
  for at in TORCHES:
   if view.has_point(at):flame(g,at-camera,t+at.x,night)
  # Eyes open, blink, fade away, then reappear elsewhere INSIDE the dark tunnel.

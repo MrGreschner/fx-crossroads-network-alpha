@@ -3,7 +3,7 @@ const TOWER=Vector2(2090,1165)
 const BARRACKS=Vector2(1375,1520)
 const BUILDINGS={"fellowship":Rect2(1670,1390,260,130),"relay":Rect2(210,1850,230,125),"tower":Rect2(1960,950,260,155),"barracks":Rect2(1240,1290,270,165)}
 const ENTRIES={"fellowship":Vector2(1800,1550),"relay":Vector2(325,2030),"tower":TOWER,"barracks":BARRACKS}
-var textures:Dictionary={"fellowship":preload("res://scripts/source_art.gd").texture("res://assets/fellowship_v109.svg"),"relay":preload("res://scripts/source_art.gd").texture("res://assets/relay_v109.svg"),"tower":preload("res://scripts/source_art.gd").texture("res://assets/mistglass_v109.svg"),"barracks":preload("res://scripts/source_art.gd").texture("res://assets/barracks_v109.svg"),"mill":preload("res://scripts/source_art.gd").texture("res://assets/mill_v109.svg")}
+var textures:Dictionary={} # V242 uses the shared offline atlas.
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 func solid_rect(id:String)->Rect2:
  var r:Rect2=BUILDINGS[id]
@@ -18,14 +18,12 @@ func interact(g:Node)->bool:
  return false
 func plaque(c:Node2D,p:Vector2,label:String,width:float)->void:
  if Rect2(p-Vector2(width*.5,17),Vector2(width,24)).intersects(Rect2(c.position_in_world-c.camera-Vector2(25,60),Vector2(50,70))):return
- c.draw_rect(Rect2(p-Vector2(width*.5,17),Vector2(width,24)),Color("#203b45"));c.draw_rect(Rect2(p-Vector2(width*.5,17),Vector2(width,24)),Color("#ceb784"),false,1)
+ preload("res://scripts/town_streets244.gd").plaque(c,Rect2(p-Vector2(width*.5,17),Vector2(width,24)))
  c.draw_string(font,p-Vector2(width*.5,0),label,HORIZONTAL_ALIGNMENT_CENTER,width,14,Color("#f1dab0"))
 func building(c:Node2D,camera:Vector2,id:String,title:String)->void:
  var r:Rect2=BUILDINGS[id];var art:=Rect2(r.position-Vector2(20,100)-camera,r.size+Vector2(40,110))
  if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(100).intersects(art):return
- c.draw_texture_rect(textures[id],art,false)
- var sign:Vector2=art.position+Vector2(art.size.x*.5,art.size.y*.4+8)
- plaque(c,sign,title,art.size.x*(.58 if id=="relay" else .5 if id=="barracks" else .46))
+ preload("res://scripts/town_shops242.gd").draw_rect(c,id,art)
  var entry:Vector2=ENTRIES[id]-camera
  c.draw_rect(Rect2(entry-Vector2(50,35),Vector2(100,54)),Color(.8,.76,.55,.1))
  if c.position_in_world.distance_to(ENTRIES[id])<80:c.draw_arc(entry,35,0,TAU,24,Color("#efd69b"),2,true)
@@ -35,7 +33,7 @@ func draw_projects(c:Node2D,camera:Vector2,data:Dictionary)->void:
 func draw_mill(c:Node2D,camera:Vector2)->void:
  var art:=Rect2(Vector2(2070,1290)-camera,Vector2(250,280))
  if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(90).intersects(art):return
- c.draw_texture_rect(textures.mill,art,false);plaque(c,Vector2(2175,1412)-camera,"WATERMILL",110)
+ preload("res://scripts/town_shops242.gd").draw_rect(c,"mill",art)
  var p:=Vector2(2300,1515)-camera;var t:=Time.get_ticks_msec()*.0005
  c.draw_circle(p,49,Color("#725b41"));c.draw_arc(p,43,0,TAU,32,Color("#cdb58b"),5,true)
  for n in 10:
@@ -62,13 +60,7 @@ func construction(c:Node2D,camera:Vector2,r:Rect2,label:String)->void:
  if not Rect2(camera,c.VIEW).grow(100).intersects(r):return
  var p=r.position-camera
  c.draw_rect(Rect2(p,r.size),Color("#77664e"))
- for n in 4:
-  var q=p+Vector2(n*r.size.x/3,0)
-  c.draw_line(q,q+Vector2(0,-42),Color("#aa8151"),5)
- c.draw_line(p-Vector2(0,22),p+Vector2(r.size.x,-22),Color("#c1a073"),5)
- for n in 3:
-  var q=p+Vector2(14+n*18,9)
-  c.draw_rect(Rect2(q,Vector2(15,6)),Color("#cab68b"))
+ preload("res://scripts/town_streets244.gd").draw(c,"construction",Rect2(p+Vector2(-3,-45),Vector2(r.size.x+6,62)))
  plaque(c,p+Vector2(r.size.x*.5,r.size.y+19),label+" • PLANNED",maxf(r.size.x,minf(280,font.get_string_size(label+" • PLANNED",HORIZONTAL_ALIGNMENT_LEFT,-1,14).x+18)))
 func draw_future_sites(c:Node2D,camera:Vector2,data:Dictionary)->void:
  var sites={"fellowship":Rect2(1670,1390,260,80),"relay":Rect2(210,1850,230,80),"mill":Rect2(2100,1420,115,110),"bakery":Rect2(750,1260,135,65),"library":Rect2(1020,1700,100,40),"statue":Rect2(1040,1130,40,25)}

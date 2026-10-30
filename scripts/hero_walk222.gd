@@ -2,6 +2,7 @@ extends RefCounted
 ## Two cached neutral walk poses, rigged from the existing idle atlas.
 ## Only lower legs change. Equipment, tails, head and torso never flip or bob.
 const RIGS={
+ "dustmarshal":[Rect2i(28,64,12,10),Rect2i(42,64,12,10)],
  "twisterspell":[Rect2i(30,65,10,9),Rect2i(49,66,10,8)],
  "echo_dancer":[Rect2i(28,63,13,11),Rect2i(42,63,13,11)],
  "cat":[Rect2i(27,66,15,8),Rect2i(44,66,14,8)],

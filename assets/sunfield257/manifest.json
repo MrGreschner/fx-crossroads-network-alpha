@@ -1,0 +1,100 @@
+{
+  "frames": {
+    "tree": [
+      0,
+      0,
+      256,
+      320
+    ],
+    "sunflower": [
+      256,
+      0,
+      128,
+      160
+    ],
+    "wheat": [
+      384,
+      0,
+      128,
+      144
+    ],
+    "rock": [
+      512,
+      0,
+      192,
+      144
+    ],
+    "sunwell": [
+      0,
+      320,
+      256,
+      256
+    ],
+    "arch": [
+      256,
+      320,
+      256,
+      384
+    ],
+    "wagon": [
+      512,
+      144,
+      192,
+      160
+    ],
+    "windmill": [
+      640,
+      320,
+      384,
+      576
+    ]
+  },
+  "sources": {
+    "water": {
+      "sha256": "78d4acb4efb363324b3207ace94f402dc03ef13faa26218892ee07fc2383870f"
+    },
+    "cliff": {
+      "sha256": "ef1b30ee943843d5ca9e9c947a67e6eab6ceb9511f36430846f6756515403f9e"
+    },
+    "rotor": {
+      "sha256": "37e1300c7ed85da2a3b0b57bc3cf969ceba6ce4b5e20f04f1488d9f558cbb4bd"
+    },
+    "sunwell": {
+      "sha256": "5265470136b46460bd93226f7a6b8641636a33920398d89946eeba0887c7334f"
+    },
+    "tree": {
+      "sha256": "8bfd9c89354b342d9045db71c6521f819c8d62a7f67363e38b432b42c23a9689"
+    },
+    "trail": {
+      "sha256": "7218a4d4e1bad7616c5e67cad8da95bbeccaf80cf1ae24c7a38735d35379b974"
+    },
+    "sunflower": {
+      "sha256": "fd0429bd902c8a7c61e1d414e18a88dfe24366df7e8c88f23aa5d6043edec479"
+    },
+    "wagon": {
+      "sha256": "f7a88161d24086c373ffe169db607e80608caec7d451242f8dc83463c4cc7c22"
+    },
+    "stone": {
+      "sha256": "0af80f82c40e75206a85ef794e988ade4b3a2028ed33acbcde808e375067fd84"
+    },
+    "wheat": {
+      "sha256": "24a46fe5e8c48faa189c557e4a9ddf5d82685e7f30182e955a071631a562ccda"
+    },
+    "windmill": {
+      "sha256": "ba06f97cb7724cf065ab39915f5ac41c51296fc5b4e831295f1a4d988bd72d63"
+    },
+    "grass": {
+      "sha256": "67ba06494ddda8e7c8d4ab6bf73aeda4b23bdf545365a3fcca0f78aa72f821f6"
+    },
+    "rock": {
+      "sha256": "17405bdaa1385aa26d3aa3ed8dda9f624dd8c99a5e552e56e903a4679f86f04f"
+    },
+    "arch": {
+      "sha256": "3e7fa10244fecdc5552060557724aa6ab36a0a6bc3a8025589bcc468896bdf80"
+    }
+  },
+  "mill_hub": [
+    48,
+    -338
+  ]
+}

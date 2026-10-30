@@ -155,8 +155,8 @@ func _draw()->void:
  renderer.ground(self,world,view,time)
  renderer.props(self,world,view,player.y)
  var end=Vector2(world.exit[0]*40+20,world.exit[1]*40+20)
- var portal:Texture2D=load("res://assets/portal.png")
- draw_texture_rect(portal,Rect2(end-Vector2(35,64+sin(time*2)*3),Vector2(70,80)),false)
+ var portal:Texture2D=preload("res://scripts/realm_portals258.gd").texture(0,time)
+ draw_texture_rect(portal,Rect2(end-Vector2(35,64),Vector2(70,80)),false)
  draw_circle(end,22,Color("#edd38b"),false,3);draw_arc(end,27,time,time+PI,24,Color("#f5e8bd"),2)
  actor_effects(self);draw_aim(self,Vector2.ZERO)
  var pose="attack" if attack_pose>0 else "walk1" if moving and int(time*8)%2==0 else "walk2" if moving else "idle"

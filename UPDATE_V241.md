@@ -1,0 +1,11 @@
+# Crossroads V241 — grand town landmarks
+
+Updated Gladiator Arena, Crossroads Studio, Crossroads Academy and Challenge Lodge to the soft coloured contours and matte storybook material style of the V207/V208 heroes and V240 Deepwell Exchange. Each retains its own silhouette, broad scale, architectural identity and centered entrance. Studio has twin slate-capped towers and six-lab campus windows; Academy keeps its formal sandstone pediment and ram crest; Lodge keeps its trophy medallion and lower wings; Arena keeps the open seating bowl, twin towers and Grand Honours variant.
+
+All four collision functions, building location constants and interaction points are identical to V240. Navigation and access rules are retained. Lodge torches move onto its new stone columns, with their light emitters. Night window panes were fitted to the new glass individually. Studio wall lanterns, arena flags, braziers, contained lightning and entrance accents remain live.
+
+One cached 1024 × 768 texture serves the four buildings: 3 MiB decoded RGBA memory. No live viewport rendering or per-frame image generation is added. The older Studio/Academy cache layers are bypassed, and the normal Lodge setup reuses the new region instead of loading its old facade. Trees, homes and other shops remain for later batches.
+
+Validation: 197 focused runtime checks passed, covering atlas geometry/reuse, night panes, centered/reachable approaches, solid building walls, open arena entrance, local light bounds and server compilation. Nine native compatibility-renderer views reviewed: day and night for each landmark, plus Grand Arena. Static comparison verifies unchanged collision functions/position constants, content/curriculum files, network service and hero atlas/scaling. Native fixture reports retained references at shutdown; no in-session script errors occurred. Browser/device playtesting is still recommended.
+
+Original reference-guided generated artwork, full prompts and atlas preparation tool are in Editable. Deploy Server_Update first, then Web. Not deployed by this task. No database migration or record reset. V240 walking/Studio/props and earlier performance, Cave Descent loadout and Leech Charm work are retained.

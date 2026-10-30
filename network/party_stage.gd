@@ -50,15 +50,21 @@ func lineup(members:Array,area:Rect2)->void:
   var rect=Rect2(area.position+Vector2(i%cols,int(i/cols))*tile,tile);var p=rect.position+Vector2(tile.x*.5,tile.y*.43)
   var height=minf(60,tile.y-34)
   draw_circle(p+Vector2(0,height*.32),14,Color(0,0,0,.28))
-  if texture!=null:draw_texture_rect(texture,Rect2(p-Vector2(height*.42,height*.65),Vector2(height*.84,height)),false)
+  texture=preload("res://scripts/hero_portrait.gd").texture(game,hero)
+  var canvas_height=minf(height,maxf(24,tile.y-56));var image_rect=Rect2(Vector2(rect.get_center().x-canvas_height*.5,rect.position.y+28),Vector2.ONE*canvas_height)
+  var body=preload("res://scripts/hero_layout250.gd").body(texture,image_rect)
+  if texture!=null:draw_texture_rect(texture,image_rect,false)
   var cosmetic:Dictionary=game.local_cosmetic() if local else member.get("cosmetic",{})
-  draw_set_transform(p-Vector2(0,height*.15),0,Vector2.ONE*minf(1,height/64))
-  preload("res://scripts/rolling_crowns.gd").draw_on(self,Vector2.ZERO,clock,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
-  draw_set_transform(p+Vector2(0,height*.20),0,Vector2.ONE*minf(.65,height/80))
-  preload("res://scripts/player_cosmetics.gd").draw_on(self,Vector2.ZERO,clock,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")))
-  draw_set_transform(p+Vector2(0,height*.12),0,Vector2.ONE*minf(1,height/64))
-  preload("res://scripts/ranked_cosmetic_art.gd").draw_lobby(self,Vector2.ZERO,clock,cosmetic)
-  draw_set_transform(Vector2.ZERO)
+  preload("res://scripts/rolling_crowns.gd").draw_town(self,preload("res://scripts/hero_layout250.gd").crown(body),clock,preload("res://scripts/rolling_crowns.gd").remote_tier(cosmetic))
+  preload("res://scripts/player_cosmetics.gd").draw_on(self,p,clock,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")),body)
+  # Dense live awards use a separate compact row, rather than covering a hero or name.
+  var awards=preload("res://scripts/ranked_cosmetic_art.gd").active(cosmetic)
+  if not awards.is_empty():
+   var icon_scale=minf(.42,(tile.x-12)/maxf(1,awards.size()*46));var step=46*icon_scale
+   for n in awards.size():
+    var at=Vector2(rect.get_center().x+(n-(awards.size()-1)*.5)*step,rect.position.y+12)
+    draw_set_transform(at,0,Vector2.ONE*icon_scale);preload("res://scripts/ranked_cosmetic_art.gd").draw_icon(self,Vector2.ZERO,clock,str(awards[n]))
+   draw_set_transform(Vector2.ZERO)
   var tint=Color("#f2d49c") if local else Color("#a6d7df")
   var text_pos=rect.position+Vector2(3,tile.y-17)
   draw_string(game.font,text_pos,str(member.get("name","Player"))+(" • You" if local else ""),HORIZONTAL_ALIGNMENT_CENTER,tile.x-6,11,tint)
@@ -73,6 +79,6 @@ func _get_tooltip(at:Vector2)->String:
   if not card.rect.has_point(at):continue
   var words=PackedStringArray([str(card.member.get("name","Player"))])
   var labels={"rank_week_damage":"Vanguard Comets • current weekly top 10 damage","rank_week_fish":"Leviathan’s Wake • current weekly top 10 heaviest fish","rank_all_damage":"Eternal Constellation • current lifetime top 5 damage"}
-  for id in preload("res://scripts/ranked_cosmetic_art.gd").active(card.cosmetic):words.append(labels[id])
+  for id in preload("res://scripts/ranked_cosmetic_art.gd").active(card.cosmetic):words.append(str(labels.get(id,preload("res://scripts/weekly_activities.gd").REWARDS.get(id,{}).get("name",str(id).replace("_"," ").capitalize()))))
   return "\n".join(words)
  return ""

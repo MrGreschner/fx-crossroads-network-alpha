@@ -1,0 +1,50 @@
+{
+  "sources": [
+    {
+      "id": "normal",
+      "sha256": "89c9d2005bbc9105ff0d01c7eebb70018f2398bf9e7c7b4e2a7236bb30aa5dbf",
+      "aperture_pixels": 3326,
+      "aperture_center": [
+        56.5,
+        73.0
+      ],
+      "frame_size": [
+        112,
+        144
+      ]
+    },
+    {
+      "id": "between",
+      "sha256": "002ea0a98faa8c847e7dc5a576039e377b54e619712231a0eeeb30659228ca71",
+      "aperture_pixels": 3812,
+      "aperture_center": [
+        57.0,
+        75.0
+      ],
+      "frame_size": [
+        112,
+        144
+      ]
+    },
+    {
+      "id": "overcharged",
+      "sha256": "e34f35172fd37f7cf104cd0c1f7d5e416431108d257bd39547544ba7b8ebcdf1",
+      "aperture_pixels": 3021,
+      "aperture_center": [
+        56.0,
+        74.5
+      ],
+      "frame_size": [
+        112,
+        144
+      ]
+    }
+  ],
+  "frames_per_variant": 24,
+  "fps": 12,
+  "atlas_size": [
+    896,
+    1296
+  ],
+  "decoded_rgba_bytes": 4644864
+}

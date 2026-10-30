@@ -1,0 +1,105 @@
+{
+  "frames": {
+    "school_tile": [
+      0,
+      0,
+      128,
+      128
+    ],
+    "school_street": [
+      128,
+      0,
+      128,
+      128
+    ],
+    "school_yard": [
+      0,
+      128,
+      128,
+      128
+    ],
+    "school_sand": [
+      128,
+      128,
+      128,
+      128
+    ],
+    "school_desk": [
+      0,
+      0,
+      128,
+      96
+    ],
+    "school_board": [
+      128,
+      0,
+      128,
+      96
+    ],
+    "school_locker": [
+      256,
+      0,
+      128,
+      96
+    ],
+    "school_playframe": [
+      384,
+      0,
+      128,
+      96
+    ],
+    "school_slide": [
+      512,
+      0,
+      128,
+      96
+    ],
+    "school_bench": [
+      640,
+      0,
+      128,
+      96
+    ],
+    "entry": [
+      0,
+      96,
+      512,
+      160
+    ]
+  },
+  "sources": {
+    "tile": {
+      "sha256": "e133ec28d481b35740916becd448724469162adc90a75f194e15ee406aee0dd8"
+    },
+    "street": {
+      "sha256": "304aaa7d6001e7faa1b725621a78e51ff9992e7aa9e2e2f2907187d50170549d"
+    },
+    "yard": {
+      "sha256": "114f83b13c7d76038f0880db12240b13bb7e72f9c2bb7f3adeaabb1c774905ac"
+    },
+    "sand": {
+      "sha256": "7b5c45cbf937e8e7ab12cdd8dfafb777a73e19a2aed3d5c022f56ccff810419a"
+    },
+    "desk": {
+      "sha256": "9182b0e527bf1432f4eff534751ba481ebd52f712393ae4f683619255ef0905e"
+    },
+    "board": {
+      "sha256": "b172d1fae5bdc426c81c4c128af1adb1d91b2898c11df8cc7a03126cda9c7573"
+    },
+    "locker": {
+      "sha256": "8ada3531c5a2032162f2c4299dce03dc20ce3e0c4813af38b1c00784ef917811"
+    },
+    "playframe": {
+      "sha256": "dc773269eb4d07191b428ad7619b70f9045a7e02df525a113579261706b31d84"
+    },
+    "slide": {
+      "sha256": "4bdc9159bc746bd21012beac9e6bcbb75c15e41377803555c408ebbdcbedb739"
+    },
+    "bench": {
+      "sha256": "be17586383fca525dd6b05e04601a30eae4825db765b7ee448c1272e52c72be5"
+    },
+    "entry": {
+      "sha256": "d6f75ce4e01495842cbbd3031ab48c5dffc45e9d6fc6f043ce07794eb9a15b25"
+    }
+  }
+}

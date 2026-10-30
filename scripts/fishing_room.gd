@@ -87,7 +87,7 @@ func _draw()->void:
    var b=p+Vector2(116+sin(bubble)*12,128-fposmod(clock*13+bubble*29,119));draw_arc(b,2+float(bubble%2),0,TAU,10,Color(.7,.93,.94,.55),1)
   var catch=fishing.records().specimen(str(fishing.records().state().display[n]))
   if not catch.is_empty():
-   var dimensions:Vector2=C.display_size(catch,shared_scale);var pos=p+Vector2(75+sin(clock*.6+n)*6,77+sin(clock+n)*4)-dimensions*.5;draw_texture_rect_region(C.texture(str(catch.species)),Rect2(pos,dimensions),C.display_region(catch))
+   var dimensions:Vector2=C.display_size(catch,shared_scale);var pos=p+Vector2(75+sin(clock*.6+n)*6,77+sin(clock+n)*4)-dimensions*.5;draw_texture_rect_region(C.catch_texture(catch),Rect2(pos,dimensions),C.display_region(catch))
    var name=("★ " if C.is_trophy(catch) else "")+str(C.fish()[catch.species].name);text(p+Vector2(-2,174),name,13,Color("#fae4b4"));text(p+Vector2(20,195),"%.2f kg • %d G/h" % [catch.kg,fishing.records().income.rate(catch)],14)
   else:text(p+Vector2(28,80),"Empty tank",14);text(p+Vector2(35,174),"DISPLAY "+str(n+1),14,Color("#fae4b4"))
   draw_rect(Rect2(p+Vector2(8,6),Vector2(8,112)),Color(1,1,1,.09))

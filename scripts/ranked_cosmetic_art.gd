@@ -4,12 +4,15 @@ static func active(cosmetic:Dictionary)->Array:
  var now=Time.get_unix_time_from_system()
  if float(cosmetic.get("rank_until",0))<=now or float(cosmetic.get("rank_until",0))>now+95:return []
  return cosmetic.get("rank_badges",[]).filter(func(id):return id in R.IDS)
-static func draw_lobby(c:CanvasItem,p:Vector2,t:float,cosmetic:Dictionary)->void:
- for id in active(cosmetic):draw_single(c,p,t,str(id),int(cosmetic.get("rank_pennant",0)))
+static func draw_lobby(c:CanvasItem,p:Vector2,t:float,cosmetic:Dictionary,body:Rect2=Rect2())->void:
+ for id in active(cosmetic):draw_single(c,p,t,str(id),int(cosmetic.get("rank_pennant",0)),body)
 static func anchor(id:String)->Vector2:
  return {"rank_week_damage":Vector2(34,-32),"rank_week_fish":Vector2(-35,-8),"rank_all_damage":Vector2(-37,-43),"week_arena_1":Vector2(27,-65),"week_arena_2":Vector2(-20,-71),"week_arena_3":Vector2(0,-117),"week_gate":Vector2(-25,-48),"week_descent":Vector2(20,-31),"week_market":Vector2(-23,-22)}.get(id,Vector2.ZERO)
 static func draw_icon(c:CanvasItem,at:Vector2,t:float,id:String)->void:draw_single(c,at-anchor(id),t,id,3)
-static func draw_single(c:CanvasItem,p:Vector2,t:float,id:String,pennant:int=3)->void:
+static func draw_single(c:CanvasItem,p:Vector2,t:float,id:String,pennant:int=3,body:Rect2=Rect2())->void:
+ if body.has_area():
+  var positions={"rank_week_damage":Vector2(body.end.x+32,body.position.y-56),"rank_all_damage":Vector2(body.position.x-32,body.position.y-56),"rank_week_fish":Vector2(body.position.x-32,body.position.y-22),"week_arena_1":Vector2(body.end.x+32,body.position.y-22),"week_arena_2":Vector2(body.position.x-32,body.position.y+12),"week_arena_3":Vector2(body.get_center().x,body.position.y-48),"week_gate":Vector2(body.end.x+32,body.position.y+12),"week_descent":Vector2(body.position.x-32,body.position.y+46),"week_market":Vector2(body.end.x+32,body.position.y+46)}
+  p=positions.get(id,body.position)-anchor(id)
  var q=p+anchor(id)
  match id:
   "rank_week_damage":

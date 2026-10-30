@@ -1,0 +1,1 @@
+V252 contains 239 species and 717 normalized runtime sprites. Full-resolution originals, generation prompt specifications and references are in Crossroads_v252_Art_Sources.zip. Artwork was created with built-in image generation and normalized with tools/prepare_fishing252.py. No original strips are required to play or edit the project.

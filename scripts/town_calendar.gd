@@ -116,9 +116,7 @@ func draw_props(c:Node2D,camera:Vector2)->void:
  if view.has_point(TENT):
   var p:Vector2=TENT-camera
   c.draw_circle(p+Vector2(0,8),38,Color(0,0,0,.18))
-  c.draw_colored_polygon(PackedVector2Array([p+Vector2(-38,12),p+Vector2(0,-49),p+Vector2(38,12)]),Color("#8c789c"))
-  c.draw_colored_polygon(PackedVector2Array([p+Vector2(-16,12),p+Vector2(0,-27),p+Vector2(16,12)]),Color("#35434e"))
-  for side in [-1,1]:c.draw_line(p+Vector2(side*25,-8),p+Vector2(side*47,17),Color("#cdbb97"),1.5)
+  preload("res://scripts/town_streets244.gd").draw(c,"tent",Rect2(p+Vector2(-48,-50),Vector2(96,70)))
   if camper_task()=="sleep":
    var font=ThemeDB.fallback_font
    c.draw_string(font,p+Vector2(8,-60-fposmod(c.town_life.clock*6,18)),"z z",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color(.8,.87,1,.7))
@@ -151,6 +149,8 @@ func collect_lights(c:Node2D,camera:Vector2)->void:
   if view.has_point(source.at):lights.append({"pos":source.at-camera,"radius":source.radius,"strength":source.strength})
  for source in preload("res://scripts/town_afterglow.gd").light_sources(c):
   if view.has_point(source.at):lights.append({"pos":source.at-camera,"radius":source.radius,"strength":source.strength})
+ for source in preload("res://scripts/town_props240.gd").light_sources():
+  if view.has_point(source.at):lights.append({"pos":source.at-camera,"radius":source.radius,"strength":source.strength,"portal":source.get("portal",false)})
  lights.append({"pos":Vector2(900,670)-camera,"radius":140.0,"strength":.7,"portal":true})
 func shade_at(p:Vector2,night:float,twilight:float)->Color:
  var light=0.0
@@ -325,7 +325,7 @@ func draw_weather(c:Node2D,camera:Vector2)->void:
    c.draw_set_transform(Vector2.ZERO)
 
 static func draw_lantern(c:Node2D,p:Vector2,lit:float)->void:
- preload("res://scripts/town_sprite_cache.gd").draw(c,"lantern_lit" if lit>.1 else "lantern",Rect2(p-Vector2(16,80),Vector2(32,96)))
+ preload("res://scripts/town_props240.gd").lamp(c,p,lit)
 static func draw_lantern_source(c:Node2D,p:Vector2,lit:float)->void:
  c.draw_circle(p,8,Color(0,0,0,.18))
  c.draw_rect(Rect2(p-Vector2(6,5),Vector2(12,6)),Color("#344c50"))

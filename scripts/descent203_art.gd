@@ -256,6 +256,7 @@ static func enemy(c:CanvasItem,e:Dictionary,clock:float,alpha:float=1)->void:
  transform(c,Vector2.ZERO)
 
 static func cached_enemy(c:CanvasItem,e:Dictionary,clock:float,alpha:float)->bool:
+ if preload("res://scripts/descent_map251.gd").enemy(c,e,alpha):return true
  if preload("res://scripts/cast_art232.gd").draw_cave(c,e,alpha):return true
  var kind:=str(e.kind)
  if not atlases.has(kind):

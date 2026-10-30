@@ -53,6 +53,7 @@ func feedback(value:String)->void:notice=value;build()
 func gear_ui(body:Node)->void:
  if not fishing.multi:
   var sea=UI.card(body,"DEEP SEA ROD • COASTAL VOYAGES","Permanent equipment • 1,200 Glimmers • Unlocks the river pier boat route to saltwater habitats, sea cages and the hidden Night Island.")
+  preload("res://scripts/item_art245.gd").card_art(sea,"rod_deep_sea",100)
   var owned=bool(fishing.records().state().get("deep_sea_rod",false))
   var buy=fishing.button(sea,"Owned ✓" if owned else "Buy Deep Sea Rod • 1,200 Glimmers",func():fishing.game.voyage.purchase();feedback(fishing.game.message))
   buy.disabled=owned or fishing.game.mode!="town"
@@ -63,14 +64,14 @@ func gear_ui(body:Node)->void:
   var b=fishing.button(row,method.capitalize()+(" ✓" if p.state().method==method else ""),func():p.state().method=method;fishing.records().save();feedback("Selected "+method+". Return to a shore marker."));b.disabled=not p.method_unlocked(method)
  for id in P.GEAR:
   var spec=P.GEAR[id];var box=UI.card(body,str(spec.name),"Fishing level %d • %d Glimmers • %s" % [spec.level,spec.cost,"owned" if p.state().gear.get(id,false) else "not owned"])
+  preload("res://scripts/item_art245.gd").card_art(box,str(id),80)
   var buy=fishing.button(box,"Owned" if p.state().gear.get(id,false) else "Buy equipment",func():feedback(p.buy_gear(id)));buy.disabled=p.level()<int(spec.level) or bool(p.state().gear.get(id,false))
  if not fishing.multi and fishing.game.town_life.events.active("visitors",fishing.game.town_life.calendar):
   var fruit=UI.card(body,"Faraway Flavours • visiting stall","Sunstar Fruit • 12 CC • packs into your food slot. Monday & Thursday, 10:00–15:00.")
   fishing.button(fruit,"Buy Sunstar Fruit",func():fishing.game.provisions.buy("sunstar_fruit");feedback(fishing.game.message))
  for id in E.BAITS:
   var spec=E.BAITS[id];var box=UI.card(body,spec.name+(" • unlimited" if id=="basic" else " • "+str(p.state().bait.get(id,0))+" in box"),spec.description)
-  if id in ["honeygrain","moonmoth","saltflash","kelp_crumble","roe"]:
-   var art=TextureRect.new();art.texture=preload("res://scripts/source_art.gd").texture("res://assets/fishing/bait_"+id+".svg");art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(80,64);box.add_child(art)
+  preload("res://scripts/item_art245.gd").card_art(box,"bait_"+str(id),72)
   var controls=HFlowContainer.new();box.add_child(controls)
   var equip=fishing.button(controls,"Equip"+(" ✓" if p.state().selected_bait==id else ""),func():p.state().selected_bait=id;fishing.records().save();feedback("Selected "+str(spec.name)));equip.disabled=not p.bait_unlocked(id) or (id!="basic" and int(p.state().bait.get(id,0))<=0)
   if not p.bait_unlocked(id):fishing.label(box,"Unlocks at fishing level %d" % int(P.BAIT_LEVELS[id]),16)
@@ -123,6 +124,7 @@ func cosmetic_ui(body:Node)->void:
  var p=fishing.records().progress
  for milestone in P.COSMETICS:
   var spec=P.COSMETICS[milestone];var box=UI.card(body,"Level %d • %s" % [milestone,spec.name],"Appearance only: rod, float and water glints. Your fishing title appears in this workshop and catch journal.")
+  preload("res://scripts/item_art245.gd").card_art(box,"rod_"+str(spec.id),100)
   var b=fishing.button(box,"Equip"+(" ✓" if p.state().cosmetic==spec.id else ""),func():p.state().cosmetic=spec.id;fishing.records().save();feedback("Equipped "+str(spec.name)));b.disabled=p.level()<int(milestone);b.modulate=Color(str(spec.color))
 func _process(_delta:float)->void:
  if is_instance_valid(panel):fit()

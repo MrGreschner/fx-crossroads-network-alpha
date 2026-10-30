@@ -1,5 +1,5 @@
 extends RefCounted
-## Small procedural presets; custom artwork stays embedded in portable abilities.
+## Shared practice sprites and lightweight effect presets; custom artwork stays embedded in portable abilities.
 static func shot(c:CanvasItem,p:Vector2,d:Vector2,a:Dictionary,scale_value:float=1)->void:
  var color=Color(a.get("color","#7bd8de"));var side=Vector2(-d.y,d.x);var kind=str(a.get("projectile_graphic","bolt"));var s=scale_value
  match kind:
@@ -25,21 +25,15 @@ static func charge(c:CanvasItem,p:Vector2,d:Vector2,a:Dictionary,ratio:float,clo
  elif kind=="runes":
   for n in 6:
    var point=p+Vector2.from_angle(clock*.4+n*TAU/6)*43;c.draw_rect(Rect2(point-Vector2.ONE*3,Vector2.ONE*6),Color(color,.3+ratio*.6),false,2)
+static func minion_pose(m:Dictionary,clock:float)->String:
+ return "attack" if float(m.get("flash",0))>0 else ["walk1","walk2"][int(clock*5)%2] if bool(m.get("moving",false)) else "idle"
 static func minion(c:CanvasItem,p:Vector2,m:Dictionary,clock:float)->void:
- var a:Dictionary=m.ability;var color=Color(a.color);var kind=str(a.get("minion_graphic","ram"))
- c.draw_circle(p+Vector2(0,9),12,Color(0,0,0,.25))
- match kind:
-  "bee":c.draw_circle(p+Vector2(-6,-4),6,Color(.8,.94,1,.6));c.draw_circle(p+Vector2(6,-4),6,Color(.8,.94,1,.6));c.draw_circle(p,8,Color("#e7c177"));c.draw_line(p+Vector2(-2,-7),p+Vector2(-2,7),Color("#344654"),3)
-  "wisp":c.draw_circle(p,12,Color(color,.15));c.draw_circle(p+Vector2(0,sin(clock*4)*2),7,color)
-  "golem":c.draw_rect(Rect2(p-Vector2(10,10),Vector2(20,22)),Color("#839da3"));c.draw_rect(Rect2(p-Vector2(8,19),Vector2(16,13)),Color("#a6b9b7"))
-  _:
-   c.draw_circle(p,10,Color("#c4a98a"));c.draw_circle(p+Vector2(0,-10),9,Color("#ead8b4"))
-   if kind=="ram":
-    for x in [-9,9]:c.draw_arc(p+Vector2(x,-13),5,0,TAU,12,Color("#b9936d"),3)
-   elif kind=="rabbit":
-    for x in [-4,4]:c.draw_line(p+Vector2(x,-15),p+Vector2(x,-27),Color("#ead8b4"),5)
-   elif kind=="cat":c.draw_colored_polygon(PackedVector2Array([p+Vector2(-8,-14),p+Vector2(-7,-24),p+Vector2(-1,-17),p+Vector2(7,-24),p+Vector2(8,-14)]),Color("#ead8b4"))
-   c.draw_circle(p+Vector2(-3,-11),1.5,Color("#233a41"));c.draw_circle(p+Vector2(3,-11),1.5,Color("#233a41"))
+ var kind=str(m.ability.get("minion_graphic","ram"))
+ if kind not in ["ram","rabbit","cat","bee","wisp","golem"]:kind="ram"
+ var pose=minion_pose(m,clock)
+ var t=preload("res://scripts/studio_art249.gd").texture("summon_"+kind,pose)
+ c.draw_circle(p+Vector2(0,9),12,Color(0,0,0,.20))
+ c.draw_texture_rect(t,Rect2(p-Vector2(24,35),Vector2(48,48)),false)
 static func strike(c:CanvasItem,v:Dictionary,camera:Vector2)->void:
  var a:Dictionary=v.ability;var p:Vector2=v.pos-camera;var d:Vector2=v.aim;var color=Color(a.color);var arc=deg_to_rad(float(a.get("melee_arc",100)));var reach=float(a.range);var angle=d.angle();var progress=1-float(v.life)/float(v.total);var kind=str(a.get("melee_visual","swing"))
  var points=PackedVector2Array([p])

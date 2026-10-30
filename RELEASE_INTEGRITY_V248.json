@@ -1,0 +1,33 @@
+{
+  "version": 248,
+  "baseline": 247,
+  "build": "V248-neon-and-summons",
+  "deployed": false,
+  "source_checks": 20274,
+  "packaged_checks": 20274,
+  "collision_samples": 11421,
+  "native_views": 29,
+  "browser_views": 26,
+  "designs": 19,
+  "frames": 76,
+  "atlas_decoded_bytes": 2048000,
+  "web_pck_sha256": "360068dfb9ef816796eccc87b50a747cbcce88ebfc0abfc28380dc74568d53ac",
+  "historical_capture_media_omitted": [
+    "qa/evidence247/*.png",
+    "qa/evidence247/*.gif"
+  ],
+  "runtime": {
+    "export_presets.cfg": "925bd0e190358a0d764e8b13da1cbbf003e5f0782b5d8465bb66c0d28d80f732",
+    "network/release.gd": "5eae30e57bfe09087bd7ef11538b8d804fe81479241adfc1f4e537083ed98627",
+    "project.godot": "b95a7d3fad418db75b37410081f45fcebbe3c96954a9f567418d0fbfd17fb486",
+    "scripts/arcade.gd": "a426cd938b12c7c43cdabb110189b2157d59187dd4b0649efefcda95945b5232",
+    "scripts/enemy_art235.gd": "85275d3724f0bb30c252575542ca0d777f16437be10bd976020109158873227a",
+    "scripts/game.gd": "9307b82e5d471f3e76e09b65796fae399722509606b96b87a4a09e2eaf21b679",
+    "scripts/menu_gallery.gd": "f7993de72f8f06e06e44db8a5c07e24a85afaa91b7acb78e1b60afcfe9f19521",
+    "scripts/morrow_combat.gd": "95a072b8a51cda2770c86b0c48b389a406ab9e24669a172403d4f0c7dc7e0cf1",
+    "scripts/neon_crucible.gd": "5ebc142207eda23e9418ee142599ecce42850d009e8bad123ea19cac8c2e7a26",
+    "scripts/actor_art248.gd": "2a88029424edf80ca6788c81b411a9800cbe9d10f65153558df0cd8de602516e",
+    "assets/actors248/actors.png": "bf32bf603ce967e2303c1b4cae284e23310e1d95d82a91878fb3c94150176c17",
+    "assets/actors248/manifest.json": "5dcc4e86a0fb9e87005aefae1aeac8d52d661d64827040012f6258cb002accac"
+  }
+}

@@ -142,7 +142,9 @@ func step(delta:float)->void:
   for owner in adventure.points():
    if adventure.alive(str(owner)) and foe.pos.distance_to(adventure.points()[owner])<distance:target=str(owner);distance=foe.pos.distance_to(adventure.points()[owner])
   if target.is_empty() or distance>850:continue
-  var p:Vector2=foe.pos;var aim:Vector2=(adventure.points()[target]-p).normalized();var boss:bool=foe.type=="confluence_heart"
+  var goal:Vector2=combat.fern.redirect(foe,adventure.points()[target])
+  distance=foe.pos.distance_to(goal)
+  var p:Vector2=foe.pos;var aim:Vector2=(goal-p).normalized();var boss:bool=foe.type=="confluence_heart"
   var direction:=aim if distance>280 else -aim if distance<170 and foe.type!="sluice_crab" else Vector2.ZERO
   if foe.type=="sluice_crab":direction=aim if distance>48 else Vector2.ZERO
   if boss:direction=aim.orthogonal()*sin(clock*.7)
@@ -152,7 +154,7 @@ func step(delta:float)->void:
   if can_stand(next) and room.has_point(next):foe.pos=next
   elif can_stand(p+direction.orthogonal()*step_distance) and room.has_point(p+direction.orthogonal()*step_distance):foe.pos=p+direction.orthogonal()*step_distance
   foe.skill_timer=float(foe.skill_timer)-delta
-  if float(foe.skill_timer)>0 or not combat.path_clear(p,adventure.points()[target]):continue
+  if float(foe.skill_timer)>0 or not combat.path_clear(p,goal):continue
   foe.skill_step=int(foe.skill_step)+1
   preload("res://scripts/enemy_visual227.gd").mark(adventure,foe,.65)
   if boss:
@@ -172,7 +174,7 @@ func step(delta:float)->void:
    foe.skill_timer=3.6
    for ally in adventure.foes():
     if ally.pos.distance_to(p)<190 and float(ally.hp)>0:ally.hp=minf(float(ally.max_hp),float(ally.hp)+9)
-   warn(adventure.points()[target],50,8,1.1,"glass")
+   warn(goal,50,8,1.1,"glass")
  for i in range(warnings.size()-1,-1,-1):
   var w:Dictionary=warnings[i];w.left=float(w.left)-delta
   if float(w.left)>0:continue
@@ -226,7 +228,7 @@ func draw_world(c:Node2D,camera:Vector2)->void:
  if not (cleared.has(1) and cleared.has(2)):
   c.draw_rect(Rect2(barrier().position-camera,barrier().size),Color(.5,.8,1,.4));c.draw_string(ThemeDB.fallback_font,barrier().position-camera+Vector2(-90,-20),"Restore both sluices",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#f2d891"))
  if done:
-  c.draw_circle(EXIT-camera,55,Color(.4,.95,.85,.2));c.draw_arc(EXIT-camera,42,clock,clock+TAU,32,Color("#c8fff0"),5,true);c.draw_string(ThemeDB.fallback_font,EXIT-camera+Vector2(-55,-70),"INTERACT: EXIT",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color.WHITE)
+  preload("res://scripts/realm_portals258.gd").draw_at(c,adventure.game,EXIT,camera);c.draw_string(ThemeDB.fallback_font,EXIT-camera+Vector2(-55,-98),"INTERACT: EXIT",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color.WHITE)
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not active:return
  for w in warnings:

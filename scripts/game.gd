@@ -24,6 +24,8 @@ var commerce_town=preload("res://scripts/commerce_town.gd").new()
 var idle_mine_town=preload("res://scripts/idle_mine_town.gd").new()
 var town_chapter=preload("res://scripts/town_chapter.gd").new()
 var catalog_ui:Node
+var hero_painted_bounds=Rect2()
+var action_notices:CanvasLayer
 var hero_workshop:CanvasLayer
 var studio_live:Control
 var cosmetic_town=preload("res://scripts/cosmetic_town.gd").new()
@@ -190,7 +192,7 @@ func _ready() -> void:
 	call_deferred("setup_media")
 	dev_magic=preload("res://scripts/dev_magic.gd").new();add_child(dev_magic);dev_magic.setup(self)
 	for sprite in ["mosaicling","hive_drone","quillling","stagelet","lanternling","deputyling","gravehorse"]:
-		for pose in ["idle","walk1","walk2","attack"]:art[sprite+"_"+pose]=load("res://assets/"+sprite+"_"+pose+".png")
+		for pose in ["idle","walk1","walk2","attack"]:art[sprite+"_"+pose]=preload("res://scripts/actor_art248.gd").texture(sprite,pose)
 	provisions.setup(self)
 	mobile = preload("res://scripts/mobile_controls.gd").new()
 	add_child(mobile)
@@ -223,6 +225,7 @@ func _ready() -> void:
 	hero_workshop=preload("res://scripts/hero_workshop.gd").new();add_child(hero_workshop);hero_workshop.setup(self)
 	preload("res://scripts/studio_library.gd").install(self)
 	studio_live=preload("res://scripts/studio_live.gd").new();add_child(studio_live);studio_live.setup(self)
+	action_notices=preload("res://scripts/action_notice250.gd").new();action_notices.game=self;add_child(action_notices)
 	hero_hall=preload("res://scripts/hero_hall.gd").new();add_child(hero_hall);hero_hall.setup(self)
 	town_services=preload("res://scripts/town_services.gd").new();add_child(town_services);town_services.setup(self)
 	catalog_ui=preload("res://scripts/adventure_catalog.gd").new();add_child(catalog_ui);catalog_ui.setup(self)
@@ -974,7 +977,7 @@ func handle_run(delta: float) -> void:
 			if Input.is_action_just_pressed("interact"):menu="training_guide"
 			return
 		if position_in_world.distance_to(pair(region["gate"]["position"])) < 85:
-			hint = "E  Return to town"
+			hint = "E  Leave the training yard"
 			if Input.is_action_just_pressed("interact"):
 				enter_region("town")
 				return
@@ -1449,8 +1452,8 @@ func damage_enemy(index: int, amount: float) -> void:
 		enemies.remove_at(index)
 		if waylight!=null and waylight.defeated(enemy):return
 		if not bool(enemy.get("summoned",false)):
-			var cc=40 if was_boss else 6+posmod(int(enemy.get("uid",kills)),3)
-			cc+=2 if inventory.has("gold_magnet") else 0
+			var cc=preload("res://scripts/enemy_reward251.gd").amount(enemy,int(region.get("difficulty",1)),int(level))
+			cc+=mini(5-cc,2) if cc>0 and cc<=5 and inventory.has("gold_magnet") else 0
 			gold+=cc;bounty_earned+=cc
 			add_float_text(enemy.pos+Vector2(-22,-68),"+"+str(cc)+" CC",Color("#f3d697"))
 		if adventure.on_defeat(enemy):
@@ -1510,9 +1513,7 @@ func update_enemies(delta: float) -> void:
 		if tutorial.active and tutorial.update_melee(enemy,delta):continue
 		var definition: Dictionary = enemy_types.get(enemy.get("type", ""), {}).duplicate()
 		definition["speed"]=float(definition.get("speed",65))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))
-		var target_point:Vector2=position_in_world
-		var leaf:Dictionary=adventure.combat.fern.decoy_for(enemy.pos)
-		if not enemy.boss and not leaf.is_empty() and adventure.combat.path_clear(enemy.pos,adventure.combat.vec(leaf.pos)):target_point=adventure.combat.vec(leaf.pos)
+		var target_point:Vector2=adventure.combat.fern.redirect(enemy,position_in_world)
 		var diff: Vector2 = target_point - enemy["pos"]
 		enemy["attack_timer"] = maxf(0.0, float(enemy["attack_timer"]) - delta)
 		if preload("res://scripts/starter_boss.gd").managed(region_id,enemy) and not tutorial.active:
@@ -1741,6 +1742,7 @@ var ground_index=preload("res://scripts/terrain_patch_index.gd").new()
 var terrain_cache:Node2D
 var realm_props:Node2D
 func sync_terrain()->void:
+	preload("res://scripts/town_terrain247.gd").sync_water(self)
 	if mode=="run" and region_id=="silverfall":
 		if terrain_cache!=null:terrain_cache.hide()
 		return
@@ -1796,15 +1798,17 @@ func draw_world() -> void:
 				draw_texture_rect(deco_texture, Rect2(decoration["pos"] - deco_size * 0.5 - camera, deco_size), false)
 	for obstacle in obstacles:
 		if bool(obstacle.get("town_hidden",false)): continue
-		if Rect2(camera - Vector2(100, 100), VIEW + Vector2(200, 200)).has_point(obstacle["pos"]):
-			var obstacle_texture: Texture2D = obstacle.get("texture")
+		if Rect2(camera,VIEW).grow(180 if mode=="run" and region_id=="grove" else 100).has_point(obstacle["pos"]):
+			var obstacle_texture: Texture2D = preload("res://scripts/quarry_art254.gd").grove_tree(obstacle["pos"]) if mode=="run" and region_id=="grove" and str(obstacle.get("kind",""))=="tree" else preload("res://scripts/quarry_art254.gd").texture("rock") if mode=="run" and region_id=="quarry" else obstacle.get("texture")
 			if obstacle_texture != null:
-				draw_texture_rect(obstacle_texture, Rect2(obstacle["pos"] - Vector2(32, 48) - camera, Vector2(64, 84)), false)
+				if mode=="run" and region_id=="grove" and str(obstacle.get("kind",""))=="tree":draw_texture_rect(obstacle_texture,Rect2(obstacle["pos"]-Vector2(72,132)-camera,Vector2(144,168)),false)
+				else:draw_texture_rect(obstacle_texture, Rect2(obstacle["pos"] - Vector2(32, 48) - camera, Vector2(64, 84)), false)
 			else:
 				draw_sprite(str(obstacle["kind"]), obstacle["pos"] - Vector2(32, 48), Vector2(64, 84))
 	if mode == "town":
 		town_chapter.draw_ground(self,camera)
 		town_plan.draw_ground(self,camera)
+		preload("res://scripts/town_art246.gd").ground(self,camera)
 		if voyage!=null:voyage.draw_pier(self,camera)
 		preload("res://scripts/town_v173.gd").draw_tracks(self,camera)
 		idle_mine_town.draw_on(self,camera)
@@ -1823,7 +1827,7 @@ func draw_world() -> void:
 				if not str(landmark["label"]).is_empty():
 					if str(landmark.sprite)=="creator_board":
 						var p:Vector2=landmark_pos-camera+Vector2(-30,74)
-						draw_rect(Rect2(p-Vector2(63,16),Vector2(126,37)),Color("#203b45"));draw_rect(Rect2(p-Vector2(63,16),Vector2(126,37)),Color("#b7a278"),false,1)
+						preload("res://scripts/town_streets244.gd").plaque(self,Rect2(p-Vector2(63,16),Vector2(126,37)))
 						draw_string(font,p+Vector2(-59,-1),"ADVENTURE",HORIZONTAL_ALIGNMENT_CENTER,118,14,Color("#fff1ca"))
 						draw_string(font,p+Vector2(-59,15),"BOARD",HORIZONTAL_ALIGNMENT_CENTER,118,13,Color("#e7d5aa"))
 					else:
@@ -1852,12 +1856,13 @@ func draw_world() -> void:
 		town_life.draw_recognition(self,camera,font)
 		presentation.elder_guide.draw_marker(self,camera)
 	else:
-		if voyage==null or not voyage.active:draw_sprite("portal", pair(region["gate"]["position"]) - Vector2(40, 76), Vector2(80, 120))
+		preload("res://scripts/realm_portals258.gd").draw_late_exits(self,self,camera)
+		if voyage==null or not voyage.active:preload("res://scripts/realm_portals258.gd").entry(self,self,pair(region["gate"]["position"]),camera)
 		if region.has("merchant") and not practice and not tutorial.active and (voyage==null or not voyage.active):
 			draw_sprite("merchant", pair(region["merchant"]) - Vector2(48, 72), Vector2(96, 80))
 			draw_world_label(pair(region["merchant"]), "MERCHANT")
-		if boss_defeated:
-			draw_sprite("portal", pair(region["boss"]) - Vector2(40, 76), Vector2(80, 120))
+		if boss_defeated and not preload("res://scripts/realm_portals258.gd").duplicate_exit(self):
+			preload("res://scripts/realm_portals258.gd").draw_at(self,self,pair(region["boss"]),camera)
 		if fishing!=null:fishing.draw_on(self,camera)
 		if mistglass_rift!=null and mistglass_rift.active:mistglass_rift.draw_on(self,camera)
 		enemy_motion229.sample(enemies,visual_clock)
@@ -2004,12 +2009,15 @@ func draw_world() -> void:
 		world_transform(pivot,fish_motion.angle("solo"));draw_sprite(hero_art,hero_rect.position-position_in_world+camera,hero_rect.size);world_transform()
 	elif mode=="run" and studio_live!=null and studio_live.active() and studio_live.form_texture()!=null:draw_texture_rect(studio_live.form_texture(),Rect2(hero_rect.position-camera,hero_rect.size),false)
 	elif not adventure.combat.robot.transformed("solo") and not adventure.combat.twister.transformed("solo"):draw_sprite(hero_art,hero_rect.position,hero_rect.size,Color(1,1,1,.43) if stealth_time>0 and mode=="run" else Color.WHITE)
-	if health>0 and legacy.daily.earned() and legacy.cosmetics.daily_visible():preload("res://scripts/daily_challenge.gd").draw_on(self,position_in_world-camera,visual_clock)
+	var cosmetic_texture:Texture2D=studio_live.form_texture() if mode=="run" and studio_live!=null and studio_live.active() and studio_live.form_texture()!=null else art.get(hero_art)
+	var cosmetic_body:Rect2=preload("res://scripts/hero_layout250.gd").body(cosmetic_texture,Rect2(hero_rect.position-camera,hero_rect.size),fish_motion.angle("solo") if sprite=="ripplejaw" else 0,position_in_world-camera)
+	hero_painted_bounds=cosmetic_body
+	if health>0 and legacy.daily.earned() and legacy.cosmetics.daily_visible():preload("res://scripts/daily_challenge.gd").draw_on(self,position_in_world-camera,visual_clock,"",cosmetic_body)
 	var dev_session:Node=get_tree().root.get_node_or_null("FXDevSession")
-	if mode=="town" and health>0:preload("res://scripts/rolling_crowns.gd").draw_town(self,Vector2(hero_rect.get_center().x,hero_rect.position.y+5)-camera,visual_clock,legacy.crowns.display_tier())
-	if health>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,position_in_world-camera,visual_clock,legacy.cosmetics.effect(),legacy.cosmetics.effect_week(legacy.cosmetics.effect()))
-	if dev_session!=null and bool(dev_session.active) and health>0:preload("res://scripts/dev_insignia.gd").draw_on(self,position_in_world-camera,visual_clock)
-	if health>0:preload("res://scripts/creation_badges.gd").draw_on(self,position_in_world-camera,visual_clock,{"custom":hero.has("studio_project"),"balanced":bool(hero.get("studio_checked",false)),"playtest":get_tree().root.get_node("FXResearch").active,"media":media.active})
+	if mode=="town" and health>0:preload("res://scripts/rolling_crowns.gd").draw_town(self,preload("res://scripts/hero_layout250.gd").crown(cosmetic_body),visual_clock,legacy.crowns.display_tier())
+	if health>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,position_in_world-camera,visual_clock,legacy.cosmetics.effect(),legacy.cosmetics.effect_week(legacy.cosmetics.effect()),cosmetic_body)
+	if dev_session!=null and bool(dev_session.active) and health>0:preload("res://scripts/dev_insignia.gd").draw_on(self,position_in_world-camera,visual_clock,1,cosmetic_body)
+	if health>0:preload("res://scripts/creation_badges.gd").draw_on(self,position_in_world-camera,visual_clock,{"custom":hero.has("studio_project"),"balanced":bool(hero.get("studio_checked",false)),"playtest":get_tree().root.get_node("FXResearch").active,"media":media.active},cosmetic_body)
 	if player_flash_time > 0:
 		draw_circle(position_in_world - camera, 34, Color(1, 0.32, 0.34, player_flash_time * 2.4))
 	if block_time > 0 and mode == "run":
@@ -2019,6 +2027,12 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if mode=="run" and region_id=="quarry" and name.begins_with("bramble_boss"):
+		var pose=name.trim_prefix("bramble_boss_");preload("res://scripts/quarry_art254.gd").draw_boss(self,pose,Rect2(world_pos-camera,size),tint);return
+	if mode=="town" and name=="tree":preload("res://scripts/town_nature243.gd").tree(self,"pine",Rect2(world_pos-camera,size),world_pos+size*Vector2(.5,.8));return
+	if mode=="town" and preload("res://scripts/town_streets244.gd").sprite(self,name,Rect2(world_pos-camera,size),tint):return
+	if mode=="town" and preload("res://scripts/town_shops242.gd").sprite(self,name,Rect2(world_pos-camera,size),tint):return
+	if name=="descent_cave":preload("res://scripts/town_props240.gd").draw(self,"cave",Rect2(world_pos-camera,size),tint);return
 	if preload("res://scripts/enemy_art235.gd").draw_key(self,name,Rect2(world_pos-camera,size),tint):return
 	if mode=="town" and name in ["guard_melee","guard_ranged"]:
 		preload("res://scripts/town_cast230.gd").draw(self,name,world_pos+size*Vector2(.5,.875)-camera,visual_clock,false);return
@@ -2072,10 +2086,6 @@ func draw_hud() -> void:
 			draw_string(font, Vector2(VIEW.x-260, VIEW.y-110), "Stealth: %.1fs" % stealth_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#abdcca"))
 		elif stun_time > 0:
 			draw_string(font, Vector2(VIEW.x-260, VIEW.y-110), "Stunned: %.1fs" % stun_time, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#ffb38d"))
-	if hint != "" and menu == "":
-		draw_string(font, Vector2(370, VIEW.y-135 if mobile.enabled else VIEW.y-110), hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 23, Color("#fbeba9"))
-	if message_time > 0 and menu == "":
-		draw_string(font, Vector2(24, 275 if tutorial.active and mobile.enabled else VIEW.y-150 if mode=="run" else VIEW.y-28), message, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color.WHITE)
 
 func draw_ability_cooldowns() -> void:
 	var labels: Array[String] = ["LMB", "RMB", "SPC"]

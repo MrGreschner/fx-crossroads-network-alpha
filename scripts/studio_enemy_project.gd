@@ -5,7 +5,7 @@ const Behavior=preload("res://scripts/studio_behavior.gd")
 static func fresh()->Dictionary:
  var primary=Project.attack("projectile");primary.name="Practice bolt";primary.damage=8;primary.heal=0;primary.range=350;primary.cooldown=1.5
  var secondary=Project.attack("spin");secondary.name="Keep away";secondary.damage=10;secondary.heal=0;secondary.cooldown=5
- return {"format":FORMAT,"version":1,"id":"enemy-"+str(randi()),"name":"My practice enemy","lore":"A watchful sparring partner.","health":100.0,"speed":100.0,"radius":20.0,"art":{},"attack_count":2,"primary":primary,"secondary":secondary,"special":Project.attack("summon"),"behavior":Behavior.fresh(),"reports":[]}
+ return {"format":FORMAT,"version":1,"id":"enemy-"+str(randi()),"name":"My practice enemy","lore":"A watchful sparring partner.","health":100.0,"speed":100.0,"radius":20.0,"art":preload("res://scripts/studio_art249.gd").encoded("bramble_practice"),"attack_count":2,"primary":primary,"secondary":secondary,"special":Project.attack("summon"),"behavior":Behavior.fresh(),"reports":[]}
 static func validate(value:Variant)->String:
  if not value is Dictionary or value.get("format")!=FORMAT or value.get("version")!=1:return "Not a Crossroads enemy project."
  if JSON.stringify(value).to_utf8_buffer().size()>Project.MAX_BYTES:return "Enemy project exceeds 2 MB."

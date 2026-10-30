@@ -30,9 +30,7 @@ func restart()->void:
  var p=lab.workshop.project.duplicate(true)
  if chosen!="workshop":
   p=preload("res://scripts/workshop_project.gd").fresh();p.hero.name="Practice ram" if chosen=="ram" else "Practice book";p.hero.primary.damage=18;p.hero.primary.heal=0;p.hero.primary.range=110 if chosen=="ram" else 500;p.hero.primary.cooldown=.6;p.hero.primary.style="melee" if chosen=="ram" else "projectile";p.hero.secondary.style="heal_wave";p.hero.special.style="block"
-  for pose in ["idle","walk1","walk2","attack"]:
-   var path="res://assets/"+("ram" if chosen=="ram" else "book")+"_"+pose+".png"
-   if FileAccess.file_exists(path):p.hero.art[pose]=Marshalls.raw_to_base64(FileAccess.get_file_as_bytes(path))
+  p.hero.art=preload("res://scripts/studio_art249.gd").encoded("stone_apprentice" if chosen=="ram" else "prism_sprout")
  arena.setup(lab.enemy,p,count);arena.grab_focus();saved=false
 func save_report()->void:
  var report={"date":Time.get_datetime_string_from_system(true),"enemy":lab.enemy.name,"hero":arena.hero.name,"count":count,"seconds":snappedf(arena.time,.1),"damage":snappedf(arena.damage,.1),"incoming":snappedf(arena.incoming,.1),"result":arena.result if not arena.result.is_empty() else "Test in progress"}

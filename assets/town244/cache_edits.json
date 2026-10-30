@@ -1,0 +1,450 @@
+{
+  "version": 244,
+  "atlas_decoded_bytes": 2097152,
+  "frames": 29,
+  "substitutions": [
+    {
+      "layer": "chapter_ground",
+      "clear_world": [
+        2247,
+        1062,
+        226,
+        162
+      ],
+      "art": "bridge",
+      "art_world": [
+        2247,
+        1062,
+        226,
+        162
+      ]
+    },
+    {
+      "layer": "chapter_ground",
+      "clear_world": [
+        2247,
+        1997,
+        226,
+        142
+      ],
+      "art": "bridge_home",
+      "art_world": [
+        2247,
+        1997,
+        226,
+        142
+      ]
+    },
+    {
+      "layer": "streets",
+      "clear_world": [
+        -772,
+        1862,
+        84,
+        40
+      ],
+      "art": "flowers243",
+      "art_world": [
+        -772,
+        1862,
+        84,
+        40
+      ]
+    },
+    {
+      "layer": "streets",
+      "clear_world": [
+        -763,
+        1907,
+        66,
+        35
+      ],
+      "art": "bench",
+      "art_world": [
+        -762,
+        1907,
+        64,
+        34
+      ]
+    },
+    {
+      "layer": "streets",
+      "clear_world": [
+        178,
+        1622,
+        84,
+        40
+      ],
+      "art": "flowers243",
+      "art_world": [
+        178,
+        1622,
+        84,
+        40
+      ]
+    },
+    {
+      "layer": "streets",
+      "clear_world": [
+        187,
+        1667,
+        66,
+        35
+      ],
+      "art": "bench",
+      "art_world": [
+        188,
+        1667,
+        64,
+        34
+      ]
+    },
+    {
+      "layer": "streets",
+      "clear_world": [
+        1738,
+        1232,
+        84,
+        40
+      ],
+      "art": "flowers243",
+      "art_world": [
+        1738,
+        1232,
+        84,
+        40
+      ]
+    },
+    {
+      "layer": "streets",
+      "clear_world": [
+        1747,
+        1277,
+        66,
+        35
+      ],
+      "art": "bench",
+      "art_world": [
+        1748,
+        1277,
+        64,
+        34
+      ]
+    },
+    {
+      "layer": "chapter_ground",
+      "clear_world": [
+        2507,
+        998,
+        58,
+        34
+      ],
+      "art": "bench",
+      "art_world": [
+        2510,
+        1000,
+        52,
+        30
+      ]
+    },
+    {
+      "layer": "chapter_ground",
+      "clear_world": [
+        788,
+        1787,
+        25,
+        327
+      ],
+      "art": null,
+      "art_world": null
+    },
+    {
+      "layer": "chapter_ground",
+      "clear_world": [
+        1068,
+        1787,
+        25,
+        327
+      ],
+      "art": null,
+      "art_world": null
+    },
+    {
+      "layer": "post242",
+      "clear_world": [
+        437,
+        1521,
+        60,
+        37
+      ],
+      "art": null,
+      "art_world": null
+    },
+    {
+      "layer": "post242",
+      "clear_world": [
+        437,
+        1521,
+        0,
+        0
+      ],
+      "art": "cart",
+      "art_world": [
+        438,
+        1522,
+        58,
+        36
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1488,
+        2743,
+        39,
+        36
+      ],
+      "art": "cargo",
+      "art_world": [
+        1490,
+        2745,
+        32,
+        28
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1508,
+        2398,
+        45,
+        39
+      ],
+      "art": "cargo",
+      "art_world": [
+        1510,
+        2400,
+        38,
+        31
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1518,
+        2668,
+        41,
+        36
+      ],
+      "art": "cargo",
+      "art_world": [
+        1520,
+        2670,
+        34,
+        28
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1478,
+        2703,
+        49,
+        38
+      ],
+      "art": "cargo",
+      "art_world": [
+        1480,
+        2705,
+        42,
+        30
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        2013,
+        2158,
+        43,
+        38
+      ],
+      "art": "cargo",
+      "art_world": [
+        2015,
+        2160,
+        36,
+        30
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1529,
+        2409,
+        64,
+        47
+      ],
+      "art": "net",
+      "art_world": [
+        1530,
+        2410,
+        60,
+        45
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1510,
+        2400,
+        0,
+        0
+      ],
+      "art": "cargo",
+      "art_world": [
+        1510,
+        2400,
+        38,
+        31
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1229,
+        2556,
+        30,
+        46
+      ],
+      "art": "basket",
+      "art_world": [
+        1229,
+        2556,
+        30,
+        46
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1229,
+        2596,
+        30,
+        46
+      ],
+      "art": "basket",
+      "art_world": [
+        1229,
+        2596,
+        30,
+        46
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1597,
+        2447,
+        36,
+        36
+      ],
+      "art": "rope",
+      "art_world": [
+        1597,
+        2447,
+        36,
+        36
+      ]
+    },
+    {
+      "layer": "marina_fittings242",
+      "clear_world": [
+        1265,
+        2653,
+        90,
+        49
+      ],
+      "art": "rack",
+      "art_world": [
+        1267,
+        2653,
+        84,
+        48
+      ]
+    },
+    {
+      "layer": "marina_deck",
+      "clear_world": [
+        1664,
+        2230,
+        32,
+        26
+      ],
+      "art": "cargo",
+      "art_world": [
+        1665,
+        2231,
+        30,
+        24
+      ]
+    },
+    {
+      "layer": "marina_deck",
+      "clear_world": [
+        2059,
+        2182,
+        32,
+        26
+      ],
+      "art": "cargo",
+      "art_world": [
+        2060,
+        2183,
+        30,
+        24
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "town46_0",
+      "size": [
+        2048,
+        2048
+      ],
+      "changed_texels": 74759,
+      "allowed_texels": 84085,
+      "outside_replacement_masks_identical": true
+    },
+    {
+      "name": "town46_1",
+      "size": [
+        2048,
+        384
+      ],
+      "changed_texels": 16094,
+      "allowed_texels": 19692,
+      "outside_replacement_masks_identical": true
+    },
+    {
+      "name": "post242",
+      "size": [
+        420,
+        390
+      ],
+      "changed_texels": 1233,
+      "allowed_texels": 2220,
+      "outside_replacement_masks_identical": true
+    },
+    {
+      "name": "marina_fittings242",
+      "size": [
+        835,
+        630
+      ],
+      "changed_texels": 11725,
+      "allowed_texels": 18744,
+      "outside_replacement_masks_identical": true
+    }
+  ]
+}

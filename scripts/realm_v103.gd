@@ -13,6 +13,8 @@ func step(delta:float)->void:
   var goal:=Vector2.ZERO;var distance:=INF
   for id in adventure.points():
    if adventure.alive(str(id)) and enemy.pos.distance_squared_to(adventure.points()[id])<distance:goal=adventure.points()[id];distance=enemy.pos.distance_squared_to(goal)
+  if is_inf(distance):continue
+  goal=combat.fern.redirect(enemy,goal);distance=enemy.pos.distance_squared_to(goal)
   if distance>850*850:continue
   var aim:Vector2=(goal-enemy.pos).normalized();var move:Vector2=combat.ranged_direction(enemy,goal)*95*delta*combat.speed_factor(combat.npc_key(enemy))
   if adventure.can_stand(enemy.pos+move) and combat.path_clear(enemy.pos,enemy.pos+move):enemy.pos+=move

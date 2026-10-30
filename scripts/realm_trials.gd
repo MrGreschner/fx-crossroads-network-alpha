@@ -744,16 +744,15 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 			preload("res://scripts/combat_cues.gd").corridor(canvas,point,end-camera,float(warning["radius"]))
 	for portal in (portals() if active else []):
 		var point:Vector2=portal["pos"]-camera
-		canvas.draw_arc(point,44,0,TAU,40,Color("#b5c5ff"),5,true)
-		canvas.draw_string(font,point+Vector2(-95,-58),str(portal["label"]),HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e9dca9"))
+		canvas.draw_string(font,point+Vector2(-95,-98),str(portal["label"]),HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e9dca9"))
 		var player:Vector2=game.local_pos if arcade else game.position_in_world
 		if player.distance_to(portal["pos"])<115:canvas.draw_string(font,Vector2(400,550),"Interact to enter • four seals "+str(cleared.size())+"/4",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("#e9dca9"))
 	if active and not finale.in_depth():canvas.draw_string(font,Vector2(35,175 if not arcade else 108),"OATH SEALS "+str(cleared.size())+"/4 • traps cycle: red wait / green cross",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ddd6ee"))
 	if complete:
 		var exit_point:=OATH_EXIT-camera
-		canvas.draw_circle(exit_point,65,Color(.35,.9,.65,.2));canvas.draw_arc(exit_point,55,clock,clock+TAU*.9,40,Color("#9bf0bc"),6,true)
-		canvas.draw_string(font,exit_point+Vector2(-110,-75),"EXIT SEAL • E / Interact",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#b2e6bb"))
-		canvas.draw_string(font,Vector2(350,200),"Restored! Use the green exit seal near the arena entrance.",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#b2e6bb"))
+		preload("res://scripts/realm_portals258.gd").draw_at(canvas,game,OATH_EXIT,camera)
+		canvas.draw_string(font,exit_point+Vector2(-110,-98),"EXIT SEAL • E / Interact",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#b2e6bb"))
+		canvas.draw_string(font,Vector2(350,200),"Restored! Use the animated exit portal near the arena entrance.",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#b2e6bb"))
 
 func launch_disc(id: String, aim: Vector2, stats: Dictionary, damage: float) -> void:
 	var owner_discs := 0

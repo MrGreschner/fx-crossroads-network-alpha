@@ -23,7 +23,14 @@ func setup(realm:String)->void:
   for p in details:
    for side in [-1,1]:
     for n in 6:scenery.append({"pos":Vector2(p[0]+n*35-80,p[1]+side*(215+n%3*15)),"kind":"snow" if id=="ice" else "ore" if id=="quarry" else "fern"})
+ if id=="grove":
+  for n in scenery.size():scenery[n].kind=["fern","roots","shrub"][n%3]
+  for kind in ["fern","roots","shrub"]:art[kind]=preload("res://scripts/grove_art253.gd").texture(kind)
+ if id=="quarry":
+  for n in scenery.size():scenery[n].kind="ore" if n%5 else "cart"
+  for kind in ["ore","cart"]:art[kind]=preload("res://scripts/quarry_art254.gd").texture(kind)
  for kind in ["wheat","sunflower","petal","fern","ore","snow"]:
+  if (id=="grove" and kind=="fern") or (id=="quarry" and kind=="ore"):continue
   art[kind]=preload("res://scripts/source_art.gd").texture("res://assets/realm_"+kind+".svg")
 func icy(point:Vector2)->bool:
  if id!="ice":return false
@@ -69,6 +76,7 @@ func bosses(delta:float)->void:
  for key in boss_tracks.keys():
   if not live.has(key):boss_tracks.erase(key)
 func draw_world(c:Node2D,camera:Vector2)->void:
+ if id=="sunfield":return
  if id not in ["grove","quarry","ice","sunfield","petalbrook"]:return
  var view:=Rect2(camera,c.get_viewport_rect().size).grow(100)
  for item in scenery:
@@ -77,7 +85,9 @@ func draw_world(c:Node2D,camera:Vector2)->void:
   var path:Array=data.get("route_points",[])
   for n in path.size()-1:
    var a:=Vector2(path[n][0],path[n][1]);var b:=Vector2(path[n+1][0],path[n+1][1]);var along:Vector2=(b-a).normalized();var across:=along.orthogonal()*28
-   for side in [-1,1]:c.draw_line(a+across*side-camera,b+across*side-camera,Color("#756359"),4)
+   for side in [-1,1]:
+    c.draw_line(a+across*side-camera,b+across*side-camera,Color("#2d3039"),6)
+    c.draw_line(a+across*side-camera+Vector2(0,-1),b+across*side-camera+Vector2(0,-1),Color("#8a7d79"),2)
    for offset in range(0,int(a.distance_to(b)),90):
     var p:=a+along*offset
     if view.has_point(p):c.draw_line(p-across*1.3-camera,p+across*1.3-camera,Color("#483e39"),7)

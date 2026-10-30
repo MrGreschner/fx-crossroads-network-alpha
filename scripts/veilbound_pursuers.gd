@@ -170,7 +170,7 @@ func step(dt:float)->void:
    var distance:float=e.pos.distance_to(adventure.points()[id])
    if distance<nearest:chosen=id;nearest=distance
   if chosen.is_empty():continue
-  var target:Vector2=adventure.points()[chosen];var kit=kit_for(e)
+  var target:Vector2=adventure.combat.fern.redirect(e,adventure.points()[chosen]);nearest=e.pos.distance_to(target);var kit=kit_for(e)
   e.veil_arrive=maxf(0,float(e.get("veil_arrive",0))-dt)
   if float(e.veil_arrive)>0 or adventure.combat.stunned(adventure.combat.npc_key(e)):continue
   e.veil_blocked=float(e.get("veil_blocked",0))+dt if not adventure.combat.path_clear(e.pos,target) else 0.0

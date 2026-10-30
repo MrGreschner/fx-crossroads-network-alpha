@@ -61,6 +61,8 @@ func setup(id:String)->void:
  if textures.is_empty():
   for key in ["school_tile","school_wood","school_street","school_yard","school_carpet","school_sand"]:textures[key]=load("res://assets/"+key+".png")
   for key in ["desk","board","locker","bookshelf","counter","oven","curtain","weightbench","hoop","clocktower","playframe","slide","bench"]:textures["school_"+key]=load("res://assets/school_"+key+".png")
+ for key in ["school_tile","school_street","school_yard","school_sand","school_desk","school_board","school_locker","school_playframe","school_slide","school_bench"]:
+  textures[key]=preload("res://scripts/firstbell_art256.gd").frame(key) if id=="elementary"else load("res://assets/"+key+".png")
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,ceili(float(region.size[0])/50),ceili(float(region.size[1])/50));grid.cell_size=Vector2(50,50);grid.offset=Vector2(25,25);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
  preload("res://scripts/navigation_cache.gd").populate(grid,"school_"+id,JSON.stringify(data),func(point):return not can_stand(point))
 func prop_rect(prop:Dictionary)->Rect2:
@@ -516,14 +518,17 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
    canvas.draw_rect(Rect2(r.position+Vector2(0,22)-camera,Vector2(r.size.x,64)),Color("#9badae"));canvas.draw_rect(Rect2(r.position+Vector2(0,r.size.y-72)-camera,Vector2(r.size.x,50)),Color("#9badae"))
    for n in range(1,int(r.size.x/450)):
     var p:Vector2=r.position+Vector2(n*450,75)-camera
-    canvas.draw_rect(Rect2(p+Vector2(-9,-58),Vector2(18,77)),Color("#536776"));canvas.draw_rect(Rect2(p+Vector2(-16,-73),Vector2(32,28)),Color("#d5d8aa"));canvas.draw_rect(Rect2(p+Vector2(-12,-68),Vector2(24,17)),Color("#ece6bb"))
+    if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").lamp(canvas,p)
+    else:canvas.draw_rect(Rect2(p+Vector2(-9,-58),Vector2(18,77)),Color("#536776"));canvas.draw_rect(Rect2(p+Vector2(-16,-73),Vector2(32,28)),Color("#d5d8aa"));canvas.draw_rect(Rect2(p+Vector2(-12,-68),Vector2(24,17)),Color("#ece6bb"))
   if str(room.id)=="entry":
    var p:Vector2=v(data.doors[0].pos)-Vector2(0,45)-camera
-   canvas.draw_rect(Rect2(p+Vector2(-260,-115),Vector2(520,68)),Color("#6a7e8a"));canvas.draw_rect(Rect2(p+Vector2(-268,-125),Vector2(536,12)),Color("#c9b993"))
-   var title:=str(data.name).to_upper();var title_width:=ThemeDB.fallback_font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
-   canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-title_width*.5,-70),title,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("#f1e2b9"))
-   for sign in [-1,1]:
-    canvas.draw_rect(Rect2(p+Vector2(sign*270-30,-115),Vector2(60,170)),Color("#819296"));canvas.draw_rect(Rect2(p+Vector2(sign*270-40,-122),Vector2(80,16)),Color("#c7cabc"))
+   if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").entrance(canvas,p,str(data.name).to_upper())
+   else:
+    canvas.draw_rect(Rect2(p+Vector2(-260,-115),Vector2(520,68)),Color("#6a7e8a"));canvas.draw_rect(Rect2(p+Vector2(-268,-125),Vector2(536,12)),Color("#c9b993"))
+    var title:=str(data.name).to_upper();var title_width:=ThemeDB.fallback_font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
+    canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-title_width*.5,-70),title,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("#f1e2b9"))
+    for sign in [-1,1]:
+     canvas.draw_rect(Rect2(p+Vector2(sign*270-30,-115),Vector2(60,170)),Color("#819296"));canvas.draw_rect(Rect2(p+Vector2(sign*270-40,-122),Vector2(80,16)),Color("#c7cabc"))
    for n in 5:canvas.draw_rect(Rect2(Vector2(p.x-155+n*70,r.end.y-camera.y-50),Vector2(40,100)),Color("#d8d5b9"))
   if str(room.theme)=="wood":
    canvas.draw_rect(Rect2(r.position+Vector2(100,170)-camera,r.size-Vector2(200,260)),Color("#e0d0a6"),false,3);canvas.draw_arc(center,140,0,TAU,64,Color("#e0d0a6"),3);canvas.draw_line(center-Vector2(r.size.x*.4,0),center+Vector2(r.size.x*.4,0),Color("#e0d0a6"),3)
@@ -538,9 +543,12 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
    if str(room.id) in ["hall","upper_hall","foyer"]:
     for n in range(1,int(r.size.x/600)):
      var p:Vector2=r.position+Vector2(n*600,r.size.y-70)-camera
+     if region_id=="elementary" and str(room.id)=="foyer":p.y=minf(p.y,3740-camera.y)
      canvas.draw_rect(Rect2(p-Vector2(42,35),Vector2(84,58)),Color("#bbab88"));canvas.draw_rect(Rect2(p-Vector2(36,29),Vector2(72,46)),Color("#8a9eae"));canvas.draw_circle(p-Vector2(16,12),10,Color("#e3cc8d"));canvas.draw_line(p+Vector2(1,4),p+Vector2(27,-15),Color("#9acaac"),5)
+  if region_id=="elementary" and str(room.id)=="entry":continue
+  var label_offset=240 if region_id=="elementary" and str(room.id)=="street"else 100
   var label:=str(room.name);var length:=ThemeDB.fallback_font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,21).x
-  canvas.draw_rect(Rect2(Vector2(center.x-length*.5-12,r.position.y+100-camera.y),Vector2(length+24,35)),Color(.1,.17,.22,.85));canvas.draw_string(ThemeDB.fallback_font,Vector2(center.x-length*.5,r.position.y+125-camera.y),label,HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#f0dfb4"))
+  canvas.draw_rect(Rect2(Vector2(center.x-length*.5-12,r.position.y+label_offset-camera.y),Vector2(length+24,35)),Color(.1,.17,.22,.85));canvas.draw_string(ThemeDB.fallback_font,Vector2(center.x-length*.5,r.position.y+label_offset+25-camera.y),label,HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#f0dfb4"))
  for prop in data.props:
   if bounds.has_point(v(prop.pos)):canvas.draw_texture_rect(textures[str(prop.kind)],Rect2(v(prop.pos)-v(prop.size)*Vector2(.5,.7)-camera,v(prop.size)),false)
  for door in data.doors:
@@ -553,8 +561,10 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
     canvas.draw_rect(Rect2(post-Vector2(5,15),Vector2(10,30)),Color("#7d725f"))
     canvas.draw_circle(post,4,Color("#91b7a0"))
    continue
-  canvas.draw_rect(Rect2(r.position-camera,r.size),Color("#7d725f"))
-  canvas.draw_line(p-Vector2(r.size.x*.5,0),p+Vector2(r.size.x*.5,0),colour,4 if bool(opened.get(str(door.id),false)) else 10)
+  if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").door(canvas,Rect2(r.position-camera,r.size),ready)
+  else:
+   canvas.draw_rect(Rect2(r.position-camera,r.size),Color("#7d725f"))
+   canvas.draw_line(p-Vector2(r.size.x*.5,0),p+Vector2(r.size.x*.5,0),colour,4 if bool(opened.get(str(door.id),false)) else 10)
   if not bool(opened.get(str(door.id),false)):
    canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-53,-20),"INTERACT" if ready else "SEALED",HORIZONTAL_ALIGNMENT_LEFT,-1,17,colour)
  for route in data.routes:
@@ -568,7 +578,7 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   var p:=v(gear.pos)-camera
   canvas.draw_arc(p,24,clock,clock+TAU*.9,20,Color("#e5ca82"),5);canvas.draw_circle(p,8,Color("#b59764"));canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-45,-40),str(gear.name),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#eaddaa"))
  if done:
-  var p:=v(data.exit)-camera;canvas.draw_circle(p,50,Color(.4,.8,.65,.18));canvas.draw_arc(p,50,clock,clock+TAU*.8,48,Color("#a4e4c3"),5);canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-65,-70),"STREET EXIT",HORIZONTAL_ALIGNMENT_LEFT,-1,22,Color("#c1f2d3"))
+  var p:=v(data.exit)-camera;preload("res://scripts/realm_portals258.gd").draw_at(canvas,adventure.game,v(data.exit),camera);canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-65,-98),"STREET EXIT",HORIZONTAL_ALIGNMENT_LEFT,-1,22,Color("#c1f2d3"))
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  if not active:return
  for h in hazards:

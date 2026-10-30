@@ -78,7 +78,7 @@ static func fill_kept(f:Node,list:Node,selling=false)->void:
 static func catch_card(f:Node,body:Node,catch:Dictionary,selling:bool=false)->void:
  var spec:Dictionary=C.fish()[catch.species];var id=str(catch.id);var trophy=C.is_trophy(catch);var color=Color(PALETTE.get(spec.rarity,"#93cdd4"));var state=f.records().state()
  var row=framed(body,Color("#edc66c") if trophy else color);row.get_parent().set_meta("catch_id",id)
- var portrait=VBoxContainer.new();portrait.custom_minimum_size.x=145;row.add_child(portrait);f.picture(portrait,str(catch.species),Vector2(145,90))
+ var portrait=VBoxContainer.new();portrait.custom_minimum_size.x=145;row.add_child(portrait);f.picture(portrait,str(catch.species),Vector2(145,90),catch)
  text(portrait,("TROPHY" if trophy else str(spec.rarity)).to_upper(),13,Color("#f7d881") if trophy else color).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  var info=VBoxContainer.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;info.add_theme_constant_override("separation",5);row.add_child(info)
  text(info,str(spec.name)+(" • FAVOURITE" if state.favorite==id else ""),19,color)

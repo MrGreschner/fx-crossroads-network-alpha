@@ -1,0 +1,75 @@
+{
+  "frames": {
+    "garden_fountain": [
+      492,
+      0,
+      128,
+      144
+    ],
+    "flower_bed": [
+      820,
+      0,
+      128,
+      144
+    ],
+    "grand_tree": [
+      0,
+      0,
+      160,
+      220
+    ],
+    "honey_lamp": [
+      328,
+      0,
+      128,
+      144
+    ],
+    "glass_pavilion": [
+      656,
+      0,
+      128,
+      144
+    ],
+    "giant_flower": [
+      164,
+      0,
+      160,
+      220
+    ]
+  },
+  "sources": {
+    "fountain": {
+      "sha256": "ba06d7961109bdeee0a50ada30174183507eae2fa9723e6d88ac38c780129cd3",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. One ornate garden fountain, isolated transparent background. Preserve original: circular shallow turquoise water basin, central slender column rising to open six-sided brass pergola topped with pale mint glass pointed canopy. Antiqued honey-brass rim, carved floral relief, gentle trickle, tiny lily detail. Compact full structure in frame. No ground tile or background."
+    },
+    "bed": {
+      "sha256": "16dae737a5fc01afe36ac4d9f6a287be6237a1df5c409c8db2264ef47d376b32",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. One rectangular raised flower bed, isolated transparent background. Preserve original: low warm sandstone rectangular border filled with two irregular rows of small golden cream flowers and lush sage leaves. Defined petal shapes, matte fine soil and worn stone, top-down three-quarter view, whole bed visible with margins. No surrounding ground tile."
+    },
+    "glass": {
+      "sha256": "9926b31a1297a34d285c2e727c71fc5e3330de177cb541275b8c08de205a2f43",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. Seamless square floor texture tile full bleed opaque. Honey-amber translucent glass paving set in antique brass, hexagonal honeycomb panels, subtle mineral cloudy inclusions and matte wear. Muted ochre/sage amber, restrained pale mint reflected details, no harsh highlights, no objects. Readable unobtrusive floor."
+    },
+    "tree": {
+      "sha256": "9aad5339870c7584c86675333209e8ba7cff9ca59e7984c5895dfdac4e383aaf",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. One large ancient garden broadleaf tree, isolated with transparent background. Rich rounded overlapping sage-green leafy crown, small warm honey-gold leaf tips, thick flared warm brown trunk and branching roots. Preserve original design: large five-lobed rounded crown over tall broad sturdy trunk. Full tree in frame, generous transparent margins. No ground tile, no shadow outside roots."
+    },
+    "grass": {
+      "sha256": "b0aa5300aeda6ee4cb08f199f575dbfe5aa27ec3397959eec1b472d91115c02b",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. Seamless square ground texture tile, full bleed opaque. Muted sage/olive garden turf with tiny clover leaves and sparse pale-gold petals, subtle variation, low contrast so bright combat warnings stay readable. No large flowers, objects or borders."
+    },
+    "lamp": {
+      "sha256": "a21090c860d2b46ddd35903c8ae04435c85bb4f1db83ad9b57c7edf805428bac",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. One honey lantern on a slender aged bronze post, isolated transparent background. Preserve original: luminous hexagonal golden amber lantern on tall narrow upright post. Detailed honeycomb metal cage, pale yellow frosted glass, small finial, stable small foot. Warm internal light painted into asset without wide halo or bloom. Full post in frame with generous margins."
+    },
+    "pavilion": {
+      "sha256": "fb6a6e2439a3a950c8752efa447722025d1c0885d32dfcc88ab3796f2619f6a2",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. One small glass conservatory pavilion, isolated transparent background. Preserve original: mint glass pyramidal roof, warm bronze rectangular posts and glazing, central dark open doorway, low horizontal stone threshold. Elaborate botanical ironwork, frosted amber and mint glazing, tiny vines on outside corners, matte shading. No closed door, no person, no background ground tile. Full roof and base visible."
+    },
+    "flower": {
+      "sha256": "0fa22f21008cee35d06db4265bc589da2b62779a20fc1112afdff9cf5b6e22c6",
+      "prompt": "Use case: stylized-concept. Production game asset for Crossroads: Realms Beyond, Honeyglass Gardens, a magical amber-glass conservatory. Match soft coloured edges, matte shading, clear pixel clusters, V207/V208 inspired painted pixel-art, no black outlines, no glossy 3D look, no text or watermarks. Top-down three-quarter game view with front face visible, soft upper-left light. One giant magical flower, isolated transparent background. Preserve the original: six large alternating dusty pink, lavender and pale apricot petals around a honey-gold seed centre, tall green stem with two broad oval leaves. Beautiful detailed petal folds and seed clusters, matte soft edges, whimsical garden scale. Full plant and stem foot in frame, generous margins. No pot, no ground tile."
+    }
+  },
+  "fit": "Original image size, visible-alpha box and bottom anchor; six shared AtlasTexture frames"
+}

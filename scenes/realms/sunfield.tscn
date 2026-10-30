@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[node name="ImmersiveRealm" type="Node2D"]
+[node name="SunfieldShowcase" type="Node2D"]
 
 [node name="Points" type="Node2D" parent="."]
 
@@ -11,13 +11,13 @@
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Spawn" type="Marker2D" parent="Points"]
-position = Vector2(450, 4100)
+position = Vector2(620, 5550)
 
 [node name="ReturnGate" type="Marker2D" parent="Points"]
-position = Vector2(360, 4100)
+position = Vector2(470, 5550)
 
 [node name="Merchant" type="Marker2D" parent="Points"]
-position = Vector2(560, 4180)
+position = Vector2(1100, 5630)
 
 [node name="Boss" type="Marker2D" parent="Points"]
-position = Vector2(8600, 1000)
+position = Vector2(9850, 1450)

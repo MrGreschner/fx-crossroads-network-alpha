@@ -13,9 +13,23 @@ func decoy_for(point:Vector2)->Dictionary:
   var d:float=point.distance_to(combat.vec(decoy.pos))
   if str(decoy.get("phase","lure"))=="lure" and float(decoy.time)>0 and d<distance:distance=d;chosen=decoy
  return chosen
+# Opposing AI can be distracted; friendly AI and human movement are never redirected.
+func lure_for(point:Vector2,observer:String="enemy")->Dictionary:
+ var chosen:Dictionary={};var distance:=330.0
+ for leaf in decoys:
+  if str(leaf.get("phase","lure"))!="lure" or float(leaf.time)<=0 or not combat.adventure.alive(str(leaf.owner)):continue
+  if observer!="enemy" and (not combat.adventure.arcade or combat.adventure.game.mode not in ["arena","battlegrounds"] or not combat.adventure.game._rival(observer,str(leaf.owner))):continue
+  var pos:Vector2=combat.vec(leaf.pos);var d:=point.distance_to(pos)
+  if d<distance and combat.path_clear(point,pos):chosen=leaf;distance=d
+ return chosen
+func actor(id:String)->Dictionary:
+ for leaf in decoys:
+  if id=="fern:"+str(leaf.owner) and str(leaf.phase)=="lure" and float(leaf.time)>0 and combat.adventure.alive(str(leaf.owner)):
+   return {"pos":combat.vec(leaf.pos),"alive":true,"player":id}
+ return {}
 func redirect(enemy:Dictionary,target:Vector2)->Vector2:
  if bool(enemy.get("boss",false)):return target
- var leaf:=decoy_for(enemy.pos)
+ var leaf:=lure_for(enemy.pos)
  if not leaf.is_empty() and combat.path_clear(enemy.pos,combat.vec(leaf.pos)):
   var key:String=combat.npc_key(enemy)
   if key not in leaf.get("attracted",[]):leaf.attracted.append(key)
@@ -62,7 +76,7 @@ func heal_tick(decoy:Dictionary)->void:
  var owner:=str(decoy.owner);var point:Vector2=combat.vec(decoy.pos)
  var stats:Dictionary=decoy.get("stats",{})
  for id in combat.adventure.points():
-  if not combat.adventure.alive(str(id)) or (combat.adventure.arcade and combat.adventure.game.mode=="arena" and combat.adventure.game._rival(owner,str(id))):continue
+  if not combat.adventure.alive(str(id)) or (combat.adventure.arcade and combat.adventure.game.mode in ["arena","battlegrounds"] and combat.adventure.game._rival(owner,str(id))):continue
   if point.distance_to(combat.adventure.points()[id])>float(stats.get("radius",150)) or not combat.path_clear(point,combat.adventure.points()[id]):continue
   var amount:float=float(stats.get("heal",8))
   combat.release_heroes.heal(owner,str(id),int(amount))

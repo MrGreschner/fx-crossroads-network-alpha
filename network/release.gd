@@ -1,3 +1,3 @@
 extends RefCounted
-const BUILD="V239-leech-charm-ko"
+const BUILD="V258.1-training-exit"
 const REPORT_SCHEMA=3

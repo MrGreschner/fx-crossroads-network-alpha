@@ -83,7 +83,7 @@ func label(c:Node2D,font:Font,point:Vector2,text:String)->void:
  if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(200).has_point(point):return
  var size:Vector2=font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,16)
  if Rect2(point+Vector2(-size.x/2-8,-18),Vector2(size.x+16,24)).intersects(Rect2(c.position_in_world-c.camera-Vector2(25,60),Vector2(50,70))):return
- c.draw_rect(Rect2(point+Vector2(-size.x/2-8,-18),Vector2(size.x+16,24)),Color(.07,.15,.18,.9))
+ preload("res://scripts/town_streets244.gd").plaque(c,Rect2(point+Vector2(-size.x/2-8,-18),Vector2(size.x+16,24)))
  c.draw_string(font,point+Vector2(-size.x/2,0),text,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#f3e1b5"))
 func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
  # Side tables display shields, tools and bottled supplies outside the stall.
@@ -104,12 +104,11 @@ func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
  for place in [Vector2(820,1100),Vector2(1040,1030),Vector2(1760,720)]:
   if not Rect2(camera,c.get_viewport_rect().size).grow(100).has_point(place):continue
   var p:Vector2=place-camera
-  for n in 3:c.draw_rect(Rect2(p+Vector2(-28,-19+n*7),Vector2(56,5)),Color("#b49268"))
-  for side in [-1,1]:c.draw_rect(Rect2(p+Vector2(side*21-2,0),Vector2(4,13)),Color("#4f5148"))
+  preload("res://scripts/town_streets244.gd").bench(c,p,56,-19,32)
  for tree in [Vector2(950,1080),Vector2(1550,350)]:
   if not Rect2(camera,c.get_viewport_rect().size).grow(200).has_point(tree):continue
   var p=tree-camera
-  c.draw_texture_rect(preload("res://assets/town_ancient_tree.svg"),Rect2(p-Vector2(95,181),Vector2(190,218)),false)
+  preload("res://scripts/town_nature243.gd").tree(c,"ancient",Rect2(p-Vector2(95,181),Vector2(190,218)),tree)
  if Rect2(camera,c.VIEW).grow(80).has_point(Vector2(1510,1710)):
   var carpenter:Vector2=Vector2(1510,1710)-camera
   npc(c,carpenter,Color("#a1825d"),"human")

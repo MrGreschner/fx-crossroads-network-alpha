@@ -47,7 +47,8 @@ static func patrol(seconds:float,offset:float=0)->Dictionary:
 static func light_sources(g:Node)->Array:
  var result=[]
  for at in LAMPS:result.append({"at":at-Vector2(0,57),"radius":135.0,"strength":.92})
- for at in [Vector2(1475,2297),Vector2(1550,2297),Vector2(1340,2565),Vector2(1470,2565),TREE+Vector2(-45,-85),TREE+Vector2(49,-104),Vector2(1834,2500),Vector2(2074,2500)]:result.append({"at":at,"radius":100.0,"strength":.8})
+ for at in [Vector2(1475,2297),Vector2(1550,2297),TREE+Vector2(-45,-85),TREE+Vector2(49,-104),Vector2(1834,2500),Vector2(2074,2500)]:result.append({"at":at,"radius":100.0,"strength":.8})
+ for at in preload("res://scripts/town_nature243.gd").home_windows("tidekeeper"):result.append({"at":at,"radius":100.0,"strength":.8})
  # The original marina's shore posts now illuminate the actual night mesh too.
  for at in [Vector2(1654,2209),Vector2(2188,2209)]:result.append({"at":at,"radius":110.0,"strength":.8})
  return result
@@ -109,43 +110,22 @@ static func person(c:Node2D,at:Vector2,coat:Color,guard:bool,t:float,walking:boo
  var id="guard_melee" if guard else "Lio" if coat==Color("#7d719d") else "Brin"
  preload("res://scripts/town_cast230.gd").draw(c,id,at+Vector2(0,8),t,walking)
 func draw_cottage_source(c:Node2D,cam:Vector2)->void:
- var night=game.town_life.calendar.night_amount()
- # Tidekeeper cottage: irregular shingles, chimney, window boxes, front porch.
- var h=HOME.position-cam;c.draw_rect(Rect2(h+Vector2(7,12),HOME.size),Color(0,0,0,.2));c.draw_rect(Rect2(h,HOME.size),Color('#c4b08b'));c.draw_rect(Rect2(h+Vector2(0,15),Vector2(210,14)),Color('#806b51'))
- for y in range(35,145,23):c.draw_line(h+Vector2(0,y),h+Vector2(210,y),Color('#9b8b6b'),2)
- c.draw_colored_polygon(PackedVector2Array([h+Vector2(-16,18),h+Vector2(38,-54),h+Vector2(157,-61),h+Vector2(226,18)]),Color('#6c655c'))
- for row in 4:
-  var y=-37+row*14;c.draw_line(h+Vector2(30-row*12,y),h+Vector2(170+row*11,y),Color('#aaa08a'),3)
- c.draw_rect(Rect2(h+Vector2(157,-67),Vector2(25,58)),Color('#8c8174'))
- for x in [28,158]:
-  c.draw_rect(Rect2(h+Vector2(x,49),Vector2(29,38)),Color('#524d43'));c.draw_rect(Rect2(h+Vector2(x+3,52),Vector2(23,32)),Color('#efcb87') if night>.1 else Color('#7fadae'));c.draw_line(h+Vector2(x+14,50),h+Vector2(x+14,85),Color('#5e6558'),3);c.draw_line(h+Vector2(x,68),h+Vector2(x+29,68),Color('#5e6558'),3);c.draw_rect(Rect2(h+Vector2(x-4,87),Vector2(37,8)),Color('#766143'))
-  for n in 4:c.draw_circle(h+Vector2(x+n*8,83),3,Color('#c3988e') if n%2 else Color('#92ab6c'))
- c.draw_rect(Rect2(h+Vector2(85,74),Vector2(40,71)),Color('#705944'));c.draw_circle(h+Vector2(116,112),2,Color('#e0c58b'));c.draw_rect(Rect2(h+Vector2(72,145),Vector2(66,20)),Color('#b19e7e'));c.draw_string(ThemeDB.fallback_font,h+Vector2(12,191),"TIDEKEEPER COTTAGE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#e9dabb'))
+ preload("res://scripts/town_nature243.gd").home(c,"tidekeeper",cam)
+ c.draw_string(ThemeDB.fallback_font,HOME.position-cam+Vector2(12,191),"TIDEKEEPER COTTAGE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e9dabb"))
 
 func draw_fittings_source(c:Node2D,cam:Vector2)->void:
  # Export crates with rope handles, stencilled fish and a net drying on the bank.
  for box in CARGO:
-  var at=box.position-cam;c.draw_rect(Rect2(at+Vector2(3,4),box.size),Color(0,0,0,.2));c.draw_rect(Rect2(at,box.size),Color('#a78358'));c.draw_rect(Rect2(at,box.size),Color('#d4b681'),false,2);c.draw_line(at+Vector2(3,3),at+box.size-Vector2(3,3),Color('#70593e'),3);c.draw_line(at+Vector2(box.size.x-3,3),at+Vector2(3,box.size.y-3),Color('#70593e'),3);c.draw_circle(at+box.size*.5,4,Color('#d7c093'))
- for x in range(1530,1590,9):c.draw_line(Vector2(x,2410)-cam,Vector2(x+6,2450)-cam,Color('#c9c2a0',.5),1)
- for y in range(2410,2455,9):c.draw_line(Vector2(1530,y)-cam,Vector2(1590,y)-cam,Color('#c9c2a0',.5),1)
- # Trade details stay on the bank, clear of the cottage and walking route.
- for at in [Vector2(1244,2590),Vector2(1244,2630)]:
-  var q=at-cam;pass
-  c.draw_rect(Rect2(q-Vector2(12,20),Vector2(24,29)),Color("#896b48"));c.draw_arc(q-Vector2(0,20),12,PI,TAU,12,Color("#bf9c6e"),4,true)
-  for y in [-14,2]:c.draw_line(q+Vector2(-12,y),q+Vector2(12,y),Color("#506466"),3)
- var rope=Vector2(1615,2465)-cam
- for n in 4:c.draw_arc(rope,9+n*2,0,TAU,18,Color("#c4af7e"),1.5,true)
+  c.draw_texture_rect(preload("res://scripts/marina_art250.gd").texture("cargo"),Rect2(box.position-cam-Vector2(3,8),box.size+Vector2(6,8)),false)
+ preload("res://scripts/town_streets244.gd").draw(c,"net",Rect2(Vector2(1530,2410)-cam,Vector2(60,45)))
+ # Reuse accepted matte basket/rope art at the original decorative anchors.
+ for at in [Vector2(1244,2590),Vector2(1244,2630)]:preload("res://scripts/town_streets244.gd").draw(c,"basket",Rect2(at-cam-Vector2(12,25),Vector2(24,34)))
+ preload("res://scripts/town_streets244.gd").draw(c,"rope",Rect2(Vector2(1597,2451)-cam,Vector2(36,28)))
  var rack=Vector2(1270,2700)-cam
  for x in [0,78]:c.draw_line(rack+Vector2(x,0),rack+Vector2(x,-45),Color("#826d4f"),4)
  c.draw_line(rack-Vector2(3,40),rack+Vector2(81,-40),Color("#b4ad86"),2)
- # Striped awning, specimen jars and specialist bait trays.
- var s=STALL.position-cam;c.draw_rect(Rect2(s+Vector2(0,36),Vector2(130,49)),Color('#816348'));c.draw_rect(Rect2(s+Vector2(-8,-30),Vector2(146,54)),Color('#477c7a'))
- for n in 7:
-  if n%2==0:c.draw_rect(Rect2(s+Vector2(-8+n*21,-30),Vector2(21,54)),Color('#d6bd8a'))
- for x in [-4,134]:c.draw_line(s+Vector2(x,-28),s+Vector2(x,90),Color('#80674c'),4)
- for n in 3:
-  var at=s+Vector2(23+n*39,33);c.draw_rect(Rect2(at-Vector2(10,13),Vector2(20,24)),Color('#9dc4b9'));c.draw_rect(Rect2(at-Vector2(10,16),Vector2(20,4)),Color('#d7c096'));c.draw_arc(at,6,0,TAU,14,[Color('#cbb17a'),Color('#b8b0db'),Color('#d59d7c')][n],3,true)
- c.draw_string(ThemeDB.fallback_font,s+Vector2(-4,-42),"EXOTIC BAIT • DAILY DELIVERY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#f4dfb5'))
+ c.draw_texture_rect(preload("res://scripts/marina_art250.gd").texture("bait_stall"),Rect2(Vector2(1440,2230)-cam,Vector2(150,125)),false)
+ c.draw_string(ThemeDB.fallback_font,STALL.position-cam+Vector2(-4,-42),"EXOTIC BAIT • DAILY DELIVERY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#f4dfb5"))
 
 func draw_on(c:Node2D,cam:Vector2)->void:
  if not Rect2(cam,c.VIEW).grow(200).intersects(Rect2(1130,2130,1150,680)):return
@@ -154,17 +134,11 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  for at in TREES:
   if Rect2(cam,c.VIEW).grow(150).has_point(at):c.draw_sprite("tree",at-Vector2(55,115),Vector2(110,145))
  preload("res://scripts/town_art39.gd").draw(c,"marina_cottage_night" if night>.1 else "marina_cottage",cam)
- var h=HOME.position-cam
- for n in 3:c.draw_circle(h+Vector2(169+sin(t+n)*6,-79-n*17-fposmod(t*8,17)),8+n*3,Color(.8,.8,.74,.17))
+ var chimney=preload("res://scripts/town_nature243.gd").chimney("tidekeeper")-cam
+ for n in 3:c.draw_circle(chimney+Vector2(sin(t+n)*6,-12-n*17-fposmod(t*8,17)),8+n*3,Color(.8,.8,.74,.17))
  # Ancient knot willow: bent trunk, swaying limbs and hanging lanterns.
- var tree=TREE-cam;var sway=sin(t*.8)*4
- c.draw_line(tree,tree+Vector2(-15,-82),Color('#655847'),28);c.draw_line(tree+Vector2(-15,-74),tree+Vector2(12,-131),Color('#786b53'),20)
- for side in [-1,1]:c.draw_line(tree+Vector2(-8,-82),tree+Vector2(side*60+sway,-115),Color('#786b53'),10)
- for n in 7:
-  var at=tree+Vector2(-83+n*27+sway*sin(n+1),-123-absf(sin(n*1.6))*32);c.draw_circle(at,35,Color('#547c63') if n%2 else Color('#6d906c'))
-  c.draw_arc(at+Vector2(0,10),26,.1,2.8,14,Color('#9cb58a',.6),2,true)
-  for k in 3:c.draw_line(at+Vector2(k*9-9,17),at+Vector2(k*9-9+sin(t+n)*4,44+k*7),Color('#82a17a'),2,true)
- c.draw_circle(tree+Vector2(-8,-37),11,Color('#473e36'));c.draw_arc(tree+Vector2(-8,-37),8,0,TAU,16,Color('#a08b64'),2,true)
+ var tree=TREE-cam
+ preload("res://scripts/town_nature243.gd").tree(c,"knot_willow",Rect2(tree-Vector2(130,200),Vector2(260,220)),TREE)
  for pair in [[-45,-85],[49,-104]]:
   var x=pair[0];var y=pair[1];var at=tree+Vector2(x+sin(t)*2,y);c.draw_line(at-Vector2(0,27),at,Color('#b1ac88'),1.5);c.draw_rect(Rect2(at-Vector2(5,0),Vector2(10,15)),Color('#eacb82') if night>.1 else Color('#b7ae85'));c.draw_rect(Rect2(at-Vector2(7,2),Vector2(14,3)),Color('#736348'))
  preload("res://scripts/town_art39.gd").draw(c,"marina_fittings",cam)
@@ -175,7 +149,7 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  c.draw_string(ThemeDB.fallback_font,TRADER-cam+Vector2(-20,27),"Lio • night shift" if night_shift else "Brin • bait trader",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color('#ead9ba'))
  for n in 2:
   var guard=patrol(game.town_life.calendar.now,n*37);game.town_scenery.guard(c,guard.pos-cam,guard.walking)
- for at in LAMPS:preload("res://scripts/town_calendar.gd").draw_lantern_source(c,at-cam,night)
+ for at in LAMPS:preload("res://scripts/marina_art250.gd").lamp(c,at-cam,night>.1)
  for at in [Vector2(1834,2500),Vector2(2074,2500)]:
   c.draw_rect(Rect2(at-cam-Vector2(6,5),Vector2(12,12)),Color('#4f5f59'));c.draw_rect(Rect2(at-cam-Vector2(3,3),Vector2(6,8)),Color('#f8d88f') if night>.1 else Color('#a5ad91'))
   if night>.1:

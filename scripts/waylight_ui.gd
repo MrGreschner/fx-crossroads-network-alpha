@@ -17,54 +17,8 @@ var detail_scroll=0
 class RelicIcon extends Control:
  var type="stormglass"
  func _draw()->void:
-  var spec=C.RELICS[type];var c=Color(spec.color);var p=size*.5;var radius=minf(size.x,size.y)*.34
-  draw_circle(p,radius*1.35,Color(c,.08));draw_arc(p,radius*1.2,0,TAU,40,Color(c,.5),1.5,true)
-  match spec.kind:
-   "oath":
-    draw_arc(p,radius*.7,0,TAU,32,c,4,true);draw_line(p+Vector2(-radius*.9,-radius*.7),p+Vector2(radius*.8,radius*.8),Color("#eadbb5"),4,true);draw_arc(p+Vector2(-radius*.65,-radius*.5),radius*.32,0,TAU,18,Color("#eadbb5"),3,true)
-   "tide":
-    for n in 3:draw_arc(p+Vector2((n-1)*5,(n-1)*radius*.6),radius*.7,PI*.1,PI*.9,20,c,3,true)
-   "vessel":
-    draw_arc(p,radius*.75,0,PI,24,c,4,true);draw_line(p-Vector2(radius*.75,0),p+Vector2(radius*.75,0),c,3,true);draw_line(p+Vector2(0,radius*.75),p+Vector2(0,radius),c,4,true);draw_circle(p-Vector2(0,radius*.5),radius*.22,Color("#f3e1b3"))
-   "folio":
-    draw_rect(Rect2(p-Vector2(radius*.8,radius*.7),Vector2(radius*1.6,radius*1.5)),c,false,3);draw_line(p-Vector2(0,radius*.7),p+Vector2(0,radius*.8),c,2);draw_polyline(PackedVector2Array([p+Vector2(8,-15),p+Vector2(1,0),p+Vector2(10,-2),p+Vector2(3,14)]),Color("#ffe2aa"),3,true)
-   "gear","clock":
-    draw_arc(p,radius*.65,0,TAU,32,c,4,true)
-    for n in 8:
-     var dir=Vector2.from_angle(n*TAU/8);draw_line(p+dir*radius*.65,p+dir*radius,c,4,true)
-    if spec.kind=="clock":draw_polyline(PackedVector2Array([p+Vector2(0,-radius*.45),p,p+Vector2(radius*.3,radius*.15)]),Color("#f6dfaa"),3,true)
-    else:draw_circle(p,radius*.22,Color("#f6dfaa"))
-   "rift":
-    draw_arc(p,radius*.9,PI*.15,PI*.85,24,c,4,true);draw_arc(p,radius*.9,PI*1.1,PI*1.8,24,c,4,true);draw_polyline(PackedVector2Array([p+Vector2(0,-radius),p+Vector2(-7,-3),p+Vector2(7,4),p+Vector2(0,radius)]),Color("#ead8ff"),3,true)
-   "anchor":
-    draw_line(p-Vector2(0,radius),p+Vector2(0,radius*.65),c,4,true);draw_arc(p-Vector2(0,radius*.7),radius*.25,0,TAU,20,c,3,true);draw_arc(p,radius*.75,0,PI,24,c,4,true);draw_line(p-Vector2(radius*.5,0),p+Vector2(radius*.5,0),c,3,true)
-   "starheart":
-    var poly=PackedVector2Array()
-    for n in 10:poly.append(p+Vector2.from_angle(-PI*.5+n*PI/5)*(radius if n%2==0 else radius*.48))
-    draw_colored_polygon(poly,c);draw_circle(p,radius*.25,Color("#fff0c4"))
-   "comb":
-    for offset in [Vector2(-10,-6),Vector2(10,-6),Vector2(0,11)]:draw_arc(p+offset,radius*.44,0,TAU,6,c,3,true)
-   "vial":
-    draw_style_box(UI.box(spec.color,"#f7e8bb",5,1),Rect2(p+Vector2(-radius*.45,-radius*.4),Vector2(radius*.9,radius*1.2)));draw_rect(Rect2(p+Vector2(-radius*.22,-radius),Vector2(radius*.44,radius*.6)),c)
-   "sun":
-    draw_circle(p,radius*.5,c)
-    for n in 8:
-     var dir=Vector2.from_angle(n*TAU/8);draw_line(p+dir*radius*.7,p+dir*radius,c,2,true)
-   "bolt":draw_colored_polygon(PackedVector2Array([p+Vector2(3,-radius),p+Vector2(-radius*.5,2),p+Vector2(0,2),p+Vector2(-3,radius),p+Vector2(radius*.5,-3),p+Vector2(1,-3)]),c)
-   "fire":draw_colored_polygon(PackedVector2Array([p+Vector2(0,-radius),p+Vector2(radius*.7,0),p+Vector2(radius*.4,radius),p+Vector2(-radius*.6,radius*.6),p+Vector2(-radius*.8,-radius*.1),p+Vector2(-radius*.2,radius*.2)]),c)
-   "pearl":draw_circle(p,radius*.7,c);draw_circle(p-Vector2(radius*.2,radius*.25),radius*.22,Color("#f5f1d8"));draw_arc(p,radius,-.2,PI+.2,28,c,3,true)
-   "snow":
-    for n in 6:
-     var dir=Vector2.from_angle(n*TAU/6);draw_line(p,p+dir*radius,c,3,true);draw_line(p+dir*radius*.55,p+dir.rotated(.35)*radius*.85,c,2,true)
-   "thorns":
-    draw_arc(p,radius*.75,0,TAU,32,c,4,true)
-    for n in 7:
-     var dir=Vector2.from_angle(n*TAU/7);draw_line(p+dir*radius*.65,p+dir.rotated(.2)*radius*1.1,c,3,true)
-   "seed":draw_circle(p,radius*.65,c);draw_line(p,p-Vector2(0,radius),Color("#e6dfa0"),3,true);draw_arc(p-Vector2(radius*.3,radius*.6),radius*.35,PI,TAU,16,c,4,true)
-   "fish":
-    draw_colored_polygon(PackedVector2Array([p+Vector2(-radius,0),p+Vector2(-radius*.3,-radius*.5),p+Vector2(radius*.7,-radius*.3),p+Vector2(radius,0),p+Vector2(radius*.7,radius*.4),p+Vector2(-radius*.3,radius*.5)]),c)
-    draw_circle(p+Vector2(radius*.6,-radius*.1),3,Color("#173347"));draw_line(p+Vector2(-radius*.7,-radius*.6),p+Vector2(-radius*.7,radius*.6),c,3)
-   _:draw_colored_polygon(PackedVector2Array([p-Vector2(0,radius),p+Vector2(radius*.8,-radius*.2),p+Vector2(radius*.5,radius*.8),p+Vector2(-radius*.4,radius),p-Vector2(radius*.8,radius*.2)]),c);draw_line(p-Vector2(0,radius*.8),p+Vector2(radius*.2,radius*.7),Color("#fff1d0"),2,true)
+  texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+  preload("res://scripts/item_art245.gd").relic(self,type)
 func text(parent:Node,value:String,size:int=17)->Label:
  var l=Label.new();l.text=value;l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;l.add_theme_font_size_override("font_size",size);parent.add_child(l);return l
 func button(parent:Node,value:String,call:Callable)->Button:
@@ -118,11 +72,11 @@ func build()->void:
  var small=manager.game.VIEW.y<500
  for n in 3:
   var locked=n==1 and not between_open or n==2 and not over_open
-  var tile=Button.new();tile.clip_contents=true;tile.name=["RealmsRoute","BetweenRoute","OverchargeRoute"][n];tile.toggle_mode=true;tile.button_pressed=tab==n;tile.disabled=locked;tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.custom_minimum_size.y=68 if small else 100;nav.add_child(tile)
+  var tile=Button.new();tile.clip_contents=true;tile.name=["RealmsRoute","BetweenRoute","OverchargeRoute"][n];tile.toggle_mode=true;tile.button_pressed=tab==n;tile.disabled=locked;tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.custom_minimum_size.y=68 if small else 124;nav.add_child(tile)
   tile.tooltip_text="Clear Sunfield Expanse or Frostbound Rink." if n==1 and locked else "Complete Portal Attunement in The Between." if n==2 and locked else ["Hand-built adventures, solo or co-op.","Gather shards in a changing world.","Today's charged realm; personal entry fee."][n]
   var inset=MarginContainer.new();inset.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);inset.add_theme_constant_override("margin_left",8);inset.add_theme_constant_override("margin_right",8);inset.mouse_filter=Control.MOUSE_FILTER_IGNORE;tile.add_child(inset)
   var row=HBoxContainer.new();row.mouse_filter=Control.MOUSE_FILTER_IGNORE;inset.add_child(row)
-  var icon=preload("res://scripts/portal_route_art.gd").new();icon.variant=n;icon.muted=locked;icon.custom_minimum_size=Vector2(42,54) if small else Vector2(76,84);row.add_child(icon)
+  var icon=preload("res://scripts/portal_route_art.gd").new();icon.variant=n;icon.muted=locked;icon.custom_minimum_size=Vector2(42,54) if small else Vector2(88,110);row.add_child(icon)
   var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.size_flags_vertical=Control.SIZE_SHRINK_CENTER;col.mouse_filter=Control.MOUSE_FILTER_IGNORE;row.add_child(col)
   text(col,["REALMS","THE BETWEEN","OVERCHARGE REALM"][n],14 if small else 17).mouse_filter=Control.MOUSE_FILTER_IGNORE
   text(col,("Sunfield or Frostbound clear" if n==1 else "Attunement required") if locked else ["Start your journey","Explore • gather shards","Today's challenge"][n],11 if small else 13).mouse_filter=Control.MOUSE_FILTER_IGNORE

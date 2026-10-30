@@ -34,7 +34,7 @@ func rebuild()->void:
    CARDS.text(row,"CASE %d • Empty\nChoose a kept catch to attract visitors." % (slot+1),17)
    CARDS.action(row,"Choose fish",func():close();fishing.open_journal(),120)
   else:
-   fishing.picture(row,str(fish.species),Vector2(130,75))
+   fishing.picture(row,str(fish.species),Vector2(130,75),fish)
    var facts=VBoxContainer.new();facts.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(facts)
    CARDS.text(facts,"CASE %d • %s" % [slot+1,C.fish()[fish.species].name],18)
    CARDS.text(facts,"%s • %.2f kg%s" % [C.fish()[fish.species].rarity,fish.kg," • TROPHY" if C.is_trophy(fish) else ""],14)

@@ -256,7 +256,7 @@ func build(parent:Node)->void:
    if not (row.get("value") is float or row.get("value") is int) or not is_finite(float(row.value)):continue
    var line=HBoxContainer.new();card.add_child(line)
    if entry[1]=="heroes":
-    var art=TextureRect.new();var sprite=str(data.get("sprite",id));art.texture=legacy.game.art.get(sprite+"_idle",legacy.game.art.get(sprite+"_0"));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(44,48);line.add_child(art)
+    var art=TextureRect.new();var sprite=str(data.get("sprite",id));art.texture=preload("res://scripts/hero_portrait.gd").texture(legacy.game,id);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(44,48);line.add_child(art)
    preload("res://scripts/garden_ui.gd").label(line,"%d. %s    %s" % [n,str(data.get("name",id)),String.num(float(row.value),0)],20)
  preload("res://scripts/named_records_ui.gd").build(times_parent if category=="realms" else parent,legacy,snapshot.get("named",{}),"times" if category=="realms" else category)
  if category in ["heroes","realms","times","streak","relic","descent"]:return
@@ -303,7 +303,7 @@ func trophy_row(parent:Node,f:Dictionary)->PanelContainer:
  var spec:Dictionary=FISH.fish()[f.species]
  var frame=PanelContainer.new();frame.name="TrophyRow";frame.add_theme_stylebox_override("panel",UI.box("#153440",preload("res://scripts/fish_weight_gauge.gd").rarity_color(str(spec.rarity)).to_html(),8,8));parent.add_child(frame)
  var row=HFlowContainer.new();row.add_theme_constant_override("h_separation",12);row.add_theme_constant_override("v_separation",4);frame.add_child(row)
- var art=TextureRect.new();art.texture=FISH.texture(str(f.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(112,72);row.add_child(art)
+ var art=TextureRect.new();art.texture=FISH.catch_texture(f);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(112,72);row.add_child(art)
  var details=VBoxContainer.new();details.custom_minimum_size.x=210;details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
  var gui=preload("res://scripts/fish_collection_ui.gd")
  gui.text(details,str(spec.name)+" • %.2f kg" % float(f.kg),17)
@@ -339,18 +339,8 @@ static func interact(g:Node)->bool:
  return true
 static func draw_on(g:Node2D,camera:Vector2)->void:
  var c=Vector2(1035,560)-camera
- if not Rect2(Vector2.ZERO,g.VIEW).grow(200).has_point(c):return
- g.draw_rect(Rect2(c+Vector2(-68,1),Vector2(136,12)),Color("#74776a"))
- for side in [-1,1]:
-  g.draw_rect(Rect2(c+Vector2(side*58-5,-128),Vector2(10,140)),Color("#755b40"));g.draw_line(c+Vector2(side*58-2,2),c+Vector2(side*58-2,-125),Color("#b29a70"),2)
- g.draw_rect(Rect2(c-Vector2(63,131),Vector2(126,114)),Color("#70553c"))
- for n in 7:
-  var y=-126+n*15;g.draw_rect(Rect2(c+Vector2(-59,y),Vector2(118,13)),Color("#a08559") if n%2 else Color("#93774f"));g.draw_line(c+Vector2(-53,y+6),c+Vector2(49,y+7),Color("#776044"),1)
- for n in 3:
-  var at=c+Vector2(-49+n*34,-110+(n%2)*6);g.draw_rect(Rect2(at,Vector2(28,65)),Color("#d9cba4"));g.draw_circle(at+Vector2(14,4),2,Color("#647e77"))
-  for j in 4:g.draw_line(at+Vector2(5,23+j*7),at+Vector2(23-j%2*5,23+j*7),Color("#9e9476"),1)
- g.draw_colored_polygon(PackedVector2Array([c+Vector2(-77,-130),c+Vector2(0,-157),c+Vector2(77,-130)]),Color("#65766b"));g.draw_line(c+Vector2(-76,-130),c+Vector2(0,-158),Color("#b3b49a"),3)
- g.draw_rect(Rect2(c+Vector2(-76,-17),Vector2(152,23)),Color("#67533b"));g.draw_string(g.font,c+Vector2(-70,-1),"COMMUNITY RECORDS",HORIZONTAL_ALIGNMENT_CENTER,140,11,Color("#ede0b6"))
+ preload("res://scripts/town_art246.gd").draw(g,"records",Rect2(c+Vector2(-78,-157),Vector2(156,184)))
+ g.draw_string(g.font,c+Vector2(-70,2),"COMMUNITY RECORDS",HORIZONTAL_ALIGNMENT_CENTER,140,11,Color("#f4e0b3"))
 
 const FISH_BOARD_KEYS=["fish_all","fish_week","rarest_all","rarest_week"]
 static func valid_fish_boards(boards:Variant)->bool:
@@ -378,7 +368,7 @@ func fish_leader_row(parent:Node,record:Dictionary,rank:int)->Control:
  var frame=PanelContainer.new();frame.name="FishLeader_"+str(rank);frame.add_theme_stylebox_override("panel",UI.box("#153440","#688e91" if rank==1 else "#284e59",6,7));parent.add_child(frame)
  var row=HBoxContainer.new();row.add_theme_constant_override("separation",8);frame.add_child(row)
  var number=Label.new();number.text=str(rank);number.custom_minimum_size.x=20;number.add_theme_font_size_override("font_size",22);number.modulate=Color("#efcd83" if rank==1 else "#bed7df");row.add_child(number)
- var art=TextureRect.new();art.texture=FISH.texture(str(record.species));art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(64,54);row.add_child(art)
+ var art=TextureRect.new();art.texture=FISH.catch_texture(record);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;art.custom_minimum_size=Vector2(64,54);row.add_child(art)
  var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.custom_minimum_size.x=150;details.add_theme_constant_override("separation",2);row.add_child(details)
  var gui=preload("res://scripts/garden_ui.gd")
  gui.label(details,str(record.get("username","Earlier anonymous catch")),17)

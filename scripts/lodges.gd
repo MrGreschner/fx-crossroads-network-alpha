@@ -37,7 +37,10 @@ var uid=980000
 var map_texture:Texture2D
 func setup(owner:Node)->void:
  game=owner
- for id in ["challenge","gather","apothecary","apple_tree"]+C.INGREDIENTS.keys()+C.RECIPES.keys():visual_textures[id]=preload("res://scripts/source_art.gd").texture("res://assets/lodges/"+id+".svg")
+ for id in C.INGREDIENTS.keys()+C.RECIPES.keys():visual_textures[id]=preload("res://scripts/source_art.gd").texture("res://assets/lodges/"+id+".svg")
+ visual_textures.apple_tree=preload("res://scripts/town_nature243.gd").texture("apple")
+ for id in ["gather","apothecary"]:visual_textures[id]=preload("res://scripts/town_shops242.gd").texture(id)
+ visual_textures.challenge=preload("res://scripts/town_landmarks241.gd").texture("lodge")
 func state()->Dictionary:return game.legacy.lodge_economy.state()
 func blocked(p:Vector2)->bool:
  if Rect2(APPLE_TREE-Vector2(15,36),Vector2(30,32)).has_point(p):return true
@@ -288,8 +291,10 @@ func draw_town(c:Node2D,camera:Vector2)->void:
   var p:Vector2=pair[0]-camera
   if not Rect2(Vector2.ZERO,game.VIEW).grow(330).has_point(p):continue
   var dimensions=Vector2(500,310) if pair[1]=="challenge" else Vector2(320,290) if pair[1]=="gather" else Vector2(290,270)
-  c.draw_texture_rect(visual_textures[pair[1]],Rect2(p-Vector2(dimensions.x*.5,dimensions.y+15),dimensions),false)
-  game.town_upgrade.label(c,UI.FONT,p+Vector2(0,-10),str(pair[2]))
+  if pair[1]=="challenge":preload("res://scripts/town_landmarks241.gd").draw(c,"lodge",camera)
+  else:
+   preload("res://scripts/town_shops242.gd").draw_rect(c,pair[1],Rect2(p-Vector2(dimensions.x*.5,dimensions.y+15),dimensions))
+   game.town_upgrade.label(c,UI.FONT,p+Vector2(0,-10),str(pair[2]))
   c.draw_arc(p,26,0,TAU,24,Color("#e3c888") if game.position_in_world.distance_to(pair[0])<85 else Color(.7,.7,.5,.35),1.5,true)
   if pair[1]=="gather":
    var total=state().jobs.size()
@@ -299,7 +304,7 @@ func draw_town(c:Node2D,camera:Vector2)->void:
    for n in 3:c.draw_circle(p+Vector2(74+sin(game.visual_clock+n)*5,-95-fposmod(game.visual_clock*13+n*10,34)),3,Color(.7,.85,.7,.4))
  var tree=APPLE_TREE-camera
  if Rect2(Vector2.ZERO,game.VIEW).grow(160).has_point(tree):
-  c.draw_texture_rect(visual_textures.apple_tree,Rect2(tree-Vector2(55,135)+Vector2(sin(game.visual_clock*32)*tree_shake*5,0),Vector2(110,135)),false)
+  preload("res://scripts/town_nature243.gd").tree(c,"apple",Rect2(tree-Vector2(55,135)+Vector2(sin(game.visual_clock*32)*tree_shake*5,0),Vector2(110,135)),APPLE_TREE)
   if tree_drop>0:
    var apple=tree+Vector2(26,-90+(1-tree_drop)*95);c.draw_circle(apple,5,Color("#df8c69"));c.draw_line(apple-Vector2(0,4),apple-Vector2(-2,8),Color("#7d6d48"),2,true)
   c.draw_arc(tree,20,0,PI,18,Color(.8,.88,.5,.35),1.5,true)

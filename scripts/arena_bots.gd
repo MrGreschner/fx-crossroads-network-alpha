@@ -82,6 +82,9 @@ func step(delta:float)->void:
    for candidate in options:
     var d=origin.distance_to(candidate.pos)
     if d<distance:distance=d;near=candidate.pos;target=str(candidate.id)
+   if game.mode in ["arena","battlegrounds"]:
+    var leaf:Dictionary=combat.fern.lure_for(origin,id)
+    if not leaf.is_empty():near=combat.vec(leaf.pos);distance=origin.distance_to(near);target="fern:"+str(leaf.owner)
    var ally_goal=origin;var ally_distance=INF;var wounded=false
    for other in game.positions:
     if str(other)==id or game.mode in ["arena","battlegrounds"] and game._rival(id,str(other)):continue

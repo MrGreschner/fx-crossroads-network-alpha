@@ -43,7 +43,6 @@ func draw_ground_source(c:Node2D,camera:Vector2)->void:
   c.draw_circle(Vector2(2880,1450)-camera,128,Color("#819069"));c.draw_circle(Vector2(2880,1450)-camera,92,Color("#b0a17b"))
  # A single physical river exists before the watermill project is earned.
  if visible.intersects(RIVER.grow(20)):
-  c.draw_rect(Rect2(RIVER.position-camera,RIVER.size),Color("#347889"))
   for x in [2268,2440]:c.draw_rect(Rect2(Vector2(x,-560)-camera,Vector2(12,RIVER.size.y)),Color("#8b9a7c"))
  if visible.intersects(Rect2(2200,250,950,1950)):
   for bridge in [BRIDGE,HOME_BRIDGE]:
@@ -79,20 +78,14 @@ static func river_surface_visible(point:Vector2)->bool:
  # Decks are already baked into the ground layer; live water must stay beneath them.
  return not BRIDGE.grow(4).has_point(point) and not HOME_BRIDGE.grow(4).has_point(point)
 func draw_ground(c:Node2D,camera:Vector2)->void:
- # Water and collision share RIVER even when a restored atlas has shorter bounds.
- # Three inexpensive fills beneath the cached scenery prevent invisible river tails.
- if Rect2(camera,c.VIEW).grow(20).intersects(RIVER.grow(20)):
-  c.draw_rect(Rect2(RIVER.position-camera,RIVER.size),Color("#347889"))
-  for x in [RIVER.position.x-12,RIVER.end.x]:
-   c.draw_rect(Rect2(Vector2(x,RIVER.position.y)-camera,Vector2(12,RIVER.size.y)),Color("#8b9a7c"))
+ # The existing northern approach belongs below the gate artwork, never across its roof.
+ if Rect2(camera,c.VIEW).grow(50).intersects(Rect2(850,-210,100,400)):
+  c.draw_line(Vector2(900,-210)-camera,Vector2(900,190)-camera,Color("#9b916d"),100)
  preload("res://scripts/town_art39.gd").draw(c,"chapter_ground",camera)
+ preload("res://scripts/marina_art250.gd").shore(c,camera)
+ preload("res://scripts/town_nature243.gd").garden(c,camera);preload("res://scripts/town_nature243.gd").river_reeds(c,camera)
  var t:=Time.get_ticks_msec()/1000.0
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
- if visible.intersects(RIVER.grow(20)):
-  for n in 64:
-   var world:=Vector2(2295+posmod(n*37,125),fposmod(n*37+t*45,RIVER.size.y)-560)
-   if visible.has_point(world) and river_surface_visible(world):
-    var p:=world-camera;c.draw_line(p,p+Vector2(minf(30,RIVER.end.x-3-world.x),0),Color(.65,.9,.92,.4),2,true)
  if visible.intersects(Rect2(800,1780,285,350)):
   var phase=fposmod(t*.006,1);var travel=phase*2 if phase<.5 else 2-phase*2
   var farmer=Vector2(1030,1890+travel*200)-camera
@@ -108,7 +101,7 @@ func draw_pads(c:Node2D,camera:Vector2)->void:
   for x in [-92,92]:
    c.draw_line(battle+Vector2(x,-52),battle+Vector2(x,35),Color("#8f7760"),5)
    c.draw_colored_polygon(PackedVector2Array([battle+Vector2(x,-52),battle+Vector2(x+25,-42),battle+Vector2(x,-28)]),Color("#6db8ce") if x<0 else Color("#cd8773"))
-  c.draw_line(Vector2(900,-210)-camera,Vector2(900,190)-camera,Color("#9b916d"),100)
+
   for n in 6:
    var p:=Vector2(680+(n%2)*440,-380+int(n/2)*100)-camera
    c.draw_circle(p,27,Color("#3d4741"));c.draw_circle(p,17,Color("#292e2d"))

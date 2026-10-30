@@ -250,7 +250,7 @@ func step(delta:float)->void:
   if str(enemy.type) not in TYPES or int(enemy.get("cinder_sector",0))>stage or bool(enemy.get("converted",false)):continue
   var id=nearest(enemy.pos)
   if id.is_empty():continue
-  var target:Vector2=adventure.points()[id];var distance:float=(enemy.pos as Vector2).distance_to(target)
+  var target:Vector2=adventure.combat.fern.redirect(enemy,adventure.points()[id]);var distance:float=(enemy.pos as Vector2).distance_to(target)
   if distance>(1300 if enemy.boss else 760):continue
   if adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
   var busy=false
@@ -351,7 +351,7 @@ func draw_world(c:Node2D,cam:Vector2)->void:
  if reveal>0:
   c.draw_circle(throne,80+(4.5-reveal)*35,Color(1,.45,.1,.12));c.draw_arc(throne,80+(4.5-reveal)*35,0,TAU,48,Color('#f6bb6d'),5)
  if done:
-  var p=v(data.exit)-cam;c.draw_circle(p,52,Color('#458d95',.5));c.draw_arc(p,47,0,TAU,40,Color('#b1f4ed'),5);c.draw_string(ThemeDB.fallback_font,p+Vector2(-85,76),"COOLED THRONE • E",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color('#b9eee7'))
+  var p=v(data.exit)-cam;preload("res://scripts/realm_portals258.gd").draw_at(c,adventure.game,v(data.exit),cam);c.draw_string(ThemeDB.fallback_font,p+Vector2(-85,76),"COOLED THRONE • E",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color('#b9eee7'))
 func guidance(c:Node2D,cam:Vector2)->void:
  var id:String=str(adventure.game.my_id) if adventure.arcade else "solo"
  if not adventure.points().has(id) or not adventure.alive(id):return

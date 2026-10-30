@@ -8,6 +8,8 @@ var neighborhood=preload("res://scripts/town_neighborhood.gd").new()
 var routines=preload("res://scripts/town_resident_routes.gd").new()
 var resident_cache:Array=[]
 var cached_clock=-1.0
+var cached_hour=-1.0
+var cached_day=-1
 var events=preload("res://scripts/town_events.gd").new()
 var calendar=preload("res://scripts/town_calendar.gd").new()
 var residents:Array[Dictionary]=[
@@ -41,8 +43,8 @@ func blocked(p:Vector2)->bool:return neighborhood.blocked(p)
 func step(delta:float)->void:
  clock+=delta;toss=maxf(0,toss-delta);cooldown=maxf(0,cooldown-delta)
 func resident_state(index:int)->Dictionary:
- if cached_clock!=clock:
-  resident_cache.clear();resident_cache.resize(residents.size());cached_clock=clock
+ if cached_clock!=clock or cached_hour!=calendar.hour or cached_day!=calendar.weekday:
+  resident_cache.clear();resident_cache.resize(residents.size());cached_clock=clock;cached_hour=calendar.hour;cached_day=calendar.weekday
  if resident_cache[index]==null:resident_cache[index]=routines.state(index,calendar.hour,residents[index],calendar.weekday)
  return resident_cache[index]
 
@@ -90,16 +92,7 @@ func draw_world(c:CanvasItem,camera:Vector2,font:Font)->void:
  var visible:=Rect2(camera,c.get_viewport_rect().size).grow(100)
  if visible.has_point(WELL):
   var w:Vector2=WELL-camera
-  c.draw_circle(w+Vector2(0,10),35,Color(0,0,0,.22))
-  c.draw_rect(Rect2(w+Vector2(-30,-6),Vector2(60,26)),Color("#8e8e8a"))
-  for n in 4:c.draw_rect(Rect2(w+Vector2(-28+n*14,0),Vector2(12,10)),Color("#c7c5b0"))
-  c.draw_circle(w,29,Color("#dad3b8"))
-  c.draw_circle(w,21,Color("#283f4c"))
-  c.draw_arc(w,14,0,TAU,24,Color("#75a4af"),2,true)
-  for side in [-1,1]:c.draw_rect(Rect2(w+Vector2(side*28-3,-61),Vector2(6,62)),Color("#775b42"))
-  c.draw_line(w+Vector2(-29,-50),w+Vector2(29,-50),Color("#b78c59"),5)
-  c.draw_line(w+Vector2(0,-50),w+Vector2(0,-8),Color("#d9c9a2"),2)
-  c.draw_colored_polygon(PackedVector2Array([w+Vector2(-42,-62),w+Vector2(0,-85),w+Vector2(42,-62)]),Color("#647f90"))
+  preload("res://scripts/town_art246.gd").draw(c,"well",Rect2(w+Vector2(-44,-95),Vector2(88,118)))
   c.draw_string(font,w+Vector2(-55,47),"WISHING WELL",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#f4dfac"))
   if toss>0:
    var t:float=1-toss/.7

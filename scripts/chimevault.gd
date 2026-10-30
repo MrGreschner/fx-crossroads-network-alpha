@@ -160,8 +160,8 @@ func draw_world(canvas: Node2D,camera: Vector2) -> void:
 func draw_on(canvas: Node2D,camera: Vector2) -> void:
 	for n in 3:
 		var point:=gates[n]-camera
-		canvas.draw_arc(point,45,0,TAU,40,Color("#83e2dd"),5,true)
-		canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-100,-65),"E • Lift" if n<2 else "E • Seal the Chimevault",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#d9d4a9"))
+		if n<2:canvas.draw_arc(point,45,0,TAU,40,Color("#83e2dd"),5,true)
+		canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-100,-98 if n==2 else -65),"E • Lift" if n<2 else "E • Seal the Chimevault",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#d9d4a9"))
 	canvas.draw_string(ThemeDB.fallback_font,Vector2(28,145),"CHIMEVAULT • "+NAMES[stage]+" • Floor "+str(stage+1)+" / 3 • "+str(adventure.foes().size())+" enemies remain",HORIZONTAL_ALIGNMENT_LEFT,-1,20,Color("#98e0d9"))
 
 	if adventure.foes().is_empty():

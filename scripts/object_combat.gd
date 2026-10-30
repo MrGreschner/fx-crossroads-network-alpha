@@ -188,6 +188,7 @@ func visible_owner(id:String)->bool:
 	if g.mode not in ["arena","battlegrounds"] or g.spectating() or id==str(g.my_id):return true
 	return not (g._rival(str(g.my_id),id) and Time.get_ticks_msec()<int(g.stealth_until.get(id,0)))
 func actor(key:String)->Dictionary:
+	if key.begins_with("p:fern:"):return fern.actor(key.substr(2))
 	if (key.begins_with("c|") or key.begins_with("p:c|")) and adventure.arcade:return adventure.game.custom_party.minion_actor(key.trim_prefix("p:"))
 	if actor_frame!=Engine.get_process_frames():
 		actor_frame=Engine.get_process_frames();actor_index.clear()
@@ -230,6 +231,8 @@ func hostile(owner:String,near:Vector2=Vector2.ZERO,radius:float=-1)->Array[Stri
 func path_clear(start:Vector2,end:Vector2)->bool:
 	return adventure.game._clear_path(start,end) if adventure.arcade else adventure.game.shot_path_clear(start,end)
 func damage(key:String,amount:float,owner:String,attack:String="Ability hit",cause:Dictionary={})->void:
+	# Fern Double is a finite illusion: a hit never transfers to its owner.
+	if key.begins_with("p:fern:"):return
 	if (key.begins_with("c|") or key.begins_with("p:c|")) and adventure.arcade and adventure.authoritative():
 		var target=adventure.game.custom_party.minion_actor(key.trim_prefix("p:"))
 		if not target.is_empty():target.minion.hp-=maxf(0,amount)

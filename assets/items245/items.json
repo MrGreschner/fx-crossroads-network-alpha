@@ -1,0 +1,1145 @@
+{
+  "aegis": {
+    "region": [
+      0,
+      0,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "antidote_pear": {
+    "region": [
+      128,
+      0,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "bait_basic": {
+    "region": [
+      256,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_dough": {
+    "region": [
+      384,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_honeygrain": {
+    "region": [
+      512,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_insects": {
+    "region": [
+      640,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_kelp_crumble": {
+    "region": [
+      768,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_moonmoth": {
+    "region": [
+      896,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_roe": {
+    "region": [
+      1024,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_saltflash": {
+    "region": [
+      1152,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_scraps": {
+    "region": [
+      1280,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "bait_worms": {
+    "region": [
+      1408,
+      0,
+      128,
+      128
+    ],
+    "kind": "bait"
+  },
+  "berry_bun": {
+    "region": [
+      1536,
+      0,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "bg_focus_1": {
+    "region": [
+      1664,
+      0,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_focus_2": {
+    "region": [
+      1792,
+      0,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_might_1": {
+    "region": [
+      1920,
+      0,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_might_2": {
+    "region": [
+      0,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_might_3": {
+    "region": [
+      128,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_might_4": {
+    "region": [
+      256,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_siphon_1": {
+    "region": [
+      384,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_siphon_2": {
+    "region": [
+      512,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_stride_1": {
+    "region": [
+      640,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_stride_2": {
+    "region": [
+      768,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_vigor_1": {
+    "region": [
+      896,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_vigor_2": {
+    "region": [
+      1024,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_vigor_3": {
+    "region": [
+      1152,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_ward_1": {
+    "region": [
+      1280,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_ward_2": {
+    "region": [
+      1408,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "bg_ward_3": {
+    "region": [
+      1536,
+      128,
+      128,
+      128
+    ],
+    "kind": "battleground"
+  },
+  "cleansing_tea": {
+    "region": [
+      1664,
+      128,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "clear_peach": {
+    "region": [
+      1792,
+      128,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "cool_cucumber": {
+    "region": [
+      1920,
+      128,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "crit_charm": {
+    "region": [
+      0,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "dawn_bloom": {
+    "region": [
+      128,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "focus_lens": {
+    "region": [
+      256,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "forage_glow_food": {
+    "region": [
+      384,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "forage_mint_food": {
+    "region": [
+      512,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "forage_moon_food": {
+    "region": [
+      640,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "forage_sun_food": {
+    "region": [
+      768,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "frost_flask": {
+    "region": [
+      896,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "gold_magnet": {
+    "region": [
+      1024,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "golden_apple": {
+    "region": [
+      1152,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "guard_buckler": {
+    "region": [
+      1280,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "hammer": {
+    "region": [
+      1408,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "heart_locket": {
+    "region": [
+      1536,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "hearty_stew": {
+    "region": [
+      1664,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "ice_bomb": {
+    "region": [
+      1792,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "iron_bark": {
+    "region": [
+      1920,
+      256,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "iron_plum": {
+    "region": [
+      0,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "last_stand": {
+    "region": [
+      128,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "leech_charm": {
+    "region": [
+      256,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_apple": {
+    "region": [
+      384,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_bluebar": {
+    "region": [
+      512,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_cavern": {
+    "region": [
+      640,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_cleanse": {
+    "region": [
+      768,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_coast": {
+    "region": [
+      896,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_guard": {
+    "region": [
+      1024,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_marsh": {
+    "region": [
+      1152,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_oldwater": {
+    "region": [
+      1280,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_reefguard": {
+    "region": [
+      1408,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_restore": {
+    "region": [
+      1536,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_river": {
+    "region": [
+      1664,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_saltwind": {
+    "region": [
+      1792,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_seaclear": {
+    "region": [
+      1920,
+      384,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_silverfall": {
+    "region": [
+      0,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_stride": {
+    "region": [
+      128,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "lodge_tonic": {
+    "region": [
+      256,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "medkit": {
+    "region": [
+      384,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "mint_leaf": {
+    "region": [
+      512,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "mirror_shard": {
+    "region": [
+      640,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "moonberry_tart": {
+    "region": [
+      768,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "net": {
+    "region": [
+      896,
+      512,
+      128,
+      128
+    ],
+    "kind": "fishing_gear"
+  },
+  "pot": {
+    "region": [
+      1024,
+      512,
+      128,
+      128
+    ],
+    "kind": "fishing_gear"
+  },
+  "potion": {
+    "region": [
+      1152,
+      512,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "relic_astral_echo": {
+    "region": [
+      1280,
+      512,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_clockwork_drive": {
+    "region": [
+      1408,
+      512,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_emberstep": {
+    "region": [
+      1536,
+      512,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_eventide_seed": {
+    "region": [
+      1664,
+      512,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_frost_lens": {
+    "region": [
+      1792,
+      512,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_gravity_anchor": {
+    "region": [
+      1920,
+      512,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_grove_seed": {
+    "region": [
+      0,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_master_fisher": {
+    "region": [
+      128,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_nectar_vial": {
+    "region": [
+      256,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_prism_comb": {
+    "region": [
+      384,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_quarry_heart": {
+    "region": [
+      512,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_reed_oath": {
+    "region": [
+      640,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_river_pearl": {
+    "region": [
+      768,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_secondhand_guard": {
+    "region": [
+      896,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_stormfolio": {
+    "region": [
+      1024,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_stormglass": {
+    "region": [
+      1152,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_sunseed": {
+    "region": [
+      1280,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_sunward": {
+    "region": [
+      1408,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_thornroot": {
+    "region": [
+      1536,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_tideheart": {
+    "region": [
+      1664,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "relic_undertow_mark": {
+    "region": [
+      1792,
+      640,
+      128,
+      128
+    ],
+    "kind": "relic"
+  },
+  "river_melon": {
+    "region": [
+      1920,
+      640,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "rod_aurora": {
+    "region": [
+      0,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_base": {
+    "region": [
+      128,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_body_aurora": {
+    "region": [
+      256,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_base": {
+    "region": [
+      384,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_copper": {
+    "region": [
+      512,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_crown": {
+    "region": [
+      640,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_deep": {
+    "region": [
+      768,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_deep_sea": {
+    "region": [
+      896,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_eternal": {
+    "region": [
+      1024,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_moon": {
+    "region": [
+      1152,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_reed": {
+    "region": [
+      1280,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_body_star": {
+    "region": [
+      1408,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod_body"
+  },
+  "rod_copper": {
+    "region": [
+      1536,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_crown": {
+    "region": [
+      1664,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_deep": {
+    "region": [
+      1792,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_deep_sea": {
+    "region": [
+      1920,
+      768,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_eternal": {
+    "region": [
+      0,
+      896,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_moon": {
+    "region": [
+      128,
+      896,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_reed": {
+    "region": [
+      256,
+      896,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "rod_star": {
+    "region": [
+      384,
+      896,
+      128,
+      128
+    ],
+    "kind": "rod"
+  },
+  "root_roast": {
+    "region": [
+      512,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "rush_tonic": {
+    "region": [
+      640,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "shield": {
+    "region": [
+      768,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "silver_pear": {
+    "region": [
+      896,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "sprint_kit": {
+    "region": [
+      1024,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "star_melon": {
+    "region": [
+      1152,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "sunapple": {
+    "region": [
+      1280,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "sunstar_fruit": {
+    "region": [
+      1408,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "swift_laces": {
+    "region": [
+      1536,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "thorn_coat": {
+    "region": [
+      1664,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  },
+  "trail_boots": {
+    "region": [
+      1792,
+      896,
+      128,
+      128
+    ],
+    "kind": "item"
+  }
+}

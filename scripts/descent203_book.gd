@@ -9,5 +9,5 @@ static func guardian(floor:int)->String:
 static func pool(floor:int)->Array:
  var result:Array=[]
  for key in load_book().ordinary:
-  if int(profile(key).unlock)<=floor:result.append(key)
+  if int(profile(key).unlock)<=floor and key!="ds_wickcaller":result.append(key)
  return result

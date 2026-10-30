@@ -1,0 +1,11 @@
+{
+  "pages": {
+    "town46_1": "bankcache_town46_1",
+    "town46_0": "bankcache_town46_0"
+  },
+  "removed_bank_pixels": {
+    "town46_1": 1152,
+    "town46_0": 65828
+  },
+  "changes": "only alpha of original uniform riverbank colour outside bridge crossings"
+}

@@ -123,7 +123,10 @@ func daily_plan(index:int,day:int,npc:Dictionary)->Dictionary:
  if NIGHT_ERRANDS.has(index):
   # These two residents take daytime rest, then cover the quieter overnight hours.
   job=bed.duplicate();bed=errand_stop(int(NIGHT_ERRANDS[index]))
- var social={"at":Vector2(-1135,1045)+Vector2(index%3*24,0),"task":"rest","inside":false,"label":"Fountain courtyard"} if index%3==0 else {"at":N.HOMES[(index+1)%5].door+Vector2(35,25),"task":"chat","inside":false,"label":"Neighbour"}
+ var social={"at":Vector2(-1135,1045)+Vector2(index%3*24,0),"task":"rest","inside":false,"label":"Fountain courtyard"} if index%3==0 else {"at":N.HOMES[(index+1)%5].door+Vector2(35+(int(index/5)%2)*64,40+int(index/10)*80),"task":"chat","inside":false,"label":"Neighbour"}
+ # The narrow cottage/Academy gap is a doorway, not a meeting area.
+ # Meet along the clear side lane instead of standing over the Academy roof.
+ if (index+1)%5==0:social["at"]=Vector2(-867,1430+int(index/5)*64)
  var lunch={"at":Vector2(1080+index%4*24,1205+int(index/4)%2*24),"task":"lunch","inside":false,"label":"Moss’s Food Stand"}
  var events=[{"hour":0.0,"stop":bed},{"hour":6.0+(float(index/4)*.07 if DAY_ERRANDS.has(index) else index%4*.12),"stop":job},{"hour":12.0+index%3*.08,"stop":lunch},{"hour":13.0+index%3*.08,"stop":job},{"hour":17.0+index%4*.12,"stop":social},{"hour":20.0+index%4*.12,"stop":bed}]
  if day==2:
@@ -159,6 +162,7 @@ func daily_plan(index:int,day:int,npc:Dictionary)->Dictionary:
   var finish=24.0 if n==events.size()-1 else float(events[n+1].hour)
   var duration=(finish-float(event.hour))*3600.0
   var stop:Dictionary=event.stop.duplicate()
+  if not stop.has("inside"):stop["inside"]=false
   # Snap outdoor destinations to clear navigation cells, not to a wall or water.
   stop.at=navigation.get_point_position(usable(stop.at))
   var previous:Dictionary=events[(n-1+events.size())%events.size()].stop

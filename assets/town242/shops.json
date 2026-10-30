@@ -1,0 +1,1657 @@
+{
+  "hall": {
+    "rect": [
+      420,
+      272.5,
+      360,
+      255
+    ],
+    "inset": [
+      15,
+      13,
+      330,
+      232
+    ],
+    "entry": [
+      600,
+      570
+    ],
+    "label": "CHARACTER HALL",
+    "condition": "",
+    "identity_reference": "hall.png",
+    "source_bounds": [
+      39,
+      53,
+      1451,
+      1007
+    ],
+    "source_size": [
+      1490,
+      1055
+    ],
+    "sign": [
+      114.0,
+      83.992,
+      132.0,
+      10.44
+    ],
+    "lights": [
+      [
+        78,
+        156
+      ],
+      [
+        280,
+        156
+      ]
+    ],
+    "emission_bounds": [
+      66,
+      133,
+      294,
+      176
+    ],
+    "mask_pixels": 1564,
+    "glass_boxes": [
+      [
+        0.14,
+        0.5,
+        0.24,
+        0.73
+      ],
+      [
+        0.76,
+        0.5,
+        0.86,
+        0.73
+      ]
+    ],
+    "region": [
+      600,
+      296,
+      360,
+      255
+    ],
+    "emission_region": [
+      2,
+      152,
+      228,
+      43
+    ]
+  },
+  "supply": {
+    "rect": [
+      1110,
+      372.5,
+      360,
+      225
+    ],
+    "inset": [
+      8,
+      16,
+      344,
+      204
+    ],
+    "entry": [
+      1290,
+      635
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "supply.png",
+    "source_bounds": [
+      113,
+      127,
+      1474,
+      874
+    ],
+    "source_size": [
+      1586,
+      992
+    ],
+    "sign": [],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      216,
+      570,
+      360,
+      225
+    ],
+    "emission_region": []
+  },
+  "food": {
+    "rect": [
+      1055,
+      962.5,
+      190,
+      155
+    ],
+    "inset": [
+      3,
+      7,
+      187,
+      141
+    ],
+    "entry": [
+      1150,
+      1150
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "food.png",
+    "source_bounds": [
+      114,
+      180,
+      1274,
+      942
+    ],
+    "source_size": [
+      1388,
+      1133
+    ],
+    "sign": [],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      172,
+      804,
+      190,
+      155
+    ],
+    "emission_region": []
+  },
+  "healer": {
+    "rect": [
+      1815,
+      490,
+      290,
+      220
+    ],
+    "inset": [
+      7,
+      32,
+      279,
+      179
+    ],
+    "entry": [
+      1960,
+      740
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "healer.png",
+    "source_bounds": [
+      59,
+      145,
+      1371,
+      980
+    ],
+    "source_size": [
+      1440,
+      1092
+    ],
+    "sign": [],
+    "lights": [
+      [
+        77,
+        140
+      ],
+      [
+        223,
+        140
+      ]
+    ],
+    "emission_bounds": [
+      54,
+      125,
+      235,
+      160
+    ],
+    "mask_pixels": 1819,
+    "glass_boxes": [
+      [
+        0.16,
+        0.51,
+        0.33,
+        0.72
+      ],
+      [
+        0.74,
+        0.51,
+        0.82,
+        0.72
+      ]
+    ],
+    "region": [
+      580,
+      570,
+      290,
+      220
+    ],
+    "emission_region": [
+      363,
+      199,
+      181,
+      35
+    ]
+  },
+  "wayfinder": {
+    "rect": [
+      1460,
+      542.5,
+      240,
+      185
+    ],
+    "inset": [
+      8,
+      18,
+      225,
+      159
+    ],
+    "entry": [
+      1580,
+      790
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "wayfinder.png",
+    "source_bounds": [
+      90,
+      132,
+      1337,
+      1010
+    ],
+    "source_size": [
+      1428,
+      1101
+    ],
+    "sign": [],
+    "lights": [
+      [
+        64,
+        118
+      ],
+      [
+        179,
+        118
+      ]
+    ],
+    "emission_bounds": [
+      50,
+      99,
+      190,
+      137
+    ],
+    "mask_pixels": 1610,
+    "glass_boxes": [
+      [
+        0.18,
+        0.5,
+        0.32,
+        0.77
+      ],
+      [
+        0.68,
+        0.5,
+        0.83,
+        0.77
+      ]
+    ],
+    "region": [
+      1672,
+      570,
+      240,
+      185
+    ],
+    "emission_region": [
+      2,
+      199,
+      140,
+      38
+    ]
+  },
+  "seedhouse": {
+    "rect": [
+      765,
+      1390,
+      270,
+      200
+    ],
+    "inset": [
+      10,
+      14,
+      249,
+      177
+    ],
+    "entry": [
+      900,
+      1615
+    ],
+    "label": "SEEDHOUSE",
+    "condition": "",
+    "identity_reference": "seedhouse.png",
+    "source_bounds": [
+      62,
+      108,
+      1392,
+      999
+    ],
+    "source_size": [
+      1457,
+      1080
+    ],
+    "sign": [
+      89.68,
+      75.94999999999999,
+      89.64,
+      11.505
+    ],
+    "lights": [
+      [
+        59,
+        116
+      ]
+    ],
+    "emission_bounds": [
+      24,
+      20,
+      244,
+      166
+    ],
+    "mask_pixels": 15492,
+    "glass_boxes": [
+      [
+        0.06,
+        0.03,
+        0.94,
+        0.86
+      ]
+    ],
+    "region": [
+      874,
+      570,
+      270,
+      200
+    ],
+    "emission_region": [
+      2,
+      2,
+      220,
+      146
+    ]
+  },
+  "training": {
+    "rect": [
+      1529,
+      863.2,
+      242,
+      193.6
+    ],
+    "inset": [
+      15,
+      15,
+      211,
+      174
+    ],
+    "entry": [
+      1650,
+      1050
+    ],
+    "label": "TRAINING YARD",
+    "condition": "",
+    "identity_reference": "training.png",
+    "source_bounds": [
+      147,
+      79,
+      1255,
+      1045
+    ],
+    "source_size": [
+      1402,
+      1122
+    ],
+    "sign": [
+      48.76,
+      90.69,
+      143.48000000000002,
+      10.44
+    ],
+    "lights": [
+      [
+        50,
+        138
+      ],
+      [
+        189,
+        138
+      ]
+    ],
+    "emission_bounds": [
+      43,
+      125,
+      198,
+      153
+    ],
+    "mask_pixels": 838,
+    "glass_boxes": [
+      [
+        0.12,
+        0.61,
+        0.22,
+        0.81
+      ],
+      [
+        0.78,
+        0.61,
+        0.88,
+        0.81
+      ]
+    ],
+    "region": [
+      1148,
+      570,
+      242,
+      194
+    ],
+    "emission_region": [
+      760,
+      199,
+      155,
+      28
+    ]
+  },
+  "atelier": {
+    "rect": [
+      495,
+      885,
+      210,
+      230
+    ],
+    "inset": [
+      1,
+      23,
+      208,
+      202
+    ],
+    "entry": [
+      600,
+      1155
+    ],
+    "label": "GLEAM ATELIER",
+    "condition": "",
+    "identity_reference": "atelier.png",
+    "source_bounds": [
+      16,
+      112,
+      1237,
+      1160
+    ],
+    "source_size": [
+      1254,
+      1254
+    ],
+    "sign": [
+      42.6,
+      96.73,
+      124.8,
+      14.14
+    ],
+    "lights": [
+      [
+        53,
+        159
+      ],
+      [
+        154,
+        156
+      ]
+    ],
+    "emission_bounds": [
+      34,
+      138,
+      176,
+      180
+    ],
+    "mask_pixels": 2336,
+    "glass_boxes": [
+      [
+        0.16,
+        0.57,
+        0.35,
+        0.78
+      ],
+      [
+        0.66,
+        0.57,
+        0.85,
+        0.78
+      ]
+    ],
+    "region": [
+      2,
+      570,
+      210,
+      230
+    ],
+    "emission_region": [
+      676,
+      152,
+      142,
+      42
+    ]
+  },
+  "post": {
+    "rect": [
+      370,
+      1248,
+      360,
+      285
+    ],
+    "inset": [
+      13,
+      17,
+      331,
+      228
+    ],
+    "entry": [
+      550,
+      1550
+    ],
+    "label": "SQUIRREL POST",
+    "condition": "",
+    "identity_reference": "post.png",
+    "source_bounds": [
+      36,
+      65,
+      1389,
+      1035
+    ],
+    "source_size": [
+      1409,
+      1116
+    ],
+    "sign": [
+      105.68,
+      101.36,
+      139.01999999999998,
+      13.68
+    ],
+    "lights": [
+      [
+        132,
+        165
+      ],
+      [
+        219,
+        165
+      ]
+    ],
+    "emission_bounds": [
+      69,
+      138,
+      284,
+      181
+    ],
+    "mask_pixels": 2785,
+    "glass_boxes": [
+      [
+        0.17,
+        0.54,
+        0.3,
+        0.66
+      ],
+      [
+        0.69,
+        0.53,
+        0.83,
+        0.72
+      ]
+    ],
+    "region": [
+      1079,
+      2,
+      360,
+      285
+    ],
+    "emission_region": [
+      234,
+      152,
+      215,
+      43
+    ]
+  },
+  "tower": {
+    "rect": [
+      1940,
+      850,
+      300,
+      265
+    ],
+    "inset": [
+      35,
+      14,
+      234,
+      237
+    ],
+    "entry": [
+      2090,
+      1165
+    ],
+    "label": "MISTGLASS SPIRE",
+    "condition": "",
+    "identity_reference": "tower.png",
+    "source_bounds": [
+      125,
+      23,
+      1242,
+      1130
+    ],
+    "source_size": [
+      1366,
+      1152
+    ],
+    "sign": [
+      102.86,
+      106.43,
+      98.28,
+      14.219999999999999
+    ],
+    "lights": [
+      [
+        151,
+        196
+      ]
+    ],
+    "emission_bounds": [
+      86,
+      149,
+      217,
+      222
+    ],
+    "mask_pixels": 3339,
+    "glass_boxes": [
+      [
+        0.22,
+        0.57,
+        0.26,
+        0.75
+      ],
+      [
+        0.74,
+        0.57,
+        0.78,
+        0.75
+      ],
+      [
+        0.39,
+        0.66,
+        0.61,
+        0.88
+      ]
+    ],
+    "region": [
+      296,
+      296,
+      300,
+      265
+    ],
+    "emission_region": [
+      226,
+      2,
+      131,
+      73
+    ]
+  },
+  "barracks": {
+    "rect": [
+      1220,
+      1190,
+      310,
+      275
+    ],
+    "inset": [
+      6,
+      6,
+      299,
+      248
+    ],
+    "entry": [
+      1375,
+      1520
+    ],
+    "label": "RAMGUARD",
+    "condition": "",
+    "identity_reference": "barracks.png",
+    "source_bounds": [
+      30,
+      29,
+      1336,
+      1133
+    ],
+    "source_size": [
+      1366,
+      1152
+    ],
+    "sign": [
+      86.73,
+      97.512,
+      137.54,
+      14.879999999999999
+    ],
+    "lights": [
+      [
+        65,
+        158
+      ],
+      [
+        243,
+        158
+      ]
+    ],
+    "emission_bounds": [
+      47,
+      141,
+      260,
+      177
+    ],
+    "mask_pixels": 1819,
+    "glass_boxes": [
+      [
+        0.14,
+        0.54,
+        0.25,
+        0.69
+      ],
+      [
+        0.74,
+        0.54,
+        0.85,
+        0.69
+      ]
+    ],
+    "region": [
+      1697,
+      2,
+      310,
+      275
+    ],
+    "emission_region": [
+      146,
+      199,
+      213,
+      36
+    ]
+  },
+  "fellowship": {
+    "rect": [
+      1650,
+      1290,
+      300,
+      240
+    ],
+    "inset": [
+      13,
+      18,
+      274,
+      209
+    ],
+    "entry": [
+      1800,
+      1550
+    ],
+    "label": "FELLOWSHIP",
+    "condition": "fellowship",
+    "identity_reference": "fellowship.png",
+    "source_bounds": [
+      47,
+      78,
+      1320,
+      1119
+    ],
+    "source_size": [
+      1366,
+      1152
+    ],
+    "sign": [
+      89.72000000000001,
+      80.69999999999999,
+      120.56,
+      12.54
+    ],
+    "lights": [
+      [
+        27,
+        116
+      ],
+      [
+        272,
+        116
+      ]
+    ],
+    "emission_bounds": [
+      26,
+      110,
+      274,
+      124
+    ],
+    "mask_pixels": 116,
+    "glass_boxes": [
+      [
+        0.04,
+        0.44,
+        0.08,
+        0.51
+      ],
+      [
+        0.93,
+        0.44,
+        0.96,
+        0.51
+      ]
+    ],
+    "region": [
+      1276,
+      296,
+      300,
+      240
+    ],
+    "emission_region": [
+      237,
+      241,
+      248,
+      14
+    ]
+  },
+  "relay": {
+    "rect": [
+      190,
+      1750,
+      270,
+      235
+    ],
+    "inset": [
+      6,
+      24,
+      257,
+      193
+    ],
+    "entry": [
+      325,
+      2030
+    ],
+    "label": "RELAY WORKSHOP",
+    "condition": "relay",
+    "identity_reference": "relay.png",
+    "source_bounds": [
+      26,
+      90,
+      1340,
+      1077
+    ],
+    "source_size": [
+      1366,
+      1152
+    ],
+    "sign": [
+      88.24,
+      103.902,
+      92.52,
+      12.159
+    ],
+    "lights": [
+      [
+        58,
+        147
+      ],
+      [
+        211,
+        147
+      ]
+    ],
+    "emission_bounds": [
+      45,
+      130,
+      224,
+      164
+    ],
+    "mask_pixels": 1784,
+    "glass_boxes": [
+      [
+        0.15,
+        0.55,
+        0.26,
+        0.73
+      ],
+      [
+        0.75,
+        0.55,
+        0.85,
+        0.73
+      ]
+    ],
+    "region": [
+      1580,
+      296,
+      270,
+      235
+    ],
+    "emission_region": [
+      548,
+      199,
+      179,
+      34
+    ]
+  },
+  "mill": {
+    "rect": [
+      2070,
+      1290,
+      250,
+      280
+    ],
+    "inset": [
+      2,
+      45,
+      200,
+      214
+    ],
+    "entry": [
+      2175,
+      1580
+    ],
+    "label": "WATERMILL",
+    "condition": "mill",
+    "identity_reference": "mill.png",
+    "source_bounds": [
+      42,
+      173,
+      1139,
+      1087
+    ],
+    "source_size": [
+      1366,
+      1152
+    ],
+    "sign": [
+      66.0,
+      109.2,
+      92.0,
+      12.84
+    ],
+    "lights": [
+      [
+        56,
+        164
+      ]
+    ],
+    "emission_bounds": [
+      46,
+      149,
+      71,
+      179
+    ],
+    "mask_pixels": 652,
+    "glass_boxes": [
+      [
+        0.21,
+        0.48,
+        0.35,
+        0.64
+      ]
+    ],
+    "region": [
+      1443,
+      2,
+      250,
+      280
+    ],
+    "emission_region": [
+      731,
+      199,
+      25,
+      30
+    ]
+  },
+  "gather": {
+    "rect": [
+      2640,
+      350,
+      320,
+      290
+    ],
+    "inset": [
+      12,
+      17,
+      298,
+      256
+    ],
+    "entry": [
+      2800,
+      655
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "gather.png",
+    "source_bounds": [
+      46,
+      52,
+      1278,
+      1142
+    ],
+    "source_size": [
+      1317,
+      1194
+    ],
+    "sign": [],
+    "lights": [
+      [
+        71,
+        153
+      ],
+      [
+        246,
+        153
+      ]
+    ],
+    "emission_bounds": [
+      51,
+      130,
+      270,
+      173
+    ],
+    "mask_pixels": 3285,
+    "glass_boxes": [
+      [
+        0.12,
+        0.44,
+        0.29,
+        0.62
+      ],
+      [
+        0.7,
+        0.44,
+        0.88,
+        0.62
+      ]
+    ],
+    "region": [
+      2,
+      2,
+      320,
+      290
+    ],
+    "emission_region": [
+      453,
+      152,
+      219,
+      43
+    ]
+  },
+  "apothecary": {
+    "rect": [
+      -245,
+      1395,
+      290,
+      270
+    ],
+    "inset": [
+      7,
+      20,
+      276,
+      235
+    ],
+    "entry": [
+      -100,
+      1680
+    ],
+    "label": "APOTHECARY",
+    "condition": "",
+    "identity_reference": "apothecary.png",
+    "source_bounds": [
+      37,
+      62,
+      1263,
+      1161
+    ],
+    "source_size": [
+      1300,
+      1210
+    ],
+    "sign": [
+      89.8,
+      114.70500000000001,
+      110.4,
+      15.745000000000001
+    ],
+    "lights": [
+      [
+        74,
+        163
+      ],
+      [
+        215,
+        163
+      ]
+    ],
+    "emission_bounds": [
+      63,
+      143,
+      227,
+      183
+    ],
+    "mask_pixels": 1541,
+    "glass_boxes": [
+      [
+        0.19,
+        0.52,
+        0.3,
+        0.7
+      ],
+      [
+        0.7,
+        0.52,
+        0.81,
+        0.7
+      ]
+    ],
+    "region": [
+      2,
+      296,
+      290,
+      270
+    ],
+    "emission_region": [
+      822,
+      152,
+      164,
+      40
+    ]
+  },
+  "fishing": {
+    "rect": [
+      1820,
+      1732,
+      360,
+      288
+    ],
+    "inset": [
+      21,
+      33,
+      320,
+      246
+    ],
+    "entry": [
+      2000,
+      2020
+    ],
+    "label": "RIPPLE & REEL",
+    "condition": "",
+    "identity_reference": "fishing.png",
+    "source_bounds": [
+      63,
+      118,
+      1339,
+      1089
+    ],
+    "source_size": [
+      1402,
+      1122
+    ],
+    "sign": [
+      117.0,
+      123.282,
+      128.0,
+      13.53
+    ],
+    "lights": [
+      [
+        93,
+        164
+      ],
+      [
+        266,
+        164
+      ]
+    ],
+    "emission_bounds": [
+      65,
+      149,
+      296,
+      177
+    ],
+    "mask_pixels": 2811,
+    "glass_boxes": [
+      [
+        0.14,
+        0.47,
+        0.31,
+        0.6
+      ],
+      [
+        0.69,
+        0.47,
+        0.86,
+        0.6
+      ]
+    ],
+    "region": [
+      715,
+      2,
+      360,
+      288
+    ],
+    "emission_region": [
+      2,
+      241,
+      231,
+      28
+    ]
+  },
+  "market": {
+    "rect": [
+      -370,
+      460,
+      385,
+      290
+    ],
+    "inset": [
+      0,
+      0,
+      385,
+      290
+    ],
+    "entry": [
+      -180,
+      775
+    ],
+    "label": "CROSSROADS MARKET",
+    "condition": "",
+    "identity_reference": "market.png",
+    "source_bounds": [
+      28,
+      77,
+      1388,
+      1031
+    ],
+    "source_size": [
+      1416,
+      1111
+    ],
+    "sign": [
+      73.15,
+      102.94999999999999,
+      238.7,
+      21.75
+    ],
+    "lights": [
+      [
+        22,
+        200
+      ],
+      [
+        362,
+        200
+      ]
+    ],
+    "emission_bounds": [
+      18,
+      158,
+      366,
+      223
+    ],
+    "mask_pixels": 6096,
+    "glass_boxes": [
+      [
+        0.14,
+        0.54,
+        0.27,
+        0.75
+      ],
+      [
+        0.73,
+        0.54,
+        0.87,
+        0.75
+      ],
+      [
+        0.43,
+        0.55,
+        0.57,
+        0.77
+      ]
+    ],
+    "region": [
+      326,
+      2,
+      385,
+      290
+    ],
+    "emission_region": [
+      361,
+      2,
+      348,
+      65
+    ]
+  },
+  "office": {
+    "rect": [
+      -734,
+      222,
+      308,
+      252
+    ],
+    "inset": [
+      0,
+      0,
+      308,
+      252
+    ],
+    "entry": [
+      -580,
+      490
+    ],
+    "label": "MARKET OFFICE",
+    "condition": "",
+    "identity_reference": "office.png",
+    "source_bounds": [
+      25,
+      77,
+      1341,
+      1095
+    ],
+    "source_size": [
+      1366,
+      1152
+    ],
+    "sign": [
+      40.04,
+      84.924,
+      227.92,
+      16.38
+    ],
+    "lights": [
+      [
+        106,
+        153
+      ],
+      [
+        204,
+        153
+      ]
+    ],
+    "emission_bounds": [
+      49,
+      126,
+      258,
+      178
+    ],
+    "mask_pixels": 4643,
+    "glass_boxes": [
+      [
+        0.16,
+        0.5,
+        0.28,
+        0.71
+      ],
+      [
+        0.72,
+        0.5,
+        0.84,
+        0.71
+      ],
+      [
+        0.44,
+        0.52,
+        0.55,
+        0.68
+      ]
+    ],
+    "region": [
+      964,
+      296,
+      308,
+      252
+    ],
+    "emission_region": [
+      713,
+      2,
+      209,
+      52
+    ]
+  },
+  "pavilion": {
+    "rect": [
+      1233,
+      1550,
+      274,
+      188
+    ],
+    "inset": [
+      0,
+      0,
+      274,
+      188
+    ],
+    "entry": [
+      1370,
+      1760
+    ],
+    "label": "WAYFARER\u2019S REST",
+    "condition": "",
+    "identity_reference": "pavilion.png",
+    "source_bounds": [
+      52,
+      64,
+      1429,
+      1004
+    ],
+    "source_size": [
+      1482,
+      1062
+    ],
+    "sign": [
+      57.54,
+      77.08,
+      158.92,
+      10.34
+    ],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      1394,
+      570,
+      274,
+      188
+    ],
+    "emission_region": []
+  },
+  "bakery": {
+    "rect": [
+      1277,
+      1005,
+      166,
+      167
+    ],
+    "inset": [
+      0,
+      0,
+      166,
+      167
+    ],
+    "entry": [
+      1360,
+      1140
+    ],
+    "label": "HEARTH & CRUMB",
+    "condition": "bakery",
+    "identity_reference": "bakery.png",
+    "source_bounds": [
+      32,
+      59,
+      1173,
+      1247
+    ],
+    "source_size": [
+      1208,
+      1302
+    ],
+    "sign": [
+      36.52,
+      44.255,
+      92.96000000000001,
+      13.36
+    ],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      2,
+      804,
+      166,
+      167
+    ],
+    "emission_region": []
+  },
+  "reading": {
+    "rect": [
+      1020,
+      1682,
+      100,
+      58
+    ],
+    "inset": [
+      0,
+      0,
+      100,
+      58
+    ],
+    "entry": [
+      1070,
+      1760
+    ],
+    "label": "READING ROOM",
+    "condition": "library",
+    "identity_reference": "reading.png",
+    "source_bounds": [
+      83,
+      174,
+      1490,
+      938
+    ],
+    "source_size": [
+      1572,
+      1001
+    ],
+    "sign": [
+      22.0,
+      31.900000000000002,
+      56.00000000000001,
+      8.7
+    ],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      654,
+      804,
+      100,
+      58
+    ],
+    "emission_region": []
+  },
+  "bait": {
+    "rect": [
+      1440,
+      2230,
+      150,
+      125
+    ],
+    "inset": [
+      0,
+      0,
+      150,
+      125
+    ],
+    "entry": [
+      1515,
+      2362
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "bait.png",
+    "source_bounds": [
+      192,
+      106,
+      1277,
+      980
+    ],
+    "source_size": [
+      1470,
+      1070
+    ],
+    "sign": [],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      500,
+      804,
+      150,
+      125
+    ],
+    "emission_region": []
+  },
+  "arcade": {
+    "rect": [
+      -510,
+      570,
+      130,
+      128
+    ],
+    "inset": [
+      0,
+      0,
+      130,
+      128
+    ],
+    "entry": [
+      -445,
+      715
+    ],
+    "label": "",
+    "condition": "",
+    "identity_reference": "arcade.png",
+    "source_bounds": [
+      94,
+      130,
+      1179,
+      1058
+    ],
+    "source_size": [
+      1278,
+      1230
+    ],
+    "sign": [],
+    "lights": [],
+    "emission_bounds": [],
+    "mask_pixels": 0,
+    "glass_boxes": [],
+    "region": [
+      366,
+      804,
+      130,
+      128
+    ],
+    "emission_region": []
+  }
+}

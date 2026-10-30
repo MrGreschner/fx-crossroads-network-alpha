@@ -30,20 +30,13 @@ func draw_on(g:Node2D,camera:Vector2)->void:
   var p:Vector2=EVENTS[id].at-camera
   match id:
    "picnic":
-    g.draw_rect(Rect2(p-Vector2(62,35),Vector2(124,70)),Color("#8e718c"))
-    for x in 6:
-     for y in 3:
-      if (x+y)%2==0:g.draw_rect(Rect2(p+Vector2(-60+x*20,-33+y*22),Vector2(20,22)),Color("#d9be9f"))
-    for n in 5:g.draw_circle(p+Vector2(-38+n*18,sin(n)*12),6,Color("#d4aa67"))
+    preload("res://scripts/town_streets244.gd").draw(g,"picnic",Rect2(p-Vector2(62,35),Vector2(124,70)))
    "visitors","fair":
     var count=3 if id=="fair" else 1
     for n in count:
      var q=p+Vector2((n-(count-1)*.5)*(105 if id=="fair" else 150),0)
      var width=45.0 if id=="fair" else 60.0;var scale_x=width/60.0
-     g.draw_rect(Rect2(q+Vector2(-56*scale_x,-28),Vector2(112*scale_x,47)),Color("#79674e"))
-     for side in [-1,1]:g.draw_line(q+Vector2(side*52*scale_x,20),q+Vector2(side*52*scale_x,-88),Color("#c5a473"),4)
-     for stripe in 8:g.draw_rect(Rect2(q+Vector2((-60+stripe*15)*scale_x,-88),Vector2(15*scale_x,29)),Color("#93bfad") if stripe%2==0 else Color("#ecd49d"))
-     for fruit in 6:g.draw_circle(q+Vector2((-40+fruit*15)*scale_x,-33),5 if id=="fair" else 7,Color("#eab367") if fruit%2 else Color("#c9a0cf"))
+     preload("res://scripts/town_streets244.gd").draw(g,"event_stall",Rect2(q+Vector2(-62*scale_x,-90),Vector2(124*scale_x,116)))
      g.draw_string(ThemeDB.fallback_font,q+Vector2(-57*scale_x,42),"FRUIT & FISH BAIT" if id=="visitors" else "MAKERS' FAIR",HORIZONTAL_ALIGNMENT_LEFT,-1,10 if id=="fair" else 13,Color("#ffe6b1"))
    "lanterns","stars":
     for n in 5:

@@ -1,0 +1,58 @@
+{
+  "version": "244",
+  "build": "V244-street-details",
+  "baseline": "completed V243",
+  "engine": [
+    4,
+    5,
+    1
+  ],
+  "pck_sha256": "7ca31f9c97a985f1a26de5123b8008bbba1a756840ab750e48f41b6fbd07c60a",
+  "pck_resources": 11740,
+  "untouched_baseline_pck_resources_preserved": 11714,
+  "runtime_resource_parity": "PASS: Editable = Server Update = Web PCK",
+  "fixture_production_parity": "PASS: every production resource identical",
+  "html_byte_sizes": "PASS",
+  "source_runtime_checks": 3777,
+  "packaged_runtime_checks": 3777,
+  "identical_navigation_probes": 32388,
+  "identical_resident_schedule_states": 315,
+  "identical_patrol_states": 288,
+  "native_captures": 144,
+  "browser_in_game_captures": 4,
+  "production_browser_boot": "PASS: main menu rendered",
+  "browser": "156.0.8078.73",
+  "server_fresh_import_and_compile": "PASS",
+  "new_atlas_decoded_bytes": 2097152,
+  "native_profile_views": 24,
+  "profile_views_with_fewer_draw_calls": 24,
+  "school_hardware_tested": false,
+  "live_backend_tested": false,
+  "deployed": false,
+  "archives": [
+    {
+      "name": "Crossroads_v244_Web.zip",
+      "files_including_integrity_record": 182,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v244_Server_Update.zip",
+      "files_including_integrity_record": 12661,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v244_Editable.zip",
+      "files_including_integrity_record": 15398,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "V244_Previews.zip",
+      "files": 161,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    }
+  ]
+}

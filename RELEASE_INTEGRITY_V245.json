@@ -1,0 +1,45 @@
+{
+  "version": 245,
+  "build": "V245-items-and-relics",
+  "baseline": "completed V244",
+  "pck_sha256": "98c93a07fe88b44bd89aaabdb6646a8407244790a5cc8b60a6e9e6826f2f620c",
+  "runtime_resource_parity": "PASS: Editable = Server Update = Web PCK",
+  "untouched_v244_exported_resources_preserved": 11728,
+  "qa_fixture_production_resources_identical": true,
+  "source_checks": 4549,
+  "packaged_checks": 4549,
+  "native_captures": 27,
+  "browser_review_captures": 11,
+  "production_main_menu_verified": true,
+  "server_import_compile": "PASS",
+  "new_atlas_decoded_bytes": 8388608,
+  "atlas_frames": 127,
+  "deployed": false,
+  "physical_school_hardware_tested": false,
+  "live_backend_tested": false,
+  "archives": [
+    {
+      "name": "Crossroads_v245_Server_Update.zip",
+      "files": 12670,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v245_Web.zip",
+      "files": 186,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v245_Editable.zip",
+      "files": 15871,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "V245_Previews.zip",
+      "files": 44,
+      "crc": "PASS"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ static func object(name:String="New object")->Dictionary:
  if name in ["Bench","Fence","Bridge"]:dimensions=Vector2(88,64)
  return {"format":"fx-crossroads-object","version":1,"id":"prop-"+str(Time.get_ticks_usec()),"name":name,"category":"Decoration","image":art(name),"width":int(dimensions.x),"height":int(dimensions.y),"block_move":name in ["Oak tree","Pine tree","Willow","Palm","Boulder","Cottage","Workshop","Tower"],"block_shots":name in ["Boulder","Cottage","Workshop","Tower"],"source":"Crossroads starter art • record your changes / credits","layers":[],"operations":[],"settings":{"mode":"RGBA8 / RGB","pixel_aspect":1,"output":"PNG for web / mobile"}}
 static func art(name:String)->String:
+ if name=="Training target":return Marshalls.raw_to_base64(preload("res://scripts/studio_art249.gd").prop("training_dummy").get_image().save_png_to_buffer())
  if art_cache.has(name):return art_cache[name]
  var path="res://assets/"+str(ASSETS.get(name,""))
  if ASSETS.has(name) and ResourceLoader.exists(path):
@@ -185,9 +186,7 @@ static func example(index:int)->Dictionary:
   if abs(x-40)<4 or (index==4 and x>43 and x<50):continue
   v.placements.append({"kind":"object","id":prop.id,"cell":[x,y]})
  var e=preload("res://scripts/studio_enemy_project.gd").fresh();e.id="example-bramble";e.name="Bramble";e.health=85;e.speed=100;e.attack_count=1;e.primary.style="melee";e.primary.name="Bramble strike";e.primary.range=65;e.primary.damage=11;e.primary.heal=0
- for pose in ["idle","walk1","walk2","attack"]:
-  var path="res://assets/bramble_"+pose+".png"
-  if FileAccess.file_exists(path):e.art[pose]=Marshalls.raw_to_base64(FileAccess.get_file_as_bytes(path))
+ e.art=preload("res://scripts/studio_art249.gd").encoded("bramble_practice")
  v.enemies[e.id]=e;v.placements.append({"kind":"enemy","id":e.id,"cell":[18,34]})
  return v
 static func download_png(owner:Node,encoded:String,filename:String)->void:

@@ -26,16 +26,20 @@ func update()->void:
  var pack=game.inventory.get(game.my_id,[]) if arcade else game.inventory if combat else game.loadout
  var food=str(game.food_slots.get(game.my_id,"")) if arcade else game.provisions.packed
  slots[0].text="Food: "+game.provisions.name_of(food)
+ slots[0].icon=preload("res://scripts/item_art245.gd").texture(food) if not food.is_empty() else null
+ for b in slots:b.add_theme_constant_override("icon_max_width",22);b.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
  slots[0].tooltip_text=game.provisions.summary(food)+". Click to visit the Food Stand in town."
  var bottle_index=preload("res://scripts/supply_slots.gd").index(pack,3,game.items)
  var bottle=game.items.get(str(pack[bottle_index]),{}) if bottle_index>=0 else {}
  slots[1].text="Consumable: "+str(bottle.get("name","empty"))
  slots[1].tooltip_text="Key 4 / Click • "+str(bottle.get("description","One potion or other single-use supply; separate from your three equipment slots."))
+ slots[1].icon=preload("res://scripts/item_art245.gd").texture(str(bottle.get("id",""))) if not bottle.is_empty() else null
  slots[1].modulate=Color.WHITE
  for i in 3:
   var packed_index=preload("res://scripts/supply_slots.gd").index(pack,i,game.items)
   var spec=game.items.get(str(pack[packed_index]),{}) if packed_index>=0 else {}
   slots[i+2].text="Item %d: %s" % [i+1,str(spec.get("name","empty"))]
+  slots[i+2].icon=preload("res://scripts/item_art245.gd").texture(str(spec.get("id",""))) if not spec.is_empty() else null
   slots[i+2].tooltip_text=str(spec.get("description","Buy equipment at the Supply Vendor with CC."))
  var progress=preload("res://network/expedition_profile.gd").progress(game) if arcade else game.waylight.progress
  var state=progress.state()
@@ -43,6 +47,7 @@ func update()->void:
  for i in 2:
   var relic=progress.item(str(state.equipped[i]));var spec=C.RELICS.get(str(relic.get("type","")),{})
   slots[i+5].text="Relic %d%s: %s" % [i+1," • off" if relics_off else "",str(spec.get("name","empty"))]
+  slots[i+5].icon=preload("res://scripts/item_art245.gd").texture("relic_"+str(relic.type)) if not relic.is_empty() else null
   slots[i+5].tooltip_text=str(spec.get("effect","Complete Portal Attunement to unlock relics. View your Inventory in town."))
   slots[i+5].modulate=Color(spec.get("color","#c6d8e1")) if state.attuned and not relics_off else Color("#82949f")
 func pressed(index:int)->void:

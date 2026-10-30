@@ -1,0 +1,13 @@
+# V248 verification
+
+20,274 checks pass in source and again against the packaged resources: 40,548 total. Eight suites cover the nineteen actor designs and original geometry, shared solo/multiplayer bindings, all existing town/crop/portal/item/street/shop checks, equipment carryover, KO healing and the three-phase Shattered Oath finale. All 11,421 sampled walking positions continue to match the independent V246 contract, also retained unchanged by V247.
+
+Actor checks verify all 76 frames, nonempty unclipped sprites, distinct idle/walk A/walk B/attack poses, shared texture identities, exact original visible idle height and foot anchors, legacy SVG aliases, preserved regular puppets and previous summons, authored Neon spawns and server compilation. Repeated animation requests keep the same atlas and exactly 76 cached frame views.
+
+29 native previews include all four Continuum forms in their authored locations, Neon arrival, three Hatch emergence stages, Chalklings, real shared summon draws, offline co-op enemy/boss/summon scenes and four-pose review galleries. Chromium passes 26 review views plus ordinary production startup and main menu using the actual release engine. WebGL2 is available and no script/rendering errors are accepted. Live service requests are unavailable in the local test environment; backend/account/multiplayer connectivity is outside this pass.
+
+Dedicated server import and compile checks pass. Every changed production resource matches between source, Server Update and Web; all unrelated V247 PCK resources remain byte-identical. The review fixture adds only QA scripts/data to those same production resources. All release ZIPs pass CRC and duplicate-member checks.
+
+Rendering budget: one 640×800 RGBA atlas, 2,048,000 decoded bytes, at most 76 small cached AtlasTexture views. No new actor nodes, per-frame image decoding/resizing, shaders, render targets, lights, particle systems or network messages are introduced. Existing animation state and cadence are reused. This is a bounded resource check, not a school-hardware frame-rate benchmark. No physical school PC or live backend was tested.
+
+The inherited isolated-QA ObjectDB/three-resource shutdown warning remains; script errors are rejected. To keep the complete Editable below the upload limit, only historical PNG/GIF capture media under qa/evidence247 is omitted from this ZIP. All original game code, assets, prompts, scenes and test scripts are retained, along with V247's JSON measurements and all V248 evidence. The complete historical captures remain in the V247 release and preview packages.

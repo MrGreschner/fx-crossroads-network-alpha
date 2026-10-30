@@ -78,13 +78,13 @@ func open_picker()->void:
  atelier=load("res://scripts/gleam_atelier.gd").new();legacy.game.add_child(atelier);atelier.setup(self)
 func close_picker()->void:
  if is_instance_valid(atelier):atelier.close()
-static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="")->void:
+static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="",body:Rect2=Rect2())->void:
  if id in preload("res://scripts/cosmetic_rankings.gd").IDS:return
  if id in W.REWARDS:
-  if week==week_key(Time.get_date_string_from_system(false)):W.draw_on(c,p,t,id)
+  if week==week_key(Time.get_date_string_from_system(false)):W.draw_on(c,(Vector2(body.position.x-34,body.position.y+12)+Vector2(0,90)) if body.has_area() else p,t,id)
   return
  if id in LODGE_IDS:
-  var q=p+Vector2(0,-83+sin(t*2)*2)
+  var q=(Vector2(body.position.x-26,body.position.y+12) if body.has_area() else p+Vector2(0,-83))+Vector2(0,sin(t*2)*2)
   if id=="lodge_week":
    if week!=week_key(Time.get_date_string_from_system(false)):return
    c.draw_circle(q,12,Color(1,.8,.3,.09));c.draw_rect(Rect2(q-Vector2(5,6),Vector2(10,13)),Color("#e7c36e"),false,1.5);c.draw_circle(q,3+sin(t*3)*.5,Color("#ffe6a5"));c.draw_arc(q+Vector2(0,-6),4,PI,TAU,12,Color("#b79760"),1.5,true)
@@ -96,14 +96,14 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="")->vo
    c.draw_circle(q+Vector2(0,-6),2,Color(ink,.8))
   return
  if id=="easter":
-  var q=p+Vector2(sin(t*.9)*29,-40+cos(t*.9)*6)
+  var q=(Vector2(body.position.x-34,body.position.y+14) if body.has_area() else p+Vector2(0,-40))+Vector2(sin(t*.9)*(7 if body.has_area() else 29),cos(t*.9)*6)
   c.draw_arc(q,5,0,TAU,14,Color("#d8b9ef"),1.5,true);c.draw_circle(q+Vector2(-1,-1),1.3,Color("#f4dfa5"));c.draw_line(q+Vector2(3,6),q+Vector2(4,9),Color(.9,.8,1,.35),1,true);return
  if id not in IDS:return
- var q=p+Vector2(0,-90+sin(t*2)*1.5)
+ var q=(Vector2(body.position.x-34,body.position.y+12) if body.has_area() else p+Vector2(0,-90))+Vector2(0,sin(t*2)*1.5)
  if id=="weekly_2":
-  q=p+Vector2(sin(t*.75)*11,-99+cos(t*.75)*1.2)
+  q=(Vector2(body.position.x-28,body.position.y+12) if body.has_area() else p+Vector2(0,-99))+Vector2(sin(t*.75)*7,cos(t*.75)*1.2)
   var ink=Color("#b9eadf")
-  c.draw_arc(p+Vector2(0,-99),15,PI*.1,PI*.9,24,Color(.5,.85,.8,.22),1,true)
+  c.draw_arc((Vector2(body.position.x-28,body.position.y+12) if body.has_area() else p+Vector2(0,-99)),15,PI*.1,PI*.9,24,Color(.5,.85,.8,.22),1,true)
   var skull=PackedVector2Array([q+Vector2(-4,-4),q+Vector2(-2,-6),q+Vector2(2,-6),q+Vector2(5,-3),q+Vector2(4,1),q+Vector2(2,2),q+Vector2(2,5),q+Vector2(-2,5),q+Vector2(-2,2),q+Vector2(-4,1)])
   c.draw_colored_polygon(skull,ink);c.draw_polyline(skull,Color("#e7fff0"),.7,true)
   for x in [-1.8,1.8]:c.draw_circle(q+Vector2(x,-1.5),1.1,Color("#284b54"))
@@ -112,7 +112,7 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,id:String,week:String="")->vo
   for side in [-1,1]:c.draw_arc(q+Vector2(side*5,-2),4,-PI*.7,PI*.3,12,Color(ink,.5),.8,true)
  elif id=="weekly_1":
   if week!=preload("res://scripts/cosmetic_rankings.gd").week_at(Time.get_unix_time_from_system()):return
-  q=p+Vector2(-48,-73+sin(t*2)*1.5);var ink=Color("#bbdef5")
+  q=(Vector2(body.position.x-22,body.position.y+12) if body.has_area() else p+Vector2(-48,-73))+Vector2(0,sin(t*2)*1.5);var ink=Color("#bbdef5")
   for side in [-1,1]:
    var a=q+Vector2(side*5,0);c.draw_polyline(PackedVector2Array([a+Vector2(0,4),a+Vector2(-side*2,-2),a+Vector2(0,-6),a+Vector2(side*3,-1),a+Vector2(0,4)]),ink,1,true)
   c.draw_circle(q,2,Color("#e2f3ff"));c.draw_arc(q,10,t*.6,t*.6+PI,18,Color(ink,.3),1,true)

@@ -7,6 +7,7 @@ var floor_bins:Dictionary={}
 var solid_bins:Dictionary={}
 var floor_layers:Array=[]
 var marsh_encounters=preload("res://scripts/lantern_marsh_encounters.gd").new()
+var sunfield_art=preload("res://scripts/sunfield_art257.gd").new()
 var silver_art=preload("res://scripts/silverfall_art.gd").new()
 var silver_encounters=preload("res://scripts/silverfall_encounters.gd").new()
 var adventure:Node
@@ -44,6 +45,7 @@ func polygon(p:Array)->PackedVector2Array:
  for point in p:points.append(v(point))
  return points
 func setup(id:String)->void:
+ sunfield_art.world=self;sunfield_art.reset()
  marsh_encounters.world=self;marsh_encounters.reset()
  silver_art.world=self;silver_art.reset();silver_encounters.world=self;silver_encounters.reset()
  for layer in floor_layers:layer.queue_free()
@@ -57,6 +59,8 @@ func setup(id:String)->void:
  for kind in ["garden_fountain","glass_pavilion","flower_bed"]:textures[kind]=load("res://assets/"+kind+".png")
  textures.floor=load("res://assets/garden_grass.png")
  textures.path=load("res://assets/path.png")
+ if id=="honeyglass":
+  for kind in ["grand_tree","giant_flower","honey_lamp","garden_fountain","glass_pavilion","flower_bed"]:textures[kind]=preload("res://scripts/honeyglass_art255.gd").prop(kind)
  for floor in data.floors:
   floor_geometry.append({"bounds":floor_bounds(floor),"polygon":polygon(floor.poly) if floor.has("poly") else PackedVector2Array(),"rect":floor.has("rect")})
   var bounds:Rect2=floor_bounds(floor)
@@ -74,6 +78,7 @@ func setup(id:String)->void:
     if not solid_bins.has(key):solid_bins[key]=[]
     solid_bins[key].append({"pos":point,"radius":radius})
  if not data.raft.is_empty():boat={"pos":data.raft.docks[0].duplicate(),"dock":0,"moving":false,"passengers":[],"progress":0.0,"boarding":0.0}
+ if id=="sunfield":sunfield_art.setup()
  grid=AStarGrid2D.new();grid.region=Rect2i(0,0,ceili(float(data.size[0])/60),ceili(float(data.size[1])/60));grid.cell_size=Vector2(60,60);grid.offset=Vector2(30,30);grid.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;grid.update()
  rebuild_grid()
 func rebuild_grid()->void:
@@ -90,6 +95,9 @@ func floor_at(point:Vector2)->bool:
 func can_stand(point:Vector2)->bool:
  if not active and adventure.between_guardians():return adventure.can_stand(point)
  if not floor_at(point):return false
+ if data.id=="sunfield":
+  for side in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
+   if not floor_at(point+side*18):return false
  for fall in data.get("falls",[]):
   if r(fall).has_point(point):
    var bridge:=false
@@ -138,9 +146,7 @@ func nearest(point:Vector2)->String:
 func target_for(enemy:Dictionary)->Vector2:
  var id:=nearest(enemy.pos)
  var target:Vector2=adventure.points().get(id,enemy.pos)
- var decoy:Dictionary=adventure.combat.fern.decoy_for(enemy.pos)
- if not decoy.is_empty() and not bool(enemy.boss) and adventure.combat.path_clear(enemy.pos,v(decoy.pos)):return v(decoy.pos)
- return target
+ return adventure.combat.fern.redirect(enemy,target)
 func cell(point:Vector2)->Vector2i:return Vector2i(floori(point.x/60),floori(point.y/60))
 func route(start:Vector2,end:Vector2)->PackedVector2Array:
  var first:=cell(start);var last:=cell(end)
@@ -406,6 +412,10 @@ func floor_bounds(floor:Dictionary)->Rect2:
 func visible(bounds:Rect2,camera:Vector2)->bool:return bounds.intersects(Rect2(camera-Vector2(300,400),Vector2(1900,1250)))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
+ if data.id=="sunfield":
+  if floor_layers.is_empty():
+   var ground=preload("res://scripts/sunfield_ground257.gd").new();ground.source=self;canvas.add_child(ground);floor_layers.append(ground)
+  floor_layers[0].sync(camera,adventure.game.VIEW);sunfield_art.draw_world(canvas,camera);return
  if data.id=="silverfall":
   if floor_layers.is_empty():
    var background=preload("res://scripts/retained_floor.gd").new();background.source=self;background.background=true;canvas.add_child(background);floor_layers.append(background)
@@ -487,11 +497,14 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
     var crown:Vector2=v(prop.pos)-Vector2(0,135)*scale
     for player in adventure.points().values():
      if (player as Vector2).distance_to(crown)<130:alpha=.32
-    canvas.draw_circle(p,float(prop.solid),Color("#778a61"));canvas.draw_arc(p,float(prop.solid),0,TAU,24,Color("#c6b995"),2,true)
+    canvas.draw_circle(p,float(prop.solid),Color(.26,.36,.25,.22))
    canvas.draw_texture_rect(textures[prop.kind] if textures.has(prop.kind) else textures.honey_lamp,Rect2(p-Vector2(80,207)*scale,Vector2(160,220)*scale),false,Color(1,1,1,alpha))
  for gate in data.gates:
   if stage>=int(gate.stage):continue
-  var bounds:=r(gate.rect);canvas.draw_rect(Rect2(bounds.position-camera,bounds.size),Color("#d5ac7a"));canvas.draw_string(font,bounds.position-camera+Vector2(-160,-25),str(gate.name),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#fff0c7"))
+  var bounds:=r(gate.rect);var panel=Rect2(bounds.position-camera,bounds.size)
+  canvas.draw_rect(panel,Color("#536f64"));canvas.draw_rect(panel,Color("#ccb47d"),false,5)
+  for y in range(int(panel.position.y)+16,int(panel.end.y),32):canvas.draw_arc(Vector2(panel.get_center().x,y),19,0,TAU,6,Color("#e5ce93"),3,true)
+  canvas.draw_string_outline(font,bounds.position-camera+Vector2(-160,-25),str(gate.name),HORIZONTAL_ALIGNMENT_LEFT,-1,16,3,Color("#394b43"));canvas.draw_string(font,bounds.position-camera+Vector2(-160,-25),str(gate.name),HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#fff0c7"))
  for secret in data.secrets:
   var point:=v(secret.pos)-camera
   if not visible(Rect2(v(secret.pos)-Vector2(100,100),Vector2(200,200)),camera):continue
@@ -510,14 +523,22 @@ func draw_conservatory(canvas:Node2D,camera:Vector2)->void:
  for entry in showcase.get("nectar_pools",[]):
   var world=Vector2(entry[0],entry[1]);var radius=float(entry[2]);var p=world-camera
   if not visible(Rect2(world-Vector2.ONE*radius,Vector2.ONE*radius*2),camera):continue
-  canvas.draw_circle(p,radius+9,Color("#a9b77f"));canvas.draw_circle(p,radius,Color("#658f87"))
+  var rim=PackedVector2Array()
+  for n in 33:rim.append(p+Vector2.from_angle(n*TAU/32)*(radius+8+sin(n*1.7)*3))
+  canvas.draw_colored_polygon(rim,Color("#8d9d73"));canvas.draw_polyline(rim,Color("#c4bd91"),3,true)
+  canvas.draw_circle(p,radius,Color("#4e817b"));canvas.draw_circle(p+Vector2(-5,-7),radius-12,Color("#66958a"))
+  for n in 4:
+   var leaf=p+Vector2.from_angle(n*2.1)*radius*.65;canvas.draw_circle(leaf,9,Color("#97b07d"));canvas.draw_line(leaf,leaf+Vector2(5,-3),Color("#c1c994"),1)
   for n in 3:canvas.draw_arc(p,radius*(.3+n*.22)+sin(clock+n)*3,clock*.2+n,clock*.2+n+TAU*.8,32,Color(.77,.96,.78,.40),2,true)
  for entry in showcase.get("glow_gardens",[]):
   var p=v(entry)-camera
   if not visible(Rect2(v(entry)-Vector2(130,130),Vector2(260,260)),camera):continue
   for n in 11:
    var at=p+Vector2.from_angle(n*2.399)*sqrt(n)*25
-   canvas.draw_circle(at,7,Color("#d8abcc"));canvas.draw_circle(at+Vector2(5,-4),6,Color("#e6c799"));canvas.draw_circle(at,2,Color("#fff4bd"))
+   canvas.draw_texture_rect_region(textures.giant_flower,Rect2(at-Vector2(15,15),Vector2(30,30)),Rect2(20,9,124,108))
+  # Keep painted blossoms adjacent for atlas batching; animate only the tiny motes.
+  for n in 11:
+   var at=p+Vector2.from_angle(n*2.399)*sqrt(n)*25
    var glow=at+Vector2(sin(clock*.5+n)*13,-12-fposmod(clock*9+n*17,65))
    canvas.draw_circle(glow,2,Color(.89,.97,.64,.45+.2*sin(clock*2+n)))
  for entry in showcase.get("wayposts",[]):
@@ -527,6 +548,7 @@ func draw_conservatory(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_line(p+Vector2(-8,0),p+Vector2(8,0),Color("#f5df9a"),3,true)
 
 func draw_on(canvas:Node2D,camera:Vector2)->void:
+ if active and data.id=="sunfield":sunfield_art.draw_on(canvas,camera);draw_sunbeams257(canvas,camera);draw_attacks(canvas,camera);return
  if not active:
   if adventure.between_guardians():draw_attacks(canvas,camera)
   return
@@ -576,7 +598,7 @@ func draw_hud(canvas:Node2D)->void:
  for enemy in adventure.foes():
   if bool(enemy.get("immersive",false)) and not bool(enemy.boss) and str(enemy.type)!="royal_nurse":count+=1
  var text:= "Guardian defeated • interact at the exit" if done else str(data.stages[mini(stage,data.stages.size()-1)])+ (" • "+str(count)+" defenders left" if stage==0 else "")
- canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Orchard canopies conceal patrols. Golden meadows are open; move out of warning sunbeams!","lantern_marsh":"Dodge to shed mosquitoes. Stop shooting into an open maw. Silk and mud slow; stomp warnings stun.","silverfall":"E: refuges, discoveries and ferry. Follow stone spans or the shore; hidden coves reward exploration.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
+ canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Explore orchard paths, terraces and the windmill ridge. Bridges cross the creek; sunbeams always warn before striking.","lantern_marsh":"Dodge to shed mosquitoes. Stop shooting into an open maw. Silk and mud slow; stomp warnings stun.","silverfall":"E: refuges, discoveries and ferry. Follow stone spans or the shore; hidden coves reward exploration.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
  canvas.draw_string(font,Vector2(33,top+43),str(tips.get(data.id,"Explore")),HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),14,Color("#b9dccc"))
  # Stable objective selection, route distance and a doorway prompt for separated interiors.
  var origin:Vector2=adventure.points().get(adventure.game.my_id if adventure.arcade else "solo",Vector2.ZERO)
@@ -654,6 +676,7 @@ func advance_guide(origin:Vector2)->void:
   if origin.distance_to(p)>=150:break
 
 func draw_floor(canvas:Node2D,floor:Dictionary,batched:bool=false)->void:
+ if data.id=="honeyglass":preload("res://scripts/honeyglass_art255.gd").ground(canvas,self,floor);return
  if data.id=="silverfall":silver_art.ground(canvas,floor);return
  # Clip connecting paths at named banks so planks and borders do not cross arenas.
  # This is retained geometry; collision continues to use the connected authored union.
@@ -828,3 +851,12 @@ func draw_attacks(canvas:Node2D,camera:Vector2)->void:
   if str(attack.style)=="heal":preload("res://scripts/combat_cues.gd").enemy_healing(canvas,point,float(attack.radius))
   elif str(attack.style)=="dash":preload("res://scripts/combat_cues.gd").corridor(canvas,v(attack.start)-camera,point,float(attack.radius))
   else:preload("res://scripts/combat_cues.gd").danger(canvas,point,float(attack.radius),float(attack.time),float(attack.total),tint)
+
+func draw_sunbeams257(canvas:Node2D,camera:Vector2)->void:
+ for beam in beams:
+  var point:=v(beam.pos)-camera;var radius:=float(beam.radius);var warned:=float(beam.warn)>0
+  if warned:preload("res://scripts/combat_cues.gd").danger(canvas,point,radius,float(beam.warn),1.3)
+  else:
+   canvas.draw_circle(point,radius,Color(1,.81,.34,.21));canvas.draw_arc(point,radius,0,TAU,48,Color("#fff1a9"),3)
+   canvas.draw_rect(Rect2(point-Vector2(radius,600),Vector2(radius*2,600)),Color(1,.9,.52,.13))
+   for n in 7:canvas.draw_line(point+Vector2((n-3)*radius/4,-600),point+Vector2((n-3)*radius/4,0),Color(1,.96,.69,.23),4)

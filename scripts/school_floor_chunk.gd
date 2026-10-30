@@ -9,6 +9,7 @@ func _process(_dt:float)->void:
  visible=source.active and (game.started and not game.spectating() if source.adventure.arcade else game.mode=="run") and game.session_menu.page not in ["main","clear","options"] and world_bounds.intersects(Rect2(game.camera,game.VIEW).grow(80))
  position=-game.camera
 func _draw()->void:
+ if source.region_id=="elementary":preload("res://scripts/firstbell_art256.gd").ground(self);return
  if background:draw_rect(world_bounds,Color("#304451"));return
  # Keep textured floors together, then paint markings/edges. Interleaving a
  # border after every tile would break texture batches and increase draw calls.

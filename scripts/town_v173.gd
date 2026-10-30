@@ -39,13 +39,12 @@ static func draw_trees(g:Node2D,camera:Vector2)->void:
   var at:Vector2=entry[0];var size:Vector2=entry[2]
   if not visible.has_point(at):continue
   var p=at-camera
-  g.draw_texture_rect(preload("res://scripts/source_art.gd").texture(entry[1]),Rect2(p-Vector2(size.x*.5,size.y-15),size),false)
+  preload("res://scripts/town_nature243.gd").tree(g,"starlace" if at==ELDER else "amber_willow",Rect2(p-Vector2(size.x*.5,size.y-15),size),at)
   if at!=ELDER:continue
   var night=g.town_life.calendar.night_amount()
   if night<.03:continue
   for n in 18:
-   var angle=n*2.399;var radius=21+sqrt(float(n)/18)*58
-   var leaf=p+Vector2(cos(angle)*radius,-143+sin(angle)*radius*.6)
+   var leaf=preload("res://scripts/town_nature243.gd").star_point(n,at,t)-camera
    var pulse=night*(.4+.6*pow((sin(t*1.7+n*2.3)+1)*.5,3))
    var shade=Color("#84e5e0") if n%3 else Color("#b5a0ff")
    g.draw_circle(leaf,6,Color(shade,pulse*.11));g.draw_line(leaf-Vector2(2,0),leaf+Vector2(2,0),Color(shade,pulse*.9),2,true)

@@ -440,7 +440,7 @@ func open_menu(kind:String)->void:
    if anchored and not ashore:f.button(col,"Deploy / recover nearby voyage cage",func():cage_action();open_menu("voyage"))
    f.button(col,"Abandon voyage & cargo…",abandon)
   for i in cargo.size():
-   var item:Dictionary=cargo[i];var r=HBoxContainer.new();col.add_child(r);f.picture(r,str(item.catch.species),Vector2(76,48));f.label(r,str(C.fish()[item.catch.species].name)+" • %.2f kg • " % float(item.catch.kg)+str(C.fish()[item.catch.species].rarity),16)
+   var item:Dictionary=cargo[i];var r=HBoxContainer.new();col.add_child(r);f.picture(r,str(item.catch.species),Vector2(76,48),item.catch);f.label(r,str(C.fish()[item.catch.species].name)+" • %.2f kg • " % float(item.catch.kg)+str(C.fish()[item.catch.species].rarity),16)
    var id=str(item.catch.id);f.button(r,"Release • free cargo slot",func():release_cargo(id);open_menu(kind))
  game.fishing.fit_panel(panel,Vector2(900,640))
  preload("res://scripts/touch_list_scroll.gd").attach(scroll)
@@ -586,10 +586,7 @@ func draw_landmarks(c:Node2D,cam:Vector2,view:Rect2)->void:
    c.draw_arc(q-Vector2(0,15),122,PI,TAU,28,Color('#8a9d94',.55),13)
 func draw_boat(c:Node2D,cam:Vector2)->void:
  var p=boat-cam;var dir=Vector2.from_angle(facing);var side=dir.orthogonal()
- var outline=PackedVector2Array([p+dir*62,p+dir*29+side*24,p-dir*31+side*29,p-dir*47+side*16,p-dir*51-side*16,p-dir*31-side*29,p+dir*29-side*24])
- c.draw_colored_polygon(outline,Color('#cda578') if impact<=0 else Color('#e69c7a'));outline.append(outline[0]);c.draw_polyline(outline,Color('#4b3e34'),4)
- c.draw_line(p+dir*40,p-dir*39,Color('#e0bf8d'),3)
- for offset in [-25,12]:c.draw_line(p+side*22+dir*offset,p-side*22+dir*offset,Color('#80634b'),7)
+ preload("res://scripts/marina_art250.gd").boat(c,"skiff_amber",p+dir*5.5,Vector2(58,113),facing+PI*.5,Color.WHITE if impact<=0 else Color("#efb49b"))
  if not anchored:
   c.draw_line(p-dir*30+side*32,p-dir*65+side*49,Color('#b2aa89'),4);c.draw_line(p-dir*30-side*32,p-dir*65-side*49,Color('#b2aa89'),4)
   c.draw_arc(p-dir*61,28,facing+1.9,facing+4.4,12,Color('#a8c6cb',.4),2)

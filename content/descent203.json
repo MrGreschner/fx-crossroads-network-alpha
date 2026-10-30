@@ -1,5 +1,5 @@
 {
-  "version": 203,
+  "version": 251,
   "enemies": {
     "ds_nibbler": {
       "id": "ds_nibbler",
@@ -1288,8 +1288,7 @@
       "attacks": [
         "firewheel",
         "meteor",
-        "quake",
-        "cataclysm"
+        "quake"
       ],
       "color": "#dc855b",
       "unlock": 100,
@@ -1302,6 +1301,128 @@
       ],
       "hit_radius": 40,
       "bar_y": -138.0
+    },
+    "ds_wickcaller": {
+      "id": "ds_wickcaller",
+      "name": "Wickcaller",
+      "form": "wickcaller",
+      "role": "guardian",
+      "health": 105,
+      "speed": 85,
+      "damage": 15,
+      "unlock": 50,
+      "attacks": [
+        "homing"
+      ],
+      "color": "#b7c8b5",
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        80,
+        80
+      ],
+      "hit_radius": 24,
+      "art_scale": 0.8,
+      "bar_y": -57.6
+    },
+    "ds_gloamrunner": {
+      "id": "ds_gloamrunner",
+      "name": "Gloamrunner",
+      "form": "gloamrunner",
+      "role": "thief",
+      "health": 100,
+      "speed": 210,
+      "damage": 15,
+      "unlock": 42,
+      "attacks": [
+        "steal",
+        "bite"
+      ],
+      "color": "#bc8c83",
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        80,
+        80
+      ],
+      "hit_radius": 24,
+      "art_scale": 0.72,
+      "bar_y": -51.839999999999996
+    },
+    "ds_craglobber": {
+      "id": "ds_craglobber",
+      "name": "Craglobber",
+      "form": "craglobber",
+      "role": "ranged",
+      "health": 195,
+      "speed": 52,
+      "damage": 22,
+      "unlock": 45,
+      "attacks": [
+        "boulder"
+      ],
+      "color": "#b5ae95",
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        80,
+        80
+      ],
+      "hit_radius": 32,
+      "art_scale": 1.0,
+      "bar_y": -72.0
+    },
+    "ds_riftskulk": {
+      "id": "ds_riftskulk",
+      "name": "Riftskulk",
+      "form": "riftskulk",
+      "role": "ranged",
+      "health": 112,
+      "speed": 130,
+      "damage": 19,
+      "unlock": 55,
+      "attacks": [
+        "snipe"
+      ],
+      "color": "#bba5ce",
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        80,
+        80
+      ],
+      "hit_radius": 24,
+      "art_scale": 0.8,
+      "bar_y": -57.6
+    },
+    "ds_mirebound": {
+      "id": "ds_mirebound",
+      "name": "Mirebound",
+      "form": "mirebound",
+      "role": "melee",
+      "health": 225,
+      "speed": 58,
+      "damage": 21,
+      "unlock": 48,
+      "attacks": [
+        "slam",
+        "bite"
+      ],
+      "color": "#aaa6c3",
+      "rank": "enemy",
+      "ornament": 0,
+      "body_scale": 1.0,
+      "cell": [
+        80,
+        80
+      ],
+      "hit_radius": 32,
+      "art_scale": 0.95,
+      "bar_y": -68.4
     }
   },
   "ordinary": [
@@ -1334,7 +1455,12 @@
     "ds_leech",
     "ds_drake",
     "ds_totem",
-    "ds_angel"
+    "ds_angel",
+    "ds_wickcaller",
+    "ds_gloamrunner",
+    "ds_craglobber",
+    "ds_riftskulk",
+    "ds_mirebound"
   ],
   "mid": [
     "ds_mid_01",

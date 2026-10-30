@@ -61,7 +61,7 @@ func refresh()->void:
   var c=rec.specimen(str(rec.state().display[n]));var cell=VBoxContainer.new();cell.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tank_strip.add_child(cell)
   if c.is_empty():CARDS.text(cell,"Tank %d • Empty" % (n+1),12)
   else:
-   fishing.picture(cell,str(c.species),Vector2(65,32))
+   fishing.picture(cell,str(c.species),Vector2(65,32),c)
    CARDS.text(cell,"Tank %d • %s\n%.2f kg • %d/h" % [n+1,fishing.C.fish()[c.species].name,float(c.kg),rec.income.rate(c)],12)
  tank_strip.visible=not goods
  filters.visible=not goods;batch_row.visible=not goods;summary.visible=not goods
@@ -84,7 +84,7 @@ func fish_row(c:Dictionary)->void:
   if on:selection[id]=true
   else:selection.erase(id)
   update_summary())
- fishing.picture(row,str(c.species),Vector2(76,47))
+ fishing.picture(row,str(c.species),Vector2(76,47),c)
  var info=VBoxContainer.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(info);CARDS.text(info,str(spec.name),16)
  var facts=HFlowContainer.new();facts.add_theme_constant_override("h_separation",6);info.add_child(facts)
  var rarity=CARDS.text(facts,str(spec.rarity),13,Color(CARDS.PALETTE.get(str(spec.rarity),"#d6e7e9")));rarity.name="FishRarity";rarity.autowrap_mode=TextServer.AUTOWRAP_OFF;rarity.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN

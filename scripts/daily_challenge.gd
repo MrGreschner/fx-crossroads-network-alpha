@@ -118,9 +118,9 @@ func quick_play()->void:
  if plan.mode=="realm":g.start_run(false,plan.realm)
  else:
   g.get_tree().root.set_meta("fx_daily_party",bool(plan.party));g.presentation.launch(plan.mode,plan.realm)
-static func draw_on(c:CanvasItem,p:Vector2,t:float,day:String="")->void:
+static func draw_on(c:CanvasItem,p:Vector2,t:float,day:String="",body:Rect2=Rect2())->void:
  if day.is_empty():day=Time.get_date_string_from_system(false)
- var style=reward_index(day);var center=p+Vector2(0,-25)
+ var style=reward_index(day);var center=Vector2(body.end.x+60,body.position.y+24) if body.has_area() else p+Vector2(0,-25)
  var colors=[Color("#ffe199"),Color("#c4afff"),Color("#ffa477"),Color("#86e5e7"),Color("#a9ccff"),Color("#ddf19c"),Color("#e1b4e9"),Color("#96e6c7")]
  var ink:Color=colors[style]
  match style:
@@ -130,20 +130,20 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,day:String="")->void:
     var a=t*.25+n*TAU/8;var inner=foot+Vector2(cos(a)*17,sin(a)*6);var outer=foot+Vector2(cos(a)*30,sin(a)*11)
     c.draw_line(inner,outer,Color(ink,.65 if n%2==0 else .3),1.5,true)
    c.draw_arc(foot,14,0,TAU,20,Color(ink,.25),1,true)
-   c.draw_line(p-Vector2(0,58),p-Vector2(0,48),Color(ink,.7),1.5,true)
+   c.draw_line((center+Vector2(0,-6) if body.has_area() else p-Vector2(0,58)),(center+Vector2(0,4) if body.has_area() else p-Vector2(0,48)),Color(ink,.7),1.5,true)
   1: # Moonpetal: hovering crescent and drifting petals.
-   c.draw_arc(p-Vector2(0,54),9,t*.2,t*.2+PI*1.55,16,Color(ink,.7),2,true)
+   c.draw_arc(center if body.has_area() else p-Vector2(0,54),9,t*.2,t*.2+PI*1.55,16,Color(ink,.7),2,true)
    for n in 4:
-    var q=p+Vector2(sin(t*.7+n)*24,-fposmod(t*10+n*16,56));c.draw_circle(q,2,Color(ink,.4))
+    var q=(center+Vector2(0,28) if body.has_area() else p)+Vector2(sin(t*.7+n)*24,-fposmod(t*10+n*16,56));c.draw_circle(q,2,Color(ink,.4))
   2: # Ember crown: tiny flames rise along a crown.
    for n in 5:
-    var q=p+Vector2((n-2)*6,-48-abs(sin(t*3+n))*8);c.draw_line(q,q+Vector2(0,5),Color(ink,.7),2,true)
+    var q=(center+Vector2(0,48) if body.has_area() else p)+Vector2((n-2)*6,-48-abs(sin(t*3+n))*8);c.draw_line(q,q+Vector2(0,5),Color(ink,.7),2,true)
   3: # Tidal pearls: wavy foot-ring and rising water beads.
    var line=PackedVector2Array()
    for n in 25:
     var a=n*TAU/24;line.append(p+Vector2(cos(a)*27,sin(a)*7+sin(t*2+a*3)*2+7))
    c.draw_polyline(line,Color(ink,.45),1.5,true)
-   for n in 3:c.draw_circle(p+Vector2(sin(t+n*2)*23,-fposmod(t*11+n*15,45)),2,Color(ink,.5))
+   for n in 3:c.draw_circle((center+Vector2(0,22) if body.has_area() else p)+Vector2(sin(t+n*2)*23,-fposmod(t*11+n*15,45)),2,Color(ink,.5))
   4: # Runic orbit: rotating diamonds.
    for n in 4:
     var a=t*.5+n*TAU/4;var q=center+Vector2(cos(a)*30,sin(a)*18)

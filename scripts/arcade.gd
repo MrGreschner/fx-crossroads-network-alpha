@@ -183,6 +183,7 @@ var world_buildings: Array[Dictionary] = []
 var descent_nav: AStarGrid2D
 var obstacle_grid: Dictionary = {}
 var world_spawns: Array[Dictionary] = []
+var portal_points258:Dictionary={}
 var world_decorations: Array[Dictionary] = []
 var world_fountains:Array[Vector2]=[]
 var fountain_tick:=0.0
@@ -223,6 +224,7 @@ var downed: Dictionary = {}
 var revive_held: Dictionary = {}
 var defeat_causes:Dictionary={}
 var results_reason := ""
+var action_notices:CanvasLayer
 var player_cosmetics: Dictionary = {}
 var presentation:Node
 var recovery:Node
@@ -248,8 +250,9 @@ func _ready() -> void:
 	descent.game=self
 	transport.game=self
 	terrain_cache=preload("res://scripts/multiplayer_ground.gd").new();terrain_cache.game=self;terrain_cache.z_index=-1;add_child(terrain_cache)
+	action_notices=preload("res://scripts/action_notice250.gd").new();action_notices.game=self;action_notices.arcade=true;add_child(action_notices)
 	for sprite in ["mosaicling","hive_drone","quillling","stagelet","lanternling","deputyling","gravehorse"]:
-		for pose in ["idle","walk1","walk2","attack"]:art[sprite+"_"+pose]=load("res://assets/"+sprite+"_"+pose+".png")
+		for pose in ["idle","walk1","walk2","attack"]:art[sprite+"_"+pose]=preload("res://scripts/actor_art248.gd").texture(sprite,pose)
 	arena_world.game=self
 	legacy=preload("res://scripts/legacy.gd").new();add_child(legacy);legacy.setup(self,true)
 	fishing=preload("res://scripts/fishing.gd").new();add_child(fishing);fishing.setup(self,true)
@@ -282,6 +285,9 @@ func _ready() -> void:
 	for entry in manifest.get("enemies", []):
 		var data := _json("res://content/enemies/" + str(entry) + ".json")
 		enemy_defs[str(entry)] = data
+		if preload("res://scripts/actor_art248.gd").has(str(data.get("sprite",entry))):
+			for pose in ["idle","walk1","walk2","attack","attack2","special"]:art[str(entry)+"_"+pose]=preload("res://scripts/actor_art248.gd").texture(str(data.get("sprite",entry)),pose)
+			continue
 		if str(data.get("sprite",entry)) in preload("res://scripts/enemy_visual227.gd").FACTORS:
 			for pose in ["idle","walk1","walk2","attack","attack2","special"]:art[str(entry)+"_"+pose]=load("res://assets/"+str(data.get("sprite",entry))+"_"+pose+".png")
 			continue
@@ -430,11 +436,13 @@ func _ui() -> void:
 	status_label=_label(notice,375,658,850,15);status_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;status_label.size.y=42
 	roster_label=_label("",900,612,326,15)
 	item_picker=OptionButton.new()
+	item_picker.add_theme_constant_override("icon_max_width",24)
 	for bottle in [false,true]:
 		item_picker.add_separator("CONSUMABLES • 1 slot" if bottle else "EQUIPMENT • 3 slots")
 		for id in item_list:
 			if preload("res://scripts/supply_slots.gd").consumable(items[id])!=bottle:continue
 			item_picker.add_icon_item(preload("res://scripts/item_icons.gd").texture(id),str(items[id].get("name",id))+" ("+str(preload("res://scripts/supply_slots.gd").price(items[id],legacy))+" CC)");item_picker.set_item_metadata(item_picker.item_count-1,id)
+	for n in item_picker.item_count:item_picker.get_popup().set_item_icon_max_width(n,24)
 	item_picker.select(1)
 	item_picker.position=Vector2(28,684);item_picker.size=Vector2(210,30);control.add_child(item_picker)
 	_button("BUY ITEM",245,683,_buy_item,102)
@@ -449,6 +457,7 @@ func _ui() -> void:
 			var style:=StyleBoxFlat.new();style.bg_color=Color("#274653");style.border_color=Color("#74938d");style.set_border_width_all(1);style.set_corner_radius_all(8);style.content_margin_left=12;style.content_margin_right=14;style.content_margin_top=4;style.content_margin_bottom=4;child.add_theme_stylebox_override("normal",style)
 			var hover:StyleBoxFlat=style.duplicate();hover.bg_color=Color("#365e69");hover.border_color=Color("#ebd59f");child.add_theme_stylebox_override("hover",hover)
 
+	item_picker.size=Vector2(210,32)
 	difficulty_picker.size.y=26
 	seats_picker.size.y=32;spectator_picker.size.y=32
 	rule_picker.size.y=32;no_items_picker.size.y=32;random_hero_picker.size.y=32
@@ -752,6 +761,7 @@ func _start_match() -> void:
 	status_label.text = "Build your army • Protect your barracks • Break their heart" if mode=="battlegrounds" else "Match started. Survive together!" if mode != "arena" else "Arena started • "+("Opening Act: level 1" if arena_opening else "level 10, all attacks ready")
 
 func _make_floor() -> void:
+	portal_points258.clear()
 	if is_instance_valid(realm_props):realm_props.queue_free()
 	realm_props=null
 	world_tile_cache.clear()
@@ -795,6 +805,8 @@ func _make_floor() -> void:
 		if layout.has_node("Enemies"):
 			for marker in layout.get_node("Enemies").get_children(): world_spawns.append({"pos":(marker as Node2D).position,"type":str(marker.get_meta("enemy_id","bramble"))})
 		if layout.has_node("Points/Spawn"): world_spawns.push_front({"pos":(layout.get_node("Points/Spawn") as Node2D).position,"type":"spawn"})
+		for id in ["ReturnGate","Boss"]:
+			if layout.has_node("Points/"+id):portal_points258[id]=(layout.get_node("Points/"+id)as Node2D).position
 		layout.free()
 	if mode=="arena":arena_world.setup(self,arena_map)
 	if mode=="defense":north_gate.setup(self)
@@ -1413,7 +1425,9 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 	if mode=="defense" and killer=="lane_guard":north_gate.guard_bounty(boss)
 	if not gold.has(killer): return
 	kills[killer] = int(kills.get(killer,0))+1
-	gold[killer] = int(gold.get(killer,0))+ (40 if boss else 6+posmod(int(defeated.get("uid",0)),3) if mode in ["coop","descent"] else 2) + (2 if (inventory.get(killer,[]) as Array).has("gold_magnet") else 0)
+	var cc=preload("res://scripts/enemy_reward251.gd").amount(defeated,{"easy":1,"medium":2,"hard":3}.get(ai_difficulty,1),floor_number if mode=="descent" else wave if mode=="defense" else int(levels.get(killer,1)))
+	if cc>0 and cc<=5 and (inventory.get(killer,[]) as Array).has("gold_magnet"):cc=mini(5,cc+2)
+	gold[killer]=int(gold.get(killer,0))+cc
 	xp[killer] = 0 if mode=="arena" and not arena_opening else int(xp.get(killer,0)) + (12 if boss else 1)
 	if int(levels.get(killer,1))>=5 and str(characters.get(str(hero_ids.get(killer,"ram")),{}).get("passive_effect",""))=="heal_on_kill":
 		health[killer] = mini(_max_hp(killer),int(health.get(killer,100))+(9 if str(mastery_choice.get(killer,""))=="passive" else 4))
@@ -1651,14 +1665,15 @@ func _simulate(delta: float) -> void:
 			if int(health.get(id,0)) > 0 and Time.get_ticks_msec() >= int(stealth_until.get(id,0)) and positions[id].distance_to(enemy["pos"]) < nearest:
 				target_id = str(id);nearest = positions[id].distance_to(enemy["pos"])
 		var destination: Vector2 = positions[target_id] if target_id != "" else GATE
-		var leaf:Dictionary=adventure.combat.fern.decoy_for(enemy.pos)
-		if not enemy.boss and not leaf.is_empty() and adventure.combat.path_clear(enemy.pos,adventure.combat.vec(leaf.pos)):destination=adventure.combat.vec(leaf.pos)
 		var guard_target := -1
 		if mode == "defense":
 			destination = north_gate.lane_goal(int(enemy.get("lane",0)),enemy.pos,false) if target_id == "" or nearest > 480 else destination
 			for guard_index in guards.size():
 				if str(guards[guard_index].get("type","")) != "summoned" and (enemy["pos"] as Vector2).distance_to(guards[guard_index]["pos"]) < (330 if adventure.combat.ranged_enemy(enemy,definition) else 95):
 					guard_target = guard_index;destination = guards[guard_index]["pos"];break
+		var redirected:Vector2=adventure.combat.fern.redirect(enemy,destination)
+		if not bool(enemy.get("boss",false)) and not adventure.combat.fern.lure_for(enemy.pos).is_empty():guard_target=-1
+		destination=redirected
 		if preload("res://scripts/between_guardians.gd").basic(self,enemy,delta,true):continue
 		var starter_boss:bool=mode=="coop" and preload("res://scripts/starter_boss.gd").managed(realm_id,enemy)
 		if starter_boss:
@@ -1682,7 +1697,7 @@ func _simulate(delta: float) -> void:
 			var sidestep := Vector2(-movement.y,movement.x)
 			if mode == "defense": sidestep = _guard_blocked_move(enemy["pos"],sidestep,-1,44.0)-(enemy["pos"] as Vector2)
 			if _clear_path(enemy["pos"],enemy["pos"]+sidestep): enemy["pos"] += sidestep
-		if mode=="defense" and north_gate.hold_at_outpost(enemy,delta):continue
+		if mode=="defense" and (bool(enemy.get("boss",false)) or adventure.combat.fern.lure_for(enemy.pos).is_empty()) and north_gate.hold_at_outpost(enemy,delta):continue
 		preload("res://scripts/ice_projectiles.gd").step_boss(self,enemy,delta)
 		if not starter_boss:enemy["attack_timer"] = maxf(0.0,float(enemy.get("attack_timer",0.0))-delta)
 		if mode == "defense" and (enemy["pos"] as Vector2).distance_to(GATE) < 85:
@@ -1879,7 +1894,7 @@ func _snapshot() -> Dictionary:
 			remaining[ability] = maxf(0.0,float(int(timers.get(ability,0))-Time.get_ticks_msec())/1000.0)
 		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"equipment_entry":accepted_equipment.get(id,[]),"consumable_entry":str(accepted_supplies.get(id,"")),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"core_action":core_art.packet(str(id)),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
 	var foes: Array = []
-	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"finale_actor":bool(enemy.get("finale_actor",false)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"action":str(enemy.get("action","")),"hurt":float(enemy.get("hurt",0)),"strike":float(enemy.get("strike",0)),"total":float(enemy.get("total",0)),"left":float(enemy.get("left",0)),"facing":float(enemy.get("facing",0)),"moving":float(enemy.get("moving",0)),"gait":float(enemy.get("gait",0)),"warning":float(enemy.get("warning",-1)),"melee_warning":float(enemy.get("melee_warning",0)),"melee_x":float(enemy.get("melee_x",0)),"melee_y":float(enemy.get("melee_y",1)),"v143_pose":float(enemy.get("v143_pose",0)),"veilbound":bool(enemy.get("veilbound",false)),"veil_pose":float(enemy.get("veil_pose",0)),"cinder_pose":float(enemy.get("cinder_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false)),"between_guardian":bool(enemy.get("between_guardian",false)),"source_realm":str(enemy.get("source_realm","")),"name":str(enemy.get("name",enemy_defs.get(str(enemy.type),{}).get("name",""))),"windup":float(enemy.get("windup",0))})
+	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"finale_actor":bool(enemy.get("finale_actor",false)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"hidden_until":float(enemy.get("hidden_until",0)),"aim":enemy.get("aim",[0,0]),"action":str(enemy.get("action","")),"hurt":float(enemy.get("hurt",0)),"strike":float(enemy.get("strike",0)),"total":float(enemy.get("total",0)),"left":float(enemy.get("left",0)),"facing":float(enemy.get("facing",0)),"moving":float(enemy.get("moving",0)),"gait":float(enemy.get("gait",0)),"warning":float(enemy.get("warning",-1)),"melee_warning":float(enemy.get("melee_warning",0)),"melee_x":float(enemy.get("melee_x",0)),"melee_y":float(enemy.get("melee_y",1)),"v143_pose":float(enemy.get("v143_pose",0)),"veilbound":bool(enemy.get("veilbound",false)),"veil_pose":float(enemy.get("veil_pose",0)),"cinder_pose":float(enemy.get("cinder_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false)),"between_guardian":bool(enemy.get("between_guardian",false)),"source_realm":str(enemy.get("source_realm","")),"name":str(enemy.get("name",enemy_defs.get(str(enemy.type),{}).get("name",""))),"windup":float(enemy.get("windup",0))})
 	var shots: Array = []
 	for bullet in missiles: shots.append({"pos":[roundi(bullet["pos"].x),roundi(bullet["pos"].y)],"owner":bullet["owner"],"color":str(bullet.get("color","#ffd985"))})
 	var sent_guards: Array = []
@@ -2112,7 +2127,7 @@ func dict_with_start(data:Dictionary)->Dictionary:
 
 func foes_from_packet(value: Dictionary) -> void:
 	var point:=Vector2(float(value["pos"][0]),float(value["pos"][1]));smoothing.push("e:"+str(value.get("uid",0)),point,Time.get_ticks_msec()/1000.0)
-	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"veilbound":bool(value.get("veilbound",false)),"veil_pose":float(value.get("veil_pose",0)),"cinder_pose":float(value.get("cinder_pose",0)),"v143_pose":float(value.get("v143_pose",0)), "melee_warning":float(value.get("melee_warning",0)),"melee_x":float(value.get("melee_x",0)),"melee_y":float(value.get("melee_y",1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"finale_actor":bool(value.get("finale_actor",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false)),"action":str(value.get("action","")),"hurt":float(value.get("hurt",0)),"strike":float(value.get("strike",0)),"total":float(value.get("total",0)),"left":float(value.get("left",0)),"facing":float(value.get("facing",0)),"moving":float(value.get("moving",0)),"gait":float(value.get("gait",0)),"between_guardian":bool(value.get("between_guardian",false)),"source_realm":str(value.get("source_realm","")),"name":str(value.get("name",enemy_defs.get(str(value.type),{}).get("name",""))),"sprite":str(value.get("sprite",value.type)),"windup":float(value.get("windup",0))})
+	opponents.append({"pos":Vector2(float(value["pos"][0]),float(value["pos"][1])),"hp":float(value["hp"]),"max_hp":float(value["max_hp"]),"type":str(value["type"]),"boss":bool(value["boss"]),"lane":int(value.get("lane",1)),"warning":float(value.get("warning",-1)),"veilbound":bool(value.get("veilbound",false)),"veil_pose":float(value.get("veil_pose",0)),"cinder_pose":float(value.get("cinder_pose",0)),"v143_pose":float(value.get("v143_pose",0)), "melee_warning":float(value.get("melee_warning",0)),"melee_x":float(value.get("melee_x",0)),"melee_y":float(value.get("melee_y",1)),"expansion_boss":bool(value.get("expansion_boss",false)),"trial_index":int(value.get("trial_index",-1)),"generation":int(value.get("generation",0)),"uid":int(value.get("uid",0)),"down_time":float(value.get("down_time",0)),"growth":float(value.get("growth",0)),"school_group":str(value.get("school_group","")),"ghost":float(value.get("ghost",0)),"hit_radius":float(value.get("hit_radius",18)),"quest_group":str(value.get("quest_group","")),"immersive":bool(value.get("immersive",false)),"buried":bool(value.get("buried",false)),"campaign_hero":bool(value.get("campaign_hero",false)),"finale_actor":bool(value.get("finale_actor",false)),"health_gem":bool(value.get("health_gem",false)),"depth_boss":bool(value.get("depth_boss",false)),"hidden_until":float(value.get("hidden_until",0)),"aim":value.get("aim",[0,0]),"action":str(value.get("action","")),"hurt":float(value.get("hurt",0)),"strike":float(value.get("strike",0)),"total":float(value.get("total",0)),"left":float(value.get("left",0)),"facing":float(value.get("facing",0)),"moving":float(value.get("moving",0)),"gait":float(value.get("gait",0)),"between_guardian":bool(value.get("between_guardian",false)),"source_realm":str(value.get("source_realm","")),"name":str(value.get("name",enemy_defs.get(str(value.type),{}).get("name",""))),"sprite":str(value.get("sprite",value.type)),"windup":float(value.get("windup",0))})
 
 func _consume(id: String, slot: int) -> void:
 	if arena_world.shatter.active():return
@@ -2303,6 +2318,7 @@ func _draw() -> void:
 		draw_set_transform(media.offset(),0,Vector2.ONE*media.factor());VIEW=screen_view/media.factor()
 	var section_began:=Time.get_ticks_usec()
 	_draw_world()
+	preload("res://scripts/realm_portals258.gd").draw_coop(self,self,camera)
 	descent.draw(self,camera)
 	if fishing!=null:fishing.draw_on(self,camera)
 	if mode=="battlegrounds":battlegrounds.draw_world(self)
@@ -2349,6 +2365,8 @@ func _draw() -> void:
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
 		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
 		if bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
+		elif mode=="coop" and realm_id=="quarry" and bool(foe.get("boss",false)):
+			preload("res://scripts/quarry_art254.gd").draw_boss(self,enemy_pose235,Rect2(pos-size*Vector2(.5,.7),size))
 		elif preload("res://scripts/enemy_art235.gd").draw_key(self,id+"_"+enemy_pose235,Rect2(pos-size*Vector2(0.5,0.7),size)):
 			pass
 		elif texture != null:
@@ -2410,15 +2428,16 @@ func _draw() -> void:
 		elif texture != null and hero_id=="ripplejaw":
 			world_transform(pos,fish_motion.angle(str(id)));draw_texture_rect(texture,Rect2(hero_rect.position-pos,hero_rect.size),false,tint);world_transform()
 		elif texture != null and not adventure.combat.robot.transformed(str(id)) and not adventure.combat.twister.drawn_transformed(str(id)):draw_texture_rect(texture,hero_rect,false,tint)
+		var cosmetic_body:Rect2=preload("res://scripts/hero_layout250.gd").body(texture,hero_rect,fish_motion.angle(str(id)) if hero_id=="ripplejaw" else 0,pos)
 		var cosmetic:Dictionary=cosmetic_for(id)
 		if str(cosmetic.get("daily_date",""))==legacy.daily.today and int(health.get(id,0))>0:
-			preload("res://scripts/daily_challenge.gd").draw_on(self,pos,visual_time)
-		if int(health.get(id,0))>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,pos,visual_time,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")))
-		if int(health.get(id,0))>0:preload("res://scripts/creation_badges.gd").draw_on(self,pos,visual_time,cosmetic)
+			preload("res://scripts/daily_challenge.gd").draw_on(self,pos,visual_time,"",cosmetic_body)
+		if int(health.get(id,0))>0:preload("res://scripts/player_cosmetics.gd").draw_on(self,pos,visual_time,str(cosmetic.get("extra_effect","")),str(cosmetic.get("weekly_week","")),cosmetic_body)
+		if int(health.get(id,0))>0:preload("res://scripts/creation_badges.gd").draw_on(self,pos,visual_time,cosmetic,cosmetic_body)
 		if bool(cosmetic.get("game_dev",false)) and int(health.get(id,0))>0:
-			preload("res://scripts/dev_insignia.gd").draw_on(self,pos,visual_time)
+			preload("res://scripts/dev_insignia.gd").draw_on(self,pos,visual_time,1,cosmetic_body)
 		if not cosmetic.is_empty() and not (media.clean_view or media.capturing):
-			draw_string(font,pos+Vector2(-35,-70),("GAME DEV" if bool(cosmetic.get("game_dev",false)) else str(cosmetic.get("title",""))),HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#ddcba3"))
+			draw_string(font,preload("res://scripts/hero_layout250.gd").title(cosmetic_body)+Vector2(-35,0),("GAME DEV" if bool(cosmetic.get("game_dev",false)) else str(cosmetic.get("title",""))),HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#ddcba3"))
 		if downed.has(id):
 			draw_string(font,pos+Vector2(-65,55),"DOWN "+str(int(downed[id].get("left",0)))+"s • HOLD INTERACT",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#a5e4b6"))
 			draw_rect(Rect2(pos+Vector2(-40,65),Vector2(80*float(downed[id].get("progress",0))/2.0,6)),Color("#9addb4"))
@@ -2442,6 +2461,7 @@ func _draw() -> void:
 	arena_world.objective.draw_crown()
 	arena_world.extra.draw_fog()
 	descent.draw_darkness(self,camera)
+	if mode=="descent":descent.battle.draw(self,camera)
 	adventure.finale.draw_fog(self,camera,VIEW)
 	_profile_section("adventure_draw",section_began)
 	section_began=Time.get_ticks_usec()
@@ -2472,12 +2492,8 @@ func _draw() -> void:
 	preload("res://scripts/combat_hud.gd").experience(self,"LEVEL 10 • ALL ABILITIES READY" if mode=="arena" and not arena_opening else "Lv %d • XP %d / %d" % [levels.get(my_id,1),xp.get(my_id,0),needed_xp],1.0 if mode=="arena" and not arena_opening else clampf(float(xp.get(my_id,0))/needed_xp,0,1))
 	if continuation!=null and continuation.active:
 		draw_rect(Rect2(24,94,245,24),Color("#18475d"));draw_string(font,Vector2(29,111),"PRACTICE • discoveries only",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#c3ebf4"))
-	if mode not in ["arena","battlegrounds"]:draw_string(font,Vector2(24,VIEW.y-115),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,VIEW.x-50,14,Color("#d9d1ae"))
-	elif arena_notice_left>0 and not arena_world.objective.active():
-		var opacity:=minf(1,arena_notice_left)
-		draw_rect(Rect2(20,110,600,53),Color(.03,.08,.11,.65*opacity))
-		draw_string(font,Vector2(34,132),status_label.text,HORIZONTAL_ALIGNMENT_LEFT,572,15,Color(.85,.82,.68,opacity))
-		draw_string(font,Vector2(34,152),str(arena_world.MAPS.get(arena_map,"Arena")),HORIZONTAL_ALIGNMENT_LEFT,572,14,Color(.91,.81,.6,opacity))
+
+
 	_draw_minimap()
 	arena_world.extra.draw_hud()
 	arena_world.objective.draw_hud()
@@ -2486,7 +2502,7 @@ func _draw() -> void:
 	if shop_open.is_empty():adventure.quests.draw_hud(self)
 	for building in world_buildings:
 		if str(building["name"]) != "Gate" and local_pos.distance_to(building["pos"]) < 220:
-			draw_string(font,Vector2(450,VIEW.y-140),"E  Visit " + str(building["name"]),HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#ffe8a7"));break
+			break
 	if level_cards==null and int(levels.get(my_id,1)) >= 8 and str(attack_branch.get(my_id,"")) == "": draw_string(font,Vector2(420,635),"LV8: J +primary / K faster secondary",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#ffe9b7"))
 	elif level_cards==null and int(levels.get(my_id,1)) >= 10 and str(mastery_choice.get(my_id,"")) == "": draw_string(font,Vector2(420,635),"LV10: J faster special / K stronger passive",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#ffe9b7"))
 	if not shop_open.is_empty():
@@ -2515,6 +2531,9 @@ func cached_world_tile(tx:int,ty:int,tile_size:int)->String:
 	world_tile_cache[key]=tile
 	return tile
 func _draw_world() -> void:
+	if mode=="descent":
+		if terrain_cache!=null:terrain_cache.hide()
+		preload("res://scripts/descent_map251.gd").draw_floor(self,camera,VIEW,floor_number)
 	if adventure.finale.in_depth():
 		if terrain_cache!=null:terrain_cache.hide()
 		adventure.finale.draw_ground(self,camera);return
@@ -2525,7 +2544,7 @@ func _draw_world() -> void:
 		preload("res://scripts/moon_castle.gd").draw(self,camera)
 	elif realm_id=="silverfall" and mode=="coop":
 		if terrain_cache!=null:terrain_cache.hide()
-	elif spectating() or terrain_cache==null:
+	elif mode!="descent" and (spectating() or terrain_cache==null):
 		for tx in range(int(camera.x/tile_size),int((camera.x+VIEW.x)/tile_size)+1):
 			for ty in range(int(camera.y/tile_size),int((camera.y+VIEW.y)/tile_size)+1):
 				var point := Vector2(tx*tile_size+tile_size/2,ty*tile_size+tile_size/2)
@@ -2556,11 +2575,18 @@ func _draw_world() -> void:
 	if not retained_props:
 		for decoration in world_decorations:
 			if bounds.has_point(decoration["pos"]): draw_texture_rect(decoration["texture"],Rect2(decoration["pos"]-(decoration["size"] as Vector2)*0.5-camera,decoration["size"]),false)
+	if mode=="descent":preload("res://scripts/descent_map251.gd").scenery(self,camera,FIELD,VIEW,floor_number)
 	for obstacle in field_obstacles:
+		if mode=="descent":
+			if bounds.has_point(obstacle.pos):preload("res://scripts/descent_map251.gd").pillar(self,obstacle.pos,float(obstacle.radius),camera)
+			continue
 		if bounds.has_point(obstacle["pos"]):
-			if str(obstacle.get("kind","tree"))=="rock":
+			if mode=="coop" and realm_id=="quarry":
+				var diameter:=float(obstacle.get("radius",38))*2+8;draw_texture_rect(preload("res://scripts/quarry_art254.gd").texture("rock"),Rect2(obstacle["pos"]-Vector2.ONE*diameter*.5-camera,Vector2.ONE*diameter),false)
+			elif str(obstacle.get("kind","tree"))=="rock":
 				var diameter:=float(obstacle.get("radius",38))*2+8
 				_sprite("rock",obstacle["pos"]-Vector2.ONE*diameter*.5,Vector2.ONE*diameter)
+			elif mode=="coop" and realm_id=="grove":draw_texture_rect(preload("res://scripts/quarry_art254.gd").grove_tree(obstacle["pos"]),Rect2(obstacle["pos"]-Vector2(72,132)-camera,Vector2(144,168)),false)
 			else:_sprite(str(obstacle.get("kind","tree")),obstacle["pos"]-Vector2(44,65),Vector2(88,112))
 	for building in world_buildings:
 		if mode=="battlegrounds":continue
@@ -2577,6 +2603,8 @@ func _draw_world() -> void:
 			draw_string(ThemeDB.fallback_font,sign-camera+Vector2(-55,32),north_gate.NAMES[lane],HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#ffe7aa"))
 
 func _sprite(key: String, point: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	var refreshed248=preload("res://scripts/enemy_art235.gd").split_key(key)
+	if not refreshed248.is_empty() and preload("res://scripts/actor_art248.gd").has(refreshed248[0]) and preload("res://scripts/enemy_art235.gd").draw_key(self,key,Rect2(point-camera,size),tint):return
 	var texture: Texture2D = art.get(key)
 	if texture != null and Rect2(camera-size,VIEW+size*2).has_point(point): draw_texture_rect(texture,preload("res://scripts/enemy_visual227.gd").adjusted(key,Rect2(point-camera,size)),false,tint)
 
@@ -3008,6 +3036,7 @@ func _update_revives(delta: float) -> void:
 			else:_send_channel(rescuer,{"type":"revive_reward"})
 			_emit_effect({"pos":positions[fallen],"radius":65.0,"time":.6,"color":"#a1edb1","cue":"reward"})
 func adventure_won(reason:String)->bool:
+	if mode=="descent":return "ancient depths cleared" in reason.to_lower()
 	if mode=="battlegrounds":return battlegrounds.winner==int(teams.get(my_id,-1))
 	return mode=="coop" and ("cleared" in reason.to_lower() or "restored" in reason.to_lower() or "freed" in reason.to_lower() or adventure.quests.active and adventure.quests.completed_count()==adventure.quests.data.get("quests",[]).size())
 

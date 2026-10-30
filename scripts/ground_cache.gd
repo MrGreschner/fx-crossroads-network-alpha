@@ -17,21 +17,34 @@ static func prepare_atlas()->void:
  regions=JSON.parse_string(FileAccess.get_file_as_string(file))
  atlas=preload("res://scripts/town_sprite_cache.gd").texture("terrain39")
 func append_tile(chunk:Chunk,id:String,rect:Rect2)->void:
- if atlas!=null and regions.has(id):
+ if game.mode=="run" and game.region_id=="quarry" and id in ["ash","path"]:
+  var a=preload("res://scripts/quarry_art254.gd");chunk.tiles.append([a.texture("ash"),rect])
+  if id=="path":
+   var world=chunk.position+rect.position;var mask=preload("res://scripts/grove_art253.gd").path_mask(game,floori(world.x/64),floori(world.y/64));chunk.tiles.append([a.texture("edge"+str(mask)),rect])
+ elif game.mode=="run" and game.region_id=="grove" and id in ["forest","path"]:
+  var a=preload("res://scripts/grove_art253.gd")
+  chunk.tiles.append([a.texture("forest"),rect])
+  if id=="path":
+   var world=chunk.position+rect.position;var mask=a.path_mask(game,floori(world.x/64),floori(world.y/64));chunk.tiles.append([a.texture("edge"+str(mask)),rect])
+ elif atlas!=null and regions.has(id):
   var uv=regions[id];chunk.tiles.append([atlas,rect,Rect2(uv[0],uv[1],uv[2],uv[3])])
  elif game.art.get(id)!=null:chunk.tiles.append([game.art[id],rect])
 func _ready()->void:z_index=-3
 class Chunk extends Node2D:
  var tiles:Array=[]
+ var overlays:Array=[]
  var used:=0
  func _draw()->void:
   for tile in tiles:
    if tile.size()==3:draw_texture_rect_region(tile[0],tile[1],tile[2])
    else:draw_texture_rect(tile[0],tile[1],false)
+  # Keep a shared wildflower atlas together after the base terrain batch.
+  for overlay in overlays:draw_texture_rect(overlay[0],overlay[1],false)
 func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
  chunks.clear();coverage_key=""
 func sync()->void:
+ if game.mode=="run" and game.region_id=="sunfield":visible=false;return
  visible=not game.region.is_empty() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
  if not visible:return
  position=game.media.offset()-game.camera*game.media.factor();scale=Vector2.ONE*game.media.factor()
@@ -53,9 +66,11 @@ func sync()->void:
       if tx<(floori(float(game.region.get("west_extent",-800))/64.0) if game.mode=="town" else 0) or ty<(-9 if game.mode=="town" else 0) or tx>int(game.region_size().x/64) or ty>int(game.region_size().y/64):continue
       var tile:String=game.ground_tile_at(tx,ty,base)
       var local:=Vector2(tx*64,ty*64)-chunk.position
-      append_tile(chunk,tile,Rect2(local,Vector2(64,64)))
+      if game.mode=="town" and tile in ["grass","path"]:preload("res://scripts/town_terrain247.gd").append(chunk,tx,ty,local,tile,game)
+      else:append_tile(chunk,tile,Rect2(local,Vector2(64,64)))
       var seed:int=(tx*37+ty*71+tx*ty*11)%19
-      if tile!="path" and seed==3 and base not in ["ash","moonburrow_grass"] and game.art.get("flower")!=null and (game.mode!="town" or not preload("res://scripts/town_plan.gd").reserved(Vector2(tx*64+32,ty*64+26))):
+      if game.mode=="town" and tile!="path":preload("res://scripts/town_art246.gd").scatter(chunk,tx,ty,local,game)
+      if game.mode!="town" and game.region_id!="grove" and tile!="path" and seed==3 and base not in ["ash","moonburrow_grass"] and game.art.get("flower")!=null and (game.mode!="town" or not preload("res://scripts/town_plan.gd").reserved(Vector2(tx*64+32,ty*64+26))):
        append_tile(chunk,"flower",Rect2(local+Vector2(12,6),Vector2(40,40)))
     chunks[key]=chunk;add_child(chunk);chunk.queue_redraw()
    chunks[key].visible=true;chunks[key].used=age

@@ -1,0 +1,110 @@
+{
+  "skiff_amber": {
+    "canvas": [
+      72,
+      128
+    ],
+    "bounds": [
+      2,
+      3,
+      69,
+      124
+    ]
+  },
+  "skiff_red": {
+    "canvas": [
+      72,
+      128
+    ],
+    "bounds": [
+      2,
+      3,
+      69,
+      124
+    ]
+  },
+  "launch_blue": {
+    "canvas": [
+      96,
+      192
+    ],
+    "bounds": [
+      3,
+      4,
+      93,
+      188
+    ]
+  },
+  "launch_olive": {
+    "canvas": [
+      96,
+      192
+    ],
+    "bounds": [
+      3,
+      4,
+      93,
+      188
+    ]
+  },
+  "bait_stall": {
+    "canvas": [
+      144,
+      140
+    ],
+    "bounds": [
+      2,
+      5,
+      142,
+      135
+    ]
+  },
+  "cargo": {
+    "canvas": [
+      48,
+      48
+    ],
+    "bounds": [
+      2,
+      3,
+      46,
+      44
+    ]
+  },
+  "harbor_lamp": {
+    "canvas": [
+      28,
+      80
+    ],
+    "bounds": [
+      6,
+      2,
+      21,
+      78
+    ]
+  },
+  "dock_wood": {
+    "canvas": [
+      128,
+      128
+    ],
+    "bounds": [
+      0,
+      0,
+      128,
+      128
+    ]
+  },
+  "shore_ground": {
+    "canvas": [
+      128,
+      128
+    ],
+    "bounds": [
+      0,
+      0,
+      128,
+      128
+    ]
+  }
+}

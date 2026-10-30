@@ -1,0 +1,15 @@
+# Crossroads: Realms Beyond — V242 continuation handoff
+
+V242 is complete and packaged, not deployed. It continues the authoritative V241 baseline and finishes the shops/public-buildings artwork batch. Recover the exact `Crossroads_v242_Editable.zip`, `Crossroads_v242_Web.zip` and `Crossroads_v242_Server_Update.zip` by filename. The Editable project is under `Crossroads_Realms_Beyond/`. `V242_Previews.zip` and `V242_Shops_Preview.png` contain actual in-game day/night views.
+
+The next agreed town batch is homes and vegetation, followed later by street details/final consistency. Do not regenerate the completed V240 props/Exchange, V241 grand landmarks or V242 shop/public facades. Preserve each design, scale, placement, entrance, collision, service and NPC route. User’s style reminder: “Match the soft coloured edges, matte shading and neutral poses of our V207/V208 sprites. Keep each building’s own design!”
+
+Read UPDATE_V242.md, VALIDATION_V242.md and ART_SOURCES_V242.md in the project. Accepted original images and references are under art_sources/town242; complete prompts/layout and offline atlas preparation are under tools/. Runtime: scripts/town_shops242.gd and assets/town242/{shops.png,glass.png,shops.json}; baked architecture caches: assets/town_cache/{market242,post242,marina_fittings242}.png. Preserve the atlas/cache interception paths when editing: changing only older source drawing will not necessarily change the game.
+
+V242 retains 24 facade frames for 25 placements, including separate products in the two matching market booths. All conditional earned buildings still honor their original unlocks; unbuilt sites remain planned. The legacy Chimehouse renderer is unused and overlaps the active Gatherers’ Lodge location; do not reactivate it there. North Gate infrastructure was not part of this facade batch. Homes/trees remain unchanged.
+
+233 focused checks pass in source and patched Web resources. All 4,752 baseline collision/approach samples match; every recorded entrance remains reachable. 7,217 existing functions, 1,301 constants and 477 protected resources are unchanged. Fresh server import/compilation passed. Actual day/night renders and unbuilt states were reviewed. Fixture shutdown has the baseline three-resource/ObjectDB notices. Browser runtime installation failed; actual browser/school-device playtesting remains outstanding. No deployment, migration or progress reset occurred.
+
+For future packages, selectively patch edited resources into the existing Web index.pck using tools/patch_web_pack.py’s unpack/pack helpers, preserve untouched exported/source differences, remove edited script remaps/compiled targets, save exported project.binary with the new version, and update network/release.gd BUILD and browser title/fileSizes. Install Server Update before Web. Do not deploy without an explicit request.
+
+Some QA fixtures contain session-specific output paths; adjust them when reproducing. The authoritative artifacts are the completed packages, not surviving scratch paths or earlier conversation summaries.

@@ -402,11 +402,12 @@ func tick(delta:float)->void:
   if f.life<=0:fields.remove_at(n)
  for n in range(minions.size()-1,-1,-1):
   var m:Dictionary=minions[n];m.life-=delta;m.timer-=delta;var index=closest(m.pos,650);var style=str(m.ability.get("minion_attack","melee"))
+  var old_pos:Vector2=m.pos;m.flash=maxf(0,float(m.get("flash",0))-delta)
   var speed=float(m.ability.get("minion_speed",120))*(1.2 if hero.passive=="packhaste" else 1.0)*buff_speed(m.pos)
   if style=="heal":
    if m.pos.distance_to(player)>65:m.pos+=(player-m.pos).normalized()*speed*delta
    if m.timer<=0:
-    var a=m.ability.duplicate(true);a.radius=maxf(70,float(a.radius));heal_at(m.pos,a);m.timer=float(a.get("minion_interval",1))
+    var a=m.ability.duplicate(true);a.radius=maxf(70,float(a.radius));heal_at(m.pos,a);m.timer=float(a.get("minion_interval",1));m.flash=.25
   elif index>=0:
    var reach=200.0 if style=="projectile" else 32.0
    if m.pos.distance_to(foes[index].pos)>reach*.8:m.pos+=(foes[index].pos-m.pos).normalized()*speed*delta
@@ -414,8 +415,9 @@ func tick(delta:float)->void:
     var a=m.ability.duplicate(true);a.damage*=1.15 if hero.passive=="packfury" else 1.0;a.minion_attack_cast=true;a.attack_origin=m.pos
     if style=="projectile":a.style="projectile";a.projectile_motion="straight";spawn_shot(m.pos,(foes[index].pos-m.pos).normalized(),a)
     else:hurt(index,a)
-    m.timer=float(a.get("minion_interval",1))
+    m.timer=float(a.get("minion_interval",1));m.flash=.25
    if not external and scenario=="Combat" and m.pos.distance_to(foes[index].pos)<40:m.hp-=delta*8*(1-buff_reduction(m.pos))
+  m.moving=(m.pos-old_pos).length_squared()>.01
   if m.life<=0 or m.hp<=0:minions.remove_at(n)
  for n in range(visuals.size()-1,-1,-1):
   visuals[n].life-=delta
@@ -441,12 +443,11 @@ func _draw()->void:
  for f in fields:
   var tint=Color(f.ability.color);tint.a=.2;draw_circle(f.pos,float(f.ability.radius),tint);draw_arc(f.pos,float(f.ability.radius),0,TAU,32,Color(f.ability.color),2)
  for f in foes:
-  var tint=Color("#b98776") if f.hp>0 else Color("#46575a")
-  draw_circle(f.pos,16,tint);draw_rect(Rect2(f.pos+Vector2(-22,-30),Vector2(44,4)),Color("#253138"));draw_rect(Rect2(f.pos+Vector2(-22,-30),Vector2(44*clampf(f.hp/float(f.get("max_hp",200)),0,1),4)),Color("#efab79"))
-  if f.slow>0:draw_circle(f.pos+Vector2(-10,-40),4,Color("#74bff3"))
-  if f.stun>0:draw_circle(f.pos+Vector2(0,-40),4,Color.WHITE)
-  if f.dot>0:draw_circle(f.pos+Vector2(10,-40),4,Color("#c294de"))
- var ally=Vector2(280,370);draw_circle(ally,18,Color("#82c39b"));draw_string(ThemeDB.fallback_font,ally+Vector2(-30,38),"Ally "+str(int(ally_hp)),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color.WHITE)
+  draw_texture_rect(preload("res://scripts/studio_art249.gd").prop("training_dummy"),Rect2(f.pos-Vector2(24,44),Vector2(48,64)),false,Color.WHITE if f.hp>0 else Color("#667575"));draw_rect(Rect2(f.pos+Vector2(-22,-50),Vector2(44,4)),Color("#253138"));draw_rect(Rect2(f.pos+Vector2(-22,-50),Vector2(44*clampf(f.hp/float(f.get("max_hp",200)),0,1),4)),Color("#efab79"))
+  if f.slow>0:draw_circle(f.pos+Vector2(-10,-62),4,Color("#74bff3"))
+  if f.stun>0:draw_circle(f.pos+Vector2(0,-62),4,Color.WHITE)
+  if f.dot>0:draw_circle(f.pos+Vector2(10,-62),4,Color("#c294de"))
+ var ally=Vector2(280,370);draw_texture_rect(preload("res://scripts/studio_art249.gd").prop("training_ally"),Rect2(ally-Vector2(30,52),Vector2(60,72)),false);draw_string(ThemeDB.fallback_font,ally+Vector2(-30,38),"Ally "+str(int(ally_hp)),HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color.WHITE)
  for m in minions:
   draw_minion(self,m,Vector2.ZERO);draw_arc(m.pos,18,0,TAU*clampf(m.hp/float(m.get("max_hp",40)),0,1),16,Color("#a6e2b7"),2)
  for shot in shots:
@@ -477,7 +478,7 @@ func _draw()->void:
  var texture:Texture2D=form_textures.get(active_form,textures.get(pose,textures.get("idle")))
  if texture!=null:draw_texture_rect(texture,Rect2(player-Vector2(28,42),Vector2(56,64)),false)
  else:
-  draw_circle(player,21,Color("#87dbe1"));draw_circle(player+aim*12,6,Color("#fff1ae"));draw_line(player+Vector2(-12,20),player+Vector2(-12,26+sin(time*8)*4 if moving else 26),Color("#85bcc8"),5)
+  draw_texture_rect(preload("res://scripts/studio_art249.gd").texture("stone_apprentice",pose),Rect2(player-Vector2(28,42),Vector2(56,64)),false)
  draw_aim(self,Vector2.ZERO)
  for kind in holds:
   var a=ability(kind);var age=float(holds[kind].age);var ratio=clampf(age/maxf(.1,float(a.charge)),0,1)

@@ -7,7 +7,7 @@ var message:Label
 var current:=""
 var field_guide=preload("res://scripts/mistglass_book.gd").new()
 var family:="orchard"
-var post_art:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/squirrel_post_v93.svg")
+var post_art:Texture2D # Facade now uses the shared V242 atlas.
 func setup(owner:Node)->void:
  game=owner;layer=34;panel=PanelContainer.new();panel.size=Vector2(980,570);panel.visible=false;add_child(panel)
  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#15363a");skin.border_color=Color("#d4b879");skin.set_border_width_all(2);skin.set_content_margin_all(20);skin.set_corner_radius_all(12);panel.add_theme_stylebox_override("panel",skin)
@@ -90,7 +90,7 @@ func _unhandled_input(event:InputEvent)->void:
 func draw_post(c:Node2D,camera:Vector2,font:Font)->void:
  if not Rect2(camera,c.VIEW).intersects(Rect2(350,1220,420,390)):return
  var origin:Vector2=Vector2(550,1490)-camera;var t=Time.get_ticks_msec()/1000.0
- preload("res://scripts/town_sprite_cache.gd").draw(c,"post",Rect2(Vector2(350,1220)-camera,Vector2(420,390)))
+ preload("res://scripts/town_sprite_cache.gd").draw(c,"post242",Rect2(Vector2(350,1220)-camera,Vector2(420,390)))
  for n in 2:
   var phase:=fposmod(t*.12+n*.5,1);var p:=origin+Vector2(-70+140*phase,52+sin(phase*PI)*10)
   preload("res://scripts/town_cast230.gd").draw(c,"postal_worker",p+Vector2(0,6),t+n*.2,true)
@@ -102,8 +102,7 @@ func draw_post_structure(c:Node2D,camera:Vector2,font:Font)->void:
  for row in 3:
   for col in 10:
    c.draw_rect(Rect2(origin+Vector2(-133+col*28+(10 if row%2 else 0),row*20),Vector2(25,17)),Color("#b5a786") if (row+col)%3 else Color("#a19578"))
- c.draw_texture_rect(post_art,Rect2(origin+Vector2(-180,-242),Vector2(360,285)),false)
- c.draw_string(font,origin+Vector2(-75,-119),"SQUIRREL POST",HORIZONTAL_ALIGNMENT_CENTER,150,13,Color("#f1d497"))
+ preload("res://scripts/town_shops242.gd").draw(c,"post",camera)
  # Two dispatch rails and a small parcel cart, clear of the entrance.
  for side in [-1,1]:
   var rail:=origin+Vector2(side*142,64)
@@ -118,8 +117,8 @@ func draw_garden(c:Node2D,camera:Vector2)->void:
  var gardening=game.legacy.gardening;var beds=gardening.state().beds
  for i in mini(2,gardening.capacity()):
   var at=Vector2(1040+(i%2)*100,1620+int(i/2)*74)-camera
-  c.draw_style_box(preload("res://scripts/studio_ui.gd").box("#5a4938","#c3aa78",5,2),Rect2(at-Vector2(38,13),Vector2(76,31)))
+  preload("res://scripts/town_nature243.gd").draw(c,"garden_bed",Rect2(at-Vector2(38,13),Vector2(76,31)))
   if beds[i].is_empty():continue
-  var b=beds[i];var stage=2 if gardening.now()>=float(b.end) else 1
+  var b=beds[i];var stage=preload("res://scripts/town_art246.gd").crop_stage(b,gardening.now())
   var art=preload("res://scripts/source_art.gd").texture("res://assets/seedhouse/"+str(b.seed)+"_"+str(stage)+".svg")
-  if art!=null:c.draw_texture_rect(art,Rect2(at-Vector2(56,99),Vector2(112,105)),false)
+  if art!=null:c.draw_texture_rect(art,Rect2(at-Vector2(56,99),Vector2(112,105)),false,preload("res://scripts/town_art246.gd").crop_tint(b,gardening.now()))

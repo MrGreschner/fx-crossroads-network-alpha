@@ -20,7 +20,7 @@ static func build(v:Node,col:Node)->void:
  for catch in list:
   var id=str(catch.id);var spec:Dictionary=C.fish()[catch.species]
   var card=UI.card(col,str(spec.name)+" • "+str(spec.rarity),"%.2f kg • %s • %d Glimmers" % [float(catch.kg),"TROPHY" if C.is_trophy(catch) else "Normal size",v.game.legacy.glimmers.fish_price(catch)])
-  f.picture(card,str(catch.species),Vector2(100,64))
+  f.picture(card,str(catch.species),Vector2(100,64),catch)
   var tanks=[]
   for n in 5:
    if r.state().display[n]==id:tanks.append(str(n+1))

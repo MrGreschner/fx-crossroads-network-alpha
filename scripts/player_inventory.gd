@@ -11,11 +11,18 @@ static func build(l:Node,body:Node)->void:
  var wallet=UI.card(body,"INVENTORY","Glimmers %d   •   Waylight Shards %d   •   Waydust %d" % [l.glimmers.balance(),s.shards,s.dust])
  label(wallet,"Prepare food, choose three CC items and equip two relics before your next adventure.")
  var food=UI.card(body,"FOOD • "+g.provisions.name_of(g.provisions.packed),g.provisions.summary(g.provisions.packed))
+ if not g.provisions.packed.is_empty():preload("res://scripts/item_art245.gd").card_art(food,str(g.provisions.packed),64)
  l.button(food,"Visit Food Stand",func():l.close();g.menu="food";g.list_preview[g.menu]=0)
  var items=UI.card(body,"ADVENTURE ITEMS • THREE SLOTS","Purchased with CC. Three equipment slots plus a separate consumable slot. Use key 4 or click the consumable to use it during a run.")
  for n in 3:
-  var spec=g.items.get(g.loadout[n],{}) if n<g.loadout.size() else {}
+  var packed_index=preload("res://scripts/supply_slots.gd").index(g.loadout,n,g.items)
+  var spec=g.items.get(str(g.loadout[packed_index]),{}) if packed_index>=0 else {}
   var row=UI.card(items,"SLOT %d • %s" % [n+1,str(spec.get("name","Empty"))],str(spec.get("description","Choose an item at the Supply Vendor.")))
+  if not spec.is_empty():preload("res://scripts/item_art245.gd").card_art(row,str(spec.id),64)
+ var bottle_index=preload("res://scripts/supply_slots.gd").index(g.loadout,3,g.items)
+ if bottle_index>=0:
+  var id=str(g.loadout[bottle_index]);var bottle=UI.card(items,"CONSUMABLE • "+str(g.items[id].name),str(g.items[id].description))
+  preload("res://scripts/item_art245.gd").card_art(bottle,id,64)
  l.button(items,"Visit Supply Vendor",func():l.close();g.menu="supplies";g.list_preview[g.menu]=0)
  var relics=UI.card(body,"RELICS • TWO SLOTS","Subtle permanent bonuses for solo adventures. Competition rules, training and current multiplayer disable relic effects.")
  if not s.attuned:
@@ -28,6 +35,7 @@ static func build(l:Node,body:Node)->void:
  for n in 2:
   var item=p.item(str(s.equipped[n]));var box=UI.card(relics,"RELIC SLOT %d • %s" % [n+1,"Empty" if item.is_empty() else C.display_name(item)])
   if not item.is_empty():
+   preload("res://scripts/item_art245.gd").card_art(box,"relic_"+str(item.type),88)
    label(box,str(C.RELICS[item.type].effect))
    l.button(box,"Unequip",func():s.equipped[n]="";p.save();l.render())
  if p.fisher_ready():l.button(relics,"Claim Riverkeeper's Covenant • master fisher",func():l.notice.text=p.fisher_claim();l.render())
@@ -36,7 +44,7 @@ static func build(l:Node,body:Node)->void:
  if s.relics.is_empty():label(relics,"No relics yet. The daily overcharge offers a chance after a successful clear; ten eligible clears without a drop guarantee one.")
  for v in s.relics:
   var box=UI.card(relics,"%s • Rank %d" % [C.display_name(v),int(v.rank)],str(C.RELICS[v.type].effect))
-  var icon=preload("res://scripts/waylight_ui.gd").RelicIcon.new();icon.type=str(v.type);icon.custom_minimum_size=Vector2(66,66);box.add_child(icon)
+  preload("res://scripts/item_art245.gd").card_art(box,"relic_"+str(v.type),110)
   label(box,"Effect strength %.2f • %s +%.2f%% • Found in %s" % [C.effective(v),C.STATS[v.stat],C.stat_bonus(v)*100,C.NAMES.get(v.source,v.source)])
   var row=HFlowContainer.new();box.add_child(row)
   for n in 2:l.button(row,"Equip slot %d" % [n+1],func():p.equip(str(v.id),n);l.render())

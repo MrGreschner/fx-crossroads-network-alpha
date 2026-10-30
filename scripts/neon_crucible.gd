@@ -149,6 +149,7 @@ func nearest_player(point:Vector2)->String:
   if d<distance:distance=d;chosen=str(id)
  return chosen
 func skill(enemy:Dictionary,target:Vector2)->void:
+ preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy,.65)
  var kind:=str(enemy.type);var origin:Vector2=enemy.pos;var aim:Vector2=(target-origin).normalized();var turn:=int(enemy.tech_turn);enemy.tech_turn=turn+1
  match kind:
   "hatch_sentinel":
@@ -268,7 +269,7 @@ func step(delta:float)->void:
      if str(ally.type) in TYPES and int(ally.uid)!=int(enemy.uid) and float(ally.hp)>0 and (ally.pos as Vector2).distance_to(enemy.pos)<190 and adventure.combat.path_clear(enemy.pos,ally.pos):ally.hp=minf(float(ally.max_hp),float(ally.hp)+6)
   if distance<65 and kind in ["magnet_hauler","fork_runner","continuum_forge"]:
    enemy.tech_melee=float(enemy.get("tech_melee",0))-delta
-   if float(enemy.tech_melee)<=0:enemy.tech_melee=1.1;damage_player(id,20 if enemy.boss else 15,"melee",enemy.pos,adventure.combat.npc_key(enemy))
+   if float(enemy.tech_melee)<=0:enemy.tech_melee=1.1;preload("res://scripts/enemy_visual227.gd").mark(adventure,enemy,.32);damage_player(id,20 if enemy.boss else 15,"melee",enemy.pos,adventure.combat.npc_key(enemy))
   if float(enemy.tech_timer)<=0 and not busy and adventure.combat.path_clear(enemy.pos,target):
    enemy.tech_timer=2.5 if enemy.boss else 3.8 if kind=="relay_weaver" else 3.1
    skill(enemy,target)
@@ -349,7 +350,7 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_rect(Rect2(point-Vector2(36,40),Vector2(72,65)),Color("#3c6265"));canvas.draw_circle(point-Vector2(0,12),20,Color("#8be7b1"));canvas.draw_line(point-Vector2(0,24),point,Color("#ecffdf"),5);canvas.draw_line(point-Vector2(12,12),point+Vector2(12,-12),Color("#ecffdf"),5)
   canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-64,44),"MAINTENANCE • E",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#b0e2b8"))
  if done:
-  var point:=v(data.exit)-camera;canvas.draw_circle(point,72,Color(.5,.95,.85,.12));canvas.draw_arc(point,60,clock,clock+TAU*.85,40,Color("#a2ead7"),5,true);canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-70,-82),"EXIT • E / INTERACT",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#d2f8e5"))
+  var point:=v(data.exit)-camera;preload("res://scripts/realm_portals258.gd").draw_at(canvas,adventure.game,v(data.exit),camera);canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-70,-98),"EXIT • E / INTERACT",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#d2f8e5"))
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  if not active:return
  for key in towers:
@@ -362,7 +363,9 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   if rise<1:
    for n in 4:
     var p:=point+Vector2.from_angle(TAU*n/4+PI*.25)*24;canvas.draw_line(point,p,Color("#576f76"),5,true)
-   if rise>=0:canvas.draw_rect(Rect2(point-Vector2(18,12+rise*32),Vector2(36,12+rise*32)),Color("#76959b"));canvas.draw_circle(point-Vector2(0,10+maxf(0,rise)*32),5,Color("#f3b776"))
+   if rise>=0:
+    var size=body_size("hatch_sentinel");var art=preload("res://scripts/actor_art248.gd");var full=art.fitted("hatch_sentinel",Rect2(point-size*Vector2(.5,.7),size));var amount=clampf(rise,0,1)
+    if amount>0:canvas.draw_texture_rect_region(art.texture("hatch_sentinel"),Rect2(full.position+Vector2(0,full.size.y*(1-amount)),Vector2(full.size.x,full.size.y*amount)),Rect2(0,80*(1-amount),80,80*amount))
  for entry in hazards:
   var point:=v(entry.pos)-camera;var end:=v(entry.end)-camera;var warn:=float(entry.warn)>0;var style:=str(entry.style);var tint:=Color("#edb76b") if warn else Color("#9de4ee");tint.a=.45 if warn else .8
   if warn:

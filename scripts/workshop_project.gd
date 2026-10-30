@@ -20,7 +20,7 @@ const LIMITS={"damage":[0.0,60.0,1.0],"heal":[0.0,30.0,1.0],"cooldown":[0.3,20.0
 static func attack(style:String="melee")->Dictionary:
  return {"name":"New ability","style":style,"damage":18.0,"heal":8.0,"cooldown":1.0,"range":180.0,"radius":70.0,"speed":350.0,"count":3,"duration":3.0,"charge":0.0,"status":"none","status_duration":1.5,"status_damage":1.0,"color":"#7bd8de"}
 static func fresh()->Dictionary:
- var h={"name":"My Crossroads Hero","role":"Melee","species":"Your choice","lore":"","max_health":120.0,"speed":230.0,"passive":"none","art":{},"passive_aura":false,"passive_radius":100.0}
+ var h={"name":"My Crossroads Hero","role":"Melee","species":"Your choice","lore":"","max_health":120.0,"speed":230.0,"passive":"none","art":preload("res://scripts/studio_art249.gd").encoded("stone_apprentice"),"passive_aura":false,"passive_radius":100.0}
  h.primary=attack();h.primary.name="First strike"
  h.secondary=attack("projectile");h.secondary.name="Second idea";h.secondary.cooldown=3.0
  h.special=attack("spin");h.special.name="Signature move";h.special.cooldown=10.0;h.special.damage=40.0

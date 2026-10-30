@@ -87,6 +87,7 @@ func setup(owner:Node,multi:bool=false)->void:
  preload("res://scripts/record_eligibility.gd").archive_custom_damage(data)
  glimmers.legacy=self;glimmers.state()
  weekly.legacy=self;fishing_records.legacy=self;fishing_records.state();lodge_economy.setup(self);daily.setup(self);cosmetics.setup(self);crowns.setup(self);mine.setup(self);commerce.setup(self);gardening.setup(self);community.setup(self)
+ preload("res://scripts/named_records.gd").state(self)
  layer=35
  root=Panel.new();root.clip_contents=true;root.position=Vector2(110,45);root.size=Vector2(1060,640);root.visible=false;add_child(root)
  var style:=StyleBoxFlat.new();style.bg_color=Color("#142b32");style.border_color=Color("#c7ad78");style.set_border_width_all(2);style.set_corner_radius_all(8);root.add_theme_stylebox_override("panel",style)
@@ -932,19 +933,16 @@ func card_building_rect(id:String)->Rect2:
 func draw_card_projects(canvas:Node,camera:Vector2,font:Font)->void:
  game.town_v109.draw_projects(canvas,camera,data)
  if bool(data.town.get("observatory",false)):
-  var p:=Vector2(1720,310)-camera;canvas.draw_line(p,p+Vector2(32,-27),Color("#c5b782"),14);canvas.draw_circle(p+Vector2(33,-28),10,Color("#8bcece"));canvas.draw_line(p,p+Vector2(-17,25),Color("#ae9367"),4);canvas.draw_line(p,p+Vector2(17,25),Color("#ae9367"),4)
+  var p:=Vector2(1720,310)-camera;preload("res://scripts/town_streets244.gd").draw(canvas,"telescope",Rect2(p+Vector2(-27,-40),Vector2(74,68)))
   canvas.draw_string(font,p+Vector2(-74,65),"EXPEDITION OBSERVATORY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#f0dbab"))
  if bool(data.town.get("bastion",false)):
   # Match the existing north fence points. The gate opening stays walkable.
   for piece in game.town_art:
    if str(piece.sprite)!="town_fence":continue
    var p:Vector2=piece.pos-camera;var w:=float(piece.size.x)
-   canvas.draw_rect(Rect2(p+Vector2(-w*.5,-26),Vector2(w,45)),Color("#687e85"))
-   for row in 3:
-    for n in maxi(1,int(w/28)):canvas.draw_rect(Rect2(p+Vector2(-w*.5+n*28+(14 if row%2 else 0),-24+row*14),Vector2(25,11)),Color("#a7b3ac"))
-   for n in maxi(1,int(w/40)):canvas.draw_rect(Rect2(p+Vector2(-w*.5+n*40,-36),Vector2(20,15)),Color("#99aaa5"))
+   preload("res://scripts/town_streets244.gd").draw(canvas,"bastion",Rect2(p+Vector2(-w*.5,-37),Vector2(w,62)))
   for x in [760,1040]:
-   var p:=Vector2(x,240)-camera;canvas.draw_rect(Rect2(p-Vector2(21,83),Vector2(42,103)),Color("#879b9d"));canvas.draw_rect(Rect2(p-Vector2(26,91),Vector2(52,16)),Color("#bac3b3"));canvas.draw_line(p-Vector2(18,56),p+Vector2(18,15),Color("#465768"),6)
+   var p:=Vector2(x,240)-camera;preload("res://scripts/town_streets244.gd").draw(canvas,"bastion_tower",Rect2(p-Vector2(27,92),Vector2(54,114)))
   canvas.draw_string(font,Vector2(795,337)-camera,"VETERAN GATE • WAVE 30",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#f0dbab"))
 func draw_town(canvas:Node,camera:Vector2)->void:
  if arcade or game.mode!="town":return
@@ -954,15 +952,14 @@ func draw_town(canvas:Node,camera:Vector2)->void:
  if flash>0:canvas.draw_rect(Rect2(Vector2.ZERO,canvas.VIEW),Color(1,1,.85,minf(.85,flash)))
  for n in 3:
   var p:Vector2=WATER_BEDS[n]-camera
-  canvas.draw_rect(Rect2(p-Vector2(25,15),Vector2(50,30)),Color("#604b32"))
-  for k in 4:canvas.draw_circle(p+Vector2(k*10-15,0),5,Color("#75bb89") if str(n) in data.watered else Color("#a8aa6b"))
+  preload("res://scripts/town_nature243.gd").draw(canvas,"garden_bed",Rect2(p-Vector2(25,15),Vector2(50,30)))
+  for k in 4:preload("res://scripts/town_nature243.gd").draw(canvas,"garden_sprout",Rect2(p+Vector2(k*10-22,-15),Vector2(14,17)),Color.WHITE if str(n) in data.watered else Color(.80,.83,.65))
  if bool(data.town.get("flowers",false)):
-  var bench:Vector2=Vector2(1300,960)-camera;canvas.draw_rect(Rect2(bench,Vector2(100,14)),Color("#ad8050"));canvas.draw_rect(Rect2(bench+Vector2(0,-17),Vector2(100,10)),Color("#c59a65"))
-  for side in [10,80]:canvas.draw_line(bench+Vector2(side,12),bench+Vector2(side,30),Color("#4f443b"),5)
+  var bench:Vector2=Vector2(1300,960)-camera;preload("res://scripts/town_streets244.gd").draw(canvas,"bench",Rect2(bench+Vector2(0,-17),Vector2(100,49)))
   for n in 4:
    var butterfly:Vector2=Vector2(1360+n*30+sin(Time.get_ticks_msec()*.002+n)*25,1130+cos(Time.get_ticks_msec()*.003+n)*18)-camera
    canvas.draw_circle(butterfly+Vector2(-4,0),4,Color("#eec4e9"));canvas.draw_circle(butterfly+Vector2(4,0),4,Color("#d3c2ed"))
-  for n in 12:canvas.draw_circle(Vector2(1300+n%2*12,1000+n/2*24)-camera,5,Color("#f1c6df"))
+  for n in 12:preload("res://scripts/town_nature243.gd").draw(canvas,"shrub",Rect2(Vector2(1300+n%2*12,1000+n/2*24)-camera-Vector2(6,6),Vector2(12,12)))
  if bool(data.town.get("mill",false)):game.town_v109.draw_mill(canvas,camera)
  if bool(data.town.get("bakery",false)):
   preload("res://scripts/town_v176.gd").draw_bakery(canvas,camera)
@@ -972,8 +969,7 @@ func draw_town(canvas:Node,camera:Vector2)->void:
   canvas.draw_string(font,p+Vector2(-64,3),str(data.title),HORIZONTAL_ALIGNMENT_CENTER,128,12,Color("#eddaa3"))
  if bool(data.town.get("market",false)):canvas.draw_string(font,Vector2(1160,710)-camera,"COVERED MARKET • 1 CC SAVINGS",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#ffe6a1"))
  if bool(data.town.get("library",false)):
-  var p:=Vector2(1020,1700)-camera;canvas.draw_rect(Rect2(p,Vector2(100,40)),Color("#8d6854"));canvas.draw_string(font,p+Vector2(5,25),"READING ROOM",HORIZONTAL_ALIGNMENT_LEFT,-1,12)
-  for n in 8:canvas.draw_rect(Rect2(p+Vector2(n*12,-18),Vector2(9,18)),Color("#d8b382") if n%2==0 else Color("#8fc0b8"))
+  preload("res://scripts/town_shops242.gd").draw(canvas,"reading",camera)
  if bool(data.town.get("clinic",false)):canvas.draw_string(font,Vector2(1840,850)-camera,"SUPPLY WING • TEA AVAILABLE",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#aee3d4"))
 
 func tuning_text(axis:int,value:int)->String:

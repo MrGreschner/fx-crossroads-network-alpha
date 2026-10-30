@@ -1,0 +1,515 @@
+{
+  "hatch_sentinel": {
+    "index": 0,
+    "group": "neon_workers",
+    "old_factor": 1,
+    "old_normalized": [
+      0.125,
+      0.140625,
+      0.875,
+      0.953125
+    ],
+    "visible_height": 58,
+    "idle_bounds": [
+      14,
+      16,
+      66,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "source": "neon_workers",
+    "menu_visible": [
+      0.65,
+      0.725
+    ]
+  },
+  "sweep_drone": {
+    "index": 1,
+    "group": "neon_workers",
+    "old_factor": 1,
+    "old_normalized": [
+      0.03125,
+      0.1875,
+      0.984375,
+      0.8125
+    ],
+    "visible_height": 45,
+    "idle_bounds": [
+      5,
+      29,
+      75,
+      74
+    ],
+    "walk_x_offsets": [
+      -1,
+      0
+    ],
+    "source": "neon_workers",
+    "menu_visible": [
+      0.875,
+      0.5625
+    ]
+  },
+  "magnet_hauler": {
+    "index": 2,
+    "group": "neon_workers",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0,
+      0.140625,
+      1.0,
+      0.953125
+    ],
+    "visible_height": 48,
+    "idle_bounds": [
+      5,
+      26,
+      75,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      1
+    ],
+    "source": "neon_workers",
+    "menu_visible": [
+      0.875,
+      0.6
+    ]
+  },
+  "repair_wisp": {
+    "index": 3,
+    "group": "neon_specialists",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.1875,
+      0.9375,
+      0.921875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      6,
+      14,
+      74,
+      74
+    ],
+    "walk_x_offsets": [
+      -2,
+      0
+    ],
+    "source": "neon_specialists",
+    "menu_visible": [
+      0.85,
+      0.75
+    ]
+  },
+  "fork_runner": {
+    "index": 4,
+    "group": "neon_specialists",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.15625,
+      0.96875,
+      0.890625
+    ],
+    "visible_height": 46,
+    "idle_bounds": [
+      7,
+      28,
+      73,
+      74
+    ],
+    "walk_x_offsets": [
+      2,
+      -1
+    ],
+    "source": "fork_corrected",
+    "menu_visible": [
+      0.825,
+      0.575
+    ]
+  },
+  "relay_weaver": {
+    "index": 5,
+    "group": "neon_specialists",
+    "old_factor": 1,
+    "old_normalized": [
+      0.078125,
+      0.0625,
+      0.84375,
+      0.9375
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      12,
+      14,
+      68,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "source": "neon_specialists",
+    "menu_visible": [
+      0.7,
+      0.75
+    ]
+  },
+  "continuum_forge": {
+    "index": 6,
+    "group": "continuum_industry",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0,
+      0.015625,
+      0.921875,
+      0.96875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      10,
+      14,
+      71,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "source": "continuum_industry",
+    "menu_visible": [
+      0.7625,
+      0.75
+    ]
+  },
+  "continuum_archive": {
+    "index": 7,
+    "group": "continuum_industry",
+    "old_factor": 1,
+    "old_normalized": [
+      0.078125,
+      0.140625,
+      0.953125,
+      0.875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      11,
+      14,
+      69,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "source": "continuum_industry",
+    "menu_visible": [
+      0.725,
+      0.75
+    ]
+  },
+  "continuum_reactor": {
+    "index": 8,
+    "group": "continuum_power",
+    "old_factor": 1,
+    "old_normalized": [
+      0.0625,
+      0.09375,
+      0.953125,
+      0.921875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      13,
+      14,
+      68,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      1
+    ],
+    "source": "continuum_power",
+    "menu_visible": [
+      0.6875,
+      0.75
+    ]
+  },
+  "continuum_crown": {
+    "index": 9,
+    "group": "continuum_power",
+    "old_factor": 1,
+    "old_normalized": [
+      0.03125,
+      0.0,
+      0.96875,
+      0.953125
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      13,
+      14,
+      68,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ],
+    "source": "continuum_power",
+    "menu_visible": [
+      0.6875,
+      0.75
+    ]
+  },
+  "chalkling": {
+    "index": 10,
+    "group": "chalkling",
+    "old_factor": 1,
+    "old_normalized": [
+      0.3229166666666667,
+      0.2916666666666667,
+      0.7083333333333334,
+      0.875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      17,
+      14,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      -1,
+      1
+    ],
+    "source": "chalkling",
+    "menu_visible": [
+      0.5875,
+      0.75
+    ]
+  },
+  "mosaicling": {
+    "index": 11,
+    "group": "summons_crafted",
+    "old_factor": 1,
+    "old_normalized": [
+      0.28125,
+      0.1875,
+      0.75,
+      0.84375
+    ],
+    "visible_height": 50,
+    "idle_bounds": [
+      19,
+      24,
+      61,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "source": "summons_crafted",
+    "menu_visible": [
+      0.525,
+      0.625
+    ]
+  },
+  "hive_drone": {
+    "index": 12,
+    "group": "summons_crafted",
+    "old_factor": 1,
+    "old_normalized": [
+      0.140625,
+      0.3125,
+      0.921875,
+      0.796875
+    ],
+    "visible_height": 48,
+    "idle_bounds": [
+      9,
+      26,
+      72,
+      74
+    ],
+    "walk_x_offsets": [
+      2,
+      2
+    ],
+    "source": "summons_crafted",
+    "menu_visible": [
+      0.7875,
+      0.6
+    ]
+  },
+  "stagelet": {
+    "index": 13,
+    "group": "summons_crafted",
+    "old_factor": 1,
+    "old_normalized": [
+      0.28125,
+      0.296875,
+      0.765625,
+      0.9375
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      17,
+      14,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      0
+    ],
+    "source": "summons_crafted",
+    "menu_visible": [
+      0.5875,
+      0.75
+    ]
+  },
+  "deputyling": {
+    "index": 14,
+    "group": "summons_crafted",
+    "old_factor": 1,
+    "old_normalized": [
+      0.21875,
+      0.234375,
+      0.84375,
+      0.9375
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      13,
+      14,
+      67,
+      74
+    ],
+    "walk_x_offsets": [
+      -2,
+      -1
+    ],
+    "source": "summons_crafted",
+    "menu_visible": [
+      0.675,
+      0.75
+    ]
+  },
+  "quillling": {
+    "index": 15,
+    "group": "summons_spirit",
+    "old_factor": 1,
+    "old_normalized": [
+      0.15625,
+      0.234375,
+      0.875,
+      0.84375
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      7,
+      14,
+      73,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      -1
+    ],
+    "source": "summons_spirit",
+    "menu_visible": [
+      0.825,
+      0.75
+    ]
+  },
+  "lanternling": {
+    "index": 16,
+    "group": "summons_spirit",
+    "old_factor": 1,
+    "old_normalized": [
+      0.15625,
+      0.109375,
+      0.828125,
+      0.796875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      11,
+      14,
+      70,
+      74
+    ],
+    "walk_x_offsets": [
+      2,
+      -1
+    ],
+    "source": "summons_spirit",
+    "menu_visible": [
+      0.7375,
+      0.75
+    ]
+  },
+  "gravehorse": {
+    "index": 17,
+    "group": "summons_spirit",
+    "old_factor": 1,
+    "old_normalized": [
+      0.03125,
+      0.046875,
+      0.9375,
+      0.921875
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      12,
+      14,
+      69,
+      74
+    ],
+    "walk_x_offsets": [
+      -1,
+      -2
+    ],
+    "source": "summons_spirit",
+    "menu_visible": [
+      0.7125,
+      0.75
+    ]
+  },
+  "morrow_healer": {
+    "index": 18,
+    "group": "summons_spirit",
+    "old_factor": 1,
+    "old_normalized": [
+      0.21875,
+      0.09375,
+      0.8229166666666666,
+      0.9166666666666666
+    ],
+    "visible_height": 60,
+    "idle_bounds": [
+      15,
+      14,
+      65,
+      74
+    ],
+    "walk_x_offsets": [
+      -2,
+      -1
+    ],
+    "source": "summons_spirit",
+    "menu_visible": [
+      0.625,
+      0.75
+    ]
+  }
+}

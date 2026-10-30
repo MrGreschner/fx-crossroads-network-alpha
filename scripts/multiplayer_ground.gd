@@ -48,6 +48,8 @@ func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
  chunks.clear()
 func sync()->void:
+ if game.mode=="coop" and game.realm_id=="sunfield":hide();return
+ if game.mode=="descent":hide();return
  if game.mode=="coop" and game.realm_id in ["moonveil","silverfall"]:hide();return
  visible=game.started and not game.spectating() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
  if not visible:return
@@ -62,9 +64,15 @@ func sync()->void:
     for tx in range(x*8,x*8+8):
      for ty in range(y*8,y*8+8):
       var tile:String=game.cached_world_tile(tx,ty,64);var local:=Vector2(tx*64,ty*64)-chunk.position
-      if game.art.get(tile)!=null:
-       chunk.tiles.append([game.art[tile],Rect2(local,Vector2(64,64))]);chunk.cells[Vector2i(tx-x*8,ty-y*8)]=game.art[tile]
-      if tile in ["grass","forest"] and (tx*37+ty*71)%23==3 and game.art.get("flower")!=null:
+      var painted:Texture2D=preload("res://scripts/grove_art253.gd").texture(tile) if game.mode=="coop" and game.realm_id=="grove" and tile in ["forest","path"] else game.art.get(tile)
+      if game.mode=="coop" and game.realm_id=="quarry" and tile in ["ash","path"]:
+       var a=preload("res://scripts/quarry_art254.gd");painted=a.texture("ash")
+       if tile=="path":chunk.flowers.append([a.texture("edge"+str(preload("res://scripts/grove_art253.gd").path_mask(game,tx,ty,true))),Rect2(local,Vector2(64,64))])
+      if game.mode=="coop" and game.realm_id=="grove" and tile=="path":
+       var a=preload("res://scripts/grove_art253.gd");painted=a.texture("forest");chunk.flowers.append([a.texture("edge"+str(a.path_mask(game,tx,ty,true))),Rect2(local,Vector2(64,64))])
+      if painted!=null:
+       chunk.tiles.append([painted,Rect2(local,Vector2(64,64))]);chunk.cells[Vector2i(tx-x*8,ty-y*8)]=painted
+      if not (game.mode=="coop" and game.realm_id=="grove") and tile in ["grass","forest"] and (tx*37+ty*71)%23==3 and game.art.get("flower")!=null:
        var flower=[game.art.flower,Rect2(local+Vector2(16,12),Vector2(32,32))]
        chunk.tiles.append(flower);chunk.flowers.append(flower)
     chunk.compile()

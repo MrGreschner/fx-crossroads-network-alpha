@@ -1,0 +1,30 @@
+{
+  "ash": {
+    "source_sha256": "acff5a71824cb62e4c1a7f8c1a51d5130ade4558dd641936116bf2f13223dd06"
+  },
+  "boss": {
+    "source_sha256": "902daae514c491bb93107486274355b748a98df8575ec133c77387e8469a609f"
+  },
+  "boss_original_bounds": [
+    0.2,
+    0.3875,
+    0.8625,
+    0.9375
+  ],
+  "boss_visible_height": 56,
+  "path": {
+    "source_sha256": "9b676039d341f0544c0c910b37cfce97df3fcc36588bd4b80bab0beda113e8ad"
+  },
+  "ore": {
+    "source_sha256": "3fd3cfaa4d7164e9108fabfc8a04afbb60b76f3386fc70b0341dd8c1b989923f"
+  },
+  "rock": {
+    "source_sha256": "2fe84f6347f4e493d420215e66572f828c1f420bae42854af8d79f0d9a227a8e"
+  },
+  "tree": {
+    "source_sha256": "2d78ce25e9c03615f1433044290815df0f340c79a726d149b55d6180a749163b"
+  },
+  "cart": {
+    "source_sha256": "bf907a5327908092a517ee57ef0fdbc483abc8fb63e31e10730fe87b3a15d9ae"
+  }
+}

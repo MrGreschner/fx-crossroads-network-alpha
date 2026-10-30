@@ -31,7 +31,7 @@ static func build(g:RefCounted,parent:Node)->void:
   if not state.beds[i].is_empty():shown=maxi(shown,i+1)
  for i in shown:
   var b:Dictionary=state.beds[i];var card=UI.card(grid,"BED "+str(i+1),"");card.get_parent().custom_minimum_size.x=minf(425,maxf(250,g.legacy.get_viewport().get_visible_rect().size.x-110));card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  if not b.is_empty():icon(card,str(b.seed),2 if g.now()>=float(b.end) else 1)
+  if not b.is_empty():icon(card,str(b.seed),preload("res://scripts/town_art246.gd").crop_stage(b,g.now()))
   var status=label(card,g.bed_text(i));g.labels.append({"label":status,"index":i})
   if b.is_empty():
    if i>=g.capacity():label(card,"Unlock more beds through Gardening levels and mastery.",16);continue

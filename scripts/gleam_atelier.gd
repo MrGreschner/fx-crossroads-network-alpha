@@ -28,20 +28,21 @@ class Preview extends Control:
   var p=Vector2(size.x*.5,218);draw_circle(p-Vector2(0,65),100,Color("#1e414c"));draw_arc(p-Vector2(0,65),98,0,TAU,72,Color("#597a7e"),1.5,true)
   var sprite=str(g.characters.get(hero,{}).get("sprite",hero));var tex:Texture2D=g.art.get(sprite+"_idle",g.art.get(sprite+"_0",g.art.get(sprite+"_walk1")))
   draw_set_transform(Vector2(p.x,p.y),0,Vector2.ONE*1.65)
-  if page.lobby_preview:A.draw_lobby(self,Vector2.ZERO,page.clock,m.rankings.lobby_payload())
-  if tex!=null:draw_texture_rect(tex,Rect2(-Vector2(27,65),Vector2(54,65)),false)
+  var hero_rect=preload("res://scripts/core_hero_art.gd").body_rect(sprite,Rect2(-Vector2(27,65),Vector2(54,65)),page.clock)
+  var cosmetic_body=preload("res://scripts/hero_layout250.gd").body(tex,hero_rect)
+  if page.lobby_preview:A.draw_lobby(self,Vector2.ZERO,page.clock,m.rankings.lobby_payload(),cosmetic_body)
+  if tex!=null:draw_texture_rect(tex,hero_rect,false)
   var id=str(page.selected)
   if id=="crown" or page.lobby_preview or not bool(m.state().get("hide_town_crown",false)):
    var crown_rank=preload("res://scripts/rolling_crowns.gd").tier_from(page.legacy.crowns.total())
-   if page.lobby_preview:preload("res://scripts/rolling_crowns.gd").draw_on(self,Vector2(0,-45),page.clock,crown_rank)
-   else:preload("res://scripts/rolling_crowns.gd").draw_town(self,Vector2(0,-62),page.clock,crown_rank)
+   preload("res://scripts/rolling_crowns.gd").draw_town(self,preload("res://scripts/hero_layout250.gd").crown(cosmetic_body),page.clock,crown_rank)
   if id=="crown":pass
   elif id in R.IDS:
-   if page.lobby_preview and id not in A.active(m.rankings.lobby_payload()):A.draw_single(self,Vector2.ZERO,page.clock,id)
+   if page.lobby_preview and id not in A.active(m.rankings.lobby_payload()):A.draw_single(self,Vector2.ZERO,page.clock,id,3,cosmetic_body)
   elif id=="daily" or id=="auto":
-   if page.legacy.daily.earned():preload("res://scripts/daily_challenge.gd").draw_on(self,Vector2.ZERO,page.clock,page.legacy.daily.today)
-   if id=="auto":C.draw_on(self,Vector2.ZERO,page.clock,m.effect(),m.effect_week(m.effect()))
-  else:C.draw_on(self,Vector2.ZERO,page.clock,id,m.effect_week(id))
+   if page.legacy.daily.earned():preload("res://scripts/daily_challenge.gd").draw_on(self,Vector2.ZERO,page.clock,page.legacy.daily.today,cosmetic_body)
+   if id=="auto":C.draw_on(self,Vector2.ZERO,page.clock,m.effect(),m.effect_week(m.effect()),cosmetic_body)
+  else:C.draw_on(self,Vector2.ZERO,page.clock,id,m.effect_week(id),cosmetic_body)
   draw_set_transform(Vector2.ZERO)
 class Swatch extends Control:
  var id=""

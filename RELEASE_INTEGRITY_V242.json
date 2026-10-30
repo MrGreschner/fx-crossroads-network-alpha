@@ -1,0 +1,45 @@
+{
+  "version": "242",
+  "build": "V242-town-shops",
+  "engine": [
+    4,
+    5,
+    1
+  ],
+  "pck_sha256": "dd218a0fddf716b914f63c075d358d0b5bf3bdf56bcaae047a77c7411d41a344",
+  "pck_resources": 11732,
+  "untouched_baseline_pck_resources_preserved": 11709,
+  "edited_resource_parity": "PASS: Editable = Server Update = Web PCK",
+  "browser_fileSizes": "PASS",
+  "source_runtime_checks": 233,
+  "packaged_runtime_checks": 233,
+  "identical_collision_approach_samples": 4752,
+  "native_views": 49,
+  "deployed": false,
+  "archives": [
+    {
+      "name": "Crossroads_v242_Web.zip",
+      "files_including_integrity_record": 172,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v242_Server_Update.zip",
+      "files_including_integrity_record": 12638,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v242_Editable.zip",
+      "files_including_integrity_record": 15237,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "V242_Previews.zip",
+      "native_gameplay_pngs": 49,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    }
+  ]
+}

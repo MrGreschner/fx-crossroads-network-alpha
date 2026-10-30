@@ -1,0 +1,226 @@
+{
+  "stone_apprentice": {
+    "index": 0,
+    "visible_height": 68,
+    "idle_bounds": [
+      16,
+      6,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      -1,
+      0
+    ]
+  },
+  "prism_sprout": {
+    "index": 1,
+    "visible_height": 68,
+    "idle_bounds": [
+      13,
+      6,
+      67,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      0
+    ]
+  },
+  "lantern_friend": {
+    "index": 2,
+    "visible_height": 68,
+    "idle_bounds": [
+      14,
+      6,
+      66,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      -1
+    ]
+  },
+  "hive_keeper": {
+    "index": 3,
+    "visible_height": 68,
+    "idle_bounds": [
+      16,
+      6,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "river_warden": {
+    "index": 4,
+    "visible_height": 56,
+    "idle_bounds": [
+      14,
+      18,
+      66,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      0
+    ]
+  },
+  "bramble_practice": {
+    "index": 5,
+    "visible_height": 60,
+    "idle_bounds": [
+      19,
+      14,
+      62,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "wave_sentry": {
+    "index": 6,
+    "visible_height": 60,
+    "idle_bounds": [
+      16,
+      14,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      1
+    ]
+  },
+  "rush_beetle": {
+    "index": 7,
+    "visible_height": 60,
+    "idle_bounds": [
+      9,
+      14,
+      72,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "mending_sentinel": {
+    "index": 8,
+    "visible_height": 60,
+    "idle_bounds": [
+      16,
+      14,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      -1,
+      0
+    ]
+  },
+  "nest_keeper": {
+    "index": 9,
+    "visible_height": 60,
+    "idle_bounds": [
+      16,
+      14,
+      65,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      1
+    ]
+  },
+  "summon_ram": {
+    "index": 10,
+    "visible_height": 60,
+    "idle_bounds": [
+      16,
+      14,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "summon_rabbit": {
+    "index": 11,
+    "visible_height": 60,
+    "idle_bounds": [
+      23,
+      14,
+      58,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      -1
+    ]
+  },
+  "summon_cat": {
+    "index": 12,
+    "visible_height": 60,
+    "idle_bounds": [
+      14,
+      14,
+      66,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "summon_bee": {
+    "index": 13,
+    "visible_height": 60,
+    "idle_bounds": [
+      14,
+      14,
+      66,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "summon_wisp": {
+    "index": 14,
+    "visible_height": 60,
+    "idle_bounds": [
+      16,
+      14,
+      64,
+      74
+    ],
+    "walk_x_offsets": [
+      0,
+      0
+    ]
+  },
+  "summon_golem": {
+    "index": 15,
+    "visible_height": 60,
+    "idle_bounds": [
+      15,
+      14,
+      65,
+      74
+    ],
+    "walk_x_offsets": [
+      1,
+      -1
+    ]
+  }
+}

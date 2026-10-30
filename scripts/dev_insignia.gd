@@ -1,6 +1,6 @@
 extends RefCounted
 ## Arcane architect: layered orbit, hovering crystal, moving sigil; no particle nodes.
-static func draw_on(c:CanvasItem,p:Vector2,t:float,scale_factor:float=1.0)->void:
+static func draw_on(c:CanvasItem,p:Vector2,t:float,scale_factor:float=1.0,body:Rect2=Rect2())->void:
  var s=scale_factor
  var blue=Color("#90f1f2");var gold=Color("#ffe1a0");var violet=Color("#b6a0ff")
  var ground=p+Vector2(0,7)*s
@@ -18,7 +18,7 @@ static func draw_on(c:CanvasItem,p:Vector2,t:float,scale_factor:float=1.0)->void
   var a=t*.55+n*TAU/4;var q=p+Vector2(cos(a)*36,-28+sin(a)*23)*s
   var shard=PackedVector2Array([q-Vector2(0,5)*s,q+Vector2(3,0)*s,q+Vector2(0,5)*s,q-Vector2(3,0)*s])
   c.draw_colored_polygon(shard,Color(violet,.24));c.draw_line(shard[0],shard[2],Color(blue,.55),1*s,true)
- var crown=p+Vector2(0,-61+sin(t*2)*3)*s
+ var crown=(Vector2(body.position.x-24,body.position.y+47) if body.has_area() else p-Vector2(0,61)*s)+Vector2(0,sin(t*2)*3)*s
  c.draw_circle(crown,10*s,Color(violet,.10))
  var diamond=PackedVector2Array([crown+Vector2(0,-8)*s,crown+Vector2(5,0)*s,crown+Vector2(0,7)*s,crown+Vector2(-5,0)*s,crown+Vector2(0,-8)*s])
  c.draw_colored_polygon(PackedVector2Array([diamond[0],diamond[1],diamond[2],diamond[3]]),Color(blue,.3));c.draw_polyline(diamond,Color(gold,.85),1.3*s,true)

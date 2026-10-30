@@ -253,7 +253,7 @@ func land()->void:
  if C.is_trophy(pending):
   label(col,"★ TROPHY FISH! ★",25).modulate=Color("#ffdb7d")
   label(col,"250%+ of species average • +50% catch XP",15).modulate=Color("#ffdb7d")
- label(col,str(spec.name),23).modulate=Color(str(spec.color));picture(col,str(pending.species),Vector2(210,110))
+ label(col,str(spec.name),23).modulate=Color(str(spec.color));picture(col,str(pending.species),Vector2(210,110),pending)
  label(col,"%s • %.2f kg • %.1f cm%s" % [spec.rarity,pending.kg,pending.cm," • TROPHY SIZE" if C.is_trophy(pending) else ""],16).modulate=rarity_colour
  label(col,C.size_summary(pending),16).modulate=Color("#ffe1a7")
  var previous:Dictionary=records().state().journal.get(str(pending.species),{})
@@ -296,8 +296,8 @@ func label(parent:Node,text:String,font_size:int=17)->Label:
  var l=Label.new();l.text=text;l.add_theme_font_size_override("font_size",font_size);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
 func button(parent:Node,text:String,action:Callable)->Button:
  var b=Button.new();b.text=text;b.custom_minimum_size.y=42;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(b);b.pressed.connect(action);return b
-func picture(parent:Node,id:String,dimensions:Vector2)->void:
- var image=TextureRect.new();image.texture=C.texture(id);image.custom_minimum_size=dimensions;image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
+func picture(parent:Node,id:String,dimensions:Vector2,specimen:Dictionary={})->void:
+ var image=TextureRect.new();image.texture=C.catch_texture(specimen) if not specimen.is_empty() else C.texture(id);image.custom_minimum_size=dimensions;image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
 func fit_panel(p:Control,dimensions:Vector2)->void:
  var v=game.get_viewport_rect().size;var scale_factor=minf(1,minf((v.x-24)/dimensions.x,(v.y-24)/dimensions.y));p.size=dimensions;p.scale=Vector2.ONE*scale_factor;p.position=(v-dimensions*scale_factor)*.5
 func open_odds()->void:
@@ -386,12 +386,8 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   if not spot.is_empty() and game.voyage.ashore:active_spots=[spot]
  var bounds=Rect2(camera,game.VIEW).grow(160)
  if region=="town" and bounds.intersects(SHOP_SOLID.grow(80)):
-  canvas.draw_texture_rect(C.texture("shop"),Rect2(SHOP-Vector2(180,288)-camera,Vector2(360,288)),false)
+  preload("res://scripts/town_shops242.gd").draw(canvas,"fishing",camera)
   var p=SHOP-camera
-  # Dedicated fascia sits below the roof, above the door and both windows.
-  var sign=Rect2(p+Vector2(-111,-169),Vector2(222,22))
-  canvas.draw_rect(sign,Color("#264753"));canvas.draw_rect(sign,Color("#c6af7d"),false,1)
-  canvas.draw_string(UI.FONT,p+Vector2(-108,-153),"RIPPLE & REEL",HORIZONTAL_ALIGNMENT_CENTER,216,16,Color("#fae2a8"))
   canvas.draw_rect(Rect2(p-Vector2(55,2),Vector2(110,38)),Color(.6,.9,.87,.17 if local_pos().distance_to(SHOP)<100 else .07))
  for spot in active_spots:
   if not spot_available(spot):continue
@@ -424,7 +420,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
     canvas.draw_line(Vector2(-edge,n*7),Vector2(edge,n*7),Color(.73,.9,.87,.6),1,true)
    canvas.draw_arc(Vector2.ZERO,22,0,TAU,32,records().progress.tint(),3,true);canvas.draw_set_transform(Vector2.ZERO)
   else:
-   canvas.draw_line(hero+Vector2(15,-36),hero+Vector2(38,-60),records().progress.tint(),3);canvas.draw_line(hero+Vector2(38,-60),water,Color(.8,.88,.86,.8),1)
+   preload("res://scripts/item_art245.gd").rod(canvas,hero+Vector2(15,-36),hero+Vector2(38,-60),preload("res://scripts/item_art245.gd").rod_style(records().progress));canvas.draw_line(hero+Vector2(38,-60),water,Color(.8,.88,.86,.8),1)
    canvas.draw_circle(bob,4,records().progress.tint());canvas.draw_line(bob-Vector2(0,7),bob,Color("#e26560"),3)
   if str(records().state().cosmetic) in ["moon","star","aurora","crown"] and records().progress.level()>=15:
    for n in 3:
@@ -440,8 +436,7 @@ func draw_baskets(canvas:Node2D,camera:Vector2)->void:
   if str(C.pools()[pot.pool].region)!=region_key():continue
   var water=C.pools()[pot.pool].water;var p=Vector2(water[0],water[1])-camera+Vector2(26,14)
   if not Rect2(Vector2.ZERO,game.VIEW).grow(40).has_point(p):continue
-  canvas.draw_rect(Rect2(p-Vector2(14,9),Vector2(28,18)),Color("#b59160"));canvas.draw_arc(p-Vector2(0,8),10,PI,TAU,16,Color("#ead2a1"),2,true)
-  for n in 5:canvas.draw_line(p+Vector2(-12+n*6,-8),p+Vector2(-12+n*6,8),Color("#705d47"),1)
+  preload("res://scripts/item_art245.gd").draw(canvas,"pot",Rect2(p-Vector2(20,23),Vector2(40,40)))
   var ready=E.context(game).utc>=float(pot.ready)
   canvas.draw_circle(p+Vector2(0,-17),5 if ready else 3,Color("#a8e0b8") if ready else Color("#ddbd7c"))
   if ready:

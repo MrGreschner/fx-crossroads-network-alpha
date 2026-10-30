@@ -312,7 +312,7 @@ func draw_fog(c:CanvasItem,camera:Vector2,view:Vector2)->void:
 func draw_on(c:CanvasItem,camera:Vector2)->void:
  if not enabled or mode=="dormant":return
  if mode=="gate" or not owns(local_point()):
-  var p=OLD_EXIT-camera;c.draw_circle(p,58,Color(.2,.8,.5,.17));c.draw_arc(p,52,clock,clock+TAU*.95,48,Color("#a8f0bb"),5,true);c.draw_string(ThemeDB.fallback_font,p+Vector2(-100,-72),"EXIT PORTAL • E / Interact",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#c4e6ba"))
+  var p=OLD_EXIT-camera;c.draw_string(ThemeDB.fallback_font,p+Vector2(-100,-98),"EXIT PORTAL • E / Interact",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#c4e6ba"))
  if not in_depth():return
  var t=visual_clock()
  for f in fireballs(t):
@@ -341,7 +341,7 @@ func draw_on(c:CanvasItem,camera:Vector2)->void:
   var next=safe_center(minf(12.9,phase_clock+3.25))-camera;c.draw_arc(next,250,0,TAU,48,Color(.7,.75,.6,.4),2,true)
   var p=safe_center(phase_clock)-camera;c.draw_circle(p,250,Color(.5,.8,.7,.16));c.draw_arc(p,250,0,TAU,60,Color("#d8e5aa"),6,true)
  if mode=="won":
-  var p=EXIT-camera;c.draw_arc(p,60,0,TAU,50,Color("#f5dfa0"),7,true);c.draw_string(ThemeDB.fallback_font,p+Vector2(-115,-85),"THE TRUE EXIT • E / Interact",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ffe6ad"))
+  var p=EXIT-camera;c.draw_string(ThemeDB.fallback_font,p+Vector2(-115,-98),"THE TRUE EXIT • E / Interact",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ffe6ad"))
 func draw_hud(c:CanvasItem)->void:
  if not in_depth():return
  var font=ThemeDB.fallback_font;var text="THE UNWRITTEN DEPTH • follow moving firelight • lava burns / chasms kill"

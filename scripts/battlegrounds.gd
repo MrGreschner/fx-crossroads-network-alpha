@@ -102,7 +102,7 @@ func damage(key:String,amount:float,source:String)->void:
    var owner:=str(units.get(source,{}).get("owner",source)).trim_prefix("bgarmy:");
    if not bool(u.get("converted",false)):
     preload("res://scripts/ko_item_heal239.gd").party(game,owner)
-    reward(owner,12+int(u.kind)*2,8)
+    reward(owner,preload("res://scripts/enemy_reward251.gd").ordinary(int(u.get("uid",0)),1,int(u.kind)*10+1),8)
     if game.kills.has(owner):game.kills[owner]=int(game.kills[owner])+1
     if game.arena_records.has(owner):game.arena_records[owner].npc_kills+=1
    units.erase(key);game.adventure.combat.statuses.erase(key)
@@ -526,7 +526,7 @@ func convert(owner:String,key:String)->void:
  if (game.positions[owner] as Vector2).distance_to(u.pos)>380:return
  for other in units.keys():
   if bool(units[other].get("converted",false)) and str(units[other].owner)==owner:units.erase(other)
- reward(owner,12+int(u.kind)*2,8)
+ reward(owner,preload("res://scripts/enemy_reward251.gd").ordinary(int(u.get("uid",0)),1,int(u.kind)*10+1),8)
  u.owner=owner;u.team=side_of(owner);u.converted=true;u.expires=8.0;u.hp=minf(float(u.hp),90);u.max_hp=minf(float(u.max_hp),90)
  game._emit_effect({"pos":u.pos,"radius":55.0,"time":.6,"color":"#aaedbe"})
 

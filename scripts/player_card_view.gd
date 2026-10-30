@@ -8,7 +8,7 @@ const METALS=["#687e87","#bb8052","#c3d3dc","#edc363","#b6eeed","#cbb2f1"]
 func _ready()->void:
  custom_minimum_size=Vector2(0,545)
  var favourite:Dictionary=legacy.fishing_records.favorite()
- if not favourite.is_empty():favorite_art=preload("res://scripts/fishing_catalog.gd").texture(str(favourite.species))
+ if not favourite.is_empty():favorite_art=preload("res://scripts/fishing_catalog.gd").catch_texture(favourite)
  size_flags_horizontal=Control.SIZE_EXPAND_FILL;mouse_filter=Control.MOUSE_FILTER_IGNORE;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
  icon_id=str(legacy.card.state().portrait)
  if not legacy.card.portrait_unlocked(icon_id):icon_id=""

@@ -156,10 +156,7 @@ func basic_enemy(id:String)->Dictionary:
  var definition:Dictionary=workshop.game.enemy_types.get(id,{})
  e.name=str(definition.get("name",e.name));e.primary.damage=clampf(float(definition.get("damage",8)),1,45);e.primary.cooldown=clampf(float(definition.get("shot_cooldown",1.5)),.5,10);e.health=clampf(float(definition.get("health",e.health)),20,500);e.speed=clampf(float(definition.get("speed",e.speed)),40,230)
  if "ranged" in str(definition.get("behaviour","")) or definition.has("shot_speed"):e.primary.style="projectile";e.primary.range=300
- var sprite=str(definition.get("sprite",id))
- for pose in ["idle","walk1","walk2","attack"]:
-  var texture:Texture2D=workshop.game.art.get(sprite+"_"+pose,workshop.game.art.get(sprite+"_0"))
-  if texture!=null:e.art[pose]=Marshalls.raw_to_base64(texture.get_image().save_png_to_buffer())
+ e.art=preload("res://scripts/studio_art249.gd").encoded("wave_sentry" if id=="archer" else "mending_sentinel" if id=="warden" else "bramble_practice")
  return e
 func edit_tile(n:int)->void:
  var dialog=AcceptDialog.new();dialog.title="Terrain • separate collision settings";add_child(dialog);UI.apply(dialog);var body=VBoxContainer.new();dialog.add_child(body);var t:Dictionary=value.tiles[n]

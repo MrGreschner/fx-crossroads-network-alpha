@@ -1,3 +1,4 @@
+import {migrateSunfieldProfile} from './sunfield-course.mjs';
 import {allowedOrigin} from './origins.mjs';
 import {repairSchema,exclusions,scrubProfile} from './record-repair.mjs';
 import {randomInt,randomBytes,createHash,scrypt as derive,timingSafeEqual,createCipheriv,createDecipheriv} from 'node:crypto';
@@ -67,7 +68,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
  async function body(req){let bytes=0;const chunks=[];const timer=setTimeout(()=>req.destroy(),15000);timer.unref();try{for await(const chunk of req){bytes+=chunk.length;if(bytes>4194304)fail(413,'Cloud profile limit is 4 MB. Download a local backup; your previous cloud save is safe.');chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks));}finally{clearTimeout(timer);}}
  function send(res,status,data,extra={}){res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff',...extra});res.end(JSON.stringify(data));}
  async function save(a,v,revision){
-  v=scrubProfile(v,await exclusions(pool,a.id));validateCloudSave(v);if(!Number.isInteger(revision)||revision<0)fail(400,'Invalid save revision.');
+  v=migrateSunfieldProfile(scrubProfile(v,await exclusions(pool,a.id)));validateCloudSave(v);if(!Number.isInteger(revision)||revision<0)fail(400,'Invalid save revision.');
   // One conditional UPDATE owns the revision. A history row is written with it in one SQL statement.
   const q=await pool.query(`WITH changed AS (UPDATE crossroads_accounts SET save=$1,revision=revision+1,updated_at=now() WHERE id=$2 AND revision=$3 RETURNING id,revision,save) INSERT INTO crossroads_save_history(account,revision,save) SELECT id,revision,save FROM changed RETURNING revision`,[seal(v),a.id,revision]);
   if(!q.rows.length)fail(409,'A newer cloud save exists. Saving paused. Download this device profile, then load the cloud save.');
@@ -107,7 +108,7 @@ export function createAccounts({pool,admin=()=>false,key=process.env.CLOUD_SAVE_
    }
    const a=await authenticate(req);if(!a)fail(401,'Session expired. Sign in again. Your local progress is safe.');
    if(req.method==='GET'&&path==='/accounts/me'){send(res,200,{user:await publicUser(a)});return true;}
-   if(req.method==='GET'&&path==='/accounts/save'){send(res,200,{revision:a.revision,profile:a.save?unseal(a.save):null});return true;}
+   if(req.method==='GET'&&path==='/accounts/save'){send(res,200,{revision:a.revision,profile:a.save?migrateSunfieldProfile(unseal(a.save)):null});return true;}
    if(req.method!=='POST')fail(405,'POST required');const p=await body(req);
    if(path==='/accounts/save'){const revision=await save(a,p.profile,p.revision);send(res,200,{saved:true,revision});}
    else if(path==='/accounts/username'){

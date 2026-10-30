@@ -1,0 +1,42 @@
+{
+  "version": 246,
+  "build": "V246-town-and-cultivation",
+  "baseline": "V245",
+  "pck_sha256": "3495df1051f74b5d97a82a249d89ebad6f5b52337f87014f2a33b91bee5675ae",
+  "runtime_resource_parity": "PASS",
+  "untouched_v245_exported_resources": 11726,
+  "source_checks": 7117,
+  "packaged_checks": 7117,
+  "native_captures": 16,
+  "browser_review_captures": 13,
+  "production_opening_passed": true,
+  "server_import_compile": "PASS",
+  "lazy_crop_pages": 8,
+  "scene_atlas_bytes": 4624384,
+  "one_crop_page_bytes": 2449920,
+  "deployed": false,
+  "physical_school_hardware_tested": false,
+  "live_backend_tested": false,
+  "archives": [
+    {
+      "name": "Crossroads_v246_Server_Update.zip",
+      "files": 12689,
+      "crc": "PASS"
+    },
+    {
+      "name": "Crossroads_v246_Web.zip",
+      "files": 190,
+      "crc": "PASS"
+    },
+    {
+      "name": "Crossroads_v246_Editable.zip",
+      "files": 16607,
+      "crc": "PASS"
+    },
+    {
+      "name": "V246_Previews.zip",
+      "files": 33,
+      "crc": "PASS"
+    }
+  ]
+}

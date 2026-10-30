@@ -1,0 +1,53 @@
+{
+  "version": "243",
+  "build": "V243-homes-vegetation",
+  "baseline": "completed V242",
+  "engine": [
+    4,
+    5,
+    1
+  ],
+  "pck_sha256": "2c38b832b0359b48c9861a3b1e98985bf96fd8dd1a200fada827e8bdc0f37450",
+  "pck_resources": 11736,
+  "untouched_baseline_pck_resources_preserved": 11716,
+  "edited_resource_parity": "PASS: Editable = Server Update = Web PCK",
+  "fixture_production_parity": "PASS: all production resources identical",
+  "browser_fileSizes": "PASS",
+  "source_runtime_checks": 2938,
+  "packaged_runtime_checks": 2938,
+  "protected_shop_checks": 233,
+  "identical_collision_approach_samples": 12486,
+  "identical_resident_schedule_states": 315,
+  "native_views": 41,
+  "server_fresh_import_and_compile": "PASS",
+  "javascript_syntax_checks": 11,
+  "browser_execution_tested": false,
+  "school_hardware_tested": false,
+  "deployed": false,
+  "archives": [
+    {
+      "name": "Crossroads_v243_Web.zip",
+      "files_including_integrity_record": 177,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v243_Server_Update.zip",
+      "files_including_integrity_record": 12650,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "Crossroads_v243_Editable.zip",
+      "files_including_integrity_record": 15306,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    },
+    {
+      "name": "V243_Previews.zip",
+      "native_gameplay_pngs": 41,
+      "crc": "PASS",
+      "duplicate_paths": 0
+    }
+  ]
+}

@@ -111,8 +111,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 		for n in 3:
 			c.draw_arc(pond+Vector2(-60+n*50,20+n*7),16+sin(clock*2+n)*3,.15,2.5,16,Color(.7,.91,.94,.38),1,true)
 			var lily:Vector2=pond+Vector2(-75+n*65,-30+n*8)
-			c.draw_circle(lily,10,Color("#6ca778"))
-			c.draw_circle(lily+Vector2(2,-3),3,Color("#edc6d5"))
+			preload("res://scripts/town_nature243.gd").draw(c,"lily",Rect2(lily-Vector2(11,10),Vector2(22,20)))
 	# Wooden lookout with ladder, parapet and a watch light.
 	if visible.has_point(TOWER):
 		preload("res://scripts/town_art39.gd").draw(c,"lookout",camera)
@@ -122,10 +121,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	for station in [Vector2(-70,1335),Vector2(330,1335)]:
 		if not visible.has_point(station):continue
 		var post:Vector2=station-camera
-		c.draw_rect(Rect2(post+Vector2(-21,-17),Vector2(42,23)),Color("#75634f"))
-		c.draw_rect(Rect2(post+Vector2(-23,-62),Vector2(5,58)),Color("#917352"))
-		c.draw_rect(Rect2(post+Vector2(18,-62),Vector2(5,58)),Color("#917352"))
-		c.draw_colored_polygon(PackedVector2Array([post+Vector2(-32,-61),post+Vector2(0,-81),post+Vector2(32,-61)]),Color("#587992"))
+		preload("res://scripts/town_streets244.gd").draw(c,"guard_booth",Rect2(post+Vector2(-33,-83),Vector2(66,91)))
 		guard(c,post,false)
 	# Flower beds, benches and glowing mushrooms near the forest.
 	for bed in [Vector2(330,620),Vector2(1470,600),Vector2(1900,975),Vector2(840,1250),Vector2(1900,1055)]:
@@ -135,18 +131,12 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	for bench in [POND_BENCH,Vector2(1650,1120)]:
 		if not visible.has_point(bench):continue
 		var b:Vector2=bench-camera
-		c.draw_rect(Rect2(b+Vector2(-25,-14),Vector2(50,9)),Color("#b08b61"))
-		c.draw_rect(Rect2(b+Vector2(-25,-1),Vector2(50,7)),Color("#967351"))
-		for side in [-1,1]:c.draw_line(b+Vector2(side*19,3),b+Vector2(side*19,13),Color("#4d514d"),4)
+		preload("res://scripts/town_streets244.gd").bench(c,b,50,-14,28)
 	if visible.has_point(CAMP):
 		var fire:Vector2=CAMP-camera
 		var strength:float=c.town_life.calendar.fire_strength()
 		c.draw_circle(fire,65,Color(1,.54,.18,(.06+.02*sin(clock*5))*strength))
-		for n in 9:
-			var stone:Vector2=fire+Vector2(cos(n*TAU/9)*27,sin(n*TAU/9)*15)
-			c.draw_circle(stone,6,Color("#92958a"))
-		c.draw_line(fire+Vector2(-21,5),fire+Vector2(17,-3),Color("#79523e"),7)
-		c.draw_line(fire+Vector2(21,5),fire+Vector2(-17,-3),Color("#79523e"),7)
+		preload("res://scripts/town_streets244.gd").draw(c,"camp_ring",Rect2(fire-Vector2(35,21),Vector2(70,42)))
 		if strength>0 and strength<.25:c.draw_circle(fire,9,Color(1,.37,.12,strength*2))
 		for n in (5 if strength>.08 else 0):
 			var base:Vector2=fire+Vector2(-16+n*8,0)
@@ -158,16 +148,12 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 			c.draw_circle(fire+Vector2(sin(clock*2+n)*12,-10-age*55),1.7,Color(1,.73,.3,1-age))
 		# Ash uses the log at dusk; his daily route is drawn by town_life.
 		var seat:Vector2=fire+Vector2(-83,27)
-		c.draw_line(seat+Vector2(-29,6),seat+Vector2(29,6),Color("#76533c"),18)
-		c.draw_circle(seat+Vector2(29,6),9,Color("#bb956b"))
-		c.draw_arc(seat+Vector2(29,6),5,0,TAU,12,Color("#846044"),1)
-		c.draw_line(seat+Vector2(-20,3),seat+Vector2(18,3),Color("#ad8256"),2)
+		preload("res://scripts/town_streets244.gd").draw(c,"log_seat",Rect2(seat+Vector2(-31,-3),Vector2(70,22)))
 
 	for n in 4:
 		var m:Vector2=Vector2(1970+n*35,1240)-camera
 		if not Rect2(Vector2.ZERO,c.get_viewport_rect().size).grow(10).has_point(m):continue
-		c.draw_circle(m+Vector2(0,-7),5,Color("#a8cdaf"))
-		c.draw_line(m+Vector2(0,-4),m+Vector2(0,3),Color("#d8d6ac"),2)
+		preload("res://scripts/town_streets244.gd").draw(c,"mushroom",Rect2(m+Vector2(-6,-13),Vector2(12,18)))
 	for group in 2:
 		var phase:float=fposmod(clock+group*21,48)
 		if phase>=32:continue

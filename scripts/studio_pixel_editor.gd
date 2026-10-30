@@ -67,7 +67,7 @@ func _process(_delta:float)->void:
  var view=partner_view.editor_view() if partner_view!=null else get_viewport().get_visible_rect().size;panel.size=Vector2(920,620);var scale_factor=minf(1,minf((view.x-20)/panel.size.x,(view.y-20)/panel.size.y));panel.scale=Vector2.ONE*scale_factor;panel.position=(view-panel.size*scale_factor)*.5
 
 func _input(event:InputEvent)->void:
- if not get_tree().get_nodes_in_group("studio_style_guide233").is_empty():return
+ if not get_tree().get_nodes_in_group("studio_style_guide233").is_empty() or not get_tree().get_nodes_in_group("studio_notes_overlay240").is_empty():return
  if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:flush_live();queue_free();get_viewport().set_input_as_handled()
 
 var live_path:Array=[]

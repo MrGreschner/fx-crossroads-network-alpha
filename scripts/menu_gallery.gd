@@ -37,6 +37,8 @@ func entry(data:Dictionary,id:String,hero:bool)->Dictionary:
  var visible=Vector2(.8,.8)
  if first!=null:
   if hero and sprite in preload("res://scripts/core_hero_art.gd").HEROES:visible=preload("res://scripts/core_hero_art.gd").visible_size(sprite)
+  elif preload("res://scripts/actor_art248.gd").has(sprite):
+   var size_data:Array=preload("res://scripts/actor_art248.gd").metadata[sprite].menu_visible;visible=Vector2(size_data[0],size_data[1])
   elif preload("res://scripts/enemy_art235.gd").metadata.has(sprite):
    var size_data:Array=preload("res://scripts/enemy_art235.gd").metadata[sprite].menu_visible;visible=Vector2(size_data[0],size_data[1])
   else:

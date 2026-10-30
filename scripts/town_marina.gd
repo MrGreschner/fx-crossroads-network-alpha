@@ -88,4 +88,4 @@ static func draw(c:Node2D,cam:Vector2)->void:
   var spec=BERTHS[n];var at:Vector2=spec.at
   if not Rect2(at-boat_size(int(spec.crew))*.5-Vector2(15,15),boat_size(int(spec.crew))+Vector2(30,30)).intersects(Rect2(cam,c.VIEW)):continue
   var bob=sin(t*1.5+at.x*.01)*1.3
-  preload("res://scripts/town_art39.gd").draw(c,"boat_"+str(n),cam-Vector2(0,bob))
+  preload("res://scripts/marina_art250.gd").boat(c,["skiff_amber","launch_blue","launch_olive","skiff_red"][n],at-cam+Vector2(0,bob),boat_size(int(spec.crew)),float(spec.angle))

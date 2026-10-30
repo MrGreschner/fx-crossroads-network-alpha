@@ -240,7 +240,7 @@ func draw_ground(g:Node2D,camera:Vector2)->void:
    g.draw_colored_polygon(PackedVector2Array([p+Vector2(0,-26),p+Vector2(15,-6),p+Vector2(8,15),p+Vector2(-10,15),p+Vector2(-15,-6)]),Color(theme.color))
    g.draw_line(p+Vector2(0,-23),p+Vector2(3,12),Color("#efffec"),2,true)
  var p=ORIGIN-camera
- g.draw_arc(p,100,0,TAU,48,Color("#94ddcf"),3,true)
+ preload("res://scripts/realm_portals258.gd").draw_at(g,g,ORIGIN,camera)
  g.draw_string(g.font,p+Vector2(-100,100),"STABLE CROSSING • EXTRACT",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#d8ead2"))
  if trial():
   for id in seal_drops:

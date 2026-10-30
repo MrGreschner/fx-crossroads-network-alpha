@@ -5,6 +5,8 @@ const P=preload("res://scripts/fishing_progress.gd")
 class Emblem extends Control:
  var kind="rod"
  func _draw()->void:
+  texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+  if preload("res://scripts/item_art245.gd").emblem(self,kind):return
   var at=size*.5;var ink=Color("#9ed8d0");draw_circle(at,24,Color("#244b56"));draw_arc(at,24,0,TAU,32,Color("#668e91"),1,true)
   match kind:
    "net":
@@ -45,7 +47,7 @@ static func build(legacy:Node,parent:Node)->void:
  var header=SKIN.card(parent,"FISHING • Lv %d / 80" % level,"");var row=HBoxContainer.new();header.add_child(row)
  var favorite=rec.favorite()
  if favorite.is_empty() and not rec.state().kept.is_empty():favorite=rec.state().kept[0]
- if not favorite.is_empty():f.picture(row,str(favorite.species),Vector2(110,60))
+ if not favorite.is_empty():f.picture(row,str(favorite.species),Vector2(110,60),favorite)
  else:icon(row,"rod")
  var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(details)
  UI.label(details,"%s • %d XP • %d / %d fish carried" % [prog.title(),xp,rec.bag_count(),rec.capacity()],17)

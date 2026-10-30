@@ -8,7 +8,12 @@ var topics:Array=[]
 var selected=0
 var choices:Array[Button]=[]
 func setup(title:String,subtitle:String,entries:Array)->void:
- layer=90;topics=entries
+ layer=90
+ var ancestor=get_parent()
+ while ancestor!=null:
+  if ancestor is CanvasLayer:layer=maxi(layer,ancestor.layer+1)
+  ancestor=ancestor.get_parent()
+ add_to_group("studio_notes_overlay240");topics=entries
  var shade=ColorRect.new();shade.color=Color(.015,.04,.065,.96);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(shade)
  panel=PanelContainer.new();panel.size=Vector2(960,620);add_child(panel);UI.apply(panel)
  var body=VBoxContainer.new();panel.add_child(body)
@@ -37,6 +42,7 @@ func show_topic(index:int)->void:
    var card=UI.card(content,pair[1]);var text=Label.new();text.text=str(topic[pair[0]]);text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;text.add_theme_font_size_override("font_size",17);card.add_child(text)
  scroll.scroll_vertical=0
 func _process(_delta:float)->void:
- var view=get_viewport().get_visible_rect().size;panel.size=Vector2(960,620);var factor=minf(1,minf((view.x-24)/panel.size.x,(view.y-24)/panel.size.y));panel.scale=Vector2.ONE*factor;panel.position=(view-panel.size*factor)*.5
+ var partner=get_tree().root.get_node_or_null("FXStudioPartner")
+ var view=partner.editor_view() if partner!=null else get_viewport().get_visible_rect().size;panel.size=Vector2(960,620);var factor=minf(1,minf((view.x-24)/panel.size.x,(view.y-24)/panel.size.y));panel.scale=Vector2.ONE*factor;panel.position=(view-panel.size*factor)*.5
 func _input(event:InputEvent)->void:
  if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:queue_free();get_viewport().set_input_as_handled()

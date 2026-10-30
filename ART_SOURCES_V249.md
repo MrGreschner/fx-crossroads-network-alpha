@@ -1,0 +1,9 @@
+# V249 art sources and reproduction
+
+The built-in image-generation tool produced sixteen transparent four-pose character sheets and five transparent training prop images. Selected original PNGs, SHA-256 provenance, character prompts and training subject prompts are in assets/studio249. The exact training prompt template and style/identity reference images are in tools/studio249_training_prompt_template.txt and tools/studio249_references. No third-party asset pack was introduced.
+
+The V207/V208 Ram, Cat, Book and Dawnblade reference board specifies style only: soft coloured edges, matte shading, readable pixel clusters and neutral poses. Studio examples intentionally have different clothing, palettes and silhouettes. Training identity references preserve the target/post, open book/lectern, pavilion roof/entrance and attached equipment rack designs.
+
+Run `python3 tools/prepare_studio249.py PATH_TO_REVIEW_OUTPUT` from the Editable project after installing Pillow, NumPy and SciPy. It uses the retained originals when no generation-path override is supplied. The preparation script crops transparent gutters, removes small alpha fragments, normalizes with nearest-neighbour scaling, registers walk frames horizontally, preserves full bodies and packs 64 80×80 frames into one 640×640 atlas. Hero template bodies are fitted to satisfy the existing 30% artwork coverage rule. It also reproduces the embedded portable PNGs and training props at their original draw canvas dimensions. No characters were procedurally painted or composited from pieces.
+
+The shared studio_art249.gd adapter caches the atlas, frame views, portable template data and five props. Existing student-created graphics retain their own embedded data and rendering path. Original V248 art, scenes and definitions remain available. The generated originals/reference images are excluded from the delivered Web/Server runtime resources.

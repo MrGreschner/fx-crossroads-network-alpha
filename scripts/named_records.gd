@@ -16,6 +16,7 @@ static func state(l:Node)->Dictionary:
  if not s.has("routes"):s.routes={"solo":{"all":{},"week":{},"week_id":week},"coop":{"all":{},"week":{},"week_id":week}}
  for route in s.routes:
   if s.routes[route].week_id!=week:s.routes[route].week={};s.routes[route].week_id=week
+ preload("res://scripts/sunfield_records257.gd").apply(l,s)
  return s
 static func cleared(l:Node,realm:String,seconds:float)->void:
  if preload("res://scripts/profile_store.gd").progression_blocked() or realm not in l.game.manifest.regions or seconds<1:return
@@ -51,7 +52,9 @@ static func valid(v:Variant)->bool:
  if v.has("routes"):
   if not v.routes is Dictionary or v.routes.size()!=2:return false
   for route in ["solo","coop"]:
-   if not v.routes.get(route) is Dictionary or v.routes[route].size()!=3 or not v.routes[route].get("week_id") is String:return false
+   if not v.routes.get(route) is Dictionary or v.routes[route].size() not in [3,4] or not v.routes[route].get("week_id") is String:return false
+   if v.routes[route].size()==4 and not v.routes[route].has("sunfield_revision"):return false
+   if v.routes[route].has("sunfield_revision") and v.routes[route].sunfield_revision!=257:return false
    for scope in ["all","week"]:
     if not v.routes[route].get(scope) is Dictionary or v.routes[route][scope].size()>128:return false
     for id in v.routes[route][scope]:

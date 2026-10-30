@@ -39,11 +39,7 @@ func step(game:Node,delta:float)->void:
 func draw_on(game:Node,camera:Vector2)->void:
  var a:Vector2=ALLY-camera
  game.draw_circle(a+Vector2(0,8),29,Color(.25,.8,.4,.13))
- game.draw_line(a+Vector2(0,4),a+Vector2(0,-35),Color("#7a694b"),9,true)
- game.draw_line(a+Vector2(-26,-24),a+Vector2(26,-24),Color("#5ba96a"),12,true)
- game.draw_circle(a+Vector2(0,-48),15,Color("#8bcd82"))
- game.draw_line(a+Vector2(-7,-48),a+Vector2(7,-48),Color("#e3ffe3"),3,true)
- game.draw_line(a+Vector2(0,-55),a+Vector2(0,-41),Color("#e3ffe3"),3,true)
+ game.draw_texture_rect(preload("res://scripts/studio_art249.gd").prop("training_ally"),Rect2(a+Vector2(-30,-64),Vector2(60,72)),false)
  game.draw_rect(Rect2(a+Vector2(-42,-80),Vector2(84,6)),Color("#244236"))
  game.draw_rect(Rect2(a+Vector2(-42,-80),Vector2(84*ally_health/200,6)),Color("#78d28a"))
  game.draw_string(font,a+Vector2(-70,33),"ALLY • HEAL / BUFF",HORIZONTAL_ALIGNMENT_CENTER,140,12,Color("#b8f0bc"))
@@ -53,10 +49,8 @@ func draw_on(game:Node,camera:Vector2)->void:
  for n in LAUNCHERS.size():
   var point:Vector2=LAUNCHERS[n]-camera
   var warning:float=clampf(1-(next_shots[n]-clock)/.6,0,1)
-  game.draw_rect(Rect2(point+Vector2(-20,-15),Vector2(40,35)),Color("#747f79"))
-  game.draw_circle(point+Vector2(0,-20),17,Color("#9fae9f"))
-  game.draw_line(point+Vector2(0,-20),point+Vector2(-24,-20),Color("#626e6c"),10,true)
-  game.draw_circle(point+Vector2(-25,-20),5,Color("#edb574") if warning>.1 else Color("#405557"))
+  game.draw_texture_rect(preload("res://scripts/studio_art249.gd").prop("training_launcher"),Rect2(point+Vector2(-30,-42),Vector2(60,62)),false)
+  if warning>.1:game.draw_circle(point+Vector2(-25,-20),3,Color("#edb574"))
   game.draw_string(font,point+Vector2(-55,48),"SHOT PRACTICE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e1d3a8"))
  for foe in game.enemies:
   if str(foe.get("type",""))=="training_runner":

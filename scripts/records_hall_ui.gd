@@ -9,13 +9,13 @@ class Award extends Control:
 class Portrait extends Control:
  var texture:Texture2D
  func _draw()->void:
-  if texture!=null:draw_texture_rect(texture,Rect2(Vector2.ZERO,size),false)
+  if texture!=null:draw_texture_rect(texture,Rect2(Vector2((size.x-size.y)*.5,0),Vector2.ONE*size.y),false)
   else:
    var center=size*.5;draw_circle(center+Vector2(0,-9),7,Color("#6b858f"));draw_style_box(UI.box("#3e5b66","#6b858f",7,0),Rect2(center+Vector2(-12,0),Vector2(24,19)));draw_string(UI.FONT,center+Vector2(-4,11),"?",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#d0dfe4"))
 static func portrait(parent:Node,l:Node,id:String)->Control:
  var art=Portrait.new();art.name="RecordHeroPortrait";art.custom_minimum_size=Vector2(42,48);art.mouse_filter=Control.MOUSE_FILTER_PASS
  var spec:Dictionary=l.game.characters.get(id,{})
- var sprite=str(spec.get("sprite",id));art.texture=l.game.art.get(sprite+"_idle",l.game.art.get(sprite+"_0"));art.tooltip_text=str(spec.get("name","Hero not recorded • older result"));art.set_meta("record_hero",id);parent.add_child(art);return art
+ var sprite=str(spec.get("sprite",id));art.texture=preload("res://scripts/hero_portrait.gd").texture(l.game,id);art.tooltip_text=str(spec.get("name","Hero not recorded • older result"));art.set_meta("record_hero",id);parent.add_child(art);return art
 static func label(parent:Node,text:String,font_size:int,color:Color=Color("#edf4f6"))->Label:
  var n=Label.new();n.text=text;n.add_theme_font_size_override("font_size",font_size);n.add_theme_color_override("font_color",color);n.size_flags_horizontal=Control.SIZE_EXPAND_FILL;n.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;n.clip_text=true;n.tooltip_text=text;parent.add_child(n);return n
 static func columns(parent:Node)->Array:

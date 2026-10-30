@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "town46_1": "watercache_town46_1",
+    "town46_0": "watercache_town46_0"
+  },
+  "changed_surface_pixels": {
+    "town46_1": 209887,
+    "town46_0": 1312318
+  },
+  "water_removal_restricted_to_original_water_shapes": true,
+  "ground_changes_restricted_to_original_walks_yard_and_forest": true
+}

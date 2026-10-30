@@ -158,7 +158,7 @@ func grant_xp(id:String,amount:int)->void:
 func guard_bounty(boss:bool)->void:
  for id in game.positions:
   if not game.gold.has(id):continue
-  shares[id]=float(shares.get(id,0))+(20 if boss else 2)*float(config.get("guard_bounty_share",.2))
+  shares[id]=float(shares.get(id,0))+(20 if boss else preload("res://scripts/enemy_reward251.gd").ordinary(game.wave,1,game.wave))*float(config.get("guard_bounty_share",.2))
   var whole:=floori(float(shares[id])+.000001)
   game.gold[id]=int(game.gold[id])+whole;shares[id]=float(shares[id])-whole
   xp_shares[id]=float(xp_shares.get(id,0))+(12 if boss else 1)*float(config.get("guard_xp_share",.2))
@@ -262,7 +262,7 @@ func step_rival(foe:Dictionary,delta:float)->void:
  var target:String=str(foe.target);var origin:Vector2=foe.pos
  var retreat:bool=float(foe.hp)<float(foe.max_hp)*.27
  var goal:Vector2=point_at(int(foe.lane),minf(length_of(int(foe.lane))-100,3400+game.wave*65)) if retreat else lane_goal(int(foe.lane),origin,false)
- if not target.is_empty() and not retreat:goal=target_point(target)
+ if not target.is_empty() and not retreat:goal=combat.fern.redirect(foe,target_point(target))
  var toward:Vector2=(goal-origin).normalized();var distance:float=origin.distance_to(goal)
  var wish:Vector2=toward
  if not target.is_empty() and not retreat:
@@ -288,7 +288,7 @@ func step_rival(foe:Dictionary,delta:float)->void:
  var speed:float=(570 if float(foe.dodge_left)>0 else 255 if kit=="npc_thorn" else 215 if kit=="npc_flint" else 235)*combat.speed_factor(combat.npc_key(foe))
  var proposed:Vector2=game._guard_blocked_move(origin,wish*speed*delta,-1,44)
  foe.pos=game._move_actor(origin,proposed-origin)
- if hold_at_outpost(foe,delta):return
+ if combat.fern.lure_for(foe.pos).is_empty() and hold_at_outpost(foe,delta):return
  # Recover slowly at the backline; never heal while actively dueling.
  if retreat and (target.is_empty() or origin.distance_to(target_point(target))>600):foe.hp=minf(float(foe.max_hp),float(foe.hp)+float(foe.max_hp)*.015*delta)
  if kit=="npc_lumen" and level>=3 and float(foe.secondary_cd)<=0:

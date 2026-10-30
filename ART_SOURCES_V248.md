@@ -1,0 +1,7 @@
+# V248 art sources and reproduction
+
+Eight unchanged selected sheets were made with the built-in image-generation tool, using the existing actors for identity and accepted V207/V208 heroes for style: soft coloured edges, matte shading and neutral poses. No third-party asset pack is used. Exact prompts, batch ordering and original visible bounds are in tools/actors248_prompts.json, actors248_batches.json and actors248_prior.json. The four-legged Fork Runner correction replaces that row of the original specialists sheet; both original sheets are retained.
+
+Original transparent sheets and SHA-256 provenance are in assets/actors248/*_source.png and provenance.json. Original game images were not repainted by normalization. tools/prepare_actors248.py reproduces gutter-aware alpha cropping, removal of tiny low-alpha fragments, nearest-neighbour scaling, baseline placement and horizontal movement registration. It requires Pillow, NumPy and SciPy. Its output is actors.png plus manifest.json and optional review boards. Full generated sheets are excluded from Web/Server runtime assets; Editable retains every selected original.
+
+Nineteen designs, 76 total 80×80 frames, one 640×800 atlas. The actor_art248.gd adapter applies the retained old normalized body bounds to keep original height and ground anchor in every renderer. Body aspect and individual small material details follow each generated identity. Existing heroes, regular puppets, Bit Buddy, mini basketball, other creatures and V247 town art remain unchanged.

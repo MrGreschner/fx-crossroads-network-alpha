@@ -1475,8 +1475,8 @@
         0
       ]
     ],
-    "world_height": 48,
-    "scale": 0.8
+    "world_height": 62,
+    "scale": 1.0333333333333334
   },
   "guard_ranged": {
     "index": 29,
@@ -1526,8 +1526,8 @@
         1
       ]
     ],
-    "world_height": 52,
-    "scale": 0.8666666666666667
+    "world_height": 64,
+    "scale": 1.0666666666666667
   },
   "Brin": {
     "index": 30,

@@ -188,6 +188,7 @@ func enemy_name(id:String,kind:String)->String:
  return str(game.enemy_types.get(kind,{}).get("name",kind.replace("_"," ").capitalize()))
 func portrait(id:String,kind:String)->Texture2D:
  var prefix:String=kind.substr(5) if kind.begins_with("boss:") else str(game.enemy_types.get(kind,{}).get("sprite",kind))
+ if id=="quarry" and prefix=="bramble_boss":return preload("res://scripts/quarry_art254.gd").boss("idle")
  var updated=preload("res://scripts/enemy_art235.gd").texture(prefix)
  if updated!=null:return updated
  if prefix in preload("res://scripts/cinderheart.gd").TYPES:

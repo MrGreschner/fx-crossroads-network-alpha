@@ -2,8 +2,8 @@
   "id": "sunfield",
   "name": "Sunfield Expanse",
   "size": [
-    9400,
-    5100
+    10800,
+    6800
   ],
   "background": "#718548",
   "accent": "#b9a26d",
@@ -16,5 +16,6 @@
   "difficulty_label": "Moderate",
   "immersive": true,
   "boss_enemy": "sun_sentinel",
-  "description": "A warm orchard trail opens into golden meadows and sunflower terraces. Canopy ambushes, hopping grasshoppers and warning sunbeams lead to the Solstice Clearing."
+  "description": "A new Sunfield: apple orchards, raised golden terraces, turquoise creeks, a turning windmill and a skybridge to the Solstice Crown. Explore the optional Pollinator Hollow. New-course speed records start here.",
+  "record_revision": 257
 }

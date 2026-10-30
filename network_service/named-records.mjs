@@ -1,3 +1,4 @@
+import {SUNFIELD_REVISION,eligibleSunfield,currentSunfieldRow} from './sunfield-course.mjs';
 import {extractionSchema,cleanExtractions,submitExtractions,extractionLeaders} from './extraction-ledger.mjs';
 import {scrubUpload} from './record-repair.mjs';
 import {combatEligible,eligibleHeroes,eligibleRecord} from './record-policy.mjs';
@@ -25,7 +26,7 @@ async function submitNamedLocked(pool,a,p,raw,now){
  for(const r of Object.values(heroRecords))if(r?.party!==undefined){if(!Array.isArray(r.party)||r.party.length>8||r.party.some(m=>!m||![2,3].includes(Object.keys(m).length)||m.account!==undefined&&(typeof m.account!=='string'||!/^([a-f0-9]{32})$/.test(m.account))||typeof m.name!=='string'||!m.name.trim()||m.name.length>32||/[\u0000-\u001f\u007f]/.test(m.name)||!heroes.has(m.hero)))throw Error('Invalid record party');for(const m of r.party)partyNames.set(m.name.toLowerCase(),null);}
  if(partyNames.size){const linked=(await pool.query('SELECT id,username,username_key FROM crossroads_accounts WHERE NOT disabled AND username_key=ANY($1::text[])',[[...partyNames.keys()]])).rows;for(const r of linked)partyNames.set(r.username_key,r.id);}
  for(const [key,r] of Object.entries(heroRecords)){if(!/^(time(?:_solo|_coop)?|between|descent):(all|[0-9]{4}-[0-9]{2}-[0-9]{2}):[a-z0-9_-]{1,64}$/.test(key)||!r||typeof r!=='object'||Array.isArray(r)||![2,3].includes(Object.keys(r).length)||!heroes.has(r.hero)||!num(r.value,1e6))throw Error('Invalid record hero');}
- const add=(scope,kind,key,value,extra={})=>{if(['time','time_solo','time_coop','between','descent'].includes(kind)&&!eligibleRecord(raw,kind,scope,key,value,heroes))return;if(['damage','streak','relic'].includes(kind)&&!combatEligible(raw))return;const hero=heroRecords[kind+':'+scope+':'+key];if(hero&&hero.value===value){extra={...extra,hero:hero.hero};if(hero.party?.length>1)extra.party=hero.party.map(m=>({name:m.name,hero:m.hero,...(m.account===a.id?{account:a.id}:partyNames.get(m.name.toLowerCase())?{account:partyNames.get(m.name.toLowerCase())}:{})}));}entries.push({scope,kind,key,value,extra});};
+ const add=(scope,kind,key,value,extra={})=>{if(!eligibleSunfield(raw,kind,key))return;if(['time','time_solo','time_coop','between','descent'].includes(kind)&&!eligibleRecord(raw,kind,scope,key,value,heroes))return;if(['damage','streak','relic'].includes(kind)&&!combatEligible(raw))return;const hero=heroRecords[kind+':'+scope+':'+key];if(hero&&hero.value===value){extra={...extra,hero:hero.hero};if(hero.party?.length>1)extra.party=hero.party.map(m=>({name:m.name,hero:m.hero,...(m.account===a.id?{account:a.id}:partyNames.get(m.name.toLowerCase())?{account:partyNames.get(m.name.toLowerCase())}:{})}));}if(key==='sunfield'&&kind.startsWith('time'))extra={...extra,layout_revision:SUNFIELD_REVISION};entries.push({scope,kind,key,value,extra});};
  const lifetime=Math.min(1e12,p.totals.filter(x=>x.kind==='hero'&&heroes.has(x.key)).reduce((s,x)=>s+x.value,0));if(!num(lifetime,1e12))throw Error('Invalid lifetime damage');add('all','damage','total',lifetime);
  for(const f of p.trophies||[])add('all','trophy',f.species,f.kg,{species:f.species,kg:f.kg});
  for(const f of p.fish)add(f.scope,'fish','largest',f.kg,{species:f.species,kg:f.kg});
@@ -57,7 +58,7 @@ async function submitNamedLocked(pool,a,p,raw,now){
 }
 export async function namedSnapshot(pool,now=Date.now()){
  const week=rankWeek(now).week;
- const rows=(await pool.query(`SELECT r.*,a.username FROM crossroads_named_records r JOIN crossroads_accounts a ON a.id=r.account WHERE NOT a.disabled AND r.value>0 ORDER BY r.value DESC,a.username_key`)).rows;
+ const rows=(await pool.query(`SELECT r.*,a.username FROM crossroads_named_records r JOIN crossroads_accounts a ON a.id=r.account WHERE NOT a.disabled AND r.value>0 ORDER BY r.value DESC,a.username_key`)).rows.filter(currentSunfieldRow);
  const ids=[...new Set(rows.flatMap(r=>Array.isArray(r.extra?.party)?r.extra.party.map(m=>m.account).filter(Boolean):[]))];
  const names=new Map(ids.length?(await pool.query('SELECT id,username FROM crossroads_accounts WHERE NOT disabled AND id=ANY($1::text[])',[ids])).rows.map(a=>[a.id,a.username]):[]);
  const display=r=>{const extra={...r.extra};if(Array.isArray(extra.party))extra.party=extra.party.map(m=>({name:m.account?(names.get(m.account)||'Unavailable player'):m.name,hero:m.hero}));return {username:r.username,key:r.key,value:Number(r.value),...extra,...(r.kind==='time_coop'||r.kind==='descent'&&r.key==='coop'?{record_route:'coop'}:{})};};

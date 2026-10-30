@@ -1,3 +1,4 @@
+import {ensureSunfieldCourse} from './sunfield-course.mjs';
 import {catchSchema,cleanCatches,submitCatches,catchBoards} from './fish-catches.mjs';
 import {scrubUpload} from './record-repair.mjs';
 import {combatEligible,eligibleHeroes,eligibleRecord} from './record-policy.mjs';
@@ -89,7 +90,7 @@ export function postgresStore(pool,{named=false}={}){return {
 };}
 export function createCommunity({pool,secret=process.env.REPORT_SIGNING_SECRET||'',store,accounts,now=()=>Date.now()}={}){
  const configured=!!(pool||store)&&secret.length>=32;let ready=false,pending=0,cache=null,expires=0,retry=0;const limits=new Map();store=store||(pool?postgresStore(pool,{named:!!accounts}):null);
- const init=async()=>{try{if(pool){await pool.query(schema);await pool.query(catchSchema);if(accounts){await accounts.initialized;await pool.query(namedSchema);}}ready=configured;}catch{ready=false;}};const initialized=configured?init():Promise.resolve();
+ const init=async()=>{try{if(pool){await pool.query(schema);await pool.query(catchSchema);if(accounts){await accounts.initialized;await pool.query(namedSchema);await ensureSunfieldCourse(pool);}}ready=configured;}catch{ready=false;}};const initialized=configured?init():Promise.resolve();
  const send=(res,code,data)=>{res.writeHead(code,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(data));};
  const hash=s=>createHmac('sha256',secret).update(s).digest('hex');
  async function handle(req,res){const path=new URL(req.url,'http://localhost').pathname;if(!['/community/records','/community/sync'].includes(path))return false;

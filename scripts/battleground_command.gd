@@ -62,6 +62,8 @@ func goal(u:Dictionary)->Vector2:
   if int(b.team)!=side and float(b.hp)>0:return b.pos
  return bg.heart_pos(1-side)
 func target(u:Dictionary)->String:
+ var leaf:Dictionary=bg.game.adventure.combat.fern.lure_for(u.pos,str(u.owner))
+ if not leaf.is_empty():return "p:fern:"+str(leaf.owner)
  var order=str(u.get("order","open"));var rally=order in ["base","capital","center"]
  var goal_point=goal(u);var result="";var nearest=maxf(380.0,float(bg.REACH[int(u.kind)])+80) if not rally else maxf(280.0,float(bg.REACH[int(u.kind)])+40)
  for id in bg.game.positions:

@@ -19,7 +19,7 @@ func setup(owner:Node,id:String)->void:
  fishing.button(header,"Close details",close)
  var row=HBoxContainer.new();row.add_theme_constant_override("separation",20);col.add_child(row)
  var image=TextureRect.new();image.custom_minimum_size=Vector2(245,130);image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
- var crop=AtlasTexture.new();crop.atlas=C.texture(str(specimen.species));crop.region=C.display_region(specimen);image.texture=crop;row.add_child(image)
+ var crop=AtlasTexture.new();crop.atlas=C.catch_texture(specimen);crop.region=C.display_region(specimen);image.texture=crop;row.add_child(image)
  var facts=VBoxContainer.new();facts.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(facts)
  fishing.label(facts,"%.2f kg  •  %.1f cm" % [specimen.kg,specimen.cm],25).modulate=Color("#ffe1a7")
  fishing.label(facts,str(spec.rarity)+" • "+("Trophy specimen" if C.is_trophy(specimen) else "Kept specimen"),18).modulate=Color(str(spec.color))
