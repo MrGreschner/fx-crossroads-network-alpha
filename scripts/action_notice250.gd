@@ -14,6 +14,10 @@ var settle=0
 var released=false
 var reflows=0
 var state:Dictionary={}
+var last_message259=""
+var context259=""
+var notice_left259=0.0
+const NOTICE_SECONDS259=6.0
 const FONT=preload("res://assets/fonts/CrossroadsUI.ttf")
 func skin(ink:String,border:String)->StyleBoxFlat:
  var s=StyleBoxFlat.new();s.bg_color=Color(ink);s.border_color=Color(border);s.set_border_width_all(1);s.set_corner_radius_all(9);s.set_content_margin_all(14);s.shadow_color=Color(0,0,0,.35);s.shadow_size=4;s.shadow_offset=Vector2(0,3);return s
@@ -28,7 +32,14 @@ func _ready()->void:
  prompt=label(20,"#fff4d4");prompt.name="InteractionText";prompt.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;prompt.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(prompt)
  notice=PanelContainer.new();notice.name="DialogueCard";notice.add_theme_stylebox_override("panel",skin("#102932","#799d9d"));add_child(notice)
  var col=VBoxContainer.new();col.add_theme_constant_override("separation",6);notice.add_child(col)
- speaker=label(14,"#e8cd91");speaker.name="Speaker";col.add_child(speaker)
+ var heading=HBoxContainer.new();col.add_child(heading)
+ speaker=label(14,"#e8cd91");speaker.name="Speaker";speaker.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(speaker)
+ var dismiss=Button.new();dismiss.name="DismissNotice";dismiss.text="×";dismiss.tooltip_text="Dismiss notice";dismiss.focus_mode=Control.FOCUS_NONE;dismiss.custom_minimum_size=Vector2(28,24);heading.add_child(dismiss)
+ dismiss.pressed.connect(func():
+  if arcade:notice_left259=0
+  else:game.message_time=0
+  notice.hide()
+ )
  scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
  text=label(18,"#f0f4ec");text.name="DialogueText";text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;text.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(text)
  action.hide();notice.hide()
@@ -52,15 +63,26 @@ func allowed()->bool:
  if not arcade and game.fishing!=null and is_instance_valid(game.fishing.room):return false
  if game.session_menu!=null and game.session_menu.page in ["main","options","clear"]:return false
  return game.started and game.shop_open.is_empty() if arcade else game.menu.is_empty()
+func transient_message259(value:String,context:String,dt:float)->String:
+ value=value.strip_edges()
+ if context!=context259:context259=context;last_message259="";notice_left259=0
+ if value!=last_message259:
+  last_message259=value;notice_left259=NOTICE_SECONDS259 if not value.is_empty() else 0.0
+ else:notice_left259=maxf(0,notice_left259-maxf(0,dt))
+ return value if notice_left259>0 and not str(split_notice(value)[1]).is_empty() else ""
 func _process(_dt:float)->void:
  if released:
   var event=InputEventAction.new();event.action="interact";event.pressed=false;Input.parse_input_event(event);released=false
+ var arcade_message=""
+ if arcade:arcade_message=transient_message259(str(game.status_label.text),str(game.mode)+":"+str(game.started),_dt)
  visible=allowed()
  if not visible:return
  var hint=hint_text().strip_edges();var message=""
  if arcade:
-  if game.mode not in ["arena","battlegrounds"] or game.arena_notice_left>0:message=str(game.status_label.text).strip_edges()
- elif game.message_time>0:message=str(game.message).strip_edges()
+  message=arcade_message
+ elif game.message_time>0:
+  message=str(game.message).strip_edges()
+  if str(split_notice(message)[1]).is_empty():message=""
  var viewport=get_viewport().get_visible_rect().size;var mobile=game.mobile.enabled;var run=arcade or game.mode=="run"
  var changed=state.is_empty() or hint!=str(state.get("hint","")) or message!=str(state.get("message","")) or viewport!=state.get("viewport",Vector2.ZERO) or mobile!=bool(state.get("mobile",false)) or run!=bool(state.get("run",false))
  if changed:
@@ -76,12 +98,12 @@ func reflow()->void:
  action.get_theme_stylebox("panel").set_content_margin_all(pad);notice.get_theme_stylebox("panel").set_content_margin_all(pad);keycap.get_theme_stylebox("normal").set_content_margin_all(6);keycap.get_theme_stylebox("disabled").set_content_margin_all(6)
  prompt.text=hint;prompt.add_theme_font_size_override("font_size",17 if compact else 20);prompt.custom_minimum_size.x=maxf(80,action_width-108);keycap.text=("TAP" if bool(state.mobile) else "E") if interactable else "TIP";keycap.disabled=not interactable;keycap.mouse_filter=Control.MOUSE_FILTER_STOP
  action.visible=not str(state.hint).is_empty();action.size=Vector2(action_width,0)
- var parts=split_notice(str(state.message));speaker.text=parts[0];text.text=parts[1];text.add_theme_font_size_override("font_size",16 if compact else 18);text.custom_minimum_size.x=maxf(100,width-36)
+ var parts=split_notice(str(state.message));speaker.text=parts[0] if str(parts[0])!="NOTICE" else "CAVE DESCENT" if arcade and game.mode=="descent" else "CROSSROADS UPDATE";text.text=parts[1];text.add_theme_font_size_override("font_size",16 if compact else 18);text.custom_minimum_size.x=maxf(100,width-36)
  scroll.custom_minimum_size=Vector2(width-28,0);scroll.size=Vector2(width-28,0);scroll.scroll_vertical=0
  notice.visible=not str(state.message).is_empty();notice.size=Vector2(width,0)
  var line_height=FONT.get_height(16 if compact else 18);var max_height=minf(140,maxf(70,v.y*.24));var estimated=FONT.get_multiline_string_size(text.text,HORIZONTAL_ALIGNMENT_LEFT,width-40,16 if compact else 18).y
  # The scroll region keeps long dialogue readable without covering the whole game.
- scroll.custom_minimum_size.y=minf(max_height,maxf(line_height,estimated));scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO
+ text.custom_minimum_size.y=maxf(line_height,estimated);scroll.custom_minimum_size.y=minf(max_height,maxf(line_height,estimated));scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO
 func place()->void:
  var v:Vector2=state.viewport;var base=88.0 if bool(state.mobile) else 116.0 if bool(state.run) else 22.0
  action.size.y=action.get_combined_minimum_size().y

@@ -2027,6 +2027,7 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if name=="merchant":draw_texture_rect(preload("res://scripts/merchant_art259.gd").texture(),Rect2(world_pos-camera,size),false,tint);return
 	if mode=="run" and region_id=="quarry" and name.begins_with("bramble_boss"):
 		var pose=name.trim_prefix("bramble_boss_");preload("res://scripts/quarry_art254.gd").draw_boss(self,pose,Rect2(world_pos-camera,size),tint);return
 	if mode=="town" and name=="tree":preload("res://scripts/town_nature243.gd").tree(self,"pine",Rect2(world_pos-camera,size),world_pos+size*Vector2(.5,.8));return

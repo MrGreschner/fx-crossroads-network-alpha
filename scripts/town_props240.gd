@@ -41,7 +41,13 @@ static func exchange(g:Node2D,camera:Vector2,night:float)->void:
    for row in 2:
     for col in 2:
      var at=window.position+Vector2(col*18,row*22)-camera;g.draw_rect(Rect2(at,Vector2(13,16)),Color(1,.75,.36,night*.65))
- for at in EXCHANGE_POSTS:lamp(g,at-camera,night)
+ # Wall lanterns replace street posts on the facade.
+ for at in EXCHANGE_POSTS:
+  var q=lamp_glass(at)-camera
+  g.draw_line(q-Vector2(0,13),q-Vector2(0,5),Color("#74664d"),3)
+  g.draw_rect(Rect2(q-Vector2(5,7),Vector2(10,14)),Color("#586253"))
+  g.draw_rect(Rect2(q-Vector2(3,5),Vector2(6,10)),Color("#b6b689").lerp(Color("#ffdc8d"),night))
+  for y in [-7,7]:g.draw_line(q+Vector2(-6,y),q+Vector2(6,y),Color("#a68e60"),2)
 static func light_sources()->Array:
  var result=[]
  for p in EXCHANGE_POSTS:result.append({"at":lamp_glass(p),"radius":130.0,"strength":.9})

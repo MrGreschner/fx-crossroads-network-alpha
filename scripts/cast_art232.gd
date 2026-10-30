@@ -13,6 +13,7 @@ static func prepare()->void:
  image=Image.new();image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/art232/mine.png"));props_sheet=ImageTexture.create_from_image(image)
 static func pose_index(pose:String)->int:return 3 if pose in ["attack","attack2","special","talk","work"] else 1 if pose in ["walk1","1"] else 2 if pose in ["walk2","2"] else 0
 static func texture(id:String,pose:Variant=0)->Texture2D:
+ if preload("res://scripts/descent_detail259.gd").has(id):return preload("res://scripts/descent_detail259.gd").texture(id,pose_index(pose) if pose is String else int(pose))
  prepare()
  if not metadata.has(id):return null
  var n:int=pose_index(pose) if pose is String else clampi(int(pose),0,3);var key=id+":"+str(n)

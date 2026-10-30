@@ -113,10 +113,10 @@ func refresh(reset_scroll:bool=true)->void:
   var h:Dictionary=game.characters[id];var info:Dictionary=library.entry(id,h);var card:=VBoxContainer.new();rows.add_child(card);var line:=HBoxContainer.new();card.add_child(line)
   var marked:bool=id in game.legacy.data.get("favourites",[])
   var star:=button(line,"",favourite.bind(id));star.custom_minimum_size.x=42;star.icon=favourite_on if marked else favourite_off;star.tooltip_text="Remove favourite" if marked else "Add favourite";star.toggle_mode=true;star.set_pressed_no_signal(marked)
-  var b:=button(line,("Community" if str(id).begins_with("community_") else "Custom" if str(id).begins_with("custom_") else str(library.number(game,str(id))))+". "+str(h.name)+"\n"+str(info.role)+" • "+str(info.difficulty),select.bind(id));b.custom_minimum_size.y=62;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.add_theme_font_size_override("font_size",16)
+  var b:=button(line,("Community" if str(id).begins_with("community_") else "Custom" if str(id).begins_with("custom_") else str(library.number(game,str(id))))+". "+str(h.name)+"\n"+str(info.role)+" • "+str(info.difficulty),select.bind(id));b.custom_minimum_size.y=96;b.clip_text=true;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.add_theme_font_size_override("font_size",16)
   if id==game.selected_character:b.modulate=Color("#ffe0a1");b.tooltip_text="Selected hero"
   var icon:Texture2D=preload("res://scripts/hero_portrait.gd").texture(game,str(id))
-  if icon!=null:b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",36)
+  if icon!=null:b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",80)
   var progress:Dictionary={"ratio":1.0,"label":"Local custom creation"} if game.characters[id].has("studio_project") else library.progress(game,id);var small:=ProgressBar.new();small.custom_minimum_size.y=5;small.show_percentage=false;small.value=float(progress.ratio)*100;small.tooltip_text=str(progress.label);card.add_child(small)
  scroller.scroll_vertical=0 if reset_scroll else old
  render_details()
@@ -130,7 +130,7 @@ func render_details()->void:
  var heading:=HBoxContainer.new();intro.add_child(heading)
  var texture:Texture2D=preload("res://scripts/hero_portrait.gd").texture(game,str(id))
  if texture!=null:
-  var pic:=TextureRect.new();pic.texture=texture;pic.custom_minimum_size=Vector2(48,56);pic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;pic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;heading.add_child(pic)
+  var pic:=TextureRect.new();pic.texture=texture;pic.custom_minimum_size=Vector2(192,192);pic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;pic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;heading.add_child(pic)
  var names:=VBoxContainer.new();names.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(names);label(names,str(library.number(game,str(id)))+". "+str(h.name),22);label(names,str(info.difficulty)+(" • Support" if "Support" in info.tags else ""),13)
  var actions:=HFlowContainer.new();actions.add_theme_constant_override("separation",5);intro.add_child(actions)
  var test:=button(actions,"Test hero",test_hero);test.custom_minimum_size=Vector2(82,30);test.add_theme_font_size_override("font_size",13);test.tooltip_text="Try this hero at level 10 in the training yard"
