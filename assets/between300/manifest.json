@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "main_progression_count": 25,
+  "eligible_count": 21,
+  "excluded_tiers": [
+    "expert",
+    "extreme"
+  ],
+  "environments": [
+    {
+      "id": "grove",
+      "family": 0,
+      "name": "The Whispering Grove Remnant",
+      "props": [
+        {
+          "kind": "tree",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "roots",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "shrub",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fern",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "tree",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "roots",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "shrub",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fern",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#93b5a0"
+    },
+    {
+      "id": "quarry",
+      "family": 1,
+      "name": "The Ember Quarry Remnant",
+      "props": [
+        {
+          "kind": "rock",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ore",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "tree",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ore",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "rock",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ore",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "tree",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "rock",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#c6a589"
+    },
+    {
+      "id": "honeyglass",
+      "family": 0,
+      "name": "Honeyglass Gardens Remnant",
+      "props": [
+        {
+          "kind": "tree",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fountain",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pavilion",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lamp",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bed",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "flower",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "tree",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lamp",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#93b5a0"
+    },
+    {
+      "id": "elementary",
+      "family": 0,
+      "name": "Firstbell Elementary Remnant",
+      "props": [
+        {
+          "kind": "school_playframe",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "school_slide",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "school_bench",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "school_desk",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "school_board",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "school_locker",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "school_bench",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "entry",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#93b5a0"
+    },
+    {
+      "id": "sunfield",
+      "family": 0,
+      "name": "Sunfield Expanse Remnant",
+      "props": [
+        {
+          "kind": "tree",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "sunflower",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "wheat",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "rock",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "sunwell",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "arch",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "wagon",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "windmill",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#93b5a0"
+    },
+    {
+      "id": "ice",
+      "family": 3,
+      "name": "Frostbound Rink Remnant",
+      "props": [
+        {
+          "kind": "fir",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pillar",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "arch",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "board",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "goal",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pillar",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fir",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "arch",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#b4d1db"
+    },
+    {
+      "id": "confluence",
+      "family": 1,
+      "name": "Confluence Foundry Remnant",
+      "props": [
+        {
+          "kind": "column",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "wheel",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "sluice",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "condenser",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "wheel",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "column",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "sluice",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "condenser",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#c6a589"
+    },
+    {
+      "id": "folded_coast",
+      "family": 2,
+      "name": "The Folded Coast Remnant",
+      "props": [
+        {
+          "kind": "pine",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "sea_stack",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "cliff",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fold",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "arch",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lighthouse",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "observatory",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "supplies",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#9fb8c1"
+    },
+    {
+      "id": "moonburrow",
+      "family": 2,
+      "name": "Moonburrow Hollow Remnant",
+      "props": [
+        {
+          "kind": "oak",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "birch",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fern",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "log",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "burrow",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "moon_arch",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "mushrooms",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "moonstones",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#9fb8c1"
+    },
+    {
+      "id": "moonveil",
+      "family": 2,
+      "name": "Moonveil Masquerade Remnant",
+      "props": [
+        {
+          "kind": "willow",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "topiary",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lantern",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "urn",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "arch",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fountain",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "palace",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "balustrade",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#9fb8c1"
+    },
+    {
+      "id": "petalbrook",
+      "family": 0,
+      "name": "Petalbrook Canopy Remnant",
+      "props": [
+        {
+          "kind": "blossom_tree",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fern_tree",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "hollow_log",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bellflowers",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "root_arch",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "well",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "cottage",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lantern",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#93b5a0"
+    },
+    {
+      "id": "clockwork_orchard",
+      "family": 0,
+      "name": "The Clockwork Orchard Remnant",
+      "props": [
+        {
+          "kind": "apple_tree",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pear_tree",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "cog",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pipe",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "arch",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "greenhouse",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "clock",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lantern",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#93b5a0"
+    },
+    {
+      "id": "middle_school",
+      "family": 3,
+      "name": "Crossbell Middle School Remnant",
+      "props": [
+        {
+          "kind": "locker",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "desk",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bookshelf",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "globe",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "entrance",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bell_tower",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "planter",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "clock",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#b4d1db"
+    },
+    {
+      "id": "space",
+      "family": 5,
+      "name": "Orbital Breach Remnant",
+      "props": [
+        {
+          "kind": "dish_receiver",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "long_range_antenna",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "solar_mast",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "navigation_beacon",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "cargo_cradle",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "gravity_stabilizer",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "oxygen_garden",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "relay_terminal",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#bcb3d4"
+    },
+    {
+      "id": "zombie",
+      "family": 4,
+      "name": "Hollow Quarantine Remnant",
+      "props": [
+        {
+          "kind": "cordon_beacon",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "folded_barricade",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "checkpoint_pillar",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "spore_stump",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "sealed_supply_crate",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "portable_generator",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "mossy_water_tank",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "broken_radio",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#b4bc96"
+    },
+    {
+      "id": "lantern_marsh",
+      "family": 4,
+      "name": "The Lantern Marsh Remnant",
+      "props": [
+        {
+          "kind": "willow_lantern",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lantern_cypress",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "moss_stump",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "cattail_clump",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "root_arch",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bell_shrine",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "refuge_hut",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "stone_lantern",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#b4bc96"
+    },
+    {
+      "id": "silverfall",
+      "family": 2,
+      "name": "Silverfall Reach Remnant",
+      "props": [
+        {
+          "kind": "willow",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "birch",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "river_rock",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fern",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ruin",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "observatory",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "tearoom",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lantern",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#9fb8c1"
+    },
+    {
+      "id": "brasslock",
+      "family": 2,
+      "name": "Brasslock Borough Remnant",
+      "props": [
+        {
+          "kind": "street_lantern",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ivy_pot",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "mailbox",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "key_sign",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "key_cabinet",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pendulum_clock",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "tram_shelter",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "street_clock",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#9fb8c1"
+    },
+    {
+      "id": "neon_crucible",
+      "family": 1,
+      "name": "Neon Crucible Remnant",
+      "props": [
+        {
+          "kind": "forge_press",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "server_rack",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "coolant_tank",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "pipe_junction",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "uplink_obelisk",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "smelter",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "fern_planter",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "memory_terminal",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#c6a589"
+    },
+    {
+      "id": "cinderheart",
+      "family": 1,
+      "name": "Cinderheart Citadel Remnant",
+      "props": [
+        {
+          "kind": "cinder_cypress",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "obsidian_cluster",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "basalt_pillar",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "cooling_crystal",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "gatehouse_bastion",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "phoenix_relief",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ember_lantern",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "ash_urn",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#c6a589"
+    },
+    {
+      "id": "high_school",
+      "family": 3,
+      "name": "Crossroads High Remnant",
+      "props": [
+        {
+          "kind": "maple",
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lockers",
+          "region": [
+            128,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "desk",
+          "region": [
+            256,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bench",
+          "region": [
+            384,
+            0,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "entrance",
+          "region": [
+            0,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "bell",
+          "region": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "lamp",
+          "region": [
+            256,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "kind": "trophies",
+          "region": [
+            384,
+            128,
+            128,
+            128
+          ]
+        }
+      ],
+      "color": "#b4d1db"
+    }
+  ]
+}

@@ -22,7 +22,7 @@ func active(uid:int)->Dictionary:
  return {}
 func state(e:Dictionary)->Dictionary:
  var key=str(e.uid)
- if not states.has(key):states[key]={"owner":int(e.uid),"kind":number(e),"phase":"ready","left":2.5,"turn":0,"cycles":0,"tier":0,"opening":0.0,"aim":d.pack(e.pos),"from":d.pack(e.pos),"action":"","head_down":[0.0,0.0,0.0],"head_uid":[0,0,0],"head_shot":[2.0,3.5,5.0],"head_exposed":false,"reflection":[],"vent_hits":0,"setup":false,"dash_hits":[],"pulse":-1.0,"pulse_prev":0.0,"channel":0.0}
+ if not states.has(key):states[key]={"owner":int(e.uid),"kind":number(e),"phase":"ready","left":1.2,"turn":0,"cycles":0,"tier":0,"opening":0.0,"aim":d.pack(e.pos),"from":d.pack(e.pos),"action":"","head_down":[0.0,0.0,0.0],"head_uid":[0,0,0],"head_shot":[2.0,3.5,5.0],"head_exposed":false,"reflection":[],"vent_hits":0,"setup":false,"dash_hits":[],"pulse":-1.0,"pulse_prev":0.0,"channel":0.0}
  return states[key]
 func reset()->void:
  if b!=null and g!=null:clear_solids()
@@ -69,7 +69,7 @@ func clear_fields(uid:int=0)->void:
  if uid==0:clear_solids()
  else:clear_solids(uid)
 func suspend(e:Dictionary)->void:
- var s=state(e);clear_fields(int(e.uid));s.setup=false;s.phase="ready";s.left=2.5;s.pulse=-1.0;s.channel=0;e.buried=false
+ var s=state(e);clear_fields(int(e.uid));s.setup=false;s.phase="ready";s.left=1.2;s.pulse=-1.0;s.channel=0;e.buried=false
 func prop(e:Dictionary,role:String,at:Vector2,hp:float,slot:int=0,solid:bool=false)->int:
  if props.size()>=24:return 0
  at=d.safe(at)
@@ -157,8 +157,8 @@ func move(e:Dictionary,s:Dictionary,goal:Vector2,dt:float)->void:
  if next_action in ["slam","sweep","bite","pincer"]:dest=goal
  elif n in [1,3,6,7]:
   var angle=d.clock*(.25 if n!=1 else .4)+n;dest=goal+Vector2.from_angle(angle)*(300 if n!=7 else 380)
- elif n==5:dest=e.pos if dist<230 else goal;speed*=.65
- elif n==10:dest=goal;speed*=.65 if int(s.tier)==0 else 1.1
+ elif n==5:dest=e.pos if dist<230 else goal;speed*=.85
+ elif n==10:dest=goal;speed*=.85 if int(s.tier)==0 else 1.1
  elif n==9 and int(s.turn)%2==0:dest=Vector2(1200,420)
  if (e.pos as Vector2).distance_to(dest)>65:d.walk_to(e,d.safe(dest),dt,speed)
  else:e.moving=0
@@ -198,14 +198,21 @@ func boss_step(e:Dictionary,target:String,goal:Vector2,dt:float)->bool:
   return true
  if str(s.phase)=="recover":
   e.moving=0
-  if float(s.left)<=0:s.phase="ready";s.left=.8
+  if float(s.left)<=0:s.phase="ready";s.left=.45
   return true
  move(e,s,goal,dt)
  if float(s.left)>0:return true
  var kit:Array=KITS[n];var action=str(kit[int(s.turn)%kit.size()]);s.turn=int(s.turn)+1
- if action in ["slam","sweep","bite","pincer"] and (e.pos as Vector2).distance_to(goal)>155:
-  s.left=.2;d.walk_to(e,goal,dt,160);s.turn=int(s.turn)-1;return true
- var tell=1.6 if n<5 else 1.4
+ # Advance the kit even when the selected melee attack cannot reach the target.
+ # Old code decremented turn here forever, soft-locking the entire ranged encounter.
+ var distance=(e.pos as Vector2).distance_to(goal)
+ if action in ["slam","sweep","bite","pincer"] and distance>155:
+  action="wick" if n==0 else "pluck" if n==1 else "debris" if n==2 else "quarry" if n==4 else "lances"
+ if action=="breath" and distance>480:action="wick_sparks"
+ if action=="claws" and distance>360:action="quarry"
+ if action in ["pulse","surge"] and distance>(230 if action=="pulse" else 740):action="oracle_rain"
+ if action in ["burst","pull"] and distance>620:action="toll" if n==7 else "lances"
+ var tell=1.3 if n<5 else 1.2
  if action in ["dig","flight","decree","caldera","silence","sentence"]:tell=2.0
  announce(e,s,action,goal,tell)
  return true
@@ -232,11 +239,17 @@ func heads(e:Dictionary,s:Dictionary,target:String,goal:Vector2,dt:float)->void:
  if all_down:s.opening=maxf(float(s.opening),.4)
 func perform(e:Dictionary,s:Dictionary,target:String,goal:Vector2)->void:
  var n=number(e);var action=str(s.action);var at:Vector2=e.pos;var aim=d.point(s.aim);var enraged=float(e.hp)<float(e.max_hp)*.5
- var uid=int(e.uid);s.cycles=int(s.cycles)+1;recover(s,1.8 if n<8 else maxf(.8,1.2-int(s.tier)*.08))
+ var uid=int(e.uid);s.cycles=int(s.cycles)+1;recover(s,1.45 if n<8 else maxf(.8,1.15-int(s.tier)*.08))
  match action:
   "wick":
+   # A burning wick is laid toward the locked target, not a short decorative spiral.
+   var direction=(aim-at).normalized();var length=minf(1600,at.distance_to(aim))
    for i in 6:
-    var a=at+Vector2.from_angle(i*.28)*i*105;field(e,"BURNING WICK",segment(d.safe(a),d.safe(a+Vector2(90,60)),65),.7,7.0 if enraged else 4.5,.35)
+    var a=d.safe(at+direction*(length*(i+.15)/6));var z=d.safe(at+direction*(length*(i+.72)/6))
+    field(e,"BURNING WICK • Leave the lit fuse",segment(a,z,72),1.0+i*.1,6.0 if enraged else 4.0,.4)
+   field(e,"WICK SPARK • Step out of the mark",b.circle(aim,110),1.6,.45,.9)
+  "wick_sparks":
+   for i in 3:b.shoot(e,at,(aim-at).normalized().rotated((i-1)*.32),float(d.Book.profile(e.type).damage)*.9,"cinder",target)
   "breath":field(e,"HUNGRY BREATH",cone(at,aim,520,.6),.7,2.0,.5,"pull",at)
   "loom":
    var anchors=helpers(uid,"web")
@@ -264,6 +277,8 @@ func perform(e:Dictionary,s:Dictionary,target:String,goal:Vector2)->void:
     for i in 3:field(e,"REFLECTED TIDE",segment(Vector2(160,500+i*380),Vector2(2240,300+i*440),125),2.5+i*.3,4.0,.25,"current",Vector2(-90,35))
    else:field(e,"REFLECTED PULSE",b.circle(mirror,240),2.5,.5,1.0)
   "surge":field(e,"ORACLE SURGE",cone(at,aim,800,.7),1.8,.6,1.2)
+  "oracle_rain":
+   for i in 3:field(e,"ORACLE RAIN • Leave the falling stars",b.circle(d.safe(aim+Vector2((i-1)*145,0)),105),1.2+i*.3,.4,1.0)
   "claws":
    var dir=(aim-at).normalized();var side=dir.orthogonal()*145
    for i in 2:field(e,"CRUSHING VERDICT • Claw "+str(i+1),cone(at+side*(1 if i==0 else -1),aim,390,.65),1.5+i*.85,.5,1.3)

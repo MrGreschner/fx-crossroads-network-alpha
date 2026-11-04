@@ -1,0 +1,299 @@
+{
+  "ram_arch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "ram_arch_large"
+  },
+  "old_oak": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "old_oak_large"
+  },
+  "gold_birch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "gold_birch_large"
+  },
+  "keeper_statue": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "keeper_statue_large"
+  },
+  "balustrade": {
+    "region": [
+      512,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "spring_fountain": {
+    "region": [
+      640,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "garden_lantern": {
+    "region": [
+      768,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "stone_bridge": {
+    "region": [
+      896,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "ferns": {
+    "region": [
+      0,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "mushroom_log": {
+    "region": [
+      128,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "flower_shrub": {
+    "region": [
+      256,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "waystone": {
+    "region": [
+      384,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "signboard": {
+    "region": [
+      512,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "garden_bench": {
+    "region": [
+      640,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "vine_urn": {
+    "region": [
+      768,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "column_ruins": {
+    "region": [
+      896,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "grand_gateway": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "grand_gateway_large"
+  },
+  "keeper_cottage": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "keeper_cottage_large"
+  },
+  "training_dais": {
+    "region": [
+      256,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "sunrise_relief": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "sunrise_relief_large"
+  },
+  "magnolia": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "magnolia_large"
+  },
+  "cedar": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "texture": "cedar_large"
+  },
+  "aqueduct": {
+    "region": [
+      768,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "root_wall": {
+    "region": [
+      896,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "beacon_crystal": {
+    "region": [
+      0,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "seedling_barrow": {
+    "region": [
+      128,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "practice_cart": {
+    "region": [
+      256,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "bluebells": {
+    "region": [
+      384,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "sun_inlay": {
+    "region": [
+      512,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "garden_steps": {
+    "region": [
+      640,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "water_table": {
+    "region": [
+      768,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  },
+  "moss_boulders": {
+    "region": [
+      896,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40
+  }
+}

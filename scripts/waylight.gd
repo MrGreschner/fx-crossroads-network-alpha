@@ -169,7 +169,7 @@ func draw_hud(g:Node2D)->void:
  if between():
   var cell=expedition.current;var home=(expedition.ORIGIN-game.position_in_world)
   g.draw_string(g.font,box.position+Vector2(12,23),"WAYLIGHT %d carried • %d banked" % [expedition.carried,progress.state().shards],HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#e8dfa8"))
-  g.draw_string(g.font,box.position+Vector2(12,46),"Ring %d • %s" % [maxi(absi(cell.x),absi(cell.y)),expedition.THEMES[expedition.chunks[expedition.key(cell)].theme].name],HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#a8d1ca"))
+  g.draw_string(g.font,box.position+Vector2(12,46),"Ring %d • %s" % [maxi(absi(cell.x),absi(cell.y)),preload("res://scripts/between_environment300.gd").name_for(expedition,expedition.chunks[expedition.key(cell)])],HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#a8d1ca"))
   g.draw_string(g.font,box.position+Vector2(12,66),"Seals %d/6 • %02d:%02d • return to extract" % [expedition.seals(),int(expedition.trial_seconds)/60,int(expedition.trial_seconds)%60] if expedition.trial() else "Entrance: %dm • extraction keeps all; defeat banks half" % int(home.length()/32),HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#c1d3d8"))
   expedition.draw_map(g);game.adventure.pursuers.draw_hud(g)
   var p=Vector2(g.VIEW.x-104,150);g.draw_line(p,p+home.normalized()*22,Color("#f2dfa4"),4,true);g.draw_string(g.font,p+Vector2(-35,35),"HOME",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#f2dfa4"))

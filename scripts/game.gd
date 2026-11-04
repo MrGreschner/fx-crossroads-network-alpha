@@ -1513,6 +1513,8 @@ func update_enemies(delta: float) -> void:
 		if bool(enemy.get("veilbound",false)) or str(enemy.get("type","")) in adventure.cinder.TYPES or str(enemy.get("type","")) in adventure.foundry.TYPES or str(enemy.get("type","")) in adventure.clockfield.TYPES or str(enemy.get("type","")) in adventure.tech.TYPES or str(enemy.get("type","")) in adventure.school.TYPES or str(enemy.get("type","")) in adventure.expansion.TYPES or str(enemy.get("type","")) in adventure.hollow.TYPES or str(enemy.get("type","")) in adventure.city.TYPES or bool(enemy.get("vault_actor",false)) or adventure.combat.stunned(adventure.combat.npc_key(enemy)):continue
 		if enemy.get("expansion_boss",false): continue
 		if preload("res://scripts/between_guardians.gd").basic(self,enemy,delta):continue
+		if region_id=="first_steps" and bool(enemy.get("boss",false)):
+			enemy.first_keeper299=true;preload("res://scripts/first_keeper299.gd").step(self,enemy,delta);continue
 		if tutorial.active and tutorial.update_melee(enemy,delta):continue
 		var definition: Dictionary = enemy_types.get(enemy.get("type", ""), {}).duplicate()
 		definition["speed"]=float(definition.get("speed",65))*adventure.combat.speed_factor(adventure.combat.npc_key(enemy))
@@ -1762,6 +1764,7 @@ func ground_tile_at(tx:int,ty:int,base:String)->String:
 	return tile
 
 func draw_world() -> void:
+	var first_art:bool=preload("res://scripts/first_environment299.gd").enabled(self)
 	var oath_art:bool=mode=="run" and region_id=="shattered_oath" and preload("res://scripts/oath_environment297.gd").enabled(adventure)
 	if adventure.finale.in_depth():
 		if terrain_cache!=null:terrain_cache.hide()
@@ -1775,7 +1778,7 @@ func draw_world() -> void:
 	elif region_id=="moonveil" and mode=="run":
 		if terrain_cache!=null:terrain_cache.hide()
 		preload("res://scripts/moon_castle.gd").draw(self,camera)
-	elif oath_art or (mode=="run" and region_id in ["ice","confluence","folded_coast","clockwork_orchard","middle_school","space","zombie","astral_rift"]):
+	elif oath_art or first_art or (mode=="run" and region_id in ["ice","confluence","folded_coast","clockwork_orchard","middle_school","space","zombie","astral_rift"]):
 		if terrain_cache!=null:terrain_cache.hide()
 	else:sync_terrain()
 	if practice:training_yard.draw_on(self,camera);town_chapter.draw_guide(self,camera)
@@ -1783,6 +1786,7 @@ func draw_world() -> void:
 	if mode=="run" and region_id=="zombie":preload("res://scripts/quarantine_art282.gd").draw(self,camera)
 	if mode=="run" and region_id=="astral_rift":preload("res://scripts/astral_environment294.gd").draw(self,camera)
 	if mode=="run" and region_id=="shattered_oath" and not adventure.finale.in_depth():preload("res://scripts/oath_environment297.gd").draw(adventure,self,camera)
+	if first_art:preload("res://scripts/first_environment299.gd").draw(self,self,camera)
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
 	if adventure.foundry.active:adventure.foundry.draw_world(self,camera)
@@ -1800,14 +1804,14 @@ func draw_world() -> void:
 	var retained_props:bool=mode=="run" and region_id=="moonveil"
 	if retained_props and not is_instance_valid(realm_props):
 		realm_props=preload("res://scripts/realm_props.gd").new();add_child(realm_props);realm_props.setup(self,false)
-	if not retained_props and not oath_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
+	if not retained_props and not oath_art and not first_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
 		for decoration in decorations:
 			var deco_texture: Texture2D = decoration["texture"]
 			var deco_size: Vector2 = decoration["size"]
 			if deco_texture != null and Rect2(camera - deco_size, VIEW + deco_size * 2).has_point(decoration["pos"]):
 				draw_texture_rect(deco_texture, Rect2(decoration["pos"] - deco_size * 0.5 - camera, deco_size), false)
 	for obstacle in obstacles:
-		if oath_art or (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):continue
+		if oath_art or first_art or (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):continue
 		if mode=="run" and region_id=="ice":preload("res://scripts/frost_art264.gd").pillar(self,obstacle.pos,camera);continue
 		if bool(obstacle.get("town_hidden",false)): continue
 		if Rect2(camera,VIEW).grow(180 if mode=="run" and region_id=="grove" else 100).has_point(obstacle["pos"]):
@@ -1902,6 +1906,7 @@ func draw_world() -> void:
 			if enemy.get("expansion_boss",false): boss_size *= (1.0 if int(enemy.get("generation",0)) == 0 else .78 if int(enemy.get("generation",0)) == 1 else .56)
 			if bool(enemy.get("veilbound",false)):
 				var veil_size:Vector2=adventure.pursuers.body_size(enemy);preload("res://scripts/hunter_art283.gd").draw(self,str(enemy.type),enemy_pose,Rect2(enemy.pos-camera-veil_size*Vector2(.5,.7),veil_size),visual_clock,int(enemy.get("uid",0)))
+			elif region_id=="first_steps" and is_boss:preload("res://scripts/first_keeper299.gd").draw_body(self,enemy,ep,visual_clock)
 			elif str(enemy.type) in adventure.cinder.TYPES:
 				var body:Vector2=adventure.cinder.body_size(str(enemy.type));draw_sprite(enemy_sprite,enemy.pos-body*Vector2(.5,.7),body)
 			elif str(enemy.type) in adventure.tech.TYPES:
@@ -2085,7 +2090,7 @@ func draw_hud() -> void:
 		draw_ability_cooldowns()
 		var span=int(region.get("xp_per_level",5))*10
 		var fraction=clampf(float(tutorial.defeated)/7.0,0,1) if tutorial.active else clampf(float(experience-(level-1)*span)/float(span),0,1)
-		var label="First steps • wave %d/3" % mini(3,1+int(tutorial.defeated)/3) if tutorial.active else "Lv %d • XP %s" % [level,"MAX" if level>=10 else str(experience)+" / "+str(level*span)]
+		var label=("First Steps • Dawnstone Keeper" if tutorial.wave==4 else "First steps • wave %d/3" % mini(3,1+int(tutorial.defeated)/3)) if tutorial.active else "Lv %d • XP %s" % [level,"MAX" if level>=10 else str(experience)+" / "+str(level*span)]
 		layout.experience(self,label,1.0 if level>=10 else fraction)
 		draw_string(font,Vector2(24,78),"PRACTICE • discoveries only" if continuation!=null and continuation.active else "%02d:%02d" % [int(run_time)/60,int(run_time)%60],HORIZONTAL_ALIGNMENT_LEFT,240,13,Color("#b7cbd6"))
 		if not (waylight!=null and waylight.between()) and not enemies.is_empty() and not tutorial.active and not adventure.quests.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and not adventure.cinder.active and (voyage==null or not voyage.active or voyage.ashore):

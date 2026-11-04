@@ -287,13 +287,14 @@ func step(delta:float)->void:
      e.dash_hits.append(id);hurt(str(id),float(spec.damage)*1.25,e,"Rush");knock(str(id))
    e.moving=200;e.gait=float(e.gait)+delta*15;continue
   if float(e.get("return_ward",0))>0:continue
-  if battle.full(e) and not battle.events.is_empty():e.moving=0;continue
+  if battle.full(e) and not battle.guardians.owns(e) and not battle.events.is_empty():e.moving=0;continue
   if not str(e.action).is_empty():
    e.left=float(e.left)-delta;e.moving=0
    if float(e.left)<=0:
     execute(e,str(e.action),point(e.aim),target);e.action="";e.strike=.3
    continue
   var speed=float(spec.speed)*float(scaling(game.floor_number).speed)
+  if battle.encounters.range_step299(e,target,goal,delta):continue
   if battle.enemy_step(e,target,goal,delta):continue
   if spec.role=="berserker" and float(e.hp)<float(e.max_hp)*.45:speed*=1.4
   if int(lamp.get("thief",0))==int(e.uid):
@@ -309,6 +310,7 @@ func step(delta:float)->void:
    # A lantern grab is not a melee attack: close the old48–65px dead zone.
    walk_to(e,goal,delta,speed);continue
   var ranged=spec.role in ["ranged","healer","summoner","guardian","shield"]
+  if str(spec.rank)=="mid":ranged=str(spec.attacks[int(e.phase)%spec.attacks.size()]) not in ["bite","slam","sweep","pincer","sting","steal","charge"]
   if ranged:
    var angle=float(posmod(int(e.uid),24))*TAU/24
    var anchor=goal+Vector2.from_angle(angle)*(260+posmod(int(e.uid),4)*35)
@@ -327,7 +329,9 @@ func step(delta:float)->void:
   var style=str(attacks[int(e.phase)%attacks.size()]);e.phase=int(e.phase)+1
   if spec.rank=="enemy" and float(spec.speed)<=67 and style in ["bolt","fan","volley"]:style="homing"
   if str(e.type)=="ds_craglobber":style="boulder"
-  if style in ["bite","slam","sweep","pincer","sting","steal"] and distance>150:e.attack_timer=.3;continue
+  if style in ["bite","slam","sweep","pincer","sting","steal"] and distance>150:
+   if str(spec.rank)=="mid":style="boulder" if str(e.type)=="ds_mid_01" else "shard_lances" if str(e.type) in ["ds_mid_03","ds_mid_05"] else "snipe"
+   else:e.attack_timer=.3;continue
   if not game._clear_path(e.pos,goal) and style in ["bolt","fan","volley","beam","drain","web","boomerang","chain"]:e.attack_timer=.4;continue
   var tell=1.1 if spec.rank!="enemy" else .65
   if style in ["boulder","homing","shard_lances","pursuit_orbs","magma_lances","cinder_orbs"]:tell=1.15
@@ -408,7 +412,7 @@ func execute(e:Dictionary,style:String,aim_at:Vector2,target:String)->void:
    var count=12 if style=="burst" else 7 if style in ["fan","volley"] else 3 if style in ["boomerang","chain"] else 1
    for n in count:
     var dir=Vector2.from_angle(n*TAU/count+clock) if style=="burst" else aim.rotated((n-(count-1)*.5)*.18)
-    var stats={"range":1000,"speed":280 if style!="beam" else 480,"projectile_radius":8 if style!="beam" else 14,"color":color}
+    var stats={"range":maxf(1000,origin.distance_to(aim_at)+280) if str(spec.rank) in ["mid","boss","beyond"] else 1000,"speed":360 if str(spec.rank) in ["mid","boss","beyond"] and style!="beam" else 280 if style!="beam" else 480,"projectile_radius":8 if style!="beam" else 14,"color":color}
     var projectile_style="echo_bolt" if style=="boomerang" else "ricochet_projectile" if style=="chain" else "pellet"
     stats["descent_visual"]=str(spec.form);stats["name"]=str(spec.name)+" • "+style.capitalize()
     if style=="boomerang":stats["return_at"]=240;stats["range"]=500

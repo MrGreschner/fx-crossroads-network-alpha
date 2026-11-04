@@ -261,4 +261,9 @@ func draw_hud()->void:
  if kind=="overcharge" and conclave.state.get("members",[]).size()==4:text="OVERCHARGE T%d • %d events • %s" % [int(config.tier),completed_events(),"CONCLAVE CACHE SECURED • finish realm" if conclave.completed() else "CONCLAVE %d/4 defeated" % conclave.state.get("dead",[]).size()]
  var y=preload("res://scripts/hud_layout.gd").objective_top(game,true)+(60 if kind=="overcharge" and game.adventure.immersive.active else 0)
  game.draw_rect(Rect2(20,y,minf(900,game.VIEW.x-40),31),Color(.03,.08,.12,.94));game.draw_string(game.font,Vector2(30,y+21),text,HORIZONTAL_ALIGNMENT_LEFT,game.VIEW.x-60,16,Color("#d8e9c7"))
- if between():expedition.draw_map(game);game.adventure.pursuers.draw_hud(game)
+ if between():
+  var cell=expedition.cell_at(game.local_pos);var chunk:Dictionary=expedition.chunks.get(expedition.key(cell),{})
+  if not chunk.is_empty():
+   var label=preload("res://scripts/between_environment300.gd").name_for(expedition,chunk)
+   game.draw_rect(Rect2(20,y+32,minf(650,game.VIEW.x-220),23),Color(.03,.08,.12,.9));game.draw_string(game.font,Vector2(30,y+49),label,HORIZONTAL_ALIGNMENT_LEFT,game.VIEW.x-240,13,Color("#a8d1ca"))
+  expedition.draw_map(game);game.adventure.pursuers.draw_hud(game)

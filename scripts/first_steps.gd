@@ -24,8 +24,8 @@ func spawn_wave()->void:
  var count:int=3 if wave==1 else 4 if wave<4 else 1
  for n in count:
   var kind:String="bramble" if wave==1 or n%3!=2 else "archer"
-  var point:=Vector2(650+n*110,380 if wave%2 else 780)
-  game.enemies.append({"uid":900000+wave*10+n,"pos":point,"hp":190.0 if wave==4 else 30.0+wave*6,"max_hp":190.0 if wave==4 else 30.0+wave*6,"attack_timer":1.5,"secondary_timer":3.0,"windup":0.0,"boss":wave==4,"type":"boss" if wave==4 else kind,"tutorial":true})
+  var point:=Vector2(1300,600) if wave==4 else Vector2(650+n*110,380 if wave%2 else 780)
+  game.enemies.append({"uid":900000+wave*10+n,"pos":point,"hp":220.0 if wave==4 else 30.0+wave*6,"max_hp":220.0 if wave==4 else 30.0+wave*6,"attack_timer":1.5,"secondary_timer":3.0,"windup":0.0,"boss":wave==4,"type":"boss" if wave==4 else kind,"tutorial":true,"first_keeper299":wave==4,"name":"Dawnstone Keeper" if wave==4 else kind})
  game.health=minf(game.max_health(),game.health+20)
  game.message="";game.message_time=0
 func step(delta:float)->void:
@@ -70,6 +70,7 @@ func interact()->bool:
  return false
 func update_melee(foe:Dictionary,delta:float)->bool:
  if not bool(foe.get("tutorial",false)) or str(foe.type)=="archer":return false
+ if bool(foe.get("first_keeper299",false)):preload("res://scripts/first_keeper299.gd").step(game,foe,delta);return true
  var reach=110.0 if foe.boss else 63.0
  var duration=1.05 if foe.boss else .72
  var diff:Vector2=game.position_in_world-foe.pos
@@ -95,11 +96,9 @@ func draw_world(c:Node2D,camera:Vector2)->void:
  if not started:
   var p=BEACON-camera;var pulse=sin(game.visual_clock*3)*.5+.5
   c.draw_circle(p,26,Color(.4,.8,.8,.09));c.draw_arc(p,27,0,TAU,24,Color("#7ccfc6"),2,true)
-  c.draw_colored_polygon(PackedVector2Array([p+Vector2(-18,4),p+Vector2(-12,-19),p+Vector2(12,-19),p+Vector2(18,4)]),Color("#788679"))
-  c.draw_line(p-Vector2(0,18),p-Vector2(0,54),Color("#d4bf89"),5)
-  c.draw_circle(p-Vector2(0,55),8+pulse*2,Color("#9de9d4"))
   c.draw_string(game.font,p+Vector2(-62,43),"Interact" if game.mobile.enabled else "E • Begin waves",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#f2dfa6"))
  for foe in game.enemies:
+  if bool(foe.get("first_keeper299",false)):preload("res://scripts/first_keeper299.gd").draw_cues(c,game,foe,camera);continue
   if not foe.get("tutorial",false) or float(foe.get("windup",0))<=0:continue
   var point:Vector2=foe.pos-camera;var reach=110.0 if foe.boss else 63.0;var duration=1.05 if foe.boss else .72
   preload("res://scripts/combat_cues.gd").danger(c,point,reach,float(foe.windup),duration)
@@ -112,10 +111,12 @@ func key(c:Node2D,at:Vector2,value:String)->void:
 func draw_on(c:Node2D)->void:
  if not active:return
  var center=game.VIEW.x*.5
- var heading="Light the beacon • E" if not started and not game.mobile.enabled else "Light the beacon • Interact" if not started else "Mini-boss" if wave==4 else "Wave %d / 3" % maxi(1,wave)
+ var heading="Light the beacon • E" if not started and not game.mobile.enabled else "Light the beacon • Interact" if not started else "Dawnstone Keeper" if wave==4 else "Wave %d / 3" % maxi(1,wave)
+ var top=160.0 if wave==4 else 107.0
+ if wave==4:heading="Watch the lantern • Dodge the marked attacks"
  var width=game.font.get_string_size(heading,HORIZONTAL_ALIGNMENT_LEFT,-1,18).x
- c.draw_rect(Rect2(center-width*.5-12,107,width+24,31),Color(.025,.08,.12,.88))
- c.draw_string(game.font,Vector2(center-width*.5,129),heading,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ecd397"))
+ c.draw_rect(Rect2(center-width*.5-12,top,width+24,31),Color(.025,.08,.12,.88))
+ c.draw_string(game.font,Vector2(center-width*.5,top+22),heading,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ecd397"))
  var origin=Vector2(38,163)
  if not moved:
   if game.mobile.enabled:

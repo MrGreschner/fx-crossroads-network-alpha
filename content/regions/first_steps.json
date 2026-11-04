@@ -8,7 +8,7 @@
   "unlock_cost": 0,
   "background": "#24372c",
   "accent": "#3e6244",
-  "boss_health": 190,
+  "boss_health": 220,
   "xp_per_level": 1,
   "terrain": "forest",
   "boss_secondary": "stomp",
@@ -17,6 +17,6 @@
   "enemies": [],
   "boss_damage": 9,
   "boss_speed": 65,
-  "boss_name": "Bramble Captain",
-  "boss_sprite": "bramble_boss"
+  "boss_name": "Dawnstone Keeper",
+  "boss_sprite": "dawnstone_keeper"
 }

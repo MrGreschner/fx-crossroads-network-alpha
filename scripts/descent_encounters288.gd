@@ -272,6 +272,49 @@ func miniboss_step(e:Dictionary,target:String,goal:Vector2,dt:float)->bool:
       b.arena(e,int(s.aux));wave(e,"FINAL COAL VERDICT","#e3b380",2.6,150)
     g.status_label.text="COAL ARCHIVIST IMMUNE • %d archive seals remain"%count
  return true
+func range_step299(e:Dictionary,target:String,goal:Vector2,dt:float)->bool:
+ if str(d.Book.profile(str(e.type)).get("rank",""))!="mid":return false
+ if bool(e.get("buried",false)) or float(e.get("hidden_until",0))>d.clock:return false
+ var n=int(str(e.type).trim_prefix("ds_mid_"))-1
+ if not e.has("range299"):e.range299={"cooldown":2.2+n*.09,"left":0.0,"aim":d.pack(goal),"casts":0}
+ var r:Dictionary=e.range299
+ r.cooldown=float(r.cooldown)-dt
+ if float(r.left)>0:
+  e.moving=0;r.left=maxf(0,float(r.left)-dt)
+  if float(r.left)<=0:
+   var aim=d.point(r.aim);var direction=(aim-(e.pos as Vector2)).normalized();var damage=float(d.Book.profile(e.type).damage)
+   match n:
+    0: # Cragjaw throws a heavy pick-like stone; splash pressure at long range.
+     b.shoot(e,e.pos,direction,damage,"boulder",target)
+    1:
+     for i in 5:b.shoot(e,e.pos,direction.rotated((i-2)*.18),damage*.8,"shard",target)
+     cloud(int(e.uid),aim,110,3.5,1.0)
+    2:
+     for i in 3:b.shoot(e,e.pos,direction.rotated((i-1)*.16),damage,"shard",target)
+    3:
+     for i in 3:b.shoot(e,e.pos,direction.rotated((i-1)*.5),damage*.85,"homing",target)
+    4:
+     b.event("COMPASS SPEAR • Step off the bearing",[b.rect(Rect2(Vector2(85,aim.y-48),Vector2(g.FIELD.size.x-170,96)))],damage,int(e.uid),.7,.35)
+     b.shoot(e,e.pos,direction,damage*.9,"shard",target)
+    5:
+     for i in 3:b.event("ROOT LANCES • Leave the marked roots",[b.circle(d.safe(aim+Vector2((i-1)*150,0)),90)],damage,int(e.uid),.75+i*.25,.35)
+    6:b.event("WICK CHAIN • Leave the lit tether",[b.rect(Rect2(aim-Vector2(170,55),Vector2(340,110)))],damage,int(e.uid),.8,.4);b.shoot(e,e.pos,direction,damage*.8,"homing",target)
+    7:
+     for i in 3:b.event("OSSUARY FLASK • Leave the falling glass",[b.circle(d.safe(aim+Vector2((i-1)*135,absf(i-1)*65)),95)],damage*.9,int(e.uid),.8+i*.25,.4)
+    8:
+     for i in 5:b.shoot(e,e.pos,direction.rotated((i-2)*.24),damage*.9,"shard",target)
+    9:
+     for i in 3:b.shoot(e,e.pos,direction.rotated((i-1)*.24),damage*.8,"boulder",target)
+   r.casts=int(r.casts)+1;e.strike=.3
+  return true
+ if float(r.cooldown)>0:return false
+ var names=["FOREMAN'S STONE PICK","FUNGAL SPORE FAN","COPPER VENOM NEEDLES","TOLLING NOTES","COMPASS SPEAR","ROOT LANCES","WICK CHAIN","OSSUARY FLASKS","THORN SCATTER","CINDER COMETS"]
+ r.aim=d.pack(b.predict(target,.35));r.left=1.2;r.cooldown=7.0+n*.12
+ e.moving=0
+ var aim=d.point(r.aim)
+ b.event(names[n]+" • Dodge the marked attack",[b.circle(aim,85)],0,int(e.uid),1.2,.01)
+ g.status_label.text=str(d.Book.profile(e.type).name)+" • "+names[n]
+ return true
 func step(dt:float)->void:
  if not retired.is_empty():
   for owner in retired:
@@ -323,6 +366,9 @@ func draw(c:Node2D,camera:Vector2)->void:
   if phase in ["rooted","brewing","archive"]:c.draw_arc(p+Vector2(0,-32),75,0,TAU,40,Color("#b4c694",.8),3,true)
   if phase in ["dig","spores","map","root_warning","steal","brew_warning","survey","archive_warning"]:
    c.draw_arc(p,80,0,TAU,40,Color("#ead4a7",.7),3,true)
+  var extra:Dictionary=e.get("range299",{})
+  if float(extra.get("left",0))>0:
+   var aimed=d.point(extra.aim)-camera;c.draw_line(p,aimed,Color(.89,.74,.48,.65),2,true);c.draw_arc(p,62,0,TAU,32,Color("#e8cb92"),3,true)
   var helper=helpers.get(str(e.uid),{})
   if not helper.is_empty():
    var role=str(helper.role)

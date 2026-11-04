@@ -760,7 +760,7 @@
       "form": "foreman",
       "role": "guardian",
       "health": 340,
-      "speed": 75,
+      "speed": 138,
       "damage": 13.0,
       "attacks": [
         "slam",
@@ -785,7 +785,7 @@
       "form": "mender",
       "role": "guardian",
       "health": 405,
-      "speed": 77,
+      "speed": 142,
       "damage": 13.9,
       "attacks": [
         "web",
@@ -810,7 +810,7 @@
       "form": "scorpion",
       "role": "guardian",
       "health": 470,
-      "speed": 79,
+      "speed": 146,
       "damage": 14.8,
       "attacks": [
         "charge",
@@ -835,7 +835,7 @@
       "form": "snail",
       "role": "guardian",
       "health": 535,
-      "speed": 81,
+      "speed": 150,
       "damage": 15.7,
       "attacks": [
         "pulse",
@@ -860,7 +860,7 @@
       "form": "owl",
       "role": "guardian",
       "health": 600,
-      "speed": 83,
+      "speed": 154,
       "damage": 16.6,
       "attacks": [
         "pincer",
@@ -885,7 +885,7 @@
       "form": "rootling",
       "role": "guardian",
       "health": 665,
-      "speed": 85,
+      "speed": 158,
       "damage": 17.5,
       "attacks": [
         "fan",
@@ -910,7 +910,7 @@
       "form": "sneak",
       "role": "guardian",
       "health": 730,
-      "speed": 87,
+      "speed": 162,
       "damage": 18.4,
       "attacks": [
         "burst",
@@ -935,7 +935,7 @@
       "form": "caller",
       "role": "guardian",
       "health": 795,
-      "speed": 89,
+      "speed": 166,
       "damage": 19.3,
       "attacks": [
         "pull",
@@ -960,7 +960,7 @@
       "form": "mantis",
       "role": "guardian",
       "health": 860,
-      "speed": 91,
+      "speed": 170,
       "damage": 20.2,
       "attacks": [
         "firewheel",
@@ -985,7 +985,7 @@
       "form": "totem",
       "role": "guardian",
       "health": 925,
-      "speed": 93,
+      "speed": 174,
       "damage": 21.1,
       "attacks": [
         "beam",
@@ -1010,7 +1010,7 @@
       "form": "wickeater",
       "role": "guardian",
       "health": 700,
-      "speed": 75,
+      "speed": 150,
       "damage": 13.0,
       "attacks": [
         "slam",
@@ -1037,7 +1037,7 @@
       "form": "spider",
       "role": "guardian",
       "health": 830,
-      "speed": 77,
+      "speed": 154,
       "damage": 13.9,
       "attacks": [
         "web",
@@ -1064,7 +1064,7 @@
       "form": "shark",
       "role": "guardian",
       "health": 960,
-      "speed": 79,
+      "speed": 158,
       "damage": 14.8,
       "attacks": [
         "charge",
@@ -1091,7 +1091,7 @@
       "form": "jelly",
       "role": "guardian",
       "health": 1090,
-      "speed": 81,
+      "speed": 162,
       "damage": 15.7,
       "attacks": [
         "pulse",
@@ -1118,7 +1118,7 @@
       "form": "crab",
       "role": "guardian",
       "health": 1220,
-      "speed": 83,
+      "speed": 166,
       "damage": 16.6,
       "attacks": [
         "pincer",
@@ -1145,7 +1145,7 @@
       "form": "hydra",
       "role": "guardian",
       "health": 1350,
-      "speed": 85,
+      "speed": 170,
       "damage": 17.5,
       "attacks": [
         "fan",
@@ -1172,7 +1172,7 @@
       "form": "urchin",
       "role": "guardian",
       "health": 1480,
-      "speed": 87,
+      "speed": 174,
       "damage": 18.4,
       "attacks": [
         "burst",
@@ -1199,7 +1199,7 @@
       "form": "bell",
       "role": "guardian",
       "health": 1610,
-      "speed": 89,
+      "speed": 178,
       "damage": 19.3,
       "attacks": [
         "pull",
@@ -1226,7 +1226,7 @@
       "form": "drake",
       "role": "guardian",
       "health": 1740,
-      "speed": 91,
+      "speed": 182,
       "damage": 20.2,
       "attacks": [
         "firewheel",
@@ -1253,7 +1253,7 @@
       "form": "angel",
       "role": "guardian",
       "health": 1870,
-      "speed": 93,
+      "speed": 186,
       "damage": 21.1,
       "attacks": [
         "firewheel",
@@ -1283,7 +1283,7 @@
       "form": "tortoise",
       "role": "guardian",
       "health": 18000,
-      "speed": 93,
+      "speed": 160,
       "damage": 30,
       "attacks": [
         "firewheel",

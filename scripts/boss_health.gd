@@ -13,6 +13,7 @@ static func draw_on(g:Node2D)->void:
  var defs:Dictionary=g.enemy_defs if g.has_method("_attack_request") else g.enemy_types
  var title=str(list[0].get("name",defs.get(str(list[0].type),{}).get("name",str(region.get("name","Realm"))+" Guardian")))
  if str(list[0].type) in ["boss","fragment"]:title="Quarry Guardians" if str(region.get("id",""))=="quarry" else "Plague Director" if str(region.get("id",""))=="zombie" else "Cryowarden" if str(region.get("id",""))=="ice" else "Grove Rootwarden"
+ if bool(list[0].get("first_keeper299",false)):title="Dawnstone Keeper"
  if list.size()>1:
   if list.any(func(e):return bool(e.get("between_guardian",false))):
    var names=[]

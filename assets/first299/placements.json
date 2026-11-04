@@ -1,0 +1,1138 @@
+[
+  {
+    "kind": "grand_gateway",
+    "pos": [
+      1000,
+      260
+    ],
+    "size": [
+      650,
+      410
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ram_arch",
+    "pos": [
+      235,
+      270
+    ],
+    "size": [
+      250,
+      235
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "keeper_cottage",
+    "pos": [
+      1640,
+      280
+    ],
+    "size": [
+      290,
+      270
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "keeper_statue",
+    "pos": [
+      1460,
+      300
+    ],
+    "size": [
+      160,
+      205
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "sunrise_relief",
+    "pos": [
+      640,
+      275
+    ],
+    "size": [
+      260,
+      240
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "aqueduct",
+    "pos": [
+      80,
+      1040
+    ],
+    "size": [
+      230,
+      190
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "stone_bridge",
+    "pos": [
+      1730,
+      1110
+    ],
+    "size": [
+      230,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "old_oak",
+    "pos": [
+      250,
+      1000
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "gold_birch",
+    "pos": [
+      360,
+      220
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "magnolia",
+    "pos": [
+      470,
+      1000
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "cedar",
+    "pos": [
+      580,
+      220
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "old_oak",
+    "pos": [
+      690,
+      1000
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "gold_birch",
+    "pos": [
+      800,
+      220
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "magnolia",
+    "pos": [
+      910,
+      1000
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "cedar",
+    "pos": [
+      1020,
+      220
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "old_oak",
+    "pos": [
+      1130,
+      1000
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "gold_birch",
+    "pos": [
+      1240,
+      220
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "magnolia",
+    "pos": [
+      1350,
+      1000
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "cedar",
+    "pos": [
+      1460,
+      220
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "moss_boulders",
+    "pos": [
+      60,
+      420
+    ],
+    "size": [
+      110,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      60,
+      690
+    ],
+    "size": [
+      110,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "flower_shrub",
+    "pos": [
+      60,
+      960
+    ],
+    "size": [
+      110,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "moss_boulders",
+    "pos": [
+      1730,
+      420
+    ],
+    "size": [
+      110,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      1730,
+      690
+    ],
+    "size": [
+      110,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "flower_shrub",
+    "pos": [
+      1730,
+      960
+    ],
+    "size": [
+      110,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      360,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      560,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      760,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      960,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1160,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1360,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1560,
+      970
+    ],
+    "size": [
+      155,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "vine_urn",
+    "pos": [
+      270,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "garden_lantern",
+    "pos": [
+      470,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "garden_bench",
+    "pos": [
+      680,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "mushroom_log",
+    "pos": [
+      900,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "waystone",
+    "pos": [
+      1110,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "column_ruins",
+    "pos": [
+      1330,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "root_wall",
+    "pos": [
+      1550,
+      1130
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "signboard",
+    "pos": [
+      330,
+      315
+    ],
+    "size": [
+      105,
+      110
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "garden_bench",
+    "pos": [
+      100,
+      775
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "spring_fountain",
+    "pos": [
+      1710,
+      370
+    ],
+    "size": [
+      160,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "beacon_crystal",
+    "pos": [
+      470,
+      600
+    ],
+    "size": [
+      68,
+      95
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "garden_steps",
+    "pos": [
+      215,
+      870
+    ],
+    "size": [
+      100,
+      65
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "training_dais",
+    "pos": [
+      1300,
+      600
+    ],
+    "size": [
+      330,
+      220
+    ],
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "flat": true
+  },
+  {
+    "kind": "sun_inlay",
+    "pos": [
+      800,
+      620
+    ],
+    "size": [
+      170,
+      120
+    ],
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "flat": true
+  },
+  {
+    "kind": "seedling_barrow",
+    "pos": [
+      1650,
+      1030
+    ],
+    "size": [
+      120,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "practice_cart",
+    "pos": [
+      80,
+      285
+    ],
+    "size": [
+      135,
+      120
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "water_table",
+    "pos": [
+      1710,
+      780
+    ],
+    "size": [
+      120,
+      120
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      100,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      176,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      252,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      328,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      404,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      480,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      556,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      632,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      708,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      784,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      860,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      936,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      1012,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      1088,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      1164,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      1240,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      1316,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      1392,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      1468,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      1544,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "ferns",
+    "pos": [
+      1620,
+      1170
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  },
+  {
+    "kind": "bluebells",
+    "pos": [
+      1696,
+      150
+    ],
+    "size": [
+      55,
+      55
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "flat": false
+  }
+]

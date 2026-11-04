@@ -200,40 +200,13 @@ func snapshot()->Dictionary:return {"pursuers":manager.game.adventure.pursuers.s
 func restore(v:Dictionary)->void:
  manager.game.adventure.pursuers.receive(v.get("pursuers",{}));trial_seconds=float(v.get("trial_seconds",0));seal_drops=v.get("seal_drops",{});dead=v.get("dead",{});collected=v.get("collected",{});explored=v.get("explored",{});sleeping=v.get("sleeping",{});carried=clampi(int(v.get("carried",0)),0,100000);farthest=clampi(int(v.get("farthest",0)),0,14);guardian=bool(v.get("guardian",false));current=Vector2i(999,999);stream();reveal_map()
 func draw_ground(g:Node2D,camera:Vector2)->void:
+ var points:Array=manager.active_points() if manager.has_method("active_points") else [manager.game.position_in_world]
+ preload("res://scripts/between_environment300.gd").draw(self,g,camera,points)
  var view=Rect2(camera,g.VIEW).grow(100)
  for k in chunks:
   var d=chunks[k];var box=Rect2(d.center-Vector2.ONE*SIZE*.5,Vector2.ONE*SIZE)
   if not view.intersects(box):continue
-  var theme=THEMES[d.theme];var pos=d.center-camera
-  g.draw_texture_rect(g.art[theme.tile],Rect2(box.position-camera,box.size),true,Color(.72,.80,.84))
-  var path=Color("#666963") if d.theme==0 else Color("#907b70") if d.theme==1 else Color("#718e91")
-  g.draw_rect(Rect2(pos-Vector2(72,SIZE*.5),Vector2(144,SIZE)),path)
-  g.draw_rect(Rect2(pos-Vector2(SIZE*.5,72),Vector2(SIZE,144)),path)
-  if d.form==1:
-   g.draw_arc(pos,165,0,TAU,32,Color(theme.color,.25),8,true)
-   for n in 6:g.draw_circle(pos+Vector2.from_angle(n*TAU/6)*170,9,Color(theme.color,.65))
-  elif d.form==2:
-   for side in [-1,1]:g.draw_rect(Rect2(pos+Vector2(side*205-18,-70),Vector2(36,140)),Color("#789099"));g.draw_rect(Rect2(pos+Vector2(side*205-25,-78),Vector2(50,12)),Color(theme.color))
-  elif d.form==3 and d.theme==2:
-   g.draw_texture_rect(g.art.river_water,Rect2(pos+Vector2(-SIZE*.5,100),Vector2(SIZE,110)),true)
-   g.draw_rect(Rect2(pos+Vector2(-125,90),Vector2(250,130)),Color("#ae9270"))
-   for n in 10:g.draw_line(pos+Vector2(-120+n*25,90),pos+Vector2(-120+n*25,220),Color("#6c665a"),2)
-  var cell=Vector2i(d.cell[0],d.cell[1])
-  for dir in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
-   if bool(d.exits[key(dir)]):continue
-   var edge=d.center+Vector2(dir)*SIZE*.5-camera
-   g.draw_rect(Rect2(edge-(Vector2(42,SIZE*.5) if dir.x!=0 else Vector2(SIZE*.5,42)),Vector2(84,SIZE) if dir.x!=0 else Vector2(SIZE,84)),Color("#30434b"))
-   for n in 12:
-    var p=edge+(Vector2(0,-352+n*64) if dir.x!=0 else Vector2(-352+n*64,0))
-    if Rect2(Vector2.ZERO,g.VIEW).grow(100).has_point(p):g.draw_sprite(theme.prop,p+camera-Vector2(32,48),Vector2(64,84))
-  for v in d.props:
-   var p=Vector2(v[0],v[1])
-   g.draw_sprite(theme.prop,p-Vector2(32,60),Vector2(64,84))
-  var water:Dictionary=d.get("fishing",{})
-  if not water.is_empty():
-   var wet=Vector2(water.water[0],water.water[1])-camera
-   g.draw_circle(wet,72,Color("#233f4d"));g.draw_circle(wet,61,Color(theme.color).darkened(.50));g.draw_arc(wet,66,0,TAU,28,Color(theme.color).darkened(.1),4,true)
-   g.draw_line(wet+Vector2(-35,15),wet+Vector2(29,15),Color(.65,.88,.9,.35),2,true)
+  var theme=preload("res://scripts/between_environment300.gd").profile(self,d)
   if d.ring>0 and not collected.has(k):
    var p=d.crystal-camera
    for n in range(3,0,-1):g.draw_circle(p,17+n*7,Color(.4,.95,.9,.035))

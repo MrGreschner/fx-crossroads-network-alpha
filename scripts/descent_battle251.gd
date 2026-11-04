@@ -89,7 +89,9 @@ func predict(id:String,lead:float)->Vector2:
  return d.safe(game.positions.get(id,game.FIELD.size*.5)+(motion.get(id,Vector2.ZERO) as Vector2).limit_length(330)*lead)
 func shoot(e:Dictionary,at:Vector2,dir:Vector2,damage:float,kind:String,target:String="")->void:
  if bolts.size()>=36:return
- bolts.append({"pos":d.pack(at),"dir":d.pack(dir.normalized()),"speed":300.0 if kind in ["homing","cinder"] else 370.0 if kind=="boulder" else 480.0,"left":4.2 if kind in ["homing","cinder"] else 3.0,"age":0.0,"kind":kind,"damage":damage,"target":target,"boss":full(e),"owner":int(e.uid),"radius":18 if kind=="boulder" else 9})
+ var lifetime=4.2 if kind in ["homing","cinder"] else 3.0
+ if str(d.Book.profile(e.type).get("rank","")) in ["mid","boss","beyond"] and game.positions.has(target):lifetime=maxf(lifetime,minf(7.0,(at.distance_to(game.positions[target])+250)/(300.0 if kind in ["homing","cinder"] else 370.0 if kind=="boulder" else 480.0)))
+ bolts.append({"pos":d.pack(at),"dir":d.pack(dir.normalized()),"speed":300.0 if kind in ["homing","cinder"] else 370.0 if kind=="boulder" else 480.0,"left":lifetime,"age":0.0,"kind":kind,"damage":damage,"target":target,"boss":full(e),"owner":int(e.uid),"radius":18 if kind=="boulder" else 9})
 func execute(e:Dictionary,style:String,aim_at:Vector2,target:String)->bool:
  var spec=d.Book.profile(str(e.type));var damage=float(spec.damage);var at:Vector2=e.pos
  if style in ["shard_lances","magma_lances"]:
