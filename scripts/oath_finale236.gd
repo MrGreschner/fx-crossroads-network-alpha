@@ -232,20 +232,21 @@ func make_mesh(v:PackedVector3Array,c:PackedColorArray,idx:PackedInt32Array)->Ar
  var m=ArrayMesh.new();m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);return m
 func draw_ground(c:CanvasItem,camera:Vector2)->void:
  if not in_depth():return
- if floor_mesh==null:
-  var vertices=PackedVector3Array();var colors=PackedColorArray();var indices=PackedInt32Array()
-  for rect in FLOORS+[ARENA]:
-   quad(vertices,colors,indices,rect,Color("#0d111a"))
-   for x in ceili(rect.size.x/128):
-    for y in ceili(rect.size.y/128):
-     var size=Vector2(minf(124,rect.size.x-x*128-4),minf(124,rect.size.y-y*128-4))
-     if size.x<=0 or size.y<=0:continue
-     var tile=Rect2(rect.position+Vector2(x*128+2,y*128+2),size)
-     var tint=Color("#343b42") if (x*13+y*17)%4 else Color("#424346")
-     quad(vertices,colors,indices,tile,tint);quad(vertices,colors,indices,Rect2(tile.position,Vector2(tile.size.x,3)),Color("#626366"));quad(vertices,colors,indices,Rect2(tile.position+Vector2(0,tile.size.y-5),Vector2(tile.size.x,5)),Color("#222a33"));quad(vertices,colors,indices,Rect2(tile.position+Vector2(tile.size.x-4,3),Vector2(4,tile.size.y-5)),Color("#292d35"))
-     if (x+y)%5==0:quad(vertices,colors,indices,Rect2(tile.position+Vector2(17,31),Vector2(31,2)),Color("#535557"))
-  floor_mesh=make_mesh(vertices,colors,indices)
- c.draw_rect(Rect2(Vector2.ZERO,c.get_viewport_rect().size),Color("#020308"));c.draw_set_transform(-camera);c.draw_mesh(floor_mesh,null);c.draw_set_transform(Vector2.ZERO)
+ if not preload("res://scripts/sovereign_environment298.gd").draw(self,c,camera):
+  if floor_mesh==null:
+   var vertices=PackedVector3Array();var colors=PackedColorArray();var indices=PackedInt32Array()
+   for rect in FLOORS+[ARENA]:
+    quad(vertices,colors,indices,rect,Color("#0d111a"))
+    for x in ceili(rect.size.x/128):
+     for y in ceili(rect.size.y/128):
+      var size=Vector2(minf(124,rect.size.x-x*128-4),minf(124,rect.size.y-y*128-4))
+      if size.x<=0 or size.y<=0:continue
+      var tile=Rect2(rect.position+Vector2(x*128+2,y*128+2),size)
+      var tint=Color("#343b42") if (x*13+y*17)%4 else Color("#424346")
+      quad(vertices,colors,indices,tile,tint);quad(vertices,colors,indices,Rect2(tile.position,Vector2(tile.size.x,3)),Color("#626366"));quad(vertices,colors,indices,Rect2(tile.position+Vector2(0,tile.size.y-5),Vector2(tile.size.x,5)),Color("#222a33"));quad(vertices,colors,indices,Rect2(tile.position+Vector2(tile.size.x-4,3),Vector2(4,tile.size.y-5)),Color("#292d35"))
+      if (x+y)%5==0:quad(vertices,colors,indices,Rect2(tile.position+Vector2(17,31),Vector2(31,2)),Color("#535557"))
+   floor_mesh=make_mesh(vertices,colors,indices)
+  c.draw_rect(Rect2(Vector2.ZERO,c.get_viewport_rect().size),Color("#020308"));c.draw_set_transform(-camera);c.draw_mesh(floor_mesh,null);c.draw_set_transform(Vector2.ZERO)
  for rect in lava:
   if not Rect2(camera,c.get_viewport_rect().size).grow(50).intersects(rect):continue
   var box=Rect2(rect.position-camera,rect.size);var edges=PackedVector2Array([box.position+Vector2(12,0),box.position+Vector2(box.size.x-23,4),box.position+Vector2(box.size.x,20),box.end-Vector2(5,16),box.end-Vector2(24,0),box.position+Vector2(18,box.size.y-3),box.position+Vector2(0,box.size.y-20),box.position+Vector2(3,19)])

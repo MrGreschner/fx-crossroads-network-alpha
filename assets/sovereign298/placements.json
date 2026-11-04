@@ -1,0 +1,2195 @@
+[
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      15250,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_frame",
+    "pos": [
+      15250,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      15640,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ash_basin",
+    "pos": [
+      15640,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chained_urn",
+    "pos": [
+      16030,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ram_gargoyle",
+    "pos": [
+      16030,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_frame",
+    "pos": [
+      16420,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      16420,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ash_basin",
+    "pos": [
+      16810,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      16810,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ram_gargoyle",
+    "pos": [
+      17200,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      17590,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_frame",
+    "pos": [
+      17590,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      17980,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ash_basin",
+    "pos": [
+      17980,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chained_urn",
+    "pos": [
+      18370,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ram_gargoyle",
+    "pos": [
+      18370,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_frame",
+    "pos": [
+      18760,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      18760,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ash_basin",
+    "pos": [
+      19150,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      19150,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ram_gargoyle",
+    "pos": [
+      19540,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chained_urn",
+    "pos": [
+      19540,
+      1378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      19930,
+      736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15120,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15900,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      16680,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17460,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      18240,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      19020,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      19800,
+      742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "coal_brazier",
+    "pos": [
+      15700,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "volcanic_crystal",
+    "pos": [
+      16090,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "charred_banner",
+    "pos": [
+      16090,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "reliquary_chest",
+    "pos": [
+      16480,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "basalt_rubble",
+    "pos": [
+      16480,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "coal_brazier",
+    "pos": [
+      16870,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "volcanic_crystal",
+    "pos": [
+      17260,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "basalt_rubble",
+    "pos": [
+      17650,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "reliquary_chest",
+    "pos": [
+      17650,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "coal_brazier",
+    "pos": [
+      18040,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "bronze_astrolabe",
+    "pos": [
+      18040,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "volcanic_crystal",
+    "pos": [
+      18430,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "reliquary_chest",
+    "pos": [
+      18820,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "basalt_rubble",
+    "pos": [
+      18820,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "bronze_astrolabe",
+    "pos": [
+      19210,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "coal_brazier",
+    "pos": [
+      19210,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "charred_banner",
+    "pos": [
+      19600,
+      1636
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "volcanic_crystal",
+    "pos": [
+      19600,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "reliquary_chest",
+    "pos": [
+      19990,
+      2278
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15570,
+      1642
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      16350,
+      1642
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17130,
+      1642
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17910,
+      1642
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      18690,
+      1642
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      19470,
+      1642
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "bronze_chimes",
+    "pos": [
+      15700,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "sarcophagus",
+    "pos": [
+      16090,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_buttress",
+    "pos": [
+      16090,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oracle_lectern",
+    "pos": [
+      16480,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "memorial_candles",
+    "pos": [
+      16480,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "bronze_chimes",
+    "pos": [
+      16870,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ivory_column",
+    "pos": [
+      16870,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_buttress",
+    "pos": [
+      17260,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "sarcophagus",
+    "pos": [
+      17260,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "memorial_candles",
+    "pos": [
+      17650,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oracle_lectern",
+    "pos": [
+      17650,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ivory_column",
+    "pos": [
+      18040,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "bronze_chimes",
+    "pos": [
+      18040,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "sarcophagus",
+    "pos": [
+      18430,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_buttress",
+    "pos": [
+      18430,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oracle_lectern",
+    "pos": [
+      18820,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "memorial_candles",
+    "pos": [
+      18820,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "bronze_chimes",
+    "pos": [
+      19210,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ivory_column",
+    "pos": [
+      19210,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_buttress",
+    "pos": [
+      19600,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "sarcophagus",
+    "pos": [
+      19600,
+      3378
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "memorial_candles",
+    "pos": [
+      19990,
+      2736
+    ],
+    "size": [
+      104,
+      118
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      16350,
+      2742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17130,
+      2742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17910,
+      2742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      18690,
+      2742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      19470,
+      2742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      20250,
+      2742
+    ],
+    "size": [
+      180,
+      90
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "crown_arch",
+    "pos": [
+      15230,
+      730
+    ],
+    "size": [
+      390,
+      350
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "caged_crown",
+    "pos": [
+      20480,
+      1450
+    ],
+    "size": [
+      180,
+      225
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "winged_crown",
+    "pos": [
+      15230,
+      2500
+    ],
+    "size": [
+      245,
+      245
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "armillary_sphere",
+    "pos": [
+      20520,
+      3400
+    ],
+    "size": [
+      190,
+      220
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "chamber_arch",
+    "pos": [
+      17150,
+      3530
+    ],
+    "size": [
+      310,
+      250
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "sun_glass",
+    "pos": [
+      18150,
+      1610
+    ],
+    "size": [
+      245,
+      280
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "depth_lantern",
+    "pos": [
+      20510,
+      2050
+    ],
+    "size": [
+      110,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "depth_lantern",
+    "pos": [
+      15270,
+      1950
+    ],
+    "size": [
+      110,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "depth_lantern",
+    "pos": [
+      20540,
+      3000
+    ],
+    "size": [
+      110,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "depth_lantern",
+    "pos": [
+      16800,
+      3790
+    ],
+    "size": [
+      110,
+      140
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "sovereign_throne",
+    "pos": [
+      16450,
+      5380
+    ],
+    "size": [
+      520,
+      475
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "winged_crown",
+    "pos": [
+      15700,
+      5368
+    ],
+    "size": [
+      260,
+      230
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "sun_glass",
+    "pos": [
+      17200,
+      5368
+    ],
+    "size": [
+      280,
+      320
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "ivory_column",
+    "pos": [
+      15025,
+      5570
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "charred_banner",
+    "pos": [
+      15025,
+      5835
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_buttress",
+    "pos": [
+      15025,
+      6100
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "caged_crown",
+    "pos": [
+      15025,
+      6365
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ram_gargoyle",
+    "pos": [
+      15025,
+      6630
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      15025,
+      6895
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "memorial_candles",
+    "pos": [
+      15025,
+      7160
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15270,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15960,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      16650,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17340,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ivory_column",
+    "pos": [
+      17875,
+      5570
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "charred_banner",
+    "pos": [
+      17875,
+      5835
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "chain_buttress",
+    "pos": [
+      17875,
+      6100
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "caged_crown",
+    "pos": [
+      17875,
+      6365
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "ram_gargoyle",
+    "pos": [
+      17875,
+      6630
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "oath_obelisk",
+    "pos": [
+      17875,
+      6895
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "memorial_candles",
+    "pos": [
+      17875,
+      7160
+    ],
+    "size": [
+      130,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15270,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      15960,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      16650,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      17340,
+      7640
+    ],
+    "size": [
+      210,
+      100
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      15500,
+      7770
+    ],
+    "size": [
+      145,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      16050,
+      7770
+    ],
+    "size": [
+      145,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      16850,
+      7770
+    ],
+    "size": [
+      145,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "royal_memorial",
+    "pos": [
+      17400,
+      7770
+    ],
+    "size": [
+      145,
+      160
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "victory_beacon",
+    "pos": [
+      16450,
+      7780
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "socket_altar",
+    "pos": [
+      16900,
+      5350
+    ],
+    "size": [
+      165,
+      125
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "fallen_crown",
+    "pos": [
+      16000,
+      5340
+    ],
+    "size": [
+      160,
+      115
+    ],
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "category": "perimeter",
+    "fade": true
+  },
+  {
+    "kind": "star_inlay",
+    "pos": [
+      17100,
+      1360
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "category": "flat",
+    "fade": false
+  },
+  {
+    "kind": "crown_medallion",
+    "pos": [
+      18300,
+      2260
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "category": "flat",
+    "fade": false
+  },
+  {
+    "kind": "star_inlay",
+    "pos": [
+      16450,
+      6250
+    ],
+    "size": [
+      780,
+      600
+    ],
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "category": "flat",
+    "fade": false
+  }
+]

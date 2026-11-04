@@ -1,0 +1,551 @@
+{
+  "crown_arch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "bounds": [
+      16,
+      29,
+      240,
+      241
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 0,
+    "texture": "crown_arch_large"
+  },
+  "oath_obelisk": {
+    "region": [
+      128,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      29,
+      10,
+      99,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 1
+  },
+  "depth_lantern": {
+    "region": [
+      256,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      30,
+      10,
+      97,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 2
+  },
+  "balustrade": {
+    "region": [
+      384,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      54,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 3
+  },
+  "chained_urn": {
+    "region": [
+      512,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      24,
+      10,
+      104,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 4
+  },
+  "royal_memorial": {
+    "region": [
+      640,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      18,
+      10,
+      110,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 5
+  },
+  "basalt_rubble": {
+    "region": [
+      768,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      46,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 6
+  },
+  "coal_brazier": {
+    "region": [
+      896,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      20,
+      11,
+      107,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 7
+  },
+  "chain_frame": {
+    "region": [
+      0,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      34,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 8
+  },
+  "reliquary_chest": {
+    "region": [
+      128,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      36,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 9
+  },
+  "crown_medallion": {
+    "region": [
+      256,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      12,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 10
+  },
+  "volcanic_crystal": {
+    "region": [
+      384,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      32,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 11
+  },
+  "ram_gargoyle": {
+    "region": [
+      512,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      18,
+      10,
+      110,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 12
+  },
+  "charred_banner": {
+    "region": [
+      640,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      28,
+      10,
+      99,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 13
+  },
+  "bronze_astrolabe": {
+    "region": [
+      768,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      21,
+      10,
+      107,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 14
+  },
+  "ash_basin": {
+    "region": [
+      896,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      30,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 1,
+    "source_cell": 15
+  },
+  "sovereign_throne": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "bounds": [
+      16,
+      19,
+      240,
+      241
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 0,
+    "texture": "sovereign_throne_large"
+  },
+  "chamber_arch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "bounds": [
+      16,
+      24,
+      240,
+      241
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 1,
+    "texture": "chamber_arch_large"
+  },
+  "ivory_column": {
+    "region": [
+      256,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      39,
+      10,
+      89,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 2
+  },
+  "winged_crown": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "bounds": [
+      16,
+      17,
+      239,
+      241
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 3,
+    "texture": "winged_crown_large"
+  },
+  "armillary_sphere": {
+    "region": [
+      512,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      22,
+      10,
+      106,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 4
+  },
+  "sarcophagus": {
+    "region": [
+      640,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      51,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 5
+  },
+  "socket_altar": {
+    "region": [
+      768,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      56,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 6
+  },
+  "caged_crown": {
+    "region": [
+      896,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      26,
+      11,
+      102,
+      119
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 7
+  },
+  "sun_glass": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "bounds": [
+      16,
+      19,
+      240,
+      241
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 8,
+    "texture": "sun_glass_large"
+  },
+  "oracle_lectern": {
+    "region": [
+      128,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      15,
+      10,
+      113,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 9
+  },
+  "bronze_chimes": {
+    "region": [
+      256,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      13,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 10
+  },
+  "star_inlay": {
+    "region": [
+      384,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      48,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 11
+  },
+  "chain_buttress": {
+    "region": [
+      512,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      18,
+      10,
+      109,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 12
+  },
+  "memorial_candles": {
+    "region": [
+      640,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      10,
+      10,
+      118,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 13
+  },
+  "fallen_crown": {
+    "region": [
+      768,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      35,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 14
+  },
+  "victory_beacon": {
+    "region": [
+      896,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      9,
+      14,
+      119,
+      120
+    ],
+    "palette_limit": 36,
+    "source_sheet": 2,
+    "source_cell": 15
+  }
+}
