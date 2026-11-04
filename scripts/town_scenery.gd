@@ -194,23 +194,7 @@ func draw_pond_source(c:Node2D,camera:Vector2)->void:
 	c.draw_polyline(walk,Color("#8e9871"),44,true);c.draw_polyline(walk,Color("#c2b28a"),30,true)
 	for point in [Vector2(105,440),Vector2(188,456),Vector2(413,375)]:
 		var q:Vector2=point-camera; c.draw_circle(q,5,Color("#d4c495"));c.draw_circle(q+Vector2(12,6),3,Color("#dcb7c9"))
-	# Pond, lily pads and visible swimming fish.
-	var pond:Vector2=POND-camera
-	var rim:PackedVector2Array=PackedVector2Array()
-	var water:PackedVector2Array=PackedVector2Array()
-	for n in 48:
-		var angle:float=n*TAU/48
-		rim.append(pond+Vector2(cos(angle)*(220+sin(angle*3)*9),sin(angle)*(132+cos(angle*5)*7)))
-		water.append(pond+Vector2(cos(angle)*(202+sin(angle*3)*7),sin(angle)*(114+cos(angle*5)*5)))
-	c.draw_colored_polygon(rim,Color("#899e7c"))
-	c.draw_colored_polygon(water,Color("#3e8592"))
-	for n in 12:
-		var a:float=n*TAU/12;var shore:Vector2=pond+Vector2(cos(a)*214,sin(a)*124)
-		c.draw_circle(shore,5+n%3,Color("#b4b295"))
-		if n%3==0:
-			for k in 3:c.draw_line(shore+Vector2(k*4,0),shore+Vector2(k*4-3,-18-k*4),Color("#789569"),2,true)
-	c.draw_circle(pond+Vector2(18,-3),44,Color(.15,.39,.47,.15))
-	c.draw_polyline(water,Color(.65,.86,.83,.3),2,true)
+	preload("res://scripts/pond_bank263.gd").draw(c,camera)
 
 func draw_lookout_source(c:Node2D,camera:Vector2,font:Font)->void:
 	var tower:Vector2=TOWER-camera

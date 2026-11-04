@@ -1,0 +1,1010 @@
+[
+  {
+    "kind": "bell_winch",
+    "pos": [
+      7550,
+      940
+    ],
+    "size": [
+      180,
+      250
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bell_tower",
+    "pos": [
+      7020,
+      1025.0
+    ],
+    "size": [
+      380,
+      430
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "clock",
+    "pos": [
+      4050,
+      1080
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "vent",
+    "pos": [
+      5960,
+      1100
+    ],
+    "size": [
+      250,
+      200
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "board",
+    "pos": [
+      3850.0,
+      1108.5
+    ],
+    "size": [
+      230,
+      137.75
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "vent",
+    "pos": [
+      7820,
+      1190
+    ],
+    "size": [
+      270,
+      210
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "telescope",
+    "pos": [
+      4230,
+      1220
+    ],
+    "size": [
+      145,
+      205
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "microscope",
+    "pos": [
+      4600,
+      1260
+    ],
+    "size": [
+      175,
+      165
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      2930,
+      1264.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3150,
+      1264.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3370,
+      1264.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3590,
+      1264.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bookshelf",
+    "pos": [
+      1000,
+      1463.0
+    ],
+    "size": [
+      190,
+      159.5
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bookshelf",
+    "pos": [
+      1350,
+      1463.0
+    ],
+    "size": [
+      190,
+      159.5
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bookshelf",
+    "pos": [
+      1700,
+      1463.0
+    ],
+    "size": [
+      190,
+      159.5
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      2930,
+      1504.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3150,
+      1504.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3370,
+      1504.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3590,
+      1504.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "checkout",
+    "pos": [
+      1880,
+      1550
+    ],
+    "size": [
+      260,
+      195
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "book_trolley",
+    "pos": [
+      1000,
+      1650
+    ],
+    "size": [
+      115,
+      120
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      2930,
+      1744.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3150,
+      1744.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3370,
+      1744.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "desk",
+    "pos": [
+      3590,
+      1744.0
+    ],
+    "size": [
+      125,
+      116.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "chemistry",
+    "pos": [
+      4550,
+      1790
+    ],
+    "size": [
+      220,
+      185
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "robotics",
+    "pos": [
+      3250,
+      2000
+    ],
+    "size": [
+      155,
+      135
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "orrery",
+    "pos": [
+      3050,
+      2110
+    ],
+    "size": [
+      170,
+      230
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bookshelf",
+    "pos": [
+      1000,
+      2153.0
+    ],
+    "size": [
+      190,
+      159.5
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bookshelf",
+    "pos": [
+      1350,
+      2153.0
+    ],
+    "size": [
+      190,
+      159.5
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bookshelf",
+    "pos": [
+      1700,
+      2153.0
+    ],
+    "size": [
+      190,
+      159.5
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "globe",
+    "pos": [
+      1950,
+      2300
+    ],
+    "size": [
+      130,
+      165
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "robotics",
+    "pos": [
+      4270,
+      2380
+    ],
+    "size": [
+      155,
+      135
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "robotics",
+    "pos": [
+      3500,
+      2400
+    ],
+    "size": [
+      155,
+      135
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "book_trolley",
+    "pos": [
+      1000,
+      2450
+    ],
+    "size": [
+      115,
+      120
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "robotics",
+    "pos": [
+      4530,
+      2460
+    ],
+    "size": [
+      250,
+      220
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "terrarium",
+    "pos": [
+      3060,
+      2510
+    ],
+    "size": [
+      230,
+      200
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      7820,
+      2560
+    ],
+    "size": [
+      250,
+      170
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "armchair",
+    "pos": [
+      2050,
+      2580
+    ],
+    "size": [
+      200,
+      210
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      5900,
+      2600
+    ],
+    "size": [
+      250,
+      170
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "book_trolley",
+    "pos": [
+      2000,
+      2600
+    ],
+    "size": [
+      115,
+      120
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "book_trolley",
+    "pos": [
+      1030,
+      2660
+    ],
+    "size": [
+      155,
+      160
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "weather_vane",
+    "pos": [
+      7860,
+      3030
+    ],
+    "size": [
+      150,
+      220
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "stairs",
+    "pos": [
+      6300,
+      3070
+    ],
+    "size": [
+      180,
+      140
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      1300,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      1800,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      2300,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      2800,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      3300,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      3800,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "locker",
+    "pos": [
+      4300,
+      3106.5
+    ],
+    "size": [
+      115,
+      210.25
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "stairs",
+    "pos": [
+      4670,
+      3260
+    ],
+    "size": [
+      180,
+      140
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "clock",
+    "pos": [
+      2700,
+      3430
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "noticeboard",
+    "pos": [
+      2500,
+      3500
+    ],
+    "size": [
+      170,
+      165
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "noticeboard",
+    "pos": [
+      3100,
+      3500
+    ],
+    "size": [
+      170,
+      165
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "hoop",
+    "pos": [
+      1000,
+      3608.0
+    ],
+    "size": [
+      145,
+      232.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "hoop",
+    "pos": [
+      1600,
+      3608.0
+    ],
+    "size": [
+      145,
+      232.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "counter",
+    "pos": [
+      3950,
+      3770.0
+    ],
+    "size": [
+      230,
+      145.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "counter",
+    "pos": [
+      4950,
+      3770.0
+    ],
+    "size": [
+      230,
+      145.0
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "noticeboard",
+    "pos": [
+      3290,
+      3810
+    ],
+    "size": [
+      210,
+      200
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "trophies",
+    "pos": [
+      2280,
+      3820
+    ],
+    "size": [
+      170,
+      220
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "vending",
+    "pos": [
+      5000,
+      3990
+    ],
+    "size": [
+      145,
+      220
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "aquarium",
+    "pos": [
+      3400,
+      4180
+    ],
+    "size": [
+      230,
+      210
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lunch_table",
+    "pos": [
+      4000,
+      4360
+    ],
+    "size": [
+      250,
+      155
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lunch_table",
+    "pos": [
+      4880,
+      4360
+    ],
+    "size": [
+      250,
+      155
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "entrance",
+    "pos": [
+      2750,
+      4380
+    ],
+    "size": [
+      600,
+      310
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "ball_rack",
+    "pos": [
+      980,
+      4400
+    ],
+    "size": [
+      155,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "mats",
+    "pos": [
+      1640,
+      4400
+    ],
+    "size": [
+      155,
+      140
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      1050,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      1770,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      3100,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      4200,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      4800,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      6400,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      7600,
+      4800
+    ],
+    "size": [
+      170,
+      130
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      1880.0,
+      5198.5
+    ],
+    "size": [
+      180,
+      137.75
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      5988.0,
+      5198.5
+    ],
+    "size": [
+      180,
+      137.75
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      1050,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      1770,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      3100,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      4200,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      4800,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      6400,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      7600,
+      5500
+    ],
+    "size": [
+      185,
+      110
+    ],
+    "layer": "ground"
+  }
+]

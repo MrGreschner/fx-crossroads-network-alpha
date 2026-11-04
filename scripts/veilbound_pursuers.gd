@@ -17,7 +17,7 @@ static func install(g:Node,multi:bool)->void:
  var defs:Dictionary=g.enemy_defs if multi else g.enemy_types
  for kit in kits():
   defs[kit.id]=kit
-  for pose in ["idle","walk1","walk2","attack","0","1"]:g.art[str(kit.id)+"_"+pose]=preload("res://scripts/source_art.gd").texture("res://assets/"+str(kit.id)+"_"+pose+".svg")
+  for pose in ["idle","walk1","walk2","attack","0","1"]:g.art[str(kit.id)+"_"+pose]=preload("res://scripts/hunter_art283.gd").texture(str(kit.id),pose)
 func reset()->void:clock=0;next_visit=180;visits=0;serial=0;survivors.clear();marks.clear();portals.clear()
 func active()->bool:
  if adventure.arcade:

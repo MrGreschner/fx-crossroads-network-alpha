@@ -1,0 +1,1286 @@
+[
+  {
+    "kind": "seedlings",
+    "pos": [
+      400,
+      185
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      505,
+      185
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      1050,
+      185
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      1155,
+      185
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      1800,
+      185
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      1905,
+      185
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      2500,
+      185
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      2605,
+      185
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      3200,
+      185
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      3305,
+      185
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      3920,
+      185
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      4025,
+      185
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      300.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      492.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      684.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      876.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      1068.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      1260.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      1452.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      1644.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      1836.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      2028.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      2220.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      2412.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      2604.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      2796.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      2988.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      3180.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      3372.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      3564.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      3756.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      3948.0,
+      330.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      3200,
+      350
+    ],
+    "size": [
+      110,
+      105
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      3305,
+      360
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "pump",
+    "pos": [
+      3100,
+      640
+    ],
+    "size": [
+      220,
+      210
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "clock",
+    "pos": [
+      1820,
+      640
+    ],
+    "size": [
+      120,
+      180
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "tank",
+    "pos": [
+      3350,
+      650
+    ],
+    "size": [
+      200,
+      260
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      1100,
+      650
+    ],
+    "size": [
+      110,
+      105
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      1205,
+      660
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "sorter",
+    "pos": [
+      2300,
+      700
+    ],
+    "size": [
+      240,
+      220
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "pipe",
+    "pos": [
+      3290,
+      790
+    ],
+    "size": [
+      115,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      700,
+      840
+    ],
+    "size": [
+      135,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "hourglass",
+    "pos": [
+      3730,
+      860
+    ],
+    "size": [
+      190,
+      240
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "cog",
+    "pos": [
+      2160,
+      880
+    ],
+    "size": [
+      115,
+      115
+    ],
+    "layer": "gear"
+  },
+  {
+    "kind": "greenhouse",
+    "pos": [
+      880,
+      900
+    ],
+    "size": [
+      420,
+      360
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "conveyor",
+    "pos": [
+      2480,
+      900
+    ],
+    "size": [
+      260,
+      160
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      1100,
+      900
+    ],
+    "size": [
+      130,
+      120
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "boiler",
+    "pos": [
+      3120,
+      920
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "shed",
+    "pos": [
+      1920,
+      960
+    ],
+    "size": [
+      290,
+      260
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "arch",
+    "pos": [
+      260,
+      1450
+    ],
+    "size": [
+      250,
+      260
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      540,
+      1460
+    ],
+    "size": [
+      90,
+      150
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      810,
+      1460
+    ],
+    "size": [
+      90,
+      150
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "toolbox",
+    "pos": [
+      2040,
+      1710
+    ],
+    "size": [
+      135,
+      110
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      380,
+      1720
+    ],
+    "size": [
+      110,
+      105
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      485,
+      1730
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "workbench",
+    "pos": [
+      1880,
+      1770
+    ],
+    "size": [
+      200,
+      180
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "potting_bench",
+    "pos": [
+      970,
+      1770
+    ],
+    "size": [
+      210,
+      170
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "flywheel",
+    "pos": [
+      2510,
+      1780
+    ],
+    "size": [
+      130,
+      130
+    ],
+    "layer": "gear"
+  },
+  {
+    "kind": "watering_can",
+    "pos": [
+      1140,
+      1810
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "planter",
+    "pos": [
+      3480,
+      1830
+    ],
+    "size": [
+      140,
+      140
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      3970,
+      1850
+    ],
+    "size": [
+      110,
+      105
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      4075,
+      1860
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "spinner",
+    "pos": [
+      2650,
+      1870
+    ],
+    "size": [
+      120,
+      180
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "trough",
+    "pos": [
+      3150,
+      1870
+    ],
+    "size": [
+      220,
+      145
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "sacks",
+    "pos": [
+      2160,
+      1880
+    ],
+    "size": [
+      130,
+      135
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "compost",
+    "pos": [
+      2370,
+      1900
+    ],
+    "size": [
+      150,
+      150
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "ladder",
+    "pos": [
+      520,
+      1900
+    ],
+    "size": [
+      120,
+      170
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      720,
+      1910
+    ],
+    "size": [
+      145,
+      150
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      1100,
+      1950
+    ],
+    "size": [
+      210,
+      115
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "press",
+    "pos": [
+      3390,
+      2060
+    ],
+    "size": [
+      170,
+      200
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "fence",
+    "pos": [
+      830,
+      2100
+    ],
+    "size": [
+      210,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      2520,
+      2230
+    ],
+    "size": [
+      110,
+      105
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      2625,
+      2240
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "crates",
+    "pos": [
+      1800,
+      2260
+    ],
+    "size": [
+      110,
+      105
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "baskets",
+    "pos": [
+      1905,
+      2270
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      300.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      492.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      684.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      876.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      1068.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      1260.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      1452.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      1644.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      1836.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      2028.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      2220.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      2412.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      2604.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      2796.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      2988.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      3180.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      3372.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      3564.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "apple_tree",
+    "pos": [
+      3756.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "pear_tree",
+    "pos": [
+      3948.0,
+      2310.0
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "layer": "tree"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      400,
+      2440
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      505,
+      2440
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      1050,
+      2440
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      1155,
+      2440
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      1800,
+      2440
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      1905,
+      2440
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      2500,
+      2440
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      2605,
+      2440
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      3200,
+      2440
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      3305,
+      2440
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "seedlings",
+    "pos": [
+      3920,
+      2440
+    ],
+    "size": [
+      170,
+      100
+    ],
+    "layer": "ground"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      4025,
+      2440
+    ],
+    "size": [
+      75,
+      125
+    ],
+    "layer": "ground"
+  }
+]

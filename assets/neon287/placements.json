@@ -1,0 +1,2182 @@
+[
+  {
+    "kind": "crane_pedestal",
+    "pos": [
+      330,
+      3040
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "bridge_girders",
+    "pos": [
+      685,
+      4370
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "cargo_crates",
+    "pos": [
+      1040,
+      3040
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "bridge_model",
+    "pos": [
+      1395,
+      4370
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "oath_plaque",
+    "pos": [
+      1750,
+      3040
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      385,
+      3036
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      1040,
+      3036
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      1695,
+      3036
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      330,
+      3770
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      355,
+      3145
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      588,
+      3462
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      821,
+      3779
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      1054,
+      4096
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      1287,
+      3303
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1520,
+      3620
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      383,
+      3937
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      616,
+      4254
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      849,
+      3461
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1082,
+      3778
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      1315,
+      4095
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      1548,
+      3302
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      411,
+      3619
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      644,
+      3936
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      877,
+      4253
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      1110,
+      3460
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      1343,
+      3777
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1576,
+      4094
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "smelter",
+    "pos": [
+      330,
+      940
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "chain_hoist",
+    "pos": [
+      685,
+      2670
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "toolbench",
+    "pos": [
+      1040,
+      940
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "saw_cradle",
+    "pos": [
+      1395,
+      2670
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "arm_rack",
+    "pos": [
+      1750,
+      940
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      385,
+      936
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      1040,
+      936
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      1695,
+      936
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      330,
+      1890
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      422,
+      1136
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      655,
+      1453
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      888,
+      1770
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      1121,
+      2087
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      1354,
+      2404
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1587,
+      1211
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      450,
+      1528
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      683,
+      1845
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      916,
+      2162
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1149,
+      2479
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      1382,
+      1286
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      1615,
+      1603
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      478,
+      1920
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      711,
+      2237
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      944,
+      2554
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      1177,
+      1361
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      1410,
+      1678
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1643,
+      1995
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "memory_terminal",
+    "pos": [
+      2590,
+      390
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "power_cells",
+    "pos": [
+      2995,
+      1720
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "cable_reel",
+    "pos": [
+      3400,
+      390
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "receiver_drum",
+    "pos": [
+      3805,
+      1720
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "charging_dock",
+    "pos": [
+      4210,
+      390
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      2645,
+      386
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      3400,
+      386
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      4155,
+      386
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      2590,
+      1120
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      2749,
+      677
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      2982,
+      994
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      3215,
+      1311
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      3448,
+      518
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      3681,
+      835
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3914,
+      1152
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      4147,
+      1469
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      2810,
+      676
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      3043,
+      993
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3276,
+      1310
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      3509,
+      517
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      3742,
+      834
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      3975,
+      1151
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      2638,
+      1468
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      2871,
+      675
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      3104,
+      992
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      3337,
+      1309
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3570,
+      516
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pump",
+    "pos": [
+      2590,
+      2590
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "filter_barrels",
+    "pos": [
+      2995,
+      4370
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "pipe_junction",
+    "pos": [
+      3400,
+      2590
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "gauges",
+    "pos": [
+      3805,
+      4370
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "aether_condenser",
+    "pos": [
+      4210,
+      2590
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      2645,
+      2586
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      3400,
+      2586
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      4155,
+      2586
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      2590,
+      3568
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      2816,
+      2968
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3049,
+      3285
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      3282,
+      3602
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      3515,
+      3919
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      3748,
+      4236
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3981,
+      2993
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      2644,
+      3310
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      2877,
+      3627
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      3110,
+      3944
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3343,
+      2701
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      3576,
+      3018
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      3809,
+      3335
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      4042,
+      3652
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      2705,
+      3969
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      2938,
+      2726
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      3171,
+      3043
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      3637,
+      3677
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "uplink_obelisk",
+    "pos": [
+      4890,
+      1340
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "receiver_drum",
+    "pos": [
+      5195,
+      3370
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "observation_window",
+    "pos": [
+      5500,
+      1340
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "aether_condenser",
+    "pos": [
+      5805,
+      3370
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "factory_bell",
+    "pos": [
+      6110,
+      1340
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      4945,
+      1336
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      5500,
+      1336
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      6055,
+      1336
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      4890,
+      2455
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      5183,
+      1809
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      5416,
+      2126
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      5649,
+      2443
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      5882,
+      2760
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      4945,
+      3077
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      5178,
+      1584
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      5411,
+      1901
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      5877,
+      2535
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      4940,
+      2852
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      5173,
+      3169
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      5406,
+      1676
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      5639,
+      1993
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      5872,
+      2310
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      4935,
+      2627
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      5168,
+      2944
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      5401,
+      1451
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      5634,
+      1768
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "tool_cart",
+    "pos": [
+      390,
+      340
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "scrap_bin",
+    "pos": [
+      595,
+      770
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "power_cells",
+    "pos": [
+      800,
+      340
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "arm_rack",
+    "pos": [
+      1005,
+      770
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "toolbench",
+    "pos": [
+      1210,
+      340
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      445,
+      336
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      800,
+      336
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      1155,
+      336
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      390,
+      575
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      750,
+      480
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      983,
+      587
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      446,
+      484
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      679,
+      591
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      912,
+      488
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      1145,
+      595
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      608,
+      492
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      841,
+      599
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "seedling_shelf",
+    "pos": [
+      4690,
+      3940
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      5020,
+      4470
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "tool_cart",
+    "pos": [
+      5350,
+      3940
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "observation_window",
+    "pos": [
+      5680,
+      4470
+    ],
+    "size": [
+      132,
+      150
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "oath_plaque",
+    "pos": [
+      6010,
+      3940
+    ],
+    "size": [
+      158,
+      185
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      4745,
+      3936
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      5350,
+      3936
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "lamp_chain",
+    "pos": [
+      5955,
+      3936
+    ],
+    "size": [
+      90,
+      60
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "vent_turbine",
+    "pos": [
+      4690,
+      4230
+    ],
+    "size": [
+      74,
+      74
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      5117,
+      4281
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      5350,
+      4288
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      5583,
+      4295
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      5816,
+      4302
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "repair_patch",
+    "pos": [
+      4779,
+      4309
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "safety_plate",
+    "pos": [
+      5012,
+      4316
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "armoured_cables",
+    "pos": [
+      5245,
+      4323
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "conduit_cross",
+    "pos": [
+      5478,
+      4330
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "bridge_model",
+    "pos": [
+      450,
+      4320
+    ],
+    "size": [
+      160,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oath_plaque",
+    "pos": [
+      1630,
+      4260
+    ],
+    "size": [
+      90,
+      118
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      4700,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      4880,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      5060,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      5240,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      5420,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      5600,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fern_planter",
+    "pos": [
+      5780,
+      4470
+    ],
+    "size": [
+      92,
+      84
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "seedling_shelf",
+    "pos": [
+      5890,
+      4430
+    ],
+    "size": [
+      120,
+      130
+    ],
+    "layer": "raised"
+  }
+]

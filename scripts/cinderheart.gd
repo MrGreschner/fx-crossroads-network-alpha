@@ -283,6 +283,7 @@ func draw_lava(c:Node2D,cam:Vector2,bounds:Rect2,deep:bool)->void:
  for halo in [85,55,25]:c.draw_rect(Rect2(bounds.position-cam-Vector2.ONE*halo,bounds.size+Vector2.ONE*halo*2),Color(1,.31,.07,.035))
  var screen=Rect2(bounds.position-cam,bounds.size)
  c.draw_rect(screen,Color('#512c38') if deep else Color('#af492f'));c.draw_rect(screen.grow(-8),Color('#e77630'));c.draw_rect(screen.grow(-18),Color('#f7a43e'))
+ preload("res://scripts/cinderheart_environment290.gd").material(self,c,"lava",bounds.grow(-8),cam)
  var clipped=bounds.intersection(Rect2(cam,c.VIEW).grow(50))
  for x in range(floori(clipped.position.x/46)*46,ceili(clipped.end.x),46):
   for y in range(floori(clipped.position.y/46)*46,ceili(clipped.end.y),46):
@@ -294,6 +295,9 @@ func draw_lava(c:Node2D,cam:Vector2,bounds:Rect2,deep:bool)->void:
  c.draw_rect(screen,Color('#342d3a'),false,7)
  c.draw_string(ThemeDB.fallback_font,screen.position+Vector2(12,22),"DEEP LAVA • FATAL" if deep else "SHALLOW LAVA • BURNS",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color('#ffe3a1'))
 func draw_world(c:Node2D,cam:Vector2)->void:
+ if not active:return
+ if not preload("res://scripts/cinderheart_environment290.gd").draw_world(self,c,cam):draw_legacy_world(c,cam)
+func draw_legacy_world(c:Node2D,cam:Vector2)->void:
  if not active:return
  var view=Rect2(cam,c.VIEW).grow(180)
  c.draw_rect(Rect2(-cam,v(data.size)),Color('#1d1a29'))

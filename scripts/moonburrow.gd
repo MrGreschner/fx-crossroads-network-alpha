@@ -10,6 +10,7 @@ var prop_grid:Dictionary={}
 var flashes:Array=[]
 var travel:Dictionary={}
 var grid:AStarGrid2D
+var visual268=preload("res://scripts/hollow_art268.gd").new()
 const SIZE=Vector2(6400,7000)
 const ENEMY_POINTS=[Vector2(1120, 1580),Vector2(1790, 2100),Vector2(2770, 1750),Vector2(980, 5300),Vector2(2640, 4900),Vector2(1560, 1100),Vector2(3180, 1900),Vector2(4900, 1740),Vector2(2140, 5450),Vector2(5290, 5300),Vector2(1800, 700),Vector2(3490, 1750),Vector2(4760, 2900),Vector2(5540, 2000),Vector2(3550, 5600),Vector2(1180, 2400),Vector2(2900, 2700),Vector2(5200, 1120),Vector2(4200, 5800),Vector2(5850, 5540),Vector2(3070, 700),Vector2(1220, 4600),Vector2(1940, 4700),Vector2(3430, 5300),Vector2(5150, 4520),Vector2(1610, 1900),Vector2(3340, 1250),Vector2(5680, 1750),Vector2(3800, 4950),Vector2(3000, 6370)]
 const TYPES=["burrowfang","shardspitter","fusehare","rootwarden","echo_bat","sap_nurse","flintroot"]
@@ -17,6 +18,7 @@ const CAVES=[Rect2(200,4400,1300,1200),Rect2(1850,4450,1100,1150),Rect2(3300,470
 const SURFACE_GATES=[Vector2(750,1100),Vector2(2650,2550),Vector2(3750,900),Vector2(5650,2600)]
 const CAVE_GATES=[Vector2(650,4900),Vector2(2350,5000),Vector2(4200,5250),Vector2(5700,5000)]
 func setup(id:String)->void:
+ visual268.reset()
  active=id=="moonburrow";clock=0;mines.clear();props.clear();prop_grid.clear();flashes.clear();travel.clear();grid=null
  if not active:return
  var random:=RandomNumberGenerator.new();random.seed=4026
@@ -195,6 +197,8 @@ func step(delta:float)->void:
 func snapshot()->Dictionary:return {"mines":mines,"flashes":flashes,"clock":clock}
 func receive(data:Dictionary)->void:mines=data.get("mines",[]);flashes=data.get("flashes",[]);clock=float(data.get("clock",clock))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
+ visual268.draw_world(self,canvas,camera)
+func draw_world_legacy268(canvas:Node2D,camera:Vector2)->void:
  var visible:=Rect2(camera-Vector2(160,160),canvas.VIEW+Vector2(320,320))
  if camera.y+canvas.VIEW.y>4100:
   canvas.draw_rect(Rect2(Vector2(0,4000)-camera,Vector2(6400,3000)),Color("#151e2b"))
@@ -304,13 +308,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_circle(point,13,Color("#695548"));canvas.draw_circle(point,7,Color("#dbb98a"));canvas.draw_line(point-Vector2(10,0),point+Vector2(10,0),Color("#fae4b2"),2)
   canvas.draw_arc(point,70,0,TAU,32,Color(1,.64,.3,.12),1,true)
   if float(mine.time)>=0:canvas.draw_arc(point,100,0,TAU,36,Color(1,.5,.2,.5+.3*sin(clock*20)),3,true)
- for enemy in adventure.foes():
-  if not bool(enemy.get("buried",false)):continue
-  var point:Vector2=enemy.pos-camera
-  if not Rect2(Vector2(-100,-100),canvas.VIEW+Vector2(200,200)).has_point(point):continue
-  var size:=24.0 if not bool(enemy.get("boss",false)) else 58.0
-  for n in 3:canvas.draw_arc(point+Vector2((n-1)*12,4),size+n*4,PI*.12,PI*.9,16,Color(.72,.61,.43,.5),3,true)
-  for n in 5:canvas.draw_circle(point+Vector2((n-2)*11,sin(clock*9+n)*5),3,Color("#a69b79"))
+ visual268.draw_trails(canvas,camera)
  for flash in flashes:
   var point:Vector2=adventure.vec(flash.pos)-camera
   var tint:=Color(.6,.9,.5,.4) if bool(flash.get("heal",false)) else Color(.9,.7,.4,.4)

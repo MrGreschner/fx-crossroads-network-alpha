@@ -69,7 +69,8 @@ func setup(id:String)->void:
  active=id=="confluence";initialized=false;done=false;cleared=[];started=[];warnings.clear();bolts.clear();clock=0;spring_used=false;floor_rects.clear();floor_mesh=null;water_mesh=null
  if active:
   for rect in ROOMS+WALKS:floor_rects.append(rect.grow(-15))
-  if not is_inside_tree() or not get_tree().root.has_meta("fx_dedicated_server"):build_floor_mesh()
+  # Exact floor art is baked offline in V265.
+  pass
 func floor_at(p:Vector2)->bool:
  for r in floor_rects:
   if r.has_point(p):return true
@@ -201,6 +202,8 @@ func receive(d:Dictionary)->void:
  for value in d.get("started",[]):started.append(int(value))
  warnings=d.get("warnings",[]);bolts=d.get("bolts",[]);clock=float(d.get("clock",0));spring_used=bool(d.get("spring_used",false))
 func draw_world(c:Node2D,camera:Vector2)->void:
+ preload("res://scripts/realm_art265.gd").foundry(self,c,camera)
+func draw_world_legacy(c:Node2D,camera:Vector2)->void:
  if not active:return
  var extent=c.get_viewport_rect().size
  var view:=Rect2(camera-Vector2(150,150),extent+Vector2(300,300))

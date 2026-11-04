@@ -1,0 +1,12 @@
+{
+  "source": "tools/release282/art_sources282/merchant_original.png",
+  "prompt": "tools/release282/prompts.json",
+  "canvas": [
+    160,
+    96
+  ],
+  "palette_max": 48,
+  "filter": "nearest",
+  "logical_axis": "front/right; service window faces viewer on long broadside",
+  "scope": "realm carts only; town artwork unchanged"
+}

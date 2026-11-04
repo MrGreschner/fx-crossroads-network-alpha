@@ -1,5 +1,6 @@
 extends RefCounted
 const C=preload("res://scripts/business_district/catalog.gd")
+const M=preload("res://scripts/market_environment292.gd")
 const FONT=preload("res://assets/fonts/CrossroadsUI.ttf")
 static var actor_sources:Dictionary={}
 static var actor_textures:Dictionary={}
@@ -19,13 +20,10 @@ static func box(c:CanvasItem,p:Vector2,s:Vector2,col:Color,h:float=12)->void:
  rect(c,p+Vector2(3,5),s,Color(0,0,0,.17));rect(c,p-Vector2(0,h),s,col)
  c.draw_colored_polygon(PackedVector2Array([p+Vector2(0,s.y-h),p+Vector2(s.x,s.y-h),p+s,p+Vector2(0,s.y)]),col.darkened(.25))
  c.draw_line(p-Vector2(0,h),p+Vector2(s.x,-h),col.lightened(.2),2,true)
-static func pot(c:CanvasItem,p:Vector2,col:Color=Color("#709365"))->void:
- ellipse(c,p+Vector2(2,4),Vector2(15,7),Color(0,0,0,.15));box(c,p-Vector2(10,6),Vector2(20,15),Color("#a8795d"),12)
- for d in [Vector2(-8,-25),Vector2(8,-29),Vector2(0,-35)]:c.draw_line(p-Vector2(0,12),p+d,Color("#526f57"),3,true);ellipse(c,p+d,Vector2(10,6),col)
+static func pot(c:CanvasItem,p:Vector2,_col:Color=Color("#709365"))->void:
+ M.planter(c,p)
 static func tree(c:CanvasItem,p:Vector2,type:int=0)->void:
- ellipse(c,p+Vector2(12,5),Vector2(46,17),Color(0,0,0,.14));c.draw_line(p,p-Vector2(4,68),Color("#786247"),13);c.draw_line(p-Vector2(3,33),p+Vector2(25,-66),Color("#786247"),6)
- for pair in [[-25,-64,29],[9,-84,35],[32,-58,30],[-7,-48,28]]:
-  var at=p+Vector2(pair[0],pair[1]);ellipse(c,at,Vector2(pair[2],pair[2]*.72),Color("#647d56") if type%2==0 else Color("#a7a169"));c.draw_arc(at-Vector2(2,5),pair[2]*.7,3.7,5.6,12,Color("#bdc591",.35),3,true)
+ M.tree(c,p,type)
 static func lantern(c:CanvasItem,p:Vector2,night:bool)->void:
  c.draw_line(p,p-Vector2(0,70),Color("#485f61"),5);c.draw_line(p-Vector2(5,70),p+Vector2(11,-70),Color("#485f61"),4)
  rect(c,p+Vector2(5,-70),Vector2(12,19),Color("#4d605f"));rect(c,p+Vector2(8,-67),Vector2(6,12),Color("#f4cf80") if night else Color("#b9bd9d"))
@@ -83,34 +81,45 @@ static func ground(c:CanvasItem,night:bool)->void:
   for x in range(0,2350,32):
    if posmod(x*17+y*11,97)<18:rect(c,Vector2(x+3,y+2),Vector2(3,5),Color("#9ba17d",.5))
  for y in [60,680,1300,1920,2540,3160]:
-  rect(c,Vector2(35,y),Vector2(2280,90),Color("#c6b99c"))
+  M.panel(c,"stone",Rect2(Vector2(35,y),Vector2(2280,90)),Color("#e4e4da"))
   for x in range(40,2300,36):
    c.draw_line(Vector2(x,y+5),Vector2(x-12,y+84),Color("#a99e84",.4),1)
    for yy in [27,53]:c.draw_line(Vector2(x-10,y+yy),Vector2(x+23,y+yy),Color("#a99e84",.3),1)
  for x in [38,752,1472,2192]:
-  rect(c,Vector2(x,130),Vector2(64,3150),Color("#c6b99c"))
+  M.panel(c,"stone",Rect2(Vector2(x,130),Vector2(64,3150)),Color("#e4e4da"))
   for y in range(140,3250,40):c.draw_line(Vector2(x+3,y),Vector2(x+60,y),Color("#a99e84",.35),1)
  rect(c,Vector2(-100,-70),Vector2(2600,90),Color("#557f89"));c.draw_line(Vector2(-100,22),Vector2(2500,22),Color("#c1b68f"),8)
  for v in C.ventures():
   var p=C.plot(v.id)
   tree(c,p+Vector2(-48,400));lantern(c,p+Vector2(590,420),night);pot(c,p+Vector2(607,50))
-  box(c,p+Vector2(60,500),Vector2(95,22),Color("#927e61"),12);pot(c,p+Vector2(190,515))
+  M.street(c,"bench",Rect2(p+Vector2(55,461),Vector2(100,62)));pot(c,p+Vector2(190,515))
 static func premises(c:CanvasItem,v:Dictionary,b:Dictionary,selected:bool,night:bool)->void:
  c.draw_set_transform(C.plot(v.id),0,Vector2.ONE*1.3)
  var p=Vector2.ZERO;var owned=not b.is_empty();var accent=Color(v.colors[0]);var dark=Color(v.colors[1]);var pale=Color(v.colors[2])
  # Cutaway premises: back roof, side walls and an open trading floor.
  rounded(c,Rect2(p+Vector2(6,20),Vector2(446,325)),Color(0,0,0,.14),8)
  rounded(c,Rect2(p-Vector2(6,10),Vector2(452,333)),Color("#4f6560") if selected else Color("#8d9075"),8)
- rect(c,p,Vector2(440,310),Color("#d2c3a0"));rect(c,p+Vector2(9,12),Vector2(422,290),Color("#b7a184"))
+ rect(c,p,Vector2(440,310),Color("#d2c3a0"));M.panel(c,"oak",Rect2(p+Vector2(9,12),Vector2(422,290)))
  for y in range(15,304,21):
   c.draw_line(p+Vector2(10,y),p+Vector2(430,y),Color("#897c65",.38),1)
   for x in range(20+(y%3)*12,430,80):c.draw_line(p+Vector2(x,y),p+Vector2(x,y+20),Color("#897c65",.25),1)
  for x in range(14,430,52):rect(c,p+Vector2(x,20),Vector2(2,278),Color("#dbcaab",.12))
- rect(c,p+Vector2(0,-45),Vector2(440,72),Color("#d9cdb2"));rect(c,p+Vector2(-4,15),Vector2(12,290),dark);rect(c,p+Vector2(432,15),Vector2(12,290),dark)
- c.draw_colored_polygon(PackedVector2Array([p+Vector2(-16,-45),p+Vector2(18,-95),p+Vector2(421,-95),p+Vector2(457,-45)]),dark)
- for x in range(25,430,27):c.draw_line(p+Vector2(x,-88),p+Vector2(x-12,-48),accent.lightened(.18),2)
+ M.panel(c,"plaster",Rect2(p+Vector2(0,-45),Vector2(440,72)))
+ for x in [-4,432]:
+  M.panel(c,"stone",Rect2(p+Vector2(x,15),Vector2(12,290)))
+  rect(c,p+Vector2(x+9,15),Vector2(3,290),dark.darkened(.1))
+  box(c,p+Vector2(x-3,304),Vector2(18,12),pale,8)
+ # Broad roof planes, ridge and eave shadows give depth without hiding the work floor.
+ M.roof(c,M.roof_id(v.id),PackedVector2Array([p+Vector2(-16,-45),p+Vector2(18,-95),p+Vector2(421,-95),p+Vector2(457,-45)]))
+ c.draw_line(p+Vector2(18,-95),p+Vector2(421,-95),pale.darkened(.16),5)
+ rect(c,p+Vector2(-16,-45),Vector2(473,7),dark.darkened(.15))
+ c.draw_line(p+Vector2(-16,-44),p+Vector2(457,-44),accent.lightened(.15),2)
  rounded(c,Rect2(p+Vector2(70,-43),Vector2(302,42)),dark.darkened(.18),4)
- ink(c,p+Vector2(88,-16),b.get("name",v.name).left(26),21,pale)
+ var business_name=str(b.get("name",v.name))
+ var sign_size=mini(21,int(274.0/maxf(1,FONT.get_string_size(business_name,HORIZONTAL_ALIGNMENT_LEFT,-1,21).x)*21))
+ sign_size=maxi(12,sign_size)
+ if FONT.get_string_size(business_name,HORIZONTAL_ALIGNMENT_LEFT,-1,sign_size).x>274:business_name=business_name.left(29)+"…"
+ ink(c,p+Vector2(88,-16),business_name,sign_size,Color("#fff0cd"))
  # Timber cornices, wall seams and patterned roof keep the cutaway grounded in town.
  for y in [-78,-62]:c.draw_line(p+Vector2(3,y),p+Vector2(440,y),dark.lightened(.15),1)
  for y in [-39,-9]:

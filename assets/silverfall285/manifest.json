@@ -1,0 +1,682 @@
+{
+  "willow": {
+    "index": 0,
+    "region": [
+      0,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      11,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 0
+  },
+  "birch": {
+    "index": 1,
+    "region": [
+      160,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      27,
+      10,
+      132,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 1
+  },
+  "river_rock": {
+    "index": 2,
+    "region": [
+      320,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      46,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 2
+  },
+  "fern": {
+    "index": 3,
+    "region": [
+      480,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      43,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 3
+  },
+  "hearth": {
+    "index": 4,
+    "region": [
+      640,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      25,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 4
+  },
+  "tearoom": {
+    "index": 5,
+    "region": [
+      800,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      18,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 5
+  },
+  "observatory": {
+    "index": 6,
+    "region": [
+      960,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      32,
+      10,
+      128,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 6
+  },
+  "lantern": {
+    "index": 7,
+    "region": [
+      1120,
+      0,
+      160,
+      160
+    ],
+    "bounds": [
+      34,
+      10,
+      125,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 7
+  },
+  "ruin": {
+    "index": 8,
+    "region": [
+      0,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      42,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 8
+  },
+  "ferry": {
+    "index": 9,
+    "region": [
+      160,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      47,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 9
+  },
+  "flowerbed": {
+    "index": 10,
+    "region": [
+      320,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      52,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 10
+  },
+  "keepsake": {
+    "index": 11,
+    "region": [
+      480,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      61,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 11
+  },
+  "reed_bed": {
+    "index": 12,
+    "region": [
+      640,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      12,
+      10,
+      148,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 12
+  },
+  "lotus": {
+    "index": 13,
+    "region": [
+      800,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      41,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 13
+  },
+  "pebble_cairn": {
+    "index": 14,
+    "region": [
+      960,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      14,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 14
+  },
+  "stone_bench": {
+    "index": 15,
+    "region": [
+      1120,
+      160,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      74,
+      150,
+      150
+    ],
+    "source_sheet": "river_props_original.png",
+    "source_cell": 15
+  },
+  "oar_rack": {
+    "index": 16,
+    "region": [
+      0,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      13,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 0
+  },
+  "rope_bollard": {
+    "index": 17,
+    "region": [
+      160,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      34,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 1
+  },
+  "fish_baskets": {
+    "index": 18,
+    "region": [
+      320,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      12,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 2
+  },
+  "ferry_sign": {
+    "index": 19,
+    "region": [
+      480,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      11,
+      10,
+      148,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 3
+  },
+  "stone_table": {
+    "index": 20,
+    "region": [
+      640,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      50,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 4
+  },
+  "tea_service": {
+    "index": 21,
+    "region": [
+      800,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      18,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 5
+  },
+  "bookcase": {
+    "index": 22,
+    "region": [
+      960,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      10,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 6
+  },
+  "rolled_charts": {
+    "index": 23,
+    "region": [
+      1120,
+      320,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      27,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 7
+  },
+  "hearth_stove": {
+    "index": 24,
+    "region": [
+      0,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      21,
+      10,
+      138,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 8
+  },
+  "woven_rug": {
+    "index": 25,
+    "region": [
+      160,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      28,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 9
+  },
+  "reading_chair": {
+    "index": 26,
+    "region": [
+      320,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      14,
+      10,
+      145,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 10
+  },
+  "astrolabe": {
+    "index": 27,
+    "region": [
+      480,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      28,
+      10,
+      131,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 11
+  },
+  "mason_bench": {
+    "index": 28,
+    "region": [
+      640,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      35,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 12
+  },
+  "stone_nursery": {
+    "index": 29,
+    "region": [
+      800,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      19,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 13
+  },
+  "waterwheel": {
+    "index": 30,
+    "region": [
+      960,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      16,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 14
+  },
+  "sluice_gate": {
+    "index": 31,
+    "region": [
+      1120,
+      480,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      28,
+      150,
+      150
+    ],
+    "source_sheet": "life_props_original.png",
+    "source_cell": 15
+  },
+  "cascade": {
+    "index": 32,
+    "region": [
+      0,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      11,
+      10,
+      148,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 0
+  },
+  "ferry_lodge": {
+    "index": 33,
+    "region": [
+      160,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      19,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 1
+  },
+  "cobbleclaw_shrine": {
+    "index": 34,
+    "region": [
+      320,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      28,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 2
+  },
+  "river_bell": {
+    "index": 35,
+    "region": [
+      480,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      15,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 3
+  },
+  "moonwater_fountain": {
+    "index": 36,
+    "region": [
+      640,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      29,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 4
+  },
+  "mist_orchard_tree": {
+    "index": 37,
+    "region": [
+      800,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      13,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 5
+  },
+  "torrent_crown": {
+    "index": 38,
+    "region": [
+      960,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      24,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 6
+  },
+  "spring_basin": {
+    "index": 39,
+    "region": [
+      1120,
+      640,
+      160,
+      160
+    ],
+    "bounds": [
+      10,
+      26,
+      150,
+      150
+    ],
+    "source_sheet": "landmarks_original.png",
+    "source_cell": 7
+  }
+}

@@ -1,0 +1,514 @@
+{
+  "apple_tree": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      0,
+      0,
+      350,
+      342
+    ],
+    "height": 296
+  },
+  "pear_tree": {
+    "region": [
+      320,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      350,
+      0,
+      708,
+      342
+    ],
+    "height": 296
+  },
+  "greenhouse": {
+    "region": [
+      640,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      708,
+      0,
+      1052,
+      342
+    ],
+    "height": 296
+  },
+  "arch": {
+    "region": [
+      960,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      1052,
+      0,
+      1402,
+      342
+    ],
+    "height": 263
+  },
+  "sorter": {
+    "region": [
+      1280,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      0,
+      318,
+      350,
+      622
+    ],
+    "height": 271
+  },
+  "pump": {
+    "region": [
+      1600,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      350,
+      318,
+      708,
+      622
+    ],
+    "height": 227
+  },
+  "tank": {
+    "region": [
+      1920,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      708,
+      318,
+      1052,
+      622
+    ],
+    "height": 276
+  },
+  "boiler": {
+    "region": [
+      2240,
+      0,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      1052,
+      318,
+      1402,
+      622
+    ],
+    "height": 277
+  },
+  "cog": {
+    "region": [
+      0,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      0,
+      598,
+      350,
+      897
+    ],
+    "height": 258
+  },
+  "flywheel": {
+    "region": [
+      320,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      350,
+      598,
+      708,
+      897
+    ],
+    "height": 257
+  },
+  "clock": {
+    "region": [
+      640,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      708,
+      598,
+      1052,
+      897
+    ],
+    "height": 264
+  },
+  "conveyor": {
+    "region": [
+      960,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      1052,
+      598,
+      1402,
+      897
+    ],
+    "height": 196
+  },
+  "crates": {
+    "region": [
+      1280,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      0,
+      873,
+      350,
+      1122
+    ],
+    "height": 220
+  },
+  "baskets": {
+    "region": [
+      1600,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      350,
+      873,
+      708,
+      1122
+    ],
+    "height": 197
+  },
+  "workbench": {
+    "region": [
+      1920,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      708,
+      873,
+      1052,
+      1122
+    ],
+    "height": 208
+  },
+  "lantern": {
+    "region": [
+      2240,
+      320,
+      320,
+      320
+    ],
+    "source": "machinery",
+    "source_box": [
+      1052,
+      873,
+      1402,
+      1122
+    ],
+    "height": 234
+  },
+  "shed": {
+    "region": [
+      0,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      0,
+      0,
+      344,
+      347
+    ],
+    "height": 291
+  },
+  "potting_bench": {
+    "region": [
+      320,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      344,
+      0,
+      694,
+      347
+    ],
+    "height": 250
+  },
+  "sundial": {
+    "region": [
+      640,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      694,
+      0,
+      1030,
+      347
+    ],
+    "height": 272
+  },
+  "hourglass": {
+    "region": [
+      960,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      1030,
+      0,
+      1374,
+      347
+    ],
+    "height": 296
+  },
+  "pipe": {
+    "region": [
+      1280,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      0,
+      323,
+      344,
+      562
+    ],
+    "height": 200
+  },
+  "fence": {
+    "region": [
+      1600,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      344,
+      323,
+      694,
+      562
+    ],
+    "height": 179
+  },
+  "seedlings": {
+    "region": [
+      1920,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      694,
+      323,
+      1030,
+      562
+    ],
+    "height": 153
+  },
+  "compost": {
+    "region": [
+      2240,
+      640,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      1030,
+      323,
+      1374,
+      562
+    ],
+    "height": 211
+  },
+  "watering_can": {
+    "region": [
+      0,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      0,
+      538,
+      344,
+      842
+    ],
+    "height": 235
+  },
+  "ladder": {
+    "region": [
+      320,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      344,
+      538,
+      694,
+      842
+    ],
+    "height": 272
+  },
+  "sacks": {
+    "region": [
+      640,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      694,
+      538,
+      1030,
+      842
+    ],
+    "height": 225
+  },
+  "toolbox": {
+    "region": [
+      960,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      1030,
+      538,
+      1374,
+      842
+    ],
+    "height": 220
+  },
+  "spinner": {
+    "region": [
+      1280,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      0,
+      818,
+      344,
+      1145
+    ],
+    "height": 296
+  },
+  "planter": {
+    "region": [
+      1600,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      344,
+      818,
+      694,
+      1145
+    ],
+    "height": 279
+  },
+  "trough": {
+    "region": [
+      1920,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      694,
+      818,
+      1030,
+      1145
+    ],
+    "height": 241
+  },
+  "press": {
+    "region": [
+      2240,
+      960,
+      320,
+      320
+    ],
+    "source": "workshop",
+    "source_box": [
+      1030,
+      818,
+      1374,
+      1145
+    ],
+    "height": 296
+  }
+}

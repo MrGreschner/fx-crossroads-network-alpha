@@ -61,8 +61,8 @@ func setup(owner:Node)->void:
  for n in RIVALS.size():
   var id:String=RIVALS[n];rival_state(id)
   game.enemy_defs[id]={"name":rival_name(id),"health":260,"speed":235,"damage":15,"behaviour":"chase" if rival_kit(id) in ["npc_bastion","npc_thorn"] else "ranged","expansion_only":true}
-  for pose in ["idle","walk1","walk2","attack"]:game.art[id+"_"+pose]=preload("res://scripts/unit_art231.gd").texture(rival_kit(id),pose)
- for pose in ["idle","walk1","walk2","attack"]:game.art["tollbreaker_"+pose]=preload("res://scripts/unit_art231.gd").texture("tollbreaker",pose)
+  for pose in ["idle","walk1","walk2","attack"]:game.art[id+"_"+pose]=preload("res://scripts/north_art260.gd").actor(rival_kit(id),pose)
+ for pose in ["idle","walk1","walk2","attack"]:game.art["tollbreaker_"+pose]=preload("res://scripts/north_art260.gd").actor("tollbreaker",pose)
 func factor(key:String)->float:return float(config.get(key,[1,1,1,1])[party_size-1])
 func wave_count(number:int)->int:return roundi((18.0+minf(24,number*.8))*factor("party_count_scale"))
 func creep_health(number:int)->float:return (0.95+number*.055)*factor("party_health_scale")
@@ -414,58 +414,7 @@ func receive(data:Dictionary)->void:
  warnings.assign(data.get("warnings",[]).slice(0,24))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if game.mode!="defense":return
- draw_base(canvas,camera)
- var font:Font=ThemeDB.fallback_font
- var bounds:=Rect2(camera-Vector2(300,300),game.VIEW+Vector2(600,600))
- for lane in 3:
-  var pos:Vector2=point_at(lane,OUTPOST_DISTANCE[lane])+Vector2(-150,-50) if lane==0 else point_at(lane,OUTPOST_DISTANCE[lane])+Vector2(0,-155)
-  if not bounds.has_point(pos):continue
-  var p:Vector2=pos-camera
-  var checkpoint:Vector2=point_at(lane,OUTPOST_DISTANCE[lane])-camera
-  var tangent:Vector2=(point_at(lane,OUTPOST_DISTANCE[lane]+10)-point_at(lane,OUTPOST_DISTANCE[lane]-10)).normalized().orthogonal()
-  if outpost_hp[lane]<=0:
-   for n in 7:canvas.draw_rect(Rect2(p+Vector2(-65+n*18,-10+sin(n*2)*18),Vector2(22,18)),Color("#69716b"))
-   canvas.draw_string(font,p+Vector2(-65,58),"OUTPOST LOST",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#e7a78e"))
-   continue
-  canvas.draw_line(checkpoint-tangent*190,checkpoint+tangent*190,Color("#655039"),12)
-  for n in range(-4,5):canvas.draw_circle(checkpoint+tangent*n*44,9,Color("#b49b71"))
-  canvas.draw_rect(Rect2(p+Vector2(-70,-158),Vector2(140,10)),Color("#352b29"))
-  canvas.draw_rect(Rect2(p+Vector2(-70,-158),Vector2(140*outpost_hp[lane]/outpost_max,10)),Color("#75d8a2"))
-  canvas.draw_circle(p+Vector2(0,20),85,Color(0,0,0,.22))
-  canvas.draw_rect(Rect2(p+Vector2(-65,-75),Vector2(130,100)),Color("#718685"))
-  for row in 4:
-   for col in 5:canvas.draw_rect(Rect2(p+Vector2(-62+col*26,-72+row*24),Vector2(23,21)),Color("#a4b0a0"))
-  canvas.draw_colored_polygon(PackedVector2Array([p+Vector2(-80,-76),p+Vector2(0,-135),p+Vector2(80,-76)]),Color(["#405f75","#587364","#856450"][lane]))
-  canvas.draw_rect(Rect2(p+Vector2(-15,-15),Vector2(30,40)),Color("#3e4b4a"))
-  for side in [-1,1]:
-   canvas.draw_rect(Rect2(p+Vector2(side*57-10,-106),Vector2(20,36)),Color("#b0b9a7"))
-   canvas.draw_line(p+Vector2(side*76,-35),p+Vector2(side*76,-125),Color("#b5a276"),4)
-   canvas.draw_rect(Rect2(p+Vector2(side*76,-122),Vector2(25,37)),Color("#72adba"))
-  canvas.draw_string(font,p+Vector2(-90,58),["BELLWOOD OUTPOST","MILLROAD OUTPOST","EMBERWATCH OUTPOST"][lane],HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#f4dfb7"))
-  canvas.draw_string(font,p+Vector2(-85,80),"1 soldier / 20 seconds",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#bedccb"))
- # Camp lamps, supply carts and milestone stones make each road a place.
- for lane in 3:
-  for n in range(1,5):
-   var pos:Vector2=point_at(lane,n*950,200)
-   if absf(n*950-OUTPOST_DISTANCE[lane])<230:continue
-   if not bounds.has_point(pos):continue
-   var p:Vector2=pos-camera
-   canvas.draw_rect(Rect2(p+Vector2(-12,-16),Vector2(24,32)),Color("#85958e"))
-   canvas.draw_rect(Rect2(p+Vector2(-8,-12),Vector2(16,10)),Color("#c0b994"))
-   canvas.draw_string(font,p+Vector2(-4,-3),str(n),HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("#4c6059"))
-   if n%2==0:
-    canvas.draw_line(p+Vector2(28,5),p+Vector2(28,-63),Color("#6f644d"),5)
-    canvas.draw_rect(Rect2(p+Vector2(20,-67),Vector2(16,22)),Color("#dfc786"))
-    canvas.draw_circle(p+Vector2(28,-56),20,Color(1,.83,.4,.08))
- # Small moving highlights make the river flow without a full-screen shader.
- for x in range(int(camera.x/140)*140,int((camera.x+game.VIEW.x)/140+1)*140,140):
-  for y in [4180,4340]:
-   var world:=Vector2(x+fposmod(clock*30,140),y)
-   if bounds.has_point(world) and not Rect2(5200,4030,590,490).has_point(world):canvas.draw_line(world-camera,world+Vector2(44,0)-camera,Color(.62,.86,.88,.36),1,true)
- # Three marked meeting circles at the town side of the lanes.
- for lane in 3:
-  var pos:=point_at(lane,600)
-  if bounds.has_point(pos):canvas.draw_arc(pos-camera,85,0,TAU,32,Color(.74,.77,.58,.45),3,true)
+ preload("res://scripts/north_art260.gd").world(canvas,self,camera)
 func draw_attacks(canvas:Node2D,camera:Vector2)->void:
  if game.mode!="defense":return
  var font:Font=ThemeDB.fallback_font
@@ -519,48 +468,4 @@ func terrain_open(point:Vector2)->bool:
  if Rect2(2200,5400,650,450).has_point(point):return false
  return true
 func draw_base(canvas:Node2D,camera:Vector2)->void:
- var bounds:=Rect2(camera-Vector2(200,200),game.VIEW+Vector2(400,400))
- var font:Font=ThemeDB.fallback_font
- # A fortified courtyard with torch posts, staging pads, carts and a resting spring.
- for side in [-1,1]:
-  var wall:Vector2=BASE+Vector2(side*350,0)
-  if bounds.has_point(wall):
-   var p:Vector2=wall-camera
-   canvas.draw_rect(Rect2(p+Vector2(-190,-66),Vector2(380,68)),Color("#718588"))
-   for row in 3:
-    for brick in 12:canvas.draw_rect(Rect2(p+Vector2(-186+brick*31+(15 if row%2 else 0),-63+row*21),Vector2(28,18)),Color("#a1aca1"))
-   for n in 9:canvas.draw_rect(Rect2(p+Vector2(-184+n*44,-82),Vector2(24,22)),Color("#aeb5a3"))
- for offset in [Vector2(-250,260),Vector2(250,260),Vector2(-250,760),Vector2(250,760)]:
-  var pos:Vector2=BASE+offset
-  if not bounds.has_point(pos):continue
-  var p:Vector2=pos-camera
-  canvas.draw_circle(p+Vector2(0,12),20,Color(0,0,0,.18))
-  canvas.draw_rect(Rect2(p+Vector2(-7,-55),Vector2(14,66)),Color("#788d8b"))
-  canvas.draw_rect(Rect2(p+Vector2(-16,-60),Vector2(32,12)),Color("#a8b5a2"))
-  for n in 3:
-   var tip:Vector2=p+Vector2(-9+n*9+sin(clock*6+n)*3,-76-9*sin(clock*5+n))
-   canvas.draw_colored_polygon(PackedVector2Array([p+Vector2(-14+n*9,-60),tip,p+Vector2(-4+n*9,-60)]),Color("#eab064"))
- for lane in 3:
-  var p:Vector2=BASE+Vector2(-140+lane*140,370)-camera
-  canvas.draw_arc(p,45,0,TAU,24,Color("#a5b79d"),3)
-  canvas.draw_string(font,p+Vector2(-30,4),["NORTH","WEST","EAST"][lane],HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e4cf9c"))
- for site in [Vector2(4710,8200),Vector2(5900,8200)]:
-  var point:Vector2=site+Vector2(110,20)
-  if not bounds.has_point(point):continue
-  var p:Vector2=point-camera
-  for n in 3:canvas.draw_rect(Rect2(p+Vector2(-24+n*16,-25),Vector2(14,24)),Color("#a58d62"))
-  canvas.draw_rect(Rect2(p+Vector2(-28,0),Vector2(60,11)),Color("#705f48"))
-  for side in [-1,1]:canvas.draw_circle(p+Vector2(side*20,15),9,Color("#394b50"));canvas.draw_circle(p+Vector2(side*20,15),4,Color("#b49864"))
- var spring:Vector2=BASE+Vector2(0,600)
- if bounds.has_point(spring):
-  var p:Vector2=spring-camera
-  canvas.draw_circle(p,61,Color("#92a69b"));canvas.draw_circle(p,48,Color("#477f8b"))
-  canvas.draw_arc(p,32,clock*.4,clock*.4+TAU*.8,32,Color("#aedbd3"),2,true)
-  canvas.draw_rect(Rect2(p+Vector2(-11,-38),Vector2(22,28)),Color("#b4c4b1"))
-  canvas.draw_circle(p+Vector2(0,-45),14,Color("#d0d8be"))
-  for n in 3:canvas.draw_line(p+Vector2(sin(clock*2+n)*20,-24),p+Vector2(sin(clock*2+n)*24,-8),Color("#c2e4d9"),2)
-  canvas.draw_string(font,p+Vector2(-70,88),"GATEWARD SPRING",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#def0d2"))
- # Watch guards patrol rather than standing motionless beside shops.
- for n in 2:
-  var pos:Vector2=BASE+Vector2(-340+n*680,300+sin(clock*.2+n*PI)*170)
-  if bounds.has_point(pos):preload("res://scripts/unit_art231.gd").draw(canvas,"guard_melee",pos+Vector2(0,4),1+int(clock*5.5)%2,48)
+ preload("res://scripts/north_art260.gd").base(canvas,self,camera)

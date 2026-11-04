@@ -141,6 +141,7 @@ func receive(data: Dictionary) -> void:
 	active=bool(data.get("active",false));stage=int(data.get("stage",0));started=bool(data.get("started",false));complete=bool(data.get("complete",false))
 	if active and grids.is_empty():build_mazes()
 func draw_world(canvas: Node2D,camera: Vector2) -> void:
+	if preload("res://scripts/chime_environment295.gd").draw(self,canvas,camera):return
 	var visible:=Rect2(camera-Vector2(180,180),canvas.get_viewport_rect().size+Vector2(360,360))
 	for n in 3:
 		for x in 17:

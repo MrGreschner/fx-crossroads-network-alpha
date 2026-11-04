@@ -1,0 +1,3603 @@
+[
+  {
+    "kind": "moonstones",
+    "pos": [
+      1520.66967773438,
+      381.898712158203
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1918.74658203125,
+      233.753311157227
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      2438.85791015625,
+      2055.99072265625
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3361.798828125,
+      1406.55297851562
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      2046.46643066406,
+      2624.21655273438
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      1847.30212402344,
+      527.46142578125
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5289.11865234375,
+      359.003845214844
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      1323.15063476562,
+      3353.95703125
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      5537.6328125,
+      2384.3984375
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      6055.96923828125,
+      3147.46850585938
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1732.1484375,
+      501.903869628906
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      557.176879882812,
+      3250.45483398438
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      575.248657226562,
+      381.822662353516
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      1398.34802246094,
+      2371.111328125
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      1202.8271484375,
+      2732.43359375
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      1620.37939453125,
+      2214.9326171875
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4092.01196289062,
+      2608.36743164062
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3358.03442382812,
+      2272.52319335938
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      2002.76403808594,
+      1520.31140136719
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      4852.49658203125,
+      2325.62719726562
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      5089.326171875,
+      2182.39624023438
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      704.200805664062,
+      2028.50402832031
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      5396.67236328125,
+      2453.36401367188
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      731.310546875,
+      2194.35888671875
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5050.21533203125,
+      458.161163330078
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1982.48071289062,
+      3127.30834960938
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      2908.04028320312,
+      494.513092041016
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      1822.3544921875,
+      2528.884765625
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      3952.8837890625,
+      3305.21459960938
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5631.38232421875,
+      907.920532226562
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      1210.37231445312,
+      2560.06372070312
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      5213.0888671875,
+      2148.36254882812
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      4743.1279296875,
+      1954.75048828125
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      4009.82934570312,
+      428.431518554688
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1987.02551269531,
+      958.674560546875
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3735.79321289062,
+      3072.38793945312
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      837.48486328125,
+      254.891754150391
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1471.99768066406,
+      2294.24731445312
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      5755.6689453125,
+      2174.67626953125
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      2335.95166015625,
+      1102.63757324219
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      3499.83984375,
+      2051.72412109375
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3290.8115234375,
+      2270.9619140625
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4580.8193359375,
+      2095.9873046875
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      4526.59765625,
+      244.43115234375
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      1161.13696289062,
+      3206.32763671875
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      1138.57165527344,
+      1076.6845703125
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      776.908813476562,
+      3177.90112304688
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3361.32568359375,
+      389.075805664062
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5767.9658203125,
+      1050.21997070312
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      4784.49951171875,
+      1421.88122558594
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      649.057189941406,
+      2439.11938476562
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5888.10205078125,
+      2702.01904296875
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1338.90551757812,
+      3369.63403320312
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      1182.52661132812,
+      351.859710693359
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      3001.49389648438,
+      2362.83227539062
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      886.928833007812,
+      3386.43481445312
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4386.4765625,
+      1218.38171386719
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      5312.287109375,
+      380.368774414062
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      1391.75805664062,
+      1417.97399902344
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      1623.42431640625,
+      2740.64453125
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4094.13037109375,
+      2697.50366210938
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3723.39575195312,
+      1122.26062011719
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3189.4140625,
+      1197.76599121094
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3982.798828125,
+      3329.10986328125
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1138.39501953125,
+      1315.32946777344
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      2979.26635742188,
+      3039.80249023438
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      2046.08288574219,
+      987.249206542969
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1856.2744140625,
+      2457.8095703125
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      2627.51611328125,
+      865.745544433594
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      2440.29833984375,
+      387.573425292969
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      2704.35083007812,
+      1262.96704101562
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      2420.677734375,
+      1961.0888671875
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      828.378356933594,
+      3375.2919921875
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      3553.92065429688,
+      2336.21728515625
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3037.34448242188,
+      516.535400390625
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      1181.07458496094,
+      521.505859375
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5523.23974609375,
+      1015.41448974609
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      4868.87646484375,
+      3218.69799804688
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      3407.45947265625,
+      2008.26416015625
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      2544.64306640625,
+      2110.26538085938
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      1115.01818847656,
+      2624.6630859375
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      4861.3779296875,
+      2705.72216796875
+    ],
+    "size": [
+      155,
+      230
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      6064.33251953125,
+      1406.45825195312
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3292.71264648438,
+      2540.82006835938
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3732.70532226562,
+      245.668365478516
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      5750.63818359375,
+      1510.55212402344
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3475.482421875,
+      1472.35595703125
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4093.64233398438,
+      2561.14038085938
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      1910.80627441406,
+      450.600799560547
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3466.71020507812,
+      1136.7919921875
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3299.4853515625,
+      1982.39892578125
+    ],
+    "size": [
+      120,
+      125
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      6015.93896484375,
+      3142.27026367188
+    ],
+    "size": [
+      230,
+      280
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "log",
+    "pos": [
+      4821.57666015625,
+      2502.52661132812
+    ],
+    "size": [
+      155,
+      115
+    ],
+    "fore": true,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      480.0,
+      4530.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      910.0,
+      4530.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      1340.0,
+      4530.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2200.0,
+      4530.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2630.0,
+      4530.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5640.0,
+      4530.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2630.0,
+      5690.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      3490.0,
+      5690.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      3920.0,
+      5690.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      4350.0,
+      5690.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5210.0,
+      5690.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5640.0,
+      5690.0
+    ],
+    "size": [
+      115,
+      165
+    ],
+    "fore": false,
+    "solid": true
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      650,
+      480
+    ],
+    "size": [
+      430,
+      480
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      1580,
+      620
+    ],
+    "size": [
+      190,
+      290
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1000,
+      1250
+    ],
+    "size": [
+      105,
+      100
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      1350,
+      2180
+    ],
+    "size": [
+      210,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "well",
+    "pos": [
+      3150,
+      1440
+    ],
+    "size": [
+      220,
+      250
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "tent",
+    "pos": [
+      950,
+      1460
+    ],
+    "size": [
+      240,
+      225
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moon_arch",
+    "pos": [
+      5350,
+      1450
+    ],
+    "size": [
+      260,
+      310
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      5480,
+      1620
+    ],
+    "size": [
+      135,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      490,
+      1800
+    ],
+    "size": [
+      100,
+      75
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      1430,
+      1490
+    ],
+    "size": [
+      110,
+      100
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "bridge",
+    "pos": [
+      2200,
+      700
+    ],
+    "size": [
+      330,
+      250
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "bridge",
+    "pos": [
+      4220,
+      2900
+    ],
+    "size": [
+      330,
+      250
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      730,
+      1500
+    ],
+    "size": [
+      135,
+      145
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "cart",
+    "pos": [
+      950,
+      1750
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "sign",
+    "pos": [
+      520,
+      1630
+    ],
+    "size": [
+      80,
+      110
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "spring",
+    "pos": [
+      5550,
+      2350
+    ],
+    "size": [
+      220,
+      170
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "root_arch",
+    "pos": [
+      1230,
+      4540
+    ],
+    "size": [
+      270,
+      300
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "roots",
+    "pos": [
+      1460,
+      4730
+    ],
+    "size": [
+      220,
+      300
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      1260,
+      5520
+    ],
+    "size": [
+      160,
+      210
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      4300,
+      4820
+    ],
+    "size": [
+      250,
+      310
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mine_gate",
+    "pos": [
+      2040,
+      4510
+    ],
+    "size": [
+      230,
+      240
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "den",
+    "pos": [
+      550,
+      4620
+    ],
+    "size": [
+      290,
+      260
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      1120,
+      5380
+    ],
+    "size": [
+      200,
+      140
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "ore_cart",
+    "pos": [
+      2530,
+      5400
+    ],
+    "size": [
+      200,
+      165
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "workbench",
+    "pos": [
+      2020,
+      4700
+    ],
+    "size": [
+      200,
+      160
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      2260,
+      4710
+    ],
+    "size": [
+      90,
+      155
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "cave_pool",
+    "pos": [
+      3510,
+      4900
+    ],
+    "size": [
+      280,
+      185
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      3400,
+      6170
+    ],
+    "size": [
+      370,
+      410
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stele",
+    "pos": [
+      2680,
+      6150
+    ],
+    "size": [
+      150,
+      240
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      4390,
+      5620
+    ],
+    "size": [
+      220,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      3050,
+      6510
+    ],
+    "size": [
+      150,
+      105
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "burrow",
+    "pos": [
+      750.0,
+      1100.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "ladder",
+    "pos": [
+      650.0,
+      4900.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "burrow",
+    "pos": [
+      2650.0,
+      2550.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "ladder",
+    "pos": [
+      2350.0,
+      5000.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "burrow",
+    "pos": [
+      3750.0,
+      900.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "ladder",
+    "pos": [
+      4200.0,
+      5250.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "burrow",
+    "pos": [
+      5650.0,
+      2600.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "ladder",
+    "pos": [
+      5700.0,
+      5000.0
+    ],
+    "size": [
+      190,
+      175
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      4681,
+      2108
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      2738,
+      405
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      4913,
+      2145
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      320,
+      1119
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      1559,
+      3373
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3481,
+      423
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      2400,
+      2207
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      998,
+      3366
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      1134,
+      2188
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3620,
+      291
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      1581,
+      3220
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1858,
+      1133
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      2804,
+      1085
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      5496,
+      3290
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      6036,
+      2268
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      3266,
+      3307
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      2877,
+      2196
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4630,
+      289
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      5464,
+      403
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      2793,
+      300
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      5447,
+      2264
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3461,
+      2178
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      2892,
+      3267
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      394,
+      368
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      4472,
+      2182
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      586,
+      1115
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      4742,
+      1087
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3797,
+      359
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      4341,
+      3257
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      5339,
+      3274
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      5133,
+      3291
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      1944,
+      2212
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      478,
+      1243
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      5633,
+      269
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      1057,
+      3290
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      4867,
+      1186
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "herb_stump",
+    "pos": [
+      4531,
+      349
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      695,
+      280
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "flowers",
+    "pos": [
+      1435,
+      2108
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      3578,
+      2164
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      3095,
+      392
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      2690,
+      303
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      469,
+      423
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      4561,
+      1164
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      5726,
+      1145
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      6003,
+      1224
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "mushrooms",
+    "pos": [
+      3403,
+      2109
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "log",
+    "pos": [
+      2858,
+      3183
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "moonstones",
+    "pos": [
+      3351,
+      3343
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      594,
+      5527
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      2414,
+      5523
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      5410,
+      4426
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      2842,
+      4517
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      3953,
+      4767
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5962,
+      5913
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      3786,
+      4779
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "roots",
+    "pos": [
+      6037,
+      4437
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      5863,
+      5943
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      807,
+      4485
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      2529,
+      4515
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "roots",
+    "pos": [
+      3603,
+      6045
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      5597,
+      4439
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      858,
+      5511
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      4451,
+      6032
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      1035,
+      5545
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      4134,
+      4755
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      4279,
+      6030
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      5222,
+      5926
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      3705,
+      6020
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5304,
+      4400
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      2277,
+      5527
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "roots",
+    "pos": [
+      6053,
+      5930
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      622,
+      4485
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      5665,
+      5926
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      5533,
+      5926
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      445,
+      5535
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "roots",
+    "pos": [
+      2430,
+      4526
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      3977,
+      6036
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      943,
+      5546
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      2546,
+      5531
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      3633,
+      4766
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      350,
+      5522
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "stalagmites",
+    "pos": [
+      1092,
+      4488
+    ],
+    "size": [
+      100,
+      150
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      1405,
+      5514
+    ],
+    "size": [
+      100,
+      90
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      1258,
+      5247
+    ],
+    "size": [
+      103,
+      113
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      4052,
+      5908
+    ],
+    "size": [
+      90,
+      72
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      1133,
+      4808
+    ],
+    "size": [
+      81,
+      89
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      3916,
+      5237
+    ],
+    "size": [
+      84,
+      67
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5982,
+      4565
+    ],
+    "size": [
+      70,
+      77
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      382,
+      4690
+    ],
+    "size": [
+      74,
+      81
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2656,
+      5228
+    ],
+    "size": [
+      98,
+      108
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      592,
+      5068
+    ],
+    "size": [
+      76,
+      61
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      4166,
+      5512
+    ],
+    "size": [
+      75,
+      60
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5829,
+      5071
+    ],
+    "size": [
+      103,
+      82
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      464,
+      5225
+    ],
+    "size": [
+      100,
+      80
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      3576,
+      5067
+    ],
+    "size": [
+      85,
+      68
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      5522,
+      4608
+    ],
+    "size": [
+      76,
+      61
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5634,
+      5244
+    ],
+    "size": [
+      86,
+      95
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      3689,
+      5835
+    ],
+    "size": [
+      93,
+      74
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      5497,
+      4891
+    ],
+    "size": [
+      86,
+      69
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      2115,
+      4825
+    ],
+    "size": [
+      85,
+      68
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      3848,
+      5787
+    ],
+    "size": [
+      87,
+      96
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      5979,
+      4834
+    ],
+    "size": [
+      93,
+      74
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      2255,
+      5164
+    ],
+    "size": [
+      93,
+      74
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5171,
+      4822
+    ],
+    "size": [
+      87,
+      70
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      553,
+      5338
+    ],
+    "size": [
+      103,
+      113
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5285,
+      4618
+    ],
+    "size": [
+      82,
+      66
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5818,
+      4878
+    ],
+    "size": [
+      102,
+      82
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      1344,
+      4711
+    ],
+    "size": [
+      88,
+      70
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      5678,
+      4810
+    ],
+    "size": [
+      78,
+      62
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      3503,
+      5428
+    ],
+    "size": [
+      96,
+      77
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      6009,
+      5454
+    ],
+    "size": [
+      72,
+      79
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      770,
+      5307
+    ],
+    "size": [
+      86,
+      95
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      3565,
+      5783
+    ],
+    "size": [
+      70,
+      56
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      6047,
+      5177
+    ],
+    "size": [
+      67,
+      54
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "earth_mound",
+    "pos": [
+      2332,
+      5263
+    ],
+    "size": [
+      92,
+      74
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      750,
+      5022
+    ],
+    "size": [
+      73,
+      58
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5425,
+      5731
+    ],
+    "size": [
+      81,
+      89
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      1074,
+      4651
+    ],
+    "size": [
+      84,
+      92
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      707,
+      5145
+    ],
+    "size": [
+      77,
+      85
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      4137,
+      4963
+    ],
+    "size": [
+      66,
+      73
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      5471,
+      5149
+    ],
+    "size": [
+      78,
+      62
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      793,
+      4613
+    ],
+    "size": [
+      79,
+      87
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      1012,
+      4867
+    ],
+    "size": [
+      73,
+      58
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      3901,
+      5926
+    ],
+    "size": [
+      77,
+      62
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      2379,
+      4842
+    ],
+    "size": [
+      102,
+      82
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2766,
+      5049
+    ],
+    "size": [
+      74,
+      81
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      4037,
+      5213
+    ],
+    "size": [
+      74,
+      81
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      2597,
+      4744
+    ],
+    "size": [
+      76,
+      61
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "glow_log",
+    "pos": [
+      420,
+      5377
+    ],
+    "size": [
+      96,
+      77
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2528,
+      5177
+    ],
+    "size": [
+      97,
+      107
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "nursery",
+    "pos": [
+      4021,
+      5755
+    ],
+    "size": [
+      86,
+      69
+    ],
+    "fore": false,
+    "solid": false
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5588,
+      5540
+    ],
+    "size": [
+      69,
+      76
+    ],
+    "fore": false,
+    "solid": false
+  }
+]

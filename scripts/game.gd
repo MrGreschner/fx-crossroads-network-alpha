@@ -314,6 +314,9 @@ func load_registry() -> void:
 			realms[region_key] = region_data
 
 func load_sprite_pair(prefix: String) -> void:
+	if prefix in preload("res://scripts/hunter_art283.gd").IDS:
+		for pose in ["idle","walk1","walk2","attack","0","1"]:art[prefix+"_"+pose]=preload("res://scripts/hunter_art283.gd").texture(prefix,pose)
+		return
 	if preload("res://scripts/enemy_art235.gd").texture(prefix)!=null:
 		for pose in ["idle","walk1","walk2","attack","attack2","special","0","1","2"]:art[prefix+"_"+pose]=preload("res://scripts/enemy_art235.gd").texture(prefix,pose)
 		art[prefix]=art[prefix+"_idle"];return
@@ -1562,13 +1565,13 @@ func update_enemies(delta: float) -> void:
 						add_float_text(enemy["pos"] + Vector2(-25, -60), "SUMMON!", Color("#d4b2e9"))
 					enemy["summon_timer"] = float(definition.get("summon_cooldown", 5.0))
 			if diff.length() < float(definition.get("aggro_range",460)):
-				move_enemy_around_obstacles(enemy, adventure.combat.ranged_direction(enemy,target_point)*float(definition.get("speed",70))*delta, bool(definition.get("flying",false)))
+				move_enemy_around_obstacles(enemy, (adventure.combat.coast.direction(enemy,target_point,true) if adventure.combat.coast.active and not adventure.between_guardians() else adventure.combat.ranged_direction(enemy,target_point))*float(definition.get("speed",70))*delta, bool(definition.get("flying",false)))
 			continue
 		if str(definition.get("behaviour", "")) in ["ranged", "burst_ranged", "dual_ranged", "homing"]:
 			if stealth_time > 0:
 				continue
 			if diff.length() < float(definition.get("aggro_range",490)):
-				move_enemy_around_obstacles(enemy, adventure.combat.ranged_direction(enemy,target_point)*float(definition.get("speed",95))*delta, bool(definition.get("flying",false)))
+				move_enemy_around_obstacles(enemy, (adventure.combat.coast.direction(enemy,target_point,true) if adventure.combat.coast.active and not adventure.between_guardians() else adventure.combat.ranged_direction(enemy,target_point))*float(definition.get("speed",95))*delta, bool(definition.get("flying",false)))
 			if diff.length() < float(definition.get("aggro_range", 490)) and float(enemy["attack_timer"]) <= 0 and diff.length() > 0:
 				if preload("res://scripts/ice_projectiles.gd").matches(str(enemy["type"])):
 					preload("res://scripts/ice_projectiles.gd").fire(self,enemy,diff.normalized(),definition)
@@ -1591,7 +1594,7 @@ func update_enemies(delta: float) -> void:
 			if stealth_time > 0:
 				continue
 			if diff.length() < (570 if enemy["boss"] else float(definition.get("aggro_range", 320))) and diff.length() > (46 if enemy["boss"] else 37):
-				move_enemy_around_obstacles(enemy, (adventure.combat.ranged_direction(enemy,target_point) if adventure.combat.ranged_enemy(enemy,definition) else diff.normalized()) * enemy_speed * delta, bool(definition.get("flying", false)))
+				move_enemy_around_obstacles(enemy, (adventure.combat.coast.direction(enemy,target_point,adventure.combat.ranged_enemy(enemy,definition)) if adventure.combat.coast.active and not adventure.between_guardians() else adventure.combat.ranged_direction(enemy,target_point) if adventure.combat.ranged_enemy(enemy,definition) else diff.normalized()) * enemy_speed * delta, bool(definition.get("flying", false)))
 			if not preload("res://scripts/starter_boss.gd").managed(region_id,enemy) and not adventure.combat.ranged_enemy(enemy,definition) and diff.length() < (54 if enemy["boss"] else 41) and float(enemy["attack_timer"]) <= 0.0:
 				var incoming := (18.0 if str(enemy["type"]) == "fragment" else 25.0) if enemy["boss"] else float(definition.get("damage", 9))
 				if position_in_world.distance_to(enemy.pos)<65:
@@ -1759,6 +1762,7 @@ func ground_tile_at(tx:int,ty:int,base:String)->String:
 	return tile
 
 func draw_world() -> void:
+	var oath_art:bool=mode=="run" and region_id=="shattered_oath" and preload("res://scripts/oath_environment297.gd").enabled(adventure)
 	if adventure.finale.in_depth():
 		if terrain_cache!=null:terrain_cache.hide()
 		adventure.finale.draw_ground(self,camera)
@@ -1771,8 +1775,14 @@ func draw_world() -> void:
 	elif region_id=="moonveil" and mode=="run":
 		if terrain_cache!=null:terrain_cache.hide()
 		preload("res://scripts/moon_castle.gd").draw(self,camera)
+	elif oath_art or (mode=="run" and region_id in ["ice","confluence","folded_coast","clockwork_orchard","middle_school","space","zombie","astral_rift"]):
+		if terrain_cache!=null:terrain_cache.hide()
 	else:sync_terrain()
 	if practice:training_yard.draw_on(self,camera);town_chapter.draw_guide(self,camera)
+	if mode=="run" and region_id=="space":preload("res://scripts/orbital_art281.gd").draw(self,camera)
+	if mode=="run" and region_id=="zombie":preload("res://scripts/quarantine_art282.gd").draw(self,camera)
+	if mode=="run" and region_id=="astral_rift":preload("res://scripts/astral_environment294.gd").draw(self,camera)
+	if mode=="run" and region_id=="shattered_oath" and not adventure.finale.in_depth():preload("res://scripts/oath_environment297.gd").draw(adventure,self,camera)
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
 	if adventure.foundry.active:adventure.foundry.draw_world(self,camera)
@@ -1790,13 +1800,15 @@ func draw_world() -> void:
 	var retained_props:bool=mode=="run" and region_id=="moonveil"
 	if retained_props and not is_instance_valid(realm_props):
 		realm_props=preload("res://scripts/realm_props.gd").new();add_child(realm_props);realm_props.setup(self,false)
-	if not retained_props:
+	if not retained_props and not oath_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
 		for decoration in decorations:
 			var deco_texture: Texture2D = decoration["texture"]
 			var deco_size: Vector2 = decoration["size"]
 			if deco_texture != null and Rect2(camera - deco_size, VIEW + deco_size * 2).has_point(decoration["pos"]):
 				draw_texture_rect(deco_texture, Rect2(decoration["pos"] - deco_size * 0.5 - camera, deco_size), false)
 	for obstacle in obstacles:
+		if oath_art or (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):continue
+		if mode=="run" and region_id=="ice":preload("res://scripts/frost_art264.gd").pillar(self,obstacle.pos,camera);continue
 		if bool(obstacle.get("town_hidden",false)): continue
 		if Rect2(camera,VIEW).grow(180 if mode=="run" and region_id=="grove" else 100).has_point(obstacle["pos"]):
 			var obstacle_texture: Texture2D = preload("res://scripts/quarry_art254.gd").grove_tree(obstacle["pos"]) if mode=="run" and region_id=="grove" and str(obstacle.get("kind",""))=="tree" else preload("res://scripts/quarry_art254.gd").texture("rock") if mode=="run" and region_id=="quarry" else obstacle.get("texture")
@@ -1860,7 +1872,7 @@ func draw_world() -> void:
 		if voyage==null or not voyage.active:preload("res://scripts/realm_portals258.gd").entry(self,self,pair(region["gate"]["position"]),camera)
 		if region.has("merchant") and not practice and not tutorial.active and (voyage==null or not voyage.active):
 			draw_sprite("merchant", pair(region["merchant"]) - Vector2(48, 72), Vector2(96, 80))
-			draw_world_label(pair(region["merchant"]), "MERCHANT")
+			if region_id not in preload("res://scripts/realm_art265.gd").IDS:draw_world_label(pair(region["merchant"]), "MERCHANT")
 		if boss_defeated and not preload("res://scripts/realm_portals258.gd").duplicate_exit(self):
 			preload("res://scripts/realm_portals258.gd").draw_at(self,self,pair(region["boss"]),camera)
 		if fishing!=null:fishing.draw_on(self,camera)
@@ -1868,7 +1880,9 @@ func draw_world() -> void:
 		enemy_motion229.sample(enemies,visual_clock)
 		for enemy in enemies:
 			if waylight!=null and waylight.between() and enemy.pos.distance_to(position_in_world)>365:continue
-			if bool(enemy.get("buried",false)):continue
+			if bool(enemy.get("buried",false)):
+				if adventure.hollow.active:adventure.hollow.visual268.draw_enemy(adventure.hollow,self,enemy,camera)
+				continue
 			if not Rect2(camera,VIEW).grow(180).has_point(enemy["pos"]):continue
 			var ep: Vector2 = enemy["pos"] - camera
 			var is_boss: bool = enemy["boss"]
@@ -1881,11 +1895,13 @@ func draw_world() -> void:
 			if is_boss:
 				var boss_prefix := "bramble_boss" if str(enemy["type"]) == "fragment" else str(enemy.get("type")) if enemy.get("expansion_boss",false) else str(enemy.get("sprite",region.get("boss_sprite", "bramble_boss")))
 				enemy_sprite = boss_prefix + "_attack" if float(enemy.get("windup",0.0)) > 0 and art.has(boss_prefix+"_attack") else boss_prefix + "_" + enemy_pose if art.has(boss_prefix+"_"+enemy_pose) else boss_prefix
+			if is_boss and str(enemy.get("sprite",region.get("boss_sprite","")))=="sun_sentinel":enemy_sprite="sun_sentinel_crown_"+enemy_pose
+			if is_boss and str(enemy.type)=="cartographer":boss_size=Vector2(166,166)
 			if bool(enemy.get("finale_actor",false)):
 				enemy_sprite=str(enemy.sprite)+"_"+enemy_pose;boss_size=Vector2(230,238)
 			if enemy.get("expansion_boss",false): boss_size *= (1.0 if int(enemy.get("generation",0)) == 0 else .78 if int(enemy.get("generation",0)) == 1 else .56)
 			if bool(enemy.get("veilbound",false)):
-				var veil_size:Vector2=adventure.pursuers.body_size(enemy);draw_sprite(enemy_sprite,enemy.pos-veil_size*Vector2(.5,.7),veil_size)
+				var veil_size:Vector2=adventure.pursuers.body_size(enemy);preload("res://scripts/hunter_art283.gd").draw(self,str(enemy.type),enemy_pose,Rect2(enemy.pos-camera-veil_size*Vector2(.5,.7),veil_size),visual_clock,int(enemy.get("uid",0)))
 			elif str(enemy.type) in adventure.cinder.TYPES:
 				var body:Vector2=adventure.cinder.body_size(str(enemy.type));draw_sprite(enemy_sprite,enemy.pos-body*Vector2(.5,.7),body)
 			elif str(enemy.type) in adventure.tech.TYPES:
@@ -1899,6 +1915,8 @@ func draw_world() -> void:
 				draw_sprite(enemy_sprite,enemy.pos-Vector2(56,74),Vector2(112,112))
 			elif str(enemy.type)=="rootbound_keeper":
 				draw_sprite(enemy_sprite,enemy.pos-Vector2(54,64),Vector2(108,120))
+			elif adventure.hollow.active and str(enemy.type) in adventure.hollow.TYPES:adventure.hollow.visual268.draw_enemy(adventure.hollow,self,enemy,camera)
+			elif preload("res://scripts/enemy_neutral270.gd").draw_front(self,enemy_sprite,enemy_pose,Rect2(enemy["pos"]-camera-(boss_size*.5 if is_boss else Vector2(28,30)),boss_size if is_boss else Vector2(56,56)),Color.WHITE,enemy):pass
 			else:draw_sprite(enemy_sprite, enemy["pos"] - (boss_size * 0.5 if is_boss else Vector2(28, 30)), boss_size if is_boss else Vector2(56, 56))
 			if float(enemy.get("strike_flash",0))>0:
 				var direction:Vector2=enemy.get("strike_direction",Vector2.DOWN);var progress:float=1.0-float(enemy.strike_flash)/.35;var angle:float=direction.angle()
@@ -2027,6 +2045,10 @@ func draw_world() -> void:
 	if mode == "run":
 		draw_line(position_in_world - camera, position_in_world - camera + aim_direction() * 34, Color("#f5db79", 0.7), 2)
 func draw_sprite(name: String, world_pos: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if name=="merchant" and mode=="run" and region_id in preload("res://scripts/realm_art265.gd").IDS:
+		if not adventure.between_guardians():preload("res://scripts/realm_art265.gd").cart(self,region_id,camera)
+		return
+	if name=="merchant" and mode=="run":preload("res://scripts/merchant_cart282.gd").draw(self,world_pos+Vector2(48,72),camera,false);return
 	if name=="merchant":draw_texture_rect(preload("res://scripts/merchant_art259.gd").texture(),Rect2(world_pos-camera,size),false,tint);return
 	if mode=="run" and region_id=="quarry" and name.begins_with("bramble_boss"):
 		var pose=name.trim_prefix("bramble_boss_");preload("res://scripts/quarry_art254.gd").draw_boss(self,pose,Rect2(world_pos-camera,size),tint);return

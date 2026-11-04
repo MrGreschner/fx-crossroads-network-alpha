@@ -24,15 +24,20 @@ static func build(parent:Node,l:Node,n:Dictionary,category:String)->void:
     var card=UI.card(parent,str(l.game.realms.get(id,{}).get("name",id)),"")
     for row in rows:preload("res://scripts/records_hall_ui.gd").run_row(card,l,row.record,row.title,clock(float(row.record.value)))
  if category=="descent":
-  G.label(parent,"CAVE DESCENT • TOP 10 FLOORS CLEARED",23)
-  G.label(parent,"Completed floors, not merely entered • separate solo/co-op records • signed-in accounts • no developer/practice records",15)
+  G.label(parent,"CAVE DESCENT • DEEPEST FLOORS CLEARED",23)
+  G.label(parent,"Solo and team bests • completed floors • this week resets Monday • boss-era records start fresh",15)
   var boards=n.get("descent",{})
-  for route in ["solo","coop"]:
-   var card=UI.card(parent,("CO-OP" if route=="coop" else "SOLO")+" • ALL TIME","")
-   var rows=boards.get(route,[]);var cols=preload("res://scripts/records_hall_ui.gd").columns(card)
-   for i in 10:
-    if i<rows.size():preload("res://scripts/records_hall_ui.gd").run_row(cols[i/5],l,rows[i],str(i+1)+". Highest clear","Floor "+str(int(rows[i].value)))
-    else:G.label(cols[i/5],str(i+1)+". No record yet",16)
+  if int(boards.get("revision",0))!=292:
+   G.label(parent,"Server update required to load the new Cave Descent boards.",18);return
+  for scope in ["all","week"]:
+   for route in ["solo","coop"]:
+    var heading=("TEAM" if route=="coop" else "SOLO")+" • "+("ALL TIME" if scope=="all" else "THIS WEEK")
+    var card=UI.card(parent,heading,"All participating heroes are shown for each team result." if route=="coop" else "Deepest completed floor for a solo run.")
+    var rows=boards.get(route,[]) if scope=="all" else boards.get("week",{}).get(route,[])
+    var cols=preload("res://scripts/records_hall_ui.gd").columns(card)
+    for i in 10:
+     if i<rows.size():preload("res://scripts/records_hall_ui.gd").run_row(cols[i/5],l,rows[i],str(i+1)+". Highest clear","Floor "+str(int(rows[i].value)))
+     else:G.label(cols[i/5],str(i+1)+". No record yet",16)
  if category=="streak":
   for e in [["LONGEST LIFE • ALL TIME","streak_all"],["LONGEST LIFE • THIS WEEK","streak_week"]]:
    var card=UI.card(parent,e[0],"Realms completed without a defeat • counted from v188 onward")

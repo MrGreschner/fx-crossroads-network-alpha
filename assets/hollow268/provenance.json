@@ -1,0 +1,28 @@
+{
+  "build": 268,
+  "unique_scenery_designs": 32,
+  "placements": 277,
+  "original_colliding_props": 105,
+  "ground_pages": 4,
+  "ground_size": [
+    1280,
+    1400
+  ],
+  "ground_scale": 2.5,
+  "props_size": [
+    1280,
+    1280
+  ],
+  "actor_size": [
+    2048,
+    1024
+  ],
+  "decoded_RGBA_bound": 50167808,
+  "sources": {
+    "actors_a.png": "232f5f6108f8e868f2dd24cad99ebdbfcdd022eda38256e1c3a2ec938549629c",
+    "cave_original.png": "39e6aff72bb978549090fdc8fe629ba89aca101af730bacd7af391f47929f862",
+    "actors_b.png": "88a35ef8a180be11f61d9fb23e9aecd01245bcd9169d4a69e23e6bedc8055e11",
+    "materials_original.png": "fee580c4e9f6124e5aa64fdf00729167b1c7b75262bf297d88c0a0f77a2426b8",
+    "surface_original.png": "e0eff2eba82cab147a0e62eaea3d82fb54c1e39813bd0ea0c4273475bf782848"
+  }
+}

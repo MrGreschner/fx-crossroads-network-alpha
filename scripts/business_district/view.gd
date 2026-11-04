@@ -62,6 +62,8 @@ func setup(g:Node,options:Dictionary={})->void:
  root=Control.new();root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(root)
  var bg=ColorRect.new();bg.color=Color("#1c3338");bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);bg.mouse_filter=Control.MOUSE_FILTER_IGNORE;root.add_child(bg)
  root.add_child(world);world.add_child(floor_layer);world.add_child(buildings);world.add_child(actors);world.add_child(lighting)
+ floor_layer.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;buildings.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+ floor_layer.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED;buildings.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
  var light_material=CanvasItemMaterial.new();light_material.blend_mode=CanvasItemMaterial.BLEND_MODE_ADD;lighting.material=light_material
  lighting.draw.connect(func():
   if state.night:A.night_lights(lighting))
@@ -386,15 +388,16 @@ func draw_actors()->void:
   var b=sim.business(id);var o=C.plot(id)
   if not visible_world.intersects(Rect2(o-Vector2(20,100),Vector2(650,670))):continue
   if b.trade in ["salon","daycare","minigolf"]:preload("res://scripts/business_district/venue_art.gd").live(actors,o,b,sim.clock)
-  A.ink(actors,o+Vector2(24,390),("%d material units • %d service kits" if b.trade in ["salon","daycare","minigolf"] else "%d material units • %d products ready") % [b.inputs,b.stock],16,Color("#314943"))
+  A.rounded(actors,Rect2(o+Vector2(20,371),Vector2(480,26)),Color("#263f43",.96),4)
+  A.ink(actors,o+Vector2(28,390),("%d material units • %d service kits" if b.trade in ["salon","daycare","minigolf"] else "%d material units • %d products ready") % [b.inputs,b.stock],16,Color("#fff0cd"))
   var slot=0
   for key in b.assets:
-   var pos=o+Vector2(40+(slot%4)*125,100+(slot/4)*95);actors.draw_texture_rect(A.item_texture(key,"equipment"),Rect2(pos,Vector2(74,74)),false);A.ink(actors,pos+Vector2(0,83),(C.ops().equipment[key].name+" × "+str(b.assets[key].count)).left(23),11,Color("#2c4444"));slot+=1
+   var pos=o+Vector2(40+(slot%4)*125,100+(slot/4)*112);actors.draw_texture_rect(A.item_texture(key,"equipment"),Rect2(pos,Vector2(74,74)),false);preload("res://scripts/market_environment292.gd").tag(actors,pos+Vector2(-5,76 if slot%4==3 else -40),C.ops().equipment[key].name+" × "+str(b.assets[key].count));slot+=1
    if slot>=8:break
   slot=0
   for key in b.materials:
    if sim.quantity(b.materials,key)==0:continue
-   var pos=o+Vector2(400+(slot%3)*36,42+(slot/3)*38);actors.draw_texture_rect(A.item_texture(key,"material"),Rect2(pos,Vector2(34,34)),false);slot+=1
+   var pos=o+Vector2(400+(slot%3)*36,72+(slot/3)*38);actors.draw_texture_rect(A.item_texture(key,"material"),Rect2(pos,Vector2(34,34)),false);slot+=1
    if slot>=9:break
   slot=0
   for key in b.finished:

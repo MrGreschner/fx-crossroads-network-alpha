@@ -1,0 +1,2276 @@
+[
+  {
+    "kind": "belfry",
+    "pos": [
+      660.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 0,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "gong",
+    "pos": [
+      1300.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 0,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "organ",
+    "pos": [
+      1940.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 0,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "rib_arch",
+    "pos": [
+      2580.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 0,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "belfry",
+    "pos": [
+      2100.0,
+      1049.0
+    ],
+    "size": [
+      95,
+      108
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "gong",
+    "pos": [
+      2260.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      89
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pier",
+    "pos": [
+      500.0,
+      1529.0
+    ],
+    "size": [
+      65,
+      119
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "chimes",
+    "pos": [
+      500.0,
+      889.0
+    ],
+    "size": [
+      65,
+      75
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      1140.0,
+      1369.0
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lectern",
+    "pos": [
+      1780.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      106
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "rail",
+    "pos": [
+      820.0,
+      2009.0
+    ],
+    "size": [
+      95,
+      60
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "rib_arch",
+    "pos": [
+      1460.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      86
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      2100.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "crystal_bell",
+    "pos": [
+      1140.0,
+      1689.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "tuning_fork",
+    "pos": [
+      1620.0,
+      569.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      2100.0,
+      1369.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "belfry",
+    "pos": [
+      500.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      108
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "gong",
+    "pos": [
+      1780.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      89
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pier",
+    "pos": [
+      1780.0,
+      889.0
+    ],
+    "size": [
+      65,
+      119
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "chimes",
+    "pos": [
+      500.0,
+      569.0
+    ],
+    "size": [
+      65,
+      75
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      1460.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lectern",
+    "pos": [
+      660.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      106
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "rail",
+    "pos": [
+      1460.0,
+      729.0
+    ],
+    "size": [
+      95,
+      60
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "rib_arch",
+    "pos": [
+      1300.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      86
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      1140.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "crystal_bell",
+    "pos": [
+      2420.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "tuning_fork",
+    "pos": [
+      820.0,
+      569.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      820.0,
+      729.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "belfry",
+    "pos": [
+      820.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      108
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "gong",
+    "pos": [
+      2580.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      89
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pier",
+    "pos": [
+      1780.0,
+      569.0
+    ],
+    "size": [
+      65,
+      119
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "chimes",
+    "pos": [
+      660.0,
+      1529.0
+    ],
+    "size": [
+      65,
+      75
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      1140.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lectern",
+    "pos": [
+      1460.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      106
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "rail",
+    "pos": [
+      1780.0,
+      729.0
+    ],
+    "size": [
+      95,
+      60
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "rib_arch",
+    "pos": [
+      1140.0,
+      729.0
+    ],
+    "size": [
+      95,
+      86
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      1780.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "crystal_bell",
+    "pos": [
+      660.0,
+      569.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "tuning_fork",
+    "pos": [
+      1620.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      340.0,
+      889.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 0,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      2580.0,
+      660.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1780.0,
+      1300.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      660.0,
+      340.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      980.0,
+      980.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1300.0,
+      660.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1620.0,
+      1940.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1780.0,
+      1940.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1300.0,
+      820.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      2580.0,
+      1780.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      2260.0,
+      1620.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "lift",
+    "pos": [
+      2260.0,
+      660.0
+    ],
+    "size": [
+      130,
+      100
+    ],
+    "stage": 0,
+    "category": "lift",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.8
+    ]
+  },
+  {
+    "kind": "mould",
+    "pos": [
+      3660.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 1,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "furnace",
+    "pos": [
+      4300.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 1,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "bell_rack",
+    "pos": [
+      4940.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 1,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "resonator",
+    "pos": [
+      5580.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 1,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "mould",
+    "pos": [
+      4140.0,
+      2009.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "furnace",
+    "pos": [
+      4620.0,
+      569.0
+    ],
+    "size": [
+      95,
+      102
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "workbench",
+    "pos": [
+      4140.0,
+      889.0
+    ],
+    "size": [
+      95,
+      64
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rack",
+    "pos": [
+      4460.0,
+      1369.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "clappers",
+    "pos": [
+      4140.0,
+      1049.0
+    ],
+    "size": [
+      95,
+      65
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "trolley",
+    "pos": [
+      4140.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rims",
+    "pos": [
+      4140.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "resonator",
+    "pos": [
+      5100.0,
+      569.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      4460.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pier",
+    "pos": [
+      4460.0,
+      1689.0
+    ],
+    "size": [
+      65,
+      119
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "mould",
+    "pos": [
+      5100.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "furnace",
+    "pos": [
+      4780.0,
+      1689.0
+    ],
+    "size": [
+      95,
+      102
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "workbench",
+    "pos": [
+      5420.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      64
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rack",
+    "pos": [
+      4940.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "clappers",
+    "pos": [
+      3820.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      65
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "trolley",
+    "pos": [
+      4460.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rims",
+    "pos": [
+      3820.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "resonator",
+    "pos": [
+      4300.0,
+      569.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      4460.0,
+      889.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pier",
+    "pos": [
+      3660.0,
+      1209.0
+    ],
+    "size": [
+      65,
+      119
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "mould",
+    "pos": [
+      3820.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "furnace",
+    "pos": [
+      4620.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      102
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "workbench",
+    "pos": [
+      4140.0,
+      569.0
+    ],
+    "size": [
+      95,
+      64
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rack",
+    "pos": [
+      3500.0,
+      729.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "clappers",
+    "pos": [
+      5420.0,
+      1689.0
+    ],
+    "size": [
+      95,
+      65
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "trolley",
+    "pos": [
+      4140.0,
+      1689.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rims",
+    "pos": [
+      4780.0,
+      569.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "resonator",
+    "pos": [
+      4780.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      5260.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      134
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pier",
+    "pos": [
+      5420.0,
+      1529.0
+    ],
+    "size": [
+      65,
+      119
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "mould",
+    "pos": [
+      3500.0,
+      889.0
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "furnace",
+    "pos": [
+      5100.0,
+      889.0
+    ],
+    "size": [
+      95,
+      102
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "workbench",
+    "pos": [
+      3340.0,
+      569.0
+    ],
+    "size": [
+      95,
+      64
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "bell_rack",
+    "pos": [
+      5420.0,
+      569.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "clappers",
+    "pos": [
+      4940.0,
+      569.0
+    ],
+    "size": [
+      95,
+      65
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "trolley",
+    "pos": [
+      5580.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      85
+    ],
+    "stage": 1,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4300.0,
+      1780.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      5260.0,
+      340.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4620.0,
+      340.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      5100.0,
+      980.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      5100.0,
+      660.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      3340.0,
+      1140.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4300.0,
+      1300.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4620.0,
+      820.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4140.0,
+      1300.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      3340.0,
+      1780.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "lift",
+    "pos": [
+      3340.0,
+      1620.0
+    ],
+    "size": [
+      130,
+      100
+    ],
+    "stage": 1,
+    "category": "lift",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.8
+    ]
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      6660.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 2,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "silent_bell",
+    "pos": [
+      7300.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 2,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "window",
+    "pos": [
+      7940.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 2,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      8580.0,
+      251.0
+    ],
+    "size": [
+      210,
+      190
+    ],
+    "stage": 2,
+    "category": "landmark",
+    "fade": true
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      6500.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      110
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "silent_bell",
+    "pos": [
+      7460.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      103
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "window",
+    "pos": [
+      8420.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      95
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      7460.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      107
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      6820.0,
+      729.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      7780.0,
+      1529.0
+    ],
+    "size": [
+      65,
+      114
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      6820.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      94
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      6500.0,
+      1049.0
+    ],
+    "size": [
+      95,
+      100
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "reliquary",
+    "pos": [
+      8420.0,
+      1369.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "organ",
+    "pos": [
+      7780.0,
+      1689.0
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      7460.0,
+      729.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      7940.0,
+      889.0
+    ],
+    "size": [
+      95,
+      110
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "silent_bell",
+    "pos": [
+      6500.0,
+      1369.0
+    ],
+    "size": [
+      95,
+      103
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "window",
+    "pos": [
+      7780.0,
+      729.0
+    ],
+    "size": [
+      95,
+      95
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      7140.0,
+      729.0
+    ],
+    "size": [
+      95,
+      107
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      6500.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      8260.0,
+      889.0
+    ],
+    "size": [
+      65,
+      114
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      7140.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      94
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      6820.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      100
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "reliquary",
+    "pos": [
+      6820.0,
+      569.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "organ",
+    "pos": [
+      7460.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      6820.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      7140.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      110
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "silent_bell",
+    "pos": [
+      6820.0,
+      1049.0
+    ],
+    "size": [
+      95,
+      103
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "window",
+    "pos": [
+      7140.0,
+      569.0
+    ],
+    "size": [
+      95,
+      95
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      8580.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      107
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      6340.0,
+      1849.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      7140.0,
+      1209.0
+    ],
+    "size": [
+      65,
+      114
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      7460.0,
+      1049.0
+    ],
+    "size": [
+      95,
+      94
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      7140.0,
+      1049.0
+    ],
+    "size": [
+      95,
+      100
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "reliquary",
+    "pos": [
+      6660.0,
+      569.0
+    ],
+    "size": [
+      95,
+      69
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "organ",
+    "pos": [
+      6340.0,
+      569.0
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      7300.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      80
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "throne",
+    "pos": [
+      8420.0,
+      1209.0
+    ],
+    "size": [
+      95,
+      110
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "silent_bell",
+    "pos": [
+      8100.0,
+      569.0
+    ],
+    "size": [
+      95,
+      103
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "window",
+    "pos": [
+      8420.0,
+      1529.0
+    ],
+    "size": [
+      95,
+      95
+    ],
+    "stage": 2,
+    "category": "wall",
+    "fade": true
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7300.0,
+      1620.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      6660.0,
+      1300.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7780.0,
+      340.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7620.0,
+      980.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7620.0,
+      1620.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7940.0,
+      1620.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7780.0,
+      980.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7300.0,
+      1300.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7460.0,
+      340.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      8580.0,
+      1940.0
+    ],
+    "size": [
+      58,
+      50
+    ],
+    "stage": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "lift",
+    "pos": [
+      7940.0,
+      1940.0
+    ],
+    "size": [
+      130,
+      100
+    ],
+    "stage": 2,
+    "category": "lift",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.8
+    ]
+  }
+]

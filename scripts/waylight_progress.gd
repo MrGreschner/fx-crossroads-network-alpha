@@ -1,15 +1,29 @@
 extends RefCounted
 const C=preload("res://scripts/waylight_catalog.gd")
 const STORE=preload("res://scripts/profile_store.gd")
+const ATTUNEMENT_REPLAY_SECONDS=86400
 var ref:WeakRef
 var legacy:Node:
  get:return ref.get_ref() if ref!=null else null
  set(value):ref=weakref(value)
-static func fresh()->Dictionary:return {"version":1,"shards":0,"dust":0,"attuned":false,"expeditions":0,"best_extraction":0,"best_ring":0,"relics":[],"equipped":["",""],"pity":{},"run":{},"settled":[],"fisher_claimed":false,"fair":false,"last":""}
+static func fresh()->Dictionary:return {"version":1,"shards":0,"dust":0,"attuned":false,"attunement_completed_at":0,"expeditions":0,"best_extraction":0,"best_ring":0,"relics":[],"equipped":["",""],"pity":{},"run":{},"settled":[],"fisher_claimed":false,"fair":false,"last":""}
 func state()->Dictionary:
  if not legacy.data.has("waylight"):legacy.data["waylight"]=fresh()
  if not legacy.data.waylight.has("best_extraction"):legacy.data.waylight.best_extraction=0
+ # Old attuned profiles have no trustworthy completion time. Their next successful trial starts the timer.
+ if not legacy.data.waylight.has("attunement_completed_at"):legacy.data.waylight.attunement_completed_at=0
  return legacy.data.waylight
+func now()->int:return floori(legacy.game.waylight.now())
+static func replay_remaining(completed_at:int,utc:int)->int:
+ if completed_at<=0:return 0
+ return maxi(0,completed_at+ATTUNEMENT_REPLAY_SECONDS-utc)
+func attunement_remaining()->int:
+ if blocked() or not bool(state().attuned):return 0
+ return replay_remaining(int(state().attunement_completed_at),now())
+func attunement_status()->String:
+ var left=attunement_remaining()
+ if left<=0:return "Ready • next successful clear starts a 24-hour cooldown."
+ return "Attunement ready in %02d:%02d:%02d • explore The Between while you wait." % [left/3600,(left%3600)/60,left%60]
 func blocked()->bool:return bool(legacy.data.get("teacher",false)) or STORE.progression_blocked()
 func save()->void:legacy.save()
 func item(id:String)->Dictionary:
@@ -22,9 +36,10 @@ func between_unlocked()->bool:
 func entry_issue(kind:String)->String:
  if blocked():return ""
  if kind in ["between","attunement"] and not between_unlocked():return "Clear Sunfield Expanse or Frostbound Rink to unlock The Between."
+ if kind=="attunement" and attunement_remaining()>0:return attunement_status()
  if kind=="overcharge" and not state().attuned:return "Complete Portal Attunement in The Between to unlock Overcharged Realms."
  return ""
-func can_attune()->bool:return between_unlocked()
+func can_attune()->bool:return between_unlocked() and attunement_remaining()==0
 func equip(id:String,slot:int)->bool:
  if slot<0 or slot>1 or item(id).is_empty():return false
  var type=str(item(id).type)
@@ -88,8 +103,10 @@ func settle(won:bool,carried:int,ring:int,guardian:bool,events:int,trial:Diction
   text="Banked %d Waylight Shards%s." % [earned,"" if won else " (half of your haul)"]
   if complete:
    var first=not bool(state().attuned);state().attuned=true
+   state().attunement_completed_at=maxi(int(state().attunement_completed_at),now())
    text+=" PORTAL ATTUNEMENT COMPLETE — relic drops unlocked!" if first else " Crossing Seals restored."
    text+=" +%d trial bonus shards (capped at 60)." % bonus
+   text+=" Attunement can be replayed in 24 hours. Normal Between expeditions remain available."
   elif ticket.kind=="attunement":text+=" Trial incomplete: extract with all six Crossing Seals in a solo challenge. No trial bonus."
  elif won:
   state().dust=mini(1000000,int(state().dust)+1+events)
@@ -126,6 +143,7 @@ static func valid(v:Variant)->bool:
  for key in ["shards","dust","expeditions","best_ring"]:
   if not C.number(v.get(key),1000000):return false
  if v.has("best_extraction") and not C.number(v.best_extraction,1000000):return false
+ if v.has("attunement_completed_at") and (not C.number(v.attunement_completed_at,1e12) or float(v.attunement_completed_at)!=floorf(float(v.attunement_completed_at))):return false
  for key in ["attuned","fisher_claimed","fair"]:
   if not v.get(key) is bool:return false
  if not v.get("last",null) is String or v.last.length()>1000:return false

@@ -1,0 +1,37 @@
+{
+  "release": 271,
+  "scope": "environment only; all V270 enemies untouched",
+  "master_sources": {
+    "palace": {
+      "sha256": "71e85fadf6784475a649b70073fae9724d3ca01aabf5bfce18299fd585d612c9",
+      "path": "tools/release271/palace.png"
+    },
+    "garden": {
+      "sha256": "9cc5a9ee340d8a6168f4963fc78b92874dc27c9107533d83adab1d9a2d631371",
+      "path": "tools/release271/garden.png"
+    },
+    "materials": {
+      "sha256": "8dc70b11233829b4e121685283560b6b757b0404e5c3c3e4e5cc959dd9956ac3",
+      "path": "tools/release271/materials.png"
+    }
+  },
+  "distinct_designs": 32,
+  "placements_including_cart": 131,
+  "terrain_pages": 4,
+  "page_pixels": [
+    1520,
+    1120
+  ],
+  "page_world_units": [
+    3800,
+    2800
+  ],
+  "runtime_image_processing": false,
+  "new_physics_nodes": 0,
+  "new_shaders_lights": 0,
+  "directional_enemy_frames_added": 0,
+  "scenery_atlas_pixels": [
+    2560,
+    1280
+  ]
+}

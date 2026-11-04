@@ -1,0 +1,49 @@
+{
+  "style": "V207/V208 soft coloured edges and matte shading",
+  "originals": [
+    {
+      "file": "fort_original.png",
+      "sha256": "8f19fe6b4f30c66722762d9ced7a4c4774f0956513046bfed8d766b087bf0098"
+    },
+    {
+      "file": "outposts_original.png",
+      "sha256": "f850499062d7a42489effd9d92e082db7e3951c3fed606bc8a62e585dcfcbf6c"
+    },
+    {
+      "file": "courtyard_original.png",
+      "sha256": "796987150dbb305f8879265d2d91eb7b3a5883f0798d9cb918c432cdfd447fab"
+    }
+  ],
+  "runtime_atlases": {
+    "fort": [
+      1024,
+      768
+    ],
+    "materials": [
+      768,
+      512
+    ],
+    "banks": [
+      512,
+      128
+    ],
+    "stone": [
+      256,
+      256
+    ]
+  },
+  "decoded_new_bytes": 8912896,
+  "physical_geometry_unchanged": true,
+  "actor_atlases": {
+    "cast": [
+      512,
+      1280
+    ],
+    "tollbreaker": [
+      1024,
+      256
+    ]
+  },
+  "actor_designs": 11,
+  "actor_poses": 44
+}

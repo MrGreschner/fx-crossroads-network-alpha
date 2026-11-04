@@ -362,7 +362,7 @@ func open_shop(notice:String="")->void:
  for k in TYPES.size():
   if not available(k,int(b.team)):continue
   var key:String="unit:"+str(TYPES[k]);var label:String=LABELS[k]+" ×"+str(int(b.counts[k]))+" • +1 / "+str(price(b,key))+" CC"
-  var button=game.presentation.button(grid,label,request_buy.bind(key));button.custom_minimum_size=Vector2(370,44);button.icon=preload("res://scripts/source_art.gd").texture("res://assets/battlegrounds/%d_%d_4.svg" % [int(b.team),k]);button.expand_icon=true;button.add_theme_constant_override("icon_max_width",36)
+  var button=game.presentation.button(grid,label,request_buy.bind(key));button.custom_minimum_size=Vector2(370,44);button.icon=preload("res://scripts/battleground_art262.gd").actor("bg_%d_%d" % [int(b.team),k],0);button.expand_icon=true;button.add_theme_constant_override("icon_max_width",36)
   button.tooltip_text="Heals nearby allies" if k==2 else "Splash siege damage" if k==3 else "Long reach, fragile" if k==7 else "Follows your army order. Lancers strike from farther away." if k==8 else "Nearby allied troops deal 10% more damage; does not stack." if k==9 else "Seeking spores slow enemies by 25% for two seconds." if k==10 else "Follows your army orders and fights the opposing army."
  game.presentation.label(game.presentation.content,"ARMY UPGRADES • apply to future troops",19)
  for key in UPGRADES:
@@ -401,50 +401,13 @@ func receive(data:Dictionary)->void:
 func draw_world(canvas:Node2D)->void:
  var view:Dictionary=game._battleground_view() if game.has_method("_battleground_view") else {}
  var draw_units:Dictionary=view.get("units",units);var draw_shots:Array=view.get("shots",shots);var draw_bombs:Array=view.get("bombs",bombs);var draw_clock:float=float(view.get("clock",clock))
- var ground=preload("res://scripts/source_art.gd").texture("res://assets/battlegrounds/ground_"+map_id+".svg")
- if ground!=null:canvas.draw_texture_rect(ground,Rect2(-game.camera.posmodv(Vector2(256,256)),game.VIEW+Vector2(256,256)),true)
  var cam:Vector2=game.camera;var visible:=Rect2(cam-Vector2(120,120),game.VIEW+Vector2(240,240));var font:=ThemeDB.fallback_font
- for lane in lanes:
-  var y:=lane_y(lane)
-  canvas.draw_line(Vector2(350,y)-cam,Vector2(6450,y)-cam,Color("#b3a572") if map_id=="woodland" else Color("#776b5c"),240)
-  canvas.draw_line(Vector2(350,y)-cam,Vector2(6450,y)-cam,Color("#d0bc87") if map_id=="woodland" else Color("#655d53"),170)
-  for x in range(900,6000,140):
-   var p:=Vector2(x,y)-cam
-   if not visible.has_point(Vector2(x,y)):continue
-   if map_id=="woodland":
-    for n in 3:
-     var mark:=p+Vector2((n-1)*27,(posmod(x+lane*35,70)-35)+n*18);canvas.draw_rect(Rect2(mark,Vector2(14,6)),Color("#aa9467"))
-   else:
-    canvas.draw_rect(Rect2(p-Vector2(26,3),Vector2(52,6)),Color("#bcb091"))
-    for offset in [-65,65]:canvas.draw_line(p+Vector2(-55,offset),p+Vector2(55,offset),Color("#454844"),3)
-  for x in [1450,2850,3950,5350]:
-   var p:=Vector2(x,y+160)
-   if not visible.has_point(p):continue
-   if map_id=="woodland":canvas.draw_rect(Rect2(p-cam-Vector2(32,18),Vector2(64,36)),Color("#6f5740"));canvas.draw_line(p-cam-Vector2(55,0),p-cam+Vector2(55,0),Color("#e3ca89"),4)
-   else:
-    canvas.draw_circle(p-cam,65,Color("#514c44"));canvas.draw_circle(p-cam,45,Color("#383a36"))
-    for n in 4:canvas.draw_rect(Rect2(p-cam+Vector2(n*20-40,60),Vector2(18,13)),Color("#a99874"))
-    canvas.draw_line(p-cam+Vector2(-55,78),p-cam+Vector2(55,78),Color("#b3bba8"),2)
- for x in [1700,3400,5100]:
-  canvas.draw_line(Vector2(x,500)-cam,Vector2(x,3900)-cam,Color("#aa9c73") if map_id=="woodland" else Color("#6c6255"),95)
- for gap in range(lanes-1):
-  var y:float=(lane_y(gap)+lane_y(gap+1))*.5
-  for x in [1150,2200,4600,5650]:
-   var p:=Vector2(x,y)-cam
-   if not visible.has_point(Vector2(x,y)):continue
-   if map_id=="woodland":
-    canvas.draw_circle(p,80,Color(.15,.35,.3,.6));canvas.draw_circle(p,53,Color("#356f77"));canvas.draw_arc(p,48,0,PI,18,Color(.5,.8,.8,.3),2)
-    for n in 4:canvas.draw_circle(p+Vector2.from_angle(n*1.6)*75,4,Color("#ead79c"))
-   else:
-    canvas.draw_rect(Rect2(p-Vector2(70,30),Vector2(140,60)),Color("#3b3c37"));canvas.draw_rect(Rect2(p-Vector2(80,40),Vector2(160,16)),Color("#8b8572"))
-    canvas.draw_rect(Rect2(p+Vector2(-12,-10),Vector2(24,20)),Color("#19242a"));canvas.draw_line(p+Vector2(-80,45),p+Vector2(80,45),Color("#bac0b6"),2)
-    for n in 6:canvas.draw_line(p+Vector2(-70+n*25,36),p+Vector2(-60+n*25,54),Color("#bac0b6"),2)
+ preload("res://scripts/battleground_art262.gd").scenery(canvas,self,cam)
  if map_id=="warzone" and not draw_bombs.is_empty():
   var plane:=Vector2(fposmod(draw_clock*650,SIZE.x),350)-cam
-  canvas.draw_colored_polygon(PackedVector2Array([plane+Vector2(0,-28),plane+Vector2(16,0),plane+Vector2(80,24),plane+Vector2(12,16),plane+Vector2(6,54),plane+Vector2(-6,54),plane+Vector2(-12,16),plane+Vector2(-80,24),plane+Vector2(-16,0)]),Color("#bbc1af"))
+  preload("res://scripts/battleground_art262.gd").aircraft(canvas,plane)
  draw_obstacles(canvas,visible)
  for side in 2:
-  canvas.draw_line(Vector2(550 if side==0 else 6250,400)-cam,Vector2(550 if side==0 else 6250,4000)-cam,Color("#a59675"),200)
   var p:=heart_pos(side)-cam;var tint:=Color("#78cce8") if side==0 else Color("#ef9876")
   if visible.grow(100).has_point(heart_pos(side)):
    preload("res://scripts/battleground_art.gd").capital(canvas,p,side,float(heart_hp[side]))
@@ -454,13 +417,10 @@ func draw_world(canvas:Node2D)->void:
   if not visible.has_point(b.pos):continue
   var tint:=Color("#8ccbd8") if int(b.team)==0 else Color("#ce836c")
   if float(b.hp)>0:
-   game._sprite("town_gate",b.pos-Vector2(115,140),Vector2(230,195),Color.WHITE if int(b.team)==0 else Color("#efb4a2"))
-  else:canvas.draw_rect(Rect2(p-Vector2(90,35),Vector2(180,65)),Color("#584a40"));canvas.draw_circle(p,24,Color("#313c3b"))
-  for x in [-135,135]:
-   canvas.draw_line(p+Vector2(x,-100),p+Vector2(x,45),Color("#8b7560"),5)
-   canvas.draw_colored_polygon(PackedVector2Array([p+Vector2(x,-100),p+Vector2(x+35,-80),p+Vector2(x,-60)]),tint)
-  canvas.draw_rect(Rect2(p+Vector2(145,10),Vector2(75,20)),Color("#a58152"))
-  for n in 3:canvas.draw_circle(p+Vector2(160+n*20,6),7,Color("#9bc9be"))
+   preload("res://scripts/battleground_art262.gd").draw(canvas,"barracks"+str(int(b.team)),Rect2(p-Vector2(115,140),Vector2(230,195)))
+  else:preload("res://scripts/battleground_art262.gd").ruins(canvas,p)
+  for x in [-135,135]:preload("res://scripts/battleground_art262.gd").draw(canvas,"banner"+str(int(b.team)),Rect2(p+Vector2(x-5,-100),Vector2(45,145)))
+  preload("res://scripts/battleground_art262.gd").draw(canvas,"bench",Rect2(p+Vector2(140,-15),Vector2(90,45)))
   canvas.draw_string(font,p+Vector2(135,50),"UPGRADES",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#ead19a"))
   canvas.draw_string(font,p+Vector2(-100,-110),player_name(str(b.owner)),HORIZONTAL_ALIGNMENT_CENTER,200,17,Color.WHITE)
   canvas.draw_rect(Rect2(p+Vector2(-65,63),Vector2(130,8)),Color("#302a25"));canvas.draw_rect(Rect2(p+Vector2(-65,63),Vector2(130*maxf(0,float(b.hp))/950.0,8)),tint)
@@ -473,13 +433,8 @@ func draw_world(canvas:Node2D)->void:
    canvas.draw_string(font,p+Vector2(-150,133),pending,HORIZONTAL_ALIGNMENT_CENTER,300,14,Color("#e3d9b4"))
    canvas.draw_string(font,p+Vector2(-150,151),"%d / 32 active • %d queued" % [count,queue.size()],HORIZONTAL_ALIGNMENT_CENTER,300,13,Color("#b4d0d1"))
  var middle:=SIZE*.5-cam
- canvas.draw_circle(middle,150,Color(.2,.42,.46,.2))
- canvas.draw_rect(Rect2(middle-Vector2(90,20),Vector2(180,65)),Color("#8c714b"))
- canvas.draw_colored_polygon(PackedVector2Array([middle+Vector2(-105,-30),middle+Vector2(-80,-85),middle+Vector2(80,-85),middle+Vector2(105,-30)]),Color("#d1c294"))
- for n in 6:canvas.draw_rect(Rect2(middle+Vector2(-80+n*28,-85),Vector2(14,55)),Color("#698b83"))
- for x in [-90,90]:canvas.draw_line(middle+Vector2(x,-35),middle+Vector2(x,50),Color("#8d7657"),6)
- for n in 5:canvas.draw_circle(middle+Vector2(-60+n*30,-10),7,Color("#8ed0d2") if n%2 else Color("#e0b888"))
- canvas.draw_circle(middle+Vector2(0,-46),11,Color("#c5b494"));canvas.draw_rect(Rect2(middle+Vector2(-10,-37),Vector2(20,21)),Color("#648384"))
+ canvas.draw_circle(middle,150,Color(.2,.42,.46,.12))
+ preload("res://scripts/battleground_art262.gd").draw(canvas,"market",Rect2(middle-Vector2(105,85),Vector2(210,150)))
  canvas.draw_string(font,middle+Vector2(-150,-105),"CENTRAL MARKET • E",HORIZONTAL_ALIGNMENT_CENTER,300,21,Color("#ffe6a2"))
  for u in draw_units.values():
   if visible.has_point(u.pos):
@@ -494,7 +449,8 @@ func draw_world(canvas:Node2D)->void:
   var p:Vector2=b.pos-cam;var colour:=Color(1,.25,.14,.25+.2*absf(sin(draw_clock*8)))
   canvas.draw_circle(p,float(b.radius),colour);canvas.draw_arc(p,float(b.radius),0,TAU,40,Color("#ff9d65"),3)
   canvas.draw_line(p-Vector2(20,0),p+Vector2(20,0),Color.WHITE,2);canvas.draw_line(p-Vector2(0,20),p+Vector2(0,20),Color.WHITE,2)
-  canvas.draw_circle(p-Vector2(0,maxf(0,float(b.time))*150),10,Color("#282a2c"))
+  var shell=p-Vector2(0,maxf(0,float(b.time))*150)
+  canvas.draw_circle(shell,10,Color("#28363b"));canvas.draw_circle(shell+Vector2(-2,-2),7,Color("#596365"));canvas.draw_arc(shell,9,PI*.2,PI*.8,12,Color("#a58a5e"),2)
 func player_name(id:String)->String:
  for member in game.roster:
   if str(member.id)==id:return str(member.name)
@@ -590,10 +546,4 @@ func open_hero_shop(notice:String="")->void:
 
 func draw_obstacles(canvas:Node2D,visible:Rect2)->void:
  for obstacle in game.field_obstacles:
-  var at:Vector2=obstacle.pos
-  if not visible.grow(80).has_point(at):continue
-  var radius=float(obstacle.get("radius",36));var p=at-game.camera
-  canvas.draw_circle(p+Vector2(0,6),radius,Color("#4c5944") if map_id=="woodland" else Color("#514e48"))
-  canvas.draw_arc(p,radius,0,TAU,18,Color("#859373") if map_id=="woodland" else Color("#928a74"),2)
-  if str(obstacle.get("kind","tree"))=="rock":game._sprite("rock",at-Vector2.ONE*(radius+4),Vector2.ONE*(radius*2+8))
-  else:game._sprite(str(obstacle.get("kind","tree")),at-Vector2(44,65),Vector2(88,112))
+  if visible.grow(80).has_point(obstacle.pos):preload("res://scripts/battleground_art262.gd").obstacle(canvas,self,obstacle)

@@ -1,0 +1,743 @@
+{
+  "belfry": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      26,
+      14,
+      198,
+      210
+    ],
+    "source_sheet": 1,
+    "source_cell": 0,
+    "source_bounds": [
+      12,
+      8,
+      301,
+      337
+    ],
+    "palette_limit": 36,
+    "texture": "belfry_large"
+  },
+  "gong": {
+    "region": [
+      128,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      15,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 1,
+    "source_bounds": [
+      339,
+      62,
+      626,
+      331
+    ],
+    "palette_limit": 36
+  },
+  "pier": {
+    "region": [
+      256,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      33,
+      8,
+      94,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 2,
+    "source_bounds": [
+      696,
+      8,
+      877,
+      341
+    ],
+    "palette_limit": 36
+  },
+  "chimes": {
+    "region": [
+      384,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      15,
+      8,
+      112,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 3,
+    "source_bounds": [
+      984,
+      46,
+      1233,
+      334
+    ],
+    "palette_limit": 36
+  },
+  "lift": {
+    "region": [
+      512,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      11,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 4,
+    "source_bounds": [
+      23,
+      376,
+      288,
+      634
+    ],
+    "palette_limit": 36
+  },
+  "organ": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      29,
+      14,
+      195,
+      210
+    ],
+    "source_sheet": 1,
+    "source_cell": 5,
+    "source_bounds": [
+      351,
+      349,
+      597,
+      639
+    ],
+    "palette_limit": 36,
+    "texture": "organ_large"
+  },
+  "bench": {
+    "region": [
+      768,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      41,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 6,
+    "source_bounds": [
+      644,
+      418,
+      947,
+      631
+    ],
+    "palette_limit": 36
+  },
+  "lectern": {
+    "region": [
+      896,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      14,
+      8,
+      114,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 7,
+    "source_bounds": [
+      999,
+      400,
+      1212,
+      639
+    ],
+    "palette_limit": 36
+  },
+  "mould": {
+    "region": [
+      0,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      31,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 8,
+    "source_bounds": [
+      13,
+      701,
+      286,
+      917
+    ],
+    "palette_limit": 36
+  },
+  "furnace": {
+    "region": [
+      128,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      12,
+      8,
+      116,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 9,
+    "source_bounds": [
+      340,
+      660,
+      583,
+      922
+    ],
+    "palette_limit": 36
+  },
+  "workbench": {
+    "region": [
+      256,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      44,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 10,
+    "source_bounds": [
+      633,
+      707,
+      931,
+      909
+    ],
+    "palette_limit": 36
+  },
+  "bell_rack": {
+    "region": [
+      384,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      39,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 11,
+    "source_bounds": [
+      956,
+      691,
+      1259,
+      909
+    ],
+    "palette_limit": 36
+  },
+  "rail": {
+    "region": [
+      512,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      49,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 12,
+    "source_bounds": [
+      10,
+      1021,
+      307,
+      1209
+    ],
+    "palette_limit": 36
+  },
+  "rib_arch": {
+    "region": [
+      640,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      19,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 13,
+    "source_bounds": [
+      332,
+      965,
+      617,
+      1223
+    ],
+    "palette_limit": 36
+  },
+  "lantern": {
+    "region": [
+      768,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      31,
+      8,
+      96,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 14,
+    "source_bounds": [
+      696,
+      940,
+      863,
+      1229
+    ],
+    "palette_limit": 36
+  },
+  "crystal_bell": {
+    "region": [
+      896,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      20,
+      120,
+      120
+    ],
+    "source_sheet": 1,
+    "source_cell": 15,
+    "source_bounds": [
+      959,
+      971,
+      1247,
+      1227
+    ],
+    "palette_limit": 36
+  },
+  "throne": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      27,
+      14,
+      196,
+      210
+    ],
+    "source_sheet": 2,
+    "source_cell": 0,
+    "source_bounds": [
+      25,
+      5,
+      290,
+      312
+    ],
+    "palette_limit": 36,
+    "texture": "throne_large"
+  },
+  "silent_bell": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      22,
+      15,
+      201,
+      210
+    ],
+    "source_sheet": 2,
+    "source_cell": 1,
+    "source_bounds": [
+      336,
+      8,
+      603,
+      300
+    ],
+    "palette_limit": 36,
+    "texture": "silent_bell_large"
+  },
+  "window": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      14,
+      14,
+      209,
+      210
+    ],
+    "source_sheet": 2,
+    "source_cell": 2,
+    "source_bounds": [
+      651,
+      24,
+      923,
+      297
+    ],
+    "palette_limit": 36,
+    "texture": "window_large"
+  },
+  "pipes": {
+    "region": [
+      384,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      14,
+      8,
+      113,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 3,
+    "source_bounds": [
+      984,
+      28,
+      1229,
+      306
+    ],
+    "palette_limit": 36
+  },
+  "clappers": {
+    "region": [
+      512,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      43,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 4,
+    "source_bounds": [
+      16,
+      391,
+      293,
+      582
+    ],
+    "palette_limit": 36
+  },
+  "tuning_fork": {
+    "region": [
+      640,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      29,
+      8,
+      98,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 5,
+    "source_bounds": [
+      386,
+      339,
+      548,
+      601
+    ],
+    "palette_limit": 36
+  },
+  "folios": {
+    "region": [
+      768,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      26,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 6,
+    "source_bounds": [
+      637,
+      360,
+      919,
+      596
+    ],
+    "palette_limit": 36
+  },
+  "memorial": {
+    "region": [
+      896,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      39,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 7,
+    "source_bounds": [
+      955,
+      374,
+      1247,
+      585
+    ],
+    "palette_limit": 36
+  },
+  "banner": {
+    "region": [
+      0,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      32,
+      8,
+      96,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 8,
+    "source_bounds": [
+      76,
+      630,
+      238,
+      913
+    ],
+    "palette_limit": 36
+  },
+  "crystals": {
+    "region": [
+      128,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      9,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 9,
+    "source_bounds": [
+      353,
+      676,
+      549,
+      871
+    ],
+    "palette_limit": 36
+  },
+  "medallion": {
+    "region": [
+      256,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      10,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 10,
+    "source_bounds": [
+      639,
+      642,
+      906,
+      905
+    ],
+    "palette_limit": 36
+  },
+  "trolley": {
+    "region": [
+      384,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      20,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 11,
+    "source_bounds": [
+      960,
+      655,
+      1229,
+      894
+    ],
+    "palette_limit": 36
+  },
+  "mobile": {
+    "region": [
+      512,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      11,
+      8,
+      117,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 12,
+    "source_bounds": [
+      34,
+      957,
+      265,
+      1202
+    ],
+    "palette_limit": 36
+  },
+  "bell_rims": {
+    "region": [
+      640,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      26,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 13,
+    "source_bounds": [
+      334,
+      974,
+      612,
+      1207
+    ],
+    "palette_limit": 36
+  },
+  "resonator": {
+    "region": [
+      768,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      31,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 14,
+    "source_bounds": [
+      640,
+      976,
+      924,
+      1202
+    ],
+    "palette_limit": 36
+  },
+  "reliquary": {
+    "region": [
+      896,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      39,
+      120,
+      120
+    ],
+    "source_sheet": 2,
+    "source_cell": 15,
+    "source_bounds": [
+      951,
+      979,
+      1250,
+      1196
+    ],
+    "palette_limit": 36
+  }
+}

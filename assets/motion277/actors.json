@@ -1,0 +1,340 @@
+{
+  "mirror_marquis": {
+    "index": 0,
+    "old_normalized": [
+      0.2,
+      0.225,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.27193,
+    "visible_height": 63,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "mask_duelist": {
+    "index": 1,
+    "old_normalized": [
+      0.2,
+      0.2125,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 57,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "prism_acolyte": {
+    "index": 2,
+    "old_normalized": [
+      0.2125,
+      0.225,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.27193,
+    "visible_height": 55,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "lunar_usher": {
+    "index": 3,
+    "old_normalized": [
+      0.225,
+      0.25,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 62,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "velvet_dancer": {
+    "index": 4,
+    "old_normalized": [
+      0.1875,
+      0.35,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 60,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "moonlit_puppeteer": {
+    "index": 5,
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.328125,
+    "visible_height": 60,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "bloomtail_regent": {
+    "index": 6,
+    "old_normalized": [
+      0.2,
+      0.2625,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.3425925,
+    "visible_height": 55,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "petal_ducker": {
+    "index": 7,
+    "old_normalized": [
+      0.1875,
+      0.2375,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.2723213,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "briar_tail": {
+    "index": 8,
+    "old_normalized": [
+      0.175,
+      0.225,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "nectar_keeper": {
+    "index": 9,
+    "old_normalized": [
+      0.225,
+      0.3125,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 59,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "silk_spinner": {
+    "index": 10,
+    "old_normalized": [
+      0.2,
+      0.3625,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 48,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "dewcap_guard": {
+    "index": 11,
+    "old_normalized": [
+      0.225,
+      0.3875,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 59,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "hourglass_hart": {
+    "index": 12,
+    "old_normalized": [
+      0.275,
+      0.225,
+      0.7125,
+      0.9375
+    ],
+    "factor": 1.25731,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "pendulum_moth": {
+    "index": 13,
+    "old_normalized": [
+      0.125,
+      0.3125,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.3,
+    "visible_height": 41,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "tick_acorn": {
+    "index": 14,
+    "old_normalized": [
+      0.125,
+      0.225,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.27193,
+    "visible_height": 53,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "gearhorn_runner": {
+    "index": 15,
+    "old_normalized": [
+      0.225,
+      0.4375,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 52,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "ratchet_keeper": {
+    "index": 16,
+    "old_normalized": [
+      0.175,
+      0.3875,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.26894,
+    "visible_height": 47,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "spark_scarab": {
+    "index": 17,
+    "old_normalized": [
+      0.1875,
+      0.4125,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 60,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "bellwork_colossus": {
+    "index": 18,
+    "old_normalized": [
+      0.2,
+      0.225,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.27193,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "hall_monitor": {
+    "index": 19,
+    "old_normalized": [
+      0.125,
+      0.275,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.2421388,
+    "visible_height": 59,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "culture_blob": {
+    "index": 20,
+    "old_normalized": [
+      0.2625,
+      0.55,
+      0.7375,
+      0.9375
+    ],
+    "factor": 1.6129038,
+    "visible_height": 46,
+    "frames": 4,
+    "movement": "flow"
+  },
+  "lunchline_leviathan": {
+    "index": 21,
+    "old_normalized": [
+      0.125,
+      0.425,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.463415,
+    "visible_height": 43,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "drone": {
+    "index": 22,
+    "old_normalized": [
+      0.041666666666666664,
+      0.16666666666666666,
+      1.0,
+      0.9375
+    ],
+    "factor": 1,
+    "visible_height": 50,
+    "frames": 4,
+    "movement": "rotor_hover"
+  },
+  "star_mine": {
+    "index": 23,
+    "old_normalized": [
+      0.020833333333333332,
+      0.020833333333333332,
+      1.0,
+      1.0
+    ],
+    "factor": 1,
+    "visible_height": 63,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "void_seeker": {
+    "index": 24,
+    "old_normalized": [
+      0.08333333333333333,
+      0.14583333333333334,
+      0.9375,
+      1.0
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "signal_core": {
+    "index": 25,
+    "old_normalized": [
+      0.020833333333333332,
+      0.0625,
+      1.0,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 51,
+    "frames": 4,
+    "movement": "hover_parts"
+  }
+}

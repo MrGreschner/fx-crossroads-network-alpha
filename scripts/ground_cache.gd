@@ -44,7 +44,7 @@ func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
  chunks.clear();coverage_key=""
 func sync()->void:
- if game.mode=="run" and game.region_id=="sunfield":visible=false;return
+ if game.mode=="run" and game.region_id in ["sunfield","ice","confluence","folded_coast","moonburrow"]:visible=false;return
  visible=not game.region.is_empty() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
  if not visible:return
  position=game.media.offset()-game.camera*game.media.factor();scale=Vector2.ONE*game.media.factor()

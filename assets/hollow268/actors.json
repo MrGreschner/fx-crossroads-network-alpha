@@ -1,0 +1,83 @@
+{
+  "burrowfang": {
+    "index": 0,
+    "visible_height": 123,
+    "old_normalized": [
+      0.25,
+      0.6,
+      0.7625,
+      0.9375
+    ],
+    "factor": 2.0164612
+  },
+  "shardspitter": {
+    "index": 1,
+    "visible_height": 172,
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.85,
+      0.9375
+    ],
+    "factor": 1.4120375
+  },
+  "fusehare": {
+    "index": 2,
+    "visible_height": 158,
+    "old_normalized": [
+      0.2,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.2698413
+  },
+  "rootwarden": {
+    "index": 3,
+    "visible_height": 190,
+    "old_normalized": [
+      0.15,
+      0.4125,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.5608462
+  },
+  "echo_bat": {
+    "index": 4,
+    "visible_height": 124,
+    "old_normalized": [
+      0.225,
+      0.5625,
+      0.7625,
+      0.9375
+    ],
+    "factor": 1.555555
+  },
+  "sap_nurse": {
+    "index": 5,
+    "visible_height": 149,
+    "old_normalized": [
+      0.225,
+      0.3375,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25
+  },
+  "flintroot": {
+    "index": 6,
+    "visible_height": 155,
+    "old_normalized": [
+      0.2,
+      0.3625,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.5700487
+  },
+  "dig_fx": {
+    "index": 7,
+    "visible_height": 62
+  }
+}

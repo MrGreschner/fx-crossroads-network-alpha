@@ -489,6 +489,8 @@ func broadcast_game(g:Node,data:Dictionary)->void:
  for id in room.get("members",{}):send_actor(str(id),data)
 func execute_action(g:Node,id:String,data:Dictionary)->void:
  var began=Time.get_ticks_msec()
+ if g.descent.resting() and str(data.get("type","")) in ["attack","held_cast","community_input"]:
+  send_actor(id,{"type":"action_ack","seq":int(data.get("seq",0)),"style":str(data.get("style","primary")),"accepted":false,"born_indices":[],"remaining":0,"tick":g.authority_tick});return
  if g.arena_world.shatter.active():
   var kind=str(data.get("type",""));var accepted=false
   if kind=="attack":accepted=g.arena_world.shatter.action(id,str(data.get("style","")),Vector2.from_angle(float(data.get("angle",0))))

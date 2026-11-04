@@ -1,0 +1,1260 @@
+{
+  "origins": [
+    [
+      420,
+      420
+    ],
+    [
+      4340,
+      420
+    ],
+    [
+      420,
+      4340
+    ],
+    [
+      4340,
+      4340
+    ]
+  ],
+  "rooms": [
+    [
+      420,
+      420,
+      2800,
+      2800
+    ],
+    [
+      4340,
+      420,
+      2800,
+      2800
+    ],
+    [
+      420,
+      4340,
+      2800,
+      2800
+    ],
+    [
+      4340,
+      4340,
+      2800,
+      2800
+    ],
+    [
+      9520,
+      1540,
+      3360,
+      2520
+    ],
+    [
+      9520,
+      4760,
+      3360,
+      2800
+    ]
+  ],
+  "walls": [
+    [
+      1246,
+      420,
+      952,
+      1218
+    ],
+    [
+      5166,
+      420,
+      952,
+      1218
+    ],
+    [
+      1246,
+      4340,
+      952,
+      1218
+    ],
+    [
+      5166,
+      4340,
+      952,
+      1218
+    ],
+    [
+      1246,
+      2002,
+      952,
+      1218
+    ],
+    [
+      5166,
+      2002,
+      952,
+      1218
+    ],
+    [
+      1246,
+      5922,
+      952,
+      1218
+    ],
+    [
+      5166,
+      5922,
+      952,
+      1218
+    ]
+  ],
+  "nodes": [
+    {
+      "name": "Prop0",
+      "category": "Obstacles",
+      "pos": [
+        588.0,
+        588.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop1",
+      "category": "Obstacles",
+      "pos": [
+        1092.0,
+        728.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop2",
+      "category": "Obstacles",
+      "pos": [
+        2450.0,
+        728.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop3",
+      "category": "Obstacles",
+      "pos": [
+        3038.0,
+        588.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop4",
+      "category": "Obstacles",
+      "pos": [
+        588.0,
+        3052.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop5",
+      "category": "Obstacles",
+      "pos": [
+        1050.0,
+        2898.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop6",
+      "category": "Obstacles",
+      "pos": [
+        2450.0,
+        2926.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop7",
+      "category": "Obstacles",
+      "pos": [
+        3038.0,
+        3052.0
+      ],
+      "texture": "briar_arch",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop8",
+      "category": "Obstacles",
+      "pos": [
+        4508.0,
+        588.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop9",
+      "category": "Obstacles",
+      "pos": [
+        5012.0,
+        728.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop10",
+      "category": "Obstacles",
+      "pos": [
+        6370.0,
+        728.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop11",
+      "category": "Obstacles",
+      "pos": [
+        6958.0,
+        588.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop12",
+      "category": "Obstacles",
+      "pos": [
+        4508.0,
+        3052.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop13",
+      "category": "Obstacles",
+      "pos": [
+        4970.0,
+        2898.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop14",
+      "category": "Obstacles",
+      "pos": [
+        6370.0,
+        2926.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop15",
+      "category": "Obstacles",
+      "pos": [
+        6958.0,
+        3052.0
+      ],
+      "texture": "kiln_forge",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop16",
+      "category": "Obstacles",
+      "pos": [
+        588.0,
+        4508.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop17",
+      "category": "Obstacles",
+      "pos": [
+        1092.0,
+        4648.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop18",
+      "category": "Obstacles",
+      "pos": [
+        2450.0,
+        4648.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop19",
+      "category": "Obstacles",
+      "pos": [
+        3038.0,
+        4508.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop20",
+      "category": "Obstacles",
+      "pos": [
+        588.0,
+        6972.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop21",
+      "category": "Obstacles",
+      "pos": [
+        1050.0,
+        6818.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop22",
+      "category": "Obstacles",
+      "pos": [
+        2450.0,
+        6846.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop23",
+      "category": "Obstacles",
+      "pos": [
+        3038.0,
+        6972.0
+      ],
+      "texture": "mirror_shard_env",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop24",
+      "category": "Obstacles",
+      "pos": [
+        4508.0,
+        4508.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop25",
+      "category": "Obstacles",
+      "pos": [
+        5012.0,
+        4648.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop26",
+      "category": "Obstacles",
+      "pos": [
+        6370.0,
+        4648.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop27",
+      "category": "Obstacles",
+      "pos": [
+        6958.0,
+        4508.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop28",
+      "category": "Obstacles",
+      "pos": [
+        4508.0,
+        6972.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop29",
+      "category": "Obstacles",
+      "pos": [
+        4970.0,
+        6818.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop30",
+      "category": "Obstacles",
+      "pos": [
+        6370.0,
+        6846.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "Prop31",
+      "category": "Obstacles",
+      "pos": [
+        6958.0,
+        6972.0
+      ],
+      "texture": "storm_coil",
+      "radius": 38.0
+    },
+    {
+      "name": "NexusRuin0",
+      "category": "Decorations",
+      "pos": [
+        9750.0,
+        3653.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin1",
+      "category": "Decorations",
+      "pos": [
+        10160.0,
+        3339.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin2",
+      "category": "Decorations",
+      "pos": [
+        10276.0,
+        1907.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin5",
+      "category": "Decorations",
+      "pos": [
+        12614.0,
+        2301.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin6",
+      "category": "Decorations",
+      "pos": [
+        10303.0,
+        1865.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin7",
+      "category": "Decorations",
+      "pos": [
+        12412.0,
+        1978.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin9",
+      "category": "Decorations",
+      "pos": [
+        11894.0,
+        3563.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin10",
+      "category": "Decorations",
+      "pos": [
+        11854.0,
+        3419.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin12",
+      "category": "Decorations",
+      "pos": [
+        10183.0,
+        1813.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin13",
+      "category": "Decorations",
+      "pos": [
+        11350.0,
+        3128.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin18",
+      "category": "Decorations",
+      "pos": [
+        11405.0,
+        1975.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin19",
+      "category": "Decorations",
+      "pos": [
+        9911.0,
+        2466.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin21",
+      "category": "Decorations",
+      "pos": [
+        10535.0,
+        2334.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin23",
+      "category": "Decorations",
+      "pos": [
+        10052.0,
+        3526.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin25",
+      "category": "Decorations",
+      "pos": [
+        10550.0,
+        3501.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin26",
+      "category": "Decorations",
+      "pos": [
+        12689.0,
+        3235.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin27",
+      "category": "Decorations",
+      "pos": [
+        10493.0,
+        3084.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin29",
+      "category": "Decorations",
+      "pos": [
+        11674.0,
+        1899.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin30",
+      "category": "Decorations",
+      "pos": [
+        10778.0,
+        3106.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin31",
+      "category": "Decorations",
+      "pos": [
+        10901.0,
+        3099.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin32",
+      "category": "Decorations",
+      "pos": [
+        12042.0,
+        3352.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin33",
+      "category": "Decorations",
+      "pos": [
+        11673.0,
+        3025.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin35",
+      "category": "Decorations",
+      "pos": [
+        10954.0,
+        2452.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin36",
+      "category": "Decorations",
+      "pos": [
+        11993.0,
+        2938.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin37",
+      "category": "Decorations",
+      "pos": [
+        10083.0,
+        2440.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin38",
+      "category": "Decorations",
+      "pos": [
+        10489.0,
+        1847.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin39",
+      "category": "Decorations",
+      "pos": [
+        12163.0,
+        3264.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin40",
+      "category": "Decorations",
+      "pos": [
+        12548.0,
+        2121.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin41",
+      "category": "Decorations",
+      "pos": [
+        12442.0,
+        3365.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin42",
+      "category": "Decorations",
+      "pos": [
+        10866.0,
+        2981.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin43",
+      "category": "Decorations",
+      "pos": [
+        12359.0,
+        2536.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin44",
+      "category": "Decorations",
+      "pos": [
+        10166.0,
+        3592.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin45",
+      "category": "Decorations",
+      "pos": [
+        10529.0,
+        3097.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin46",
+      "category": "Decorations",
+      "pos": [
+        11521.0,
+        3380.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin47",
+      "category": "Decorations",
+      "pos": [
+        9898.0,
+        2213.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin48",
+      "category": "Decorations",
+      "pos": [
+        10796.0,
+        2134.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin49",
+      "category": "Decorations",
+      "pos": [
+        12309.0,
+        2218.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin52",
+      "category": "Decorations",
+      "pos": [
+        12622.0,
+        2352.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin53",
+      "category": "Decorations",
+      "pos": [
+        11648.0,
+        1967.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin54",
+      "category": "Decorations",
+      "pos": [
+        11740.0,
+        3827.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin55",
+      "category": "Decorations",
+      "pos": [
+        10838.0,
+        3255.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin56",
+      "category": "Decorations",
+      "pos": [
+        12209.0,
+        3738.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin57",
+      "category": "Decorations",
+      "pos": [
+        12305.0,
+        1885.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin58",
+      "category": "Decorations",
+      "pos": [
+        10158.0,
+        3718.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin59",
+      "category": "Decorations",
+      "pos": [
+        10264.0,
+        3768.0
+      ],
+      "texture": "ruin5",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin61",
+      "category": "Decorations",
+      "pos": [
+        11706.0,
+        3654.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "NexusRuin63",
+      "category": "Decorations",
+      "pos": [
+        9745.0,
+        2126.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "SolidNexusRubble0",
+      "category": "Obstacles",
+      "pos": [
+        9820.0,
+        1830.0
+      ],
+      "texture": "ruin2",
+      "radius": 36.0
+    },
+    {
+      "name": "SolidNexusRubble1",
+      "category": "Obstacles",
+      "pos": [
+        12520.0,
+        1830.0
+      ],
+      "texture": "ruin2",
+      "radius": 36.0
+    },
+    {
+      "name": "SolidNexusRubble2",
+      "category": "Obstacles",
+      "pos": [
+        9820.0,
+        3770.0
+      ],
+      "texture": "ruin2",
+      "radius": 36.0
+    },
+    {
+      "name": "SolidNexusRubble3",
+      "category": "Obstacles",
+      "pos": [
+        12520.0,
+        3770.0
+      ],
+      "texture": "ruin2",
+      "radius": 36.0
+    },
+    {
+      "name": "ArenaFrieze0",
+      "category": "Decorations",
+      "pos": [
+        9760.0,
+        4910.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth0",
+      "category": "Decorations",
+      "pos": [
+        9760.0,
+        7360.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze1",
+      "category": "Decorations",
+      "pos": [
+        9950.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth1",
+      "category": "Decorations",
+      "pos": [
+        9950.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze2",
+      "category": "Decorations",
+      "pos": [
+        10140.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth2",
+      "category": "Decorations",
+      "pos": [
+        10140.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze3",
+      "category": "Decorations",
+      "pos": [
+        10330.0,
+        4910.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth3",
+      "category": "Decorations",
+      "pos": [
+        10330.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze4",
+      "category": "Decorations",
+      "pos": [
+        10520.0,
+        4910.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth4",
+      "category": "Decorations",
+      "pos": [
+        10520.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze5",
+      "category": "Decorations",
+      "pos": [
+        10710.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth5",
+      "category": "Decorations",
+      "pos": [
+        10710.0,
+        7360.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze6",
+      "category": "Decorations",
+      "pos": [
+        10900.0,
+        4910.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth6",
+      "category": "Decorations",
+      "pos": [
+        10900.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze7",
+      "category": "Decorations",
+      "pos": [
+        11090.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth7",
+      "category": "Decorations",
+      "pos": [
+        11090.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze8",
+      "category": "Decorations",
+      "pos": [
+        11280.0,
+        4910.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth8",
+      "category": "Decorations",
+      "pos": [
+        11280.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze9",
+      "category": "Decorations",
+      "pos": [
+        11470.0,
+        4910.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth9",
+      "category": "Decorations",
+      "pos": [
+        11470.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze10",
+      "category": "Decorations",
+      "pos": [
+        11660.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth10",
+      "category": "Decorations",
+      "pos": [
+        11660.0,
+        7360.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze11",
+      "category": "Decorations",
+      "pos": [
+        11850.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth11",
+      "category": "Decorations",
+      "pos": [
+        11850.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze12",
+      "category": "Decorations",
+      "pos": [
+        12040.0,
+        4910.0
+      ],
+      "texture": "ruin0",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth12",
+      "category": "Decorations",
+      "pos": [
+        12040.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze13",
+      "category": "Decorations",
+      "pos": [
+        12230.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth13",
+      "category": "Decorations",
+      "pos": [
+        12230.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze14",
+      "category": "Decorations",
+      "pos": [
+        12420.0,
+        4910.0
+      ],
+      "texture": "ruin2",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth14",
+      "category": "Decorations",
+      "pos": [
+        12420.0,
+        7360.0
+      ],
+      "texture": "ruin4",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFrieze15",
+      "category": "Decorations",
+      "pos": [
+        12610.0,
+        4910.0
+      ],
+      "texture": "ruin3",
+      "radius": 0
+    },
+    {
+      "name": "ArenaFriezeSouth15",
+      "category": "Decorations",
+      "pos": [
+        12610.0,
+        7360.0
+      ],
+      "texture": "ruin1",
+      "radius": 0
+    }
+  ]
+}

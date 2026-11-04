@@ -1,0 +1,44 @@
+{
+  "ground_world": [
+    6200,
+    1900
+  ],
+  "ground_pixels": [
+    3100,
+    950
+  ],
+  "route_polygons": 5,
+  "slip_rectangles": [
+    [
+      1800,
+      580,
+      580,
+      430
+    ],
+    [
+      2950,
+      780,
+      750,
+      540
+    ],
+    [
+      4210,
+      580,
+      730,
+      500
+    ],
+    [
+      5170,
+      710,
+      720,
+      540
+    ]
+  ],
+  "new_decoded_rgba_budget": 14925728,
+  "source_sha256": {
+    "frost_ground_original.png": "b6c727a49c4edcbe72a7beab18459d103bfa7f5c5abff57d47586a87b01e0eba",
+    "ice_identity_reference.png": "c0a372a92f74a838f4afb45256aa6af42a17a2486aef9408052b0de5bad81b4d",
+    "frost_actors_original.png": "87ecd7ba3a540966977ac22bb7d13d0207e9ad338beae6a3b1e58f34d92d9bd1",
+    "frost_props_original.png": "6fda9e74f0f77081c1bf8e4cb2a46f32143c8bd3924074ff392f070b13f0fb20"
+  }
+}

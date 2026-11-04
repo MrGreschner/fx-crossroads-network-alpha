@@ -246,8 +246,7 @@ func draw_ground()->void:
    if not is_inf(time):time=maxf(0,time-(visual_clock()-clock))
    if time<=0:
     g.draw_rect(rect,Color("#101b30"));g.draw_line(p+Vector2(24,26),p+Vector2(42,38),Color("#33415c"),2);continue
-   var tint=colors[layer].darkened(.35) if is_inf(time) else Color("#edb36b").lerp(Color("#ee6b69"),1-clampf(time/.85,0,1))
-   g.draw_rect(Rect2(rect.position+Vector2(0,6),rect.size),tint.darkened(.65));g.draw_rect(rect,tint);g.draw_rect(rect,tint.lightened(.25),false,1)
+   preload("res://scripts/arena_art261.gd").deck(g,rect,layer,time)
    if not is_inf(time):
     var progress=1-clampf(time/.85,0,1)
     var crack=[Vector2(15,3),Vector2(34,28),Vector2(24,42),Vector2(48,60),Vector2(42,77)]

@@ -1,0 +1,21 @@
+{
+  "art": "three built-in generated sheets + recovered original 88 troop poses",
+  "roads": "Exact original 240px horizontal, 95px cross-lanes, 200px home tracks; 12px softening stays inside bounds. 3/4 lanes only, unchanged official formats. Offline tiles deduplicated across both layouts.",
+  "ground": {
+    "woodland": {
+      "tiles": 331,
+      "size": [
+        1024,
+        1344
+      ]
+    },
+    "warzone": {
+      "tiles": 329,
+      "size": [
+        1024,
+        1344
+      ]
+    }
+  },
+  "new_decoded_rgba_bytes": 29500096
+}

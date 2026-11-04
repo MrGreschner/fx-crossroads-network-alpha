@@ -505,52 +505,56 @@ func receive(packet:Dictionary)->void:
   if bool(packet.get("opened",{}).get(str(door.id),false)) and not bool(opened.get(str(door.id),false)):open_door(door)
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
- var view:Vector2=adventure.game.VIEW;var bounds:=Rect2(camera-Vector2(280,280),view+Vector2(560,560))
- if floor_chunks.is_empty():build_floor_chunks(canvas)
- for chunk in floor_chunks:
-  chunk.position=-camera
-  chunk.visible=chunk.world_bounds.intersects(Rect2(camera,view).grow(80))
- for room in data.rooms:
-  var r:=rect(room.rect)
-  if not bounds.intersects(r) or str(room.name).is_empty():continue
-  var center:=r.get_center()-camera
-  if str(room.id)=="street":
-   canvas.draw_rect(Rect2(r.position+Vector2(0,22)-camera,Vector2(r.size.x,64)),Color("#9badae"));canvas.draw_rect(Rect2(r.position+Vector2(0,r.size.y-72)-camera,Vector2(r.size.x,50)),Color("#9badae"))
-   for n in range(1,int(r.size.x/450)):
-    var p:Vector2=r.position+Vector2(n*450,75)-camera
-    if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").lamp(canvas,p)
-    else:canvas.draw_rect(Rect2(p+Vector2(-9,-58),Vector2(18,77)),Color("#536776"));canvas.draw_rect(Rect2(p+Vector2(-16,-73),Vector2(32,28)),Color("#d5d8aa"));canvas.draw_rect(Rect2(p+Vector2(-12,-68),Vector2(24,17)),Color("#ece6bb"))
-  if str(room.id)=="entry":
-   var p:Vector2=v(data.doors[0].pos)-Vector2(0,45)-camera
-   if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").entrance(canvas,p,str(data.name).to_upper())
-   else:
-    canvas.draw_rect(Rect2(p+Vector2(-260,-115),Vector2(520,68)),Color("#6a7e8a"));canvas.draw_rect(Rect2(p+Vector2(-268,-125),Vector2(536,12)),Color("#c9b993"))
-    var title:=str(data.name).to_upper();var title_width:=ThemeDB.fallback_font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
-    canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-title_width*.5,-70),title,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("#f1e2b9"))
-    for sign in [-1,1]:
-     canvas.draw_rect(Rect2(p+Vector2(sign*270-30,-115),Vector2(60,170)),Color("#819296"));canvas.draw_rect(Rect2(p+Vector2(sign*270-40,-122),Vector2(80,16)),Color("#c7cabc"))
-   for n in 5:canvas.draw_rect(Rect2(Vector2(p.x-155+n*70,r.end.y-camera.y-50),Vector2(40,100)),Color("#d8d5b9"))
-  if str(room.theme)=="wood":
-   canvas.draw_rect(Rect2(r.position+Vector2(100,170)-camera,r.size-Vector2(200,260)),Color("#e0d0a6"),false,3);canvas.draw_arc(center,140,0,TAU,64,Color("#e0d0a6"),3);canvas.draw_line(center-Vector2(r.size.x*.4,0),center+Vector2(r.size.x*.4,0),Color("#e0d0a6"),3)
-  elif str(room.theme)=="stage":
-   canvas.draw_rect(Rect2(r.position+Vector2(150,160)-camera,Vector2(r.size.x-300,330)),Color("#4b4656"));canvas.draw_line(r.position+Vector2(150,490)-camera,r.position+Vector2(r.size.x-150,490)-camera,Color("#bc9569"),6)
-  elif str(room.id)=="playground":
-   for n in 4:canvas.draw_rect(Rect2(center+Vector2((n%2)*75-75,(n/2)*75),Vector2(60,60)),Color("#d4ceb0"),false,3)
-  if str(room.theme) not in ["street","yard","sand","roof"]:
-   for n in range(1,maxi(2,int(r.size.x/340))):
-    var p:Vector2=r.position+Vector2(n*320,38)-camera
-    canvas.draw_rect(Rect2(p-Vector2(55,0),Vector2(110,45)),Color("#405665"));canvas.draw_rect(Rect2(p-Vector2(47,-5),Vector2(94,30)),Color("#91bbc9"));canvas.draw_line(p+Vector2(0,5),p+Vector2(0,35),Color("#c4d5cf"),3)
-   if str(room.id) in ["hall","upper_hall","foyer"]:
-    for n in range(1,int(r.size.x/600)):
-     var p:Vector2=r.position+Vector2(n*600,r.size.y-70)-camera
-     if region_id=="elementary" and str(room.id)=="foyer":p.y=minf(p.y,3740-camera.y)
-     canvas.draw_rect(Rect2(p-Vector2(42,35),Vector2(84,58)),Color("#bbab88"));canvas.draw_rect(Rect2(p-Vector2(36,29),Vector2(72,46)),Color("#8a9eae"));canvas.draw_circle(p-Vector2(16,12),10,Color("#e3cc8d"));canvas.draw_line(p+Vector2(1,4),p+Vector2(27,-15),Color("#9acaac"),5)
-  if region_id=="elementary" and str(room.id)=="entry":continue
-  var label_offset=240 if region_id=="elementary" and str(room.id)=="street"else 100
-  var label:=str(room.name);var length:=ThemeDB.fallback_font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,21).x
-  canvas.draw_rect(Rect2(Vector2(center.x-length*.5-12,r.position.y+label_offset-camera.y),Vector2(length+24,35)),Color(.1,.17,.22,.85));canvas.draw_string(ThemeDB.fallback_font,Vector2(center.x-length*.5,r.position.y+label_offset+25-camera.y),label,HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#f0dfb4"))
- for prop in data.props:
-  if bounds.has_point(v(prop.pos)):canvas.draw_texture_rect(textures[str(prop.kind)],Rect2(v(prop.pos)-v(prop.size)*Vector2(.5,.7)-camera,v(prop.size)),false)
+ var bounds:=Rect2(camera-Vector2(280,280),adventure.game.VIEW+Vector2(560,560))
+ if region_id=="high_school" and preload("res://scripts/high_environment291.gd").draw(self,canvas,camera):pass
+ elif region_id=="middle_school":preload("res://scripts/crossbell_art274.gd").draw(self,canvas,camera)
+ else:
+  var view:Vector2=adventure.game.VIEW
+  if floor_chunks.is_empty():build_floor_chunks(canvas)
+  for chunk in floor_chunks:
+   chunk.position=-camera
+   chunk.visible=chunk.world_bounds.intersects(Rect2(camera,view).grow(80))
+  for room in data.rooms:
+   var r:=rect(room.rect)
+   if not bounds.intersects(r) or str(room.name).is_empty():continue
+   var center:=r.get_center()-camera
+   if str(room.id)=="street":
+    canvas.draw_rect(Rect2(r.position+Vector2(0,22)-camera,Vector2(r.size.x,64)),Color("#9badae"));canvas.draw_rect(Rect2(r.position+Vector2(0,r.size.y-72)-camera,Vector2(r.size.x,50)),Color("#9badae"))
+    for n in range(1,int(r.size.x/450)):
+     var p:Vector2=r.position+Vector2(n*450,75)-camera
+     if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").lamp(canvas,p)
+     else:canvas.draw_rect(Rect2(p+Vector2(-9,-58),Vector2(18,77)),Color("#536776"));canvas.draw_rect(Rect2(p+Vector2(-16,-73),Vector2(32,28)),Color("#d5d8aa"));canvas.draw_rect(Rect2(p+Vector2(-12,-68),Vector2(24,17)),Color("#ece6bb"))
+   if str(room.id)=="entry":
+    var p:Vector2=v(data.doors[0].pos)-Vector2(0,45)-camera
+    if region_id=="elementary":preload("res://scripts/firstbell_art256.gd").entrance(canvas,p,str(data.name).to_upper())
+    else:
+     canvas.draw_rect(Rect2(p+Vector2(-260,-115),Vector2(520,68)),Color("#6a7e8a"));canvas.draw_rect(Rect2(p+Vector2(-268,-125),Vector2(536,12)),Color("#c9b993"))
+     var title:=str(data.name).to_upper();var title_width:=ThemeDB.fallback_font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
+     canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-title_width*.5,-70),title,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("#f1e2b9"))
+     for sign in [-1,1]:
+      canvas.draw_rect(Rect2(p+Vector2(sign*270-30,-115),Vector2(60,170)),Color("#819296"));canvas.draw_rect(Rect2(p+Vector2(sign*270-40,-122),Vector2(80,16)),Color("#c7cabc"))
+    for n in 5:canvas.draw_rect(Rect2(Vector2(p.x-155+n*70,r.end.y-camera.y-50),Vector2(40,100)),Color("#d8d5b9"))
+   if str(room.theme)=="wood":
+    canvas.draw_rect(Rect2(r.position+Vector2(100,170)-camera,r.size-Vector2(200,260)),Color("#e0d0a6"),false,3);canvas.draw_arc(center,140,0,TAU,64,Color("#e0d0a6"),3);canvas.draw_line(center-Vector2(r.size.x*.4,0),center+Vector2(r.size.x*.4,0),Color("#e0d0a6"),3)
+   elif str(room.theme)=="stage":
+    canvas.draw_rect(Rect2(r.position+Vector2(150,160)-camera,Vector2(r.size.x-300,330)),Color("#4b4656"));canvas.draw_line(r.position+Vector2(150,490)-camera,r.position+Vector2(r.size.x-150,490)-camera,Color("#bc9569"),6)
+   elif str(room.id)=="playground":
+    for n in 4:canvas.draw_rect(Rect2(center+Vector2((n%2)*75-75,(n/2)*75),Vector2(60,60)),Color("#d4ceb0"),false,3)
+   if str(room.theme) not in ["street","yard","sand","roof"]:
+    for n in range(1,maxi(2,int(r.size.x/340))):
+     var p:Vector2=r.position+Vector2(n*320,38)-camera
+     canvas.draw_rect(Rect2(p-Vector2(55,0),Vector2(110,45)),Color("#405665"));canvas.draw_rect(Rect2(p-Vector2(47,-5),Vector2(94,30)),Color("#91bbc9"));canvas.draw_line(p+Vector2(0,5),p+Vector2(0,35),Color("#c4d5cf"),3)
+    if str(room.id) in ["hall","upper_hall","foyer"]:
+     for n in range(1,int(r.size.x/600)):
+      var p:Vector2=r.position+Vector2(n*600,r.size.y-70)-camera
+      if region_id=="elementary" and str(room.id)=="foyer":p.y=minf(p.y,3740-camera.y)
+      canvas.draw_rect(Rect2(p-Vector2(42,35),Vector2(84,58)),Color("#bbab88"));canvas.draw_rect(Rect2(p-Vector2(36,29),Vector2(72,46)),Color("#8a9eae"));canvas.draw_circle(p-Vector2(16,12),10,Color("#e3cc8d"));canvas.draw_line(p+Vector2(1,4),p+Vector2(27,-15),Color("#9acaac"),5)
+   if region_id=="elementary" and str(room.id)=="entry":continue
+   var label_offset=240 if region_id=="elementary" and str(room.id)=="street"else 100
+   var label:=str(room.name);var length:=ThemeDB.fallback_font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,21).x
+   canvas.draw_rect(Rect2(Vector2(center.x-length*.5-12,r.position.y+label_offset-camera.y),Vector2(length+24,35)),Color(.1,.17,.22,.85));canvas.draw_string(ThemeDB.fallback_font,Vector2(center.x-length*.5,r.position.y+label_offset+25-camera.y),label,HORIZONTAL_ALIGNMENT_LEFT,-1,21,Color("#f0dfb4"))
+  for prop in data.props:
+   if bounds.has_point(v(prop.pos)):canvas.draw_texture_rect(textures[str(prop.kind)],Rect2(v(prop.pos)-v(prop.size)*Vector2(.5,.7)-camera,v(prop.size)),false)
  for door in data.doors:
   var r:=door_rect(door);var p:=v(door.pos)-camera
   if not bounds.intersects(r):continue
@@ -570,8 +574,9 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
  for route in data.routes:
   var p:=v(route.pos)-camera
   if not bounds.has_point(v(route.pos)):continue
-  canvas.draw_rect(Rect2(p-Vector2(55,55),Vector2(110,100)),Color("#506472"))
-  for n in 5:canvas.draw_rect(Rect2(p+Vector2(-48,-45+n*17),Vector2(95,14)),Color("#c0bda8").darkened(n*.07))
+  if region_id!="middle_school":
+   canvas.draw_rect(Rect2(p-Vector2(55,55),Vector2(110,100)),Color("#506472"))
+   for n in 5:canvas.draw_rect(Rect2(p+Vector2(-48,-45+n*17),Vector2(95,14)),Color("#c0bda8").darkened(n*.07))
   canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-95,-75),str(route.name),HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#e6d3a0"));canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-35,75),"INTERACT" if unlocked(str(route.requires)) else "SEALED",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#c4e5d7"))
  for gear in data.gears:
   if collected.has(str(gear.id)) or not bounds.has_point(v(gear.pos)):continue
@@ -581,6 +586,8 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   var p:=v(data.exit)-camera;preload("res://scripts/realm_portals258.gd").draw_at(canvas,adventure.game,v(data.exit),camera);canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-65,-98),"STREET EXIT",HORIZONTAL_ALIGNMENT_LEFT,-1,22,Color("#c1f2d3"))
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  if not active:return
+ if region_id=="middle_school":preload("res://scripts/crossbell_art274.gd").overlay(self,canvas,camera)
+ if region_id=="high_school":preload("res://scripts/high_environment291.gd").overlay(self,canvas,camera)
  for h in hazards:
   var p:=v(h.pos)-camera;var end:=v(h.end)-camera;var waiting:=float(h.warn)>0;var tint:=Color(str(h.stats.get("color","#ecbe83")));var alpha:=.12 if waiting else .28;tint.a=.85
   if waiting:

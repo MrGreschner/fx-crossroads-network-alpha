@@ -1,0 +1,922 @@
+{
+  "forge_press": {
+    "region": [
+      0,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      9,
+      8,
+      102,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 0,
+    "source_bounds": [
+      15,
+      39,
+      276,
+      309
+    ],
+    "palette_limit": 36
+  },
+  "server_rack": {
+    "region": [
+      112,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      28,
+      8,
+      84,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 1,
+    "source_bounds": [
+      325,
+      48,
+      476,
+      309
+    ],
+    "palette_limit": 36
+  },
+  "coolant_tank": {
+    "region": [
+      224,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      12,
+      8,
+      99,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 2,
+    "source_bounds": [
+      512,
+      65,
+      731,
+      308
+    ],
+    "palette_limit": 36
+  },
+  "uplink_dish": {
+    "region": [
+      336,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      20,
+      8,
+      92,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 3,
+    "source_bounds": [
+      764,
+      64,
+      949,
+      309
+    ],
+    "palette_limit": 36
+  },
+  "conveyor": {
+    "region": [
+      448,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      55,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 4,
+    "source_bounds": [
+      972,
+      164,
+      1241,
+      301
+    ],
+    "palette_limit": 36
+  },
+  "console": {
+    "region": [
+      560,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      11,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 5,
+    "source_bounds": [
+      19,
+      390,
+      250,
+      614
+    ],
+    "palette_limit": 36
+  },
+  "toolbench": {
+    "region": [
+      672,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      12,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 6,
+    "source_bounds": [
+      266,
+      385,
+      504,
+      613
+    ],
+    "palette_limit": 36
+  },
+  "arm_rack": {
+    "region": [
+      784,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      12,
+      8,
+      100,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 7,
+    "source_bounds": [
+      515,
+      372,
+      736,
+      613
+    ],
+    "palette_limit": 36
+  },
+  "bridge_girders": {
+    "region": [
+      0,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      24,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 8,
+    "source_bounds": [
+      750,
+      411,
+      991,
+      613
+    ],
+    "palette_limit": 36
+  },
+  "saw_cradle": {
+    "region": [
+      112,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      10,
+      8,
+      102,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 9,
+    "source_bounds": [
+      1011,
+      373,
+      1236,
+      609
+    ],
+    "palette_limit": 36
+  },
+  "cargo_crates": {
+    "region": [
+      224,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      17,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 10,
+    "source_bounds": [
+      15,
+      692,
+      259,
+      913
+    ],
+    "palette_limit": 36
+  },
+  "chain_hoist": {
+    "region": [
+      336,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      19,
+      8,
+      93,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 11,
+    "source_bounds": [
+      283,
+      669,
+      476,
+      918
+    ],
+    "palette_limit": 36
+  },
+  "gauges": {
+    "region": [
+      448,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      9,
+      8,
+      103,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 12,
+    "source_bounds": [
+      509,
+      680,
+      736,
+      911
+    ],
+    "palette_limit": 36
+  },
+  "vent_turbine": {
+    "region": [
+      560,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      9,
+      8,
+      103,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 13,
+    "source_bounds": [
+      753,
+      686,
+      971,
+      909
+    ],
+    "palette_limit": 36
+  },
+  "smelter": {
+    "region": [
+      672,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      8,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 14,
+    "source_bounds": [
+      999,
+      675,
+      1233,
+      909
+    ],
+    "palette_limit": 36
+  },
+  "pipe_junction": {
+    "region": [
+      784,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      12,
+      8,
+      100,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 15,
+    "source_bounds": [
+      19,
+      968,
+      249,
+      1218
+    ],
+    "palette_limit": 36
+  },
+  "cable_reel": {
+    "region": [
+      0,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      11,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 16,
+    "source_bounds": [
+      260,
+      986,
+      491,
+      1210
+    ],
+    "palette_limit": 36
+  },
+  "power_cells": {
+    "region": [
+      112,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      15,
+      8,
+      96,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 17,
+    "source_bounds": [
+      509,
+      977,
+      710,
+      1215
+    ],
+    "palette_limit": 36
+  },
+  "tool_cart": {
+    "region": [
+      224,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      9,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 18,
+    "source_bounds": [
+      739,
+      981,
+      982,
+      1222
+    ],
+    "palette_limit": 36
+  },
+  "scrap_bin": {
+    "region": [
+      336,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      16,
+      104,
+      104
+    ],
+    "source_sheet": 0,
+    "source_cell": 19,
+    "source_bounds": [
+      996,
+      993,
+      1239,
+      1215
+    ],
+    "palette_limit": 36
+  },
+  "aether_condenser": {
+    "region": [
+      448,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      26,
+      8,
+      85,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 0,
+    "source_bounds": [
+      60,
+      18,
+      253,
+      330
+    ],
+    "palette_limit": 36
+  },
+  "uplink_obelisk": {
+    "region": [
+      560,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      29,
+      8,
+      83,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 1,
+    "source_bounds": [
+      320,
+      29,
+      491,
+      331
+    ],
+    "palette_limit": 36
+  },
+  "repair_pod": {
+    "region": [
+      672,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      11,
+      8,
+      100,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 2,
+    "source_bounds": [
+      531,
+      125,
+      722,
+      330
+    ],
+    "palette_limit": 36
+  },
+  "fern_planter": {
+    "region": [
+      784,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      17,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 3,
+    "source_bounds": [
+      764,
+      129,
+      985,
+      330
+    ],
+    "palette_limit": 36
+  },
+  "seedling_shelf": {
+    "region": [
+      0,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      14,
+      8,
+      97,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 4,
+    "source_bounds": [
+      1027,
+      105,
+      1221,
+      330
+    ],
+    "palette_limit": 36
+  },
+  "bridge_model": {
+    "region": [
+      112,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      41,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 5,
+    "source_bounds": [
+      16,
+      450,
+      287,
+      628
+    ],
+    "palette_limit": 36
+  },
+  "oath_plaque": {
+    "region": [
+      224,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      17,
+      8,
+      94,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 6,
+    "source_bounds": [
+      309,
+      406,
+      486,
+      627
+    ],
+    "palette_limit": 36
+  },
+  "memory_terminal": {
+    "region": [
+      336,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      17,
+      8,
+      95,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 7,
+    "source_bounds": [
+      516,
+      372,
+      721,
+      625
+    ],
+    "palette_limit": 36
+  },
+  "charging_dock": {
+    "region": [
+      448,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      13,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 8,
+    "source_bounds": [
+      745,
+      400,
+      979,
+      623
+    ],
+    "palette_limit": 36
+  },
+  "pump": {
+    "region": [
+      560,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      18,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 9,
+    "source_bounds": [
+      1005,
+      421,
+      1235,
+      626
+    ],
+    "palette_limit": 36
+  },
+  "filter_barrels": {
+    "region": [
+      672,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      8,
+      103,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 10,
+    "source_bounds": [
+      30,
+      688,
+      253,
+      914
+    ],
+    "palette_limit": 36
+  },
+  "armoured_cables": {
+    "region": [
+      784,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      43,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 11,
+    "source_bounds": [
+      280,
+      770,
+      498,
+      908
+    ],
+    "palette_limit": 36
+  },
+  "repair_patch": {
+    "region": [
+      0,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      13,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 12,
+    "source_bounds": [
+      528,
+      709,
+      736,
+      907
+    ],
+    "palette_limit": 36
+  },
+  "safety_plate": {
+    "region": [
+      112,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      12,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 13,
+    "source_bounds": [
+      771,
+      709,
+      978,
+      907
+    ],
+    "palette_limit": 36
+  },
+  "conduit_cross": {
+    "region": [
+      224,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      17,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 14,
+    "source_bounds": [
+      1012,
+      707,
+      1232,
+      907
+    ],
+    "palette_limit": 36
+  },
+  "observation_window": {
+    "region": [
+      336,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      19,
+      8,
+      93,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 15,
+    "source_bounds": [
+      38,
+      972,
+      231,
+      1223
+    ],
+    "palette_limit": 36
+  },
+  "crane_pedestal": {
+    "region": [
+      448,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      14,
+      8,
+      98,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 16,
+    "source_bounds": [
+      261,
+      965,
+      485,
+      1222
+    ],
+    "palette_limit": 36
+  },
+  "lamp_chain": {
+    "region": [
+      560,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      40,
+      104,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 17,
+    "source_bounds": [
+      505,
+      1032,
+      743,
+      1190
+    ],
+    "palette_limit": 36
+  },
+  "receiver_drum": {
+    "region": [
+      672,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      19,
+      8,
+      92,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 18,
+    "source_bounds": [
+      765,
+      958,
+      966,
+      1223
+    ],
+    "palette_limit": 36
+  },
+  "factory_bell": {
+    "region": [
+      784,
+      448,
+      112,
+      112
+    ],
+    "bounds": [
+      11,
+      8,
+      100,
+      104
+    ],
+    "source_sheet": 1,
+    "source_cell": 19,
+    "source_bounds": [
+      1005,
+      978,
+      1219,
+      1209
+    ],
+    "palette_limit": 36
+  }
+}

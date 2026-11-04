@@ -30,4 +30,6 @@ func locomotion(foe:Dictionary)->String:
  var track:Dictionary=tracks.get(int(foe.get("uid",0)),{})
  if track.is_empty() or sampled_at-float(track.moved_at)>=STOP_DELAY:return "idle"
  var stride:float=20.0 if bool(foe.get("boss",false)) else 12.0
+ if str(foe.get("type","")) in preload("res://scripts/hunter_art283.gd").IDS:
+  stride=20.0 if str(foe.type)=="veil_hound"else 28.0 if str(foe.type)in ["veil_maw","veil_warden"]else 24.0
  return "walk1" if int(float(track.distance)/stride)%2==0 else "walk2"

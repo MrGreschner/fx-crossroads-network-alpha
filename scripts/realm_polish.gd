@@ -34,9 +34,7 @@ func setup(realm:String)->void:
   art[kind]=preload("res://scripts/source_art.gd").texture("res://assets/realm_"+kind+".svg")
 func icy(point:Vector2)->bool:
  if id!="ice":return false
- for patch in data.get("slip_patches",[]):
-  if Rect2(patch[0],patch[1],patch[2],patch[3]).has_point(point):return true
- return false
+ return preload("res://scripts/frost_surface275.gd").icy(point)
 func motion(player:String,point:Vector2,move:Vector2,delta:float)->Vector2:
  if not icy(point):momentum.erase(player);return move
  if adventure.combat.stunned(adventure.combat.player_key(player)) or (not adventure.arcade and adventure.game.stun_time>0):momentum.erase(player);return Vector2.ZERO
@@ -76,6 +74,7 @@ func bosses(delta:float)->void:
  for key in boss_tracks.keys():
   if not live.has(key):boss_tracks.erase(key)
 func draw_world(c:Node2D,camera:Vector2)->void:
+ if id=="ice":preload("res://scripts/frost_art264.gd").draw(c,camera);return
  if id=="sunfield":return
  if id not in ["grove","quarry","ice","sunfield","petalbrook"]:return
  var view:=Rect2(camera,c.get_viewport_rect().size).grow(100)

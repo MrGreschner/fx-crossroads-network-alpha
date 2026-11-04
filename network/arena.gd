@@ -559,7 +559,9 @@ func receive_net(data:Dictionary)->void:
    for actor in positions.keys():
     if not data.get("players",{}).has(actor):
      positions.erase(actor);health.erase(actor);hero_ids.erase(actor);remote_draw_pos.erase(actor)
-   if mode=="descent" and int(data.get("floor",floor_number))!=floor_number:
+   var rest_changed=mode=="descent" and bool(data.get("descent",{}).get("rest263",{}).get("active",false))!=descent.rest.active
+   if mode=="descent":descent.rest.receive(data.get("descent",{}).get("rest263",{}))
+   if mode=="descent" and (int(data.get("floor",floor_number))!=floor_number or rest_changed):
     floor_number=int(data.floor);_make_floor();world_view.reset_timeline();_buffer_state(data);ability_view.reset();local_view.reset(local_pos)
    # Install both local and remote authoritative builds BEFORE replaying inputs.
    for actor in data.get("players",{}):authority_builds[str(actor)]=legacy.sanitize_build(data.players[actor].get("build",{}))
@@ -691,8 +693,8 @@ func _process(delta:float)->void:
  missiles.assign(shots_view.samples(Time.get_ticks_msec()/1000.0))
  for shot in render_shots:
   if str(shot.owner)!=my_id and not bool(shot.get("custom",false)):missiles.append({"pos":shot.draw_pos,"owner":shot.owner,"color":shot.color})
- adventure.combat.held_cast.local_input(delta,not descent.falling() and not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
- if not descent.falling() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
+ adventure.combat.held_cast.local_input(delta,not descent.falling() and not descent.resting() and not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
+ if not descent.falling() and not descent.resting() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
   if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):_attack_request("primary")
   if Input.is_action_pressed("secondary"):_attack_request("secondary")
   if Input.is_action_just_pressed("special"):_attack_request("special")

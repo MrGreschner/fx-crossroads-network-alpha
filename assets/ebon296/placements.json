@@ -1,0 +1,4092 @@
+[
+  {
+    "kind": "sea_gate",
+    "pos": [
+      800.0,
+      2018
+    ],
+    "size": [
+      520,
+      496
+    ],
+    "district": 0,
+    "category": "landmark",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      312.5,
+      2018
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      475.0,
+      2018
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      1125.0,
+      2018
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1287.5,
+      2018
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      160,
+      2187.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      160,
+      2375.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      160,
+      2562.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      160,
+      2750.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      160,
+      2937.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      160,
+      3125.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      160,
+      3312.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      1440,
+      2187.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      1440,
+      2375.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      1440,
+      2750.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1440,
+      2937.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      1440,
+      3125.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      1440,
+      3312.5
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      335.7142857142857,
+      3485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      521.4285714285714,
+      3485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      707.1428571428571,
+      3485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      892.8571428571429,
+      3485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      1078.5714285714284,
+      3485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      1264.2857142857142,
+      3485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      800.0,
+      2750.0
+    ],
+    "size": [
+      260,
+      190
+    ],
+    "district": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "infirmary",
+    "pos": [
+      2700.0,
+      918
+    ],
+    "size": [
+      520,
+      443
+    ],
+    "district": 1,
+    "category": "landmark",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "screen",
+    "pos": [
+      2025.0,
+      918
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "basin",
+    "pos": [
+      2250.0,
+      918
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "window",
+    "pos": [
+      3150.0,
+      918
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "screen",
+    "pos": [
+      3375.0,
+      918
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "screen",
+    "pos": [
+      1810,
+      1125.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "basin",
+    "pos": [
+      1810,
+      1350.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      1810,
+      1575.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      1810,
+      1800.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      1810,
+      2025.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "window",
+    "pos": [
+      1810,
+      2250.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      3590,
+      1125.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      3590,
+      1350.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "window",
+    "pos": [
+      3590,
+      1800.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "screen",
+    "pos": [
+      3590,
+      2025.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "basin",
+    "pos": [
+      3590,
+      2250.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      3590,
+      2475.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      2057.1428571428573,
+      2685
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      2314.285714285714,
+      2685
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "window",
+    "pos": [
+      2571.4285714285716,
+      2685
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "screen",
+    "pos": [
+      2828.5714285714284,
+      2685
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "basin",
+    "pos": [
+      3085.714285714286,
+      2685
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      3342.857142857143,
+      2685
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 1,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      2700.0,
+      1800.0
+    ],
+    "size": [
+      260,
+      190
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "rookery",
+    "pos": [
+      4850.0,
+      718
+    ],
+    "size": [
+      520,
+      790
+    ],
+    "district": 2,
+    "category": "landmark",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "raven",
+    "pos": [
+      4175.0,
+      718
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      4400.0,
+      718
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      5300.0,
+      718
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "raven",
+    "pos": [
+      5525.0,
+      718
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "raven",
+    "pos": [
+      3960,
+      925.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      3960,
+      1150.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      3960,
+      1375.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      3960,
+      1825.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      3960,
+      2050.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "raven",
+    "pos": [
+      3960,
+      2275.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      5740,
+      925.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "chrysalis",
+    "pos": [
+      5740,
+      1150.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      5740,
+      1375.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      5740,
+      1600.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      5740,
+      2275.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "chrysalis",
+    "pos": [
+      4207.142857142857,
+      2485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      4464.285714285715,
+      2485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "raven",
+    "pos": [
+      4978.571428571428,
+      2485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      5235.714285714286,
+      2485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "rubble",
+    "pos": [
+      5492.857142857143,
+      2485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 2,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4850.0,
+      1600.0
+    ],
+    "size": [
+      260,
+      190
+    ],
+    "district": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "forge",
+    "pos": [
+      5350.0,
+      3318
+    ],
+    "size": [
+      520,
+      551
+    ],
+    "district": 3,
+    "category": "landmark",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "bellows",
+    "pos": [
+      4225.0,
+      3318
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4450.0,
+      3318
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anvil",
+    "pos": [
+      5350.0,
+      3318
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "bellows",
+    "pos": [
+      5575.0,
+      3318
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "bellows",
+    "pos": [
+      4010,
+      3575.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4010,
+      3850.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "armour_rack",
+    "pos": [
+      4010,
+      4125.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "worktable",
+    "pos": [
+      4010,
+      4400.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "chrysalis",
+    "pos": [
+      4010,
+      4675.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "anvil",
+    "pos": [
+      4010,
+      4950.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "bellows",
+    "pos": [
+      4010,
+      5225.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "armour_rack",
+    "pos": [
+      5790,
+      3575.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "worktable",
+    "pos": [
+      5790,
+      3850.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "anvil",
+    "pos": [
+      5790,
+      4400.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "bellows",
+    "pos": [
+      5790,
+      4675.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      5790,
+      4950.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "armour_rack",
+    "pos": [
+      5790,
+      5225.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "worktable",
+    "pos": [
+      4257.142857142857,
+      5485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "chrysalis",
+    "pos": [
+      4514.285714285715,
+      5485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "anvil",
+    "pos": [
+      4771.428571428572,
+      5485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "bellows",
+    "pos": [
+      5028.571428571428,
+      5485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      5285.714285714286,
+      5485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "armour_rack",
+    "pos": [
+      5542.857142857143,
+      5485
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 3,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4900.0,
+      4400.0
+    ],
+    "size": [
+      260,
+      190
+    ],
+    "district": 3,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "ledger_throne",
+    "pos": [
+      7600.0,
+      2418
+    ],
+    "size": [
+      380,
+      416
+    ],
+    "district": 4,
+    "category": "landmark",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      7050.0,
+      2418
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "lectern",
+    "pos": [
+      8150.0,
+      2418
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "coffer",
+    "pos": [
+      8425.0,
+      2418
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "coffer",
+    "pos": [
+      6510,
+      2675.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      6510,
+      2950.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      6510,
+      3225.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      6510,
+      3500.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      6510,
+      3775.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "coffer",
+    "pos": [
+      6510,
+      4325.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      8690,
+      2675.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      8690,
+      2950.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      8690,
+      3225.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "lectern",
+    "pos": [
+      8690,
+      3500.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "coffer",
+    "pos": [
+      8690,
+      3775.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      8690,
+      4050.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      8690,
+      4325.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.85
+    ]
+  },
+  {
+    "kind": "banner",
+    "pos": [
+      6814.285714285715,
+      4585
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "memorial",
+    "pos": [
+      7128.571428571428,
+      4585
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "lectern",
+    "pos": [
+      7442.857142857143,
+      4585
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "coffer",
+    "pos": [
+      7757.142857142857,
+      4585
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "folios",
+    "pos": [
+      8071.428571428572,
+      4585
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "ward_clock",
+    "pos": [
+      8385.714285714286,
+      4585
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "district": 4,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7600.0,
+      3500.0
+    ],
+    "size": [
+      260,
+      190
+    ],
+    "district": 4,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      2000,
+      1100
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      3350,
+      2500
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      4200,
+      850
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      5550,
+      2200
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      4200,
+      3500
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      5550,
+      5300
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      6750,
+      2650
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "buttress",
+    "pos": [
+      8450,
+      4250
+    ],
+    "size": [
+      106,
+      190
+    ],
+    "district": 0,
+    "category": "pillar",
+    "fade": true
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2050,
+      1105
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2050,
+      1110
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2108,
+      1103
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2430,
+      1105
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2430,
+      1110
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2488,
+      1103
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2810,
+      1105
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2810,
+      1110
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2868,
+      1103
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      3190,
+      1105
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      3190,
+      1110
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      3248,
+      1103
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2050,
+      1445
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2050,
+      1450
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2108,
+      1443
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2430,
+      1445
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2430,
+      1450
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2488,
+      1443
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2810,
+      1445
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2810,
+      1450
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2868,
+      1443
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      3190,
+      1445
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      3190,
+      1450
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      3248,
+      1443
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2050,
+      1785
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2050,
+      1790
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2108,
+      1783
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2430,
+      1785
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2430,
+      1790
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2488,
+      1783
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2810,
+      1785
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2810,
+      1790
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2868,
+      1783
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      3190,
+      1785
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      3190,
+      1790
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      3248,
+      1783
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2050,
+      2125
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2050,
+      2130
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2108,
+      2123
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2430,
+      2125
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2430,
+      2130
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2488,
+      2123
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      2810,
+      2125
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      2810,
+      2130
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      2868,
+      2123
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      3190,
+      2125
+    ],
+    "size": [
+      120,
+      85
+    ],
+    "district": 1,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "cot",
+    "pos": [
+      3190,
+      2130
+    ],
+    "size": [
+      88,
+      104
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "cabinet",
+    "pos": [
+      3248,
+      2123
+    ],
+    "size": [
+      39,
+      47
+    ],
+    "district": 1,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.7
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4150,
+      3500
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4500,
+      3500
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4850,
+      3500
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      5200,
+      3500
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4150,
+      4150
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4500,
+      4150
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4850,
+      4150
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      5200,
+      4150
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4150,
+      4800
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4500,
+      4800
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      4850,
+      4800
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "crucible",
+    "pos": [
+      5200,
+      4800
+    ],
+    "size": [
+      87,
+      85
+    ],
+    "district": 3,
+    "category": "original_furniture",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0.75
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1733.3333333333333,
+      2465
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      1733.3333333333333,
+      2755
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      3760.0,
+      1415
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      3760.0,
+      1705
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      3940.0,
+      1415
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      3940.0,
+      1705
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      4665,
+      2760.0
+    ],
+    "size": [
+      75,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      1
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      4955,
+      2760.0
+    ],
+    "size": [
+      55,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.8
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      4665,
+      2990.0
+    ],
+    "size": [
+      75,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      1
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      4955,
+      2990.0
+    ],
+    "size": [
+      55,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.8
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      4665,
+      3220.0
+    ],
+    "size": [
+      75,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      1
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      4955,
+      3220.0
+    ],
+    "size": [
+      55,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.8
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6050.0,
+      4015
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      6050.0,
+      4305
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6250.0,
+      4015
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      6250.0,
+      4305
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6450.0,
+      4015
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      6450.0,
+      4305
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      5916.666666666667,
+      1815
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      5916.666666666667,
+      2085
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6100.0,
+      1815
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      6100.0,
+      2085
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6283.333333333333,
+      1815
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      6283.333333333333,
+      2085
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6466.666666666667,
+      1815
+    ],
+    "size": [
+      130,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      1
+    ]
+  },
+  {
+    "kind": "anchor_chain",
+    "pos": [
+      6466.666666666667,
+      2085
+    ],
+    "size": [
+      55,
+      80
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6515,
+      2225.0
+    ],
+    "size": [
+      75,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      1
+    ]
+  },
+  {
+    "kind": "ward_lamp",
+    "pos": [
+      6785,
+      2225.0
+    ],
+    "size": [
+      55,
+      95
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      0,
+      0.8
+    ]
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      6515,
+      2437.5
+    ],
+    "size": [
+      75,
+      60
+    ],
+    "district": 0,
+    "category": "perimeter",
+    "fade": true,
+    "anchor": [
+      1,
+      1
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      475.0,
+      2450.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      1125.0,
+      2450.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      475.0,
+      3080.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "rug",
+    "pos": [
+      1125.0,
+      3080.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 0,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4400.0,
+      1240.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      5300.0,
+      1240.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4400.0,
+      1996.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      5300.0,
+      1996.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 2,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7050.0,
+      3060.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 4,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      8150.0,
+      3060.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 4,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      7050.0,
+      3984.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 4,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      8150.0,
+      3984.0
+    ],
+    "size": [
+      150,
+      100
+    ],
+    "district": 4,
+    "category": "flat",
+    "fade": false,
+    "anchor": [
+      0.5,
+      0.5
+    ]
+  }
+]

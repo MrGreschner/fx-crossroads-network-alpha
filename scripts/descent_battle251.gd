@@ -14,18 +14,25 @@ var return_at:Vector2=Vector2.ZERO
 var motion:Dictionary={}
 var previous:Dictionary={}
 var call:Dictionary={}
+var encounters=preload("res://scripts/descent_encounters288.gd").new()
+var guardians=preload("res://scripts/descent_guardians293.gd").new()
 const NEW=["ds_wickcaller","ds_gloamrunner","ds_craglobber","ds_riftskulk","ds_mirebound"]
 const LOCALS=["shard_lances","echo_rings","pursuit_orbs"]
 const FINAL=["shard_lances","echo_rings","pursuit_orbs","rift_mines","seismic_cross","crown_grid","shard_rain"]
 const LAVA=["magma_lances","cinder_orbs","eruption_mines","basalt_cross","magma_tide","eruption_sweep"]
 func reset()->void:
+ guardians.b=self;guardians.reset()
+ encounters.b=self;encounters.reset()
  events.clear();bolts.clear();suspended.clear();minions.clear();call.clear();motion.clear();previous.clear();return_left=-1
 func full(e:Dictionary)->bool:return str(d.Book.profile(str(e.type)).get("rank","enemy")) in ["boss","beyond"]
-static func stages(floor:int)->int:return floor/20 if floor in [20,40,60,80,100] else 0
+static func stages(floor:int)->int:return 2 if floor>100 else floor/20 if floor in [20,40,60,80,100] else 0
 func threshold(e:Dictionary)->float:
  var n=stages(game.floor_number);var done=int(e.get("intermissions",0))
+ if game.floor_number>100:return float(e.max_hp)*([.65,.30][done] if done<2 else 0.0)
  return float(e.max_hp)*(1-float(done+1)/(n+1)) if done<n else 0.0
 func damage(e:Dictionary,amount:float)->float:
+ guardians.b=self;amount=guardians.damage(e,amount)
+ encounters.b=self;amount=encounters.adjusted_damage(e,amount)
  if not full(e):return amount
  if bool(e.get("phase_pending",false)) or float(e.get("return_ward",0))>0:return 0.0
  var limit=threshold(e)
@@ -34,8 +41,11 @@ func damage(e:Dictionary,amount:float)->float:
   return maxf(0,float(e.hp)-limit)
  return amount
 func clear_attacks()->void:
+ guardians.clear_fields()
+ encounters.waves.clear();encounters.clouds.clear()
  events.clear();bolts.clear();d.warnings.clear();d.hazards.clear();d.wheels.clear();game.adventure.combat.projectiles.clear();game.missiles.clear()
 func intermission(e:Dictionary)->void:
+ guardians.suspend(e)
  suspended=e.duplicate(true);suspended.intermissions=int(e.get("intermissions",0))+1;suspended.phase_pending=false;suspended.action="";suspended.dash_left=0
  return_at=d.safe(game.FIELD.size*.5+Vector2(0,240));return_left=-1;clear_attacks()
  game.opponents.erase(e);minions.clear()
@@ -56,19 +66,22 @@ static func contains(shape:Dictionary,p:Vector2)->bool:
  var dist=p.distance_to(Vector2(shape.pos[0],shape.pos[1]));return dist<float(shape.radius)+12 and (str(shape.shape)!="ring" or dist>float(shape.inner)-12)
 func arena(e:Dictionary,index:int)->void:
  var shapes:Array=[];var f:Rect2=game.FIELD;var damage=float(d.Book.profile(e.type).damage)*1.35
+ var growth=clampf((game.floor_number-10.0)/90.0,0,1)
+ var vertical=lerpf(180,330,growth);var horizontal=lerpf(160,285,growth)
  var pattern=posmod(index+game.floor_number/10,5)
  match pattern:
   0:
-   for x in range(120,int(f.size.x)-100,480):shapes.append(rect(Rect2(x+posmod(index,2)*240,70,170,f.size.y-140)))
+   for x in range(120,int(f.size.x)-100,480):shapes.append(rect(Rect2(x+posmod(index,2)*240,70,vertical,f.size.y-140)))
   1:
-   for y in range(120,int(f.size.y)-100,420):shapes.append(rect(Rect2(70,y+posmod(index,2)*210,f.size.x-140,150)))
+   for y in range(120,int(f.size.y)-100,420):shapes.append(rect(Rect2(70,y+posmod(index,2)*210,f.size.x-140,horizontal)))
   2:
-   shapes=[rect(Rect2(f.size.x*.5-85,70,170,f.size.y-140)),rect(Rect2(70,f.size.y*.5-75,f.size.x-140,150))]
+   shapes=[rect(Rect2(f.size.x*.5-vertical*.5,70,vertical,f.size.y-140)),rect(Rect2(70,f.size.y*.5-horizontal*.5,f.size.x-140,horizontal))]
   3:
    for x in [420,1200,1980]:
-    for y in [340,850,1360]:shapes.append(circle(Vector2(x,y),140+mini(30,game.floor_number/4)))
+    for y in [340,850,1360]:shapes.append(circle(Vector2(x,y),lerpf(150,235,growth)))
   4:
-   shapes=[rect(Rect2(70,70,f.size.x-140,155)),rect(Rect2(70,f.size.y-225,f.size.x-140,155)),rect(Rect2(70,225,155,f.size.y-450)),rect(Rect2(f.size.x-225,225,155,f.size.y-450))]
+   var rim=lerpf(165,290,growth)
+   shapes=[rect(Rect2(70,70,f.size.x-140,rim)),rect(Rect2(70,f.size.y-70-rim,f.size.x-140,rim)),rect(Rect2(70,70+rim,rim,f.size.y-140-rim*2)),rect(Rect2(f.size.x-70-rim,70+rim,rim,f.size.y-140-rim*2))]
  var names=["FAULT LANES • Leave the marked strips","SHELF COLLAPSE • Find an open lane","CAVERN CROSS • Move off the seams","CEILING FALL • Dodge the marked circles","RIM COLLAPSE • Leave the outer rim"]
  event(names[pattern],shapes,damage,int(e.uid),maxf(1.65,2.5-game.floor_number*.005),.65)
  game.status_label.text=names[pattern]
@@ -93,12 +106,13 @@ func execute(e:Dictionary,style:String,aim_at:Vector2,target:String)->bool:
   for n in (5 if style=="shard_rain" else 3):shapes.append(circle(d.safe(game.FIELD.size*.5+Vector2(cos(n*2.4+e.phase)*700,sin(n*2.4+e.phase)*480)),110))
   event("CEILING MARKS • Move before impact",shapes,damage*1.2,int(e.uid),1.7)
  elif style in ["seismic_cross","basalt_cross"]:
-  event("BREAKING CROSS",[rect(Rect2(aim_at.x-70,70,140,game.FIELD.size.y-140)),rect(Rect2(70,aim_at.y-70,game.FIELD.size.x-140,140))],damage*1.3,int(e.uid),1.8)
+  var width=lerpf(150,300,clampf(game.floor_number/100.0,0,1))
+  event("BREAKING CROSS",[rect(Rect2(aim_at.x-width*.5,70,width,game.FIELD.size.y-140)),rect(Rect2(70,aim_at.y-width*.5,game.FIELD.size.x-140,width))],damage*1.3,int(e.uid),1.8)
  elif style in ["crown_grid","magma_tide","eruption_sweep"]:
   for n in 3:
    var shapes:Array=[]
    for lane in 5:
-    if posmod(lane+n,2)==0:shapes.append(rect(Rect2(100+lane*440,70,180,game.FIELD.size.y-140)))
+    if posmod(lane+n,2)==0:shapes.append(rect(Rect2(100+lane*440,70,lerpf(190,320,clampf(game.floor_number/100.0,0,1)),game.FIELD.size.y-140)))
    event("SHIFTING FAULTS • Follow the open lanes",shapes,damage*1.3,int(e.uid),2+n*1.3,.5)
  elif style=="boulder":shoot(e,at,(aim_at-at).normalized(),damage,"boulder",target)
  elif style=="snipe":shoot(e,at,(aim_at-at).normalized(),damage,"shard",target)
@@ -109,6 +123,8 @@ func execute(e:Dictionary,style:String,aim_at:Vector2,target:String)->bool:
  else:return false
  return true
 func remove_owner(uid:int)->void:
+ guardians.retire(uid)
+ encounters.retire(uid)
  events=events.filter(func(x):return int(x.owner)!=uid);bolts=bolts.filter(func(x):return int(x.owner)!=uid)
  if int(call.get("owner",0))==uid:cancel_call("Lantern ritual broken")
 func cancel_call(reason:String)->void:
@@ -149,6 +165,8 @@ func edge_anchor(e:Dictionary)->Vector2:
  var points=[Vector2(160,220),Vector2(size.x*.5,160),Vector2(size.x-160,220),Vector2(size.x-160,size.y*.5),Vector2(size.x-160,size.y-220),Vector2(size.x*.5,size.y-160),Vector2(160,size.y-220),Vector2(160,size.y*.5)]
  return d.safe(points[slot])
 func enemy_step(e:Dictionary,target:String,goal:Vector2,dt:float)->bool:
+ if guardians.helper_step(e,target,goal,dt) or guardians.boss_step(e,target,goal,dt):return true
+ if encounters.miniboss_step(e,target,goal,dt):return true
  var kind=str(e.type);var spec=d.Book.profile(kind)
  if kind=="ds_wickcaller":return summoner(e,dt)
  if kind=="ds_riftskulk":
@@ -173,6 +191,8 @@ func enemy_step(e:Dictionary,target:String,goal:Vector2,dt:float)->bool:
    event("MIREBOUND LEAP",[circle(landing,95)],0,int(e.uid),1.4,.01);return true
  return false
 func step(dt:float)->void:
+ guardians.b=self;guardians.step(dt)
+ encounters.b=self;encounters.step(dt)
  for id in game.positions:
   var p:Vector2=game.positions[id];motion[id]=((p-(previous.get(id,p) as Vector2))/maxf(dt,.001)).limit_length(500);previous[id]=p
  step_call(dt)
@@ -187,6 +207,7 @@ func step(dt:float)->void:
   if not full(e):continue
   e.return_ward=maxf(0,float(e.get("return_ward",0))-dt)
   if bool(e.get("phase_pending",false)):intermission(e);break
+  if guardians.owns(e):continue
   e.arena_timer=float(e.get("arena_timer",4.5))-dt
   if float(e.arena_timer)<=0 and events.is_empty() and str(e.action).is_empty():
    e.arena_index=int(e.get("arena_index",0))+1;arena(e,int(e.arena_index));e.arena_timer=maxf(6.8,12-game.floor_number*.04)
@@ -212,6 +233,8 @@ func step_bolts(dt:float)->void:
    goal=game.adventure.combat.fern.redirect(source,goal)
    dir=dir.rotated(clampf(dir.angle_to(goal-old),-1.15*dt,1.15*dt));b.dir=d.pack(dir)
   var next=old+dir*float(b.speed)*dt;var hit=not d.segment_clear(old,next) or not game.FIELD.grow(-45).has_point(next)
+  if guardians.intercept(old,next):bolts.remove_at(i);continue
+  if str(b.kind)=="boulder":guardians.cover_impact(old,next,float(b.damage))
   for id in game.positions:
    if int(game.health.get(id,0))<=0:continue
    if Geometry2D.get_closest_point_to_segment(game.positions[id],old,next).distance_to(game.positions[id])<float(b.radius)+18:
@@ -231,11 +254,15 @@ func step_bolts(dt:float)->void:
 func snapshot()->Dictionary:
  var hidden=suspended.duplicate(true)
  if not hidden.is_empty():hidden.pos=d.pack(hidden.pos);hidden.path=[]
- return {"events":events,"bolts":bolts,"hidden_boss":hidden,"minions":minions,"return_left":return_left,"return_at":d.pack(return_at),"call":call}
+ return {"guardians293":guardians.snapshot(),"encounters288":encounters.snapshot(),"events":events,"bolts":bolts,"hidden_boss":hidden,"minions":minions,"return_left":return_left,"return_at":d.pack(return_at),"call":call}
 func receive(s:Dictionary)->void:
+ guardians.b=self;guardians.receive(s.get("guardians293",{}))
+ encounters.b=self;encounters.receive(s.get("encounters288",{}))
  events=s.get("events",[]);bolts=s.get("bolts",[]);suspended=s.get("hidden_boss",{});minions=s.get("minions",[]);return_left=float(s.get("return_left",-1));return_at=d.point(s.get("return_at",[1200,1100]));call=s.get("call",{})
 func draw(c:Node2D,camera:Vector2)->void:
  if d==null or game==null:return
+ guardians.b=self;guardians.draw(c,camera)
+ encounters.b=self;encounters.draw(c,camera)
  # Keep new ranged windups legible above the room's darkness mask.
  for w in d.warnings:
   if w.kind not in ["homing","boulder","shard_lances","magma_lances","pursuit_orbs","cinder_orbs","beam"]:continue

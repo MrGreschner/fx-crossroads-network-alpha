@@ -1,0 +1,2305 @@
+[
+  {
+    "kind": "willow_lantern",
+    "pos": [
+      330,
+      4200
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 0
+  },
+  {
+    "kind": "lantern_cypress",
+    "pos": [
+      1230,
+      5100
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 1
+  },
+  {
+    "kind": "moss_stump",
+    "pos": [
+      510,
+      5300
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 2
+  },
+  {
+    "kind": "twisted_sapling",
+    "pos": [
+      1160,
+      4220
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 3
+  },
+  {
+    "kind": "moss_boulder",
+    "pos": [
+      2350,
+      2800
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 4
+  },
+  {
+    "kind": "willow_lantern",
+    "pos": [
+      3610,
+      2830
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 5
+  },
+  {
+    "kind": "lantern_cypress",
+    "pos": [
+      2350,
+      4110
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 6
+  },
+  {
+    "kind": "moss_stump",
+    "pos": [
+      3610,
+      4100
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 7
+  },
+  {
+    "kind": "twisted_sapling",
+    "pos": [
+      2700,
+      2910
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 8
+  },
+  {
+    "kind": "moss_boulder",
+    "pos": [
+      3480,
+      3900
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 9
+  },
+  {
+    "kind": "willow_lantern",
+    "pos": [
+      4600,
+      1680
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 10
+  },
+  {
+    "kind": "lantern_cypress",
+    "pos": [
+      5770,
+      1700
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 11
+  },
+  {
+    "kind": "moss_stump",
+    "pos": [
+      4580,
+      2940
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 12
+  },
+  {
+    "kind": "twisted_sapling",
+    "pos": [
+      5780,
+      2920
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 13
+  },
+  {
+    "kind": "moss_boulder",
+    "pos": [
+      4730,
+      4310
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 14
+  },
+  {
+    "kind": "willow_lantern",
+    "pos": [
+      5640,
+      5210
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 15
+  },
+  {
+    "kind": "lantern_cypress",
+    "pos": [
+      4730,
+      5240
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 16
+  },
+  {
+    "kind": "moss_stump",
+    "pos": [
+      5630,
+      4320
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 17
+  },
+  {
+    "kind": "twisted_sapling",
+    "pos": [
+      6700,
+      600
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 18
+  },
+  {
+    "kind": "moss_boulder",
+    "pos": [
+      7750,
+      640
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 19
+  },
+  {
+    "kind": "willow_lantern",
+    "pos": [
+      7740,
+      1820
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 20
+  },
+  {
+    "kind": "lantern_cypress",
+    "pos": [
+      6700,
+      1830
+    ],
+    "size": [
+      230,
+      265
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 21
+  },
+  {
+    "kind": "moss_stump",
+    "pos": [
+      7470,
+      530
+    ],
+    "size": [
+      145,
+      165
+    ],
+    "layer": "raised",
+    "collision_radius": 36,
+    "original_anchor": 22
+  },
+  {
+    "kind": "refuge_hut",
+    "pos": [
+      868.4000000000001,
+      3940
+    ],
+    "size": [
+      300,
+      300
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "bell_shrine",
+    "pos": [
+      3080.9,
+      2540
+    ],
+    "size": [
+      300,
+      300
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "reed_shelter",
+    "pos": [
+      7298.4,
+      340
+    ],
+    "size": [
+      300,
+      300
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "root_shrine",
+    "pos": [
+      5215.9,
+      4090
+    ],
+    "size": [
+      300,
+      300
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "moon_gate",
+    "pos": [
+      5280.9,
+      1440
+    ],
+    "size": [
+      300,
+      300
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "willow_lantern",
+    "pos": [
+      95,
+      4262
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "lantern_cypress",
+    "pos": [
+      2115,
+      2862
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "root_arch",
+    "pos": [
+      6415,
+      662
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "refuge_hut",
+    "pos": [
+      4415,
+      4412
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "bell_shrine",
+    "pos": [
+      4315,
+      1762
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "reed_brazier",
+    "pos": [
+      95,
+      4442
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "hanging_lantern",
+    "pos": [
+      2115,
+      3042
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "moon_gate",
+    "pos": [
+      6415,
+      842
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "moss_stump",
+    "pos": [
+      4415,
+      4592
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      5199.0,
+      1722
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      1298.0,
+      4222
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      3668.0,
+      2822
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "reed_boat",
+    "pos": [
+      6415,
+      1022
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "peat_basket",
+    "pos": [
+      5668.0,
+      4372
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "waymarker",
+    "pos": [
+      4315,
+      2122
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "stone_lantern",
+    "pos": [
+      95,
+      4802
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "drowned_bell",
+    "pos": [
+      2115,
+      3402
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "root_shrine",
+    "pos": [
+      6415,
+      1202
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "marsh_obelisk",
+    "pos": [
+      4415,
+      4952
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "lantern_buoy",
+    "pos": [
+      4315,
+      2302
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "reed_shelter",
+    "pos": [
+      95,
+      4982
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "moss_boulder",
+    "pos": [
+      2115,
+      3582
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "twisted_sapling",
+    "pos": [
+      6415,
+      1382
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "abandoned_dock",
+    "pos": [
+      4415,
+      5132
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "lily_raft",
+    "pos": [
+      5199.0,
+      2948
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      1298.0,
+      5248
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      3668.0,
+      4098
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      7818.0,
+      1898
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "firefly_jar",
+    "pos": [
+      4415,
+      4426
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "newt_waystone",
+    "pos": [
+      4315,
+      2662
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore_only": true
+  },
+  {
+    "kind": "reed_nest",
+    "pos": [
+      310.0,
+      6274
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "broken_bell",
+    "pos": [
+      2330.0,
+      5374
+    ],
+    "size": [
+      110,
+      110
+    ],
+    "layer": "floor",
+    "shore_only": false
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      230,
+      4102
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      429,
+      4415
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      628,
+      4728
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      827,
+      5041
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      1026,
+      4108
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      1225,
+      4421
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      276,
+      4734
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      475,
+      5047
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      674,
+      4114
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      873,
+      4427
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      1072,
+      4740
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      1271,
+      5053
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      322,
+      4120
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      521,
+      4433
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      720,
+      4746
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      919,
+      5059
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      1118,
+      4126
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      1317,
+      4439
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      368,
+      4752
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      567,
+      5065
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      2321,
+      2799
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      2520,
+      3112
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      2719,
+      3425
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      2918,
+      3738
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      3117,
+      4051
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      3316,
+      2868
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      3515,
+      3181
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      3714,
+      3494
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      2415,
+      3807
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      2614,
+      4120
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      2813,
+      2937
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      3012,
+      3250
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      3211,
+      3563
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      3410,
+      3876
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      3609,
+      4189
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      2310,
+      3006
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      2509,
+      3319
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      2708,
+      3632
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      2907,
+      3945
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      3106,
+      2762
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      6692,
+      696
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      6891,
+      1009
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      7090,
+      1322
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      7289,
+      1635
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      7488,
+      1948
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      7687,
+      765
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      7886,
+      1078
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      6737,
+      1391
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      6936,
+      1704
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      7135,
+      521
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      7334,
+      834
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      7533,
+      1147
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      7732,
+      1460
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      6583,
+      1773
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      6782,
+      590
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      6981,
+      903
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      7180,
+      1216
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      7379,
+      1529
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      7578,
+      1842
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      7777,
+      659
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      4763,
+      4543
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4962,
+      4856
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      5161,
+      5169
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      5360,
+      4436
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      5559,
+      4749
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      4560,
+      5062
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      4759,
+      4329
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4958,
+      4642
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      5157,
+      4955
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      5356,
+      5268
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      5555,
+      4535
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      4556,
+      4848
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      4755,
+      5161
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4954,
+      4428
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      5153,
+      4741
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      5352,
+      5054
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      5551,
+      4321
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      4552,
+      4634
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      4751,
+      4947
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4950,
+      5260
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      4734,
+      1990
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4933,
+      2303
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      5132,
+      2616
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      5331,
+      2929
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      5530,
+      1796
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      5729,
+      2109
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      5928,
+      2422
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4629,
+      2735
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      4828,
+      1602
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      5027,
+      1915
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      5226,
+      2228
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      5425,
+      2541
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      5624,
+      2854
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      5823,
+      1721
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      4524,
+      2034
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "root_fan",
+    "pos": [
+      4723,
+      2347
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fallen_branch",
+    "pos": [
+      4922,
+      2660
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      5121,
+      2973
+    ],
+    "size": [
+      118,
+      118
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      5320,
+      1840
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      5519,
+      2153
+    ],
+    "size": [
+      104,
+      104
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      3349.69,
+      4345.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lily_raft",
+    "pos": [
+      3210.75,
+      4655.43
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      2922.12,
+      4609.85
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      2775.6,
+      4345.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      2909.99,
+      4055.98
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      5418.72,
+      4710.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lily_raft",
+    "pos": [
+      5230.08,
+      4858.36
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      4914.89,
+      4844.9
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      4729.36,
+      4710.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4912.42,
+      4572.87
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      6334.13,
+      2730.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lily_raft",
+    "pos": [
+      6258.2,
+      2942.54
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      6139.43,
+      2951.18
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      6073.31,
+      2730.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      6146.36,
+      2534.13
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      5100.13,
+      2690.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lily_raft",
+    "pos": [
+      4996.64,
+      2873.42
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      4812.93,
+      2895.49
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      4731.56,
+      2690.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      4829.74,
+      2520.09
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "cattail_clump",
+    "pos": [
+      7227.2,
+      1560.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lily_raft",
+    "pos": [
+      7142.07,
+      1696.44
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus_cluster",
+    "pos": [
+      6952.1,
+      1705.07
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "glow_mushrooms",
+    "pos": [
+      6884.13,
+      1560.0
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern_fan",
+    "pos": [
+      6964.04,
+      1432.62
+    ],
+    "size": [
+      100,
+      100
+    ],
+    "layer": "floor"
+  }
+]

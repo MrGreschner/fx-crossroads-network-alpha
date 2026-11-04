@@ -1,0 +1,707 @@
+{
+  "entrance": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      17,
+      23,
+      208,
+      208
+    ],
+    "source_cell": 0,
+    "source_bounds": [
+      14,
+      15,
+      239,
+      232
+    ],
+    "palette_limit": 36,
+    "texture": "entrance"
+  },
+  "lockers": {
+    "region": [
+      112,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      19,
+      8,
+      92,
+      104
+    ],
+    "source_cell": 1,
+    "source_bounds": [
+      272,
+      44,
+      413,
+      229
+    ],
+    "palette_limit": 36
+  },
+  "desk": {
+    "region": [
+      224,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      17,
+      8,
+      95,
+      104
+    ],
+    "source_cell": 2,
+    "source_bounds": [
+      478,
+      39,
+      633,
+      229
+    ],
+    "palette_limit": 36
+  },
+  "chalkboard": {
+    "region": [
+      336,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      39,
+      104,
+      104
+    ],
+    "source_cell": 3,
+    "source_bounds": [
+      677,
+      58,
+      875,
+      192
+    ],
+    "palette_limit": 36
+  },
+  "bookshelf": {
+    "region": [
+      448,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      15,
+      8,
+      97,
+      104
+    ],
+    "source_cell": 4,
+    "source_bounds": [
+      906,
+      17,
+      1088,
+      229
+    ],
+    "palette_limit": 36
+  },
+  "sofa": {
+    "region": [
+      560,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      42,
+      104,
+      104
+    ],
+    "source_cell": 5,
+    "source_bounds": [
+      1117,
+      82,
+      1328,
+      219
+    ],
+    "palette_limit": 36
+  },
+  "trophies": {
+    "region": [
+      672,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      16,
+      8,
+      95,
+      104
+    ],
+    "source_cell": 6,
+    "source_bounds": [
+      1355,
+      20,
+      1528,
+      229
+    ],
+    "palette_limit": 36
+  },
+  "noticeboard": {
+    "region": [
+      784,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      15,
+      104,
+      104
+    ],
+    "source_cell": 7,
+    "source_bounds": [
+      1570,
+      43,
+      1756,
+      215
+    ],
+    "palette_limit": 36
+  },
+  "oven": {
+    "region": [
+      0,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      10,
+      8,
+      102,
+      104
+    ],
+    "source_cell": 8,
+    "source_bounds": [
+      16,
+      251,
+      208,
+      451
+    ],
+    "palette_limit": 36
+  },
+  "prep_counter": {
+    "region": [
+      112,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      28,
+      104,
+      104
+    ],
+    "source_cell": 9,
+    "source_bounds": [
+      238,
+      293,
+      437,
+      450
+    ],
+    "palette_limit": 36
+  },
+  "pots": {
+    "region": [
+      224,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      25,
+      104,
+      104
+    ],
+    "source_cell": 10,
+    "source_bounds": [
+      462,
+      275,
+      652,
+      431
+    ],
+    "palette_limit": 36
+  },
+  "cakes": {
+    "region": [
+      336,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      8,
+      103,
+      104
+    ],
+    "source_cell": 11,
+    "source_bounds": [
+      684,
+      255,
+      870,
+      443
+    ],
+    "palette_limit": 36
+  },
+  "sink": {
+    "region": [
+      448,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      21,
+      104,
+      104
+    ],
+    "source_cell": 12,
+    "source_bounds": [
+      902,
+      280,
+      1094,
+      445
+    ],
+    "palette_limit": 36
+  },
+  "herbs": {
+    "region": [
+      560,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      29,
+      104,
+      104
+    ],
+    "source_cell": 13,
+    "source_bounds": [
+      1124,
+      295,
+      1311,
+      442
+    ],
+    "palette_limit": 36
+  },
+  "proscenium": {
+    "region": [
+      672,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      23,
+      104,
+      104
+    ],
+    "source_cell": 14,
+    "source_bounds": [
+      1332,
+      264,
+      1550,
+      448
+    ],
+    "palette_limit": 36
+  },
+  "spotlight": {
+    "region": [
+      784,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      26,
+      8,
+      86,
+      104
+    ],
+    "source_cell": 15,
+    "source_bounds": [
+      1607,
+      264,
+      1724,
+      450
+    ],
+    "palette_limit": 36
+  },
+  "costumes": {
+    "region": [
+      0,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      17,
+      104,
+      104
+    ],
+    "source_cell": 16,
+    "source_bounds": [
+      19,
+      481,
+      209,
+      654
+    ],
+    "palette_limit": 36
+  },
+  "flats": {
+    "region": [
+      112,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      23,
+      104,
+      104
+    ],
+    "source_cell": 17,
+    "source_bounds": [
+      232,
+      479,
+      438,
+      653
+    ],
+    "palette_limit": 36
+  },
+  "weightbench": {
+    "region": [
+      224,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      25,
+      104,
+      104
+    ],
+    "source_cell": 18,
+    "source_bounds": [
+      456,
+      495,
+      659,
+      662
+    ],
+    "palette_limit": 36
+  },
+  "hoop": {
+    "region": [
+      336,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      25,
+      8,
+      87,
+      104
+    ],
+    "source_cell": 19,
+    "source_bounds": [
+      714,
+      468,
+      839,
+      660
+    ],
+    "palette_limit": 36
+  },
+  "sports_rack": {
+    "region": [
+      448,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      21,
+      104,
+      104
+    ],
+    "source_cell": 20,
+    "source_bounds": [
+      905,
+      495,
+      1088,
+      653
+    ],
+    "palette_limit": 36
+  },
+  "mats": {
+    "region": [
+      560,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      43,
+      104,
+      104
+    ],
+    "source_cell": 21,
+    "source_bounds": [
+      1125,
+      521,
+      1314,
+      642
+    ],
+    "palette_limit": 36
+  },
+  "lab_bench": {
+    "region": [
+      672,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      21,
+      104,
+      104
+    ],
+    "source_cell": 22,
+    "source_bounds": [
+      1342,
+      479,
+      1539,
+      650
+    ],
+    "palette_limit": 36
+  },
+  "chemistry": {
+    "region": [
+      784,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      24,
+      104,
+      104
+    ],
+    "source_cell": 23,
+    "source_bounds": [
+      1564,
+      482,
+      1756,
+      642
+    ],
+    "palette_limit": 36
+  },
+  "skeleton": {
+    "region": [
+      0,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      34,
+      8,
+      78,
+      104
+    ],
+    "source_cell": 24,
+    "source_bounds": [
+      70,
+      672,
+      161,
+      872
+    ],
+    "palette_limit": 36
+  },
+  "globe": {
+    "region": [
+      112,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      18,
+      8,
+      94,
+      104
+    ],
+    "source_cell": 25,
+    "source_bounds": [
+      251,
+      672,
+      409,
+      872
+    ],
+    "palette_limit": 36
+  },
+  "scrolls": {
+    "region": [
+      224,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      19,
+      104,
+      104
+    ],
+    "source_cell": 26,
+    "source_bounds": [
+      461,
+      704,
+      647,
+      869
+    ],
+    "palette_limit": 36
+  },
+  "piano": {
+    "region": [
+      336,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      21,
+      104,
+      104
+    ],
+    "source_cell": 27,
+    "source_bounds": [
+      678,
+      701,
+      874,
+      871
+    ],
+    "palette_limit": 36
+  },
+  "bell": {
+    "region": [
+      448,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      11,
+      104,
+      104
+    ],
+    "source_cell": 28,
+    "source_bounds": [
+      903,
+      683,
+      1091,
+      866
+    ],
+    "palette_limit": 36
+  },
+  "maple": {
+    "region": [
+      560,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      11,
+      104,
+      104
+    ],
+    "source_cell": 29,
+    "source_bounds": [
+      1116,
+      672,
+      1327,
+      876
+    ],
+    "palette_limit": 36
+  },
+  "lamp": {
+    "region": [
+      672,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      31,
+      8,
+      80,
+      104
+    ],
+    "source_cell": 30,
+    "source_bounds": [
+      1389,
+      672,
+      1491,
+      872
+    ],
+    "palette_limit": 36
+  },
+  "bench": {
+    "region": [
+      784,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      40,
+      104,
+      104
+    ],
+    "source_cell": 31,
+    "source_bounds": [
+      1550,
+      719,
+      1762,
+      861
+    ],
+    "palette_limit": 36
+  }
+}

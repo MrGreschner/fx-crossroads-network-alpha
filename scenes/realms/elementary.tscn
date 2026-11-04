@@ -17,7 +17,7 @@ position = Vector2(3900, 4970)
 position = Vector2(3900, 4970)
 
 [node name="Merchant" type="Marker2D" parent="Points"]
-position = Vector2(4550, 5300)
+position = Vector2(4550, 4770)
 
 [node name="Boss" type="Marker2D" parent="Points"]
 position = Vector2(3900, 4970)

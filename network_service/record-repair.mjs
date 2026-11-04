@@ -9,7 +9,7 @@ const remove=(o,k,v)=>{if(o&&equal(o[k],v))delete o[k];};
 export function scrubProfile(value,exclusions){
  if(!value||!exclusions.length)return value;
  const p=structuredClone(value),n=p.progress?.named_records;
- const affectedDepth=exclusions.filter(e=>e.kind==='descent').map(e=>Number(e.value));
+ const affectedDepth=exclusions.filter(e=>e.kind==='descent'&&e.scope==='all').map(e=>Number(e.value));
  const fixCard=affectedDepth.some(v=>equal(p.progress?.card?.descent_best,v)),fixLocal=affectedDepth.some(v=>equal(p.saves?.['fx_descent_best.json']?.best,v));
  for(const e of exclusions){
   const v=Number(e.value),route=e.kind==='time_solo'?'solo':e.kind==='time_coop'?'coop':null;
@@ -18,10 +18,10 @@ export function scrubProfile(value,exclusions){
    if(equal(n.hero_records?.[key]?.value,v))delete n.hero_records[key];
    if(e.kind==='time')remove(n[e.scope==='all'?'times_all':'times_week'],e.key,v);
    if(route){const r=n.routes?.[route];if(e.scope==='all'||r?.week_id===e.scope)remove(r?.[e.scope==='all'?'all':'week'],e.key,v);}
-   if(e.kind==='descent'&&equal(n.descent?.[e.key],v))n.descent[e.key]=0;
+   if(e.kind==='descent'){const depth=e.scope==='all'?n.descent:n.descent?.week_id===e.scope?n.descent.week:null;if(equal(depth?.[e.key],v))depth[e.key]=0;}
   }
   if(e.kind==='between'&&equal(p.progress?.community_records?.[e.key],v))p.progress.community_records[e.key]=0;
-  if(e.kind==='descent'){
+  if(e.kind==='descent'&&e.scope==='all'){
    if(equal(p.progress?.card?.descent_best,v))p.progress.card.descent_best=0;
    if(e.key==='coop'&&equal(p.progress?.tasks?.coop_descent,v))p.progress.tasks.coop_descent=0;
    if(equal(p.saves?.['fx_descent_best.json']?.best,v))p.saves['fx_descent_best.json'].best=0;
@@ -46,7 +46,7 @@ export async function scrubUpload(pool,account,raw){
   if(equal(n.hero_records?.[rk]?.value,v))delete n.hero_records[rk];
   if(e.kind==='time')remove(n.times?.[e.scope],e.key,v);
   if(e.kind==='time_solo'||e.kind==='time_coop'){const a=n.routes?.[e.kind.slice(5)];if(e.scope==='all'||a?.week_id===e.scope)remove(a?.[e.scope==='all'?'all':'week'],e.key,v);}
-  if(e.kind==='descent'&&equal(n.descent?.[e.key],v))n.descent[e.key]=0;
+  if(e.kind==='descent'){const depth=e.scope==='all'?n.descent:n.descent?.week_id===e.scope?n.descent.week:null;if(equal(depth?.[e.key],v))depth[e.key]=0;}
   if(e.kind==='between'&&equal(r.between?.[e.key],v))r.between[e.key]=0;
  }
  return r;

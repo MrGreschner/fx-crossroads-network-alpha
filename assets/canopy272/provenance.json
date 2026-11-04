@@ -1,0 +1,27 @@
+{
+  "release": 272,
+  "scope": "Petalbrook environment only; enemy/hero changes paused for user playtest",
+  "scenery_designs": 32,
+  "placements": 211,
+  "original_prop_records": 103,
+  "terrain_pages": 4,
+  "page_pixels": [
+    1560,
+    1180
+  ],
+  "world_page_units": [
+    3900,
+    2950
+  ],
+  "atlas_pixels": [
+    2560,
+    1280
+  ],
+  "source_sha256": {
+    "forest": "29248f8a490fa5722bc2a81f0ee851cadcc565303580ec32c67d26793a1f19e4",
+    "village": "146023ff5a568fdaea013a8fe802fbe783fdf86fe0da5c467625d773c976e5e9",
+    "materials": "46498dd3d37a84af3e2cd16eb72802d16475d1bd86a74af4b2a47ba5c003336a"
+  },
+  "new_physics_shaders_lights": 0,
+  "character_asset_changes": 0
+}

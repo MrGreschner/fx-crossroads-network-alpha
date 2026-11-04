@@ -270,12 +270,13 @@ func draw_ground()->void:
    if meshes[chunk]!=null and bounds.intersects(Rect2(Vector2(chunk)*512,Vector2(512,512))):g.draw_mesh(meshes[chunk],null,Transform2D(0.0,-g.camera))
   for beacon in beacons:
    var p=world.point(beacon.pos)-g.camera;var tint=colour(str(beacon.owner)) if not str(beacon.owner).is_empty() else Color("#b9c4ca")
-   g.draw_circle(p,110,Color(tint,.08));g.draw_arc(p,110,0,TAU,48,Color(tint,.45),2);g.draw_circle(p,35,Color("#183342"));g.draw_arc(p,35,0,TAU,32,tint,4)
+   g.draw_circle(p,110,Color(tint,.08));g.draw_arc(p,110,0,TAU,48,Color(tint,.45),2);preload("res://scripts/arena_art261.gd").beacon(g,p,tint)
    if float(beacon.progress)>0:g.draw_arc(p,43,-PI/2,-PI/2+TAU*clampf(float(beacon.progress)/3,0,1),32,Color("#fff1ad"),5)
    for n in 4:g.draw_line(p+Vector2.from_angle(n*PI/2)*12,p+Vector2.from_angle(n*PI/2)*26,tint,4)
+   g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#18313b","#779593",4,3),Rect2(p+Vector2(-58,51),Vector2(140,23)))
    g.draw_string(ThemeDB.fallback_font,p+Vector2(-48,66),"CONTESTED" if beacon.contested else "HOLD TO CLAIM" if str(beacon.owner).is_empty() else "PAINT BEACON",HORIZONTAL_ALIGNMENT_LEFT,120,12,tint)
  else:
-  var p=SIZE*.5-g.camera;g.draw_circle(p,76,Color("#173440"));g.draw_arc(p,76,0,TAU,48,Color("#b49b60"),3);g.draw_arc(p,61,0,TAU,48,Color("#698995"),2)
+  var p=SIZE*.5-g.camera;preload("res://scripts/arena_art261.gd").plinth(g,p)
 func draw_crown()->void:
  if not active():return
  if world.map_id=="colour_clash":
@@ -291,8 +292,7 @@ func draw_crown()->void:
  var lift=-70.0 if not holder.is_empty() else -15.0-12*sin(PI*clampf(float(crown.get("flight",0))/.58,0,1))
  var at=p+Vector2(0,lift);var time=world.clock
  g.draw_circle(at,30,Color(1,.78,.32,.1));g.draw_arc(at,25+sin(time*3)*2,0,TAU,32,Color(1,.85,.45,.5),2)
- var shape=PackedVector2Array([at+Vector2(-18,-10),at+Vector2(-10,-2),at+Vector2(0,-21),at+Vector2(10,-2),at+Vector2(18,-10),at+Vector2(14,13),at+Vector2(-14,13)])
- g.draw_colored_polygon(shape,Color("#e6bc62"));g.draw_polyline(shape+PackedVector2Array([shape[0]]),Color("#fff0bc"),2,true);g.draw_rect(Rect2(at+Vector2(-13,7),Vector2(26,6)),Color("#a77743"));g.draw_circle(at+Vector2(0,4),4,Color("#78cfe4"))
+ preload("res://scripts/arena_art261.gd").crown(g,at)
  if not holder.is_empty():g.draw_arc(p+Vector2(0,12),30,0,TAU,32,Color("#f4dc96"),3)
 func draw_minimap()->void:
  var g=world.game;var rect=Rect2(g.VIEW.x-220,100,200,145);g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#122a36","#799c9d",7,8),rect)

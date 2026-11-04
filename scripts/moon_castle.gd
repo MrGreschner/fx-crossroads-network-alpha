@@ -11,6 +11,8 @@ static func open(p:Vector2)->bool:
   if p.distance_to(f)<150:return false
  return true
 static func draw(c:Node2D,cam:Vector2)->void:
+ preload("res://scripts/masque_art271.gd").draw(c,cam)
+static func draw_legacy271(c:Node2D,cam:Vector2)->void:
  var view=Rect2(cam,c.get_viewport_rect().size+Vector2(200,200)).grow(180)
  c.draw_rect(Rect2(-cam,Vector2(7600,5600)),Color('#172b3a'))
  # Lake is an actual unwalkable body of water beside the southern moon garden.

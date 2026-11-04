@@ -309,6 +309,7 @@ func snapshot()->Dictionary:return {"plants":plants,"nets":nets,"brands":brands,
 func receive(packet:Dictionary)->void:plants=packet.get("plants",[]);nets=packet.get("nets",[]);brands=packet.get("brands",[]);ledgers=packet.get("ledgers",[]);holes=packet.get("holes",[]);clock=float(packet.get("clock",clock));boss_started=bool(packet.get("boss_started",false))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
+ if preload("res://scripts/ebon_environment296.gd").draw(self,canvas,camera):return
  var view:Vector2=adventure.game.VIEW
  canvas.draw_rect(Rect2(Vector2.ZERO,view),Color("#131d30"))
  for x in range(floori(camera.x/64),ceili((camera.x+view.x)/64)+1):

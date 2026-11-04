@@ -808,6 +808,7 @@ func _make_floor() -> void:
 		for id in ["ReturnGate","Boss"]:
 			if layout.has_node("Points/"+id):portal_points258[id]=(layout.get_node("Points/"+id)as Node2D).position
 		layout.free()
+	if mode=="coop" and realm_id in preload("res://scripts/realm_art265.gd").IDS:world_buildings.append({"name":"Supplies","pos":preload("res://scripts/realm_cart264.gd").anchor(realm_id),"sprite":"supply_shop"})
 	if mode=="arena":arena_world.setup(self,arena_map)
 	if mode=="defense":north_gate.setup(self)
 	if mode=="descent":descent.setup_geometry()
@@ -1225,7 +1226,7 @@ func _clear_path(start: Vector2, finish: Vector2) -> bool:
 	return true
 
 func _attack_request(style: String) -> void:
-	if descent.falling():return
+	if descent.falling() or descent.resting():return
 	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if arena_world.shatter.active():arena_world.shatter.request(style);return
 	if fishing!=null and fishing.busy():return
@@ -1254,7 +1255,7 @@ func _attack_request(style: String) -> void:
 		_send_channel(host_id,{"type":"attack","style":style,"angle":aim.angle(),"target":[position.x,position.y]})
 
 func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.ZERO) -> void:
-	if descent.falling():return
+	if descent.falling() or descent.resting():return
 	if arena_world.shatter.active():arena_world.shatter.action(id,kind,aim);return
 	if characters.get(str(hero_ids.get(id,"")),{}).has("studio_project"):return
 	if adventure.combat.held_cast.charges.has(id) and not adventure.combat.held_cast.context.has(id):return
@@ -1414,6 +1415,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 	if boss:presentation.burst(defeated.pos);journey.cue("victory")
 	if mode=="descent":descent.defeated(defeated)
 	opponents.remove_at(index)
+	if mode=="descent" and bool(defeated.get("guardian_prop",false)):return
 	if not bool(defeated.get("converted",false)):preload("res://scripts/ko_item_heal239.gd").party(self,killer)
 	if mode=="defense":north_gate.killed(defeated)
 	adventure.on_defeat(defeated)
@@ -1442,7 +1444,7 @@ func _hit_enemy(index: int, amount: float, killer: String) -> void:
 			status_label.text = "LEVEL " + str(new_level) + ": press J for primary/special or K for secondary/passive."
 
 func _hurt(id: String, amount: float, source: String = "", melee_attacker:String="", cause:Dictionary={}) -> void:
-	if descent.falling():return
+	if descent.falling() or descent.resting():return
 	if mode=="descent" and source=="enemy":amount*=float(descent.scaling(floor_number).damage)
 	if arena_world.shatter.active():return
 	if id.begins_with("c|"):
@@ -1527,7 +1529,7 @@ func _spawn_wave(amount: int) -> void:
 		north_gate.spawn_wave(wave);return
 	var authored:bool=mode=="coop" and realm_id in ["grove","quarry","ice"] and world_spawns.size()>1
 	var first_marker:=1
-	if authored:
+	if authored or mode=="coop" and realm_id=="folded_coast":
 		var total:=world_spawns.size()-1;var batch:=ceili(total/3.0);first_marker=1+maxi(0,wave-1)*batch;amount=maxi(0,mini(batch,world_spawns.size()-first_marker))
 	var prior_size:=opponents.size()
 	var random := RandomNumberGenerator.new();random.seed = floor_seed + wave*9929 + floor_number*271
@@ -1537,7 +1539,7 @@ func _spawn_wave(amount: int) -> void:
 		var lane := n % 3
 		var pos: Vector2 = APPROACHES[lane] + Vector2(random.randf_range(-55,55),random.randf_range(-55,55)) if mode == "defense" else _random_spawn(random)
 		if mode == "coop" and world_spawns.size()>1:
-			var marker: Dictionary = world_spawns[first_marker+n if authored else 1+n%(world_spawns.size()-1)]
+			var marker: Dictionary = world_spawns[first_marker+n if authored or realm_id=="folded_coast" else 1+n%(world_spawns.size()-1)]
 			pos = marker["pos"];id = str(marker["type"]);stats = enemy_defs.get(id,{})
 		if mode == "defense": pos = GATE + (APPROACHES[lane]-GATE).normalized()*minf(GATE.distance_to(APPROACHES[lane]),2200.0+maxi(0,wave-1)*180.0) + Vector2(random.randf_range(-45,45),random.randf_range(-45,45))
 		if mode == "arena" and positions.size() > 0 and pos.distance_to(local_pos) < 150: pos += Vector2(200,0)
@@ -1553,7 +1555,7 @@ func _spawn_wave(amount: int) -> void:
 			opponents[-1]["hp"]=float(regions[realm_id].get("boss_health",1200))*(1+.55*maxi(0,positions.size()-1));opponents[-1]["max_hp"]=opponents[-1]["hp"]
 		if adventure.combat.coast.active:
 			var paper_boss:Dictionary=opponents[-1]
-			paper_boss["pos"]=Vector2(5200,1500);paper_boss["hp"]=780.0*(1.0+.55*maxi(0,positions.size()-1));paper_boss["max_hp"]=paper_boss["hp"]
+			paper_boss["pos"]=Vector2(5150,1500);paper_boss["hp"]=780.0*(1.0+.55*maxi(0,positions.size()-1));paper_boss["max_hp"]=paper_boss["hp"]
 		if adventure.astral:
 			var engine: Dictionary = opponents[-1]
 			engine["pos"] = Vector2(7100,1800)
@@ -1622,7 +1624,7 @@ func _simulate(delta: float) -> void:
 		if wave==1:
 			wave=3;adventure.spawn("lockmaster_regent",Vector2(3500,2330),1450,true)
 		else:end_match("Brasslock Borough freed!")
-	elif (descent.combat_count()==0 if mode=="descent" else opponents.is_empty()) and not (get("expedition")!=null and get("expedition").between()) and not adventure.active and not adventure.vault.active and not adventure.quests.active and not adventure.expansion.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and not adventure.cinder.active:
+	elif (descent.combat_count()==0 if mode=="descent" else opponents.is_empty()) and not descent.resting() and not (get("expedition")!=null and get("expedition").between()) and not adventure.active and not adventure.vault.active and not adventure.quests.active and not adventure.expansion.active and not adventure.school.active and not adventure.tech.active and not adventure.immersive.active and not adventure.foundry.active and not adventure.cinder.active:
 		if mode == "coop" and wave >= 3:
 			end_match("Realm cleared • "+str(int(run_time))+" seconds")
 			var key := "user://fx_coop_"+realm_id+".json"
@@ -1688,11 +1690,17 @@ func _simulate(delta: float) -> void:
 		var steering:Vector2=descent_direction(enemy,destination,delta) if mode == "descent" else diff.normalized()
 		if target_id!="" and adventure.combat.ranged_enemy(enemy,definition) and (mode!="defense" or nearest<=480):
 			steering=descent_ranged_direction(enemy,destination,delta) if mode=="descent" else adventure.combat.ranged_direction(enemy,destination)
+		if adventure.combat.coast.active and not adventure.between_guardians():steering=adventure.combat.coast.direction(enemy,destination,adventure.combat.ranged_enemy(enemy,definition))
 		if adventure.quests.active:steering=adventure.quests.direction(enemy,destination,adventure.combat.ranged_enemy(enemy,definition)) if nearest<600 else Vector2.ZERO
 		if mode=="defense" and guard_target>=0 and adventure.combat.ranged_enemy(enemy,definition):steering=adventure.combat.ranged_direction(enemy,destination)
 		var movement := steering * float(definition.get("speed",65)) * delta
 		if mode == "defense": movement = _guard_blocked_move(enemy["pos"],movement,-1,44.0)-(enemy["pos"] as Vector2)
-		if bool(definition.get("flying",false)) or _clear_path(enemy["pos"],enemy["pos"]+movement): enemy["pos"] += movement
+		if mode=="arena" and arena_world.extra.active():
+			if not arena_world.extra.movement_clear(enemy.pos,enemy.pos):enemy.pos=arena_world.extra.safe_spawn(enemy.pos)
+			if not arena_world.extra.movement_clear(enemy.pos,destination):steering=arena_world.extra.navigate("creature:"+str(enemy.uid),enemy.pos,destination)
+			movement=steering*float(definition.get("speed",65))*delta
+			enemy.pos=_move_actor(enemy.pos,movement)
+		elif bool(definition.get("flying",false)) or _clear_path(enemy["pos"],enemy["pos"]+movement): enemy["pos"] += movement
 		else:
 			var sidestep := Vector2(-movement.y,movement.x)
 			if mode == "defense": sidestep = _guard_blocked_move(enemy["pos"],sidestep,-1,44.0)-(enemy["pos"] as Vector2)
@@ -1717,8 +1725,8 @@ func _simulate(delta: float) -> void:
 			var windup := float(enemy.get("warning",-1.0))
 			if windup<0 and nearest<340:
 				enemy["warning"]=.55
-				# Descent windups use the attack pose; no orange engagement halo.
-				if mode!="descent":_emit_effect({"pos":enemy["pos"],"radius":48.0,"time":.55,"color":"#ffba6c"})
+				# Descent and arena windups use the body attack pose.
+				if mode not in ["descent","arena"]:_emit_effect({"pos":enemy["pos"],"radius":48.0,"time":.55,"color":"#ffba6c"})
 				opponents[i]=enemy;continue
 			if windup>0:
 				enemy["warning"]=maxf(0.0,windup-delta);opponents[i]=enemy;continue
@@ -1749,6 +1757,7 @@ func _simulate(delta: float) -> void:
 			elif opponents.size()>0: target = opponents[0]["pos"]
 			bullet["direction"] = ((bullet["direction"] as Vector2)*0.93+(target-origin).normalized()*0.07).normalized()
 		var next: Vector2 = origin+(bullet["direction"] as Vector2)*float(bullet["speed"])*delta/maxf(.3,dev_magic.world_scale())*dev_magic.scale_for(str(bullet["owner"]))
+		if mode=="descent" and descent.battle.guardians.intercept(origin,next):missiles.remove_at(i);continue
 		bullet["distance"] = float(bullet["distance"])+origin.distance_to(next)
 		if not _clear_path(origin,next) or float(bullet["distance"])>float(bullet.get("range",650)): missiles.remove_at(i);continue
 		if adventure.combat.v59.catch_copy(origin,next,str(bullet["owner"]),float(bullet["damage"])):missiles.remove_at(i);continue
@@ -1904,6 +1913,7 @@ func _snapshot() -> Dictionary:
 	return {"type":"state","unofficial":bool(get_meta("records_unofficial",false)),"studio":custom_party.snapshot(),"dev_magic":dev_magic.snapshot(),"descent":descent.snapshot(),"battlegrounds":battlegrounds.snapshot() if mode=="battlegrounds" else {},"match_id":match_id,"party_size":match_party_size,"arena_random":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"arena_no_items":arena_no_items,"arena_records":arena_records,"arena_outcomes":arena_outcomes,"defense_cleared_wave":defense_cleared_wave,"arena_world":arena_world.snapshot(),"north_gate":north_gate.snapshot() if mode=="defense" else {},"pvp_scores":pvp_scores,"contributions":contributions,"downed":downed,"results":results_reason,"notice":status_label.text,"adventure":adventure.snapshot(),"players":players,"enemies":foes,"shots":shots,"guards":sent_guards,"effects":sent_effects,"walls":_wall_packet(),"wave":wave,"floor":floor_number,"gate":gate_hp,"upgrades":upgrade_level,"active":started,"timer":run_time}
 
 func _packet(remote_id: String, data: Dictionary) -> void:
+	if descent.resting() and str(data.get("type","")) in ["attack","held_cast","community_input"]:return
 	if role=="guest" and remote_id==host_id and data.get("unofficial",false)==true:set_meta("records_unofficial",true)
 	if custom_party.packet(remote_id,data):return
 	if music_network.packet(remote_id,data):return
@@ -2038,7 +2048,9 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			if not match_id.is_empty() and not str(data.get("match_id",match_id)).is_empty() and str(data.get("match_id",match_id))!=match_id:return
 			var receive_began:=Time.get_ticks_usec()
 			dev_magic.receive(data.get("dev_magic",{}))
+			var rest_changed=mode=="descent" and bool(data.get("descent",{}).get("rest263",{}).get("active",false))!=descent.rest.active
 			descent.receive(data.get("descent",{}))
+			if rest_changed:floor_number=int(data.get("floor",floor_number));_make_floor()
 			pvp_scores=data.get("pvp_scores",{});contributions=data.get("contributions",{});downed=data.get("downed",{});results_reason=str(data.get("results",""));status_label.text=str(data.get("notice",status_label.text))
 			arena_world.receive(data.get("arena_world",{}))
 			match_id=str(data.get("match_id",match_id));match_party_size=int(data.get("party_size",match_party_size));ai_difficulty=bots.difficulty(data.get("ai_difficulty",ai_difficulty));bot_count=clampi(int(data.get("bots",bot_count)),0,7);arena_random=bool(data.get("arena_random",arena_random));arena_no_items=bool(data.get("arena_no_items",arena_no_items));arena_records=data.get("arena_records",{});arena_outcomes=data.get("arena_outcomes",{});defense_cleared_wave=int(data.get("defense_cleared_wave",0))
@@ -2184,6 +2196,8 @@ func _buy_item() -> void:
 	else: _send_channel(host_id,{"type":"purchase","id":id})
 
 func _purchase(id: String, item_id: String) -> void:
+	if preload("res://scripts/realm_cart264.gd").supports(self) and (not preload("res://scripts/realm_cart264.gd").near(self,id) or bool(items.get(item_id,{}).get("bg_only",false))):return
+	if descent.resting() and (bool(items.get(item_id,{}).get("bg_only",false)) or not descent.rest.near_merchant(id)):return
 	if arena_world.shatter.active():return
 	if mode=="arena" and arena_no_items:status_label.text="Host rule: items and food are disabled for this arena match.";return
 	if not items.has(item_id) or not bool(items[item_id].get("shop",true)) or not gold.has(id) or not _near_building(id,"Supplies"): return
@@ -2261,10 +2275,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if spectating() or start_countdown>0:return
 	if key.keycode == KEY_E:
+		if preload("res://scripts/realm_cart264.gd").near(self,my_id):preload("res://scripts/realm_cart264.gd").open(self);return
 		if get("expedition")!=null and get("expedition").between():_send_channel(host_id,{"type":"rift"});return
 		if mode=="battlegrounds" and battlegrounds.interact(my_id):return
 		if _near_downed(my_id): return
 		if mode=="descent":
+			if descent.rest.near_merchant(my_id):descent.rest.open_shop();return
 			if role=="host":descent.interact(my_id)
 			else:_send_channel(host_id,{"type":"rift"})
 			return
@@ -2333,7 +2349,9 @@ func _draw() -> void:
 	for guard in guards:
 		if str(guard.type)!="summoned":
 			var pose="attack" if run_time-float(guard.get("visual_attack_at",-10))>=0 and run_time-float(guard.get("visual_attack_at",-10))<.32 else guard_motion231.locomotion(guard)
-			preload("res://scripts/unit_art231.gd").draw(self,"guard_"+str(guard.type),visual_actor("g:"+str(guard.get("net_uid",0)),guard.pos)-camera+Vector2(0,5),preload("res://scripts/unit_art231.gd").pose_index(pose),42);continue
+			if mode=="defense":preload("res://scripts/north_art260.gd").unit(self,"guard_"+str(guard.type),visual_actor("g:"+str(guard.get("net_uid",0)),guard.pos)-camera+Vector2(0,5),preload("res://scripts/unit_art231.gd").pose_index(pose),42)
+			else:preload("res://scripts/unit_art231.gd").draw(self,"guard_"+str(guard.type),visual_actor("g:"+str(guard.get("net_uid",0)),guard.pos)-camera+Vector2(0,5),preload("res://scripts/unit_art231.gd").pose_index(pose),42)
+			continue
 		var sprite := str(guard.get("sprite","mini_basketball")) if str(guard["type"]) == "summoned" else "guard_"+str(guard["type"])
 		if not preload("res://scripts/minion_art215.gd").draw_legacy(self,guard,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-camera,"guard:"+str(guard.get("net_uid",0))):_sprite(sprite,visual_actor("g:"+str(guard.get("net_uid",0)),guard["pos"])-Vector2(24,44),Vector2(48,56))
 		if str(guard.get("type",""))=="summoned" and float(guard.get("hp",0))>0:
@@ -2342,15 +2360,20 @@ func _draw() -> void:
 			draw_rect(Rect2(bar,Vector2(40*clampf(float(guard.hp)/maxf(1,float(guard.get("max_hp",70))),0,1),4)),Color("#a8d47c"))
 	enemy_motion229.sample(opponents,visual_time)
 	for foe in opponents:
-		if bool(foe.get("buried",false)):continue
+		if mode=="descent" and (descent.battle.guardians.props.has(str(foe.get("uid",0))) or bool(foe.get("guardian_expired",false))):continue
+		if bool(foe.get("buried",false)):
+			if adventure.hollow.active:adventure.hollow.visual268.draw_enemy(adventure.hollow,self,foe,camera)
+			continue
 		var id := str(foe.get("sprite",foe["type"]))
 		var pos: Vector2 = visual_actor("e:"+str(foe.get("uid",0)),foe["pos"])-camera
 		if bool(foe.get("health_gem",false)):pos.y-=8+sin(descent.clock*2+int(foe.uid)%7)*5
 		if not Rect2(Vector2(-100,-100),VIEW+Vector2(200,200)).has_point(pos): continue
-		var enemy_pose235: String = "attack" if mode=="descent" and float(foe.get("warning",-1))>0 or float(foe.get("melee_warning",0))>0 or ((str(foe.type) in preload("res://scripts/enemy_visual227.gd").FACTORS or preload("res://scripts/enemy_art235.gd").texture(id)!=null) and float(foe.get("windup",0))>0) or float(foe.get("v143_pose",0))>adventure.newcomers.clock or float(foe.get("veil_pose",0))>adventure.pursuers.clock or float(foe.get("cinder_pose",0))>adventure.cinder.clock else enemy_motion229.locomotion(foe)
+		var enemy_pose235: String = "attack" if mode in ["descent","arena"] and float(foe.get("warning",-1))>0 or float(foe.get("melee_warning",0))>0 or ((str(foe.type) in preload("res://scripts/enemy_visual227.gd").FACTORS or preload("res://scripts/enemy_art235.gd").texture(id)!=null) and float(foe.get("windup",0))>0) or float(foe.get("v143_pose",0))>adventure.newcomers.clock or float(foe.get("veil_pose",0))>adventure.pursuers.clock or float(foe.get("cinder_pose",0))>adventure.cinder.clock else enemy_motion229.locomotion(foe)
+		if bool(foe.get("boss",false)) and id=="sun_sentinel":id="sun_sentinel_crown"
 		var texture: Texture2D = art.get(id+"_"+enemy_pose235)
 		var size := Vector2(230,238) if bool(foe.get("finale_actor",false)) else Vector2(130,146) if str(foe.type)=="tollbreaker" else Vector2(54,68) if str(foe.type) in north_gate.RIVALS else Vector2(82,88) if bool(foe["boss"]) else Vector2(46,50)
 		if bool(foe.get("depth_boss",false)) and str(foe.type) in ["cavern_warden","basalt_ram","garnet_widow"]:size=Vector2(150,175)
+		if bool(foe.get("boss",false)) and str(foe.type)=="cartographer":size=Vector2(166,166)
 		if str(foe.type)=="sluicewarden":size=Vector2(120,120)
 		if str(foe.type)=="mirevein_collector":size=Vector2(112,112)
 		if str(foe.type)=="depth_sovereign":size=Vector2(124,136)
@@ -2363,10 +2386,14 @@ func _draw() -> void:
 		if str(foe["type"])=="gilded_usurper":size*=1.0 if int(foe.get("generation",0))==0 else .78 if int(foe.get("generation",0))==1 else .56
 		if bool(foe.get("depth_boss",false)):size=descent.visual_size(foe)
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
-		if mode!="descent" and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
-		if bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
+		if mode not in ["descent","arena"] and float(foe.get("warning",-1))>0:preload("res://scripts/combat_cues.gd").danger(self,pos,48,float(foe.warning),.55)
+		if bool(foe.get("veilbound",false)):
+			preload("res://scripts/hunter_art283.gd").draw(self,id,enemy_pose235,Rect2(pos-size*Vector2(.5,.7),size),visual_time,int(foe.get("uid",0)))
+		elif bool(foe.get("depth_boss",false)):descent.draw_boss(self,foe,pos)
 		elif mode=="coop" and realm_id=="quarry" and bool(foe.get("boss",false)):
 			preload("res://scripts/quarry_art254.gd").draw_boss(self,enemy_pose235,Rect2(pos-size*Vector2(.5,.7),size))
+		elif adventure.hollow.active and str(foe.type) in adventure.hollow.TYPES:adventure.hollow.visual268.draw_enemy(adventure.hollow,self,foe,camera)
+		elif preload("res://scripts/enemy_neutral270.gd").draw_front(self,id+"_"+enemy_pose235,enemy_pose235,Rect2(pos-size*Vector2(.5,.7),size),Color.WHITE,foe):pass
 		elif preload("res://scripts/enemy_art235.gd").draw_key(self,id+"_"+enemy_pose235,Rect2(pos-size*Vector2(0.5,0.7),size)):
 			pass
 		elif texture != null:
@@ -2408,6 +2435,7 @@ func _draw() -> void:
 		var tint := Color.WHITE if int(health.get(id,0)) > 0 else Color(0.5,0.5,0.5,0.45)
 		if Time.get_ticks_msec() < int(stealth_until.get(id,0)): tint.a = 0.43
 		if Time.get_ticks_msec()<int(hit_flash.get(id,0)):tint=Color(1,.45,.4)
+		if mode=="defense" and hero_id.begins_with("npc_"):texture=preload("res://scripts/north_art260.gd").actor(hero_id,pose)
 		if hero_id=="goalie":skating_motion.draw_skates(self,str(id),pos)
 		draw_ellipse_shadow(pos,17.0 if hero_id=="book" else 16.0 if hero_id=="basketball" else 23.0)
 		adventure.combat.halloween.draw_mount(self,str(id),camera)
@@ -2481,7 +2509,7 @@ func _draw() -> void:
 	if arena_world.shatter.active():
 		arena_world.shatter.draw_overlay();_profile_section("hud_draw",section_began);return
 	adventure.finale.draw_hud(self)
-	var title := ("PRACTICE CONTINUE • " if continuation!=null and continuation.active else "") + ("Battlegrounds • "+str(battlegrounds.MAPS.get(bg_map,"Front")) if mode=="battlegrounds" else "Wave " + str(wave) + "  |  Town gate " + str(int(gate_hp)) + "/" + str(int(gate_max)) if mode == "defense" else "Floor " + str(floor_number) + "  |  Best " + str(best_floor) if mode == "descent" else "PvP " + pvp_rule.to_upper() + "  |  Score " + str(pvp_scores.get(my_id,0)) + "  |  " + str(maxi(0,300-int(run_time))) + "s left" if mode == "arena" else str(regions.get(realm_id,{}).get("name",realm_id)) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Stage " + str(wave) + "/3"))
+	var title := ("PRACTICE CONTINUE • " if continuation!=null and continuation.active else "") + ("Battlegrounds • "+str(battlegrounds.MAPS.get(bg_map,"Front")) if mode=="battlegrounds" else "Wave " + str(wave) + "  |  Town gate " + str(int(gate_hp)) + "/" + str(int(gate_max)) if mode == "defense" else ("Floor 50.5 • Mine Refuge" if descent.resting() else "Floor " + str(floor_number)) + "  |  Best " + str(best_floor) if mode == "descent" else "PvP " + pvp_rule.to_upper() + "  |  Score " + str(pvp_scores.get(my_id,0)) + "  |  " + str(maxi(0,300-int(run_time))) + "s left" if mode == "arena" else str(regions.get(realm_id,{}).get("name",realm_id)) + ("  |  Quests "+str(adventure.quests.completed_count())+"/"+str(adventure.quests.data.get("quests",[]).size()) if adventure.quests.active else "  |  Sluices "+str(int(adventure.foundry.cleared.has(1))+int(adventure.foundry.cleared.has(2)))+"/2" if adventure.foundry.active else "  |  Explore" if adventure.immersive.active else "  |  Continuum hunt" if adventure.tech.active else "  |  School adventure" if adventure.school.active else "  |  Stage " + str(wave) + "/3"))
 	if get("expedition")!=null and get("expedition").special():title=("Portal attunement" if get("expedition").kind=="attunement" else "The Between" if get("expedition").between() else "Overcharged "+str(regions.get(realm_id,{}).get("name",realm_id)))+" • 2-player expedition"
 	if arena_world.shatter.active():title=arena_world.shatter.header()
 	elif arena_world.objective.active():title=arena_world.objective.header()
@@ -2531,26 +2559,39 @@ func cached_world_tile(tx:int,ty:int,tile_size:int)->String:
 	world_tile_cache[key]=tile
 	return tile
 func _draw_world() -> void:
+	var oath_art:bool=mode=="coop" and realm_id=="shattered_oath" and preload("res://scripts/oath_environment297.gd").enabled(adventure)
+	preload("res://scripts/north_art260.gd").sync_water(self)
 	if mode=="descent":
 		if terrain_cache!=null:terrain_cache.hide()
+		if descent.resting():descent.rest.draw_ground(self,camera);return
 		preload("res://scripts/descent_map251.gd").draw_floor(self,camera,VIEW,floor_number)
 	if adventure.finale.in_depth():
 		if terrain_cache!=null:terrain_cache.hide()
 		adventure.finale.draw_ground(self,camera);return
 	var tile_size:int=128 if spectating() else 64
 	var bounds := Rect2(camera-Vector2(160,160),VIEW+Vector2(320,320))
-	if realm_id=="moonveil" and mode=="coop":
+	if oath_art or (realm_id in ["ice","confluence","folded_coast","clockwork_orchard","middle_school","space","zombie","astral_rift"] and mode=="coop"):
+		if terrain_cache!=null:terrain_cache.hide()
+	elif realm_id=="moonveil" and mode=="coop":
 		if terrain_cache!=null:terrain_cache.hide()
 		preload("res://scripts/moon_castle.gd").draw(self,camera)
 	elif realm_id=="silverfall" and mode=="coop":
 		if terrain_cache!=null:terrain_cache.hide()
+	elif mode=="battlegrounds" and (spectating() or terrain_cache==null):
+		preload("res://scripts/battleground_art262.gd").overview(self,battlegrounds)
 	elif mode!="descent" and (spectating() or terrain_cache==null):
 		for tx in range(int(camera.x/tile_size),int((camera.x+VIEW.x)/tile_size)+1):
 			for ty in range(int(camera.y/tile_size),int((camera.y+VIEW.y)/tile_size)+1):
 				var point := Vector2(tx*tile_size+tile_size/2,ty*tile_size+tile_size/2)
 				var tile := cached_world_tile(tx,ty,tile_size)
-				_sprite(tile,Vector2(tx*tile_size,ty*tile_size),Vector2(tile_size,tile_size))
-				if tile in ["grass","forest"] and (tx*37+ty*71)%23 == 3: _sprite("flower",point-Vector2(16,20),Vector2(32,32))
+				if mode=="arena":
+					for piece in preload("res://scripts/arena_art261.gd").layers(tx,ty,tile,self):draw_texture_rect(piece,Rect2(Vector2(tx*tile_size,ty*tile_size)-camera,tile_size*Vector2.ONE),false)
+				else:_sprite(tile,Vector2(tx*tile_size,ty*tile_size),Vector2(tile_size,tile_size))
+				if mode not in ["arena","battlegrounds"] and tile in ["grass","forest"] and (tx*37+ty*71)%23 == 3: _sprite("flower",point-Vector2(16,20),Vector2(32,32))
+	if mode=="coop" and realm_id=="space":preload("res://scripts/orbital_art281.gd").draw(self,camera)
+	if mode=="coop" and realm_id=="zombie":preload("res://scripts/quarantine_art282.gd").draw(self,camera)
+	if mode=="coop" and realm_id=="astral_rift":preload("res://scripts/astral_environment294.gd").draw(self,camera)
+	if mode=="coop" and realm_id=="shattered_oath":preload("res://scripts/oath_environment297.gd").draw(adventure,self,camera)
 	adventure.polish.draw_world(self,camera)
 	if adventure.immersive.active:adventure.immersive.draw_world(self,camera)
 	if adventure.foundry.active:adventure.foundry.draw_world(self,camera)
@@ -2572,15 +2613,21 @@ func _draw_world() -> void:
 	var retained_props:bool=mode=="coop" and realm_id=="moonveil" and not spectating()
 	if retained_props and not is_instance_valid(realm_props):
 		realm_props=preload("res://scripts/realm_props.gd").new();add_child(realm_props);realm_props.setup(self,true)
-	if not retained_props:
+	if not retained_props and not oath_art and not (mode=="coop" and realm_id in ["clockwork_orchard","space","zombie","astral_rift"]):
 		for decoration in world_decorations:
 			if bounds.has_point(decoration["pos"]): draw_texture_rect(decoration["texture"],Rect2(decoration["pos"]-(decoration["size"] as Vector2)*0.5-camera,decoration["size"]),false)
 	if mode=="descent":preload("res://scripts/descent_map251.gd").scenery(self,camera,FIELD,VIEW,floor_number)
 	for obstacle in field_obstacles:
+		if oath_art or (mode=="coop" and realm_id in ["clockwork_orchard","space","zombie","astral_rift"]):continue
+		if mode=="coop" and realm_id=="ice":preload("res://scripts/frost_art264.gd").pillar(self,obstacle.pos,camera);continue
+		if mode=="battlegrounds":continue
 		if mode=="descent":
+			if obstacle.has("descent288_owner"):continue
 			if bounds.has_point(obstacle.pos):preload("res://scripts/descent_map251.gd").pillar(self,obstacle.pos,float(obstacle.radius),camera)
 			continue
 		if bounds.has_point(obstacle["pos"]):
+			if mode=="defense":preload("res://scripts/north_art260.gd").obstacle(self,obstacle,camera);continue
+			if mode=="arena":preload("res://scripts/arena_art261.gd").obstacle(self,obstacle,camera);continue
 			if mode=="coop" and realm_id=="quarry":
 				var diameter:=float(obstacle.get("radius",38))*2+8;draw_texture_rect(preload("res://scripts/quarry_art254.gd").texture("rock"),Rect2(obstacle["pos"]-Vector2.ONE*diameter*.5-camera,Vector2.ONE*diameter),false)
 			elif str(obstacle.get("kind","tree"))=="rock":
@@ -2589,11 +2636,15 @@ func _draw_world() -> void:
 			elif mode=="coop" and realm_id=="grove":draw_texture_rect(preload("res://scripts/quarry_art254.gd").grove_tree(obstacle["pos"]),Rect2(obstacle["pos"]-Vector2(72,132)-camera,Vector2(144,168)),false)
 			else:_sprite(str(obstacle.get("kind","tree")),obstacle["pos"]-Vector2(44,65),Vector2(88,112))
 	for building in world_buildings:
+		if preload("res://scripts/realm_cart264.gd").supports(self) and str(building.name)=="Supplies":
+			preload("res://scripts/realm_art265.gd").cart(self,realm_id,camera);continue
 		if mode=="battlegrounds":continue
 		if not bounds.has_point(building["pos"]): continue
 		var is_gate := str(building["name"]) == "Gate"
 		var size := Vector2(260,210) if is_gate else Vector2(170,150)
-		_sprite(str(building["sprite"]),building["pos"]-size*Vector2(0.5,0.7),size)
+		if mode=="arena":preload("res://scripts/arena_art261.gd").building(self,building,camera)
+		elif mode=="defense":preload("res://scripts/north_art260.gd").building(self,building,camera)
+		else:_sprite(str(building["sprite"]),building["pos"]-size*Vector2(0.5,0.7),size)
 		draw_string(ThemeDB.fallback_font,building["pos"]-camera+Vector2(-65,65),str(building["name"]).to_upper(),HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#f5e3bb"))
 	if mode == "defense":
 		north_gate.draw_world(self,camera)
@@ -2603,6 +2654,7 @@ func _draw_world() -> void:
 			draw_string(ThemeDB.fallback_font,sign-camera+Vector2(-55,32),north_gate.NAMES[lane],HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#ffe7aa"))
 
 func _sprite(key: String, point: Vector2, size: Vector2, tint: Color = Color.WHITE) -> void:
+	if mode=="defense" and key=="town_banner":preload("res://scripts/town_streets244.gd").draw(self,"banner",Rect2(point-camera,size),tint);return
 	var refreshed248=preload("res://scripts/enemy_art235.gd").split_key(key)
 	if not refreshed248.is_empty() and preload("res://scripts/actor_art248.gd").has(refreshed248[0]) and preload("res://scripts/enemy_art235.gd").draw_key(self,key,Rect2(point-camera,size),tint):return
 	var texture: Texture2D = art.get(key)
@@ -3017,7 +3069,7 @@ func _update_revives(delta: float) -> void:
 	revive_held[my_id]=Input.is_action_pressed("interact")
 	for fallen in downed.keys():
 		var state:Dictionary=downed[fallen]
-		state["left"]-=delta
+		if not descent.resting():state["left"]-=delta
 		if float(state["left"])<=0:
 			downed.erase(fallen)
 			if mode=="defense":respawn_at[fallen]=Time.get_ticks_msec()+5000
@@ -3282,7 +3334,7 @@ func _draw_broadcast(font:Font)->void:
 	draw_string(font,Vector2(VIEW.x-310,58),"Esc: leave broadcast",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#bdd5df"))
 	if shop_open=="Travel":draw_string(font,Vector2(22,80),"Enter: return to town / Esc: keep watching",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#ffcc88"))
 	draw_string(font,Vector2(22,30),"CROSSROADS: REALMS BEYOND  •  LIVE "+("BATTLEGROUNDS" if mode=="battlegrounds" else "DESCENT" if mode=="descent" else "ARENA"),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color("#ffe0a1"))
-	var subtitle:String="Floor "+str(floor_number)+" • CO-OP SURVIVAL" if mode=="descent" else str(battlegrounds.MAPS.get(bg_map,bg_map))+" • TEAM BATTLE" if mode=="battlegrounds" else str(arena_world.MAPS.get(arena_map,"Arena"))+" • "+("TEAM BATTLE" if pvp_rule=="teams" else "FREE FOR ALL")+" • %d:%02d remaining" % [int(maxf(0,300-run_time))/60,int(maxf(0,300-run_time))%60]
+	var subtitle:String=("Floor 50.5 • Mine Refuge" if descent.resting() else "Floor "+str(floor_number)+" • CO-OP SURVIVAL") if mode=="descent" else str(battlegrounds.MAPS.get(bg_map,bg_map))+" • TEAM BATTLE" if mode=="battlegrounds" else str(arena_world.MAPS.get(arena_map,"Arena"))+" • "+("TEAM BATTLE" if pvp_rule=="teams" else "FREE FOR ALL")+" • %d:%02d remaining" % [int(maxf(0,300-run_time))/60,int(maxf(0,300-run_time))%60]
 	if arena_world.shatter.active():subtitle=arena_world.shatter.header()
 	draw_string(font,Vector2(22,58),subtitle,HORIZONTAL_ALIGNMENT_LEFT,VIEW.x-350,17,Color("#bdd5df"))
 	if mode=="arena" and pvp_rule=="teams":

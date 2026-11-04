@@ -1,0 +1,546 @@
+{
+  "key_bench": {
+    "region": [
+      0,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      6,
+      90,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 0,
+    "palette_limit": 32
+  },
+  "key_cabinet": {
+    "region": [
+      96,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      15,
+      6,
+      81,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 1,
+    "palette_limit": 32
+  },
+  "mail_cabinet": {
+    "region": [
+      192,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      13,
+      6,
+      83,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 2,
+    "palette_limit": 32
+  },
+  "parcel_desk": {
+    "region": [
+      288,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      15,
+      90,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 3,
+    "palette_limit": 32
+  },
+  "clock_bench": {
+    "region": [
+      384,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      7,
+      6,
+      89,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 4,
+    "palette_limit": 32
+  },
+  "pendulum_clock": {
+    "region": [
+      480,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      30,
+      6,
+      66,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 5,
+    "palette_limit": 32
+  },
+  "archive_shelf": {
+    "region": [
+      576,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      16,
+      6,
+      80,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 6,
+    "palette_limit": 32
+  },
+  "map_desk": {
+    "region": [
+      672,
+      0,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      8,
+      90,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 7,
+    "palette_limit": 32
+  },
+  "tea_counter": {
+    "region": [
+      0,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      17,
+      90,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 8,
+    "palette_limit": 32
+  },
+  "wicker_chair": {
+    "region": [
+      96,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      16,
+      6,
+      79,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 9,
+    "palette_limit": 32
+  },
+  "stove": {
+    "region": [
+      192,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      18,
+      6,
+      78,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 10,
+    "palette_limit": 32
+  },
+  "ivy_pot": {
+    "region": [
+      288,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      8,
+      6,
+      87,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 11,
+    "palette_limit": 32
+  },
+  "street_lantern": {
+    "region": [
+      384,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      31,
+      6,
+      64,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 12,
+    "palette_limit": 32
+  },
+  "key_sign": {
+    "region": [
+      480,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      25,
+      90,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 13,
+    "palette_limit": 32
+  },
+  "pipes": {
+    "region": [
+      576,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      12,
+      6,
+      83,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 14,
+    "palette_limit": 32
+  },
+  "drain": {
+    "region": [
+      672,
+      96,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      37,
+      90,
+      90
+    ],
+    "source_sheet": 0,
+    "source_cell": 15,
+    "palette_limit": 32
+  },
+  "tram_shelter": {
+    "region": [
+      0,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      7,
+      6,
+      89,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 0,
+    "palette_limit": 32
+  },
+  "ghost_tram": {
+    "region": [
+      96,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      32,
+      90,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 1,
+    "palette_limit": 32
+  },
+  "civic_crest": {
+    "region": [
+      192,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      8,
+      6,
+      88,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 2,
+    "palette_limit": 32
+  },
+  "ticket_kiosk": {
+    "region": [
+      288,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      15,
+      6,
+      81,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 3,
+    "palette_limit": 32
+  },
+  "mailbox": {
+    "region": [
+      384,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      15,
+      6,
+      80,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 4,
+    "palette_limit": 32
+  },
+  "luggage_trolley": {
+    "region": [
+      480,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      14,
+      90,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 5,
+    "palette_limit": 32
+  },
+  "safe_cabinet": {
+    "region": [
+      576,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      7,
+      6,
+      88,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 6,
+    "palette_limit": 32
+  },
+  "coat_rack": {
+    "region": [
+      672,
+      192,
+      96,
+      96
+    ],
+    "bounds": [
+      12,
+      6,
+      84,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 7,
+    "palette_limit": 32
+  },
+  "flower_basket": {
+    "region": [
+      0,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      13,
+      6,
+      82,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 8,
+    "palette_limit": 32
+  },
+  "street_clock": {
+    "region": [
+      96,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      30,
+      6,
+      66,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 9,
+    "palette_limit": 32
+  },
+  "bench": {
+    "region": [
+      192,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      30,
+      90,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 10,
+    "palette_limit": 32
+  },
+  "coal_logs": {
+    "region": [
+      288,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      36,
+      90,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 11,
+    "palette_limit": 32
+  },
+  "boiler": {
+    "region": [
+      384,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      11,
+      6,
+      84,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 12,
+    "palette_limit": 32
+  },
+  "book_cart": {
+    "region": [
+      480,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      16,
+      90,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 13,
+    "palette_limit": 32
+  },
+  "tailor_table": {
+    "region": [
+      576,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      6,
+      17,
+      90,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 14,
+    "palette_limit": 32
+  },
+  "bread_counter": {
+    "region": [
+      672,
+      288,
+      96,
+      96
+    ],
+    "bounds": [
+      7,
+      6,
+      88,
+      90
+    ],
+    "source_sheet": 1,
+    "source_cell": 15,
+    "palette_limit": 32
+  }
+}

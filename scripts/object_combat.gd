@@ -774,6 +774,7 @@ func step_projectiles(delta:float)->void:
 		shot["aim"]=point_array(direction)
 		var travel:=minf(float(shot["speed"])*clock_delta(str(shot["owner"]),delta),float(shot["range"])-float(shot["distance"]))
 		var end:=start+direction*travel;shot["distance"]=float(shot["distance"])+travel
+		if adventure.game.mode=="descent" and adventure.game.descent.battle.guardians.intercept(start,end):projectiles.remove_at(i);continue
 		if str(shot["style"]) in ["weaving","corkscrew_key"]:
 			var base:=vec(shot["base_aim"]);var side:=Vector2(-base.y,base.x)
 			end=vec(shot["origin"])+base*float(shot["distance"])+side*sin(float(shot["distance"])*TAU/float(shot["stats"].get("wavelength",170)))*float(shot["stats"].get("amplitude",20))

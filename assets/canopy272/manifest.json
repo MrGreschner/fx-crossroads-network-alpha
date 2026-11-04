@@ -1,0 +1,514 @@
+{
+  "blossom_tree": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      0,
+      0,
+      410,
+      320
+    ],
+    "visible_height": 232
+  },
+  "fern_tree": {
+    "region": [
+      320,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      410,
+      0,
+      800,
+      320
+    ],
+    "visible_height": 263
+  },
+  "hollow_log": {
+    "region": [
+      640,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      800,
+      0,
+      1160,
+      320
+    ],
+    "visible_height": 202
+  },
+  "root_arch": {
+    "region": [
+      960,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      1160,
+      0,
+      1536,
+      320
+    ],
+    "visible_height": 233
+  },
+  "bellflowers": {
+    "region": [
+      1280,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      0,
+      320,
+      410,
+      570
+    ],
+    "visible_height": 189
+  },
+  "mushrooms": {
+    "region": [
+      1600,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      410,
+      320,
+      800,
+      570
+    ],
+    "visible_height": 211
+  },
+  "wildflowers": {
+    "region": [
+      1920,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      800,
+      320,
+      1160,
+      570
+    ],
+    "visible_height": 183
+  },
+  "ferns": {
+    "region": [
+      2240,
+      0,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      1160,
+      320,
+      1536,
+      570
+    ],
+    "visible_height": 184
+  },
+  "rocks": {
+    "region": [
+      0,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      0,
+      570,
+      410,
+      780
+    ],
+    "visible_height": 144
+  },
+  "ribbon_arch": {
+    "region": [
+      320,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      410,
+      570,
+      800,
+      780
+    ],
+    "visible_height": 192
+  },
+  "guardrail": {
+    "region": [
+      640,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      800,
+      570,
+      1160,
+      780
+    ],
+    "visible_height": 168
+  },
+  "footbridge": {
+    "region": [
+      960,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      1160,
+      570,
+      1536,
+      780
+    ],
+    "visible_height": 175
+  },
+  "lantern": {
+    "region": [
+      1280,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      0,
+      780,
+      410,
+      1024
+    ],
+    "visible_height": 238
+  },
+  "butterflies": {
+    "region": [
+      1600,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      410,
+      780,
+      800,
+      1024
+    ],
+    "visible_height": 238
+  },
+  "well": {
+    "region": [
+      1920,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      800,
+      780,
+      1160,
+      1024
+    ],
+    "visible_height": 235
+  },
+  "maypole": {
+    "region": [
+      2240,
+      320,
+      320,
+      320
+    ],
+    "source": "forest",
+    "source_box": [
+      1160,
+      780,
+      1536,
+      1024
+    ],
+    "visible_height": 225
+  },
+  "cottage": {
+    "region": [
+      0,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      0,
+      0,
+      400,
+      310
+    ],
+    "visible_height": 227
+  },
+  "atelier": {
+    "region": [
+      320,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      400,
+      0,
+      810,
+      310
+    ],
+    "visible_height": 222
+  },
+  "gazebo": {
+    "region": [
+      640,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      810,
+      0,
+      1195,
+      310
+    ],
+    "visible_height": 254
+  },
+  "tea_table": {
+    "region": [
+      960,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      1195,
+      0,
+      1536,
+      310
+    ],
+    "visible_height": 223
+  },
+  "bench": {
+    "region": [
+      1280,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      0,
+      310,
+      400,
+      560
+    ],
+    "visible_height": 207
+  },
+  "baskets": {
+    "region": [
+      1600,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      400,
+      310,
+      810,
+      560
+    ],
+    "visible_height": 186
+  },
+  "spinning_wheel": {
+    "region": [
+      1920,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      810,
+      310,
+      1195,
+      560
+    ],
+    "visible_height": 239
+  },
+  "loom": {
+    "region": [
+      2240,
+      640,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      1195,
+      310,
+      1536,
+      560
+    ],
+    "visible_height": 244
+  },
+  "spools": {
+    "region": [
+      0,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      0,
+      560,
+      400,
+      805
+    ],
+    "visible_height": 242
+  },
+  "bunting": {
+    "region": [
+      320,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      400,
+      560,
+      810,
+      805
+    ],
+    "visible_height": 170
+  },
+  "barrel": {
+    "region": [
+      640,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      810,
+      560,
+      1195,
+      805
+    ],
+    "visible_height": 222
+  },
+  "signpost": {
+    "region": [
+      960,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      1195,
+      560,
+      1536,
+      805
+    ],
+    "visible_height": 245
+  },
+  "hammock": {
+    "region": [
+      1280,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      0,
+      805,
+      400,
+      1024
+    ],
+    "visible_height": 154
+  },
+  "teacup": {
+    "region": [
+      1600,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      400,
+      805,
+      810,
+      1024
+    ],
+    "visible_height": 191
+  },
+  "chest": {
+    "region": [
+      1920,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      810,
+      805,
+      1195,
+      1024
+    ],
+    "visible_height": 198
+  },
+  "cart": {
+    "region": [
+      2240,
+      960,
+      320,
+      320
+    ],
+    "source": "village",
+    "source_box": [
+      1195,
+      805,
+      1536,
+      1024
+    ],
+    "visible_height": 192
+  }
+}

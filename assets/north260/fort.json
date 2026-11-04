@@ -1,0 +1,182 @@
+{
+  "gate": {
+    "region": [
+      0,
+      0,
+      256,
+      224
+    ],
+    "source": "fort_original.png",
+    "source_box": [
+      0,
+      0,
+      630,
+      560
+    ]
+  },
+  "barracks": {
+    "region": [
+      256,
+      0,
+      256,
+      224
+    ],
+    "source": "fort_original.png",
+    "source_box": [
+      630,
+      0,
+      1058,
+      560
+    ]
+  },
+  "forge": {
+    "region": [
+      512,
+      0,
+      256,
+      224
+    ],
+    "source": "fort_original.png",
+    "source_box": [
+      1058,
+      0,
+      1536,
+      560
+    ]
+  },
+  "archery": {
+    "region": [
+      0,
+      224,
+      256,
+      224
+    ],
+    "source": "fort_original.png",
+    "source_box": [
+      0,
+      560,
+      540,
+      1024
+    ]
+  },
+  "sanctum": {
+    "region": [
+      256,
+      224,
+      256,
+      224
+    ],
+    "source": "fort_original.png",
+    "source_box": [
+      540,
+      560,
+      1020,
+      1024
+    ]
+  },
+  "supplies": {
+    "region": [
+      512,
+      224,
+      256,
+      224
+    ],
+    "source": "fort_original.png",
+    "source_box": [
+      1020,
+      560,
+      1536,
+      1024
+    ]
+  },
+  "outpost0": {
+    "region": [
+      0,
+      448,
+      192,
+      192
+    ],
+    "source": "outposts_original.png",
+    "source_box": [
+      0,
+      0,
+      512,
+      560
+    ]
+  },
+  "outpost1": {
+    "region": [
+      192,
+      448,
+      192,
+      192
+    ],
+    "source": "outposts_original.png",
+    "source_box": [
+      512,
+      0,
+      1024,
+      560
+    ]
+  },
+  "outpost2": {
+    "region": [
+      384,
+      448,
+      192,
+      192
+    ],
+    "source": "outposts_original.png",
+    "source_box": [
+      1024,
+      0,
+      1536,
+      560
+    ]
+  },
+  "wall": {
+    "region": [
+      0,
+      640,
+      384,
+      128
+    ],
+    "source": "outposts_original.png",
+    "source_box": [
+      0,
+      560,
+      800,
+      1024
+    ]
+  },
+  "brazier": {
+    "region": [
+      768,
+      0,
+      64,
+      128
+    ],
+    "source": "outposts_original.png",
+    "source_box": [
+      800,
+      560,
+      1120,
+      1024
+    ]
+  },
+  "milestone": {
+    "region": [
+      832,
+      0,
+      64,
+      80
+    ],
+    "source": "outposts_original.png",
+    "source_box": [
+      1120,
+      560,
+      1536,
+      1024
+    ]
+  }
+}

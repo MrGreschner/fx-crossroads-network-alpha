@@ -1,0 +1,52 @@
+{
+  "frostling": {
+    "old_normalized": [
+      0.275,
+      0.2625,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.3425925,
+    "visible_height": 108.98924731182797
+  },
+  "glacier_hound": {
+    "old_normalized": [
+      0.3125,
+      0.2375,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 95.43968871595331
+  },
+  "ice_archer": {
+    "old_normalized": [
+      0.2875,
+      0.2125,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 95.60975609756098
+  },
+  "snow_oracle": {
+    "old_normalized": [
+      0.25,
+      0.2375,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.2797625,
+    "visible_height": 102.51612903225806
+  },
+  "cryowarden": {
+    "old_normalized": [
+      0.175,
+      0.25,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.3181813,
+    "visible_height": 88.8125
+  }
+}

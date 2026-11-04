@@ -1,0 +1,23 @@
+{
+  "revision": 266,
+  "ground_pages": 3,
+  "ground_page_size": [
+    1000,
+    1600
+  ],
+  "actor_size": [
+    2048,
+    1024
+  ],
+  "props_size": [
+    1536,
+    1536
+  ],
+  "decoded_RGBA_upper_bound": 37025792,
+  "sources": {
+    "sun_original.png": "9eb7df8f4228f548ca48a757f35c2d621e8a4fce93a8afce060c9e5016b6ec43",
+    "actors_original.png": "c2897bd85f4182c84c10215a1402aa61d5f3e69a32b09c2f13b69f3e216e2f03",
+    "materials_original.png": "b351d748b4e8a833ff5d0de0a7fc55a60055ed77aa69fbe0c2576905d7868971",
+    "props_original.png": "99a7b2952063f09b199378e16763c5d942024acda44d2772ffbd93e414064070"
+  }
+}

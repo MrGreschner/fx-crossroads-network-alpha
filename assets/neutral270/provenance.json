@@ -1,0 +1,10 @@
+{
+  "release": "V270-neutral-rebuild",
+  "base": 268,
+  "front_masters": 15,
+  "directional_frames_used": 0,
+  "sheet": [
+    1024,
+    1024
+  ]
+}

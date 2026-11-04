@@ -1,0 +1,712 @@
+{
+  "briar_arch": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      14,
+      29,
+      210,
+      210
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      13,
+      13,
+      332,
+      308
+    ],
+    "texture": "briar_arch_large"
+  },
+  "root_urn": {
+    "region": [
+      128,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      25,
+      8,
+      102,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      396,
+      24,
+      590,
+      308
+    ]
+  },
+  "root_altar": {
+    "region": [
+      256,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      43,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      646,
+      100,
+      946,
+      307
+    ]
+  },
+  "thorn_wall": {
+    "region": [
+      384,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      56,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      980,
+      117,
+      1291,
+      296
+    ]
+  },
+  "vine_memorial": {
+    "region": [
+      512,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      10,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      26,
+      342,
+      303,
+      613
+    ]
+  },
+  "briar_lantern": {
+    "region": [
+      640,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      28,
+      8,
+      99,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      398,
+      342,
+      566,
+      608
+    ]
+  },
+  "fern_roots": {
+    "region": [
+      768,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      47,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      645,
+      399,
+      963,
+      605
+    ]
+  },
+  "briar_seal": {
+    "region": [
+      896,
+      0,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      15,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      1008,
+      365,
+      1262,
+      602
+    ]
+  },
+  "kiln_gate": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      14,
+      49,
+      210,
+      210
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      7,
+      638,
+      328,
+      901
+    ],
+    "texture": "kiln_gate_large"
+  },
+  "kiln": {
+    "region": [
+      128,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      26,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      363,
+      660,
+      652,
+      902
+    ]
+  },
+  "cinder_urn": {
+    "region": [
+      256,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      19,
+      8,
+      108,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      718,
+      646,
+      922,
+      904
+    ]
+  },
+  "basalt_column": {
+    "region": [
+      384,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      11,
+      8,
+      117,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      1011,
+      642,
+      1256,
+      902
+    ]
+  },
+  "tool_rack": {
+    "region": [
+      512,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      31,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      34,
+      961,
+      307,
+      1177
+    ]
+  },
+  "brazier": {
+    "region": [
+      640,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      14,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      370,
+      950,
+      616,
+      1183
+    ]
+  },
+  "cinder_rubble": {
+    "region": [
+      768,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      53,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      669,
+      1000,
+      963,
+      1177
+    ]
+  },
+  "cinder_seal": {
+    "region": [
+      896,
+      128,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      10,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 1,
+    "source_bounds": [
+      1018,
+      942,
+      1259,
+      1179
+    ]
+  },
+  "mirror_frame": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      36,
+      14,
+      187,
+      210
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      63,
+      8,
+      273,
+      281
+    ],
+    "texture": "mirror_frame_large"
+  },
+  "crystal": {
+    "region": [
+      128,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      9,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      366,
+      54,
+      590,
+      275
+    ]
+  },
+  "chime_lamp": {
+    "region": [
+      256,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      13,
+      8,
+      115,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      674,
+      17,
+      912,
+      278
+    ]
+  },
+  "frost_seal": {
+    "region": [
+      384,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      13,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      984,
+      40,
+      1228,
+      274
+    ]
+  },
+  "storm_spire": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      35,
+      15,
+      188,
+      210
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      51,
+      295,
+      279,
+      588
+    ],
+    "texture": "storm_spire_large"
+  },
+  "storm_coil": {
+    "region": [
+      640,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      13,
+      8,
+      114,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      369,
+      333,
+      588,
+      577
+    ]
+  },
+  "storm_globe": {
+    "region": [
+      768,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      19,
+      8,
+      108,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      703,
+      353,
+      884,
+      580
+    ]
+  },
+  "storm_seal": {
+    "region": [
+      896,
+      256,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      15,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      986,
+      344,
+      1231,
+      573
+    ]
+  },
+  "oath_gate": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      14,
+      42,
+      210,
+      210
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      8,
+      617,
+      330,
+      893
+    ],
+    "texture": "oath_gate_large"
+  },
+  "empty_throne": {
+    "region": [
+      0,
+      0,
+      224,
+      224
+    ],
+    "bounds": [
+      25,
+      14,
+      199,
+      210
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      363,
+      612,
+      612,
+      893
+    ],
+    "texture": "empty_throne_large"
+  },
+  "knight_memorial": {
+    "region": [
+      256,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      23,
+      8,
+      105,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      691,
+      616,
+      891,
+      890
+    ]
+  },
+  "oath_column": {
+    "region": [
+      384,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      14,
+      8,
+      114,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      993,
+      634,
+      1222,
+      891
+    ]
+  },
+  "oath_banner": {
+    "region": [
+      512,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      23,
+      8,
+      105,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      63,
+      922,
+      272,
+      1206
+    ]
+  },
+  "fallen_stone": {
+    "region": [
+      640,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      57,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      336,
+      1014,
+      626,
+      1176
+    ]
+  },
+  "oath_lantern": {
+    "region": [
+      768,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      32,
+      8,
+      95,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      715,
+      922,
+      878,
+      1211
+    ]
+  },
+  "oath_medallion": {
+    "region": [
+      896,
+      384,
+      128,
+      128
+    ],
+    "bounds": [
+      8,
+      11,
+      120,
+      120
+    ],
+    "palette_limit": 36,
+    "sheet": 2,
+    "source_bounds": [
+      982,
+      953,
+      1231,
+      1196
+    ]
+  }
+}

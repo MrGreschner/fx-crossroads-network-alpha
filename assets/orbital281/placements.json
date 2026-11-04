@@ -1,0 +1,1542 @@
+[
+  {
+    "kind": "dish_receiver",
+    "pos": [
+      570.0,
+      1200.0
+    ],
+    "size": [
+      230.258,
+      230.258
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_01",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "long_range_antenna",
+    "pos": [
+      732.0,
+      250.0
+    ],
+    "size": [
+      181.56,
+      181.56
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_02",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "solar_mast",
+    "pos": [
+      894.0,
+      1200.0
+    ],
+    "size": [
+      302.913,
+      302.913
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_03",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "navigation_beacon",
+    "pos": [
+      1056.0,
+      250.0
+    ],
+    "size": [
+      138.24,
+      138.24
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_04",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "magnetic_mooring",
+    "pos": [
+      1218.0,
+      1200.0
+    ],
+    "size": [
+      153.191,
+      153.191
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_05",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "cargo_cradle",
+    "pos": [
+      1381.0,
+      250.0
+    ],
+    "size": [
+      85.787,
+      85.787
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_06",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "pressure_tank",
+    "pos": [
+      1543.0,
+      1200.0
+    ],
+    "size": [
+      156.077,
+      156.077
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_07",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "coolant_reservoir",
+    "pos": [
+      1705.0,
+      250.0
+    ],
+    "size": [
+      153.191,
+      153.191
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_08",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "reactor_coil",
+    "pos": [
+      1867.0,
+      1200.0
+    ],
+    "size": [
+      116.87,
+      116.87
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_09",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "plasma_condenser",
+    "pos": [
+      2030.0,
+      250.0
+    ],
+    "size": [
+      108.0,
+      108.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_10",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "power_cabinet",
+    "pos": [
+      2192.0,
+      1200.0
+    ],
+    "size": [
+      135.91,
+      135.91
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_11",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "battery_stack",
+    "pos": [
+      2354.0,
+      250.0
+    ],
+    "size": [
+      85.183,
+      85.183
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_12",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "air_scrubber",
+    "pos": [
+      2516.0,
+      1200.0
+    ],
+    "size": [
+      119.172,
+      119.172
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_13",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "oxygen_garden",
+    "pos": [
+      2678.0,
+      250.0
+    ],
+    "size": [
+      139.838,
+      139.838
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_14",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "gravity_stabilizer",
+    "pos": [
+      2841.0,
+      1200.0
+    ],
+    "size": [
+      91.291,
+      91.291
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_15",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "gyro_ring",
+    "pos": [
+      3003.0,
+      250.0
+    ],
+    "size": [
+      144.862,
+      144.862
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_16",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "survey_console",
+    "pos": [
+      3165.0,
+      1200.0
+    ],
+    "size": [
+      118.588,
+      118.588
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_17",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "hologram_pedestal",
+    "pos": [
+      3327.0,
+      250.0
+    ],
+    "size": [
+      85.484,
+      85.484
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_18",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "relay_terminal",
+    "pos": [
+      3490.0,
+      1200.0
+    ],
+    "size": [
+      104.727,
+      104.727
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_19",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "archive_spindle",
+    "pos": [
+      3652.0,
+      250.0
+    ],
+    "size": [
+      105.183,
+      105.183
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_20",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "repair_bench",
+    "pos": [
+      3814.0,
+      1200.0
+    ],
+    "size": [
+      85.183,
+      85.183
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_21",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "spare_parts_rack",
+    "pos": [
+      3976.0,
+      250.0
+    ],
+    "size": [
+      96.0,
+      96.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_22",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sealed_sample_case",
+    "pos": [
+      4138.0,
+      1200.0
+    ],
+    "size": [
+      145.735,
+      145.735
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_23",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "emergency_supply_pod",
+    "pos": [
+      4301.0,
+      250.0
+    ],
+    "size": [
+      97.157,
+      97.157
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_24",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "dish_receiver",
+    "pos": [
+      4463.0,
+      1200.0
+    ],
+    "size": [
+      230.258,
+      230.258
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_25",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "long_range_antenna",
+    "pos": [
+      4625.0,
+      250.0
+    ],
+    "size": [
+      181.56,
+      181.56
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_26",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "solar_mast",
+    "pos": [
+      4787.0,
+      1200.0
+    ],
+    "size": [
+      302.913,
+      302.913
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_27",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "navigation_beacon",
+    "pos": [
+      4950.0,
+      250.0
+    ],
+    "size": [
+      138.24,
+      138.24
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_28",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "magnetic_mooring",
+    "pos": [
+      5112.0,
+      1200.0
+    ],
+    "size": [
+      153.191,
+      153.191
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_29",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "cargo_cradle",
+    "pos": [
+      5274.0,
+      250.0
+    ],
+    "size": [
+      85.787,
+      85.787
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_30",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "pressure_tank",
+    "pos": [
+      5436.0,
+      1200.0
+    ],
+    "size": [
+      156.077,
+      156.077
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_31",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "coolant_reservoir",
+    "pos": [
+      5598.0,
+      250.0
+    ],
+    "size": [
+      153.191,
+      153.191
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_32",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "reactor_coil",
+    "pos": [
+      5761.0,
+      1200.0
+    ],
+    "size": [
+      116.87,
+      116.87
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_33",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "plasma_condenser",
+    "pos": [
+      5923.0,
+      250.0
+    ],
+    "size": [
+      108.0,
+      108.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_34",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "power_cabinet",
+    "pos": [
+      6085.0,
+      1200.0
+    ],
+    "size": [
+      135.91,
+      135.91
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_35",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "battery_stack",
+    "pos": [
+      6247.0,
+      250.0
+    ],
+    "size": [
+      85.183,
+      85.183
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_36",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "air_scrubber",
+    "pos": [
+      6410.0,
+      1200.0
+    ],
+    "size": [
+      119.172,
+      119.172
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_37",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "oxygen_garden",
+    "pos": [
+      6572.0,
+      250.0
+    ],
+    "size": [
+      139.838,
+      139.838
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_38",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "gravity_stabilizer",
+    "pos": [
+      6734.0,
+      1200.0
+    ],
+    "size": [
+      91.291,
+      91.291
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_39",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "gyro_ring",
+    "pos": [
+      6896.0,
+      250.0
+    ],
+    "size": [
+      144.862,
+      144.862
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_40",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "survey_console",
+    "pos": [
+      7058.0,
+      1200.0
+    ],
+    "size": [
+      118.588,
+      118.588
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_41",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "hologram_pedestal",
+    "pos": [
+      7221.0,
+      250.0
+    ],
+    "size": [
+      85.484,
+      85.484
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_42",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "relay_terminal",
+    "pos": [
+      7383.0,
+      1200.0
+    ],
+    "size": [
+      104.727,
+      104.727
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_43",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "archive_spindle",
+    "pos": [
+      7545.0,
+      250.0
+    ],
+    "size": [
+      105.183,
+      105.183
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_44",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "repair_bench",
+    "pos": [
+      7707.0,
+      1200.0
+    ],
+    "size": [
+      85.183,
+      85.183
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Satellite_45",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      200,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "flush_pressure_hatch",
+    "pos": [
+      590,
+      525
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "service_rail",
+    "pos": [
+      980,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "evacuation_strip",
+    "pos": [
+      1370,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "botanical_deck_mat",
+    "pos": [
+      200,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "riveted_repair_patch",
+    "pos": [
+      590,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "capacitor_service_cover",
+    "pos": [
+      980,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "core_landing_medallion",
+    "pos": [
+      840,
+      725
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      300,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      300,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      810,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      810,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      1320,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      1320,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      1840,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "flush_pressure_hatch",
+    "pos": [
+      2230,
+      525
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "service_rail",
+    "pos": [
+      2620,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "evacuation_strip",
+    "pos": [
+      3010,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "botanical_deck_mat",
+    "pos": [
+      1840,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "riveted_repair_patch",
+    "pos": [
+      2230,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "capacitor_service_cover",
+    "pos": [
+      2620,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "core_landing_medallion",
+    "pos": [
+      2480,
+      725
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      1940,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      1940,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      2450,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      2450,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      2960,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      2960,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      3480,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "flush_pressure_hatch",
+    "pos": [
+      3870,
+      525
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "service_rail",
+    "pos": [
+      4260,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "evacuation_strip",
+    "pos": [
+      4650,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "botanical_deck_mat",
+    "pos": [
+      3480,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "riveted_repair_patch",
+    "pos": [
+      3870,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "capacitor_service_cover",
+    "pos": [
+      4260,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "core_landing_medallion",
+    "pos": [
+      4120,
+      1030
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      3580,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      3580,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      4090,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      4090,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      4600,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      4600,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      5120,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "flush_pressure_hatch",
+    "pos": [
+      5510,
+      525
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "service_rail",
+    "pos": [
+      5900,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "evacuation_strip",
+    "pos": [
+      6290,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "botanical_deck_mat",
+    "pos": [
+      5120,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "riveted_repair_patch",
+    "pos": [
+      5510,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "capacitor_service_cover",
+    "pos": [
+      5900,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "core_landing_medallion",
+    "pos": [
+      5760,
+      725
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      5220,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      5220,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      5730,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      5730,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      6240,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      6240,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      6760,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "flush_pressure_hatch",
+    "pos": [
+      7150,
+      525
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "service_rail",
+    "pos": [
+      7540,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "evacuation_strip",
+    "pos": [
+      7930,
+      525
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "botanical_deck_mat",
+    "pos": [
+      6760,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "riveted_repair_patch",
+    "pos": [
+      7150,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "capacitor_service_cover",
+    "pos": [
+      7540,
+      980
+    ],
+    "size": [
+      240,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "core_landing_medallion",
+    "pos": [
+      7900,
+      725
+    ],
+    "size": [
+      450,
+      450
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      6860,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      6860,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      7370,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      7370,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      7880,
+      150
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "observation_glass",
+    "pos": [
+      7880,
+      1370
+    ],
+    "size": [
+      390,
+      145
+    ],
+    "layer": "floor",
+    "walkable": true
+  }
+]

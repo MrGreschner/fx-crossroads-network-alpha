@@ -1,0 +1,1672 @@
+[
+  {
+    "kind": "cordon_beacon",
+    "pos": [
+      570.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_01",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "folded_barricade",
+    "pos": [
+      738.0,
+      250.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_02",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "checkpoint_pillar",
+    "pos": [
+      907.0,
+      1200.0
+    ],
+    "size": [
+      144.0,
+      144.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_03",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "decontamination_post",
+    "pos": [
+      1076.0,
+      250.0
+    ],
+    "size": [
+      140.651,
+      140.651
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_04",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sealed_supply_crate",
+    "pos": [
+      1245.0,
+      1200.0
+    ],
+    "size": [
+      91.636,
+      91.636
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_05",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "medicine_cabinet",
+    "pos": [
+      1414.0,
+      250.0
+    ],
+    "size": [
+      108.0,
+      108.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_06",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sample_canister",
+    "pos": [
+      1583.0,
+      1200.0
+    ],
+    "size": [
+      123.429,
+      123.429
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_07",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "filter_column",
+    "pos": [
+      1752.0,
+      250.0
+    ],
+    "size": [
+      151.2,
+      151.2
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_08",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "wash_station",
+    "pos": [
+      1921.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_09",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sterilizer",
+    "pos": [
+      2090.0,
+      250.0
+    ],
+    "size": [
+      114.113,
+      114.113
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_10",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "quarantine_bed",
+    "pos": [
+      2258.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_11",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "triage_screen",
+    "pos": [
+      2427.0,
+      250.0
+    ],
+    "size": [
+      137.455,
+      137.455
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_12",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "oxygen_rack",
+    "pos": [
+      2596.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_13",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "drip_stand",
+    "pos": [
+      2765.0,
+      250.0
+    ],
+    "size": [
+      163.459,
+      163.459
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_14",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sealed_waste_bin",
+    "pos": [
+      2934.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_15",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "portable_generator",
+    "pos": [
+      3103.0,
+      250.0
+    ],
+    "size": [
+      112.0,
+      112.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_16",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "spore_stump",
+    "pos": [
+      3272.0,
+      1200.0
+    ],
+    "size": [
+      88.941,
+      88.941
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_17",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "fungal_planter",
+    "pos": [
+      3441.0,
+      250.0
+    ],
+    "size": [
+      123.429,
+      123.429
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_18",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "rooted_pipe",
+    "pos": [
+      3610.0,
+      1200.0
+    ],
+    "size": [
+      90.269,
+      90.269
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_19",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "mossy_water_tank",
+    "pos": [
+      3778.0,
+      250.0
+    ],
+    "size": [
+      106.105,
+      106.105
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_20",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sample_incubator",
+    "pos": [
+      3947.0,
+      1200.0
+    ],
+    "size": [
+      93.046,
+      93.046
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_21",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "vent_stack",
+    "pos": [
+      4116.0,
+      250.0
+    ],
+    "size": [
+      137.455,
+      137.455
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_22",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "broken_radio",
+    "pos": [
+      4285.0,
+      1200.0
+    ],
+    "size": [
+      100.8,
+      100.8
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_23",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "warden_locker",
+    "pos": [
+      4454.0,
+      250.0
+    ],
+    "size": [
+      123.429,
+      123.429
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_24",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "cordon_beacon",
+    "pos": [
+      4623.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_25",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "folded_barricade",
+    "pos": [
+      4792.0,
+      250.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_26",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "checkpoint_pillar",
+    "pos": [
+      4961.0,
+      1200.0
+    ],
+    "size": [
+      144.0,
+      144.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_27",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "decontamination_post",
+    "pos": [
+      5130.0,
+      250.0
+    ],
+    "size": [
+      140.651,
+      140.651
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_28",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sealed_supply_crate",
+    "pos": [
+      5298.0,
+      1200.0
+    ],
+    "size": [
+      91.636,
+      91.636
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_29",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "medicine_cabinet",
+    "pos": [
+      5467.0,
+      250.0
+    ],
+    "size": [
+      108.0,
+      108.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_30",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sample_canister",
+    "pos": [
+      5636.0,
+      1200.0
+    ],
+    "size": [
+      123.429,
+      123.429
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_31",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "filter_column",
+    "pos": [
+      5805.0,
+      250.0
+    ],
+    "size": [
+      151.2,
+      151.2
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_32",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "wash_station",
+    "pos": [
+      5974.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_33",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sterilizer",
+    "pos": [
+      6143.0,
+      250.0
+    ],
+    "size": [
+      114.113,
+      114.113
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_34",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "quarantine_bed",
+    "pos": [
+      6312.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_35",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "triage_screen",
+    "pos": [
+      6481.0,
+      250.0
+    ],
+    "size": [
+      137.455,
+      137.455
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_36",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "oxygen_rack",
+    "pos": [
+      6650.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_37",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "drip_stand",
+    "pos": [
+      6818.0,
+      250.0
+    ],
+    "size": [
+      163.459,
+      163.459
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_38",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sealed_waste_bin",
+    "pos": [
+      6987.0,
+      1200.0
+    ],
+    "size": [
+      147.059,
+      147.059
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_39",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "portable_generator",
+    "pos": [
+      7156.0,
+      250.0
+    ],
+    "size": [
+      112.0,
+      112.0
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_40",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "spore_stump",
+    "pos": [
+      7325.0,
+      1200.0
+    ],
+    "size": [
+      88.941,
+      88.941
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_41",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "fungal_planter",
+    "pos": [
+      7494.0,
+      250.0
+    ],
+    "size": [
+      123.429,
+      123.429
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_42",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "rooted_pipe",
+    "pos": [
+      7663.0,
+      1200.0
+    ],
+    "size": [
+      90.269,
+      90.269
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_43",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "mossy_water_tank",
+    "pos": [
+      7832.0,
+      250.0
+    ],
+    "size": [
+      106.105,
+      106.105
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_44",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "sample_incubator",
+    "pos": [
+      8001.0,
+      1200.0
+    ],
+    "size": [
+      93.046,
+      93.046
+    ],
+    "layer": "hardware",
+    "solid_anchor": "Barricade_45",
+    "collision_radius": 42.0
+  },
+  {
+    "kind": "drain_grate",
+    "pos": [
+      204,
+      418
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "cracked_mosaic",
+    "pos": [
+      588,
+      435
+    ],
+    "size": [
+      260,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      972,
+      452
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      1283,
+      469
+    ],
+    "size": [
+      210,
+      140
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      247,
+      1026
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "rusted_access_cover",
+    "pos": [
+      631,
+      1043
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      942,
+      1060
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      971,
+      947
+    ],
+    "size": [
+      160,
+      130
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      180,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      180,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      595,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      595,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      1010,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      1010,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      1425,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      1425,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "drain_grate",
+    "pos": [
+      1945,
+      441
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "cracked_mosaic",
+    "pos": [
+      2329,
+      458
+    ],
+    "size": [
+      260,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      2640,
+      420
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      3024,
+      437
+    ],
+    "size": [
+      210,
+      140
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      1915,
+      1049
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "rusted_access_cover",
+    "pos": [
+      2299,
+      1066
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      2683,
+      1028
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      2639,
+      970
+    ],
+    "size": [
+      160,
+      130
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      1880,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      1880,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      2295,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      2295,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      2710,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      2710,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      3125,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      3125,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "drain_grate",
+    "pos": [
+      3613,
+      464
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "cracked_mosaic",
+    "pos": [
+      3997,
+      426
+    ],
+    "size": [
+      260,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      4381,
+      443
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      4692,
+      460
+    ],
+    "size": [
+      210,
+      140
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      3656,
+      1017
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "rusted_access_cover",
+    "pos": [
+      3967,
+      1034
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      4351,
+      1051
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      4380,
+      938
+    ],
+    "size": [
+      160,
+      130
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      3580,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      3580,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      3995,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      3995,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      4410,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      4410,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      4825,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      4825,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "drain_grate",
+    "pos": [
+      5354,
+      432
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "cracked_mosaic",
+    "pos": [
+      5665,
+      449
+    ],
+    "size": [
+      260,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      6049,
+      466
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6433,
+      428
+    ],
+    "size": [
+      210,
+      140
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      5324,
+      1040
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "rusted_access_cover",
+    "pos": [
+      5708,
+      1057
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      6019,
+      1019
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      6048,
+      961
+    ],
+    "size": [
+      160,
+      130
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      5280,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      5280,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      5695,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      5695,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6110,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6110,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6525,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6525,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "drain_grate",
+    "pos": [
+      7022,
+      455
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "cracked_mosaic",
+    "pos": [
+      7406,
+      472
+    ],
+    "size": [
+      260,
+      180
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "collapsed_tape",
+    "pos": [
+      7717,
+      434
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      8101,
+      451
+    ],
+    "size": [
+      210,
+      140
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scattered_papers",
+    "pos": [
+      7065,
+      1063
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "rusted_access_cover",
+    "pos": [
+      7376,
+      1025
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "scuffed_medical_mat",
+    "pos": [
+      7760,
+      1042
+    ],
+    "size": [
+      185,
+      120
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "director_floor_seal",
+    "pos": [
+      8200,
+      725
+    ],
+    "size": [
+      440,
+      440
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6980,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      6980,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      7395,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      7395,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      7810,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      7810,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      8225,
+      130
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  },
+  {
+    "kind": "spore_patch",
+    "pos": [
+      8225,
+      1360
+    ],
+    "size": [
+      220,
+      90
+    ],
+    "layer": "floor",
+    "walkable": true
+  }
+]

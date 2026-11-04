@@ -1,0 +1,514 @@
+{
+  "locker": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      0,
+      0,
+      324,
+      328
+    ],
+    "height": 296
+  },
+  "desk": {
+    "region": [
+      320,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      324,
+      0,
+      648,
+      328
+    ],
+    "height": 270
+  },
+  "board": {
+    "region": [
+      640,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      648,
+      0,
+      971,
+      318
+    ],
+    "height": 274
+  },
+  "bookshelf": {
+    "region": [
+      960,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      971,
+      0,
+      1295,
+      328
+    ],
+    "height": 296
+  },
+  "counter": {
+    "region": [
+      1280,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      0,
+      328,
+      423,
+      649
+    ],
+    "height": 190
+  },
+  "hoop": {
+    "region": [
+      1600,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      423,
+      328,
+      648,
+      649
+    ],
+    "height": 296
+  },
+  "bell_tower": {
+    "region": [
+      1920,
+      0,
+      320,
+      320
+    ],
+    "source": "bell_tower.png",
+    "source_box": [
+      648,
+      328,
+      947,
+      649
+    ],
+    "height": 296
+  },
+  "bench": {
+    "region": [
+      2240,
+      0,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      947,
+      328,
+      1295,
+      649
+    ],
+    "height": 187
+  },
+  "armchair": {
+    "region": [
+      0,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      0,
+      649,
+      300,
+      910
+    ],
+    "height": 261
+  },
+  "checkout": {
+    "region": [
+      320,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      300,
+      649,
+      660,
+      910
+    ],
+    "height": 197
+  },
+  "globe": {
+    "region": [
+      640,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      660,
+      649,
+      971,
+      910
+    ],
+    "height": 245
+  },
+  "book_trolley": {
+    "region": [
+      960,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      971,
+      649,
+      1295,
+      910
+    ],
+    "height": 261
+  },
+  "microscope": {
+    "region": [
+      1280,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      0,
+      910,
+      324,
+      1214
+    ],
+    "height": 261
+  },
+  "chemistry": {
+    "region": [
+      1600,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      324,
+      910,
+      648,
+      1214
+    ],
+    "height": 251
+  },
+  "terrarium": {
+    "region": [
+      1920,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      648,
+      910,
+      971,
+      1214
+    ],
+    "height": 276
+  },
+  "robotics": {
+    "region": [
+      2240,
+      320,
+      320,
+      320
+    ],
+    "source": "classrooms",
+    "source_box": [
+      971,
+      910,
+      1295,
+      1214
+    ],
+    "height": 260
+  },
+  "telescope": {
+    "region": [
+      0,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      0,
+      0,
+      350,
+      314
+    ],
+    "height": 296
+  },
+  "orrery": {
+    "region": [
+      320,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      350,
+      0,
+      701,
+      314
+    ],
+    "height": 296
+  },
+  "trophies": {
+    "region": [
+      640,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      701,
+      0,
+      1052,
+      314
+    ],
+    "height": 296
+  },
+  "noticeboard": {
+    "region": [
+      960,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      1052,
+      0,
+      1402,
+      314
+    ],
+    "height": 296
+  },
+  "ball_rack": {
+    "region": [
+      1280,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      0,
+      314,
+      350,
+      572
+    ],
+    "height": 191
+  },
+  "mats": {
+    "region": [
+      1600,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      350,
+      314,
+      701,
+      572
+    ],
+    "height": 227
+  },
+  "lunch_table": {
+    "region": [
+      1920,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      701,
+      314,
+      1108,
+      572
+    ],
+    "height": 168
+  },
+  "vending": {
+    "region": [
+      2240,
+      640,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      1108,
+      314,
+      1402,
+      572
+    ],
+    "height": 258
+  },
+  "vent": {
+    "region": [
+      0,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      0,
+      572,
+      407,
+      842
+    ],
+    "height": 162
+  },
+  "bell_winch": {
+    "region": [
+      320,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      407,
+      572,
+      701,
+      842
+    ],
+    "height": 270
+  },
+  "planter": {
+    "region": [
+      640,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      701,
+      572,
+      1108,
+      842
+    ],
+    "height": 206
+  },
+  "weather_vane": {
+    "region": [
+      960,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      1108,
+      572,
+      1402,
+      842
+    ],
+    "height": 269
+  },
+  "entrance": {
+    "region": [
+      1280,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      0,
+      842,
+      393,
+      1122
+    ],
+    "height": 210
+  },
+  "stairs": {
+    "region": [
+      1600,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      393,
+      842,
+      785,
+      1122
+    ],
+    "height": 183
+  },
+  "clock": {
+    "region": [
+      1920,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      785,
+      842,
+      1052,
+      1122
+    ],
+    "height": 265
+  },
+  "aquarium": {
+    "region": [
+      2240,
+      960,
+      320,
+      320
+    ],
+    "source": "campus",
+    "source_box": [
+      1052,
+      842,
+      1402,
+      1122
+    ],
+    "height": 256
+  }
+}

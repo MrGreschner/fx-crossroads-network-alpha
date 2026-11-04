@@ -13,10 +13,12 @@ var bolts:Array=[]
 var warnings:Array=[]
 var tick=0.0
 var spawn_timer=0.0
+var gear_cycle:=0
+const GEARS=[Vector2(240,240),Vector2(2160,240),Vector2(240,1560),Vector2(2160,1560),Vector2(1200,900)]
 func setup(owner:Node,id:String)->void:
  owner.world_tile_cache.clear()
  if owner.terrain_cache!=null:owner.terrain_cache.reset()
- game=owner;map_id=id if MAPS.has(id) else "sand";clock=0;tick=0;spawn_timer=0;drones.clear();flowers.clear();bolts.clear();warnings.clear()
+ game=owner;map_id=id if MAPS.has(id) else "sand";clock=0;tick=0;spawn_timer=0;gear_cycle=0;drones.clear();flowers.clear();bolts.clear();warnings.clear()
  extra.setup(self)
  objective.setup(self)
  shatter.setup(self)
@@ -26,15 +28,66 @@ func setup(owner:Node,id:String)->void:
  game.art[game.world_terrain]=load("res://assets/"+game.world_terrain+".png")
  for n in 8:
   var angle=TAU*n/8;var point=game.FIELD.size*.5+Vector2(cos(angle)*game.FIELD.size.x*.42,sin(angle)*game.FIELD.size.y*.41)
+  if map_id=="forest":
+   if absf(point.x-1600)<155:point.x+=230*(1 if n<4 else -1)
+   if absf(point.y-1150)<145:point.y+=230*(1 if n<4 else -1)
   game.field_obstacles.append({"pos":point,"radius":36.0,"kind":"tree" if map_id=="forest" else "rock"})
+ if map_id=="forest":forest_groves()
+ game._rebuild_grid()
  if map_id=="storm":
   for n in 3:drones.append({"pos":[650+n*500,600+n*180],"phase":n*12.0,"target":[0,0]})
  if map_id=="forest" and game.role=="host":
   var random=RandomNumberGenerator.new();random.seed=game.floor_seed
-  for n in 3:game.adventure.spawn(["bramble","archer"].pick_random(),Vector2(random.randf_range(800,2400),random.randf_range(600,1700)),75,false)
+  for n in 3:game.adventure.spawn(["bramble","archer"].pick_random(),open_floor(Vector2(random.randf_range(800,2400),random.randf_range(600,1700))),75,false)
   for n in 1:
    var p=Vector2(1150,1000) if n==0 else Vector2(2150,1350)
-   game.adventure.spawn("bramble" if n==0 else "archer",p,450,true);game.opponents[-1].expansion_boss=false
+   game.adventure.spawn("bramble" if n==0 else "archer",open_floor(p),450,true);game.opponents[-1].expansion_boss=false
+func forest_groves()->void:
+ var rng=RandomNumberGenerator.new();rng.seed=game.floor_seed+289
+ # The two broad crossing clearings and all eight respawn pockets stay open.
+ for row in 8:
+  for column in 12:
+   var p=Vector2(160+column*260,180+row*280)+Vector2(rng.randf_range(-52,52),rng.randf_range(-50,50))
+   if absf(p.x-1600)<155 or absf(p.y-1150)<145:continue
+   if game.field_obstacles.any(func(o):return (o.pos as Vector2).distance_to(p)<145):continue
+   var reserved=false
+   for n in 8:
+    var angle=TAU*n/8;var anchor=game.FIELD.size*.5+Vector2(cos(angle)*game.FIELD.size.x*.30,sin(angle)*game.FIELD.size.y*.30)
+    if p.distance_to(anchor)<165:reserved=true;break
+   if not reserved:game.field_obstacles.append({"pos":p,"radius":32.0,"kind":"tree","grove_scale":rng.randf_range(1.15,1.65)})
+func open_floor(p:Vector2)->Vector2:
+ for ring in range(0,16):
+  for n in (1 if ring==0 else 16):
+   var q=p+Vector2.from_angle(n*TAU/16)*ring*25
+   if game.FIELD.grow(-65).has_point(q) and game._clear_path(q,q):return q
+ return game.FIELD.size*.5
+func clock_trigger()->void:
+ var index=gear_cycle%5;var shapes:Array=[];var sources:Array=[]
+ if index==4:
+  shapes=[Rect2(1080,40,240,1720),Rect2(40,780,2320,240)];sources=[4]
+ elif index%2==0:
+  shapes=[Rect2(480,40,240,1720),Rect2(1680,40,240,1720)];sources=[index,(index+1)%4]
+ else:
+  shapes=[Rect2(40,330,2320,240),Rect2(40,1230,2320,240)];sources=[index,(index+2)%4]
+ var packed:Array=[]
+ for r in shapes:packed.append([r.position.x,r.position.y,r.size.x,r.size.y])
+ warnings.append({"kind":"gear_grid","time":1.7,"total":1.7,"life":1.0,"damage":18.0,"shapes":packed,"gears":sources,"hits":[]});gear_cycle+=1
+ game.status_label.text="GEAR OVERLOAD • Amber lanes charge; blue lanes strike • Find the open floor"
+static func clock_shapes(w:Dictionary)->Array:
+ var result:Array=[]
+ for r in w.get("shapes",[]):result.append(Rect2(r[0],r[1],r[2],r[3]))
+ return result
+func clock_warning_step(w:Dictionary,dt:float)->bool:
+ var old=float(w.time);w.time=old-dt
+ if float(w.time)>0:return false
+ w.life=float(w.life)-(dt if old<=0 else maxf(0,-float(w.time)))
+ if float(w.life)<=0:return true
+ var shapes=clock_shapes(w)
+ for id in game.positions:
+  if int(game.health.get(id,0))<=0 or id in w.hits or Time.get_ticks_msec()<int(game.invincible_until.get(id,0)):continue
+  if shapes.any(func(r):return r.has_point(game.positions[id])):
+   w.hits.append(id);game._hurt(str(id),float(w.damage),"environment","",preload("res://scripts/defeat_credit.gd").hazard("Clockwork gear overload"))
+ return false
 func test_enemies(reset:bool=true)->void:
  if game.role!="host" or map_id!="crossroads":return
  if reset:game.opponents.clear()
@@ -86,7 +139,7 @@ func step(delta:float)->void:
    if phase>=36 and tick>=.2:harm(p,170,1)
  elif map_id=="forest":
   if spawn_timer<=0:
-   spawn_timer=4;var p=Vector2(400+randf()*2400,350+randf()*1600);flowers.append({"pos":[p.x,p.y],"time":9.0,"fire":1.2})
+   spawn_timer=4;var p=open_floor(Vector2(400+randf()*2400,350+randf()*1600));flowers.append({"pos":[p.x,p.y],"time":9.0,"fire":1.2})
    if flowers.size()>6:flowers.pop_front()
   for n in range(flowers.size()-1,-1,-1):
    var flower:Dictionary=flowers[n];flower.time-=delta;flower.fire-=delta
@@ -94,10 +147,13 @@ func step(delta:float)->void:
    if flower.fire<=0:
     flower.fire=2;var p=point(flower.pos);var direction:Vector2=(nearest(p)-p).normalized();game.missiles.append({"pos":p,"direction":direction,"speed":320.0,"damage":9.0,"owner":"enemy","distance":0.0,"range":960.0,"color":"#ff9650"})
  elif map_id=="clock" and spawn_timer<=0:
-  spawn_timer=5;var vertical=int(clock/5)%2==0;var center=Vector2(500+fposmod(clock*97,1400),900) if vertical else Vector2(1200,450+fposmod(clock*61,900))
-  warnings.append({"pos":[center.x,center.y],"time":1.2,"total":1.2,"damage":18.0,"radius":0.0,"kind":"stripe","vertical":vertical})
+  spawn_timer=5;clock_trigger()
  for n in range(warnings.size()-1,-1,-1):
   var w:Dictionary=warnings[n];w.time-=delta
+  if w.kind=="gear_grid":
+   w.time+=delta
+   if clock_warning_step(w,delta):warnings.remove_at(n)
+   continue
   if w.time<=0:
    var p=point(w.pos)
    if w.kind=="stripe":
@@ -113,9 +169,9 @@ func step(delta:float)->void:
    if int(game.health.get(id,0))>0 and game._segment_near(start,end,game.positions[id],25):game._hurt(str(id),9,"environment","",preload("res://scripts/defeat_credit.gd").hazard("Forest fireball"));hit=true;break
   if hit or bolt.time<=0:bolts.remove_at(n)
  if tick>=.2:tick=fposmod(tick,.2)
-func snapshot()->Dictionary:return {"map":map_id,"clock":clock,"drones":drones,"flowers":flowers,"bolts":bolts,"warnings":warnings,"variant":extra.snapshot() if extra.active() else {},"shatter":shatter.snapshot() if shatter.active() else {},"objective":objective.snapshot() if objective.active() else {}}
+func snapshot()->Dictionary:return {"map":map_id,"clock":clock,"gear_cycle":gear_cycle,"drones":drones,"flowers":flowers,"bolts":bolts,"warnings":warnings,"variant":extra.snapshot() if extra.active() else {},"shatter":shatter.snapshot() if shatter.active() else {},"objective":objective.snapshot() if objective.active() else {}}
 func receive(data:Dictionary)->void:
- map_id=str(data.get("map",map_id));clock=float(data.get("clock",clock));drones=data.get("drones",[]);flowers=data.get("flowers",[]);bolts=data.get("bolts",[]);warnings=data.get("warnings",[])
+ map_id=str(data.get("map",map_id));clock=float(data.get("clock",clock));gear_cycle=int(data.get("gear_cycle",gear_cycle));drones=data.get("drones",[]);flowers=data.get("flowers",[]);bolts=data.get("bolts",[]);warnings=data.get("warnings",[])
  if extra.active():extra.receive(data.get("variant",{}))
  if shatter.active():shatter.receive(data.get("shatter",{}))
  if objective.active():objective.receive(data.get("objective",{}))
@@ -125,24 +181,9 @@ func draw()->void:
  objective.draw_ground()
  shatter.draw_ground()
  var camera:Vector2=game.camera;var font:Font=ThemeDB.fallback_font
- if map_id=="sand":
-  for p in pits():
-   game.draw_circle(p-camera,150,Color(.35,.22,.12,.4));game.draw_arc(p-camera,150,0,TAU,40,Color("#d4b178"),3)
-   for n in 4:game.draw_arc(p-camera,30+n*28,clock*.15,clock*.15+PI*1.5,32,Color(.75,.56,.3,.35),2)
- elif map_id=="storm":
-  for drone in drones:
-   var p=point(drone.pos)-camera;var orb=fposmod(clock+float(drone.phase),44)>=36
-   if orb:
-    game.draw_circle(p,170,Color(.25,.65,.95,.15));game.draw_arc(p,170,clock*2,clock*2+TAU*.85,40,Color("#8fd8ff"),3);game.draw_circle(p,42,Color("#b8eafa"))
-   else:
-    game.draw_circle(p+Vector2(0,18),35,Color(0,0,0,.25));game.draw_rect(Rect2(p-Vector2(35,40),Vector2(70,28)),Color("#8bafc5"));game.draw_circle(p-Vector2(0,26),12,Color("#aeeeff"))
-    for x in [-1,1]:game.draw_line(p+Vector2(x*22,-32),p+Vector2(x*60,-32),Color("#e0f5f7"),4)
- elif map_id=="forest":
-  for flower in flowers:
-   var p=point(flower.pos)-camera;var scale=minf(1,(9-float(flower.time))*2)
-   for n in 6:game.draw_circle(p+Vector2.from_angle(n*TAU/6)*18*scale,15*scale,Color("#edaa85"))
-   game.draw_circle(p,10*scale,Color("#ffd173"))
+ preload("res://scripts/arena_art261.gd").features(self)
  for w in warnings:
+  if w.kind=="gear_grid":preload("res://scripts/arena_art261.gd").clock_grid(self,w);continue
   var p=point(w.pos)-camera
   if w.kind=="stripe":
    var r=Rect2(p-Vector2(70,1800),Vector2(140,3600)) if bool(w.vertical) else Rect2(p-Vector2(2400,70),Vector2(4800,140));preload("res://scripts/combat_cues.gd").rectangle(game,r,float(w.time),float(w.total))

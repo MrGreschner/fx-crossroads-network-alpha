@@ -60,6 +60,7 @@ func draw_world(c:Node2D,camera:Vector2)->void:
    c.draw_line(q,q+Vector2(0,minf(28,float(fall.height)-q.y+p.y)),Color(.81,.92,.8,.55),2,true)
  for p in visible_props(camera,world.adventure.game.VIEW):
   if p.kind=="support":continue
+  if p.kind=="wagon":preload("res://scripts/merchant_cart282.gd").draw(c,world.v(p.pos),camera);continue
   var r=rect(p,camera)
   if not r.intersects(view):continue
   var t=frame(str(p.kind))

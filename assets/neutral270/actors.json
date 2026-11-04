@@ -1,0 +1,175 @@
+{
+  "sun_sentinel": {
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.725,
+      0.9375
+    ],
+    "factor": 1.6477275,
+    "index": 0,
+    "source": "sun_original.png",
+    "visible_height": 201
+  },
+  "sun_sentinel_crown": {
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.725,
+      0.9375
+    ],
+    "factor": 1.6477275,
+    "index": 1,
+    "source": "sun_original.png",
+    "visible_height": 209
+  },
+  "sunbeam_cantor": {
+    "old_normalized": [
+      0.25,
+      0.3125,
+      0.7,
+      0.9375
+    ],
+    "factor": 1.45,
+    "index": 2,
+    "source": "sun_original.png",
+    "visible_height": 230
+  },
+  "saffron_hopper": {
+    "old_normalized": [
+      0.175,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.25,
+    "index": 3,
+    "source": "sun_original.png",
+    "visible_height": 230
+  },
+  "cartographer": {
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.3888888,
+    "index": 4,
+    "source": "actors_original.png",
+    "visible_height": 207
+  },
+  "inkfin": {
+    "old_normalized": [
+      0.1875,
+      0.45,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.6239313,
+    "index": 5,
+    "source": "actors_original.png",
+    "visible_height": 184
+  },
+  "foldwing": {
+    "old_normalized": [
+      0.225,
+      0.5375,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.9270837,
+    "index": 6,
+    "source": "actors_original.png",
+    "visible_height": 166
+  },
+  "crease_sentry": {
+    "old_normalized": [
+      0.2375,
+      0.3875,
+      0.7625,
+      0.9375
+    ],
+    "factor": 1.3068188,
+    "index": 7,
+    "source": "actors_original.png",
+    "visible_height": 230
+  },
+  "burrowfang": {
+    "index": 8,
+    "visible_height": 171,
+    "old_normalized": [
+      0.25,
+      0.6,
+      0.7625,
+      0.9375
+    ],
+    "factor": 2.0164612
+  },
+  "shardspitter": {
+    "index": 9,
+    "visible_height": 206,
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.85,
+      0.9375
+    ],
+    "factor": 1.4120375
+  },
+  "fusehare": {
+    "index": 10,
+    "visible_height": 230,
+    "old_normalized": [
+      0.2,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.2698413
+  },
+  "rootwarden": {
+    "index": 11,
+    "visible_height": 213,
+    "old_normalized": [
+      0.15,
+      0.4125,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.5608462
+  },
+  "echo_bat": {
+    "index": 12,
+    "visible_height": 135,
+    "old_normalized": [
+      0.225,
+      0.5625,
+      0.7625,
+      0.9375
+    ],
+    "factor": 1.555555
+  },
+  "sap_nurse": {
+    "index": 13,
+    "visible_height": 230,
+    "old_normalized": [
+      0.225,
+      0.3375,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25
+  },
+  "flintroot": {
+    "index": 14,
+    "visible_height": 178,
+    "old_normalized": [
+      0.2,
+      0.3625,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.5700487
+  }
+}

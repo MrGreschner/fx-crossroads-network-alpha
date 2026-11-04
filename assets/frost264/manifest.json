@@ -1,0 +1,42 @@
+{
+  "frames": {
+    "fir": [
+      0,
+      0,
+      320,
+      336
+    ],
+    "pillar": [
+      340,
+      0,
+      320,
+      295
+    ],
+    "arch": [
+      680,
+      0,
+      320,
+      307
+    ],
+    "board": [
+      0,
+      384,
+      320,
+      189
+    ],
+    "goal": [
+      340,
+      384,
+      320,
+      231
+    ],
+    "cart": [
+      680,
+      384,
+      320,
+      320
+    ]
+  },
+  "source": "generated frost_props_original.png",
+  "anchors": "base centre, individual world rectangles in frost_art264.gd"
+}

@@ -11,6 +11,16 @@ static func prepare()->void:
  var im=Image.new();im.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/enemy235/creatures.png"));sheet=ImageTexture.create_from_image(im)
 static func pose_index(pose:String)->int:return 3 if pose in ["attack","attack2","special","open"] else 1 if pose in ["walk1","1"] else 2 if pose in ["walk2","2"] else 0
 static func texture(id:String,pose:String="idle")->Texture2D:
+ if preload("res://scripts/enemy_animation280.gd").has(id):return preload("res://scripts/enemy_animation280.gd").texture(id,pose)
+ if preload("res://scripts/enemy_animation279.gd").has(id):return preload("res://scripts/enemy_animation279.gd").texture(id,pose)
+ if preload("res://scripts/enemy_animation278.gd").has(id):return preload("res://scripts/enemy_animation278.gd").texture(id,pose)
+ if preload("res://scripts/enemy_animation277.gd").has(id):return preload("res://scripts/enemy_animation277.gd").texture(id,pose)
+ if preload("res://scripts/enemy_animation276.gd").has(id):return preload("res://scripts/enemy_animation276.gd").texture(id,pose)
+ if preload("res://scripts/enemy_animation275.gd").has(id):return preload("res://scripts/enemy_animation275.gd").texture(id,pose)
+ if preload("res://scripts/hollow_actors268.gd").has(id):return preload("res://scripts/hollow_actors268.gd").texture(id,pose)
+ if preload("res://scripts/actors266.gd").has(id):return preload("res://scripts/actors266.gd").texture(id,pose)
+ if preload("res://scripts/foundry_actors265.gd").has(id):return preload("res://scripts/foundry_actors265.gd").texture(id,pose)
+ if preload("res://scripts/frost_actors264.gd").has(id):return preload("res://scripts/frost_actors264.gd").texture(id,pose)
  if preload("res://scripts/actor_art248.gd").has(id):return preload("res://scripts/actor_art248.gd").texture(id,pose)
  prepare()
  if not metadata.has(id):return null
@@ -23,13 +33,23 @@ static func split_key(key:String)->Array:
  prepare();var id=key;var pose="idle"
  for suffix in SUFFIXES:
   if key.ends_with(suffix):id=key.trim_suffix(suffix);pose=suffix.trim_prefix("_");break
- var result=[id,pose] if metadata.has(id) or preload("res://scripts/actor_art248.gd").has(id) else []
+ var result=[id,pose] if preload("res://scripts/enemy_animation280.gd").has(id) or preload("res://scripts/enemy_animation279.gd").has(id) or preload("res://scripts/enemy_animation278.gd").has(id) or preload("res://scripts/enemy_animation277.gd").has(id) or preload("res://scripts/enemy_animation276.gd").has(id) or metadata.has(id) or preload("res://scripts/hollow_actors268.gd").has(id) or preload("res://scripts/actors266.gd").has(id) or preload("res://scripts/foundry_actors265.gd").has(id) or preload("res://scripts/frost_actors264.gd").has(id) or preload("res://scripts/actor_art248.gd").has(id) else []
  keys[key]=result;return result
 static func legacy_path(path:String)->Texture2D:
  if not path.begins_with("res://assets/") or not path.ends_with(".svg"):return null
  var k=split_key(path.get_file().trim_suffix(".svg"))
  return texture(k[0],k[1]) if not k.is_empty() else null
 static func fitted(id:String,rect:Rect2)->Rect2:
+ if preload("res://scripts/enemy_animation280.gd").has(id):return preload("res://scripts/enemy_animation280.gd").fitted(id,rect)
+ if preload("res://scripts/enemy_animation279.gd").has(id):return preload("res://scripts/enemy_animation279.gd").fitted(id,rect)
+ if preload("res://scripts/enemy_animation278.gd").has(id):return preload("res://scripts/enemy_animation278.gd").fitted(id,rect)
+ if preload("res://scripts/enemy_animation277.gd").has(id):return preload("res://scripts/enemy_animation277.gd").fitted(id,rect)
+ if preload("res://scripts/enemy_animation276.gd").has(id):return preload("res://scripts/enemy_animation276.gd").fitted(id,rect)
+ if preload("res://scripts/enemy_animation275.gd").has(id):return preload("res://scripts/enemy_animation275.gd").fitted(id,rect)
+ if preload("res://scripts/hollow_actors268.gd").has(id):return preload("res://scripts/hollow_actors268.gd").fitted(id,rect)
+ if preload("res://scripts/actors266.gd").has(id):return preload("res://scripts/actors266.gd").fitted(id,rect)
+ if preload("res://scripts/foundry_actors265.gd").has(id):return preload("res://scripts/foundry_actors265.gd").fitted(id,rect)
+ if preload("res://scripts/frost_actors264.gd").has(id):return preload("res://scripts/frost_actors264.gd").fitted(id,rect)
  if preload("res://scripts/actor_art248.gd").has(id):return preload("res://scripts/actor_art248.gd").fitted(id,rect)
  prepare();var m:Dictionary=metadata[id];var factor:float=m.old_factor;var growth:Vector2=rect.size*(factor-1.0)
  rect=Rect2(rect.position-growth*Vector2(.5,.9375),rect.size*factor)
@@ -39,4 +59,14 @@ static func fitted(id:String,rect:Rect2)->Rect2:
 static func draw_key(c:CanvasItem,key:String,rect:Rect2,tint:Color=Color.WHITE)->bool:
  var k=split_key(key)
  if k.is_empty():return false
- c.draw_texture_rect(texture(k[0],k[1]),fitted(k[0],rect),false,tint);return true
+ if preload("res://scripts/enemy_animation280.gd").has(k[0]):
+  preload("res://scripts/enemy_animation280.gd").draw(c,k[0],str(k[1]),rect,tint);return true
+ if preload("res://scripts/enemy_animation279.gd").has(k[0]):
+  preload("res://scripts/enemy_animation279.gd").draw(c,k[0],str(k[1]),rect,tint);return true
+ if preload("res://scripts/enemy_animation278.gd").has(k[0]):
+  preload("res://scripts/enemy_animation278.gd").draw(c,k[0],str(k[1]),rect,tint);return true
+ if preload("res://scripts/enemy_animation277.gd").has(k[0]):
+  preload("res://scripts/enemy_animation277.gd").draw(c,k[0],str(k[1]),rect,tint);return true
+ if preload("res://scripts/enemy_animation276.gd").has(k[0]):
+  preload("res://scripts/enemy_animation276.gd").draw(c,k[0],str(k[1]),rect,tint);return true
+ c.draw_texture_rect(texture(k[0],str(k[1])),fitted(k[0],rect),false,tint);return true

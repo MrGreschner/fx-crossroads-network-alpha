@@ -1,0 +1,2366 @@
+[
+  {
+    "kind": "gatehouse_bastion",
+    "pos": [
+      340,
+      4540
+    ],
+    "size": [
+      260,
+      260
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oath_monument",
+    "pos": [
+      720,
+      4540
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ash_urn",
+    "pos": [
+      1860,
+      4540
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "gatehouse_bastion",
+    "pos": [
+      340,
+      5772
+    ],
+    "size": [
+      260,
+      260
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oath_monument",
+    "pos": [
+      720,
+      5772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "shield_rack",
+    "pos": [
+      1100,
+      5772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cinder_cypress",
+    "pos": [
+      1480,
+      5772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ash_urn",
+    "pos": [
+      1860,
+      5772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      280,
+      4435
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      280,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      514,
+      4435
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      514,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      749,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      983,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1217,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1451,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1686,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1920,
+      4435
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1920,
+      5776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      232,
+      4530
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      1972,
+      4530
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      232,
+      5570
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "sealed_reliquary",
+    "pos": [
+      2450,
+      4790
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oath_monument",
+    "pos": [
+      2730,
+      4790
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ash_urn",
+    "pos": [
+      3010,
+      4790
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "scroll_cabinet",
+    "pos": [
+      2170,
+      5422
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "sealed_reliquary",
+    "pos": [
+      2450,
+      5422
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oath_monument",
+    "pos": [
+      2730,
+      5422
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1830,
+      4685
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2007,
+      5426
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2184,
+      5426
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2361,
+      4685
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2361,
+      5426
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2539,
+      4685
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2539,
+      5426
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2716,
+      4685
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2716,
+      5426
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2893,
+      4685
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      3070,
+      4685
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      3122,
+      4780
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cinder_cypress",
+    "pos": [
+      3122,
+      4927
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "retort_bench",
+    "pos": [
+      340,
+      2340
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "glass_condenser",
+    "pos": [
+      820,
+      2340
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pressure_vessel",
+    "pos": [
+      2260,
+      2340
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "retort_bench",
+    "pos": [
+      340,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "glass_condenser",
+    "pos": [
+      820,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "alchemist_rack",
+    "pos": [
+      1300,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pipe_junction",
+    "pos": [
+      1780,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pressure_vessel",
+    "pos": [
+      2260,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      280,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      280,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      571,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      571,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      863,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      863,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1154,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1154,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1446,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1446,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1737,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1737,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2029,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2029,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2320,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2320,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      232,
+      2330
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      2372,
+      2330
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      232,
+      3570
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ashglass_terrarium",
+    "pos": [
+      640,
+      890
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "glass_condenser",
+    "pos": [
+      2060,
+      890
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ashglass_terrarium",
+    "pos": [
+      640,
+      2172
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cooling_crystal",
+    "pos": [
+      995,
+      2172
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cinder_cypress",
+    "pos": [
+      1350,
+      2172
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cooling_trough",
+    "pos": [
+      1705,
+      2172
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "glass_condenser",
+    "pos": [
+      2060,
+      2172
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      580,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      580,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      800,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      800,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1020,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1020,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1240,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1240,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1460,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1460,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1680,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      1900,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      1900,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2120,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2120,
+      2176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      532,
+      880
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      2172,
+      880
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cinder_cypress",
+    "pos": [
+      2172,
+      1243
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      532,
+      1970
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "crucible_furnace",
+    "pos": [
+      2990,
+      2340
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "forge_tools",
+    "pos": [
+      4000,
+      2340
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "slag_cart",
+    "pos": [
+      4505,
+      2340
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "bell_frame",
+    "pos": [
+      5010,
+      2340
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "crucible_furnace",
+    "pos": [
+      2990,
+      3972
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "forge_tools",
+    "pos": [
+      4000,
+      3972
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "slag_cart",
+    "pos": [
+      4505,
+      3972
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "bell_frame",
+    "pos": [
+      5010,
+      3972
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      2930,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      2930,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      3236,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      3236,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      3847,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4153,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4153,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4459,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4459,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4764,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4764,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      5070,
+      2235
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      5070,
+      3976
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      2882,
+      2330
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      2882,
+      3770
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pipe_junction",
+    "pos": [
+      3745,
+      4040
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pressure_vessel",
+    "pos": [
+      4050,
+      4040
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "forge_tools",
+    "pos": [
+      4355,
+      4040
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "slag_cart",
+    "pos": [
+      4660,
+      4040
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "chain_winch",
+    "pos": [
+      3440,
+      5372
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pipe_junction",
+    "pos": [
+      3745,
+      5372
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "pressure_vessel",
+    "pos": [
+      4050,
+      5372
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "forge_tools",
+    "pos": [
+      4355,
+      5372
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "slag_cart",
+    "pos": [
+      4660,
+      5372
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      3380,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      3571,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      3763,
+      3935
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      3763,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      3954,
+      3935
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      3954,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4146,
+      3935
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4146,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4337,
+      3935
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4337,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4529,
+      3935
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4529,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      4720,
+      3935
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      4720,
+      5376
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      4772,
+      4030
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cinder_cypress",
+    "pos": [
+      4772,
+      4410
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      3332,
+      5170
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "crown_banner",
+    "pos": [
+      5740,
+      2140
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "sealed_reliquary",
+    "pos": [
+      7630,
+      2140
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "caldera_altar",
+    "pos": [
+      8260,
+      2140
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "crown_banner",
+    "pos": [
+      5740,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "phoenix_relief",
+    "pos": [
+      6370,
+      3772
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      7000,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "sealed_reliquary",
+    "pos": [
+      7630,
+      3772
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "caldera_altar",
+    "pos": [
+      8260,
+      3772
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      5680,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      5680,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      6057,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      6057,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      6434,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      6434,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      6811,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      7189,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7189,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      7566,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7566,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      7943,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7943,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      8320,
+      2035
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      8320,
+      3776
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      5632,
+      2130
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      8372,
+      2130
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      5632,
+      3570
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "obsidian_cluster",
+    "pos": [
+      6040,
+      890
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      6520,
+      890
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "caldera_altar",
+    "pos": [
+      7480,
+      890
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7960,
+      890
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "obsidian_cluster",
+    "pos": [
+      6040,
+      2022
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      6520,
+      2022
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "caldera_altar",
+    "pos": [
+      7480,
+      2022
+    ],
+    "size": [
+      190,
+      190
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7960,
+      2022
+    ],
+    "size": [
+      126,
+      150
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      5980,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      5980,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      6271,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      6271,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      6563,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      6563,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      6854,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      7146,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7146,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      7437,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7437,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      7729,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      7729,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ember_lantern",
+    "pos": [
+      8020,
+      785
+    ],
+    "size": [
+      72,
+      100
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "broken_masonry",
+    "pos": [
+      8020,
+      2026
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "basalt_pillar",
+    "pos": [
+      5932,
+      880
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "charred_tree",
+    "pos": [
+      8072,
+      880
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "cinder_cypress",
+    "pos": [
+      8072,
+      1193
+    ],
+    "size": [
+      120,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_brazier",
+    "pos": [
+      5932,
+      1820
+    ],
+    "size": [
+      90,
+      120
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "iron_anvil",
+    "pos": [
+      2200,
+      4575
+    ],
+    "size": [
+      120,
+      140
+    ],
+    "layer": "raised"
+  }
+]

@@ -2,9 +2,11 @@ extends RefCounted
 ## V203: official hero combat, one shared lantern and fixed 100-floor milestones.
 const Book=preload("res://scripts/descent203_book.gd")
 const Art=preload("res://scripts/descent203_art.gd")
+var rest=preload("res://scripts/descent_rest263.gd").new()
 var game:Node
 var battle=preload("res://scripts/descent_battle251.gd").new()
-func bind_battle()->void:battle.d=self;battle.game=game
+func bind_battle()->void:battle.d=self;battle.game=game;rest.d=self
+func resting()->bool:return game!=null and game.mode=="descent" and rest.active
 var boosts:Dictionary={}
 var pending:Dictionary={}
 var warnings:Array=[]
@@ -37,7 +39,7 @@ static func boss_pressure(floor:int)->float:return 1.3+maxi(1,floor/10)*.10
 static func fuel_rate(floor:int)->float:return 0.0 if floor<20 else .20+minf(.55,(floor-20)*.006)
 static func milestone(floor:int)->String:return Book.guardian(floor)
 func reset()->void:
- bind_battle();battle.reset()
+ bind_battle();battle.reset();rest.reset()
  boosts.clear();pending.clear();warnings.clear();hazards.clear();wheels.clear();fuel_drops.clear();corpses.clear();interact_at.clear();clock=0;floor_clock=0;fall_time=-1;fall_swapped=false;completed=0;cataclysm=-1;lamp={"holder":"","thief":0,"pos":[1200,850],"fuel":100.0}
 func state(id:String)->Dictionary:
  if not boosts.has(id):boosts[id]={"power":0,"health":0,"cooldown":0,"spent":0}
@@ -65,6 +67,8 @@ func lamp_pos()->Vector2:
  return point(lamp.get("pos",[1200,850]))
 func interact(id:String)->bool:
  if game.role!="host" or falling() or int(game.health.get(id,0))<=0 or not game.positions.has(id) or clock<float(interact_at.get(id,0)):return false
+ if rest.active:return rest.interact(id)
+ if battle.guardians.interact(id):return true
  if str(lamp.get("holder",""))==id:
   lamp.holder="";lamp.pos=pack(game.positions[id]);interact_at[id]=clock+.5;return true
  if str(lamp.get("holder","")).is_empty() and int(lamp.get("thief",0))==0 and (game.positions[id] as Vector2).distance_to(lamp_pos())<80:
@@ -97,8 +101,12 @@ func setup_geometry()->void:
   game.enemy_defs[kind]={"name":spec.name,"sprite":kind,"health":spec.health,"damage":spec.damage,"speed":spec.speed,"expansion_only":true,"behaviour":"ranged" if spec.role in ["ranged","healer","summoner","shield"] else "melee"}
  game.field_obstacles.clear()
  # Broad corridors, rounded pillars, clear central landing. Visuals use these exact colliders.
- if game.floor_number<=100:
+ if rest.active:rest.setup_geometry()
+ if game.floor_number<=100 and not rest.active:
   for p in [Vector2(540,430),Vector2(1100,330),Vector2(1810,420),Vector2(680,1230),Vector2(1430,1290),Vector2(1990,1110)]:game.field_obstacles.append({"pos":p,"radius":52.0,"kind":"rock"})
+ rebuild_navigation()
+func rebuild_navigation()->void:
+ game._rebuild_grid();game.descent_nav=null
  navigation=AStarGrid2D.new();navigation.region=Rect2i(0,0,40,29);navigation.cell_size=Vector2(60,60);navigation.offset=Vector2(30,30);navigation.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;navigation.update()
  for y in 29:
   for x in 40:
@@ -111,6 +119,8 @@ func floor_start()->void:
  warnings.clear();hazards.clear();wheels.clear();fuel_drops.clear();corpses.clear();floor_clock=0;cataclysm=-1
  # Evict the previous floor's sprite textures, keeping memory proportional to the active roster.
  Art.atlases.clear()
+ if rest.active:
+  game.status_label.text="DEPTH 50.5 • Safe mine refuge • Well +10 HP/s • Merchant • E at ladder to ready";return
  var floor:int=game.floor_number
  if floor==1 or lamp.is_empty():lamp={"holder":"","thief":0,"pos":pack(game.FIELD.size*.5),"fuel":100.0}
  if floor>100:
@@ -146,6 +156,11 @@ func cleared(floor:int)->void:
  game.legacy.card.descent_cleared(bank,game.match_party_size);preload("res://scripts/named_records.gd").descent_cleared(game.legacy,bank);game.legacy.save()
 func begin_fall()->void:
  if falling():return
+ if rest.active:
+  if rest.exit_requested:
+   fall_time=0;fall_swapped=false
+   if game.get("dedicated")!=true:game.presentation.close()
+  return
  if game.floor_number>100:game.end_match("Floor 100 and the Unquenchable conquered • Ancient depths cleared");return
  cleared(game.floor_number);fall_time=0;fall_swapped=false
  if not preload("res://scripts/profile_store.gd").progression_blocked() and not game.spectating():
@@ -163,7 +178,10 @@ func step_transition(delta:float)->void:
  fall_time+=delta
  if fall_time>=1.85 and not fall_swapped:
   var fallen=game.downed.duplicate(true)
-  fall_swapped=true;game.floor_number+=1;game._make_floor();game.downed=fallen
+  fall_swapped=true
+  if game.floor_number==50 and not rest.used:rest.enter()
+  else:rest.active=false;rest.exit_requested=false;rest.ready.clear();game.floor_number+=1
+  game._make_floor();game.downed=fallen
   for id in game.positions:
    game.positions[id]=safe(game.FIELD.size*.5+Vector2((game._slot(str(id))-(game.positions.size()-1)*.5)*64,40))
    game.invincible_until[id]=Time.get_ticks_msec()+1500
@@ -241,6 +259,7 @@ func step(delta:float)->void:
   corpses[i].collapse=float(corpses[i].collapse)+delta*1.8
   if float(corpses[i].collapse)>=1:corpses.remove_at(i)
  if game.role!="host":return
+ if rest.active:rest.step(delta);return
  floor_clock+=delta
  var holder=str(lamp.get("holder",""))
  if not holder.is_empty() and (not game.positions.has(holder) or int(game.health.get(holder,0))<=0):drop_lamp(lamp_pos())
@@ -400,9 +419,9 @@ func snapshot()->Dictionary:
  bind_battle()
  var sent_corpses:Array=[]
  for e in corpses:sent_corpses.append({"type":str(e.type),"pos":pack(e.pos),"collapse":float(e.collapse),"gait":float(e.gait),"facing":float(e.facing),"moving":0.0})
- return {"battle251":battle.snapshot(),"corpses":sent_corpses,"boosts":boosts,"pending":pending,"warnings":warnings,"hazards":hazards,"wheels":wheels,"fuel_drops":fuel_drops,"lamp":lamp,"clock":clock,"floor_clock":floor_clock,"fall_time":fall_time,"fall_swapped":fall_swapped,"completed":completed,"cataclysm":cataclysm}
+ return {"rest263":rest.snapshot(),"battle251":battle.snapshot(),"corpses":sent_corpses,"boosts":boosts,"pending":pending,"warnings":warnings,"hazards":hazards,"wheels":wheels,"fuel_drops":fuel_drops,"lamp":lamp,"clock":clock,"floor_clock":floor_clock,"fall_time":fall_time,"fall_swapped":fall_swapped,"completed":completed,"cataclysm":cataclysm}
 func receive(value:Dictionary)->void:
- bind_battle();battle.receive(value.get("battle251",{}))
+ bind_battle();rest.receive(value.get("rest263",{}));battle.receive(value.get("battle251",{}))
  if game.mode=="descent" and game.role=="guest" and int(value.get("completed",0))>completed:cleared(int(value.completed))
  corpses.clear()
  for e in value.get("corpses",[]):
@@ -410,6 +429,7 @@ func receive(value:Dictionary)->void:
  boosts=value.get("boosts",{});pending=value.get("pending",{});warnings=value.get("warnings",[]);hazards=value.get("hazards",[]);wheels=value.get("wheels",[]);fuel_drops=value.get("fuel_drops",[]);lamp=value.get("lamp",{});clock=float(value.get("clock",clock));floor_clock=float(value.get("floor_clock",0));fall_time=float(value.get("fall_time",-1));fall_swapped=bool(value.get("fall_swapped",false));completed=int(value.get("completed",0));cataclysm=float(value.get("cataclysm",-1))
 func draw(c:Node2D,camera:Vector2)->void:
  if game.mode!="descent" or not game.started:return
+ if rest.active:return
  if game.floor_number>100:
   # Incandescent rivers reveal a bright volcanic cavern beneath the dark strata.
   for n in 3:
@@ -464,14 +484,24 @@ func health_bar_y(e:Dictionary)->float:
  var spec=Book.profile(str(e.type))
  return float(spec.get("bar_y",-56))
 func draw_boss(c:Node2D,e:Dictionary,p:Vector2)->void:
+ if bool(e.get("guardian_prop",false)) or bool(e.get("guardian_expired",false)) or battle.guardians.props.has(str(e.uid)):return
  var spec=Book.profile(str(e.type))
  if spec.is_empty():return
  if str(e.type)=="ds_mirebound":c.draw_arc(p,175,0,TAU,40,Color("#baabd1",.45),2,true)
  var alpha=.35 if float(e.get("hidden_until",0))>clock else 1.0
+ var encounter=battle.encounters.states.get(str(e.uid),{})
+ var guardian=battle.guardians.states.get(str(e.uid),{})
+ if str(e.type)=="ds_boss_06" and not guardian.is_empty():return
+ if str(guardian.get("phase",""))=="burrow":return
+ if str(guardian.get("phase",""))=="flight":p.y-=55+sin(clock*5)*18
+ if str(encounter.get("phase",""))=="burrow":return
  if str(e.action)=="leap":
   var t=smoothstep(.55,1,1-float(e.left)/maxf(.01,float(e.total)));p=p.lerp(p+point(e.aim)-e.pos,t)-Vector2(0,sin(t*PI)*110)
  if float(e.get("hidden_until",0))>clock:c.draw_arc(p,29,0,TAU,24,Color("#b9a2ca",.5),1,true)
  var art=e.duplicate();art.merge(spec,false);art.kind=str(e.type);art.pos=p;art.color=spec.color;art.cell=spec.cell
+ if str(guardian.get("phase",""))=="tell":art.action="guardian";art.total=float(guardian.get("total",1));art.left=float(guardian.get("left",0))
+ if str(encounter.get("phase","ready")) in ["dig","spores","sting","map","root_warning","steal","brew_warning","survey","archive_warning"]:
+  art.action="encounter";art.left=maxf(0,float(encounter.get("left",0)));art.total=float(encounter.get("total",1))
  Art.enemy(c,art,clock,alpha*(1-float(e.get("collapse",0))))
  if bool(e.get("boss",false)):
   c.draw_string(ThemeDB.fallback_font,p+Vector2(-150,health_bar_y(e)-12),str(spec.name),HORIZONTAL_ALIGNMENT_CENTER,300,15,Color("#eadbb9"))
@@ -513,6 +543,7 @@ func prepare_light_grid()->void:
    light_indices.append_array(PackedInt32Array([a,b,e,a,e,d]))
 func draw_darkness(c:Node2D,camera:Vector2)->void:
  if game.mode!="descent" or not game.started:return
+ if rest.active:rest.draw_light(c,camera);return
  if darkness==null:make_darkness()
  var world=lamp_pos();var at=world-camera;var fuel=float(lamp.get("fuel",100));var radius=(310.0 if str(lamp.get("holder","")).is_empty() and int(lamp.get("thief",0))==0 else 248.0)*(0.42+.58*minf(1,fuel/30))
  if game.floor_number<=100:
@@ -537,6 +568,10 @@ func hero_rect(rect:Rect2)->Rect2:
  var centre=rect.get_center();rect.size*=1-.78*t;rect.position=centre-rect.size*.5+Vector2(0,t*t*160);return rect
 func draw_overlay(c:Node2D)->void:
  if game.mode!="descent" or not game.started:return
+ if rest.active:
+  rest.draw_hud(c,game.camera)
+  if falling():c.draw_rect(Rect2(Vector2.ZERO,game.VIEW),Color(.02,.024,.031,sin(clampf(fall_time/3.1,0,1)*PI)))
+  return
  var text="Shared lantern • E: carry / place • wider light when placed"
  if game.floor_number>=20:text+=" • Fuel %d%%"%int(lamp.get("fuel",100))
  if game.floor_number>100:text="FLOOR 100 COMPLETE • Bonus battle: The Unquenchable"
@@ -551,7 +586,7 @@ func draw_overlay(c:Node2D)->void:
  var centre=game.VIEW*.5;var t=clampf(fall_time/.8,0,1)
  var fade=clampf((fall_time-1.1)/.65,0,1) if not fall_swapped else 1-clampf((fall_time-2.05)/1.05,0,1)
  c.draw_rect(Rect2(Vector2.ZERO,game.VIEW),Color(.02,.024,.031,fade))
- if fade>.55:c.draw_string(ThemeDB.fallback_font,centre-Vector2(180,0),"DESCENDING • "+str(game.floor_number+ (0 if fall_swapped else 1)),HORIZONTAL_ALIGNMENT_CENTER,360,28,Color(1,.85,.61,fade))
+ if fade>.55:c.draw_string(ThemeDB.fallback_font,centre-Vector2(180,0),"DESCENDING • "+("50.5" if game.floor_number==50 and not rest.used else str(game.floor_number+ (0 if fall_swapped else 1))),HORIZONTAL_ALIGNMENT_CENTER,360,28,Color(1,.85,.61,fade))
 
 func draw_fracture(c:Node2D)->void:
  if fall_swapped:return

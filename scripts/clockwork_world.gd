@@ -91,6 +91,7 @@ func receive(data:Dictionary)->void:
   if pair is Array and pair.size()==2:held.append([int(pair[0]),int(pair[1])])
 func draw_world(c:Node2D,camera:Vector2)->void:
  if not active:return
+ preload("res://scripts/orchard_art273.gd").draw(self,c,camera)
  var view=Rect2(camera-Vector2(80,80),c.get_viewport_rect().size+Vector2(160,160))
  for index in 2:
   var x=float(WALL_X[index]);var top=0.0
@@ -111,9 +112,10 @@ func draw_world(c:Node2D,camera:Vector2)->void:
   draw_wall(c,Rect2(x-35,top,70,2520-top),camera,view)
 func draw_wall(c:Node2D,rect:Rect2,camera:Vector2,view:Rect2)->void:
  if not view.intersects(rect):return
- c.draw_rect(Rect2(rect.position-camera,rect.size),Color("#364b4c"));c.draw_rect(Rect2(rect.position-camera,rect.size),Color("#c29f68"),false,4)
+ preload("res://scripts/orchard_art273.gd").wall(c,rect,camera);c.draw_rect(Rect2(rect.position-camera,rect.size),Color("#c29f68"),false,4)
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not active:return
+ preload("res://scripts/orchard_art273.gd").overlay(self,c,camera)
  for b in blasts:
   var p=Vector2(b.pos[0],b.pos[1])-camera;var hit=bool(b.hit)
   if not hit:

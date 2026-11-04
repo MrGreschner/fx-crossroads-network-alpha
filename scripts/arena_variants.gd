@@ -101,6 +101,34 @@ func occupied(r:Rect2)->bool:
  for foe in world.game.opponents:
   if float(foe.hp)>0 and r.grow(30).has_point(foe.pos):return true
  return false
+func safe_spawn(p:Vector2)->Vector2:
+ var g=world.game;var wanted=p.clamp(Vector2(50,50),g.FIELD.size-Vector2(50,50))
+ for ring in range(0,16):
+  for n in (1 if ring==0 else 16):
+   var q=wanted+Vector2.from_angle(n*TAU/16)*ring*24
+   if g.FIELD.grow(-35).has_point(q) and movement_clear(q,q) and g._clear_path(q,q):return q
+ return spawn_point(0)
+func close_door(door:Dictionary)->void:
+ # Closing is a clock event. An occupied opening pushes actors to the nearest
+ # valid side; approaching an already-closed gate never changes its state.
+ var g=world.game;var r:Rect2=door.rect;var vertical=r.size.y>r.size.x
+ var resolve=func(p:Vector2)->Vector2:
+  if not r.grow(20).has_point(p):return p
+  var offset=p-r.get_center();var side=-1.0 if (offset.x if vertical else offset.y)<0 else 1.0
+  for sign_value in [side,-side]:
+   var q=Vector2(r.get_center().x+sign_value*(r.size.x*.5+26),p.y) if vertical else Vector2(p.x,r.get_center().y+sign_value*(r.size.y*.5+26))
+   if movement_clear(q,q) and g._clear_path(q,q):return q
+  return safe_spawn(p)
+ for id in g.positions:
+  if int(g.health.get(id,0))<=0:continue
+  var old:Vector2=g.positions[id];var q:Vector2=resolve.call(old)
+  if q==old:continue
+  g.positions[id]=q
+  if str(id)==g.my_id:g.local_pos=q
+ for enemy in g.opponents:
+  if float(enemy.hp)>0:enemy.pos=resolve.call(enemy.pos)
+ for guard in g.guards:
+  if float(guard.hp)>0:guard.pos=resolve.call(guard.pos)
 func step(dt:float)->void:
  if not active() or world.game.start_countdown>0:return
  var g=world.game
@@ -115,19 +143,15 @@ func step(dt:float)->void:
      event.spawned=true
      for n in 3:
       if g.opponents.size()>=12:break
-      var p=area.get_center()+[Vector2(160,0),Vector2(-180,0),Vector2(0,250)][n];g.adventure.spawn("archer" if n==2 else "bramble",p,70+g.positions.size()*5,false);g.opponents[-1].arena_chamber=room
+      var p=safe_spawn(area.get_center()+[Vector2(160,0),Vector2(-180,0),Vector2(0,250)][n]);g.adventure.spawn("archer" if n==2 else "bramble",p,70+g.positions.size()*5,false);g.opponents[-1].arena_chamber=room
     var living=g.opponents.any(func(e):return int(e.get("arena_chamber",-1))==room and float(e.hp)>0)
     if world.clock>=float(event.until) or event.spawned and not living:event.active=false;event.ready=world.clock+30
   var changed=false
   for door in doors:
    var phase=fposmod(world.clock+float(door.phase),14.0);var wanted=phase>=9;var warning=phase>=7.5 and phase<9
-   for key in chambers:
-    var e:Dictionary=chambers[key]
-    if e.active and int(key) in [int(door.a),int(door.b)]:wanted=world.clock>=float(e.born)+2;warning=not wanted
-   # Never materialize a gate inside a hero or creature. It waits until clear.
-   var closed=wanted and not occupied(door.rect)
-   if closed!=door.closed:changed=true
-   door.closed=closed;door.warning=warning or wanted and not closed
+   if wanted and not bool(door.closed):close_door(door)
+   if wanted!=bool(door.closed):changed=true
+   door.closed=wanted;door.warning=warning
   if changed:revision+=1;routes.clear()
  else:
   for id in g.positions:
@@ -139,7 +163,9 @@ func step(dt:float)->void:
     if world.clock>=float(torch.ready) and (g.positions[id] as Vector2).distance_to(world.point(torch.pos))<52:
      torch.ready=world.clock+24;light[id]=minf(520,float(light[id])+145);last_pickup[id]=world.clock
 func receive(data:Dictionary)->void:
- for n in mini(doors.size(),data.get("doors",[]).size()):doors[n].closed=bool(data.doors[n][0]);doors[n].warning=bool(data.doors[n][1])
+ for n in mini(doors.size(),data.get("doors",[]).size()):
+  if bool(data.doors[n][0]) and not bool(doors[n].closed):close_door(doors[n])
+  doors[n].closed=bool(data.doors[n][0]);doors[n].warning=bool(data.doors[n][1])
  if revision!=int(data.get("revision",revision)):routes.clear()
  revision=int(data.get("revision",revision));light=data.get("light",{});last_pickup=data.get("pickup",{});chambers=data.get("chambers",chambers)
  for n in mini(torches.size(),data.get("torches",[]).size()):torches[n].ready=float(data.torches[n])
@@ -158,7 +184,7 @@ func nearest_enemy(id:String,p:Vector2)->Vector2:
   if float(foe.hp)>0 and d<distance:distance=d;best=foe.pos
  return best
 func navigate(id:String,p:Vector2,destination:Vector2)->Vector2:
- if movement_clear(p,p+(destination-p).limit_length(120)):return (destination-p).normalized()
+ if movement_clear(p,destination):return (destination-p).normalized()
  if nav_revision!=revision:
   nav.region=Rect2i(0,0,ceili(world.game.FIELD.size.x/60),ceili(world.game.FIELD.size.y/60));nav.cell_size=Vector2(60,60);nav.offset=Vector2(30,30);nav.diagonal_mode=AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES;nav.update()
   for shape in rects():
@@ -217,23 +243,7 @@ func build_stone_mesh()->ArrayMesh:
  var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_COLOR]=colors;arrays[Mesh.ARRAY_INDEX]=indices;var mesh=ArrayMesh.new();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);return mesh
 func draw_ground()->void:
  if not active():return
- var g=world.game
- if stone_mesh==null:stone_mesh=build_stone_mesh()
- g.draw_mesh(stone_mesh,null,Transform2D(0.0,-g.camera))
- for door in doors:
-  var box=Rect2(door.rect.position-g.camera,door.rect.size);var tint=Color("#e8b76a") if door.warning else Color("#b76266") if door.closed else Color("#78cdb6")
-  g.draw_rect(box,Color(tint,.85 if door.closed else .15));g.draw_rect(box,tint,false,3)
-  if door.closed:
-   var vertical=box.size.y>box.size.x
-   if str(door.get("kind","gate"))=="stone":
-    g.draw_rect(box.grow(-3),Color("#73838b"));g.draw_line(box.position,box.end,Color("#b2b9ae"),3)
-   for n in (0 if str(door.get("kind","gate"))=="stone" else 5):
-    var a=box.position+Vector2(0,n*box.size.y/5) if vertical else box.position+Vector2(n*box.size.x/5,0);g.draw_line(a,a+Vector2(box.size.x,0) if vertical else a+Vector2(0,box.size.y),Color("#e5c092"),3)
-  if door.warning:g.draw_circle(box.get_center(),10+sin(world.clock*10)*3,tint)
- for torch in torches:
-  if world.clock<float(torch.ready):continue
-  var p=world.point(torch.pos)-g.camera;var pulse=sin(world.clock*6+p.x)*2
-  g.draw_circle(p,36,Color(1,.65,.2,.12));g.draw_line(p+Vector2(0,15),p-Vector2(0,7),Color("#9a6243"),6);g.draw_colored_polygon(PackedVector2Array([p+Vector2(-8,0),p+Vector2(0,-24-pulse),p+Vector2(9,-4),p+Vector2(3,7)]),Color("#ffbd5b"));g.draw_circle(p,4,Color("#fff1b0"))
+ preload("res://scripts/arena_art261.gd").variants(self)
 func draw_fog()->void:
  if not active() or world.map_id!="lanternfall" or world.game.spectating():return
  var g=world.game;var center=g._player_draw_position(g.my_id,g.local_pos)-g.camera
@@ -254,7 +264,7 @@ func draw_hud()->void:
  if not active():return
  var g=world.game;var font=ThemeDB.fallback_font
  if world.map_id=="maze":
-  g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#162934","#7f9799",7,8),Rect2(20,165,310,55));g.draw_string(font,Vector2(30,187),"Teal: OPEN • Amber: CLOSING",HORIZONTAL_ALIGNMENT_LEFT,295,15,Color("#bce1d2"));g.draw_string(font,Vector2(30,207),"Red: LOCKED • ambush limit 14s.",HORIZONTAL_ALIGNMENT_LEFT,295,13,Color("#e4c596"));return
+  g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#162934","#7f9799",7,8),Rect2(20,165,325,55));g.draw_string(font,Vector2(30,187),"Teal: OPEN • Amber: CLOSING",HORIZONTAL_ALIGNMENT_LEFT,310,15,Color("#bce1d2"));g.draw_string(font,Vector2(30,207),"Red: BLOCKED • gates shift every 14s",HORIZONTAL_ALIGNMENT_LEFT,310,13,Color("#e4c596"));return
  var box=Rect2(g.VIEW.x-220,100,200,145);g.draw_style_box(preload("res://scripts/studio_ui.gd").box("#10232e","#6baab7",8,10),box)
  var p:Vector2=g.local_pos;var enemy=nearest_enemy(g.my_id,p);var center=box.position+Vector2(100,68)
  g.draw_string(font,box.position+Vector2(13,23),"ECHO BEACON",HORIZONTAL_ALIGNMENT_LEFT,180,15,Color("#b4d9df"));g.draw_arc(center,28,0,TAU,32,Color("#6b9caa"),2)

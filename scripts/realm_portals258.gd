@@ -34,6 +34,9 @@ static func draw_at(canvas:CanvasItem,game:Node,point:Vector2,camera:Vector2,siz
  var target=rect(point,camera,size)
  var view:Vector2=game.get("VIEW")
  if not target.intersects(Rect2(Vector2.ZERO,view).grow(8)):return
+ var realm=str(game.get("realm_id")) if game.get("realm_id")!=null else str(game.get("region_id"))
+ if realm=="folded_coast" and variant(game)!=1:
+  preload("res://scripts/coast_art267.gd").portal(canvas,game,point,camera,size,variant(game),muted);return
  canvas.draw_texture_rect(texture(variant(game),clock(game),muted),target,false,Color("#88939b")if muted else Color.WHITE)
 static func entry(canvas:CanvasItem,game:Node,point:Vector2,camera:Vector2)->void:
  if is_training(game):

@@ -1,0 +1,641 @@
+{
+  "veil_shear": {
+    "index": 0,
+    "movement": "walk",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          0,
+          80,
+          80
+        ],
+        "bounds": [
+          17,
+          4,
+          63,
+          73
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          0,
+          80,
+          80
+        ],
+        "bounds": [
+          18,
+          4,
+          61,
+          74
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          0,
+          80,
+          80
+        ],
+        "bounds": [
+          18,
+          4,
+          61,
+          74
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          0,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          4,
+          68,
+          72
+        ]
+      }
+    },
+    "source": "hunters0_original.png",
+    "source_row": 0,
+    "scale": 0.21406727828746178,
+    "pose_hashes": [
+      "843c29afe9cc0c4715066cc3fe1f567010f412efe0b0477c4321174ec148ef19",
+      "937c5bcfbcaa86c33da42415c8da4d718c33e67a33f49415d3723eb5bcac6bec",
+      "5339269cccef3688ebda852cd36fafe73c51edb5dddfa8c01fb0b3c5bc7f86c4",
+      "ee2979e2ab3465e5766b0645931a45a989377ceb8ec6351c65fbf2dfddff1399"
+    ]
+  },
+  "veil_spindle": {
+    "index": 1,
+    "movement": "hover",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          80,
+          80,
+          80
+        ],
+        "bounds": [
+          22,
+          4,
+          58,
+          73
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          80,
+          80,
+          80
+        ],
+        "bounds": [
+          20,
+          4,
+          59,
+          73
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          80,
+          80,
+          80
+        ],
+        "bounds": [
+          22,
+          4,
+          58,
+          72
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          80,
+          80,
+          80
+        ],
+        "bounds": [
+          16,
+          4,
+          64,
+          73
+        ]
+      }
+    },
+    "source": "hunters0_original.png",
+    "source_row": 1,
+    "scale": 0.21341463414634146,
+    "pose_hashes": [
+      "670aa9f5d55ac0444ba10191606e05d3aef041e9cb120a102f032c04588fb03b",
+      "311a42e4bce14d7541b741c3204987cd528c94f9e23a9f246d8cd24974b6e9eb",
+      "f84a9c99c45c1b23fd883230c9ef18b65296d5d59962b3527ac8491dbe5cfc97",
+      "22da750c0296ccc396ee1f9f475f5b42f562548712a4a33c34f4f7f500fef984"
+    ]
+  },
+  "veil_mourner": {
+    "index": 2,
+    "movement": "hover",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          160,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          4,
+          67,
+          71
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          160,
+          80,
+          80
+        ],
+        "bounds": [
+          16,
+          4,
+          64,
+          71
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          160,
+          80,
+          80
+        ],
+        "bounds": [
+          8,
+          4,
+          71,
+          72
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          160,
+          80,
+          80
+        ],
+        "bounds": [
+          6,
+          4,
+          73,
+          73
+        ]
+      }
+    },
+    "source": "hunters0_original.png",
+    "source_row": 2,
+    "scale": 0.21671826625386997,
+    "pose_hashes": [
+      "8119c37790899e0172275fbe16ec84dbad77b54fd3d1f5de706ad888328862b1",
+      "bb58499430308f94920942f4800669299e1d934d34731a885cc8b5ee687d7705",
+      "a0a4ebee33023e7e202d2ccfc2b30965469e236f125c0ad0af1ba5a18b1df544",
+      "08f859df49366a7e0515a95c3403a715122997a985a279ad5245668949913c5e"
+    ]
+  },
+  "veil_prism": {
+    "index": 3,
+    "movement": "walk",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          240,
+          80,
+          80
+        ],
+        "bounds": [
+          17,
+          4,
+          63,
+          74
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          240,
+          80,
+          80
+        ],
+        "bounds": [
+          18,
+          4,
+          63,
+          74
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          240,
+          80,
+          80
+        ],
+        "bounds": [
+          17,
+          4,
+          63,
+          74
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          240,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          4,
+          67,
+          74
+        ]
+      }
+    },
+    "source": "hunters1_original.png",
+    "source_row": 0,
+    "scale": 0.2127659574468085,
+    "pose_hashes": [
+      "972b84a92309485d09d6e13576a3f370b0e739e5990aa9b12880661a07590f63",
+      "24ab0170182760585cdf6bfa4ceeb622d325fe0f1f4201c25080902df6bac0ca",
+      "a5aa8baf2928d3c6454af7e7c0ea6d508bf33ec450deea0cd5f72bf169c3a017",
+      "d889a900d210792b9d15b946bd1ff9169684c8e136bd03e03d68396c2832e5ac"
+    ]
+  },
+  "veil_hound": {
+    "index": 4,
+    "movement": "walk",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          320,
+          80,
+          80
+        ],
+        "bounds": [
+          10,
+          15,
+          69,
+          74
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          320,
+          80,
+          80
+        ],
+        "bounds": [
+          11,
+          13,
+          69,
+          74
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          320,
+          80,
+          80
+        ],
+        "bounds": [
+          11,
+          14,
+          69,
+          74
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          320,
+          80,
+          80
+        ],
+        "bounds": [
+          5,
+          21,
+          75,
+          73
+        ]
+      }
+    },
+    "source": "hunters1_original.png",
+    "source_row": 1,
+    "scale": 0.2127659574468085,
+    "pose_hashes": [
+      "f534b530e81cb497fb63bc19d66403266aec5f751ac395afd9b2014b00e6e45e",
+      "0bdb454d5d62619d4bf45d696059c0089fef3dc625da08aac147730cecd40213",
+      "81f8f386e739dfbf4b9d03aa44793b50fd50b091bd90ff2c3acdbc0cc7b5a16b",
+      "6d669f2b20edfe4e7486c13575d506d303d1317ea2950e2d1efca08b727acd12"
+    ]
+  },
+  "veil_scribe": {
+    "index": 5,
+    "movement": "hover",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          400,
+          80,
+          80
+        ],
+        "bounds": [
+          16,
+          4,
+          64,
+          73
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          400,
+          80,
+          80
+        ],
+        "bounds": [
+          13,
+          4,
+          67,
+          72
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          400,
+          80,
+          80
+        ],
+        "bounds": [
+          14,
+          4,
+          65,
+          73
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          400,
+          80,
+          80
+        ],
+        "bounds": [
+          10,
+          4,
+          70,
+          72
+        ]
+      }
+    },
+    "source": "hunters1_original.png",
+    "source_row": 2,
+    "scale": 0.21406727828746178,
+    "pose_hashes": [
+      "a87e501be0996950a8321712f4819940f065612887cf5b76d1eddd7a0793bbf2",
+      "b51d67e68d4c295412f97b7018b284f2bfbc03ca46d903d9c710c5529278ad4b",
+      "df63ae4111908709f6963569368282f5770ebfd5f90c872045ce157a6e479a68",
+      "0eba9d28baaf257c37d4d84ecfa87f0a452139aad51c63df85e24e9efe6ec51c"
+    ]
+  },
+  "veil_maw": {
+    "index": 6,
+    "movement": "walk",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          480,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          5,
+          69,
+          73
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          480,
+          80,
+          80
+        ],
+        "bounds": [
+          10,
+          5,
+          69,
+          74
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          480,
+          80,
+          80
+        ],
+        "bounds": [
+          10,
+          5,
+          69,
+          73
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          480,
+          80,
+          80
+        ],
+        "bounds": [
+          5,
+          4,
+          75,
+          72
+        ]
+      }
+    },
+    "source": "hunters2_original.png",
+    "source_row": 0,
+    "scale": 0.22508038585209003,
+    "pose_hashes": [
+      "7e2ae840bbb777426b6523025bb839931986a485baf2dd1e266b5bd2019cea37",
+      "19ec3612fb07e1e299f365ba70723175064164f51cad8678c3cad472051da030",
+      "8074569283eb0b22ebdb4967e2e0b4edef6bc49c985c6f5dc7159b21af439627",
+      "e3704dc1a2318a3c8c9f072695258739f99c3184a4e793754c40e04bf08164e3"
+    ]
+  },
+  "veil_null": {
+    "index": 7,
+    "movement": "hover",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          560,
+          80,
+          80
+        ],
+        "bounds": [
+          20,
+          4,
+          61,
+          73
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          560,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          4,
+          68,
+          71
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          560,
+          80,
+          80
+        ],
+        "bounds": [
+          16,
+          4,
+          65,
+          72
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          560,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          4,
+          69,
+          74
+        ]
+      }
+    },
+    "source": "hunters2_original.png",
+    "source_row": 1,
+    "scale": 0.20588235294117646,
+    "pose_hashes": [
+      "960b19e01954751d7f84aa6ec8bed0b76130e8f46d84c02624be11f50a566208",
+      "64917375053d4547a4ab23422781da8cc623dbae4e4940153d3ae96065660bfb",
+      "74565f315153042243e161ed47495846d73f6ccb51cad1ee066b62216a11c1c1",
+      "86a5794de8be221267e98c208d2ba6200a8cc0a5c2dda2a50fddf9f9ed22c550"
+    ]
+  },
+  "veil_warden": {
+    "index": 8,
+    "movement": "walk",
+    "frames": {
+      "idle": {
+        "region": [
+          0,
+          640,
+          80,
+          80
+        ],
+        "bounds": [
+          12,
+          7,
+          68,
+          74
+        ]
+      },
+      "walk1": {
+        "region": [
+          80,
+          640,
+          80,
+          80
+        ],
+        "bounds": [
+          13,
+          7,
+          67,
+          74
+        ]
+      },
+      "walk2": {
+        "region": [
+          160,
+          640,
+          80,
+          80
+        ],
+        "bounds": [
+          13,
+          7,
+          67,
+          74
+        ]
+      },
+      "attack": {
+        "region": [
+          240,
+          640,
+          80,
+          80
+        ],
+        "bounds": [
+          5,
+          7,
+          75,
+          74
+        ]
+      }
+    },
+    "source": "hunters2_original.png",
+    "source_row": 2,
+    "scale": 0.19662921348314608,
+    "pose_hashes": [
+      "dba956c070f7a15e0bf90351809c0772d44445d7024cb061ce22df861504e821",
+      "ca3abf6cd835da0b56129fee6d66cb657117a41987b60e322a64468d1ca85f72",
+      "0bbb9b014a18aa5849003ca0901b96fff6a293e6b7c3dea58ecf4221d02ed588",
+      "aa6328d947eee49b6649f6e01f9118c1591145e0d93f8eee34676ac45a712711"
+    ]
+  }
+}

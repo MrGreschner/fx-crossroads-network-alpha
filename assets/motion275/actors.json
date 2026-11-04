@@ -1,0 +1,314 @@
+{
+  "sunbeam_cantor": {
+    "index": 0,
+    "old_normalized": [
+      0.25,
+      0.3125,
+      0.7,
+      0.9375
+    ],
+    "factor": 1.45,
+    "visible_height": 63,
+    "frames": 6,
+    "movement": "walk"
+  },
+  "saffron_hopper": {
+    "index": 1,
+    "old_normalized": [
+      0.175,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 62,
+    "frames": 6,
+    "movement": "hop"
+  },
+  "frostling": {
+    "index": 2,
+    "old_normalized": [
+      0.275,
+      0.2625,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.3425925,
+    "visible_height": 56,
+    "frames": 6,
+    "movement": "walk"
+  },
+  "ice_archer": {
+    "index": 3,
+    "old_normalized": [
+      0.2875,
+      0.2125,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 64,
+    "frames": 6,
+    "movement": "walk"
+  },
+  "glacier_hound": {
+    "index": 4,
+    "old_normalized": [
+      0.3125,
+      0.2375,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 63,
+    "frames": 6,
+    "movement": "walk"
+  },
+  "cryowarden": {
+    "index": 5,
+    "old_normalized": [
+      0.175,
+      0.25,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.3181813,
+    "visible_height": 53,
+    "frames": 6,
+    "movement": "walk"
+  },
+  "confluence_heart": {
+    "index": 6,
+    "old_normalized": [
+      0.2375,
+      0.325,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.4795912,
+    "visible_height": 53,
+    "frames": 6,
+    "movement": "hover"
+  },
+  "glass_mender": {
+    "index": 7,
+    "old_normalized": [
+      0.2375,
+      0.25,
+      0.8625,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 59,
+    "frames": 6,
+    "movement": "hover"
+  },
+  "sluice_crab": {
+    "index": 8,
+    "old_normalized": [
+      0.225,
+      0.5125,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.32353,
+    "visible_height": 37,
+    "frames": 6,
+    "movement": "walk"
+  },
+  "coil_singer": {
+    "index": 9,
+    "old_normalized": [
+      0.325,
+      0.2875,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 61,
+    "frames": 6,
+    "movement": "hop"
+  },
+  "sun_sentinel": {
+    "index": 10,
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.725,
+      0.9375
+    ],
+    "factor": 1.6477275,
+    "visible_height": 38,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "sun_sentinel_crown": {
+    "index": 11,
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.725,
+      0.9375
+    ],
+    "factor": 1.6477275,
+    "visible_height": 47,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "cartographer": {
+    "index": 12,
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.3888888,
+    "visible_height": 51,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "inkfin": {
+    "index": 13,
+    "old_normalized": [
+      0.1875,
+      0.45,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.6239313,
+    "visible_height": 49,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "foldwing": {
+    "index": 14,
+    "old_normalized": [
+      0.225,
+      0.5375,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.9270837,
+    "visible_height": 41,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "crease_sentry": {
+    "index": 15,
+    "old_normalized": [
+      0.2375,
+      0.3875,
+      0.7625,
+      0.9375
+    ],
+    "factor": 1.3068188,
+    "visible_height": 62,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "burrowfang": {
+    "index": 16,
+    "old_normalized": [
+      0.25,
+      0.6,
+      0.7625,
+      0.9375
+    ],
+    "factor": 2.0164612,
+    "visible_height": 49,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "shardspitter": {
+    "index": 17,
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.85,
+      0.9375
+    ],
+    "factor": 1.4120375,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "fusehare": {
+    "index": 18,
+    "old_normalized": [
+      0.2,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.2698413,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "hop"
+  },
+  "rootwarden": {
+    "index": 19,
+    "old_normalized": [
+      0.15,
+      0.4125,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.5608462,
+    "visible_height": 42,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "echo_bat": {
+    "index": 20,
+    "old_normalized": [
+      0.225,
+      0.5625,
+      0.7625,
+      0.9375
+    ],
+    "factor": 1.555555,
+    "visible_height": 44,
+    "frames": 4,
+    "movement": "hover"
+  },
+  "sap_nurse": {
+    "index": 21,
+    "old_normalized": [
+      0.225,
+      0.3375,
+      0.775,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "flintroot": {
+    "index": 22,
+    "old_normalized": [
+      0.2,
+      0.3625,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.5700487,
+    "visible_height": 49,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "snow_oracle": {
+    "index": 23,
+    "old_normalized": [
+      0.25,
+      0.2375,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.2797625,
+    "visible_height": 58,
+    "frames": 4,
+    "movement": "hover"
+  }
+}

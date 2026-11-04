@@ -1,0 +1,496 @@
+{
+  "calderax": {
+    "index": 0,
+    "old_normalized": [
+      0.05,
+      0.07317073170731707,
+      0.9571428571428572,
+      0.9085365853658537
+    ],
+    "factor": 1,
+    "visible_height": 60,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "cinder_page": {
+    "index": 1,
+    "old_normalized": [
+      0.14285714285714285,
+      0.22560975609756098,
+      0.85,
+      0.7621951219512195
+    ],
+    "factor": 1,
+    "visible_height": 50,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "crucible_scuttler": {
+    "index": 2,
+    "old_normalized": [
+      0.09285714285714286,
+      0.22560975609756098,
+      0.9142857142857143,
+      0.8658536585365854
+    ],
+    "factor": 1,
+    "visible_height": 62,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "furnace_sentinel": {
+    "index": 3,
+    "old_normalized": [
+      0.08571428571428572,
+      0.13414634146341464,
+      0.9142857142857143,
+      0.8841463414634146
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "ashglass_alchemist": {
+    "index": 4,
+    "old_normalized": [
+      0.05714285714285714,
+      0.11585365853658537,
+      0.9142857142857143,
+      0.8170731707317073
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "coalwing_gargoyle": {
+    "index": 5,
+    "old_normalized": [
+      0.07857142857142857,
+      0.07317073170731707,
+      0.9285714285714286,
+      0.8719512195121951
+    ],
+    "factor": 1,
+    "visible_height": 62,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "brandbound_chain": {
+    "index": 6,
+    "old_normalized": [
+      0.10714285714285714,
+      0.1524390243902439,
+      0.8642857142857143,
+      0.8719512195121951
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "kiln_slug": {
+    "index": 7,
+    "old_normalized": [
+      0.11428571428571428,
+      0.1524390243902439,
+      0.9,
+      0.8414634146341463
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "crawl"
+  },
+  "cinderbell_wisp": {
+    "index": 8,
+    "old_normalized": [
+      0.20714285714285716,
+      0.1524390243902439,
+      0.8,
+      0.8292682926829268
+    ],
+    "factor": 1,
+    "visible_height": 63,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "gatebreaker_korr": {
+    "index": 9,
+    "old_normalized": [
+      0.05714285714285714,
+      0.07317073170731707,
+      0.9428571428571428,
+      0.8536585365853658
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "glass_matron": {
+    "index": 10,
+    "old_normalized": [
+      0.04285714285714286,
+      0.08536585365853659,
+      0.95,
+      0.8963414634146342
+    ],
+    "factor": 1,
+    "visible_height": 62,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "pyrewing_bellkeeper": {
+    "index": 11,
+    "old_normalized": [
+      0.05714285714285714,
+      0.11585365853658537,
+      0.95,
+      0.823170731707317
+    ],
+    "factor": 1,
+    "visible_height": 52,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "castellan_varr": {
+    "index": 12,
+    "old_normalized": [
+      0.1357142857142857,
+      0.06707317073170732,
+      0.9142857142857143,
+      0.8902439024390244
+    ],
+    "factor": 1,
+    "visible_height": 63,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "exam_math": {
+    "index": 13,
+    "old_normalized": [
+      0.07291666666666667,
+      0.13541666666666666,
+      0.9791666666666666,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 49,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "gravel_skater": {
+    "index": 14,
+    "old_normalized": [
+      0.125,
+      0.0625,
+      0.9166666666666666,
+      0.9791666666666666
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "skate"
+  },
+  "spotlight_sovereign": {
+    "index": 15,
+    "old_normalized": [
+      0.14583333333333334,
+      0.09375,
+      0.8645833333333334,
+      0.9479166666666666
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "layercake_golem": {
+    "index": 16,
+    "old_normalized": [
+      0.13541666666666666,
+      0.052083333333333336,
+      0.8541666666666666,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "iron_barbell": {
+    "index": 17,
+    "old_normalized": [
+      0.052083333333333336,
+      0.16666666666666666,
+      0.9479166666666666,
+      0.8645833333333334
+    ],
+    "factor": 1,
+    "visible_height": 47,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "exam_english": {
+    "index": 18,
+    "old_normalized": [
+      0.03125,
+      0.13541666666666666,
+      0.9270833333333334,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 61,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "exam_history": {
+    "index": 19,
+    "old_normalized": [
+      0.07291666666666667,
+      0.13541666666666666,
+      0.96875,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 54,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "exam_science": {
+    "index": 20,
+    "old_normalized": [
+      0.041666666666666664,
+      0.13541666666666666,
+      0.9583333333333334,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 63,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "eclipse_engine": {
+    "index": 21,
+    "old_normalized": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+    ],
+    "factor": 1,
+    "visible_height": 48,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "rift_weaver": {
+    "index": 22,
+    "old_normalized": [
+      0.020833333333333332,
+      0.1875,
+      1.0,
+      0.9791666666666666
+    ],
+    "factor": 1,
+    "visible_height": 47,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "prism_kite": {
+    "index": 23,
+    "old_normalized": [
+      0.10416666666666667,
+      0.041666666666666664,
+      0.9166666666666666,
+      1.0
+    ],
+    "factor": 1,
+    "visible_height": 50,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "comet_urchin": {
+    "index": 24,
+    "old_normalized": [
+      0.08333333333333333,
+      0.0625,
+      0.9791666666666666,
+      0.9791666666666666
+    ],
+    "factor": 1,
+    "visible_height": 62,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "gravity_husk": {
+    "index": 25,
+    "old_normalized": [
+      0.0,
+      0.09722222222222222,
+      0.90625,
+      0.9861111111111112
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "singularity_oracle": {
+    "index": 26,
+    "old_normalized": [
+      0.109375,
+      0.125,
+      0.875,
+      0.9444444444444444
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "rift_skitter": {
+    "index": 27,
+    "old_normalized": [
+      0.0625,
+      0.28125,
+      0.9583333333333334,
+      0.84375
+    ],
+    "factor": 1,
+    "visible_height": 56,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "silence_regent": {
+    "index": 28,
+    "old_normalized": [
+      0.109375,
+      0.046875,
+      0.921875,
+      0.9375
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "tuning_wraith": {
+    "index": 29,
+    "old_normalized": [
+      0.203125,
+      0.09375,
+      0.859375,
+      0.90625
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "hover_parts"
+  },
+  "resonance_beetle": {
+    "index": 30,
+    "old_normalized": [
+      0.140625,
+      0.125,
+      0.875,
+      0.828125
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "gongbreaker": {
+    "index": 31,
+    "old_normalized": [
+      0.03125,
+      0.046875,
+      0.96875,
+      0.953125
+    ],
+    "factor": 1,
+    "visible_height": 61,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "last_creditor": {
+    "index": 32,
+    "old_normalized": [
+      0.015625,
+      0.0,
+      0.984375,
+      0.9583333333333334
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "ashen_revenant": {
+    "index": 33,
+    "old_normalized": [
+      0.0625,
+      0.06944444444444445,
+      0.8125,
+      0.9722222222222222
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "mercy_cantor": {
+    "index": 34,
+    "old_normalized": [
+      0.0,
+      0.013888888888888888,
+      0.890625,
+      0.9444444444444444
+    ],
+    "factor": 1,
+    "visible_height": 61,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "chrysalis_knight": {
+    "index": 35,
+    "old_normalized": [
+      0.15625,
+      0.05555555555555555,
+      0.984375,
+      0.9722222222222222
+    ],
+    "factor": 1,
+    "visible_height": 59,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "brood_reliquary": {
+    "index": 36,
+    "old_normalized": [
+      0.0625,
+      0.19444444444444445,
+      0.953125,
+      0.9305555555555556
+    ],
+    "factor": 1,
+    "visible_height": 61,
+    "frames": 4,
+    "movement": "nest_activity"
+  },
+  "exalted_wraith": {
+    "index": 37,
+    "old_normalized": [
+      0.015625,
+      0.1111111111111111,
+      1.0,
+      0.9166666666666666
+    ],
+    "factor": 1,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "wingbeat"
+  }
+}

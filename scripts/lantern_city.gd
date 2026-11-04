@@ -169,7 +169,7 @@ func receive(data:Dictionary)->void:
  if old_rifts.map(func(v):return str(v.id)+str(v.open))!=rifts.map(func(v):return str(v.id)+str(v.open)):
   for portal in old_rifts+rifts:refresh_rift(rift_rect(portal))
 
-func draw_world(canvas:Node2D,camera:Vector2)->void:
+func draw_legacy_world(canvas:Node2D,camera:Vector2)->void:
  var view:Vector2=canvas.VIEW;var visible:=Rect2(camera-Vector2(100,100),view+Vector2(200,200))
  for building in buildings:
   var world:Rect2=building.rect
@@ -228,7 +228,30 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   for k in 4:canvas.draw_arc(p,27+k*8,clock*.8+k,clock*.8+k+PI*1.5,24,Color(.95,.76,.4,.65-k*.1),2,true)
   canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-110,-80),"SECRET DOOR • 2 HOUNDS" if not bool(portal.spawned) else "SECRET PASSAGE",HORIZONTAL_ALIGNMENT_CENTER,220,14,Color("#f8d68b"))
 
+func draw_world(canvas:Node2D,camera:Vector2)->void:
+ preload("res://scripts/brasslock_environment286.gd").draw_base(self,canvas,camera)
+ var visible=preload("res://scripts/brasslock_environment286.gd").bounds(self,canvas,camera)
+ # Original live door leaves, hints and conjured passages stay above the new scenery.
+ for door in doors:
+  var world:=door_rect(door)
+  if not visible.intersects(world.grow(70)):continue
+  var rect:=Rect2(world.position-camera,world.size);var horizontal:=rect.size.x>rect.size.y
+  var hinge:=rect.position+(Vector2(0,19) if horizontal else Vector2(19,0));var leaf:=Vector2(rect.size.x,0) if horizontal else Vector2(0,rect.size.y);var size:=leaf.rotated(float(door.anim)*PI*.5 if horizontal else -float(door.anim)*PI*.5)
+  canvas.draw_line(hinge,hinge+size,Color("#372b29"),12,true);canvas.draw_line(hinge+Vector2(0,-3),hinge+size+Vector2(0,-3),Color("#ad7951"),5,true)
+  canvas.draw_circle(hinge+size*.82,4,Color("#ffe3a0"))
+  for id in adventure.points():
+   if (adventure.points()[id] as Vector2).distance_to(world.get_center())<120:
+    canvas.draw_string(ThemeDB.fallback_font,world.get_center()-camera+Vector2(-60,-42),"E / INTERACT: "+("CLOSE" if bool(door.open) else "OPEN")+" DOOR",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#ffe7b0"));break
+ for portal in rifts:
+  var p=Vector2(portal.pos[0],portal.pos[1])-camera
+  if not visible.has_point(p+camera):continue
+  var shape=rift_rect(portal);shape.position-=camera
+  canvas.draw_rect(shape,Color("#1c263c"));canvas.draw_rect(shape,Color("#ecc16c"),false,5)
+  for k in 4:canvas.draw_arc(p,27+k*8,clock*.8+k,clock*.8+k+PI*1.5,24,Color(.95,.76,.4,.65-k*.1),2,true)
+  canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-110,-80),"SECRET DOOR • 2 HOUNDS" if not bool(portal.spawned) else "SECRET PASSAGE",HORIZONTAL_ALIGNMENT_CENTER,220,14,Color("#f8d68b"))
+
 func draw_on(canvas:Node2D,camera:Vector2)->void:
+ preload("res://scripts/brasslock_environment286.gd").draw_life(self,canvas,camera)
  for blast in eruptions:
   var point:Vector2=adventure.vec(blast.pos)-camera;var radius:=float(blast.radius)
   canvas.draw_arc(point,radius,0,TAU,28,Color(1,.55,.3,.8),3,true)

@@ -1,0 +1,706 @@
+{
+  "gatehouse_bastion": {
+    "region": [
+      0,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      9,
+      104,
+      104
+    ],
+    "source_cell": 0,
+    "source_bounds": [
+      12,
+      16,
+      211,
+      212
+    ],
+    "palette_limit": 36
+  },
+  "archive_shelf": {
+    "region": [
+      112,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      11,
+      8,
+      101,
+      104
+    ],
+    "source_cell": 1,
+    "source_bounds": [
+      36,
+      28,
+      209,
+      212
+    ],
+    "palette_limit": 36
+  },
+  "scroll_cabinet": {
+    "region": [
+      224,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      11,
+      8,
+      101,
+      104
+    ],
+    "source_cell": 2,
+    "source_bounds": [
+      28,
+      26,
+      203,
+      212
+    ],
+    "palette_limit": 36
+  },
+  "oath_monument": {
+    "region": [
+      336,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      18,
+      8,
+      94,
+      104
+    ],
+    "source_cell": 3,
+    "source_bounds": [
+      31,
+      13,
+      190,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "retort_bench": {
+    "region": [
+      448,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      20,
+      104,
+      104
+    ],
+    "source_cell": 4,
+    "source_bounds": [
+      18,
+      50,
+      205,
+      213
+    ],
+    "palette_limit": 36
+  },
+  "glass_condenser": {
+    "region": [
+      560,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      27,
+      8,
+      85,
+      104
+    ],
+    "source_cell": 5,
+    "source_bounds": [
+      53,
+      13,
+      173,
+      213
+    ],
+    "palette_limit": 36
+  },
+  "alchemist_rack": {
+    "region": [
+      672,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      13,
+      8,
+      99,
+      104
+    ],
+    "source_cell": 6,
+    "source_bounds": [
+      28,
+      23,
+      199,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "ashglass_terrarium": {
+    "region": [
+      784,
+      0,
+      112,
+      112
+    ],
+    "bounds": [
+      16,
+      8,
+      95,
+      104
+    ],
+    "source_cell": 7,
+    "source_bounds": [
+      29,
+      14,
+      191,
+      211
+    ],
+    "palette_limit": 36
+  },
+  "crucible_furnace": {
+    "region": [
+      0,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      10,
+      8,
+      102,
+      104
+    ],
+    "source_cell": 8,
+    "source_bounds": [
+      16,
+      12,
+      209,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "bell_frame": {
+    "region": [
+      112,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      14,
+      8,
+      98,
+      104
+    ],
+    "source_cell": 9,
+    "source_bounds": [
+      26,
+      13,
+      201,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "chain_winch": {
+    "region": [
+      224,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      15,
+      104,
+      104
+    ],
+    "source_cell": 10,
+    "source_bounds": [
+      16,
+      44,
+      203,
+      217
+    ],
+    "palette_limit": 36
+  },
+  "cooling_trough": {
+    "region": [
+      336,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      21,
+      104,
+      104
+    ],
+    "source_cell": 11,
+    "source_bounds": [
+      7,
+      29,
+      213,
+      207
+    ],
+    "palette_limit": 36
+  },
+  "crown_throne": {
+    "region": [
+      448,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      16,
+      8,
+      95,
+      104
+    ],
+    "source_cell": 12,
+    "source_bounds": [
+      30,
+      13,
+      196,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "crown_banner": {
+    "region": [
+      560,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      27,
+      8,
+      85,
+      104
+    ],
+    "source_cell": 13,
+    "source_bounds": [
+      54,
+      12,
+      176,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "phoenix_relief": {
+    "region": [
+      672,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      10,
+      8,
+      102,
+      104
+    ],
+    "source_cell": 14,
+    "source_bounds": [
+      20,
+      15,
+      210,
+      214
+    ],
+    "palette_limit": 36
+  },
+  "caldera_altar": {
+    "region": [
+      784,
+      112,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      17,
+      104,
+      104
+    ],
+    "source_cell": 15,
+    "source_bounds": [
+      10,
+      25,
+      217,
+      212
+    ],
+    "palette_limit": 36
+  },
+  "cinder_cypress": {
+    "region": [
+      0,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      27,
+      8,
+      84,
+      104
+    ],
+    "source_cell": 16,
+    "source_bounds": [
+      49,
+      9,
+      168,
+      209
+    ],
+    "palette_limit": 36
+  },
+  "charred_tree": {
+    "region": [
+      112,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      11,
+      8,
+      100,
+      104
+    ],
+    "source_cell": 17,
+    "source_bounds": [
+      21,
+      12,
+      201,
+      206
+    ],
+    "palette_limit": 36
+  },
+  "obsidian_cluster": {
+    "region": [
+      224,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      12,
+      104,
+      104
+    ],
+    "source_cell": 18,
+    "source_bounds": [
+      16,
+      25,
+      200,
+      202
+    ],
+    "palette_limit": 36
+  },
+  "cooling_crystal": {
+    "region": [
+      336,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      9,
+      104,
+      104
+    ],
+    "source_cell": 19,
+    "source_bounds": [
+      29,
+      33,
+      193,
+      195
+    ],
+    "palette_limit": 36
+  },
+  "ash_urn": {
+    "region": [
+      448,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      17,
+      8,
+      94,
+      104
+    ],
+    "source_cell": 20,
+    "source_bounds": [
+      35,
+      16,
+      188,
+      206
+    ],
+    "palette_limit": 36
+  },
+  "forge_tools": {
+    "region": [
+      560,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      13,
+      104,
+      104
+    ],
+    "source_cell": 21,
+    "source_bounds": [
+      25,
+      33,
+      203,
+      202
+    ],
+    "palette_limit": 36
+  },
+  "slag_cart": {
+    "region": [
+      672,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      23,
+      104,
+      104
+    ],
+    "source_cell": 22,
+    "source_bounds": [
+      19,
+      45,
+      205,
+      201
+    ],
+    "palette_limit": 36
+  },
+  "iron_anvil": {
+    "region": [
+      784,
+      224,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      31,
+      104,
+      104
+    ],
+    "source_cell": 23,
+    "source_bounds": [
+      22,
+      58,
+      202,
+      195
+    ],
+    "palette_limit": 36
+  },
+  "basalt_pillar": {
+    "region": [
+      0,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      23,
+      8,
+      89,
+      104
+    ],
+    "source_cell": 24,
+    "source_bounds": [
+      43,
+      6,
+      183,
+      209
+    ],
+    "palette_limit": 36
+  },
+  "ember_lantern": {
+    "region": [
+      112,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      27,
+      8,
+      85,
+      104
+    ],
+    "source_cell": 25,
+    "source_bounds": [
+      45,
+      11,
+      164,
+      209
+    ],
+    "palette_limit": 36
+  },
+  "iron_brazier": {
+    "region": [
+      224,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      17,
+      8,
+      94,
+      104
+    ],
+    "source_cell": 26,
+    "source_bounds": [
+      33,
+      15,
+      180,
+      198
+    ],
+    "palette_limit": 36
+  },
+  "shield_rack": {
+    "region": [
+      336,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      21,
+      104,
+      104
+    ],
+    "source_cell": 27,
+    "source_bounds": [
+      13,
+      28,
+      208,
+      197
+    ],
+    "palette_limit": 36
+  },
+  "pipe_junction": {
+    "region": [
+      448,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      16,
+      104,
+      104
+    ],
+    "source_cell": 28,
+    "source_bounds": [
+      15,
+      14,
+      211,
+      193
+    ],
+    "palette_limit": 36
+  },
+  "pressure_vessel": {
+    "region": [
+      560,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      8,
+      103,
+      104
+    ],
+    "source_cell": 29,
+    "source_bounds": [
+      17,
+      14,
+      205,
+      204
+    ],
+    "palette_limit": 36
+  },
+  "sealed_reliquary": {
+    "region": [
+      672,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      9,
+      8,
+      102,
+      104
+    ],
+    "source_cell": 30,
+    "source_bounds": [
+      25,
+      12,
+      203,
+      195
+    ],
+    "palette_limit": 36
+  },
+  "broken_masonry": {
+    "region": [
+      784,
+      336,
+      112,
+      112
+    ],
+    "bounds": [
+      8,
+      9,
+      104,
+      104
+    ],
+    "source_cell": 31,
+    "source_bounds": [
+      11,
+      11,
+      203,
+      200
+    ],
+    "palette_limit": 36
+  }
+}

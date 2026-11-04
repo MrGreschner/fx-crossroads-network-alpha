@@ -1,0 +1,22 @@
+{
+  "pond_world": [
+    -45,
+    195,
+    495,
+    345
+  ],
+  "pond_material": "assets/marina250/shore_ground.png",
+  "water_geometry_unchanged": true,
+  "light_mask": [
+    320,
+    240
+  ],
+  "props_reused": [
+    "town246 well",
+    "detail259 merchant",
+    "arena261 torch",
+    "descent251 floors and walls",
+    "marina250 dock_wood"
+  ],
+  "new_decoded_rgba_bytes": 990300
+}

@@ -1,0 +1,21 @@
+{
+  "revision": 267,
+  "course_revision_retained": 266,
+  "paper_world": true,
+  "merchant_frame_identical_to_266": true,
+  "ground_pages": 3,
+  "ground_page_size": [
+    1000,
+    1600
+  ],
+  "props_size": [
+    1536,
+    1536
+  ],
+  "new_decoded_RGBA_bytes": 28637184,
+  "original_actors_reused": true,
+  "sources": {
+    "materials_original.png": "af74d0fb6b09e4c4c616a9aa812223b68b7fc21e79c903dcba930a0387b3a9fa",
+    "props_original.png": "3b5c85042832b2a58a8951e3d893c2cde4d84a8adb5ab090dc251247f4bd6db8"
+  }
+}

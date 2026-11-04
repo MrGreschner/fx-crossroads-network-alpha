@@ -1,0 +1,3323 @@
+[
+  {
+    "kind": "reed_bed",
+    "pos": [
+      1491,
+      6280
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      778,
+      6545
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      1194,
+      5777
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1611,
+      6768
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      241,
+      6156
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      1435,
+      6128
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      1015,
+      6659
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      845,
+      5834
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1867,
+      6487
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      300,
+      6563
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      1285,
+      6025
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      1292,
+      6652
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      590,
+      6032
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1891,
+      6140
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      625,
+      6881
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      1090,
+      6002
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      1520,
+      6528
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      509,
+      6309
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1677,
+      5837
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      1114,
+      7008
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      2147,
+      6303
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      1070,
+      7092
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      156,
+      6303
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      1070,
+      5472
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "ferry_lodge",
+    "pos": [
+      919.7,
+      5519.4
+    ],
+    "size": [
+      480,
+      420
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      3535,
+      4836
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      2734,
+      5129
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      3201,
+      4280
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3670,
+      5376
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      2131,
+      4699
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      3472,
+      4668
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      3001,
+      5255
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      2810,
+      4343
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3957,
+      5065
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      2197,
+      5150
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      3304,
+      4554
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      3311,
+      5248
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      2523,
+      4562
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3985,
+      4681
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      2563,
+      5501
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      3085,
+      4529
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      3568,
+      5110
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      2433,
+      4868
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3744,
+      4347
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      3112,
+      5641
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      4283,
+      4817
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      3117,
+      5630
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      2051,
+      4817
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      3117,
+      3937
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      2694,
+      2647
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      2051,
+      2957
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      2426,
+      2059
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      2803,
+      3217
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      1566,
+      2502
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      2644,
+      2470
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      2265,
+      3090
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      2112,
+      2125
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3034,
+      2889
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      1619,
+      2979
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      2509,
+      2349
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      2515,
+      3083
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      1881,
+      2357
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      3056,
+      2483
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      1913,
+      3350
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      2332,
+      2322
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      2721,
+      2937
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      1809,
+      2681
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      2863,
+      2130
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      2355,
+      3498
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      3261,
+      2593
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      2404,
+      3597
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      1459,
+      2593
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      2404,
+      1769
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5225,
+      2338
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      4521,
+      2644
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      4932,
+      1759
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      5345,
+      2901
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      3989,
+      2195
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5170,
+      2164
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      4755,
+      2776
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      4587,
+      1824
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      5598,
+      2577
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      4047,
+      2666
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5022,
+      2045
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      5029,
+      2768
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      4334,
+      2053
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      5622,
+      2177
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      4370,
+      3032
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      4829,
+      2019
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      5255,
+      2624
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      4255,
+      2372
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      5410,
+      1828
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      4853,
+      3178
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      5885,
+      2294
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      4904,
+      3275
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      3883,
+      2294
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      4903,
+      1458
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "moonwater_fountain",
+    "pos": [
+      4878.45,
+      3246.0
+    ],
+    "size": [
+      280,
+      280
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "cobbleclaw_shrine",
+    "pos": [
+      5330,
+      2780
+    ],
+    "size": [
+      145,
+      145
+    ],
+    "layer": "raised",
+    "fade_near_hero": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5936,
+      5026
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      5103,
+      5404
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      5589,
+      4311
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      6077,
+      5721
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      4476,
+      4850
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5871,
+      4811
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      5380,
+      5566
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      5182,
+      4392
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      6375,
+      5321
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      4545,
+      5430
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5696,
+      4664
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      5703,
+      5557
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      4883,
+      4674
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      6404,
+      4827
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      4925,
+      5882
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      5467,
+      4632
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      5970,
+      5379
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      4789,
+      5068
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      6154,
+      4397
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      5496,
+      6062
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      6714,
+      5065
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      5542,
+      6098
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      4337,
+      5066
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      5542,
+      3943
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "mist_orchard_tree",
+    "pos": [
+      4436.4,
+      4576.3
+    ],
+    "size": [
+      240,
+      290
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "mist_orchard_tree",
+    "pos": [
+      4436.4,
+      4786.3
+    ],
+    "size": [
+      240,
+      290
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "mist_orchard_tree",
+    "pos": [
+      4436.4,
+      4996.3
+    ],
+    "size": [
+      240,
+      290
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "mist_orchard_tree",
+    "pos": [
+      4436.4,
+      5206.3
+    ],
+    "size": [
+      240,
+      290
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "mist_orchard_tree",
+    "pos": [
+      4436.4,
+      5416.3
+    ],
+    "size": [
+      240,
+      290
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      7913,
+      2354
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      7213,
+      2708
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      7621,
+      1682
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      8031,
+      3006
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      6686,
+      2188
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      7858,
+      2151
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      7446,
+      2861
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      7279,
+      1758
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      8282,
+      2630
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      6744,
+      2733
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      7711,
+      2013
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      7718,
+      2852
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      7029,
+      2023
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      8306,
+      2167
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      7063,
+      3157
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      7519,
+      1983
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      7942,
+      2685
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      6950,
+      2393
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      8096,
+      1763
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      7543,
+      3327
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      8565,
+      2442
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      7605,
+      3439
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      6570,
+      2442
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      7605,
+      1268
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9794,
+      1336
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9064,
+      1684
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      9490,
+      678
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      9917,
+      1976
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      8515,
+      1173
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9737,
+      1138
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9307,
+      1833
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      9133,
+      752
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      10179,
+      1607
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      8575,
+      1708
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9584,
+      1002
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9590,
+      1825
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      8872,
+      1011
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      10204,
+      1153
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      8908,
+      2124
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9383,
+      973
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9824,
+      1661
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      8789,
+      1374
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      9985,
+      757
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      9409,
+      2290
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      10446,
+      1375
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      9441,
+      2401
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      8468,
+      1376
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      9441,
+      381
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "torrent_crown",
+    "pos": [
+      9434.55,
+      328.5
+    ],
+    "size": [
+      480,
+      460
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9441,
+      4679
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      8830,
+      4928
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      9186,
+      4207
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      9545,
+      5137
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      8369,
+      4563
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9393,
+      4537
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9033,
+      5035
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      8887,
+      4260
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      9764,
+      4873
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      8419,
+      4945
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9265,
+      4440
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9271,
+      5029
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      8668,
+      4446
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      9785,
+      4548
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      8699,
+      5244
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      9097,
+      4419
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      9467,
+      4912
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      8599,
+      4706
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      9602,
+      4264
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      9118,
+      5363
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      10005,
+      4657
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      9082,
+      5430
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      8326,
+      4657
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      9082,
+      3936
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      4089,
+      3515
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      3728,
+      3647
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      3939,
+      3265
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      4150,
+      3757
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      3456,
+      3453
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      4061,
+      3440
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      3848,
+      3703
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      3762,
+      3293
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      4280,
+      3618
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      3485,
+      3656
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      3985,
+      3388
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      3988,
+      3700
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      3632,
+      3392
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      4292,
+      3445
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      3650,
+      3814
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "reed_bed",
+    "pos": [
+      3886,
+      3377
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      4104,
+      3638
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      3592,
+      3529
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      4184,
+      3295
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "pebble_cairn",
+    "pos": [
+      3898,
+      3876
+    ],
+    "size": [
+      110,
+      95
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "river_bell",
+    "pos": [
+      4404,
+      3509
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "waterwheel",
+    "pos": [
+      3887,
+      3895
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "sluice_gate",
+    "pos": [
+      3400,
+      3509
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      3887,
+      3111
+    ],
+    "size": [
+      180,
+      180
+    ],
+    "layer": "raised",
+    "shore": true
+  },
+  {
+    "kind": "spring_basin",
+    "pos": [
+      3911.1499999999996,
+      3514.8
+    ],
+    "size": [
+      190,
+      160
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "bookcase",
+    "pos": [
+      3330.0,
+      6580
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oar_rack",
+    "pos": [
+      3563.3333333333335,
+      6580
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "rolled_charts",
+    "pos": [
+      3796.6666666666665,
+      6580
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "hearth_stove",
+    "pos": [
+      4030.0,
+      6580
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "woven_rug",
+    "pos": [
+      3680.0,
+      6901.0
+    ],
+    "size": [
+      300,
+      220
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "stone_bench",
+    "pos": [
+      3895.6,
+      7040.4
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fish_baskets",
+    "pos": [
+      3300.0,
+      6750
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "reading_chair",
+    "pos": [
+      4060.0,
+      6750
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oar_rack",
+    "pos": [
+      3300.0,
+      6910
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "bookcase",
+    "pos": [
+      4060.0,
+      6910
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "rolled_charts",
+    "pos": [
+      3300.0,
+      7070
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "stone_bench",
+    "pos": [
+      4060.0,
+      7070
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "tea_service",
+    "pos": [
+      320.0,
+      2290
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "reading_chair",
+    "pos": [
+      573.3333333333334,
+      2290
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "stone_table",
+    "pos": [
+      826.6666666666667,
+      2290
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      1080.0,
+      2290
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "woven_rug",
+    "pos": [
+      700.0,
+      2655.0
+    ],
+    "size": [
+      300,
+      220
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "stone_bench",
+    "pos": [
+      928.8,
+      2808.0
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "tea_service",
+    "pos": [
+      290.0,
+      2460
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "reading_chair",
+    "pos": [
+      1110.0,
+      2460
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "reading_chair",
+    "pos": [
+      290.0,
+      2620
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "stone_table",
+    "pos": [
+      1110.0,
+      2620
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "lotus",
+    "pos": [
+      290.0,
+      2780
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "flowerbed",
+    "pos": [
+      1110.0,
+      2780
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "astrolabe",
+    "pos": [
+      7890.0,
+      6380
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "rolled_charts",
+    "pos": [
+      8213.333333333334,
+      6380
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "bookcase",
+    "pos": [
+      8536.666666666666,
+      6380
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "mason_bench",
+    "pos": [
+      8860.0,
+      6380
+    ],
+    "size": [
+      155,
+      165
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "woven_rug",
+    "pos": [
+      8375.0,
+      6800.0
+    ],
+    "size": [
+      300,
+      220
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "stone_bench",
+    "pos": [
+      8650.0,
+      6970.0
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "bookcase",
+    "pos": [
+      7860.0,
+      6550
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "astrolabe",
+    "pos": [
+      8890.0,
+      6550
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "reading_chair",
+    "pos": [
+      7860.0,
+      6710
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "rolled_charts",
+    "pos": [
+      8890.0,
+      6710
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      7860.0,
+      6870
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "river_rock",
+    "pos": [
+      8890.0,
+      6870
+    ],
+    "size": [
+      125,
+      135
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "rope_bollard",
+    "pos": [
+      6250,
+      5085
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oar_rack",
+    "pos": [
+      6345,
+      5085
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fish_baskets",
+    "pos": [
+      6440,
+      5085
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ferry_sign",
+    "pos": [
+      6535,
+      5085
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "rope_bollard",
+    "pos": [
+      8440,
+      4855
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "oar_rack",
+    "pos": [
+      8535,
+      4855
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "fish_baskets",
+    "pos": [
+      8630,
+      4855
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "ferry_sign",
+    "pos": [
+      8725,
+      4855
+    ],
+    "size": [
+      110,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "stone_nursery",
+    "pos": [
+      5440,
+      2820
+    ],
+    "size": [
+      135,
+      110
+    ],
+    "layer": "floor"
+  },
+  {
+    "kind": "mason_bench",
+    "pos": [
+      5280,
+      2840
+    ],
+    "size": [
+      130,
+      130
+    ],
+    "layer": "raised"
+  },
+  {
+    "kind": "stone_table",
+    "pos": [
+      3670,
+      6680
+    ],
+    "size": [
+      160,
+      150
+    ],
+    "layer": "raised"
+  }
+]

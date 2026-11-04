@@ -14,12 +14,14 @@ static func grove_tree(p:Vector2)->Texture2D:
   var t=AtlasTexture.new();t.atlas=texture("trees");t.region=Rect2(n*192,0,192,252);frames[key]=t
  return frames[key]
 static func pose_index(pose:String)->int:return 3 if pose in ["attack","attack2","special"] else 1 if pose in ["walk1","1"] else 2 if pose in ["walk2","2"] else 0
-static func boss(pose:String)->Texture2D:
+static func boss(pose:String)->Texture2D:return preload("res://scripts/enemy_animation276.gd").texture("quarry_boss",pose)
+static func legacy_boss(pose:String)->Texture2D:
  var n=pose_index(pose)
  if not frames.has(n):
   var t=AtlasTexture.new();t.atlas=texture("boss");t.region=Rect2(n*80,0,80,80);frames[n]=t
  return frames[n]
-static func boss_rect(rect:Rect2)->Rect2:
+static func boss_rect(rect:Rect2)->Rect2:return preload("res://scripts/enemy_animation276.gd").fitted("quarry_boss",rect)
+static func legacy_boss_rect(rect:Rect2)->Rect2:
  if metadata.is_empty():metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/quarry254/manifest.json"))
  var b:Array=metadata.boss_original_bounds
  var adjusted=preload("res://scripts/enemy_visual227.gd").adjusted("bramble_boss",rect)

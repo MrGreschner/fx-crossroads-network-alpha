@@ -280,7 +280,7 @@ func objective()->String:
  return ("UPLOAD IN PROGRESS • " if upload>0 else "Destroy ")+str(data.bodies[mini(stage,data.bodies.size()-1)].name)+" • body "+str(stage+1)+"/"+str(data.bodies.size())
 func snapshot()->Dictionary:return {"initialized":initialized,"stage":stage,"boss_live":boss_live,"upload":upload,"done":done,"clock":clock,"hazards":hazards,"wrecks":wrecks,"towers":towers,"used_pods":used_pods}
 func receive(packet:Dictionary)->void:initialized=bool(packet.get("initialized",false));stage=int(packet.get("stage",0));boss_live=bool(packet.get("boss_live",false));upload=float(packet.get("upload",0));done=bool(packet.get("done",false));clock=float(packet.get("clock",0));hazards=packet.get("hazards",[]);wrecks=packet.get("wrecks",[]);towers=packet.get("towers",{});used_pods=packet.get("used_pods",{})
-func draw_world(canvas:Node2D,camera:Vector2)->void:
+func draw_legacy_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
  var visible:=Rect2(camera-Vector2(100,100),canvas.VIEW+Vector2(200,200))
  canvas.draw_rect(Rect2(Vector2.ZERO,canvas.VIEW),Color("#111a2b"))
@@ -351,8 +351,30 @@ func draw_world(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-64,44),"MAINTENANCE • E",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#b0e2b8"))
  if done:
   var point:=v(data.exit)-camera;preload("res://scripts/realm_portals258.gd").draw_at(canvas,adventure.game,v(data.exit),camera);canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-70,-98),"EXIT • E / INTERACT",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#d2f8e5"))
+func draw_world(canvas:Node2D,camera:Vector2)->void:
+ if not active:return
+ if not preload("res://scripts/neon_environment287.gd").draw_world(self,canvas,camera):
+  draw_legacy_world(canvas,camera);return
+ var visible=preload("res://scripts/neon_environment287.gd").view(self,canvas,camera)
+ for body in data.bodies:
+  var point:=v(body.pos)-camera
+  if not visible.has_point(v(body.pos)):continue
+  canvas.draw_arc(point,100,0,TAU,48,Color(.4,.75,.85,.35),3,true)
+  for n in 8:canvas.draw_line(point+Vector2.from_angle(TAU*n/8)*85,point+Vector2.from_angle(TAU*n/8)*100,Color("#728a9e"),4,true)
+ for wreck in wrecks:
+  var point:=v(wreck.pos)-camera;canvas.draw_circle(point,52,Color("#18252e"))
+  for n in 6:canvas.draw_rect(Rect2(point+Vector2.from_angle(n*TAU/6)*28-Vector2(9,7),Vector2(18,14)),Color("#637477"))
+ for pod in data.pods:
+  var point:=v(pod.pos)-camera
+  preload("res://scripts/neon_environment287.gd").draw_pod(self,canvas,pod,camera)
+  canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-64,44),"MAINTENANCE • E",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("#b0e2b8"))
+ if done:
+  var point:=v(data.exit)-camera;preload("res://scripts/realm_portals258.gd").draw_at(canvas,adventure.game,v(data.exit),camera);canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-70,-98),"EXIT • E / INTERACT",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#d2f8e5"))
+
+
 func draw_on(canvas:Node2D,camera:Vector2)->void:
  if not active:return
+ preload("res://scripts/neon_environment287.gd").draw_life(self,canvas,camera)
  for key in towers:
   var tower:Dictionary=towers[key];var point:=v(tower.pos)-camera;var rise:=float(tower.rise)
   var living:=false

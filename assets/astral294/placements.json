@@ -1,0 +1,2004 @@
+[
+  {
+    "kind": "obelisk",
+    "pos": [
+      500,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      1110,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      1720,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      2330,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      2940,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      3550,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      4160,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      4770,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      5380,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      5990,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      6600,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      7210,
+      1056
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      500,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      1110,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      1720,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      2330,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      2940,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      3550,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      4160,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      4770,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      5380,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      5990,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      6600,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      7210,
+      2586
+    ],
+    "size": [
+      88,
+      130
+    ],
+    "fade": true,
+    "category": "original_collision"
+  },
+  {
+    "kind": "armillary",
+    "pos": [
+      1100,
+      876
+    ],
+    "size": [
+      282,
+      352
+    ],
+    "fade": true,
+    "category": "original_decoration"
+  },
+  {
+    "kind": "armillary",
+    "pos": [
+      4000,
+      876
+    ],
+    "size": [
+      282,
+      352
+    ],
+    "fade": true,
+    "category": "original_decoration"
+  },
+  {
+    "kind": "armillary",
+    "pos": [
+      7100,
+      876
+    ],
+    "size": [
+      282,
+      352
+    ],
+    "fade": true,
+    "category": "original_decoration"
+  },
+  {
+    "kind": "observatory",
+    "pos": [
+      830,
+      480
+    ],
+    "size": [
+      340,
+      310
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      1410,
+      450
+    ],
+    "size": [
+      200,
+      210
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "chart_table",
+    "pos": [
+      870,
+      890
+    ],
+    "size": [
+      138,
+      96
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "telescope",
+    "pos": [
+      1350,
+      930
+    ],
+    "size": [
+      140,
+      170
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "atlas",
+    "pos": [
+      1480,
+      790
+    ],
+    "size": [
+      105,
+      102
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "observatory",
+    "pos": [
+      3730,
+      480
+    ],
+    "size": [
+      340,
+      310
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      4310,
+      450
+    ],
+    "size": [
+      200,
+      210
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "chart_table",
+    "pos": [
+      3770,
+      890
+    ],
+    "size": [
+      138,
+      96
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "telescope",
+    "pos": [
+      4250,
+      930
+    ],
+    "size": [
+      140,
+      170
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "atlas",
+    "pos": [
+      4380,
+      790
+    ],
+    "size": [
+      105,
+      102
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "observatory",
+    "pos": [
+      6830,
+      480
+    ],
+    "size": [
+      340,
+      310
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      7410,
+      450
+    ],
+    "size": [
+      200,
+      210
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "chart_table",
+    "pos": [
+      6870,
+      890
+    ],
+    "size": [
+      138,
+      96
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "telescope",
+    "pos": [
+      7350,
+      930
+    ],
+    "size": [
+      140,
+      170
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "atlas",
+    "pos": [
+      7480,
+      790
+    ],
+    "size": [
+      105,
+      102
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "observatory",
+    "pos": [
+      400,
+      1066
+    ],
+    "size": [
+      240,
+      223
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "armillary",
+    "pos": [
+      948,
+      1045
+    ],
+    "size": [
+      150,
+      198
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "obelisk",
+    "pos": [
+      1318,
+      1015
+    ],
+    "size": [
+      150,
+      262
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "arch",
+    "pos": [
+      1910,
+      1019
+    ],
+    "size": [
+      240,
+      214
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "roost",
+    "pos": [
+      2336,
+      987
+    ],
+    "size": [
+      150,
+      133
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      2819,
+      1031
+    ],
+    "size": [
+      150,
+      177
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "chart_table",
+    "pos": [
+      3236,
+      994
+    ],
+    "size": [
+      150,
+      104
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "moon_clock",
+    "pos": [
+      3704,
+      1025
+    ],
+    "size": [
+      150,
+      195
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "orrery",
+    "pos": [
+      4193,
+      1011
+    ],
+    "size": [
+      150,
+      150
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "telescope",
+    "pos": [
+      4675,
+      1004
+    ],
+    "size": [
+      150,
+      183
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "shelves",
+    "pos": [
+      5187,
+      997
+    ],
+    "size": [
+      150,
+      149
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "astrolabe",
+    "pos": [
+      5593,
+      1035
+    ],
+    "size": [
+      150,
+      163
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      6061,
+      1023
+    ],
+    "size": [
+      150,
+      104
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "prism",
+    "pos": [
+      6581,
+      1013
+    ],
+    "size": [
+      150,
+      200
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      6975,
+      1049
+    ],
+    "size": [
+      150,
+      271
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      7462,
+      1000
+    ],
+    "size": [
+      150,
+      171
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      407,
+      3030
+    ],
+    "size": [
+      240,
+      256
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stairs",
+    "pos": [
+      900,
+      2749
+    ],
+    "size": [
+      150,
+      123
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "balustrade",
+    "pos": [
+      1433,
+      2805
+    ],
+    "size": [
+      150,
+      76
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1845,
+      2761
+    ],
+    "size": [
+      150,
+      115
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "bollard",
+    "pos": [
+      2351,
+      2781
+    ],
+    "size": [
+      150,
+      221
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2767,
+      2780
+    ],
+    "size": [
+      150,
+      107
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      3293,
+      2770
+    ],
+    "size": [
+      150,
+      96
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      3728,
+      2830
+    ],
+    "size": [
+      150,
+      141
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "parcels",
+    "pos": [
+      4250,
+      2909
+    ],
+    "size": [
+      150,
+      138
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "atlas",
+    "pos": [
+      4635,
+      2878
+    ],
+    "size": [
+      150,
+      146
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      5068,
+      2723
+    ],
+    "size": [
+      150,
+      205
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "perch",
+    "pos": [
+      5664,
+      2912
+    ],
+    "size": [
+      150,
+      131
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      6144,
+      2833
+    ],
+    "size": [
+      240,
+      247
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      6581,
+      2806
+    ],
+    "size": [
+      150,
+      202
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      6975,
+      2754
+    ],
+    "size": [
+      150,
+      106
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      7507,
+      2811
+    ],
+    "size": [
+      150,
+      187
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      203,
+      2941
+    ],
+    "size": [
+      95,
+      68
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      424,
+      336
+    ],
+    "size": [
+      170,
+      181
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      608,
+      2891
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      717,
+      324
+    ],
+    "size": [
+      95,
+      109
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      891,
+      2905
+    ],
+    "size": [
+      95,
+      98
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      1077,
+      317
+    ],
+    "size": [
+      95,
+      118
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      1149,
+      2873
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      1380,
+      319
+    ],
+    "size": [
+      95,
+      130
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      1473,
+      3010
+    ],
+    "size": [
+      95,
+      68
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      1657,
+      233
+    ],
+    "size": [
+      170,
+      181
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      1750,
+      2983
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      1960,
+      313
+    ],
+    "size": [
+      95,
+      109
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      2133,
+      2908
+    ],
+    "size": [
+      95,
+      98
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      2287,
+      261
+    ],
+    "size": [
+      95,
+      118
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      2431,
+      2938
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      2572,
+      289
+    ],
+    "size": [
+      95,
+      130
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      2677,
+      2949
+    ],
+    "size": [
+      95,
+      68
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      2909,
+      263
+    ],
+    "size": [
+      170,
+      181
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      3012,
+      2973
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      3166,
+      327
+    ],
+    "size": [
+      95,
+      109
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      3308,
+      2924
+    ],
+    "size": [
+      95,
+      98
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      3526,
+      295
+    ],
+    "size": [
+      95,
+      118
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      3657,
+      3016
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      3842,
+      244
+    ],
+    "size": [
+      95,
+      130
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      4008,
+      2930
+    ],
+    "size": [
+      95,
+      68
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      4090,
+      307
+    ],
+    "size": [
+      170,
+      181
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      4307,
+      2885
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      4470,
+      296
+    ],
+    "size": [
+      95,
+      109
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      4554,
+      2908
+    ],
+    "size": [
+      95,
+      98
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      4716,
+      240
+    ],
+    "size": [
+      95,
+      118
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      4911,
+      2891
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      5068,
+      298
+    ],
+    "size": [
+      95,
+      130
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      5193,
+      2959
+    ],
+    "size": [
+      95,
+      68
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      5357,
+      232
+    ],
+    "size": [
+      170,
+      181
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      5488,
+      2990
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      5628,
+      335
+    ],
+    "size": [
+      95,
+      109
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      5781,
+      2992
+    ],
+    "size": [
+      95,
+      98
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      6021,
+      259
+    ],
+    "size": [
+      95,
+      118
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      6134,
+      2966
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      6254,
+      279
+    ],
+    "size": [
+      95,
+      130
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "crystals",
+    "pos": [
+      6391,
+      2921
+    ],
+    "size": [
+      95,
+      68
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "island",
+    "pos": [
+      6657,
+      296
+    ],
+    "size": [
+      170,
+      181
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      6792,
+      2993
+    ],
+    "size": [
+      95,
+      67
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "column",
+    "pos": [
+      6931,
+      247
+    ],
+    "size": [
+      95,
+      109
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "window",
+    "pos": [
+      7086,
+      2934
+    ],
+    "size": [
+      95,
+      98
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "mobile",
+    "pos": [
+      7180,
+      268
+    ],
+    "size": [
+      95,
+      118
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "postbox",
+    "pos": [
+      7423,
+      3011
+    ],
+    "size": [
+      95,
+      112
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "pennant",
+    "pos": [
+      7587,
+      306
+    ],
+    "size": [
+      95,
+      130
+    ],
+    "fade": true,
+    "category": "scenery"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      550,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      770,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      990,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      1210,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      1430,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      1650,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      1870,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      2090,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      2310,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      2530,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      2750,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      2970,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      3190,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      3410,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      3630,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      3850,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      4070,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      4290,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      4510,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      4730,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      4950,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      5170,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      5390,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      5610,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      5830,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      6050,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      6270,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      6490,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "stones",
+    "pos": [
+      6710,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "medallion",
+    "pos": [
+      6930,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "crater",
+    "pos": [
+      7150,
+      2455
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  },
+  {
+    "kind": "sundial",
+    "pos": [
+      7370,
+      1225
+    ],
+    "size": [
+      58,
+      40
+    ],
+    "fade": false,
+    "category": "ground_detail"
+  }
+]

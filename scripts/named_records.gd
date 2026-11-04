@@ -17,6 +17,9 @@ static func state(l:Node)->Dictionary:
  for route in s.routes:
   if s.routes[route].week_id!=week:s.routes[route].week={};s.routes[route].week_id=week
  preload("res://scripts/sunfield_records257.gd").apply(l,s)
+ preload("res://scripts/coast_records266.gd").apply(l,s)
+ preload("res://scripts/marsh_records284.gd").apply(l,s)
+ preload("res://scripts/descent_records292.gd").apply(s,week)
  return s
 static func cleared(l:Node,realm:String,seconds:float)->void:
  if preload("res://scripts/profile_store.gd").progression_blocked() or realm not in l.game.manifest.regions or seconds<1:return
@@ -52,15 +55,23 @@ static func valid(v:Variant)->bool:
  if v.has("routes"):
   if not v.routes is Dictionary or v.routes.size()!=2:return false
   for route in ["solo","coop"]:
-   if not v.routes.get(route) is Dictionary or v.routes[route].size() not in [3,4] or not v.routes[route].get("week_id") is String:return false
-   if v.routes[route].size()==4 and not v.routes[route].has("sunfield_revision"):return false
+   if not v.routes.get(route) is Dictionary or v.routes[route].size() not in [3,4,5,6] or not v.routes[route].get("week_id") is String:return false
+   for field in v.routes[route]:
+    if field not in ["all","week","week_id","sunfield_revision","folded_coast_revision","lantern_marsh_revision"]:return false
+   if v.routes[route].has("lantern_marsh_revision") and v.routes[route].lantern_marsh_revision!=284:return false
+   if v.routes[route].has("folded_coast_revision") and v.routes[route].folded_coast_revision!=266:return false
    if v.routes[route].has("sunfield_revision") and v.routes[route].sunfield_revision!=257:return false
    for scope in ["all","week"]:
     if not v.routes[route].get(scope) is Dictionary or v.routes[route][scope].size()>128:return false
     for id in v.routes[route][scope]:
      if id not in JSON.parse_string(FileAccess.get_file_as_string("res://content/manifest.json")).regions or not C.number(v.routes[route][scope][id],86400) or v.routes[route][scope][id]<1:return false
  if v.has("descent"):
-  if not v.descent is Dictionary or v.descent.size()!=2:return false
+  if not v.descent is Dictionary or v.descent.size() not in [2,5]:return false
+  if v.descent.size()==5:
+   if v.descent.get("revision")!=292 or not v.descent.get("week_id") is String or v.descent.week_id.length()!=10:return false
+   if not v.descent.get("week") is Dictionary or v.descent.week.size()!=2:return false
+   for route in ["solo","coop"]:
+    if not preload("res://scripts/competitive_progress.gd").integer(v.descent.week.get(route),1000000):return false
   for route in ["solo","coop"]:
    if not preload("res://scripts/competitive_progress.gd").integer(v.descent.get(route),1000000):return false
  if v.has("hero_records") and not valid_hero_records(v.hero_records):return false
@@ -92,7 +103,7 @@ static func valid_hero_records(records:Variant)->bool:
   var parts=key.split(":")
   if parts.size()!=3 or parts[0] not in ["time","time_solo","time_coop","between","descent"] or not (parts[1]=="all" or parts[1].length()==10):return false
   if parts[0] in ["between","descent"]:
-   if parts[1]!="all" or parts[2] not in ["solo","coop"]:return false
+   if (parts[0]=="between" and parts[1]!="all") or parts[2] not in ["solo","coop"]:return false
   elif parts[2] not in manifest.regions:return false
   var r=records[key]
   if not r is Dictionary or r.size() not in [2,3] or not record_hero_id(r.get("hero"),manifest.characters) or not C.number(r.get("value"),1000000 if parts[0] in ["between","descent"] else 86400):return false
@@ -122,6 +133,10 @@ static func descent_cleared(l:Node,floor:int)->void:
  if floor>=previous:
   remember_hero(l,"descent","all",route,floor,floor>previous)
   s.descent[route]=maxi(previous,floor);l.community.delay=1
+ var weekly=int(s.descent.week[route])
+ if floor>=weekly:
+  remember_hero(l,"descent",str(s.week),route,floor,floor>weekly)
+  s.descent.week[route]=maxi(weekly,floor);l.community.delay=1
 
 static func realm_name(l:Node,realm:String)->String:
  if not l.arcade:return str(l.game.realms.get(realm,{}).get("name",realm))

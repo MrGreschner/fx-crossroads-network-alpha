@@ -14,6 +14,8 @@ var drawn_props:=0
 var drawn_water:=0
 func reset()->void:stamps.clear();terrain_cache.clear();terrain_order.clear();ground_validated=false
 func texture(name:String)->Texture2D:
+ var updated=preload("res://scripts/silverfall_environment285.gd").legacy_texture(name)
+ if updated!=null:return updated
  if not art.has(name):art[name]=preload("res://scripts/source_art.gd").texture("res://assets/"+name+".svg")
  return art[name]
 func near(bounds:Rect2)->bool:return bounds.intersects(Rect2(world.adventure.game.camera,world.adventure.game.get_viewport_rect().size).grow(300))
@@ -127,6 +129,8 @@ func prop_bounds(p:Dictionary)->Rect2:
  var size=body_size(str(p.kind))*float(p.scale)
  return Rect2(world.v(p.pos)-Vector2(size.x*.5,size.y*.94),size)
 func draw_world(c:Node2D,camera:Vector2)->void:
+ if preload("res://scripts/silverfall_environment285.gd").draw_interior(world,c,camera):return
+ preload("res://scripts/silverfall_environment285.gd").draw_details(world,c,camera)
  drawn_props=0
  var view=Rect2(camera,c.get_viewport_rect().size).grow(180)
  for p in world.data.props:
@@ -168,6 +172,8 @@ func draw_world(c:Node2D,camera:Vector2)->void:
   var p=world.v(world.boat.pos)
   if view.has_point(p):c.draw_texture_rect(texture("sf_raft"),Rect2(p-camera-Vector2(90,95),Vector2(180,127)),false)
 func draw_on(c:Node2D,camera:Vector2)->void:
+ preload("res://scripts/silverfall_environment285.gd").draw_life(world,c,camera)
+ if preload("res://scripts/silverfall_environment285.gd").interior(world,c,camera).has_area():return
  var view=Rect2(camera,c.get_viewport_rect().size).grow(250)
  for p in world.data.props:
   if str(p.kind) not in ["sf_willow","sf_birch"]:continue
@@ -196,6 +202,7 @@ static func draw_bolt(c:Node2D,shot:Dictionary,p:Vector2,time:float)->bool:
  return true
 
 func draw_baked(canvas:Node2D,camera:Vector2)->void:
+ if preload("res://scripts/silverfall_environment285.gd").draw_ground(world,canvas,camera):return
  if terrain_manifest.is_empty():
   var text=FileAccess.get_file_as_string("res://assets/silverfall_ground/manifest.json");var parsed=JSON.parse_string(text)
   if not parsed is Dictionary:return

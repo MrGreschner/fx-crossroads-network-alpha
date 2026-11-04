@@ -708,11 +708,12 @@ func draw_on(canvas: Node2D, camera: Vector2) -> void:
 			var point := Vector2(300+n*347,300+sin(n*1.7)*200)-camera
 			canvas.draw_circle(point,3+sin(clock*2+n),Color(.55,.7,1,.8))
 			if n%3!=0:canvas.draw_line(point,Vector2(300+(n-1)*347,300+sin((n-1)*1.7)*200)-camera,Color(.3,.5,.8,.3),1)
-	for trial in trials:
-		var origin:=vec(trial["origin"])
-		for rect in [Rect2(origin+Vector2(826,0),Vector2(952,1218)),Rect2(origin+Vector2(826,1582),Vector2(952,1218))]:
-			canvas.draw_rect(Rect2(rect.position-camera,rect.size),Color("#171c2c"))
-			canvas.draw_rect(Rect2(rect.position-camera,rect.size),Color("#727394"),false,4)
+	if not preload("res://scripts/oath_environment297.gd").enabled(self):
+		for trial in trials:
+			var origin:=vec(trial["origin"])
+			for rect in [Rect2(origin+Vector2(826,0),Vector2(952,1218)),Rect2(origin+Vector2(826,1582),Vector2(952,1218))]:
+				canvas.draw_rect(Rect2(rect.position-camera,rect.size),Color("#171c2c"))
+				canvas.draw_rect(Rect2(rect.position-camera,rect.size),Color("#727394"),false,4)
 	for trap in traps:
 		var bounds:=Rect2(float(trap["rect"][0]),float(trap["rect"][1]),float(trap["rect"][2]),float(trap["rect"][3]))
 		var phase:=fmod(clock+float(trap["phase"]),float(trap["period"]))

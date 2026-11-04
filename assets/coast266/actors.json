@@ -1,0 +1,98 @@
+{
+  "sun_sentinel": {
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.725,
+      0.9375
+    ],
+    "factor": 1.6477275,
+    "index": 0,
+    "source": "sun_original.png",
+    "visible_height": 176
+  },
+  "sun_sentinel_crown": {
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.725,
+      0.9375
+    ],
+    "factor": 1.6477275,
+    "index": 1,
+    "source": "sun_original.png",
+    "visible_height": 206
+  },
+  "sunbeam_cantor": {
+    "old_normalized": [
+      0.25,
+      0.3125,
+      0.7,
+      0.9375
+    ],
+    "factor": 1.45,
+    "index": 2,
+    "source": "sun_original.png",
+    "visible_height": 222
+  },
+  "saffron_hopper": {
+    "old_normalized": [
+      0.175,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.25,
+    "index": 3,
+    "source": "sun_original.png",
+    "visible_height": 216
+  },
+  "cartographer": {
+    "old_normalized": [
+      0.1625,
+      0.3375,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.3888888,
+    "index": 4,
+    "source": "actors_original.png",
+    "visible_height": 145
+  },
+  "inkfin": {
+    "old_normalized": [
+      0.1875,
+      0.45,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.6239313,
+    "index": 5,
+    "source": "actors_original.png",
+    "visible_height": 157
+  },
+  "foldwing": {
+    "old_normalized": [
+      0.225,
+      0.5375,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.9270837,
+    "index": 6,
+    "source": "actors_original.png",
+    "visible_height": 115
+  },
+  "crease_sentry": {
+    "old_normalized": [
+      0.2375,
+      0.3875,
+      0.7625,
+      0.9375
+    ],
+    "factor": 1.3068188,
+    "index": 7,
+    "source": "actors_original.png",
+    "visible_height": 177
+  }
+}

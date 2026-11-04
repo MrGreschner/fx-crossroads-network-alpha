@@ -5,6 +5,7 @@ const LIMIT=48
 var game:Node2D
 var chunks:Dictionary={}
 var age:=0
+var battleground_layout=""
 class Chunk extends Node2D:
  var tiles:Array=[]
  var cells:Dictionary={}
@@ -15,6 +16,7 @@ class Chunk extends Node2D:
  func compile()->void:
   texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
   spans.clear()
+  if not compact:return
   var consumed={}
   for y in 8:
    for x in 8:
@@ -48,7 +50,9 @@ func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
  chunks.clear()
 func sync()->void:
- if game.mode=="coop" and game.realm_id=="sunfield":hide();return
+ var layout_key=str(game.battlegrounds.map_id)+str(game.battlegrounds.lanes) if game.mode=="battlegrounds" else ""
+ if layout_key!=battleground_layout:reset();battleground_layout=layout_key
+ if game.mode=="coop" and game.realm_id in ["sunfield","ice","confluence","folded_coast","moonburrow"]:hide();return
  if game.mode=="descent":hide();return
  if game.mode=="coop" and game.realm_id in ["moonveil","silverfall"]:hide();return
  visible=game.started and not game.spectating() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
@@ -64,6 +68,12 @@ func sync()->void:
     for tx in range(x*8,x*8+8):
      for ty in range(y*8,y*8+8):
       var tile:String=game.cached_world_tile(tx,ty,64);var local:=Vector2(tx*64,ty*64)-chunk.position
+      if game.mode=="battlegrounds":
+       preload("res://scripts/battleground_art262.gd").append(chunk,tx,ty,local,game);continue
+      if game.mode=="defense":
+       preload("res://scripts/north_art260.gd").append(chunk,tx,ty,local,tile,game);continue
+      if game.mode=="arena":
+       preload("res://scripts/arena_art261.gd").append(chunk,tx,ty,local,tile,game);continue
       var painted:Texture2D=preload("res://scripts/grove_art253.gd").texture(tile) if game.mode=="coop" and game.realm_id=="grove" and tile in ["forest","path"] else game.art.get(tile)
       if game.mode=="coop" and game.realm_id=="quarry" and tile in ["ash","path"]:
        var a=preload("res://scripts/quarry_art254.gd");painted=a.texture("ash")
@@ -88,5 +98,5 @@ func counters()->Dictionary:
  var original=0;var merged=0;var active=0
  for chunk in chunks.values():
   if not chunk.visible:continue
-  active+=1;original+=chunk.tiles.size();merged+=chunk.spans.size()+chunk.flowers.size()
+  active+=1;original+=chunk.tiles.size();merged+=chunk.tiles.size() if not chunk.compact else chunk.spans.size()+chunk.flowers.size()
  return {"visible_chunks":active,"original_quads":original,"merged_quads":merged}

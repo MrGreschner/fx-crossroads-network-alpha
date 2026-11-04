@@ -1,0 +1,262 @@
+{
+  "bramble": {
+    "index": 0,
+    "old_normalized": [
+      0.1625,
+      0.3125,
+      0.85,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 57,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "archer": {
+    "index": 1,
+    "old_normalized": [
+      0.175,
+      0.2625,
+      0.8625,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "lantern_moth": {
+    "index": 2,
+    "old_normalized": [
+      0.15,
+      0.425,
+      0.8625,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 44,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "bramble_boss": {
+    "index": 3,
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.8625,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 50,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "imp": {
+    "index": 4,
+    "old_normalized": [
+      0.2125,
+      0.4375,
+      0.8,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 60,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "cinderling": {
+    "index": 5,
+    "old_normalized": [
+      0.1875,
+      0.2375,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "warlock": {
+    "index": 6,
+    "old_normalized": [
+      0.3125,
+      0.4,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.5,
+    "visible_height": 56,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "quarry_boss": {
+    "index": 7,
+    "old_normalized": [
+      0.2,
+      0.3875,
+      0.8625,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 50,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "honey_beetle": {
+    "index": 8,
+    "old_normalized": [
+      0.2375,
+      0.3875,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 55,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "seed_blossom": {
+    "index": 9,
+    "old_normalized": [
+      0.2375,
+      0.3375,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.25,
+    "visible_height": 42,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "amber_hornet": {
+    "index": 10,
+    "old_normalized": [
+      0.225,
+      0.4125,
+      0.825,
+      0.9375
+    ],
+    "factor": 1.4285713,
+    "visible_height": 54,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "royal_nurse": {
+    "index": 11,
+    "old_normalized": [
+      0.225,
+      0.325,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.2585037,
+    "visible_height": 47,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "glass_queen": {
+    "index": 12,
+    "old_normalized": [
+      0.2,
+      0.3625,
+      0.85,
+      0.9375
+    ],
+    "factor": 1.5489125,
+    "visible_height": 59,
+    "frames": 4,
+    "movement": "wingbeat"
+  },
+  "yellow_bus": {
+    "index": 13,
+    "old_normalized": [
+      0.225,
+      0.3875,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.5340913,
+    "visible_height": 48,
+    "frames": 4,
+    "movement": "wheel_suspension"
+  },
+  "pencil_scrapper": {
+    "index": 14,
+    "old_normalized": [
+      0.3125,
+      0.325,
+      0.7375,
+      0.9375
+    ],
+    "factor": 1.2414962,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "backpack_biter": {
+    "index": 15,
+    "old_normalized": [
+      0.2625,
+      0.3125,
+      0.7875,
+      0.9375
+    ],
+    "factor": 1.3333337,
+    "visible_height": 60,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "paper_sprite": {
+    "index": 16,
+    "old_normalized": [
+      0.1875,
+      0.375,
+      0.875,
+      0.9375
+    ],
+    "factor": 1.2962962,
+    "visible_height": 55,
+    "frames": 4,
+    "movement": "paper_flutter"
+  },
+  "lesson_warden": {
+    "index": 17,
+    "old_normalized": [
+      0.1875,
+      0.3375,
+      0.8375,
+      0.9375
+    ],
+    "factor": 1.3888888,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  },
+  "recess_ringleader": {
+    "index": 18,
+    "old_normalized": [
+      0.2125,
+      0.3125,
+      0.8125,
+      0.9375
+    ],
+    "factor": 1.35,
+    "visible_height": 58,
+    "frames": 4,
+    "movement": "playground_spring"
+  },
+  "chalkling": {
+    "index": 19,
+    "old_normalized": [
+      0.3229166666666667,
+      0.2916666666666667,
+      0.7083333333333334,
+      0.875
+    ],
+    "factor": 1.0,
+    "visible_height": 64,
+    "frames": 4,
+    "movement": "walk"
+  }
+}

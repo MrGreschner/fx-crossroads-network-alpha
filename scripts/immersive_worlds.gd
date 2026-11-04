@@ -6,6 +6,7 @@ var floor_geometry:Array=[]
 var floor_bins:Dictionary={}
 var solid_bins:Dictionary={}
 var floor_layers:Array=[]
+var marsh_art=preload("res://scripts/marsh_art284.gd").new()
 var marsh_encounters=preload("res://scripts/lantern_marsh_encounters.gd").new()
 var sunfield_art=preload("res://scripts/sunfield_art257.gd").new()
 var silver_art=preload("res://scripts/silverfall_art.gd").new()
@@ -46,7 +47,7 @@ func polygon(p:Array)->PackedVector2Array:
  return points
 func setup(id:String)->void:
  sunfield_art.world=self;sunfield_art.reset()
- marsh_encounters.world=self;marsh_encounters.reset()
+ marsh_encounters.world=self;marsh_encounters.reset();marsh_art.world=self
  silver_art.world=self;silver_art.reset();silver_encounters.world=self;silver_encounters.reset()
  for layer in floor_layers:layer.queue_free()
  floor_layers.clear();floor_geometry.clear();floor_bins.clear();solid_bins.clear();floor_stamps.clear()
@@ -113,6 +114,7 @@ func moving(id:String)->bool:return active and bool(boat.get("moving",false)) an
 func aboard(id:String)->bool:return active and id in boat.get("passengers",[])
 func terrain_speed(point:Vector2)->float:
  if not active:return 1.0
+ if str(data.id)=="lantern_marsh":return marsh_art.terrain_speed(point)
  for patch in data.mud:
   if r(patch).has_point(point):return .55
  return 1.0
@@ -412,6 +414,8 @@ func floor_bounds(floor:Dictionary)->Rect2:
 func visible(bounds:Rect2,camera:Vector2)->bool:return bounds.intersects(Rect2(camera-Vector2(300,400),Vector2(1900,1250)))
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
+ if str(data.get("id",""))=="lantern_marsh":marsh_art.draw_world(canvas,camera);return
+ if str(data.get("id",""))=="petalbrook":preload("res://scripts/canopy_art272.gd").draw(self,canvas,camera);return
  if data.id=="sunfield":
   if floor_layers.is_empty():
    var ground=preload("res://scripts/sunfield_ground257.gd").new();ground.source=self;canvas.add_child(ground);floor_layers.append(ground)
@@ -548,6 +552,9 @@ func draw_conservatory(canvas:Node2D,camera:Vector2)->void:
   canvas.draw_line(p+Vector2(-8,0),p+Vector2(8,0),Color("#f5df9a"),3,true)
 
 func draw_on(canvas:Node2D,camera:Vector2)->void:
+ if active and str(data.get("id",""))=="lantern_marsh":
+  marsh_art.draw_on(canvas,camera);draw_attacks(canvas,camera);marsh_encounters.draw(canvas,camera);return
+ if active and str(data.get("id",""))=="petalbrook":preload("res://scripts/canopy_art272.gd").overlay(self,canvas,camera);return
  if active and data.id=="sunfield":sunfield_art.draw_on(canvas,camera);draw_sunbeams257(canvas,camera);draw_attacks(canvas,camera);return
  if not active:
   if adventure.between_guardians():draw_attacks(canvas,camera)
@@ -598,7 +605,7 @@ func draw_hud(canvas:Node2D)->void:
  for enemy in adventure.foes():
   if bool(enemy.get("immersive",false)) and not bool(enemy.boss) and str(enemy.type)!="royal_nurse":count+=1
  var text:= "Guardian defeated • interact at the exit" if done else str(data.stages[mini(stage,data.stages.size()-1)])+ (" • "+str(count)+" defenders left" if stage==0 else "")
- canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Explore orchard paths, terraces and the windmill ridge. Bridges cross the creek; sunbeams always warn before striking.","lantern_marsh":"Dodge to shed mosquitoes. Stop shooting into an open maw. Silk and mud slow; stomp warnings stun.","silverfall":"E: refuges, discoveries and ferry. Follow stone spans or the shore; hidden coves reward exploration.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
+ canvas.draw_string(font,Vector2(33,top+22),text,HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),16,Color("#f5e4b3"));var tips:Dictionary={"honeyglass":"Follow the golden guide • gallery loops and nectar gardens lead to the Crown Chamber.","sunfield":"Explore orchard paths, terraces and the windmill ridge. Bridges cross the creek; sunbeams always warn before striking.","lantern_marsh":"Amber lanterns: boardwalk. Fireflies: fen crossings. Mire slows; violet spores hurt. Dodge to shed mosquitoes; avoid the open maw.","silverfall":"E: refuges, discoveries and ferry. Follow stone spans or the shore; hidden coves reward exploration.","petalbrook":"Explore ribbon paths, hollow logs, cottages and tea gardens. E / Interact: doors and discoveries."}
  canvas.draw_string(font,Vector2(33,top+43),str(tips.get(data.id,"Explore")),HORIZONTAL_ALIGNMENT_LEFT,minf(820,canvas.VIEW.x-240),14,Color("#b9dccc"))
  # Stable objective selection, route distance and a doorway prompt for separated interiors.
  var origin:Vector2=adventure.points().get(adventure.game.my_id if adventure.arcade else "solo",Vector2.ZERO)

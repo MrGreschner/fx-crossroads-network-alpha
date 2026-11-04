@@ -1,0 +1,6039 @@
+[
+  {
+    "kind": "briar_arch",
+    "pos": [
+      588.0,
+      588.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop0"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      1092.0,
+      728.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop1"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      2450.0,
+      728.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop2"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      3038.0,
+      588.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop3"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      588.0,
+      3052.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop4"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      1050.0,
+      2898.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop5"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      2450.0,
+      2926.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop6"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      3038.0,
+      3052.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 0,
+    "fade": true,
+    "original": "Prop7"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      4508.0,
+      588.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop8"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      5012.0,
+      728.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop9"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      6370.0,
+      728.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop10"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      6958.0,
+      588.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop11"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      4508.0,
+      3052.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop12"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      4970.0,
+      2898.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop13"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      6370.0,
+      2926.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop14"
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      6958.0,
+      3052.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 1,
+    "fade": true,
+    "original": "Prop15"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      588.0,
+      4508.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop16"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      1092.0,
+      4648.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop17"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      2450.0,
+      4648.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop18"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      3038.0,
+      4508.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop19"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      588.0,
+      6972.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop20"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      1050.0,
+      6818.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop21"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      2450.0,
+      6846.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop22"
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      3038.0,
+      6972.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 2,
+    "fade": true,
+    "original": "Prop23"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      4508.0,
+      4508.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop24"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      5012.0,
+      4648.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop25"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      6370.0,
+      4648.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop26"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      6958.0,
+      4508.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop27"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      4508.0,
+      6972.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop28"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      4970.0,
+      6818.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop29"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      6370.0,
+      6846.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop30"
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      6958.0,
+      6972.0
+    ],
+    "size": [
+      100,
+      120
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 3,
+    "fade": true,
+    "original": "Prop31"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      9750.0,
+      3653.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin0"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10160.0,
+      3339.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin1"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10276.0,
+      1907.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin2"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12614.0,
+      2301.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin5"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10303.0,
+      1865.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin6"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12412.0,
+      1978.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin7"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11894.0,
+      3563.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin9"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11854.0,
+      3419.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin10"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10183.0,
+      1813.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin12"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11350.0,
+      3128.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin13"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11405.0,
+      1975.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin18"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9911.0,
+      2466.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin19"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10535.0,
+      2334.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin21"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      10052.0,
+      3526.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin23"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      10550.0,
+      3501.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin25"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12689.0,
+      3235.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin26"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10493.0,
+      3084.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin27"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11674.0,
+      1899.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin29"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10778.0,
+      3106.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin30"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10901.0,
+      3099.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin31"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12042.0,
+      3352.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin32"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11673.0,
+      3025.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin33"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10954.0,
+      2452.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin35"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11993.0,
+      2938.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin36"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      10083.0,
+      2440.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin37"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      10489.0,
+      1847.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin38"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12163.0,
+      3264.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin39"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12548.0,
+      2121.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin40"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12442.0,
+      3365.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin41"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      10866.0,
+      2981.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin42"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12359.0,
+      2536.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin43"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10166.0,
+      3592.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin44"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10529.0,
+      3097.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin45"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      11521.0,
+      3380.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin46"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      9898.0,
+      2213.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin47"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      10796.0,
+      2134.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin48"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12309.0,
+      2218.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin49"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12622.0,
+      2352.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin52"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      11648.0,
+      1967.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin53"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11740.0,
+      3827.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin54"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      10838.0,
+      3255.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin55"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12209.0,
+      3738.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin56"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12305.0,
+      1885.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin57"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10158.0,
+      3718.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin58"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10264.0,
+      3768.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin59"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      11706.0,
+      3654.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin61"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      9745.0,
+      2126.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "NexusRuin63"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9820.0,
+      1830.0
+    ],
+    "size": [
+      82,
+      78
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "SolidNexusRubble0"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12520.0,
+      1830.0
+    ],
+    "size": [
+      82,
+      78
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "SolidNexusRubble1"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9820.0,
+      3770.0
+    ],
+    "size": [
+      82,
+      78
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "SolidNexusRubble2"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12520.0,
+      3770.0
+    ],
+    "size": [
+      82,
+      78
+    ],
+    "category": "original_obstacle",
+    "anchor": [
+      0.5,
+      0.65
+    ],
+    "district": 4,
+    "fade": true,
+    "original": "SolidNexusRubble3"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      9760.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze0"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9760.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth0"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9950.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze1"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      9950.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth1"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10140.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze2"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      10140.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth2"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      10330.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze3"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      10330.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth3"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      10520.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze4"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      10520.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth4"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      10710.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze5"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10710.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth5"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      10900.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze6"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      10900.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth6"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11090.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze7"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      11090.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth7"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      11280.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze8"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11280.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth8"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11470.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze9"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      11470.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth9"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      11660.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze10"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      11660.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth10"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      11850.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze11"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      11850.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth11"
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12040.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze12"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12040.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth12"
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12230.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze13"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12230.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth13"
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12420.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze14"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12420.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth14"
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12610.0,
+      4910.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFrieze15"
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12610.0,
+      7360.0
+    ],
+    "size": [
+      96,
+      108
+    ],
+    "category": "original_decoration",
+    "anchor": [
+      0.5,
+      0.7
+    ],
+    "district": 5,
+    "fade": true,
+    "original": "ArenaFriezeSouth15"
+  },
+  {
+    "kind": "briar_arch",
+    "pos": [
+      1820.0,
+      434
+    ],
+    "size": [
+      360,
+      320
+    ],
+    "category": "landmark",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      430,
+      700.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      430,
+      980.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "briar_lantern",
+    "pos": [
+      430,
+      1260.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "fern_roots",
+    "pos": [
+      430,
+      1540.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      430,
+      1820.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      430,
+      2100.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      430,
+      2380.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "briar_lantern",
+    "pos": [
+      430,
+      2660.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "fern_roots",
+    "pos": [
+      430,
+      2940.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      3210,
+      700.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "briar_lantern",
+    "pos": [
+      3210,
+      980.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "fern_roots",
+    "pos": [
+      3210,
+      1260.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      3210,
+      1540.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      3210,
+      1820.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      3210,
+      2100.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "briar_lantern",
+    "pos": [
+      3210,
+      2380.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "fern_roots",
+    "pos": [
+      3210,
+      2660.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      3210,
+      2940.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      770.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      1120.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "briar_lantern",
+    "pos": [
+      1470.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      2170.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      2520.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      2870.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "briar_seal",
+    "pos": [
+      890,
+      970
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 0,
+    "fade": false
+  },
+  {
+    "kind": "briar_seal",
+    "pos": [
+      2770,
+      970
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 0,
+    "fade": false
+  },
+  {
+    "kind": "briar_seal",
+    "pos": [
+      890,
+      2670
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 0,
+    "fade": false
+  },
+  {
+    "kind": "briar_seal",
+    "pos": [
+      2770,
+      2670
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 0,
+    "fade": false
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      1484.0,
+      1053.3600000000001
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      1722.0,
+      1053.3600000000001
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      1960.0,
+      1053.3600000000001
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      1484.0,
+      2635.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_altar",
+    "pos": [
+      1722.0,
+      2635.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "vine_memorial",
+    "pos": [
+      1960.0,
+      2635.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "root_urn",
+    "pos": [
+      2660,
+      540
+    ],
+    "size": [
+      160,
+      180
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "kiln_gate",
+    "pos": [
+      5740.0,
+      434
+    ],
+    "size": [
+      360,
+      320
+    ],
+    "category": "landmark",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      4350,
+      700.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      4350,
+      980.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      4350,
+      1260.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "tool_rack",
+    "pos": [
+      4350,
+      1540.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      4350,
+      1820.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      4350,
+      2100.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      4350,
+      2380.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      4350,
+      2660.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "tool_rack",
+    "pos": [
+      4350,
+      2940.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      7130,
+      700.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      7130,
+      980.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "tool_rack",
+    "pos": [
+      7130,
+      1260.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      7130,
+      1540.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      7130,
+      1820.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      7130,
+      2100.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      7130,
+      2380.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "tool_rack",
+    "pos": [
+      7130,
+      2660.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      7130,
+      2940.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      4690.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      5040.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      5390.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      6090.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      6440.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      6790.0,
+      3208
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_seal",
+    "pos": [
+      4810,
+      970
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 1,
+    "fade": false
+  },
+  {
+    "kind": "cinder_seal",
+    "pos": [
+      6690,
+      970
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 1,
+    "fade": false
+  },
+  {
+    "kind": "cinder_seal",
+    "pos": [
+      4810,
+      2670
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 1,
+    "fade": false
+  },
+  {
+    "kind": "cinder_seal",
+    "pos": [
+      6690,
+      2670
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 1,
+    "fade": false
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      5404.0,
+      1053.3600000000001
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      5642.0,
+      1053.3600000000001
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      5880.0,
+      1053.3600000000001
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      5404.0,
+      2635.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "cinder_urn",
+    "pos": [
+      5642.0,
+      2635.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "basalt_column",
+    "pos": [
+      5880.0,
+      2635.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "kiln",
+    "pos": [
+      6580,
+      540
+    ],
+    "size": [
+      160,
+      180
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "mirror_frame",
+    "pos": [
+      1820.0,
+      4354
+    ],
+    "size": [
+      360,
+      320
+    ],
+    "category": "landmark",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      430,
+      4620.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      430,
+      4900.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      430,
+      5180.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      430,
+      5460.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      430,
+      5740.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      430,
+      6020.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      430,
+      6300.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      430,
+      6580.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      430,
+      6860.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      3210,
+      4620.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      3210,
+      4900.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      3210,
+      5180.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      3210,
+      5460.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      3210,
+      5740.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      3210,
+      6020.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      3210,
+      6300.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      3210,
+      6580.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      3210,
+      6860.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      770.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      1120.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      1470.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      2170.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      2520.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      2870.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "frost_seal",
+    "pos": [
+      890,
+      4890
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 2,
+    "fade": false
+  },
+  {
+    "kind": "frost_seal",
+    "pos": [
+      2770,
+      4890
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 2,
+    "fade": false
+  },
+  {
+    "kind": "frost_seal",
+    "pos": [
+      890,
+      6590
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 2,
+    "fade": false
+  },
+  {
+    "kind": "frost_seal",
+    "pos": [
+      2770,
+      6590
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 2,
+    "fade": false
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      1484.0,
+      4973.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      1722.0,
+      4973.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      1960.0,
+      4973.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      1484.0,
+      6555.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "chime_lamp",
+    "pos": [
+      1722.0,
+      6555.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      1960.0,
+      6555.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "crystal",
+    "pos": [
+      2660,
+      4460
+    ],
+    "size": [
+      160,
+      180
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 2,
+    "fade": true
+  },
+  {
+    "kind": "storm_spire",
+    "pos": [
+      5740.0,
+      4354
+    ],
+    "size": [
+      360,
+      320
+    ],
+    "category": "landmark",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      4350,
+      4620.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      4350,
+      4900.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      4350,
+      5180.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      4350,
+      5460.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      4350,
+      5740.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      4350,
+      6020.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      4350,
+      6300.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      4350,
+      6580.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      4350,
+      6860.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      7130,
+      4620.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      7130,
+      4900.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      7130,
+      5180.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      7130,
+      5460.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      7130,
+      5740.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      7130,
+      6020.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      7130,
+      6300.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      7130,
+      6580.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      7130,
+      6860.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      4690.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      5040.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      5390.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      6090.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      6440.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      6790.0,
+      7128
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_seal",
+    "pos": [
+      4810,
+      4890
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 3,
+    "fade": false
+  },
+  {
+    "kind": "storm_seal",
+    "pos": [
+      6690,
+      4890
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 3,
+    "fade": false
+  },
+  {
+    "kind": "storm_seal",
+    "pos": [
+      4810,
+      6590
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 3,
+    "fade": false
+  },
+  {
+    "kind": "storm_seal",
+    "pos": [
+      6690,
+      6590
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 3,
+    "fade": false
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      5404.0,
+      4973.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      5642.0,
+      4973.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      5880.0,
+      4973.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      5404.0,
+      6555.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_globe",
+    "pos": [
+      5642.0,
+      6555.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      5880.0,
+      6555.36
+    ],
+    "size": [
+      138,
+      155
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "storm_coil",
+    "pos": [
+      6580,
+      4460
+    ],
+    "size": [
+      160,
+      180
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 3,
+    "fade": true
+  },
+  {
+    "kind": "oath_gate",
+    "pos": [
+      11200.0,
+      1554
+    ],
+    "size": [
+      360,
+      320
+    ],
+    "category": "landmark",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9530,
+      1792.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      9530,
+      2044.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      9530,
+      2296.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9530,
+      2548.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      9530,
+      2800.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9530,
+      3052.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      9530,
+      3304.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      9530,
+      3556.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9530,
+      3808.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12870,
+      1792.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12870,
+      2044.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12870,
+      2296.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12870,
+      2548.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12870,
+      2800.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12870,
+      3052.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12870,
+      3304.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12870,
+      3556.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12870,
+      3808.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9940.0,
+      4048
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      10360.0,
+      4048
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      10780.0,
+      4048
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11620.0,
+      4048
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12040.0,
+      4048
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12460.0,
+      4048
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 4,
+    "fade": true
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      9990,
+      2090
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      12430,
+      2090
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      9990,
+      3510
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      12430,
+      3510
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      11200.0,
+      2800.0
+    ],
+    "size": [
+      280,
+      220
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "empty_throne",
+    "pos": [
+      11200.0,
+      4774
+    ],
+    "size": [
+      270,
+      300
+    ],
+    "category": "landmark",
+    "anchor": [
+      0.5,
+      0.94
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9530,
+      5040.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      9530,
+      5320.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      9530,
+      5600.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9530,
+      5880.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      9530,
+      6160.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9530,
+      6440.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      9530,
+      6720.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      9530,
+      7000.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9530,
+      7280.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      1,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12870,
+      5040.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12870,
+      5320.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12870,
+      5600.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12870,
+      5880.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12870,
+      6160.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12870,
+      6440.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      12870,
+      6720.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12870,
+      7000.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      12870,
+      7280.0
+    ],
+    "size": [
+      98,
+      110
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0,
+      0.75
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      9940.0,
+      7548
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      10360.0,
+      7548
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_lantern",
+    "pos": [
+      10780.0,
+      7548
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "knight_memorial",
+    "pos": [
+      11620.0,
+      7548
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_column",
+    "pos": [
+      12040.0,
+      7548
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_banner",
+    "pos": [
+      12460.0,
+      7548
+    ],
+    "size": [
+      105,
+      105
+    ],
+    "category": "perimeter",
+    "anchor": [
+      0.5,
+      0
+    ],
+    "district": 5,
+    "fade": true
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      9990,
+      5310
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      12430,
+      5310
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      9990,
+      7010
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      12430,
+      7010
+    ],
+    "size": [
+      150,
+      110
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "oath_medallion",
+    "pos": [
+      11200.0,
+      6160.0
+    ],
+    "size": [
+      280,
+      220
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "thorn_wall",
+    "pos": [
+      1680,
+      950
+    ],
+    "size": [
+      210,
+      130
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 0,
+    "fade": true
+  },
+  {
+    "kind": "cinder_rubble",
+    "pos": [
+      5590,
+      940
+    ],
+    "size": [
+      170,
+      95
+    ],
+    "category": "wall_furniture",
+    "anchor": [
+      0.5,
+      0.8
+    ],
+    "district": 1,
+    "fade": true
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9850,
+      1960
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12480,
+      1960
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9850,
+      3670
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12480,
+      3670
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 4,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9760,
+      5100
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12560,
+      5100
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      9760,
+      7160
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  },
+  {
+    "kind": "fallen_stone",
+    "pos": [
+      12560,
+      7160
+    ],
+    "size": [
+      110,
+      74
+    ],
+    "category": "flat",
+    "anchor": [
+      0.5,
+      0.5
+    ],
+    "district": 5,
+    "fade": false
+  }
+]

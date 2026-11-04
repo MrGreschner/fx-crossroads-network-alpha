@@ -1,0 +1,2037 @@
+[
+  {
+    "kind": "key_bench",
+    "pos": [
+      257,
+      300
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "key_cabinet",
+    "pos": [
+      602,
+      300
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "safe_cabinet",
+    "pos": [
+      286,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      592,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      236,
+      454
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      670,
+      460
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "key_sign",
+    "pos": [
+      500,
+      239
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      128,
+      230
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      778,
+      563
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      760,
+      690
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "boiler",
+    "pos": [
+      238,
+      225
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "mail_cabinet",
+    "pos": [
+      977,
+      300
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "parcel_desk",
+    "pos": [
+      1322,
+      300
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      1006,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "luggage_trolley",
+    "pos": [
+      1312,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      956,
+      454
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      1390,
+      460
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      1220,
+      239
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      848,
+      230
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "mailbox",
+    "pos": [
+      1498,
+      563
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      1480,
+      690
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      958,
+      225
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "clock_bench",
+    "pos": [
+      1697,
+      300
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "pendulum_clock",
+    "pos": [
+      2042,
+      300
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      1726,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "key_cabinet",
+    "pos": [
+      2032,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      1676,
+      454
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      2110,
+      460
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      1940,
+      239
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      1568,
+      230
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      2218,
+      563
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      2200,
+      690
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      1678,
+      225
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "archive_shelf",
+    "pos": [
+      2417,
+      300
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "map_desk",
+    "pos": [
+      2762,
+      300
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "book_cart",
+    "pos": [
+      2446,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      2752,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      2396,
+      454
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      2830,
+      460
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      2660,
+      239
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      2288,
+      230
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "mailbox",
+    "pos": [
+      2938,
+      563
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      2920,
+      690
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "boiler",
+    "pos": [
+      2398,
+      225
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "tea_counter",
+    "pos": [
+      3137,
+      300
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "bread_counter",
+    "pos": [
+      3482,
+      300
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "wicker_chair",
+    "pos": [
+      3166,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "stove",
+    "pos": [
+      3472,
+      548
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      3116,
+      454
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      3550,
+      460
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      3380,
+      239
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      3008,
+      230
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      3658,
+      563
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      3640,
+      690
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      3118,
+      225
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "key_bench",
+    "pos": [
+      257,
+      1040
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "key_cabinet",
+    "pos": [
+      602,
+      1040
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "safe_cabinet",
+    "pos": [
+      286,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      592,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      236,
+      1194
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      670,
+      1200
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "key_sign",
+    "pos": [
+      500,
+      979
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      128,
+      970
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      778,
+      1303
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      760,
+      1430
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      238,
+      965
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "mail_cabinet",
+    "pos": [
+      977,
+      1040
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "parcel_desk",
+    "pos": [
+      1322,
+      1040
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      1006,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "luggage_trolley",
+    "pos": [
+      1312,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      956,
+      1194
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      1390,
+      1200
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      1220,
+      979
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      848,
+      970
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "mailbox",
+    "pos": [
+      1498,
+      1303
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      1480,
+      1430
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "boiler",
+    "pos": [
+      958,
+      965
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "clock_bench",
+    "pos": [
+      1697,
+      1040
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "pendulum_clock",
+    "pos": [
+      2042,
+      1040
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      1726,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "key_cabinet",
+    "pos": [
+      2032,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      1676,
+      1194
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      2110,
+      1200
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      1940,
+      979
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      1568,
+      970
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      2218,
+      1303
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      2200,
+      1430
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      1678,
+      965
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "archive_shelf",
+    "pos": [
+      2417,
+      1040
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "map_desk",
+    "pos": [
+      2762,
+      1040
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "book_cart",
+    "pos": [
+      2446,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      2752,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      2396,
+      1194
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      2830,
+      1200
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      2660,
+      979
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      2288,
+      970
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "mailbox",
+    "pos": [
+      2938,
+      1303
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      2920,
+      1430
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      2398,
+      965
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "tea_counter",
+    "pos": [
+      3137,
+      1040
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "bread_counter",
+    "pos": [
+      3482,
+      1040
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "wicker_chair",
+    "pos": [
+      3166,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "stove",
+    "pos": [
+      3472,
+      1288
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      3116,
+      1194
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      3550,
+      1200
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      3380,
+      979
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      3008,
+      970
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      3658,
+      1303
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      3640,
+      1430
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "boiler",
+    "pos": [
+      3118,
+      965
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "key_bench",
+    "pos": [
+      257,
+      1780
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "key_cabinet",
+    "pos": [
+      602,
+      1780
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "safe_cabinet",
+    "pos": [
+      286,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      592,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      236,
+      1934
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      670,
+      1940
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "key_sign",
+    "pos": [
+      500,
+      1719
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      233,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "coal_logs",
+    "pos": [
+      667,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      128,
+      1710
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      778,
+      2043
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      760,
+      2170
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      238,
+      1705
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "mail_cabinet",
+    "pos": [
+      977,
+      1780
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "parcel_desk",
+    "pos": [
+      1322,
+      1780
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      1006,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "luggage_trolley",
+    "pos": [
+      1312,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      956,
+      1934
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      1390,
+      1940
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      1220,
+      1719
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "tailor_table",
+    "pos": [
+      953,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "coal_logs",
+    "pos": [
+      1387,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      848,
+      1710
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "mailbox",
+    "pos": [
+      1498,
+      2043
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      1480,
+      2170
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      958,
+      1705
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "clock_bench",
+    "pos": [
+      1697,
+      1780
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "pendulum_clock",
+    "pos": [
+      2042,
+      1780
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "pipes",
+    "pos": [
+      1726,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "key_cabinet",
+    "pos": [
+      2032,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      1676,
+      1934
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      2110,
+      1940
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      1940,
+      1719
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      1673,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "ticket_kiosk",
+    "pos": [
+      2107,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      1568,
+      1710
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      2218,
+      2043
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      2200,
+      2170
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "boiler",
+    "pos": [
+      1678,
+      1705
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "archive_shelf",
+    "pos": [
+      2417,
+      1780
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "map_desk",
+    "pos": [
+      2762,
+      1780
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "book_cart",
+    "pos": [
+      2446,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      2752,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      2396,
+      1934
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      2830,
+      1940
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      2660,
+      1719
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      2393,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "coal_logs",
+    "pos": [
+      2827,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      2288,
+      1710
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "mailbox",
+    "pos": [
+      2938,
+      2043
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      2920,
+      2170
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      2398,
+      1705
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "tea_counter",
+    "pos": [
+      3137,
+      1780
+    ],
+    "size": [
+      96,
+      106
+    ]
+  },
+  {
+    "kind": "bread_counter",
+    "pos": [
+      3482,
+      1780
+    ],
+    "size": [
+      112,
+      120
+    ]
+  },
+  {
+    "kind": "wicker_chair",
+    "pos": [
+      3166,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "stove",
+    "pos": [
+      3472,
+      2028
+    ],
+    "size": [
+      100,
+      102
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      3116,
+      1934
+    ],
+    "size": [
+      58,
+      70
+    ]
+  },
+  {
+    "kind": "flower_basket",
+    "pos": [
+      3550,
+      1940
+    ],
+    "size": [
+      55,
+      64
+    ]
+  },
+  {
+    "kind": "civic_crest",
+    "pos": [
+      3380,
+      1719
+    ],
+    "size": [
+      57,
+      60
+    ]
+  },
+  {
+    "kind": "coat_rack",
+    "pos": [
+      3113,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "street_clock",
+    "pos": [
+      3547,
+      2075
+    ],
+    "size": [
+      62,
+      74
+    ]
+  },
+  {
+    "kind": "street_lantern",
+    "pos": [
+      3008,
+      1710
+    ],
+    "size": [
+      66,
+      100
+    ]
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      3658,
+      2043
+    ],
+    "size": [
+      74,
+      76
+    ]
+  },
+  {
+    "kind": "drain",
+    "pos": [
+      3640,
+      2170
+    ],
+    "size": [
+      38,
+      26
+    ]
+  },
+  {
+    "kind": "ivy_pot",
+    "pos": [
+      3118,
+      1705
+    ],
+    "size": [
+      50,
+      60
+    ]
+  },
+  {
+    "kind": "tram_shelter",
+    "pos": [
+      440,
+      2500
+    ],
+    "size": [
+      154,
+      147
+    ]
+  },
+  {
+    "kind": "street_clock",
+    "pos": [
+      550,
+      2438
+    ],
+    "size": [
+      63,
+      100
+    ]
+  },
+  {
+    "kind": "ticket_kiosk",
+    "pos": [
+      315,
+      2500
+    ],
+    "size": [
+      82,
+      112
+    ]
+  },
+  {
+    "kind": "tram_shelter",
+    "pos": [
+      1880,
+      2500
+    ],
+    "size": [
+      154,
+      147
+    ]
+  },
+  {
+    "kind": "street_clock",
+    "pos": [
+      1990,
+      2438
+    ],
+    "size": [
+      63,
+      100
+    ]
+  },
+  {
+    "kind": "ticket_kiosk",
+    "pos": [
+      1755,
+      2500
+    ],
+    "size": [
+      82,
+      112
+    ]
+  },
+  {
+    "kind": "tram_shelter",
+    "pos": [
+      3020,
+      2500
+    ],
+    "size": [
+      154,
+      147
+    ]
+  },
+  {
+    "kind": "street_clock",
+    "pos": [
+      3130,
+      2438
+    ],
+    "size": [
+      63,
+      100
+    ]
+  },
+  {
+    "kind": "ticket_kiosk",
+    "pos": [
+      2895,
+      2500
+    ],
+    "size": [
+      82,
+      112
+    ]
+  },
+  {
+    "kind": "ghost_tram",
+    "pos": [
+      3400,
+      2500
+    ],
+    "size": [
+      174,
+      104
+    ]
+  }
+]

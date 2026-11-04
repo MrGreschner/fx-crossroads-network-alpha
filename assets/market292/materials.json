@@ -1,0 +1,50 @@
+{
+  "oak": {
+    "size": [
+      192,
+      192
+    ],
+    "palette_limit": 24,
+    "sha256": "f895888bac11c2adc021e8bb88defcaaa406b64f904551c98ad9b3f657c866f4"
+  },
+  "stone": {
+    "size": [
+      192,
+      192
+    ],
+    "palette_limit": 24,
+    "sha256": "3e4ce739348849f27fe29ddf25f184b38daaba7345933734e85ef19f834ac2a7"
+  },
+  "teal_roof": {
+    "size": [
+      192,
+      192
+    ],
+    "palette_limit": 24,
+    "sha256": "95ae267fde2c5fa7a10c4c740dbb6dcde8155aefe7add5e1d8a942e6b5f59730"
+  },
+  "clay_roof": {
+    "size": [
+      192,
+      192
+    ],
+    "palette_limit": 24,
+    "sha256": "e3ca3c8c877038bec5dd4f7a15f6d82325d54fa3933bcc6bbaa6d0309f0b0a24"
+  },
+  "plum_roof": {
+    "size": [
+      192,
+      192
+    ],
+    "palette_limit": 24,
+    "sha256": "2fe0da01bba00110d7dbc5770ea9330b1d3d472e5e4a888241579425f930cbc7"
+  },
+  "plaster": {
+    "size": [
+      192,
+      192
+    ],
+    "palette_limit": 24,
+    "sha256": "85760cb7b9ace487b3302efabb6be1437a9a3be52457b720ca6d62100c245a11"
+  }
+}

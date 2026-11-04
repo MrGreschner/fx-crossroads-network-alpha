@@ -24,6 +24,7 @@ static func page(name:String)->Texture2D:
  if texture!=null:pages[name]=texture
  return texture
 static func draw(c:Node2D,kind:String,camera:Vector2)->void:
+ if kind=="pond":source(c,kind,camera);return
  if kind=="marina_deck":preload("res://scripts/marina_art250.gd").deck(c,camera);return
  if kind=="lookout":preload("res://scripts/town_streets244.gd").lookout(c,camera);return
  if kind in ["studio","academy"]:

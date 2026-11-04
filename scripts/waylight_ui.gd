@@ -8,6 +8,7 @@ var tab=0
 var tier=1
 var notice=""
 var countdown:Label
+var attunement_countdown:Label
 var rendered_day=-1
 var selected_realm="grove"
 var realm_scroll=0
@@ -155,7 +156,7 @@ func between_ui(col:Node)->void:
  var actions=HBoxContainer.new();actions.add_theme_constant_override("separation",8);col.add_child(actions)
  var b=button(actions,"Explore solo",func():feedback(manager.launch("between")));UI.accent(b);b.disabled=not manager.progress.state().run.is_empty()
  var co=button(actions,"Explore together • co-op",func():feedback(manager.launch_coop("between")));co.disabled=b.disabled
- var trial=button(actions,"Attunement Challenge",func():feedback(manager.launch("attunement")));trial.name="TrialLaunch";trial.disabled=not manager.progress.can_attune() or b.disabled;trial.tooltip_text="Replay for bonus shards" if manager.progress.state().attuned else "Solo level-10 trial • collect six Crossing Seals";UI.accent(trial)
+ var trial=button(actions,"Attunement Challenge",func():feedback(manager.launch("attunement")));trial.name="TrialLaunch";trial.disabled=not manager.progress.can_attune() or b.disabled;trial.tooltip_text=manager.progress.attunement_status() if manager.progress.state().attuned else "Solo level-10 trial • collect six Crossing Seals";UI.accent(trial)
  var box=UI.card(col,"THE BETWEEN","Grove, Quarry and Frostbound fragments form a fresh expedition. Realm milestones add Silverfall, Lantern Marsh and Astral biomes as the portal strengthens. Follow connected crossings into darkness; farther rings bring tougher foes and richer Waylight deposits (5–10 shards, depending on distance).")
  text(box,"Walk over an unguarded crystal to gather it. Defeat guardians for more. Return to the luminous entrance and Interact to bank your whole haul. Defeat banks half. Resume an interrupted expedition from this menu.")
  text(box,"Solo or two-player expedition • outward difficulty scales with portal strength. Co-op shares one map and haul; return together to bank it for each player.",15)
@@ -187,10 +188,12 @@ func relic_preview(parent:Node,type:String)->void:
  var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(col);text(col,C.RELICS[type].name,20).modulate=Color(C.RELICS[type].color);text(col,C.RELICS[type].effect,16)
 func attunement_ui(col:Node)->void:
  var p=manager.progress;var s=p.state()
- var box=UI.card(col,"ATTUNEMENT CHALLENGE" if not s.attuned else "ATTUNEMENT • REPEATABLE TRIAL","A dedicated solo Between expedition. Begin at combat level 10 with your hero's abilities. Six elite Wardens hold Crossing Seals across rings 3–5. Defeat each Warden, collect all six seals, then return to the entrance and extract.")
+ var box=UI.card(col,"ATTUNEMENT CHALLENGE" if not s.attuned else "ATTUNEMENT • 24-HOUR REPLAY","A dedicated solo Between expedition. Begin at combat level 10 with your hero's abilities. Six elite Wardens hold Crossing Seals across rings 3–5. Defeat each Warden, collect all six seals, then return to the entrance and extract.")
  text(box,"First completion: unlock Overcharged Realms and relic drop eligibility.",16)
  text(box,"Every successful six-seal extraction: +60% of carried shards within 10 minutes, +40% within 15 minutes, or +25% at any pace. Bonus capped at 60 shards. No bonus on defeat or an incomplete trial; no guaranteed relic.",16)
  text(box,"Solo only • seals are tracked on your map and saved with the run • timer pauses with menus",15)
+ text(box,"A successful six-seal extraction starts a real-time 24-hour replay cooldown. Failed or incomplete attempts do not start it. Normal Between expeditions are always available once unlocked.",15)
+ attunement_countdown=text(box,p.attunement_status(),16)
  if s.attuned:text(box,"ATTUNED • overcharge remains unlocked",18).modulate=Color("#eddda1")
 func update_countdown()->void:
  if not is_instance_valid(countdown):return
@@ -200,6 +203,10 @@ func fit()->void:
  var view=manager.game.get_viewport_rect().size;var width=minf(1150,maxf(900,view.x-24));var factor=minf(1,(view.x-24)/width);panel.scale=Vector2.ONE*factor;panel.size=Vector2(width,minf(690,(view.y-24)/factor));panel.position=(view-panel.size*factor)*.5
 func _process(_delta:float)->void:
  fit();update_countdown()
+ if tab==1:
+  if is_instance_valid(attunement_countdown):attunement_countdown.text=manager.progress.attunement_status()
+  var trial=panel.find_child("TrialLaunch",true,false)
+  if trial!=null:trial.disabled=not manager.progress.can_attune() or not manager.progress.state().run.is_empty();trial.tooltip_text=manager.progress.attunement_status()
  if rendered_day!=manager.today() or records_fingerprint!=hash(manager.game.legacy.community.snapshot.get("named",{}).get("route_times",{})):
   var list_scroll=panel.find_child("RealmListScroll",true,false)
   if list_scroll!=null:realm_scroll=list_scroll.scroll_vertical

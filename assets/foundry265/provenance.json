@@ -1,0 +1,22 @@
+{
+  "world": [
+    4200,
+    2400
+  ],
+  "pages": [
+    [
+      1050,
+      1200
+    ],
+    [
+      1050,
+      1200
+    ]
+  ],
+  "RGBA_upper_bound": 14405376,
+  "sources": {
+    "actors_original.png": "4cb3696fbdd5cce6dd5170c17962b9fe3db5225e5e42c5d5cadd32f5f7177a68",
+    "materials_original.png": "15305fb61ad16e977c6eedad784b25949f63050fa5a202ad4f4031b10882166e",
+    "props_original.png": "63ae50a0ff2dce8e2a257a10dff2c9003741c3023ff38f607c59cbed7e504faa"
+  }
+}

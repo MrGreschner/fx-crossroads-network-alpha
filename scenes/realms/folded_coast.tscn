@@ -1,24 +1,19 @@
 [gd_scene format=3]
 
 [node name="FoldedCoast" type="Node2D"]
-
 [node name="Points" type="Node2D" parent="."]
 
 [node name="Spawn" type="Marker2D" parent="Points"]
-
-position = Vector2(450,1500)
+position = Vector2(450, 1500)
 
 [node name="ReturnGate" type="Marker2D" parent="Points"]
-
-position = Vector2(350,1500)
+position = Vector2(350, 1500)
 
 [node name="Merchant" type="Marker2D" parent="Points"]
-
-position = Vector2(750,1650)
+position = Vector2(750, 1650)
 
 [node name="Boss" type="Marker2D" parent="Points"]
-
-position = Vector2(5200,1500)
+position = Vector2(5150, 1500)
 
 [node name="GroundPaint" type="Node2D" parent="."]
 
@@ -31,193 +26,141 @@ position = Vector2(5200,1500)
 [node name="Buildings" type="Node2D" parent="."]
 
 [node name="Enemy0" type="Marker2D" parent="Enemies"]
-
-position = Vector2(850,650)
-
+position = Vector2(820, 590)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy1" type="Marker2D" parent="Enemies"]
-
-position = Vector2(1110,860)
-
+position = Vector2(1130, 760)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy2" type="Marker2D" parent="Enemies"]
-
-position = Vector2(1370,1070)
-
+position = Vector2(910, 890)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy3" type="Marker2D" parent="Enemies"]
-
-position = Vector2(850,1280)
-
+position = Vector2(1190, 950)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy4" type="Marker2D" parent="Enemies"]
-
-position = Vector2(1110,1490)
-
+position = Vector2(860, 1590)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy5" type="Marker2D" parent="Enemies"]
-
-position = Vector2(1370,1700)
-
+position = Vector2(1170, 1760)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy6" type="Marker2D" parent="Enemies"]
-
-position = Vector2(850,1910)
-
+position = Vector2(950, 1890)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy7" type="Marker2D" parent="Enemies"]
-
-position = Vector2(1110,2120)
-
+position = Vector2(1230, 1950)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy8" type="Marker2D" parent="Enemies"]
-
-position = Vector2(1370,2330)
-
+position = Vector2(910, 2380)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy9" type="Marker2D" parent="Enemies"]
-
-position = Vector2(850,2540)
-
+position = Vector2(1220, 2550)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy10" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2810,650)
-
+position = Vector2(1000, 2570)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy11" type="Marker2D" parent="Enemies"]
-
-position = Vector2(3070,860)
-
+position = Vector2(1280, 2570)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy12" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2550,1070)
-
+position = Vector2(2690, 780)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy13" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2810,1280)
-
+position = Vector2(3000, 950)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy14" type="Marker2D" parent="Enemies"]
-
-position = Vector2(3070,1490)
-
+position = Vector2(2780, 1080)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy15" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2550,1700)
-
+position = Vector2(3060, 1140)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy16" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2810,1910)
-
+position = Vector2(2820, 1640)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy17" type="Marker2D" parent="Enemies"]
-
-position = Vector2(3070,2120)
-
+position = Vector2(3130, 1810)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy18" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2550,2330)
-
+position = Vector2(2910, 1940)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy19" type="Marker2D" parent="Enemies"]
-
-position = Vector2(2810,2540)
-
+position = Vector2(3190, 2000)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy20" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5270,650)
-
+position = Vector2(2870, 2340)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy21" type="Marker2D" parent="Enemies"]
-
-position = Vector2(4750,860)
-
+position = Vector2(3180, 2510)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy22" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5010,1070)
-
+position = Vector2(2960, 2570)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy23" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5270,1280)
-
+position = Vector2(3240, 2570)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy24" type="Marker2D" parent="Enemies"]
-
-position = Vector2(4750,1490)
-
+position = Vector2(4950, 660)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy25" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5010,1700)
-
+position = Vector2(5260, 830)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy26" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5270,1910)
-
+position = Vector2(5040, 960)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy27" type="Marker2D" parent="Enemies"]
-
-position = Vector2(4750,2120)
-
+position = Vector2(5320, 1020)
 metadata/enemy_id = "foldwing"
 
 [node name="Enemy28" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5010,2330)
-
+position = Vector2(4950, 2360)
 metadata/enemy_id = "inkfin"
 
 [node name="Enemy29" type="Marker2D" parent="Enemies"]
-
-position = Vector2(5270,2540)
-
+position = Vector2(5260, 2530)
 metadata/enemy_id = "foldwing"
 
-[node name="V103Enemy0" type="Marker2D" parent="Enemies"]
-position = Vector2(1320, 1800)
+[node name="Enemy30" type="Marker2D" parent="Enemies"]
+position = Vector2(5040, 2570)
+metadata/enemy_id = "inkfin"
+
+[node name="Enemy31" type="Marker2D" parent="Enemies"]
+position = Vector2(5320, 2570)
+metadata/enemy_id = "foldwing"
+
+[node name="Enemy32" type="Marker2D" parent="Enemies"]
+position = Vector2(1400, 1580)
 metadata/enemy_id = "crease_sentry"
 
-[node name="V103Enemy1" type="Marker2D" parent="Enemies"]
-position = Vector2(2700, 1700)
+[node name="Enemy33" type="Marker2D" parent="Enemies"]
+position = Vector2(3570, 1520)
 metadata/enemy_id = "crease_sentry"
 
-[node name="V103Enemy2" type="Marker2D" parent="Enemies"]
-position = Vector2(5050, 950)
+[node name="Enemy34" type="Marker2D" parent="Enemies"]
+position = Vector2(5480, 2170)
 metadata/enemy_id = "crease_sentry"
