@@ -33,7 +33,8 @@ static func layers(x:int,y:int,old:String,g:Node)->Array:
  result.append(t);return result
 static func append(chunk:Node,x:int,y:int,at:Vector2,old:String,g:Node)->void:
  chunk.compact=false
- for t in layers(x,y,old,g):chunk.tiles.append([t,Rect2(at,Vector2(64,64))])
+ var cell_layers=layers(x,y,old,g)
+ for layer in cell_layers.size():chunk.tiles.append([cell_layers[layer],Rect2(at,Vector2(64,64)),layer])
 static func draw(g:CanvasItem,id:String,r:Rect2,tint:Color=Color.WHITE)->void:
  g.draw_texture_rect(prop(id),r,false,tint)
 static func obstacle(g:Node,b:Dictionary,camera:Vector2)->void:

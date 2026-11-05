@@ -2,6 +2,7 @@ extends RefCounted
 ## Three small cached floor materials, static culled wall trim and unchanged pillars.
 static var textures:Dictionary={}
 static var frames:Dictionary={}
+static var floor_materials:Dictionary={}
 static func texture(id:String)->Texture2D:
  if not textures.has(id):
   var image=Image.new()
@@ -11,12 +12,18 @@ static func texture(id:String)->Texture2D:
 static func floor_id(depth:int)->String:return "lava_floor" if depth>100 else "deep_floor" if depth>=45 else "cave_floor"
 static func floor_texture(depth:int)->Texture2D:return texture(floor_id(depth))
 static func draw_floor(c:Node2D,camera:Vector2,view:Vector2,depth:int)->void:
- var t=floor_texture(depth)
- if t==null:return
- # At most 7x5 quads at 1280x720; no per-frame pixel generation or render target.
- for x in range(floori(camera.x/256),ceili((camera.x+view.x)/256)):
-  for y in range(floori(camera.y/256),ceili((camera.y+view.y)/256)):
-   c.draw_texture_rect(t,Rect2(Vector2(x,y)*256-camera,Vector2.ONE*256),false)
+ var id=floor_id(depth)
+ if not floor_materials.has(id):
+  var source=floor_texture(depth)
+  if source==null:return
+  var repeating=CanvasTexture.new()
+  repeating.diffuse_texture=source
+  repeating.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
+  floor_materials[id]=repeating
+ var first=Vector2(floorf(camera.x/256),floorf(camera.y/256))*256
+ var last=Vector2(ceilf((camera.x+view.x)/256),ceilf((camera.y+view.y)/256))*256
+ var size=last-first
+ c.draw_texture_rect_region(floor_materials[id],Rect2(first-camera,size),Rect2(Vector2.ZERO,size),Color.WHITE,false,false)
 static func scenery(c:Node2D,camera:Vector2,field:Rect2,view:Vector2,depth:int)->void:
  var side=texture("cave_wall_side");var wall=texture("cave_wall");var bounds=Rect2(camera,view).grow(180);var tint=Color("#b6bcc0") if depth>=45 else Color.WHITE
  for x in range(0,int(field.size.x),150):

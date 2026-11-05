@@ -216,7 +216,7 @@ func _ready() -> void:
 	if not characters.has(selected_character): selected_character = "ram"
 	enemy_types["training_runner"]={"sprite":"training_dummy","health":500,"speed":0,"damage":0}
 	enemy_types["training_dummy"] = {"sprite":"training_dummy", "health":500, "speed":0, "damage":0}
-	art["training_dummy_0"] = preload("res://scripts/source_art.gd").texture("res://assets/training_dummy.svg")
+	art["training_dummy_0"] = preload("res://scripts/training_environment303.gd").frame("sparring_dummy")
 	art["training_dummy_1"] = art["training_dummy_0"]
 	respawn_clinic=bool(get_tree().root.get_meta("fx_clinic",false));get_tree().root.set_meta("fx_clinic",false)
 	legacy=preload("res://scripts/legacy.gd").new();add_child(legacy);legacy.setup(self)
@@ -1764,6 +1764,7 @@ func ground_tile_at(tx:int,ty:int,base:String)->String:
 	return tile
 
 func draw_world() -> void:
+	var training_art:bool=mode=="run" and practice
 	var first_art:bool=preload("res://scripts/first_environment299.gd").enabled(self)
 	var oath_art:bool=mode=="run" and region_id=="shattered_oath" and preload("res://scripts/oath_environment297.gd").enabled(adventure)
 	if adventure.finale.in_depth():
@@ -1775,10 +1776,13 @@ func draw_world() -> void:
 	elif waylight!=null and waylight.between() and mode=="run":
 		if terrain_cache!=null:terrain_cache.hide()
 		waylight.expedition.draw_ground(self,camera)
+	elif training_art:
+		if terrain_cache!=null:terrain_cache.hide()
+		preload("res://scripts/training_environment303.gd").draw(self,camera)
 	elif region_id=="moonveil" and mode=="run":
 		if terrain_cache!=null:terrain_cache.hide()
 		preload("res://scripts/moon_castle.gd").draw(self,camera)
-	elif oath_art or first_art or (mode=="run" and region_id in ["ice","confluence","folded_coast","clockwork_orchard","middle_school","space","zombie","astral_rift"]):
+	elif oath_art or first_art or training_art or (mode=="run" and region_id in ["ice","confluence","folded_coast","clockwork_orchard","middle_school","space","zombie","astral_rift"]):
 		if terrain_cache!=null:terrain_cache.hide()
 	else:sync_terrain()
 	if practice:training_yard.draw_on(self,camera);town_chapter.draw_guide(self,camera)
@@ -1804,14 +1808,14 @@ func draw_world() -> void:
 	var retained_props:bool=mode=="run" and region_id=="moonveil"
 	if retained_props and not is_instance_valid(realm_props):
 		realm_props=preload("res://scripts/realm_props.gd").new();add_child(realm_props);realm_props.setup(self,false)
-	if not retained_props and not oath_art and not first_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
+	if not retained_props and not oath_art and not first_art and not training_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
 		for decoration in decorations:
 			var deco_texture: Texture2D = decoration["texture"]
 			var deco_size: Vector2 = decoration["size"]
 			if deco_texture != null and Rect2(camera - deco_size, VIEW + deco_size * 2).has_point(decoration["pos"]):
 				draw_texture_rect(deco_texture, Rect2(decoration["pos"] - deco_size * 0.5 - camera, deco_size), false)
 	for obstacle in obstacles:
-		if oath_art or first_art or (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):continue
+		if oath_art or first_art or training_art or (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):continue
 		if mode=="run" and region_id=="ice":preload("res://scripts/frost_art264.gd").pillar(self,obstacle.pos,camera);continue
 		if bool(obstacle.get("town_hidden",false)): continue
 		if Rect2(camera,VIEW).grow(180 if mode=="run" and region_id=="grove" else 100).has_point(obstacle["pos"]):

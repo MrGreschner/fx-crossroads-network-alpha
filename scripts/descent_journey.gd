@@ -456,8 +456,11 @@ func draw(c:Node2D,camera:Vector2)->void:
     c.draw_arc(at,9+sin(clock*2+k)*3,.3,PI*1.6,12,Color("#ffe8a4"),2,true)
     if k%2==0:c.draw_line(at-Vector2(10,3),at+Vector2(12,sin(clock+k)*5),Color("#e57432"),4,true)
  if falling():draw_fracture(c)
+ var view=Rect2(Vector2.ZERO,game.VIEW)
  for h in hazards:
-  var p=point(h.pos)-camera;var tint=Color(str(h.color),.22)
+  var p=point(h.pos)-camera
+  if not view.grow(float(h.radius)+4).has_point(p):continue
+  var tint=Color(str(h.color),.22)
   c.draw_circle(p,float(h.radius),tint)
   for n in 7:
    var dir=Vector2.from_angle(n*TAU/7+clock*.4);c.draw_line(p+dir*float(h.radius)*.2,p+dir*float(h.radius)*.8,Color(str(h.color),.5),2,true)
@@ -474,12 +477,16 @@ func draw(c:Node2D,camera:Vector2)->void:
     c.draw_line(at+dir*25,at+dir*radius,tint,2+alpha*2,true)
  for w in wheels:
   var at=point(w.pos)-camera
+  if not view.grow(40).has_point(at):continue
   for n in 7:
    var dir=Vector2.from_angle(n*TAU/7+clock*6);c.draw_line(at+dir*10,at+dir*30,Color("#f8b45e"),7,true)
   c.draw_arc(at,22,0,TAU,24,Color("#f6d592"),3,true)
  for f in fuel_drops:
-  var at=point(f.pos)-camera;c.draw_rect(Rect2(at-Vector2(8,10),Vector2(16,20)),Color("#bd9362"));c.draw_line(at-Vector2(0,8),at+Vector2(0,8),Color("#ffe19b"),4,true)
- for corpse in corpses:draw_boss(c,corpse,corpse.pos-camera)
+  var at=point(f.pos)-camera
+  if not view.grow(16).has_point(at):continue
+  c.draw_rect(Rect2(at-Vector2(8,10),Vector2(16,20)),Color("#bd9362"));c.draw_line(at-Vector2(0,8),at+Vector2(0,8),Color("#ffe19b"),4,true)
+ for corpse in corpses:
+  if view.grow(visual_size(corpse).length()).has_point(corpse.pos-camera):draw_boss(c,corpse,corpse.pos-camera)
 func visual_size(e:Dictionary)->Vector2:
  var spec=Book.profile(str(e.type))
  if spec.is_empty():return Vector2(52,58)

@@ -127,15 +127,23 @@ func enemy(uid:int,fallback:Vector2)->Vector2:
  var values=pair()
  if values.is_empty():return fallback
  var left={};var right={}
- for foe in values[0].data.get("enemies",[]):
-  if int(foe.get("uid",0))==uid:left=foe;break
- for foe in values[1].data.get("enemies",[]):
-  if int(foe.get("uid",0))==uid:right=foe;break
+ left=_enemy_index(values[0]).get(uid,{})
+ right=_enemy_index(values[1]).get(uid,{})
  if left.is_empty():return fallback
  if right.is_empty():right=left
  var p=Vector2(float(left.pos[0]),float(left.pos[1]));var q=Vector2(float(right.pos[0]),float(right.pos[1]))
  if int(left.get("position_epoch",0))!=int(right.get("position_epoch",0)) or p.distance_to(q)>160:return p
  return p.lerp(q,alpha(values[0],values[1]))
+
+func _enemy_index(snapshot:Dictionary)->Dictionary:
+ # Wrapper-local cache. The network snapshot and interpolation clock are unchanged.
+ if not snapshot.has("enemy_index"):
+  var index:Dictionary={}
+  for foe in snapshot.data.get("enemies",[]):
+   var uid=int(foe.get("uid",0))
+   if not index.has(uid):index[uid]=foe
+  snapshot.enemy_index=index
+ return snapshot.enemy_index
 
 func battlegrounds()->Dictionary:
  # Each soldier has its own 10 Hz sample time. Ordinance uses the shared

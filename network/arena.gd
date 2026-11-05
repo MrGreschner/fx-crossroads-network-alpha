@@ -29,6 +29,7 @@ var frame_stalls=0
 var delivery_stalls=0
 var last_stall_context="none"
 var browser_timing:Dictionary={}
+var browser_renderer=""
 var scenery_view:Node2D
 var network_hud:Node2D
 var dash_view=preload("res://network/dash_view.gd").new()
@@ -1141,9 +1142,18 @@ func receive_events(data:Dictionary)->void:
   render_events.append({"tick":int(event.get("tick",current)),"data":event.data})
  while render_events.size()>256:render_events.pop_front()
 
+func low_effect_detail()->bool:
+ return balanced_graphics and (render_budget.tier>=2 or render_budget.software_renderer)
+
 func _report_network()->void:
  if not OS.has_feature("web") or Time.get_ticks_msec()<report_at:return
  report_at=Time.get_ticks_msec()+1000
+ if browser_renderer.is_empty():
+  browser_renderer=str(JavaScriptBridge.eval("window.fxDiagnostics?.inspect()?.graphics?.renderer || ''",true))
+  var renderer_name=browser_renderer.to_lower()
+  if ["basic render driver","swiftshader","llvmpipe","software rasterizer"].any(func(marker):return marker in renderer_name):
+   render_budget.software_renderer=true
+   _configure_rendering()
  var sample={"build":BUILD,"protocol":PROTOCOL,"fps":Engine.get_frames_per_second(),"rtt_ms":metrics.rtt_ms,"simulation_ms":metrics.tick_ms,"snapshot_ms":server_snapshot_ms,"authority_hz":server_hz,"prediction_queue":history.size(),"state_age_ms":Time.get_ticks_msec()-last_state_at,"buffer_ms":maxf(0,world_view.latest_time-world_view.render_time)*1000,"buffer_holds":world_view.underruns,"wire_bytes":metrics.wire_bytes,"disconnect_reason":disconnect_reason,"clock_resyncs":world_view.clock_resyncs,"max_world_backlog_ms":world_view.max_backlog*1000,"projectile_handoffs":shots_view.handoffs,"projectile_confirmations":shots_view.confirmations,"max_handoff_error_px":shots_view.max_handoff_error,"confirmed_damage_events":confirmed_damage_events,"recent_hit_events":recent_hit_events}
  sample.mode=mode;sample.realm=realm_id;sample.players=positions.size()
  sample.category=get_tree().root.get_node("FXActivity").gameplay_category(self)
@@ -1205,6 +1215,10 @@ func _report_network()->void:
  var render_size=get_viewport().get_texture().get_size()
  sample.render_size=[render_size.x,render_size.y]
  sample.server_build=server_build
+ sample.client_unix_ms=int(Time.get_unix_time_from_system()*1000)
+ sample.state_age_before_poll_ms=pre_poll_state_age
+ sample.software_renderer=render_budget.software_renderer
+ sample.effects_detail="reduced" if low_effect_detail() else "full"
  sample.gateway_rtt_ms=metrics.get("gateway_rtt_ms",-1)
  sample.snapshot_interarrival_ms=world_view.arrival_age*1000
  sample.target_buffer_ms=world_view.target_delay*1000
@@ -1230,15 +1244,15 @@ func _report_network()->void:
  sample.mode=mode;sample.realm=realm_id
  sample.client_elapsed_ms=Time.get_ticks_msec();sample.match_elapsed_ms=int(run_time*1000);sample.active=started;sample.match_id=match_id;sample.room=net_room;sample.arena_map=arena_map;sample.arena_objective=arena_world.shatter.report() if arena_world.shatter.active() else arena_world.objective.report() if arena_world.objective.active() else {};sample.arena_variant={"closed_gates":arena_world.extra.doors.filter(func(d):return d.closed).size(),"cliffs":arena_world.extra.cliffs.size(),"torches_ready":arena_world.extra.torches.filter(func(t):return arena_world.clock>=float(t.ready)).size(),"light_radius":arena_world.extra.radius(my_id) if arena_map=="lanternfall" else 0};sample.enemies=opponents.size();sample.predicted_projectiles=shots_view.predicted.size();sample.prediction_expiries=shots_view.expired;sample.last_launch=metrics.get("last_launch",{});sample.hero=selected_hero;sample.players=positions.size();sample.viewport=[VIEW.x,VIEW.y]
  perf_latest=sample
- JavaScriptBridge.eval("window.fxPerf=window.fxPerf||{version:'V179-preview',samples:[]};window.fxPerf.samples.push("+JSON.stringify(sample)+");if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();",true)
- JavaScriptBridge.eval("if(window.fxDiagnostics)window.fxDiagnostics.sample("+JSON.stringify(sample)+");if(window.fxReports)window.fxReports.sample("+JSON.stringify(sample)+");",true)
+ var payload=JSON.stringify(sample)
+ JavaScriptBridge.eval("((sample)=>{window.fxPerf=window.fxPerf||{samples:[]};window.fxPerf.version=sample.build;window.fxPerf.samples.push(sample);if(window.fxPerf.samples.length>180)window.fxPerf.samples.shift();window.fxDiagnostics?.sample(sample);window.fxReports?.sample(sample);})("+payload+");",true)
 
 func profile_work(kind:String,elapsed:int)->void:
  if not dedicated:client_perf.work(kind,elapsed)
 func download_performance()->void:
  if not OS.has_feature("web"):return
  report_downloads+=1
- JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:'V179-preview',samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='Crossroads_V179_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
+ JavaScriptBridge.eval("(()=>{const r=window.fxPerf||{version:" + JSON.stringify(BUILD) + ",samples:[]};r.graphics=window.fxDiagnostics?window.fxDiagnostics.inspect():{};const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));a.href=u;a.download='Crossroads_'+r.version+'_performance.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);})()",true)
 
 func _actor_walking(id:String)->bool:
  if id==my_id:return float(net_dash.get(id,{}).get("time",0))>0 or super._actor_walking(id)

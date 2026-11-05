@@ -1,3 +1,4 @@
 extends RefCounted
-const BUILD="V291-crossroads-high-school-spirit"
+const GAME_BUILD=304
+const BUILD="V304-performance"
 const REPORT_SCHEMA=3

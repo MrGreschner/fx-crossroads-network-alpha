@@ -54,6 +54,9 @@ var darkness_builds=0
 var is_banking=false
 var surf=preload("res://scripts/voyage_waves.gd").new()
 var debris=preload("res://scripts/voyage_debris.gd").new()
+var ocean_charted:Array=[]
+const OCEAN=preload("res://scripts/ocean_environment302.gd")
+const OCEAN_GEO=preload("res://scripts/ocean_geometry302.gd")
 const ISLES=preload("res://scripts/voyage_islands.gd")
 func setup(g:Node)->void:
  game=g;rng.randomize();hud=CanvasLayer.new();hud.layer=57;add_child(hud)
@@ -95,8 +98,7 @@ func current_at(point:Vector2)->Vector2:
   for band in CURRENT_BANDS:
    var strength=maxf(0,1-absf(point.x-band)/650.0)
    flow+=Vector2(sin(point.y/680+band*.001)*70,(-150 if int(band) in [6100,11500,20500] else 150))*strength
-  var eddy=point-Vector2(10600,3400)
-  if eddy.length()<1250 and eddy.length()>20:flow+=eddy.normalized().orthogonal()*90*(1-eddy.length()/1250)
+  flow+=OCEAN_GEO.eddy_force(point)
  if str(context().weather)=="Storm":flow*=1.5
  return flow.limit_length(260)
 func islands()->Array:
@@ -113,14 +115,18 @@ func rocks()->Array:
   var near_island=false
   for isle in islands():
    if p.distance_to(isle.p)<float(isle.r)+140:near_island=true
-  if not near_island and p.distance_to(HOME)>650:result.append({"p":p,"r":34.0+(i%4)*13})
+  if not near_island and p.distance_to(HOME)>650:
+   var entry={"p":p,"r":34.0+(i%4)*13}
+   if route=="lake":entry.variant301=i%8
+   else:entry.variant302=i%12
+   result.append(entry)
  cached_rock_key=key;cached_rocks=result
  return result
 func land_at(p:Vector2)->bool:
  if not active:return true
  for isle in islands():
   if ISLES.contains(isle,p,28):
-   if route=="coast" and str(isle.name)=="Night Island" and p.distance_to(night_center())<210:return false
+   if route=="coast" and str(isle.name)=="Night Island" and OCEAN_GEO.crater_contains(p-night_center()):return false
    return true
  return false
 func nearby_island()->Dictionary:
@@ -166,6 +172,7 @@ func launch(destination:String,resume:bool=false)->void:
  if resume and (not bool(previous.get("banking",false)) or Vector2(previous.get("boat",[0,0])[0],previous.get("boat",[0,0])[1]).distance_to(HOME)>260):
   game.message="Ended voyages cannot be resumed. Sail home before leaving to keep the rewards.";game.message_time=6;return
  if not resume and not previous.is_empty():records().state().erase("voyage");records().save()
+ ocean_charted.clear()
  close_menu();night_seed=int(game.town_life.calendar.day_number);island_found_night=-1;route=destination;boat=HOME;hull=100;elapsed=0;velocity=Vector2.ZERO;anchored=false;ashore=false;cargo=[];release_log=[];xp_quote_key="";cages=[];seen=[];repairs=[];start_hour=float(preload("res://scripts/fishing_ecology.gd").context(game).hour)
  if resume:
   if not valid_state(previous):return
@@ -320,11 +327,13 @@ func bank()->void:
 func obstruction(from:Vector2,to:Vector2)->String:
  # Sweep the boat path so a strong wave cannot skip a narrow obstacle.
  for rock in rocks():
-  if Geometry2D.get_closest_point_to_segment(rock.p,from,to).distance_to(rock.p)<float(rock.r)+25:return "rock"
+  if route=="lake":
+   if preload("res://scripts/lake_geometry301.gd").rock_hit(rock,from,to,25):return "rock"
+  elif OCEAN_GEO.rock_hit(rock,from,to,25):return "rock"
  var samples=maxi(1,ceili(from.distance_to(to)/16))
  for n in range(samples+1):
   var point=from.lerp(to,float(n)/samples)
-  if point.x<520:return "shore"
+  if point.x<(preload("res://scripts/lake_geometry301.gd").coast_x(point.y)+40 if route=="lake" else OCEAN_GEO.coast_x(point.y)+40):return "shore"
   for isle in islands():
    if ISLES.distance_to_shore(isle,point)<40:return "shore"
  return debris.hit(from,to)
@@ -372,6 +381,7 @@ func step(delta:float)->bool:
   var id=habitat()
   if id not in seen:seen.append(id)
   if route=="coast" and night() and boat.distance_to(night_center())<1050:island_found_night=night_number()
+ if route=="coast":OCEAN.update_discoveries(self)
  if elapsed-last_checkpoint>=8:checkpoint()
  hud_view.refresh(self)
  game.queue_redraw();return not ashore
@@ -446,7 +456,9 @@ func open_menu(kind:String)->void:
  preload("res://scripts/touch_list_scroll.gd").attach(scroll)
 func draw_chart(c:Control)->void:
  var size=Vector2(minf(800,c.size.x),300);c.draw_rect(Rect2(Vector2.ZERO,size),Color('#13384d'));var scale_xy=size/world_size()
+ if route=="lake":preload("res://scripts/lake_environment301.gd").draw_chart_bank(c,scale_xy)
  if route=="coast":
+  OCEAN.draw_chart(self,c,scale_xy)
   for band in CURRENT_BANDS:c.draw_rect(Rect2(Vector2(band-500,0)*scale_xy,Vector2(1000,world_size().y)*scale_xy),Color('#64b4bd',.13))
  var chart_step=2000 if route=="coast" else 1000
  for x in range(0,int(world_size().x),chart_step):
@@ -461,7 +473,9 @@ func draw_chart(c:Control)->void:
    for point in ISLES.polygon(isle):outline.append(point*scale_xy)
    c.draw_colored_polygon(outline,Color('#b5b894'))
   c.draw_string(ThemeDB.fallback_font,isle.p*scale_xy+Vector2(8,-9),isle.name,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#f5e5c4'))
- for rock in rocks():c.draw_circle(rock.p*scale_xy,2,Color('#8b9f9b'))
+ for rock in rocks():
+  if route=="lake":preload("res://scripts/lake_environment301.gd").draw_chart_rock(c,rock,scale_xy)
+  else:c.draw_circle(rock.p*scale_xy,2,Color('#8b9f9b'))
  for cage in cages:
   var p=Vector2(cage.pos[0],cage.pos[1])*scale_xy;c.draw_circle(p,5,Color('#edb378'))
  c.draw_circle(HOME*scale_xy,6,Color('#f4ce76'));c.draw_circle(boat*scale_xy,5,Color('#ffffff'))
@@ -469,86 +483,9 @@ func draw_chart(c:Control)->void:
   var names={"voyage_lake_reeds":[Vector2(1500,4000),"Reedbanks"],"voyage_lake_islands":[Vector2(6000,4900),"Island narrows"],"voyage_lake_deep":[Vector2(5400,1300),"Deep basin"],"voyage_coast_shoals":[Vector2(2200,5700),"Shoals"],"voyage_coast_kelp":[Vector2(5800,5400),"Kelp"],"voyage_coast_reef":[Vector2(3200,2500),"Reef"],"voyage_coast_channel":[Vector2(7700,3700),"Deep channel"]}
   if names.has(id):c.draw_string(ThemeDB.fallback_font,names[id][0]*scale_xy,names[id][1],HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color('#84d5d2'))
 func draw_ground(c:Node2D,cam:Vector2)->void:
- var view=Rect2(cam,c.get_viewport_rect().size/game.media.factor()).grow(150)
- c.draw_rect(Rect2(-cam,world_size()),Color('#235065') if route=="lake" else Color('#183b53'))
- # Submerged sandbars and darker channels show depth without revealing every species.
- if route=="coast":
-  c.draw_rect(Rect2(Vector2(6500,0)-cam,Vector2(world_size().x-6500,world_size().y)),Color('#102e47'))
-  c.draw_rect(Rect2(Vector2(0,0)-cam,Vector2(world_size().x,1700)),Color('#122f48'))
- for x in range(int(view.position.x/120)*120,int(view.end.x),120):
-  for y in range(int(view.position.y/120)*120,int(view.end.y),120):
-   var seed_value=absi(int(x/120)*73856093 ^ int(y/120)*19349663)
-   var p=Vector2(x+posmod(seed_value,71)-35,y+posmod(seed_value/3,77)-38)
-   var phase=sin(elapsed*1.2+x*.01+y*.008)*8
-   if seed_value%5!=0:c.draw_arc(p-cam+Vector2(phase,0),17+seed_value%23,.12,PI*.7,10,Color('#58828e',.45),1.3)
-   if (x/120+y/120)%7==0:
-    var flow=current_at(p);var direction=flow.normalized()*(18+flow.length()*.13)
-    c.draw_line(p-cam,p+direction-cam,Color('#77a0ac',.3),2);c.draw_line(p+direction-cam,p+direction*.65+direction.orthogonal()*.25-cam,Color('#77a0ac',.3),2)
-   if route=="coast" and p.x>4100 and p.x<6500 and p.y>3000 and seed_value%4==0:
-    for frond in 3:
-     var points=PackedVector2Array()
-     for k in 8:points.append(p+Vector2(frond*12+sin(k*.8+elapsed*.4+frond)*9,-k*9)-cam)
-     c.draw_polyline(points,Color('#578b75',.5),3)
-   elif route=="coast" and p.y>1900 and p.y<3800 and p.x<6500 and seed_value%4==0:
-    c.draw_circle(p-cam,28+seed_value%17,Color('#768b80',.28))
-    c.draw_arc(p-cam,22,PI,TAU,12,Color('#9c9c81',.3),4)
-   elif (route=="lake" and p.x<3300 or route=="coast" and p.y>3800 and p.x<4100) and seed_value%4==0:c.draw_circle(p-cam,45+seed_value%35,Color('#a2ab80',.1))
-   if (x/120*7+y/120*3)%19==0:
-    for i in 4:c.draw_line(p+Vector2(i*13,i%2*9)-cam,p+Vector2(i*13+10,i%2*9+3)-cam,Color('#9bbcae',.28),4)
-   if route=="lake" and seed_value%6==0:
-    if p.x<3300:
-     for stalk in 5:
-      var at=p+Vector2(stalk*9,stalk%2*7)-cam
-      c.draw_line(at,at+Vector2(sin(elapsed*.5+stalk)*5,-42-stalk%3*7),Color('#779b6f',.6),2)
-      c.draw_line(at+Vector2(1,-30),at+Vector2(1,-44),Color('#b7a979',.7),4)
-    else:
-     c.draw_circle(p-cam,14,Color('#78a18c',.3));c.draw_arc(p-cam,10,.3,5.8,12,Color('#a2bb98',.4),2)
- # A visible mainland shore keeps the destination recognisably coastal.
- var shore=PackedVector2Array([Vector2(-cam.x,-cam.y),Vector2(460-cam.x,-cam.y)])
- for y in range(0,int(world_size().y)+201,160):shore.append(Vector2(430+sin(y*.003)*75,y)-cam)
- shore.append(Vector2(0,world_size().y)-cam);c.draw_colored_polygon(shore,Color('#b8b185'));c.draw_polyline(shore,Color('#6f9a98'),14)
- var inland=PackedVector2Array([Vector2(-cam.x,-cam.y),Vector2(280-cam.x,-cam.y)])
- for y in range(0,int(world_size().y)+201,220):inland.append(Vector2(250+sin(y*.003)*65,y)-cam)
- inland.append(Vector2(0,world_size().y)-cam);c.draw_colored_polygon(inland,Color('#4b705b'))
- surf.draw_on(c,cam)
- debris.draw_on(c,cam)
- for rock in rocks():
-  if not view.has_point(rock.p):continue
-  c.draw_circle(rock.p-cam,float(rock.r)+12,Color('#50747c'));c.draw_circle(rock.p-cam,float(rock.r),Color('#69797c'));c.draw_arc(rock.p-cam,float(rock.r)+20,0,TAU,22,Color('#b3c6c3'),3)
- for isle in islands():
-  if not view.intersects(Rect2(isle.p-Vector2.ONE*(float(isle.r)+40),Vector2.ONE*float(isle.r)*2+Vector2(80,80))):continue
-  var p:Vector2=isle.p-cam
-  for layer in [{"inset":-18.0,"color":"#63918e"},{"inset":0.0,"color":"#c8bc8b"},{"inset":52.0,"color":"#5c7862"}]:
-   var outline=PackedVector2Array()
-   for point in ISLES.polygon(isle,float(layer.inset)):outline.append(point-cam)
-   c.draw_colored_polygon(outline,Color(layer.color))
-  for j in 9:
-   var q=p+Vector2.from_angle(j*2.4)*(ISLES.radius(isle,j*2.4)*.64);c.draw_circle(q,40,Color('#3c5d51'));c.draw_circle(q-Vector2(0,14),32,Color('#6b8767'))
-  c.draw_string(ThemeDB.fallback_font,p-Vector2(95,float(isle.r)+35),str(isle.name),HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color('#f3e5bf'))
-  for j in 22:
-   var angle=j*2.399;var at=p+Vector2.from_angle(angle)*(ISLES.radius(isle,angle)-29-j%3*13)
-   c.draw_circle(at,4+j%4*2,Color('#a19f84'))
-   if j%4==0:c.draw_arc(at,11,.2,PI,8,Color('#ede0af'),2)
-  for j in 6:
-   var at=p+Vector2.from_angle(j*2.1+1)*ISLES.radius(isle,j*2.1+1)*.52
-   c.draw_line(at+Vector2(0,13),at-Vector2(0,35),Color('#766a4e'),7)
-   for crown in 4:c.draw_circle(at+Vector2.from_angle(crown*1.8)*24-Vector2(0,33),19,Color('#719062') if j%2 else Color('#597b5d'))
-  var trail=PackedVector2Array()
-  for j in 30:
-   var a=.3+j/29.0*1.9;trail.append(p+Vector2.from_angle(a)*(ISLES.radius(isle,a)-105))
-  c.draw_polyline(trail,Color('#b7b080',.6),14)
-  ISLES.draw_details(c,isle,cam)
-  if str(isle.name)=="Night Island":c.draw_circle(p,210,Color('#305a70'));c.draw_arc(p,216,0,TAU,70,Color('#a0bac1'),8)
- var hp=HOME-cam
- c.draw_rect(Rect2(hp-Vector2(230,95),Vector2(150,190)),Color('#9d8059'))
- for j in 13:c.draw_line(hp+Vector2(-230+j*12,-95),hp+Vector2(-230+j*12,95),Color('#5b5043'),2)
- c.draw_string(ThemeDB.fallback_font,hp-Vector2(270,120),'HOME HARBOUR • RETURN HERE',HORIZONTAL_ALIGNMENT_LEFT,-1,22,Color('#f2d296'))
- for cage in cages:
-  var p=Vector2(cage.pos[0],cage.pos[1])-cam
-  if not view.has_point(p+cam):continue
-  c.draw_circle(p,12,Color('#edb378'));c.draw_line(p,p-Vector2(0,25),Color('#c9d5c5'),2);c.draw_string(ThemeDB.fallback_font,p+Vector2(16,0),'READY' if elapsed>=float(cage.ready) else '%ds' % ceili(float(cage.ready)-elapsed),HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color('#f7d4a2'))
- draw_landmarks(c,cam,view)
- draw_boat(c,cam)
+ if route=="lake":preload("res://scripts/lake_environment301.gd").draw(self,c,cam);return
+ OCEAN.draw(self,c,cam)
+
 func draw_landmarks(c:Node2D,cam:Vector2,view:Rect2)->void:
  var sites=[Vector2(1750,3200),Vector2(3850,2100),Vector2(6500,4400),Vector2(5700,1900)] if route=="lake" else [Vector2(3900,5200),Vector2(6000,2100),Vector2(8650,6100),Vector2(11300,5500),Vector2(12600,8500),Vector2(14500,2800),Vector2(17200,6900),Vector2(20400,12300),Vector2(24100,4500),Vector2(25300,16000),Vector2(13400,14700),Vector2(18200,17400)]
  for i in sites.size():

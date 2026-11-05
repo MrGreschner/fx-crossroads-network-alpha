@@ -1,0 +1,866 @@
+[
+  {
+    "kind": "fern",
+    "pos": [
+      510,
+      150
+    ],
+    "size": [
+      125,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "hedge",
+    "pos": [
+      1240,
+      155
+    ],
+    "size": [
+      110,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1500,
+      155
+    ],
+    "size": [
+      125,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      1030,
+      160
+    ],
+    "size": [
+      140,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "hedge",
+    "pos": [
+      320,
+      165
+    ],
+    "size": [
+      110,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      1670,
+      180
+    ],
+    "size": [
+      140,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1430,
+      180
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      170,
+      186
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      850,
+      186
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      600,
+      200
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "root_stones",
+    "pos": [
+      1120,
+      220
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      800,
+      226
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "weapons_rack",
+    "pos": [
+      1220,
+      290
+    ],
+    "size": [
+      165,
+      155
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "shield_rack",
+    "pos": [
+      1390,
+      290
+    ],
+    "size": [
+      150,
+      130
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "target_rack",
+    "pos": [
+      970,
+      300
+    ],
+    "size": [
+      185,
+      135
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "supply_crates",
+    "pos": [
+      1250,
+      305
+    ],
+    "size": [
+      100,
+      80
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "training_banner",
+    "pos": [
+      780,
+      315
+    ],
+    "size": [
+      68,
+      145
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "brazier",
+    "pos": [
+      420,
+      407
+    ],
+    "size": [
+      34,
+      40
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      90,
+      440
+    ],
+    "size": [
+      125,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "arrow_basket",
+    "pos": [
+      1390,
+      445
+    ],
+    "size": [
+      58,
+      64
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      185,
+      465
+    ],
+    "size": [
+      50,
+      90
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "clay_jars",
+    "pos": [
+      480,
+      488
+    ],
+    "size": [
+      65,
+      76
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      765,
+      492
+    ],
+    "size": [
+      50,
+      90
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "water_trough",
+    "pos": [
+      400,
+      495
+    ],
+    "size": [
+      130,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "training_banner",
+    "pos": [
+      1695,
+      620
+    ],
+    "size": [
+      68,
+      145
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      100,
+      700
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "bandage_station",
+    "pos": [
+      540,
+      740
+    ],
+    "size": [
+      90,
+      75
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "rest_bench",
+    "pos": [
+      315,
+      815
+    ],
+    "size": [
+      175,
+      105
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "chalk_box",
+    "pos": [
+      1250,
+      820
+    ],
+    "size": [
+      55,
+      44
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "hedge",
+    "pos": [
+      65,
+      820
+    ],
+    "size": [
+      110,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "arrow_basket",
+    "pos": [
+      1385,
+      825
+    ],
+    "size": [
+      58,
+      64
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "repair_bench",
+    "pos": [
+      470,
+      840
+    ],
+    "size": [
+      175,
+      130
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "rolled_mats",
+    "pos": [
+      605,
+      842
+    ],
+    "size": [
+      100,
+      65
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "sandbags",
+    "pos": [
+      1340,
+      845
+    ],
+    "size": [
+      92,
+      68
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "practice_bell",
+    "pos": [
+      770,
+      850
+    ],
+    "size": [
+      100,
+      130
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "root_stones",
+    "pos": [
+      335,
+      970
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      800,
+      990
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      250,
+      1006
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      470,
+      1006
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      690,
+      1006
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "oak",
+    "pos": [
+      910,
+      1006
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      1130,
+      1006
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      1350,
+      1006
+    ],
+    "size": [
+      150,
+      180
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      90,
+      1010
+    ],
+    "size": [
+      140,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      1450,
+      1010
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "root_stones",
+    "pos": [
+      1220,
+      1015
+    ],
+    "size": [
+      110,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "hedge",
+    "pos": [
+      1720,
+      1020
+    ],
+    "size": [
+      110,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "root_stones",
+    "pos": [
+      1010,
+      1020
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      590,
+      1035
+    ],
+    "size": [
+      90,
+      55
+    ],
+    "flat": true,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "stump",
+    "pos": [
+      1010,
+      1050
+    ],
+    "size": [
+      95,
+      75
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      1550,
+      1070
+    ],
+    "size": [
+      125,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "fern",
+    "pos": [
+      410,
+      1120
+    ],
+    "size": [
+      125,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "flower_bed",
+    "pos": [
+      1170,
+      1130
+    ],
+    "size": [
+      140,
+      70
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  },
+  {
+    "kind": "hedge",
+    "pos": [
+      790,
+      1130
+    ],
+    "size": [
+      110,
+      85
+    ],
+    "flat": false,
+    "anchor": [
+      0.5,
+      0.94
+    ]
+  }
+]

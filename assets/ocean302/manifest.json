@@ -1,0 +1,1190 @@
+{
+  "salt_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "shoals",
+    "description": "long bleached driftwood arch with salt-worn timber",
+    "source_sheet": 0,
+    "source_cell": 0,
+    "texture": "salt_arch_large"
+  },
+  "shoal_lighthouse": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "shoals",
+    "description": "grand weathered sandstone coastal lighthouse",
+    "source_sheet": 0,
+    "source_cell": 1,
+    "texture": "shoal_lighthouse_large"
+  },
+  "stilt_chalet": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "shoals",
+    "description": "small fisher's stilt chalet with ochre canvas awning",
+    "source_sheet": 0,
+    "source_cell": 2,
+    "texture": "stilt_chalet_large"
+  },
+  "conch_beacon": {
+    "region": [
+      480,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "conch-shell navigation beacon on an old timber post",
+    "source_sheet": 0,
+    "source_cell": 3
+  },
+  "rope_creels": {
+    "region": [
+      640,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "woven rope and wicker fishing-creel cluster",
+    "source_sheet": 0,
+    "source_cell": 4
+  },
+  "tide_gate": {
+    "region": [
+      800,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "broken double timber tide gate with seaweed",
+    "source_sheet": 0,
+    "source_cell": 5
+  },
+  "board_stack": {
+    "region": [
+      960,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "irregular piled dock boards and cork floats",
+    "source_sheet": 0,
+    "source_cell": 6
+  },
+  "salt_trough": {
+    "region": [
+      1120,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "low weathered stone salt trough",
+    "source_sheet": 0,
+    "source_cell": 7
+  },
+  "seagrass_fan": {
+    "region": [
+      1280,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "low sea-grass fan rooted in sandy gravel",
+    "source_sheet": 0,
+    "source_cell": 8
+  },
+  "clam_bank": {
+    "region": [
+      1440,
+      0,
+      160,
+      160
+    ],
+    "zone": "shoals",
+    "description": "asymmetric clam-shell and pale pebble bank",
+    "source_sheet": 0,
+    "source_cell": 9
+  },
+  "coral_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "reef",
+    "description": "grand branching coral arch, muted rust and sea-green",
+    "source_sheet": 0,
+    "source_cell": 10,
+    "texture": "coral_arch_large"
+  },
+  "elkhorn": {
+    "region": [
+      1760,
+      0,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "wide asymmetric elkhorn coral stand",
+    "source_sheet": 0,
+    "source_cell": 11
+  },
+  "red_fan": {
+    "region": [
+      0,
+      160,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "delicate muted red gorgonian sea fan",
+    "source_sheet": 0,
+    "source_cell": 12
+  },
+  "brain_ledge": {
+    "region": [
+      160,
+      160,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "low terraced brain-coral ledge, natural grey-rose",
+    "source_sheet": 0,
+    "source_cell": 13
+  },
+  "sponges": {
+    "region": [
+      320,
+      160,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "uneven cluster of sea sponges and small shells",
+    "source_sheet": 0,
+    "source_cell": 14
+  },
+  "glass_buoy": {
+    "region": [
+      480,
+      160,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "old green-glass buoy in rope mesh",
+    "source_sheet": 0,
+    "source_cell": 15
+  },
+  "reef_fountain": {
+    "region": [
+      640,
+      160,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "broken limestone reef fountain encrusted in coral",
+    "source_sheet": 1,
+    "source_cell": 0
+  },
+  "shell_column": {
+    "region": [
+      800,
+      160,
+      160,
+      160
+    ],
+    "zone": "reef",
+    "description": "fractured shell-covered ancient column",
+    "source_sheet": 1,
+    "source_cell": 1
+  },
+  "keyhole_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "reef",
+    "description": "massive weathered limestone keyhole sea arch",
+    "source_sheet": 1,
+    "source_cell": 2,
+    "texture": "keyhole_arch_large"
+  },
+  "cove_grotto": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "reef",
+    "description": "low craggy limestone grotto entrance with oysters",
+    "source_sheet": 1,
+    "source_cell": 3,
+    "texture": "cove_grotto_large"
+  },
+  "kelp_stalks": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "kelp",
+    "description": "towering asymmetric golden-green kelp stalk cluster",
+    "source_sheet": 1,
+    "source_cell": 4,
+    "texture": "kelp_stalks_large"
+  },
+  "kelp_curtain": {
+    "region": [
+      1440,
+      160,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "long flowing forest curtain of twisting kelp fronds",
+    "source_sheet": 1,
+    "source_cell": 5
+  },
+  "encrusted_scaffold": {
+    "region": [
+      1600,
+      160,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "collapsed timber scaffold heavily encrusted in seaweed",
+    "source_sheet": 1,
+    "source_cell": 6
+  },
+  "kelp_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "kelp",
+    "description": "rooted kelp arch twisted around old rock",
+    "source_sheet": 1,
+    "source_cell": 7,
+    "texture": "kelp_arch_large"
+  },
+  "black_reef": {
+    "region": [
+      0,
+      320,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "low angular obsidian reef blades with muted algae",
+    "source_sheet": 1,
+    "source_cell": 8
+  },
+  "diving_bell": {
+    "region": [
+      160,
+      320,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "antique brass diving bell covered in algae",
+    "source_sheet": 1,
+    "source_cell": 9
+  },
+  "kelp_camp": {
+    "region": [
+      320,
+      320,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "abandoned small fisher shelter with collapsed reed roof",
+    "source_sheet": 1,
+    "source_cell": 10
+  },
+  "urchin_garden": {
+    "region": [
+      480,
+      320,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "small muted sea-green urchin garden, subtle pale tips",
+    "source_sheet": 1,
+    "source_cell": 11
+  },
+  "kelp_masts": {
+    "region": [
+      640,
+      320,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "two broken ship masts braided with kelp",
+    "source_sheet": 1,
+    "source_cell": 12
+  },
+  "kelp_nursery": {
+    "region": [
+      800,
+      320,
+      160,
+      160
+    ],
+    "zone": "kelp",
+    "description": "stepped freshwater-looking stone nursery terrace with sea plants",
+    "source_sheet": 1,
+    "source_cell": 13
+  },
+  "galleon_bow": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "wrecks",
+    "description": "grand shattered wooden galleon bow with ram figurehead",
+    "source_sheet": 1,
+    "source_cell": 14,
+    "texture": "galleon_bow_large"
+  },
+  "broken_masts": {
+    "region": [
+      1120,
+      320,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "two snapped crossing naval masts with tattered sail",
+    "source_sheet": 1,
+    "source_cell": 15
+  },
+  "hull_ribs": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "wrecks",
+    "description": "long low broken hull ribs and old copper nails",
+    "source_sheet": 2,
+    "source_cell": 0,
+    "texture": "hull_ribs_large"
+  },
+  "naval_bell": {
+    "region": [
+      1440,
+      320,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "large sunken bronze naval bell in a timber frame",
+    "source_sheet": 2,
+    "source_cell": 1
+  },
+  "capsized_boat": {
+    "region": [
+      1600,
+      320,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "capsized fishing boat split through its keel",
+    "source_sheet": 2,
+    "source_cell": 2
+  },
+  "ballast_pots": {
+    "region": [
+      1760,
+      320,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "spilled old ballast jars, ceramic pots and iron weights",
+    "source_sheet": 2,
+    "source_cell": 3
+  },
+  "anchor_shrine": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "wrecks",
+    "description": "giant old anchor with coiled heavy chain",
+    "source_sheet": 2,
+    "source_cell": 4,
+    "texture": "anchor_shrine_large"
+  },
+  "figurehead": {
+    "region": [
+      160,
+      480,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "broken carved ram ship figurehead with worn paint",
+    "source_sheet": 2,
+    "source_cell": 5
+  },
+  "rotten_winch": {
+    "region": [
+      320,
+      480,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "collapsed wooden capstan and rotten rope winch",
+    "source_sheet": 2,
+    "source_cell": 6
+  },
+  "sail_shroud": {
+    "region": [
+      480,
+      480,
+      160,
+      160
+    ],
+    "zone": "wrecks",
+    "description": "long frayed sail shroud tangled on broken spars",
+    "source_sheet": 2,
+    "source_cell": 7
+  },
+  "wind_stack": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "storm",
+    "description": "huge wind-carved basalt sea stack with jagged silhouette",
+    "source_sheet": 2,
+    "source_cell": 8,
+    "texture": "wind_stack_large"
+  },
+  "split_spires": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "storm",
+    "description": "forked split slate spires, tall and asymmetric",
+    "source_sheet": 2,
+    "source_cell": 9,
+    "texture": "split_spires_large"
+  },
+  "lightning_beacon": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "storm",
+    "description": "grand old storm navigation beacon with copper lightning rod",
+    "source_sheet": 2,
+    "source_cell": 10,
+    "texture": "lightning_beacon_large"
+  },
+  "storm_belltower": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "storm",
+    "description": "weather-beaten stone storm bell tower",
+    "source_sheet": 2,
+    "source_cell": 11,
+    "texture": "storm_belltower_large"
+  },
+  "collapsed_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "storm",
+    "description": "massive collapsed grey sea arch with exposed strata",
+    "source_sheet": 2,
+    "source_cell": 12,
+    "texture": "collapsed_arch_large"
+  },
+  "granite_fins": {
+    "region": [
+      1440,
+      480,
+      160,
+      160
+    ],
+    "zone": "storm",
+    "description": "three long sharp granite fins of different heights",
+    "source_sheet": 2,
+    "source_cell": 13
+  },
+  "storm_bow": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "storm",
+    "description": "dark broken ship bow with copper storm plates",
+    "source_sheet": 2,
+    "source_cell": 14,
+    "texture": "storm_bow_large"
+  },
+  "warning_column": {
+    "region": [
+      1760,
+      480,
+      160,
+      160
+    ],
+    "zone": "storm",
+    "description": "ram-carved maritime warning column with weathered brass bands",
+    "source_sheet": 2,
+    "source_cell": 15
+  },
+  "steering_wheel": {
+    "region": [
+      0,
+      640,
+      160,
+      160
+    ],
+    "zone": "storm",
+    "description": "broken ship steering wheel half buried in timber",
+    "source_sheet": 3,
+    "source_cell": 0
+  },
+  "observatory_roof": {
+    "region": [
+      160,
+      640,
+      160,
+      160
+    ],
+    "zone": "storm",
+    "description": "torn stormwatch observatory roof with broken telescope",
+    "source_sheet": 3,
+    "source_cell": 1
+  },
+  "shell_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "opal",
+    "description": "large pale shell arch with subdued opal edges",
+    "source_sheet": 3,
+    "source_cell": 2,
+    "texture": "shell_arch_large"
+  },
+  "opal_urchins": {
+    "region": [
+      480,
+      640,
+      160,
+      160
+    ],
+    "zone": "opal",
+    "description": "white and lavender urchin bed with natural low sheen",
+    "source_sheet": 3,
+    "source_cell": 3
+  },
+  "lavender_fan": {
+    "region": [
+      640,
+      640,
+      160,
+      160
+    ],
+    "zone": "opal",
+    "description": "lavender gorgonian coral fan with asymmetric branches",
+    "source_sheet": 3,
+    "source_cell": 4
+  },
+  "sea_glass_spires": {
+    "region": [
+      800,
+      640,
+      160,
+      160
+    ],
+    "zone": "opal",
+    "description": "irregular sea-glass spires in desaturated teal and pearl",
+    "source_sheet": 3,
+    "source_cell": 5
+  },
+  "mosaic_ruin": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "opal",
+    "description": "ancient pale mosaic terrace ruin with opal shells",
+    "source_sheet": 3,
+    "source_cell": 6,
+    "texture": "mosaic_ruin_large"
+  },
+  "grass_spiral": {
+    "region": [
+      1120,
+      640,
+      160,
+      160
+    ],
+    "zone": "opal",
+    "description": "sweeping spiral-shaped sea grass patch",
+    "source_sheet": 3,
+    "source_cell": 7
+  },
+  "coral_pagoda": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "opal",
+    "description": "grand natural white coral pagoda formation",
+    "source_sheet": 3,
+    "source_cell": 8,
+    "texture": "coral_pagoda_large"
+  },
+  "moon_instrument": {
+    "region": [
+      1440,
+      640,
+      160,
+      160
+    ],
+    "zone": "opal",
+    "description": "buried brass moon-navigation instrument",
+    "source_sheet": 3,
+    "source_cell": 9
+  },
+  "sea_glass_statue": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "opal",
+    "description": "eroded robed maritime statue covered in pale glass",
+    "source_sheet": 3,
+    "source_cell": 10,
+    "texture": "sea_glass_statue_large"
+  },
+  "nautilus_colony": {
+    "region": [
+      1760,
+      640,
+      160,
+      160
+    ],
+    "zone": "opal",
+    "description": "spiralling nautilus shell colony on low stone",
+    "source_sheet": 3,
+    "source_cell": 11
+  },
+  "leviathan_ribs": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "deeps",
+    "description": "enormous ancient leviathan rib arch, non-gory fossil stone",
+    "source_sheet": 3,
+    "source_cell": 12,
+    "texture": "leviathan_ribs_large"
+  },
+  "deep_anchor": {
+    "region": [
+      160,
+      800,
+      160,
+      160
+    ],
+    "zone": "deeps",
+    "description": "giant fractured iron deep-water anchor",
+    "source_sheet": 3,
+    "source_cell": 13
+  },
+  "stone_compass": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "deeps",
+    "description": "huge ancient maritime compass rose carved in stone",
+    "source_sheet": 3,
+    "source_cell": 14,
+    "texture": "stone_compass_large"
+  },
+  "pressure_bell": {
+    "region": [
+      480,
+      800,
+      160,
+      160
+    ],
+    "zone": "deeps",
+    "description": "old bronze pressure bell with corroded rivets",
+    "source_sheet": 3,
+    "source_cell": 15
+  },
+  "thermal_vent": {
+    "region": [
+      640,
+      800,
+      160,
+      160
+    ],
+    "zone": "deeps",
+    "description": "natural hydrothermal chimney cluster, no smoke painted",
+    "source_sheet": 4,
+    "source_cell": 0
+  },
+  "basalt_organ": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "deeps",
+    "description": "irregular dark basalt organ pipes with mineral stains",
+    "source_sheet": 4,
+    "source_cell": 1,
+    "texture": "basalt_organ_large"
+  },
+  "stone_face": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "deeps",
+    "description": "collapsed monumental weathered stone face",
+    "source_sheet": 4,
+    "source_cell": 2,
+    "texture": "stone_face_large"
+  },
+  "boulder_chain": {
+    "region": [
+      1120,
+      800,
+      160,
+      160
+    ],
+    "zone": "deeps",
+    "description": "long low chain of eroded angular boulders",
+    "source_sheet": 4,
+    "source_cell": 3
+  },
+  "stone_wheel": {
+    "region": [
+      1280,
+      800,
+      160,
+      160
+    ],
+    "zone": "deeps",
+    "description": "half-buried colossal stone ship's wheel",
+    "source_sheet": 4,
+    "source_cell": 4
+  },
+  "maritime_obelisk": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "deeps",
+    "description": "broken deep-sea maritime obelisk with undecipherable worn grooves",
+    "source_sheet": 4,
+    "source_cell": 5,
+    "texture": "maritime_obelisk_large"
+  },
+  "keel_monument": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "trench",
+    "description": "huge stacked broken ship keels like a drowned monument",
+    "source_sheet": 4,
+    "source_cell": 6,
+    "texture": "keel_monument_large"
+  },
+  "lantern_buoy": {
+    "region": [
+      1760,
+      800,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "old brass lantern buoy in a timber-and-chain frame",
+    "source_sheet": 4,
+    "source_cell": 7
+  },
+  "pier_fragments": {
+    "region": [
+      0,
+      960,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "narrow ancient stone pier fragments",
+    "source_sheet": 4,
+    "source_cell": 8
+  },
+  "trench_ledge": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "trench",
+    "description": "long stratified cliff ledge with a deep angular fissure",
+    "source_sheet": 4,
+    "source_cell": 9,
+    "texture": "trench_ledge_large"
+  },
+  "tangled_rigging": {
+    "region": [
+      320,
+      960,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "large web of tangled wreck rigging around old spars",
+    "source_sheet": 4,
+    "source_cell": 10
+  },
+  "diving_cage": {
+    "region": [
+      480,
+      960,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "abandoned corroded diving cage, clearly broken and empty",
+    "source_sheet": 4,
+    "source_cell": 11
+  },
+  "white_sponges": {
+    "region": [
+      640,
+      960,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "small ghost-white deep-sea sponge stand",
+    "source_sheet": 4,
+    "source_cell": 12
+  },
+  "copper_chart": {
+    "region": [
+      800,
+      960,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "broken copper chart cabinet with exposed corroded charts",
+    "source_sheet": 4,
+    "source_cell": 13
+  },
+  "bronze_beacon": {
+    "region": [
+      960,
+      960,
+      160,
+      160
+    ],
+    "zone": "trench",
+    "description": "small warm bronze deep-water beacon on a chain weight",
+    "source_sheet": 4,
+    "source_cell": 14
+  },
+  "keel_stack": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "trench",
+    "description": "low offset pile of carved keel fragments",
+    "source_sheet": 4,
+    "source_cell": 15,
+    "texture": "keel_stack_large"
+  },
+  "moon_gate": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "grand ancient obsidian moon gate with pearl inlay",
+    "source_sheet": 5,
+    "source_cell": 0,
+    "texture": "moon_gate_large"
+  },
+  "obsidian_willow": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "unique black-barked night willow with muted silver leaves",
+    "source_sheet": 5,
+    "source_cell": 1,
+    "texture": "obsidian_willow_large"
+  },
+  "silver_reeds": {
+    "region": [
+      1600,
+      960,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "fine silver reed bed with dark teal stalks",
+    "source_sheet": 5,
+    "source_cell": 2
+  },
+  "pearl_shrine": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "weathered pearl and dark-stone tidal shrine",
+    "source_sheet": 5,
+    "source_cell": 3,
+    "texture": "pearl_shrine_large"
+  },
+  "night_pier": {
+    "region": [
+      0,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "small curved night-island timber pier with silver ropes",
+    "source_sheet": 5,
+    "source_cell": 4
+  },
+  "tear_lotus": {
+    "region": [
+      160,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "rare pale-blue tear-shaped lotus bed",
+    "source_sheet": 5,
+    "source_cell": 5
+  },
+  "black_altar": {
+    "region": [
+      320,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "low obsidian altar covered in natural pale lichen",
+    "source_sheet": 5,
+    "source_cell": 6
+  },
+  "lunar_gazebo": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "grand ruined lunar gazebo with fractured jade roof",
+    "source_sheet": 5,
+    "source_cell": 7,
+    "texture": "lunar_gazebo_large"
+  },
+  "night_spire": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "slender black stone night spire with moon-shaped opening",
+    "source_sheet": 5,
+    "source_cell": 8,
+    "texture": "night_spire_large"
+  },
+  "crater_arch": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "crater-side dark stone arch with pale mineral veins",
+    "source_sheet": 5,
+    "source_cell": 9,
+    "texture": "crater_arch_large"
+  },
+  "moon_bowl": {
+    "region": [
+      960,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "ancient shallow moonwater bowl on a low pedestal",
+    "source_sheet": 5,
+    "source_cell": 10
+  },
+  "fabled_creel": {
+    "region": [
+      1120,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "intricate silver-woven fishing creel with dark wicker lid",
+    "source_sheet": 5,
+    "source_cell": 11
+  },
+  "instrument_stand": {
+    "region": [
+      1280,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "old bronze tidal instrument stand with an armillary dial",
+    "source_sheet": 5,
+    "source_cell": 12
+  },
+  "night_torch": {
+    "region": [
+      1440,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "restrained amber night lantern on an obsidian post",
+    "source_sheet": 5,
+    "source_cell": 13
+  },
+  "shadow_roots": {
+    "region": [
+      1600,
+      1120,
+      160,
+      160
+    ],
+    "zone": "night",
+    "description": "asymmetric fan of dark exposed roots and silver moss",
+    "source_sheet": 5,
+    "source_cell": 14
+  },
+  "silver_stair": {
+    "region": [
+      0,
+      0,
+      384,
+      384
+    ],
+    "zone": "night",
+    "description": "broad broken silver-grey stone stairs with jade edges",
+    "source_sheet": 5,
+    "source_cell": 15,
+    "texture": "silver_stair_large"
+  }
+}

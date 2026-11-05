@@ -1,0 +1,396 @@
+{
+  "outpost": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 0,
+    "source_cell": 0,
+    "palette_limit": 48,
+    "texture": "outpost_large"
+  },
+  "hero_book": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 0,
+    "source_cell": 1,
+    "palette_limit": 48,
+    "texture": "hero_book_large"
+  },
+  "ally_dummy": {
+    "region": [
+      0,
+      0,
+      60,
+      72
+    ],
+    "source_sheet": 0,
+    "source_cell": 2,
+    "palette_limit": 48,
+    "texture": "ally_dummy_registered",
+    "old_opaque_bounds": [
+      0,
+      11,
+      60,
+      72
+    ],
+    "old_canvas": [
+      60,
+      72
+    ]
+  },
+  "launcher": {
+    "region": [
+      0,
+      0,
+      60,
+      62
+    ],
+    "source_sheet": 0,
+    "source_cell": 3,
+    "palette_limit": 48,
+    "texture": "launcher_registered",
+    "old_opaque_bounds": [
+      0,
+      7,
+      60,
+      62
+    ],
+    "old_canvas": [
+      60,
+      62
+    ]
+  },
+  "sparring_dummy": {
+    "region": [
+      0,
+      0,
+      48,
+      64
+    ],
+    "source_sheet": 0,
+    "source_cell": 4,
+    "palette_limit": 48,
+    "texture": "sparring_dummy_registered",
+    "old_opaque_bounds": [
+      0,
+      11,
+      48,
+      64
+    ],
+    "old_canvas": [
+      48,
+      64
+    ]
+  },
+  "target_rack": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 0,
+    "source_cell": 5,
+    "palette_limit": 48,
+    "texture": "target_rack_large"
+  },
+  "weapons_rack": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 0,
+    "source_cell": 6,
+    "palette_limit": 48,
+    "texture": "weapons_rack_large"
+  },
+  "shield_rack": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 0,
+    "source_cell": 7,
+    "palette_limit": 48,
+    "texture": "shield_rack_large"
+  },
+  "arrow_basket": {
+    "region": [
+      0,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 8,
+    "palette_limit": 48
+  },
+  "repair_bench": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 0,
+    "source_cell": 9,
+    "palette_limit": 48,
+    "texture": "repair_bench_large"
+  },
+  "bandage_station": {
+    "region": [
+      320,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 10,
+    "palette_limit": 48
+  },
+  "rest_bench": {
+    "region": [
+      480,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 11,
+    "palette_limit": 48
+  },
+  "water_trough": {
+    "region": [
+      640,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 12,
+    "palette_limit": 48
+  },
+  "training_banner": {
+    "region": [
+      800,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 13,
+    "palette_limit": 48
+  },
+  "exit_sign": {
+    "region": [
+      960,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 14,
+    "palette_limit": 48
+  },
+  "fence_end": {
+    "region": [
+      1120,
+      160,
+      160,
+      160
+    ],
+    "source_sheet": 0,
+    "source_cell": 15,
+    "palette_limit": 48
+  },
+  "oak": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 1,
+    "source_cell": 0,
+    "palette_limit": 48,
+    "texture": "oak_large"
+  },
+  "pine": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 1,
+    "source_cell": 1,
+    "palette_limit": 48,
+    "texture": "pine_large"
+  },
+  "willow": {
+    "region": [
+      0,
+      0,
+      320,
+      320
+    ],
+    "source_sheet": 1,
+    "source_cell": 2,
+    "palette_limit": 48,
+    "texture": "willow_large"
+  },
+  "hedge": {
+    "region": [
+      480,
+      320,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 3,
+    "palette_limit": 48
+  },
+  "fern": {
+    "region": [
+      640,
+      320,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 4,
+    "palette_limit": 48
+  },
+  "flower_bed": {
+    "region": [
+      800,
+      320,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 5,
+    "palette_limit": 48
+  },
+  "stump": {
+    "region": [
+      960,
+      320,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 6,
+    "palette_limit": 48
+  },
+  "root_stones": {
+    "region": [
+      1120,
+      320,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 7,
+    "palette_limit": 48
+  },
+  "chalk_box": {
+    "region": [
+      0,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 8,
+    "palette_limit": 48
+  },
+  "sandbags": {
+    "region": [
+      160,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 9,
+    "palette_limit": 48
+  },
+  "practice_bell": {
+    "region": [
+      320,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 10,
+    "palette_limit": 48
+  },
+  "rolled_mats": {
+    "region": [
+      480,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 11,
+    "palette_limit": 48
+  },
+  "clay_jars": {
+    "region": [
+      640,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 12,
+    "palette_limit": 48
+  },
+  "lantern": {
+    "region": [
+      800,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 13,
+    "palette_limit": 48
+  },
+  "supply_crates": {
+    "region": [
+      960,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 14,
+    "palette_limit": 48
+  },
+  "brazier": {
+    "region": [
+      1120,
+      480,
+      160,
+      160
+    ],
+    "source_sheet": 1,
+    "source_cell": 15,
+    "palette_limit": 48
+  }
+}

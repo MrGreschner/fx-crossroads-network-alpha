@@ -22,4 +22,4 @@ func fit()->void:
  viewport.size_2d_override=logical
  container.size=Vector2(raster);container.scale=Vector2(logical)/Vector2(raster)
 func set_quality(value:float)->void:
- render_scale=clampf(value,.7,1);fit()
+ render_scale=clampf(value,.60,1);fit()

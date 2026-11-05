@@ -1,0 +1,5042 @@
+{
+  "day": [
+    {
+      "kind": "cove_grotto",
+      "pos": [
+        5797.34,
+        197.71
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "reef_fountain",
+      "pos": [
+        5330.46,
+        525.68
+      ],
+      "size": [
+        261,
+        170
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "sponges",
+      "pos": [
+        5961.58,
+        592.12
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "shell_column",
+      "pos": [
+        3228.66,
+        627.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "elkhorn",
+      "pos": [
+        5653.41,
+        683.97
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "sponges",
+      "pos": [
+        2841.06,
+        889.89
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "coral_arch",
+      "pos": [
+        5700.0,
+        900.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "warning_column",
+      "pos": [
+        12828.66,
+        927.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "brain_ledge",
+      "pos": [
+        5359.67,
+        942.73
+      ],
+      "size": [
+        312,
+        203
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "cove_grotto",
+      "pos": [
+        2424.48,
+        984.71
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "red_fan",
+      "pos": [
+        3299.83,
+        1001.02
+      ],
+      "size": [
+        240,
+        216
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "red_fan",
+      "pos": [
+        5930.05,
+        1063.1
+      ],
+      "size": [
+        261,
+        235
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "collapsed_arch",
+      "pos": [
+        12441.06,
+        1189.89
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "coral_arch",
+      "pos": [
+        3100.0,
+        1200.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "elkhorn",
+      "pos": [
+        2879.19,
+        1209.2
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "glass_buoy",
+      "pos": [
+        3560.87,
+        1261.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "observatory_roof",
+      "pos": [
+        12024.48,
+        1284.71
+      ],
+      "size": [
+        193,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "lightning_beacon",
+      "pos": [
+        12899.83,
+        1301.02
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "keyhole_arch",
+      "pos": [
+        5200.83,
+        1313.2
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "glass_buoy",
+      "pos": [
+        5717.36,
+        1364.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "wind_stack",
+      "pos": [
+        12700.0,
+        1500.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "reef_fountain",
+      "pos": [
+        2668.32,
+        1500.55
+      ],
+      "size": [
+        240,
+        156
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "split_spires",
+      "pos": [
+        12479.19,
+        1509.2
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "brain_ledge",
+      "pos": [
+        3084.26,
+        1542.64
+      ],
+      "size": [
+        287,
+        187
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "granite_fins",
+      "pos": [
+        13160.87,
+        1561.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "shell_column",
+      "pos": [
+        1429.45,
+        1679.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "cove_grotto",
+      "pos": [
+        4222.02,
+        1700.16
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "keyhole_arch",
+      "pos": [
+        3422.34,
+        1762.14
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "nautilus_colony",
+      "pos": [
+        25422.02,
+        1800.16
+      ],
+      "size": [
+        202,
+        131
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "storm_bow",
+      "pos": [
+        12268.32,
+        1800.55
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "storm_belltower",
+      "pos": [
+        12684.26,
+        1842.64
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "sponges",
+      "pos": [
+        4601.73,
+        1896.0
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "red_fan",
+      "pos": [
+        1724.65,
+        1919.08
+      ],
+      "size": [
+        230,
+        207
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "shell_column",
+      "pos": [
+        5067.37,
+        1944.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "glass_buoy",
+      "pos": [
+        2092.35,
+        1950.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "mosaic_ruin",
+      "pos": [
+        25801.73,
+        1996.0
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "moon_instrument",
+      "pos": [
+        26267.37,
+        2044.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "steering_wheel",
+      "pos": [
+        13022.34,
+        2062.14
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "warning_column",
+      "pos": [
+        8129.45,
+        2079.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "sponges",
+      "pos": [
+        1302.18,
+        2129.63
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "elkhorn",
+      "pos": [
+        4425.19,
+        2164.79
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "coral_arch",
+      "pos": [
+        1700.0,
+        2200.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "reef_fountain",
+      "pos": [
+        4076.22,
+        2251.77
+      ],
+      "size": [
+        251,
+        163
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "opal_urchins",
+      "pos": [
+        25625.19,
+        2264.79
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "red_fan",
+      "pos": [
+        4881.02,
+        2276.55
+      ],
+      "size": [
+        251,
+        226
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "coral_arch",
+      "pos": [
+        4600.0,
+        2300.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "lightning_beacon",
+      "pos": [
+        8424.65,
+        2319.08
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "elkhorn",
+      "pos": [
+        1537.04,
+        2349.28
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "granite_fins",
+      "pos": [
+        8792.35,
+        2350.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "coral_pagoda",
+      "pos": [
+        25276.22,
+        2351.77
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "lavender_fan",
+      "pos": [
+        26081.02,
+        2376.55
+      ],
+      "size": [
+        251,
+        226
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "moon_instrument",
+      "pos": [
+        18229.45,
+        2379.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "shell_arch",
+      "pos": [
+        25800.0,
+        2400.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "keyhole_arch",
+      "pos": [
+        2308.68,
+        2422.29
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "cove_grotto",
+      "pos": [
+        1044.64,
+        2470.52
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "brain_ledge",
+      "pos": [
+        1908.69,
+        2472.2
+      ],
+      "size": [
+        275,
+        179
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "collapsed_arch",
+      "pos": [
+        8002.18,
+        2529.63
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "brain_ledge",
+      "pos": [
+        4367.23,
+        2551.92
+      ],
+      "size": [
+        300,
+        195
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "wind_stack",
+      "pos": [
+        8400.0,
+        2600.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "lavender_fan",
+      "pos": [
+        18524.65,
+        2619.08
+      ],
+      "size": [
+        230,
+        207
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "glass_buoy",
+      "pos": [
+        4912.63,
+        2644.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "grass_spiral",
+      "pos": [
+        18892.35,
+        2650.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "sea_glass_spires",
+      "pos": [
+        25567.23,
+        2651.92
+      ],
+      "size": [
+        300,
+        195
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "reef_fountain",
+      "pos": [
+        1563.45,
+        2707.97
+      ],
+      "size": [
+        230,
+        150
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "reef"
+    },
+    {
+      "kind": "grass_spiral",
+      "pos": [
+        26112.63,
+        2744.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "split_spires",
+      "pos": [
+        8237.04,
+        2749.28
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "steering_wheel",
+      "pos": [
+        9008.68,
+        2822.29
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "mosaic_ruin",
+      "pos": [
+        18102.18,
+        2829.63
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "observatory_roof",
+      "pos": [
+        7744.64,
+        2870.52
+      ],
+      "size": [
+        185,
+        120
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "storm_belltower",
+      "pos": [
+        8608.69,
+        2872.2
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "shell_arch",
+      "pos": [
+        18500.0,
+        2900.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "keyhole_arch",
+      "pos": [
+        4484.4,
+        2937.61
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "reef"
+    },
+    {
+      "kind": "sea_glass_statue",
+      "pos": [
+        25684.4,
+        3037.61
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "opal_urchins",
+      "pos": [
+        18337.04,
+        3049.28
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "storm_bow",
+      "pos": [
+        8263.45,
+        3107.97
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "sea_glass_statue",
+      "pos": [
+        19108.68,
+        3122.29
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "nautilus_colony",
+      "pos": [
+        17844.64,
+        3170.52
+      ],
+      "size": [
+        185,
+        120
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "sea_glass_spires",
+      "pos": [
+        18708.69,
+        3172.2
+      ],
+      "size": [
+        275,
+        179
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "coral_pagoda",
+      "pos": [
+        18363.45,
+        3407.97
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "observatory_roof",
+      "pos": [
+        14722.02,
+        4100.16
+      ],
+      "size": [
+        202,
+        131
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "kelp_camp",
+      "pos": [
+        5430,
+        4180
+      ],
+      "size": [
+        220,
+        190
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "kelp"
+    },
+    {
+      "kind": "collapsed_arch",
+      "pos": [
+        15101.73,
+        4296.0
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "tide_gate",
+      "pos": [
+        2300,
+        4310
+      ],
+      "size": [
+        260,
+        170
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "shoals"
+    },
+    {
+      "kind": "warning_column",
+      "pos": [
+        15567.37,
+        4344.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "split_spires",
+      "pos": [
+        14925.19,
+        4564.79
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "storm_bow",
+      "pos": [
+        14576.22,
+        4651.77
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "lightning_beacon",
+      "pos": [
+        15381.02,
+        4676.55
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "wind_stack",
+      "pos": [
+        15100.0,
+        4700.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "observatory_roof",
+      "pos": [
+        10597.34,
+        4897.71
+      ],
+      "size": [
+        210,
+        136
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "storm_belltower",
+      "pos": [
+        14867.23,
+        4951.92
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "granite_fins",
+      "pos": [
+        15412.63,
+        5044.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "urchin_garden",
+      "pos": [
+        4829.45,
+        5079.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "storm_bow",
+      "pos": [
+        10130.46,
+        5225.68
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "collapsed_arch",
+      "pos": [
+        10761.58,
+        5292.12
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "encrusted_scaffold",
+      "pos": [
+        5124.65,
+        5319.08
+      ],
+      "size": [
+        230,
+        207
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "steering_wheel",
+      "pos": [
+        14984.4,
+        5337.61
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "diving_bell",
+      "pos": [
+        5492.35,
+        5350.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "split_spires",
+      "pos": [
+        10453.41,
+        5383.97
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "shoal_lighthouse",
+      "pos": [
+        280,
+        5520
+      ],
+      "size": [
+        310,
+        470
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "shoals"
+    },
+    {
+      "kind": "moon_instrument",
+      "pos": [
+        22328.66,
+        5527.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "black_reef",
+      "pos": [
+        4702.18,
+        5529.63
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "conch_beacon",
+      "pos": [
+        970,
+        5580
+      ],
+      "size": [
+        75,
+        115
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "shoals"
+    },
+    {
+      "kind": "rope_creels",
+      "pos": [
+        800,
+        5590
+      ],
+      "size": [
+        90,
+        90
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_stalks",
+      "pos": [
+        5100.0,
+        5600.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "wind_stack",
+      "pos": [
+        10500.0,
+        5600.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "warning_column",
+      "pos": [
+        11086.26,
+        5629.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "storm_belltower",
+      "pos": [
+        10159.67,
+        5642.73
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "board_stack",
+      "pos": [
+        670,
+        5705
+      ],
+      "size": [
+        220,
+        140
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_curtain",
+      "pos": [
+        4937.04,
+        5749.28
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "lightning_beacon",
+      "pos": [
+        10730.05,
+        5763.1
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "storm"
+    },
+    {
+      "kind": "mosaic_ruin",
+      "pos": [
+        21941.06,
+        5789.89
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "stilt_chalet",
+      "pos": [
+        1974.65,
+        5819.08
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_masts",
+      "pos": [
+        5708.68,
+        5822.29
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "tide_gate",
+      "pos": [
+        2342.35,
+        5850.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_nursery",
+      "pos": [
+        4444.64,
+        5870.52
+      ],
+      "size": [
+        185,
+        120
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "kelp_arch",
+      "pos": [
+        5308.69,
+        5872.2
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "nautilus_colony",
+      "pos": [
+        21524.48,
+        5884.71
+      ],
+      "size": [
+        193,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "stilt_chalet",
+      "pos": [
+        250,
+        5900
+      ],
+      "size": [
+        380,
+        310
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "shoals"
+    },
+    {
+      "kind": "lavender_fan",
+      "pos": [
+        22399.83,
+        5901.02
+      ],
+      "size": [
+        240,
+        216
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "steering_wheel",
+      "pos": [
+        10000.83,
+        6013.2
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "granite_fins",
+      "pos": [
+        10517.36,
+        6064.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "storm"
+    },
+    {
+      "kind": "salt_arch",
+      "pos": [
+        1950.0,
+        6100.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "shell_arch",
+      "pos": [
+        22200.0,
+        6100.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "kelp_camp",
+      "pos": [
+        4963.45,
+        6107.97
+      ],
+      "size": [
+        230,
+        150
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "opal_urchins",
+      "pos": [
+        21979.19,
+        6109.2
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "grass_spiral",
+      "pos": [
+        22660.87,
+        6161.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "shoal_lighthouse",
+      "pos": [
+        1787.04,
+        6249.28
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "seagrass_fan",
+      "pos": [
+        2558.68,
+        6322.29
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "conch_beacon",
+      "pos": [
+        2158.69,
+        6372.2
+      ],
+      "size": [
+        275,
+        179
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "coral_pagoda",
+      "pos": [
+        21768.32,
+        6400.55
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "sea_glass_spires",
+      "pos": [
+        22184.26,
+        6442.64
+      ],
+      "size": [
+        287,
+        187
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "board_stack",
+      "pos": [
+        1813.45,
+        6607.97
+      ],
+      "size": [
+        230,
+        150
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "sea_glass_statue",
+      "pos": [
+        22522.34,
+        6662.14
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "figurehead",
+      "pos": [
+        8029.45,
+        7279.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "hull_ribs",
+      "pos": [
+        8324.65,
+        7519.08
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "ballast_pots",
+      "pos": [
+        8692.35,
+        7550.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "salt_trough",
+      "pos": [
+        2928.66,
+        7627.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "urchin_garden",
+      "pos": [
+        5728.66,
+        7727.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "capsized_boat",
+      "pos": [
+        7902.18,
+        7729.63
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "galleon_bow",
+      "pos": [
+        8300.0,
+        7800.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "rope_creels",
+      "pos": [
+        2541.06,
+        7889.89
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "nautilus_colony",
+      "pos": [
+        25497.34,
+        7897.71
+      ],
+      "size": [
+        210,
+        136
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "broken_masts",
+      "pos": [
+        8137.04,
+        7949.28
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "clam_bank",
+      "pos": [
+        2124.48,
+        7984.71
+      ],
+      "size": [
+        193,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "black_reef",
+      "pos": [
+        5341.06,
+        7989.89
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "stilt_chalet",
+      "pos": [
+        2999.83,
+        8001.02
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "rotten_winch",
+      "pos": [
+        8908.68,
+        8022.29
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "sail_shroud",
+      "pos": [
+        7644.64,
+        8070.52
+      ],
+      "size": [
+        185,
+        120
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "naval_bell",
+      "pos": [
+        8508.69,
+        8072.2
+      ],
+      "size": [
+        275,
+        179
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "kelp_nursery",
+      "pos": [
+        4924.48,
+        8084.71
+      ],
+      "size": [
+        193,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "encrusted_scaffold",
+      "pos": [
+        5799.83,
+        8101.02
+      ],
+      "size": [
+        240,
+        216
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "salt_arch",
+      "pos": [
+        2800.0,
+        8200.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "shoal_lighthouse",
+      "pos": [
+        2579.19,
+        8209.2
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "coral_pagoda",
+      "pos": [
+        25030.46,
+        8225.68
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "tide_gate",
+      "pos": [
+        3260.87,
+        8261.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "mosaic_ruin",
+      "pos": [
+        25661.58,
+        8292.12
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "kelp_stalks",
+      "pos": [
+        5600.0,
+        8300.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "anchor_shrine",
+      "pos": [
+        8163.45,
+        8307.97
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "kelp_curtain",
+      "pos": [
+        5379.19,
+        8309.2
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "diving_bell",
+      "pos": [
+        6060.87,
+        8361.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "opal_urchins",
+      "pos": [
+        25353.41,
+        8383.97
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "board_stack",
+      "pos": [
+        2368.32,
+        8500.55
+      ],
+      "size": [
+        240,
+        156
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "conch_beacon",
+      "pos": [
+        2784.26,
+        8542.64
+      ],
+      "size": [
+        287,
+        187
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "shell_arch",
+      "pos": [
+        25400.0,
+        8600.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "kelp_camp",
+      "pos": [
+        5168.32,
+        8600.55
+      ],
+      "size": [
+        240,
+        156
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "moon_instrument",
+      "pos": [
+        25986.26,
+        8629.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "kelp_arch",
+      "pos": [
+        5584.26,
+        8642.64
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "sea_glass_spires",
+      "pos": [
+        25059.67,
+        8642.73
+      ],
+      "size": [
+        312,
+        203
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "seagrass_fan",
+      "pos": [
+        3122.34,
+        8762.14
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "lavender_fan",
+      "pos": [
+        25630.05,
+        8763.1
+      ],
+      "size": [
+        261,
+        235
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "kelp_masts",
+      "pos": [
+        5922.34,
+        8862.14
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "sea_glass_statue",
+      "pos": [
+        24900.83,
+        9013.2
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "opal"
+    },
+    {
+      "kind": "grass_spiral",
+      "pos": [
+        25417.36,
+        9064.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "opal"
+    },
+    {
+      "kind": "figurehead",
+      "pos": [
+        11328.66,
+        9127.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "capsized_boat",
+      "pos": [
+        10941.06,
+        9389.89
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "sail_shroud",
+      "pos": [
+        10524.48,
+        9484.71
+      ],
+      "size": [
+        193,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "hull_ribs",
+      "pos": [
+        11399.83,
+        9501.02
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "galleon_bow",
+      "pos": [
+        11200.0,
+        9700.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "broken_masts",
+      "pos": [
+        10979.19,
+        9709.2
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "ballast_pots",
+      "pos": [
+        11660.87,
+        9761.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "anchor_shrine",
+      "pos": [
+        10768.32,
+        10000.55
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "naval_bell",
+      "pos": [
+        11184.26,
+        10042.64
+      ],
+      "size": [
+        287,
+        187
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "rotten_winch",
+      "pos": [
+        11522.34,
+        10262.14
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "boulder_chain",
+      "pos": [
+        22128.66,
+        10927.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "thermal_vent",
+      "pos": [
+        21741.06,
+        11189.89
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "maritime_obelisk",
+      "pos": [
+        21324.48,
+        11284.71
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "stone_compass",
+      "pos": [
+        22199.83,
+        11301.02
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "leviathan_ribs",
+      "pos": [
+        22000.0,
+        11500.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "deep_anchor",
+      "pos": [
+        21779.19,
+        11509.2
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "basalt_organ",
+      "pos": [
+        22460.87,
+        11561.87
+      ],
+      "size": [
+        752,
+        677
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "clam_bank",
+      "pos": [
+        1172.02,
+        11700.16
+      ],
+      "size": [
+        202,
+        131
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "stone_face",
+      "pos": [
+        21568.32,
+        11800.55
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "pressure_bell",
+      "pos": [
+        21984.26,
+        11842.64
+      ],
+      "size": [
+        287,
+        187
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "rope_creels",
+      "pos": [
+        1551.73,
+        11896.0
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_nursery",
+      "pos": [
+        4522.02,
+        11900.16
+      ],
+      "size": [
+        202,
+        131
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "salt_trough",
+      "pos": [
+        2017.37,
+        11944.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "sail_shroud",
+      "pos": [
+        13222.02,
+        12000.16
+      ],
+      "size": [
+        202,
+        131
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "stone_wheel",
+      "pos": [
+        22322.34,
+        12062.14
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "black_reef",
+      "pos": [
+        4901.73,
+        12096.0
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "urchin_garden",
+      "pos": [
+        5367.37,
+        12144.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "shoal_lighthouse",
+      "pos": [
+        1375.19,
+        12164.79
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "capsized_boat",
+      "pos": [
+        13601.73,
+        12196.0
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "figurehead",
+      "pos": [
+        14067.37,
+        12244.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "board_stack",
+      "pos": [
+        1026.22,
+        12251.77
+      ],
+      "size": [
+        251,
+        163
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "stilt_chalet",
+      "pos": [
+        1831.02,
+        12276.55
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "salt_arch",
+      "pos": [
+        1550.0,
+        12300.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_curtain",
+      "pos": [
+        4725.19,
+        12364.79
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "sail_shroud",
+      "pos": [
+        7997.34,
+        12397.71
+      ],
+      "size": [
+        210,
+        136
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "kelp_camp",
+      "pos": [
+        4376.22,
+        12451.77
+      ],
+      "size": [
+        251,
+        163
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "broken_masts",
+      "pos": [
+        13425.19,
+        12464.79
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "encrusted_scaffold",
+      "pos": [
+        5181.02,
+        12476.55
+      ],
+      "size": [
+        251,
+        226
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "kelp_stalks",
+      "pos": [
+        4900.0,
+        12500.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "anchor_shrine",
+      "pos": [
+        13076.22,
+        12551.77
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "conch_beacon",
+      "pos": [
+        1317.23,
+        12551.92
+      ],
+      "size": [
+        300,
+        195
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "hull_ribs",
+      "pos": [
+        13881.02,
+        12576.55
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "galleon_bow",
+      "pos": [
+        13600.0,
+        12600.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "tide_gate",
+      "pos": [
+        1862.63,
+        12644.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "anchor_shrine",
+      "pos": [
+        7530.46,
+        12725.68
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "kelp_arch",
+      "pos": [
+        4667.23,
+        12751.92
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "capsized_boat",
+      "pos": [
+        8161.58,
+        12792.12
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "diving_bell",
+      "pos": [
+        5212.63,
+        12844.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "naval_bell",
+      "pos": [
+        13367.23,
+        12851.92
+      ],
+      "size": [
+        300,
+        195
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "broken_masts",
+      "pos": [
+        7853.41,
+        12883.97
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "seagrass_fan",
+      "pos": [
+        1434.4,
+        12937.61
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "ballast_pots",
+      "pos": [
+        13912.63,
+        12944.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "galleon_bow",
+      "pos": [
+        7900.0,
+        13100.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "figurehead",
+      "pos": [
+        8486.26,
+        13129.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "kelp_masts",
+      "pos": [
+        4784.4,
+        13137.61
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "naval_bell",
+      "pos": [
+        7559.67,
+        13142.73
+      ],
+      "size": [
+        312,
+        203
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "boulder_chain",
+      "pos": [
+        17329.45,
+        13179.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "rotten_winch",
+      "pos": [
+        13484.4,
+        13237.61
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "hull_ribs",
+      "pos": [
+        8130.05,
+        13263.1
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "stone_compass",
+      "pos": [
+        17624.65,
+        13419.08
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "basalt_organ",
+      "pos": [
+        17992.35,
+        13450.42
+      ],
+      "size": [
+        720,
+        648
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "rotten_winch",
+      "pos": [
+        7400.83,
+        13513.2
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "ballast_pots",
+      "pos": [
+        7917.36,
+        13564.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "wrecks"
+    },
+    {
+      "kind": "thermal_vent",
+      "pos": [
+        17202.18,
+        13629.63
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "leviathan_ribs",
+      "pos": [
+        17600.0,
+        13700.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "deep_anchor",
+      "pos": [
+        17437.04,
+        13849.28
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "stone_wheel",
+      "pos": [
+        18208.68,
+        13922.29
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "maritime_obelisk",
+      "pos": [
+        16944.64,
+        13970.52
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "pressure_bell",
+      "pos": [
+        17808.69,
+        13972.2
+      ],
+      "size": [
+        275,
+        179
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "maritime_obelisk",
+      "pos": [
+        25422.02,
+        14200.16
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "stone_face",
+      "pos": [
+        17463.45,
+        14207.97
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "thermal_vent",
+      "pos": [
+        25801.73,
+        14396.0
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "boulder_chain",
+      "pos": [
+        26267.37,
+        14444.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "deep_anchor",
+      "pos": [
+        25625.19,
+        14664.79
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "stone_face",
+      "pos": [
+        25276.22,
+        14751.77
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "stone_compass",
+      "pos": [
+        26081.02,
+        14776.55
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "leviathan_ribs",
+      "pos": [
+        25800.0,
+        14800.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "pressure_bell",
+      "pos": [
+        25567.23,
+        15051.92
+      ],
+      "size": [
+        300,
+        195
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "basalt_organ",
+      "pos": [
+        26112.63,
+        15144.22
+      ],
+      "size": [
+        785,
+        706
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "copper_chart",
+      "pos": [
+        7929.45,
+        15279.07
+      ],
+      "size": [
+        275,
+        248
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "keel_stack",
+      "pos": [
+        12722.02,
+        15400.16
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "stone_wheel",
+      "pos": [
+        25684.4,
+        15437.61
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "pier_fragments",
+      "pos": [
+        8224.65,
+        15519.08
+      ],
+      "size": [
+        230,
+        207
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "diving_cage",
+      "pos": [
+        8592.35,
+        15550.42
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "tangled_rigging",
+      "pos": [
+        13101.73,
+        15596.0
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "copper_chart",
+      "pos": [
+        13567.37,
+        15644.84
+      ],
+      "size": [
+        300,
+        270
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "tangled_rigging",
+      "pos": [
+        7802.18,
+        15729.63
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "clam_bank",
+      "pos": [
+        2697.34,
+        15797.71
+      ],
+      "size": [
+        210,
+        136
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "keel_monument",
+      "pos": [
+        8200.0,
+        15800.0
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "lantern_buoy",
+      "pos": [
+        12925.19,
+        15864.79
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "lantern_buoy",
+      "pos": [
+        8037.04,
+        15949.28
+      ],
+      "size": [
+        185,
+        166
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "white_sponges",
+      "pos": [
+        12576.22,
+        15951.77
+      ],
+      "size": [
+        251,
+        163
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "pier_fragments",
+      "pos": [
+        13381.02,
+        15976.55
+      ],
+      "size": [
+        251,
+        226
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "keel_monument",
+      "pos": [
+        13100.0,
+        16000.0
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "bronze_beacon",
+      "pos": [
+        8808.68,
+        16022.29
+      ],
+      "size": [
+        140,
+        126
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "keel_stack",
+      "pos": [
+        7544.64,
+        16070.52
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "trench_ledge",
+      "pos": [
+        8408.69,
+        16072.2
+      ],
+      "size": [
+        720,
+        468
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "board_stack",
+      "pos": [
+        2230.46,
+        16125.68
+      ],
+      "size": [
+        261,
+        170
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "rope_creels",
+      "pos": [
+        2861.58,
+        16192.12
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "trench_ledge",
+      "pos": [
+        12867.23,
+        16251.92
+      ],
+      "size": [
+        785,
+        510
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "shoal_lighthouse",
+      "pos": [
+        2553.41,
+        16283.97
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "white_sponges",
+      "pos": [
+        8063.45,
+        16307.97
+      ],
+      "size": [
+        230,
+        150
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "diving_cage",
+      "pos": [
+        13412.63,
+        16344.22
+      ],
+      "size": [
+        202,
+        181
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "salt_arch",
+      "pos": [
+        2600.0,
+        16500.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "salt_trough",
+      "pos": [
+        3186.26,
+        16529.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "conch_beacon",
+      "pos": [
+        2259.67,
+        16542.73
+      ],
+      "size": [
+        312,
+        203
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "bronze_beacon",
+      "pos": [
+        12984.4,
+        16637.61
+      ],
+      "size": [
+        153,
+        137
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "stilt_chalet",
+      "pos": [
+        2830.05,
+        16663.1
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_nursery",
+      "pos": [
+        5597.34,
+        16697.71
+      ],
+      "size": [
+        210,
+        136
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "seagrass_fan",
+      "pos": [
+        2100.83,
+        16913.2
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "tide_gate",
+      "pos": [
+        2617.36,
+        16964.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "shoals"
+    },
+    {
+      "kind": "kelp_camp",
+      "pos": [
+        5130.46,
+        17025.68
+      ],
+      "size": [
+        261,
+        170
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "black_reef",
+      "pos": [
+        5761.58,
+        17092.12
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "kelp_curtain",
+      "pos": [
+        5453.41,
+        17183.97
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "kelp_stalks",
+      "pos": [
+        5500.0,
+        17400.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "urchin_garden",
+      "pos": [
+        6086.26,
+        17429.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "kelp_arch",
+      "pos": [
+        5159.67,
+        17442.73
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "kelp"
+    },
+    {
+      "kind": "maritime_obelisk",
+      "pos": [
+        22697.34,
+        17497.71
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "encrusted_scaffold",
+      "pos": [
+        5730.05,
+        17563.1
+      ],
+      "size": [
+        261,
+        235
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "kelp_masts",
+      "pos": [
+        5000.83,
+        17813.2
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "stone_face",
+      "pos": [
+        22230.46,
+        17825.68
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "copper_chart",
+      "pos": [
+        10528.66,
+        17827.27
+      ],
+      "size": [
+        287,
+        259
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "diving_bell",
+      "pos": [
+        5517.36,
+        17864.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "kelp"
+    },
+    {
+      "kind": "thermal_vent",
+      "pos": [
+        22861.58,
+        17892.12
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "deep_anchor",
+      "pos": [
+        22553.41,
+        17983.97
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "tangled_rigging",
+      "pos": [
+        10141.06,
+        18089.89
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "keel_stack",
+      "pos": [
+        9724.48,
+        18184.71
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "leviathan_ribs",
+      "pos": [
+        22600.0,
+        18200.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "pier_fragments",
+      "pos": [
+        10599.83,
+        18201.02
+      ],
+      "size": [
+        240,
+        216
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "boulder_chain",
+      "pos": [
+        23186.26,
+        18229.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "pressure_bell",
+      "pos": [
+        22259.67,
+        18242.73
+      ],
+      "size": [
+        312,
+        203
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "keel_stack",
+      "pos": [
+        13697.34,
+        18297.71
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "stone_compass",
+      "pos": [
+        22830.05,
+        18363.1
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "keel_monument",
+      "pos": [
+        10400.0,
+        18400.0
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "lantern_buoy",
+      "pos": [
+        10179.19,
+        18409.2
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "diving_cage",
+      "pos": [
+        10860.87,
+        18461.87
+      ],
+      "size": [
+        193,
+        174
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "stone_wheel",
+      "pos": [
+        22100.83,
+        18613.2
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "deeps"
+    },
+    {
+      "kind": "white_sponges",
+      "pos": [
+        13230.46,
+        18625.68
+      ],
+      "size": [
+        261,
+        170
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "basalt_organ",
+      "pos": [
+        22617.36,
+        18664.68
+      ],
+      "size": [
+        817,
+        735
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "deeps"
+    },
+    {
+      "kind": "tangled_rigging",
+      "pos": [
+        13861.58,
+        18692.12
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "white_sponges",
+      "pos": [
+        9968.32,
+        18700.55
+      ],
+      "size": [
+        240,
+        156
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "trench_ledge",
+      "pos": [
+        10384.26,
+        18742.64
+      ],
+      "size": [
+        752,
+        489
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "lantern_buoy",
+      "pos": [
+        13553.41,
+        18783.97
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "bronze_beacon",
+      "pos": [
+        10722.34,
+        18962.14
+      ],
+      "size": [
+        146,
+        132
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "keel_monument",
+      "pos": [
+        13600.0,
+        19000.0
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "copper_chart",
+      "pos": [
+        14186.26,
+        19029.45
+      ],
+      "size": [
+        312,
+        281
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "trench_ledge",
+      "pos": [
+        13259.67,
+        19042.73
+      ],
+      "size": [
+        817,
+        531
+      ],
+      "flat": true,
+      "alpha": 0.48,
+      "zone": "trench"
+    },
+    {
+      "kind": "pier_fragments",
+      "pos": [
+        13830.05,
+        19163.1
+      ],
+      "size": [
+        261,
+        235
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "bronze_beacon",
+      "pos": [
+        13100.83,
+        19413.2
+      ],
+      "size": [
+        159,
+        143
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    },
+    {
+      "kind": "diving_cage",
+      "pos": [
+        13617.36,
+        19464.68
+      ],
+      "size": [
+        210,
+        189
+      ],
+      "flat": true,
+      "alpha": 0.57,
+      "zone": "trench"
+    }
+  ],
+  "night": [
+    {
+      "kind": "moon_gate",
+      "pos": [
+        314,
+        64
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "obsidian_willow",
+      "pos": [
+        292,
+        197
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "silver_reeds",
+      "pos": [
+        212,
+        320
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "pearl_shrine",
+      "pos": [
+        61,
+        314
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "night_pier",
+      "pos": [
+        -70,
+        345
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "tear_lotus",
+      "pos": [
+        -215,
+        319
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "black_altar",
+      "pos": [
+        -267,
+        177
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "lunar_gazebo",
+      "pos": [
+        -345,
+        67
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "night_spire",
+      "pos": [
+        -376,
+        -76
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "crater_arch",
+      "pos": [
+        -265,
+        -179
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "moon_bowl",
+      "pos": [
+        -194,
+        -293
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "fabled_creel",
+      "pos": [
+        -74,
+        -377
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "instrument_stand",
+      "pos": [
+        64,
+        -314
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "night_torch",
+      "pos": [
+        197,
+        -292
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "shadow_roots",
+      "pos": [
+        320,
+        -212
+      ],
+      "size": [
+        85,
+        76
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    },
+    {
+      "kind": "silver_stair",
+      "pos": [
+        314,
+        -61
+      ],
+      "size": [
+        180,
+        162
+      ],
+      "flat": false,
+      "alpha": 1,
+      "zone": "night"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "shoals0",
+      "region": "shoals",
+      "pos": [
+        1950,
+        6100
+      ],
+      "name": "Salt arch"
+    },
+    {
+      "id": "shoals1",
+      "region": "shoals",
+      "pos": [
+        2800,
+        8200
+      ],
+      "name": "Stilt chalet"
+    },
+    {
+      "id": "shoals2",
+      "region": "shoals",
+      "pos": [
+        1550,
+        12300
+      ],
+      "name": "Rope creels"
+    },
+    {
+      "id": "shoals3",
+      "region": "shoals",
+      "pos": [
+        2600,
+        16500
+      ],
+      "name": "Board stack"
+    },
+    {
+      "id": "reef0",
+      "region": "reef",
+      "pos": [
+        1700,
+        2200
+      ],
+      "name": "Coral arch"
+    },
+    {
+      "id": "reef1",
+      "region": "reef",
+      "pos": [
+        3100,
+        1200
+      ],
+      "name": "Red fan"
+    },
+    {
+      "id": "reef2",
+      "region": "reef",
+      "pos": [
+        4600,
+        2300
+      ],
+      "name": "Sponges"
+    },
+    {
+      "id": "reef3",
+      "region": "reef",
+      "pos": [
+        5700,
+        900
+      ],
+      "name": "Reef fountain"
+    },
+    {
+      "id": "kelp0",
+      "region": "kelp",
+      "pos": [
+        5100,
+        5600
+      ],
+      "name": "Kelp stalks"
+    },
+    {
+      "id": "kelp1",
+      "region": "kelp",
+      "pos": [
+        5600,
+        8300
+      ],
+      "name": "Encrusted scaffold"
+    },
+    {
+      "id": "kelp2",
+      "region": "kelp",
+      "pos": [
+        4900,
+        12500
+      ],
+      "name": "Black reef"
+    },
+    {
+      "id": "kelp3",
+      "region": "kelp",
+      "pos": [
+        5500,
+        17400
+      ],
+      "name": "Kelp camp"
+    },
+    {
+      "id": "wrecks0",
+      "region": "wrecks",
+      "pos": [
+        8300,
+        7800
+      ],
+      "name": "Galleon bow"
+    },
+    {
+      "id": "wrecks1",
+      "region": "wrecks",
+      "pos": [
+        11200,
+        9700
+      ],
+      "name": "Hull ribs"
+    },
+    {
+      "id": "wrecks2",
+      "region": "wrecks",
+      "pos": [
+        13600,
+        12600
+      ],
+      "name": "Capsized boat"
+    },
+    {
+      "id": "wrecks3",
+      "region": "wrecks",
+      "pos": [
+        7900,
+        13100
+      ],
+      "name": "Anchor shrine"
+    },
+    {
+      "id": "storm0",
+      "region": "storm",
+      "pos": [
+        8400,
+        2600
+      ],
+      "name": "Wind stack"
+    },
+    {
+      "id": "storm1",
+      "region": "storm",
+      "pos": [
+        12700,
+        1500
+      ],
+      "name": "Lightning beacon"
+    },
+    {
+      "id": "storm2",
+      "region": "storm",
+      "pos": [
+        15100,
+        4700
+      ],
+      "name": "Collapsed arch"
+    },
+    {
+      "id": "storm3",
+      "region": "storm",
+      "pos": [
+        10500,
+        5600
+      ],
+      "name": "Storm bow"
+    },
+    {
+      "id": "opal0",
+      "region": "opal",
+      "pos": [
+        18500,
+        2900
+      ],
+      "name": "Shell arch"
+    },
+    {
+      "id": "opal1",
+      "region": "opal",
+      "pos": [
+        22200,
+        6100
+      ],
+      "name": "Lavender fan"
+    },
+    {
+      "id": "opal2",
+      "region": "opal",
+      "pos": [
+        25800,
+        2400
+      ],
+      "name": "Mosaic ruin"
+    },
+    {
+      "id": "opal3",
+      "region": "opal",
+      "pos": [
+        25400,
+        8600
+      ],
+      "name": "Coral pagoda"
+    },
+    {
+      "id": "deeps0",
+      "region": "deeps",
+      "pos": [
+        17600,
+        13700
+      ],
+      "name": "Leviathan ribs"
+    },
+    {
+      "id": "deeps1",
+      "region": "deeps",
+      "pos": [
+        22000,
+        11500
+      ],
+      "name": "Stone compass"
+    },
+    {
+      "id": "deeps2",
+      "region": "deeps",
+      "pos": [
+        25800,
+        14800
+      ],
+      "name": "Thermal vent"
+    },
+    {
+      "id": "deeps3",
+      "region": "deeps",
+      "pos": [
+        22600,
+        18200
+      ],
+      "name": "Stone face"
+    },
+    {
+      "id": "trench0",
+      "region": "trench",
+      "pos": [
+        8200,
+        15800
+      ],
+      "name": "Keel monument"
+    },
+    {
+      "id": "trench1",
+      "region": "trench",
+      "pos": [
+        10400,
+        18400
+      ],
+      "name": "Pier fragments"
+    },
+    {
+      "id": "trench2",
+      "region": "trench",
+      "pos": [
+        13100,
+        16000
+      ],
+      "name": "Tangled rigging"
+    },
+    {
+      "id": "trench3",
+      "region": "trench",
+      "pos": [
+        13600,
+        19000
+      ],
+      "name": "White sponges"
+    }
+  ]
+}

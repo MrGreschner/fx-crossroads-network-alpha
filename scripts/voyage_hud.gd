@@ -40,6 +40,7 @@ func refresh(v:Node)->void:
  var view=v.game.get_viewport_rect().size;panel.scale=Vector2.ONE;panel.size=Vector2(maxf(220,minf(235,view.x*.19-24)),0);panel.position=Vector2(12,view.y-panel.get_combined_minimum_size().y-12-(135 if v.game.mobile.enabled else 70 if view.x<1200 else 0))
  condition_panel.position=Vector2(maxf(14,view.x-condition_panel.get_combined_minimum_size().x-14) if view.y<500 else 14,100 if view.y<500 else 112);condition_panel.scale=Vector2.ONE*minf(1,(view.x-28)/maxf(1,condition_panel.get_combined_minimum_size().x))
  var cal=v.game.town_life.calendar;conditions.text=cal.label();badge.weather=cal.weather();badge.queue_redraw()
+ if v.route=="coast":conditions.text+="\n"+str(v.OCEAN_GEO.REGION_NAMES[v.OCEAN_GEO.region(v.boat)])+" • %d/32 landmarks charted this voyage"%v.ocean_charted.size()
  v.status.text="Hull %d%% • Cargo %d/%d" % [ceili(v.hull),v.cargo.size(),v.capacity()]
  var xp=v.pending_xp();var p=v.records().progress;var level=p.level();pool_label.text="Safe-return XP: +%d" % xp;pool_bar.max_value=maxi(1,p.threshold(mini(p.MAX_LEVEL,level+1))-int(p.state().xp));pool_bar.value=xp
  if level==p.MAX_LEVEL:pool_bar.max_value=maxi(1,xp);pool_bar.value=xp
@@ -47,6 +48,7 @@ func refresh(v:Node)->void:
  if predicted>level:pool_label.text+=" • Lv %d → %d" % [level,predicted]
  hazard.text=v.surf.warning_at(v.boat)
  if hazard.text.is_empty() and v.debris.warning_at(v.boat):hazard.text="DRIFTING DEBRIS • steer clear"
+ if hazard.text.is_empty() and v.route=="coast" and v.OCEAN_GEO.eddy_force(v.boat).length()>3:hazard.text="WHIRLPOOL • steer across the current"
  if hazard.text.is_empty() and v.night():hazard.text="Night • stay near the lantern"
  hazard.visible=not hazard.text.is_empty()
  v.anchor_button.text="Ashore" if v.ashore else "Sail" if v.anchored else "Anchor";v.anchor_button.disabled=v.ashore

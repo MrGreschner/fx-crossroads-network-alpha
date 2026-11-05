@@ -1,0 +1,2264 @@
+[
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      150
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      301
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      452
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      603
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      906.447,
+      685.402
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      754
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      1771.782,
+      797.079
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      2480.073,
+      802.287
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      905
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      1056
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2675.402,
+      1091.019
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      1643.207,
+      1189.375
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      1207
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      2824.882,
+      1216.477
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      3001.934,
+      1217.729
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2861.99,
+      1224.442
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2766.976,
+      1245.16
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2692.375,
+      1292.775
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "watchtower",
+    "pos": [
+      2880,
+      1320
+    ],
+    "size": [
+      240,
+      320
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      2878.728,
+      1331.762
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      2967.155,
+      1333.657
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      1300.312,
+      1352.415
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      1358
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      2687.376,
+      1365.04
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      3038.89,
+      1403.68
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      2639.211,
+      1406.82
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      2563.071,
+      1411.26
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      1137.832,
+      1412.631
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      2932.92,
+      1415.447
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      2627.061,
+      1469.41
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      1509
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2552.663,
+      1552.249
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      2596.309,
+      1584.081
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      1601.704,
+      1591.63
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      1538.804,
+      1619.38
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      3055.99,
+      1651.176
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      1660
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      2657.025,
+      1703.368
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "moss_log",
+    "pos": [
+      2871.883,
+      1729.172
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      2934.06,
+      1733.95
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      2734.46,
+      1743.807
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      1811
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2964.844,
+      1823.879
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      2639.616,
+      1835.52
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "moss_log",
+    "pos": [
+      2782.671,
+      1874.782
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "broken_mast",
+    "pos": [
+      5700,
+      1900
+    ],
+    "size": [
+      260,
+      200
+    ],
+    "flat": true,
+    "alpha": 0.48
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2855.347,
+      1956.518
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      1962
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      1528.384,
+      2043.02
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "weed_fan",
+    "pos": [
+      3850,
+      2100
+    ],
+    "size": [
+      230,
+      210
+    ],
+    "flat": true,
+    "alpha": 0.48
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      2113
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      2264
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      1069.691,
+      2399.422
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      2415
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      1301.58,
+      2419.289
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      4908.357,
+      2420.953
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      2566
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      5054.204,
+      2696.601
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      2717
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      4932.89,
+      2728.242
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      5127.23,
+      2739.728
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      5319.701,
+      2742.894
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      5162.272,
+      2773.186
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "ruin_arch",
+    "pos": [
+      5080,
+      2800
+    ],
+    "size": [
+      340,
+      290
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      5314.892,
+      2836.152
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      4926.762,
+      2842.405
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      2868
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      5531.483,
+      2876.027
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      4644.116,
+      2879.252
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      5177.909,
+      2883.511
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      4831.05,
+      2894.139
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      5297.133,
+      2924.6
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      2878.519,
+      2926.184
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "stone_wall",
+    "pos": [
+      4760,
+      2950
+    ],
+    "size": [
+      200,
+      110
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      4851.596,
+      2970.754
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      5433.408,
+      2976.7
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      4717.424,
+      2982.328
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pillars",
+    "pos": [
+      5410,
+      2990
+    ],
+    "size": [
+      175,
+      210
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      3019
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      5369.834,
+      3050.0
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      4762.224,
+      3063.969
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      5400.438,
+      3090.422
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      4628.179,
+      3149.67
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      3170
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      5444.95,
+      3175.975
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      4785.227,
+      3179.935
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      4890.557,
+      3195.727
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "ferry_wreck",
+    "pos": [
+      1750,
+      3200
+    ],
+    "size": [
+      320,
+      220
+    ],
+    "flat": true,
+    "alpha": 0.48
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      5314.007,
+      3230.364
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      4953.515,
+      3258.361
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bench",
+    "pos": [
+      5180,
+      3290
+    ],
+    "size": [
+      130,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      5035.398,
+      3290.318
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "moss_log",
+    "pos": [
+      5288.236,
+      3295.52
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "moss_log",
+    "pos": [
+      5180.379,
+      3306.26
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      5536.972,
+      3308.055
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      3321
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "wreck_ribs",
+    "pos": [
+      1840,
+      3335
+    ],
+    "size": [
+      160,
+      95
+    ],
+    "flat": true,
+    "alpha": 0.48
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      5265.407,
+      3338.653
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      4950.454,
+      3362.845
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "moss_log",
+    "pos": [
+      5082.741,
+      3423.277
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      5297.858,
+      3438.743
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      3472
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      1364.436,
+      3491.198
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      5158.249,
+      3530.459
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      3623
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      712.26,
+      3767.843
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      3774
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      1585.336,
+      3898.007
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      3925
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      1592.609,
+      4001.657
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      4076
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2573.59,
+      4099.192
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      2670,
+      4120
+    ],
+    "size": [
+      105,
+      95
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "cottage",
+    "pos": [
+      2470,
+      4140
+    ],
+    "size": [
+      390,
+      310
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      2794.539,
+      4147.959
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      721.434,
+      4152.37
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      2173.71,
+      4171.609
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      3076.481,
+      4178.044
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2688.375,
+      4179.414
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2563.501,
+      4183.452
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      2664.037,
+      4190.054
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      2381.805,
+      4194.577
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      2788.01,
+      4212.661
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2632.658,
+      4216.175
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      2538.551,
+      4216.449
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      4227
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      2704.518,
+      4233.498
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      2791.73,
+      4259.843
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      2390.409,
+      4267.185
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      3001.764,
+      4272.665
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "driftroots",
+    "pos": [
+      2262.553,
+      4281.466
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "chart_table",
+    "pos": [
+      2450,
+      4320
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      1915.506,
+      4331.831
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      2908.486,
+      4350.0
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      2332.443,
+      4363.133
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      4378
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "iris_garden",
+    "pos": [
+      2904.509,
+      4384.243
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "sunken_arch",
+    "pos": [
+      6500,
+      4400
+    ],
+    "size": [
+      330,
+      250
+    ],
+    "flat": true,
+    "alpha": 0.48
+  },
+  {
+    "kind": "landing_steps",
+    "pos": [
+      2920,
+      4430
+    ],
+    "size": [
+      150,
+      85
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2191.277,
+      4446.903
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      2849.882,
+      4468.041
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      2345.16,
+      4475.834
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      2466.977,
+      4477.344
+    ],
+    "size": [
+      105,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "sunken_statue",
+    "pos": [
+      6535,
+      4500
+    ],
+    "size": [
+      175,
+      110
+    ],
+    "flat": true,
+    "alpha": 0.42
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      4529
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      2770.211,
+      4559.782
+    ],
+    "size": [
+      180,
+      220
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "gravel_cluster",
+    "pos": [
+      2549.289,
+      4560.684
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2681.59,
+      4610.566
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "rock_shelf",
+    "pos": [
+      2786.125,
+      4617.452
+    ],
+    "size": [
+      85,
+      65
+    ],
+    "flat": true,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      2058.167,
+      4643.772
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      4680
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      4831
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      4982
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      5133
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      2171.908,
+      5164.763
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      5284
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lilies",
+    "pos": [
+      2416.495,
+      5285.31
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      5435
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bulrush",
+    "pos": [
+      2726.636,
+      5497.303
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "harbour_gate",
+    "pos": [
+      390,
+      5510
+    ],
+    "size": [
+      300,
+      260
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "lantern",
+    "pos": [
+      860,
+      5570
+    ],
+    "size": [
+      75,
+      115
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "net_rack",
+    "pos": [
+      680,
+      5580
+    ],
+    "size": [
+      150,
+      140
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bollard",
+    "pos": [
+      1000,
+      5580
+    ],
+    "size": [
+      64,
+      80
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      5586
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "reeds",
+    "pos": [
+      1803.944,
+      5670.611
+    ],
+    "size": [
+      100,
+      85
+    ],
+    "flat": true,
+    "alpha": 0.58
+  },
+  {
+    "kind": "dock_stack",
+    "pos": [
+      570,
+      5680
+    ],
+    "size": [
+      120,
+      80
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "trap_stack",
+    "pos": [
+      810,
+      5705
+    ],
+    "size": [
+      90,
+      90
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "bollard",
+    "pos": [
+      1000,
+      5720
+    ],
+    "size": [
+      64,
+      80
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      5737
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "boathouse",
+    "pos": [
+      340,
+      5840
+    ],
+    "size": [
+      450,
+      330
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      5888
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "birch",
+    "pos": [
+      145,
+      6039
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "willow",
+    "pos": [
+      221,
+      6190
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  },
+  {
+    "kind": "pine",
+    "pos": [
+      297,
+      6341
+    ],
+    "size": [
+      180,
+      230
+    ],
+    "flat": false,
+    "alpha": 1
+  }
+]

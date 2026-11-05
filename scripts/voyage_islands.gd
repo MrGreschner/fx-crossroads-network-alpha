@@ -1,6 +1,8 @@
 extends RefCounted
 ## One coastline drives drawing, landing, navigation and boat collisions.
 static func radius(isle:Dictionary,angle:float)->float:
+ if preload("res://scripts/lake_geometry301.gd").lake_island(isle):return preload("res://scripts/lake_geometry301.gd").radius(isle,angle)
+ if str(isle.name) in ["Shore Refuge","Kelp Rest","Night Island"]:return preload("res://scripts/ocean_geometry302.gd").radius(isle,angle)
  var phase=float(posmod(str(isle.name).hash(),628))/100.0
  var coast=.86+.075*sin(angle*3+phase)+.045*sin(angle*5-phase)
  var bay=absf(wrapf(angle-phase,-PI,PI));coast-=.15*exp(-bay*bay/.13)

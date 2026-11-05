@@ -570,7 +570,7 @@ func snapshot(g:Node)->void:
  if g.mode!="defense":state.erase("north_gate")
  if g.mode!="descent":state.erase("descent")
  state.adventure=prune_idle(state.adventure)
- state.server_metrics={"measured_at_ms":Time.get_ticks_msec(),"authority_hz":actual_hz,"step_work_ms":step_work_ms,"step_work_max_ms":step_work_max_ms,"socket_poll_ms":process_ms,"encode_ms":encode_ms,"snapshot_bytes":snapshot_bytes,"input_backlog":backlog_max(),"dropped_inputs":dropped_inputs,"coalesced_snapshots":coalesced_snapshots,"rooms":rooms.size(),"connections":peers.size()}
+ state.server_metrics={"measured_at_ms":Time.get_ticks_msec(),"measured_unix_ms":int(Time.get_unix_time_from_system()*1000),"authority_hz":actual_hz,"step_work_ms":step_work_ms,"step_work_max_ms":step_work_max_ms,"socket_poll_ms":process_ms,"encode_ms":encode_ms,"snapshot_bytes":snapshot_bytes,"input_backlog":backlog_max(),"dropped_inputs":dropped_inputs,"coalesced_snapshots":coalesced_snapshots,"rooms":rooms.size(),"connections":peers.size()}
  state.mode=g.mode;state.realm=g.realm_id;state.realm_result=g.realm_result
  if g.expedition.special():state.expedition=g.expedition.snapshot()
  state.server_tick=g.authority_tick;state.tick_ms=g.metrics.tick_ms;state.effects=[]

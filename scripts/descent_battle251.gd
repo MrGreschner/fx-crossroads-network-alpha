@@ -289,8 +289,11 @@ func draw(c:Node2D,camera:Vector2)->void:
     else:c.draw_circle(at,radius,fill)
     c.draw_arc(at,radius,0,TAU,48,edge,2,true)
     if warning:c.draw_arc(at,maxf(8,radius-7),-PI*.5,-PI*.5+TAU*clampf(1-float(a.left)/float(a.warning),0,1),40,Color("#fff1cf"),3,true)
+ var bolt_view=Rect2(Vector2.ZERO,game.VIEW)
  for b in bolts:
-  var at=d.point(b.pos)-camera;var dir=d.point(b.dir);var color=Color("#ccbca0") if str(b.kind)=="boulder" else Color("#f5b976") if str(b.kind)=="cinder" else Color("#b7e0e1")
+  var at=d.point(b.pos)-camera
+  if not bolt_view.grow(maxf(30,float(b.radius)+4)).has_point(at):continue
+  var dir=d.point(b.dir);var color=Color("#ccbca0") if str(b.kind)=="boulder" else Color("#f5b976") if str(b.kind)=="cinder" else Color("#b7e0e1")
   c.draw_line(at-dir*24,at,color.darkened(.35),4,true);c.draw_circle(at,float(b.radius),color);c.draw_arc(at,float(b.radius)+2,0,TAU,12,Color("#eadbb9"),1,true)
  if not call.is_empty():
   var summoner:Dictionary={}

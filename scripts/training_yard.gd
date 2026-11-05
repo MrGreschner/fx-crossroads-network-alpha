@@ -6,8 +6,8 @@ var runner_phase:float=0
 var clock:float=0
 var next_shots:Array[float]=[1.0,2.1]
 const HERO_BOOK=Vector2(660,400)
-var outpost:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/training_outpost.svg")
-var book:Texture2D=preload("res://scripts/source_art.gd").texture("res://assets/training_hero_book.svg")
+var outpost:Texture2D=preload("res://scripts/training_environment303.gd").frame("outpost")
+var book:Texture2D=preload("res://scripts/training_environment303.gd").frame("hero_book")
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 const LAUNCHERS=[Vector2(1460,410),Vector2(1460,790)]
 func reset()->void:ally_health=50;full_time=0;clock=0;runner_phase=0;next_shots=[1.0,2.1]
@@ -39,7 +39,7 @@ func step(game:Node,delta:float)->void:
 func draw_on(game:Node,camera:Vector2)->void:
  var a:Vector2=ALLY-camera
  game.draw_circle(a+Vector2(0,8),29,Color(.25,.8,.4,.13))
- game.draw_texture_rect(preload("res://scripts/studio_art249.gd").prop("training_ally"),Rect2(a+Vector2(-30,-64),Vector2(60,72)),false)
+ game.draw_texture_rect(preload("res://scripts/training_environment303.gd").frame("ally_dummy"),Rect2(a+Vector2(-30,-64),Vector2(60,72)),false)
  game.draw_rect(Rect2(a+Vector2(-42,-80),Vector2(84,6)),Color("#244236"))
  game.draw_rect(Rect2(a+Vector2(-42,-80),Vector2(84*ally_health/200,6)),Color("#78d28a"))
  game.draw_string(font,a+Vector2(-70,33),"ALLY • HEAL / BUFF",HORIZONTAL_ALIGNMENT_CENTER,140,12,Color("#b8f0bc"))
@@ -49,7 +49,7 @@ func draw_on(game:Node,camera:Vector2)->void:
  for n in LAUNCHERS.size():
   var point:Vector2=LAUNCHERS[n]-camera
   var warning:float=clampf(1-(next_shots[n]-clock)/.6,0,1)
-  game.draw_texture_rect(preload("res://scripts/studio_art249.gd").prop("training_launcher"),Rect2(point+Vector2(-30,-42),Vector2(60,62)),false)
+  game.draw_texture_rect(preload("res://scripts/training_environment303.gd").frame("launcher"),Rect2(point+Vector2(-30,-42),Vector2(60,62)),false)
   if warning>.1:game.draw_circle(point+Vector2(-25,-20),3,Color("#edb574"))
   game.draw_string(font,point+Vector2(-55,48),"SHOT PRACTICE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e1d3a8"))
  for foe in game.enemies:
@@ -73,7 +73,6 @@ func draw_outpost(game:Node2D,camera:Vector2)->void:
  for n in 5:
   var h:=12+sin(clock*5+n*1.7)*4;var x:=float(n-2)*3
   game.draw_colored_polygon(PackedVector2Array([fire+Vector2(x-5,-11),fire+Vector2(x+sin(clock*3+n)*3,-11-h),fire+Vector2(x+5,-11)]),Color("#e99245"))
- game.draw_rect(Rect2(fire+Vector2(-11,-11),Vector2(22,17)),Color("#626e70"));game.draw_line(fire+Vector2(-13,-11),fire+Vector2(13,-11),Color("#a6b0a8"),3)
  var frost:=Vector2(520,335)-camera
  game.draw_circle(frost,15+sin(clock*2)*2,Color(.35,.76,1,.13))
  game.draw_circle(frost,5,Color("#91e4f1"))

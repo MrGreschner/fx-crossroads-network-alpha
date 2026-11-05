@@ -12,6 +12,7 @@ class Chunk extends Node2D:
  var spans:Array=[]
  var flowers:Array=[]
  var compact=true
+ var atlas_batches:Array=[]
  var used:=0
  func compile()->void:
   texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -35,7 +36,45 @@ class Chunk extends Node2D:
     for dy in height:
      for dx in width:consumed[Vector2i(x+dx,y+dy)]=true
     spans.append([texture,Rect2(x*64,y*64,width*64,height*64)])
+ func compile_arena_atlas()->void:
+  var layers:Dictionary={}
+  for tile in tiles:
+   var frame=tile[0] as AtlasTexture
+   if frame==null or frame.atlas==null or frame.margin!=Rect2():
+    return
+   var layer:int=tile[2]
+   if not layers.has(layer):layers[layer]={}
+   var groups:Dictionary=layers[layer]
+   if not groups.has(frame.atlas):groups[frame.atlas]=[]
+   groups[frame.atlas].append(tile)
+  var order=layers.keys()
+  order.sort()
+  # Tiles in a layer do not overlap. Preserve the order of ground and path layers.
+  for layer in order:
+   for atlas in layers[layer]:
+    var vertices=PackedVector2Array()
+    var uvs=PackedVector2Array()
+    var indices=PackedInt32Array()
+    for tile in layers[layer][atlas]:
+     var rect:Rect2=tile[1]
+     var region:Rect2=tile[0].region
+     var i=vertices.size()
+     vertices.append_array(PackedVector2Array([rect.position,Vector2(rect.end.x,rect.position.y),rect.end,Vector2(rect.position.x,rect.end.y)]))
+     var uv=Rect2(region.position/atlas.get_size(),region.size/atlas.get_size())
+     uvs.append_array(PackedVector2Array([uv.position,Vector2(uv.end.x,uv.position.y),uv.end,Vector2(uv.position.x,uv.end.y)]))
+     indices.append_array(PackedInt32Array([i,i+1,i+2,i,i+2,i+3]))
+    var arrays=[]
+    arrays.resize(Mesh.ARRAY_MAX)
+    arrays[Mesh.ARRAY_VERTEX]=vertices
+    arrays[Mesh.ARRAY_TEX_UV]=uvs
+    arrays[Mesh.ARRAY_INDEX]=indices
+    var mesh=ArrayMesh.new()
+    mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+    atlas_batches.append([mesh,atlas])
  func _draw()->void:
+  if not atlas_batches.is_empty():
+   for batch in atlas_batches:draw_mesh(batch[0],batch[1])
+   return
   if not compact:
    for tile in tiles:draw_texture_rect(tile[0],tile[1],false)
    return
@@ -86,6 +125,7 @@ func sync()->void:
        var flower=[game.art.flower,Rect2(local+Vector2(16,12),Vector2(32,32))]
        chunk.tiles.append(flower);chunk.flowers.append(flower)
     chunk.compile()
+    if game.mode=="arena":chunk.compile_arena_atlas()
     chunks[key]=chunk;add_child(chunk);chunk.queue_redraw()
    chunks[key].visible=true;chunks[key].used=age
  while chunks.size()>LIMIT:
@@ -96,7 +136,9 @@ func sync()->void:
   chunks[oldest].queue_free();chunks.erase(oldest)
 func counters()->Dictionary:
  var original=0;var merged=0;var active=0
+ var submissions=0
  for chunk in chunks.values():
   if not chunk.visible:continue
   active+=1;original+=chunk.tiles.size();merged+=chunk.tiles.size() if not chunk.compact else chunk.spans.size()+chunk.flowers.size()
- return {"visible_chunks":active,"original_quads":original,"merged_quads":merged}
+  submissions+=chunk.atlas_batches.size() if not chunk.atlas_batches.is_empty() else chunk.tiles.size() if not chunk.compact else chunk.spans.size()+chunk.flowers.size()
+ return {"visible_chunks":active,"original_quads":original,"merged_quads":merged,"floor_submissions":submissions}

@@ -1,0 +1,366 @@
+{
+  "birch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 0,
+    "texture": "birch_large"
+  },
+  "willow": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 1,
+    "texture": "willow_large"
+  },
+  "pine": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 2,
+    "texture": "pine_large"
+  },
+  "reeds": {
+    "region": [
+      384,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 3
+  },
+  "bulrush": {
+    "region": [
+      512,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 4
+  },
+  "lilies": {
+    "region": [
+      640,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 5
+  },
+  "moss_log": {
+    "region": [
+      768,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 6
+  },
+  "driftroots": {
+    "region": [
+      896,
+      0,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 7
+  },
+  "cottage": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 8,
+    "texture": "cottage_large"
+  },
+  "watchtower": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 9,
+    "texture": "watchtower_large"
+  },
+  "ruin_arch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 10,
+    "texture": "ruin_arch_large"
+  },
+  "pillars": {
+    "region": [
+      384,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 11
+  },
+  "stone_wall": {
+    "region": [
+      512,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 12
+  },
+  "bench": {
+    "region": [
+      640,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 13
+  },
+  "iris_garden": {
+    "region": [
+      768,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 14
+  },
+  "landing_steps": {
+    "region": [
+      896,
+      128,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 1,
+    "source_cell": 15
+  },
+  "harbour_gate": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 0,
+    "texture": "harbour_gate_large"
+  },
+  "boathouse": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 1,
+    "texture": "boathouse_large"
+  },
+  "net_rack": {
+    "region": [
+      256,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 2
+  },
+  "dock_stack": {
+    "region": [
+      384,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 3
+  },
+  "bollard": {
+    "region": [
+      512,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 4
+  },
+  "trap_stack": {
+    "region": [
+      640,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 5
+  },
+  "chart_table": {
+    "region": [
+      768,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 6
+  },
+  "lantern": {
+    "region": [
+      896,
+      256,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 7
+  },
+  "ferry_wreck": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 8,
+    "texture": "ferry_wreck_large"
+  },
+  "broken_mast": {
+    "region": [
+      128,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 9
+  },
+  "sunken_arch": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 10,
+    "texture": "sunken_arch_large"
+  },
+  "sunken_statue": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 11,
+    "texture": "sunken_statue_large"
+  },
+  "weed_fan": {
+    "region": [
+      512,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 12
+  },
+  "gravel_cluster": {
+    "region": [
+      640,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 13
+  },
+  "rock_shelf": {
+    "region": [
+      0,
+      0,
+      256,
+      256
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 14,
+    "texture": "rock_shelf_large"
+  },
+  "wreck_ribs": {
+    "region": [
+      896,
+      384,
+      128,
+      128
+    ],
+    "palette_limit": 40,
+    "source_sheet": 2,
+    "source_cell": 15
+  }
+}

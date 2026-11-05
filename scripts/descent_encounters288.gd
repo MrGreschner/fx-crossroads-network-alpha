@@ -344,10 +344,15 @@ func draw(c:Node2D,camera:Vector2)->void:
   if float(w.left)>0:
    c.draw_arc(p,72,0,TAU,32,Color(col,.65),3,true);c.draw_arc(p,90,-PI*.5,-PI*.5+TAU*(1-float(w.left)/float(w.warning)),40,col,4,true)
   else:
-   c.draw_arc(p,radius,0,TAU,96,Color(col,.40),float(w.width),true);c.draw_arc(p,radius+float(w.width)*.5,0,TAU,96,col,3,true)
-   for n in 48:
-    var v=p+Vector2.from_angle(n*TAU/48)*radius
-    if Rect2(Vector2.ZERO,g.VIEW).grow(20).has_point(v):c.draw_rect(Rect2(v-Vector2(4,4),Vector2(8,8)),col)
+   var view=Rect2(Vector2.ZERO,g.VIEW)
+   var extent=radius+float(w.width)*.5+4
+   if not view.grow(extent).has_point(p):continue
+   c.draw_arc(p,radius,0,TAU,96,Color(col,.40),float(w.width),true)
+   c.draw_arc(p,radius+float(w.width)*.5,0,TAU,96,col,3,true)
+   if not c.has_method("low_effect_detail") or not c.low_effect_detail():
+    for n in 48:
+     var v=p+Vector2.from_angle(n*TAU/48)*radius
+     if view.grow(20).has_point(v):c.draw_rect(Rect2(v-Vector2(4,4),Vector2(8,8)),col)
  for cloud_value in clouds:
   var p=d.point(cloud_value.pos)-camera;var radius=float(cloud_value.radius)
   if not Rect2(Vector2.ZERO,g.VIEW).grow(radius).has_point(p):continue
