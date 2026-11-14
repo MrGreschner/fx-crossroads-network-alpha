@@ -270,7 +270,7 @@ func _ready() -> void:
 		var primary_mouse:=InputEventMouseButton.new();primary_mouse.button_index=MOUSE_BUTTON_LEFT;InputMap.action_add_event("primary",primary_mouse)
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	manifest = _json("res://content/manifest.json")
-	for entry in manifest.get("characters", []):
+	for entry in (manifest.get("characters", []) + manifest.get("event_heroes", [])):
 		var data := _json("res://content/characters/" + str(entry) + ".json")
 		characters[str(entry)] = data
 		for pose in ["idle", "walk1", "walk2", "attack", "attack2", "special", "open", "spin", "shell"]:
@@ -317,7 +317,7 @@ func _ready() -> void:
 	preload("res://scripts/studio_library.gd").install(self)
 	selected_hero = str(get_tree().root.get_meta("fx_hero", "ram"))
 	if not characters.has(selected_hero):selected_hero="ram";get_tree().root.set_meta("fx_hero","ram")
-	if not characters.has(selected_hero): selected_hero = "ram"
+	if not characters.has(selected_hero) or not bool(characters[selected_hero].get("event_active",true)): selected_hero = "ram"
 	preferred_hero=selected_hero
 	for sprite in ["moonburrow_grass","city_cobble","moonveil_court","moonveil_canal","oath_broken_road","oath_void","briar_arch","kiln_forge","mirror_shard_env","storm_coil","oath_stone","briar_floor","cinder_floor","mirror_floor","storm_floor","marsh_floor","river_grass","river_water","river_bridge","waterfall","river_willow","clock_floor","brass_path","clock_arch","clock_tree","astral_void","astral_floor","astral_bridge","star_obelisk","astrolabe","oath_pillar","marsh_reeds","lantern_tree","creator_board","realm_banner"]:
 		art[sprite] = load("res://assets/"+sprite+".png")
@@ -678,7 +678,7 @@ func _start_match() -> void:
 		match_id=Crypto.new().generate_random_bytes(16).hex_encode();match_party_size=positions.size()
 		arena_opening=opening_picker.button_pressed;arena_map=str(arena_map_picker.get_item_metadata(arena_map_picker.selected));arena_no_items=mode=="arena" and no_items_picker.button_pressed;arena_random=mode=="arena" and random_hero_picker.button_pressed
 		if arena_random:
-			var ids:Array=characters.keys().filter(func(id):return not str(id).begins_with("custom_") and not bool(characters[id].get("npc_only",false)))
+			var ids:Array=characters.keys().filter(func(id):return not str(id).begins_with("custom_") and not bool(characters[id].get("npc_only",false)) and bool(characters[id].get("event_active",true)))
 			for id in positions:
 				if bots.is_bot(str(id)):continue
 				hero_ids[id]=str(ids[randi_range(0,ids.size()-1)])
@@ -1033,7 +1033,7 @@ func _process(delta: float) -> void:
 	adventure.combat.release_heroes.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
 	adventure.combat.classics.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"))
 	adventure.combat.v79.holding(my_id,not arena_world.shatter.active() and started and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Input.is_action_pressed("secondary"),vacuum_aim)
-	adventure.combat.held_cast.local_input(delta,not arena_world.shatter.active() and started and start_countdown<=0 and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty() and not spectating() and not recovery.frozen)
+	adventure.combat.held_cast.local_input(delta,session_menu.page.is_empty() and not arena_world.shatter.active() and started and start_countdown<=0 and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty() and not spectating() and not recovery.frozen)
 	VIEW = get_viewport_rect().size
 	_poll_socket()
 	if search_remaining > 0:
@@ -1129,15 +1129,16 @@ func _process(delta: float) -> void:
 	movement=adventure.combat.twister.sway(my_id,movement)
 	if not presentation.page.is_empty():movement=Vector2.ZERO
 	var alive := int(health.get(my_id,0)) > 0
-	if arena_world.shatter.active() and Input.is_action_just_pressed("dodge"):arena_world.shatter.request("secondary")
-	if not arena_world.shatter.active() and Input.is_action_just_pressed("dodge") and alive and not adventure.combat.stunned(adventure.combat.player_key(my_id)) and shop_open.is_empty() and not adventure.combat.classics.locked(my_id) and not adventure.combat.v48.moving(my_id) and not adventure.immersive.aboard(my_id) and not adventure.combat.robot.transformed(my_id) and not adventure.combat.v78.locked(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.release_heroes.locked(my_id) and Time.get_ticks_msec() >= int(dodge_at.get(my_id,0)):
+	var dodge_pressed: bool = mobile.take_dodge() or Input.is_action_just_pressed("dodge")
+	if arena_world.shatter.active() and dodge_pressed:arena_world.shatter.request("secondary")
+	if not arena_world.shatter.active() and dodge_pressed and not adventure.combat.events.clamped(my_id) and not adventure.combat.events.locks_input(my_id) and alive and not adventure.combat.stunned(adventure.combat.player_key(my_id)) and shop_open.is_empty() and not adventure.combat.classics.locked(my_id) and not adventure.combat.v48.moving(my_id) and not adventure.immersive.aboard(my_id) and not adventure.combat.robot.transformed(my_id) and not adventure.combat.v78.locked(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.release_heroes.locked(my_id) and Time.get_ticks_msec() >= int(dodge_at.get(my_id,0)):
 		dodge_at[my_id] = Time.get_ticks_msec() + 2500
-		dodge_direction = movement.normalized() if movement.length_squared() > 0 else last_aim
+		dodge_direction = movement.normalized() if movement.length_squared() > 0 else (mobile.aim if mobile.enabled else last_aim)
 		dodge_time = 0.26
 		if role == "host": invincible_until[my_id] = Time.get_ticks_msec() + 220
 		else: _send_channel(host_id,{"type":"dodge"})
 	var displacement := Vector2.ZERO
-	if alive and shop_open.is_empty() and not charges.has(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.v78.locked(my_id):
+	if alive and shop_open.is_empty() and not adventure.combat.events.locks_input(my_id) and not charges.has(my_id) and not adventure.combat.v79.moving(my_id) and not adventure.combat.v110.charging(my_id) and not adventure.combat.halloween.moving(my_id) and not adventure.combat.v78.locked(my_id):
 		var speed:float = float(characters.get(selected_hero,{}).get("speed",230))*adventure.combat.speed_factor(adventure.combat.player_key(my_id))*legacy.speed_factor(my_id)*arena_world.slow(local_pos)*arena_world.objective.carrier_factor(my_id)
 		if adventure.combat.classics.channeling(my_id):speed*=legacy.channel_speed(my_id)
 		for carried_id in inventory.get(my_id,[]):
@@ -1158,12 +1159,13 @@ func _process(delta: float) -> void:
 		local_pos=positions.get(my_id,local_pos) if not arena_world.shatter.playable(my_id) or arena_world.shatter.airborne(my_id) else _move_actor(positions.get(my_id,local_pos),movement.limit_length(1)*arena_world.shatter.SPEED*delta)
 	adventure.combat.release_heroes.follow_local()
 	adventure.combat.v79.follow_local(delta*dev_magic.scale_for(my_id))
+	if role == "guest" and adventure.combat.events.following(my_id):local_pos=positions.get(my_id,local_pos)
 	if role == "guest" and charges.has(my_id): local_pos = local_pos.lerp(network_charge_target,minf(1.0,delta*18.0))
 	if role == "host" and not spectating(): positions[my_id] = local_pos
 	media.refresh_arcade() if media.game!=null else assign_base_camera()
 	if not spectating() and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty():
 		if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)): _attack_request("primary")
-		if Input.is_action_pressed("secondary"): _attack_request("secondary")
+		if (Input.is_action_just_pressed("secondary") if str(characters.get(selected_hero,{}).get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard"] else Input.is_action_pressed("secondary")): _attack_request("secondary")
 		if Input.is_action_just_pressed("special"): _attack_request("special")
 	if role == "host":
 		arena_world.step(delta*dev_magic.world_scale())
@@ -1247,7 +1249,7 @@ func _attack_request(style: String) -> void:
 		var needed:=1 if style=="primary" else 3 if style=="secondary" else 6
 		if int(levels.get(my_id,1))<needed:return
 		var stamp:=Time.get_ticks_msec()
-		if stamp<int(request_ready.get(style,0)):return
+		if stamp<int(request_ready.get(style,0)) and not adventure.combat.events.can_recast(my_id,style):return
 		stats=adventure.combat.effective_stats(my_id,style,stats)
 		request_ready[style]=stamp if str(stats.get("style",""))=="v91_pistol" else stamp+1000 # Six-shooter clicks may queue independently; authority enforces cylinder/reload.
 		predicted_pose_until=stamp+180
@@ -1285,6 +1287,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 	aim_angles[id]=aim.angle()
 	var now := Time.get_ticks_msec()
 	var cd: Dictionary = cooldown_at.get(id,{})
+	if adventure.combat.events.recast(id,kind):return
 	if now < int(cd.get(kind,0)): return
 	if not adventure.combat.v90.pistol_ready(id,stats):return
 	var delay := float(stats.get("cooldown",0.5))
@@ -1490,6 +1493,7 @@ func _hurt(id: String, amount: float, source: String = "", melee_attacker:String
 		adventure.combat.v112.on_hit(source,"p:"+id,minf(adjusted,float(health.get(id,0))))
 		adventure.combat.v90.on_hit(source,minf(adjusted,float(health.get(id,0))))
 	adventure.expansion.linked_hit("p:"+id,minf(adjusted,float(health.get(id,0))))
+	adventure.combat.events.incoming(id,float(mini(int(adjusted),int(health.get(id,0)))),source)
 	health[id] = maxi(0,int(health.get(id,100))-int(adjusted))
 	if int(adjusted)>0:provisions.check_auto(id)
 	if source == "enemy" and (inventory.get(id,[]) as Array).has("thorn_coat"):
@@ -1901,7 +1905,7 @@ func _snapshot() -> Dictionary:
 		var remaining := {}
 		for ability in ["primary","secondary","special"]:
 			remaining[ability] = maxf(0.0,float(int(timers.get(ability,0))-Time.get_ticks_msec())/1000.0)
-		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"equipment_entry":accepted_equipment.get(id,[]),"consumable_entry":str(accepted_supplies.get(id,"")),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"core_action":core_art.packet(str(id)),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
+		players[id] = {"pos":[roundi(p.x),roundi(p.y)],"position_ack":int(position_acks.get(id,0)),"hp":int(health.get(id,0)),"xp":int(xp.get(id,0)),"gold":int(gold.get(id,0)),"level":int(levels.get(id,1)),"kills":int(kills.get(id,0)),"team":int(teams.get(id,0)),"hero":str(hero_ids.get(id,"ram")),"build":legacy.build(str(id)),"cosmetic":cosmetic_for(id),"defeat":defeat_causes.get(id,{}),"food_ready":bool(food_registered.get(id,false)),"food":food_slots.get(id,""),"items":inventory.get(id,[]),"equipment_entry":accepted_equipment.get(id,[]),"consumable_entry":str(accepted_supplies.get(id,"")),"branch":str(attack_branch.get(id,"")),"mastery":str(mastery_choice.get(id,"")),"shield":maxi(0,int(shield_until.get(id,0))-Time.get_ticks_msec()),"haste_scale":float(item_haste_scale.get(id,1.35)),"haste":maxi(0,int(haste_until.get(id,0))-Time.get_ticks_msec()),"cooldowns":remaining,"stealth":maxi(0,int(stealth_until.get(id,0))-Time.get_ticks_msec()),"core_action":core_art.packet(str(id)),"pose":maxi(0,int(attack_pose_until.get(id,0))-Time.get_ticks_msec()),"stance_moving":adventure.combat.events.following(str(id)) or adventure.combat.stance_heroes.moving(str(id)) or adventure.combat.v90.moving(str(id)) or adventure.combat.v98.moving(str(id)),"shield_reduction":float(shield_reduction.get(id,.75)),"invincible":maxi(0,int(invincible_until.get(id,0))-Time.get_ticks_msec()),"charging":charges.has(id) or adventure.combat.chain.moving(str(id)) or adventure.combat.classics.moving(str(id)) or adventure.combat.v48.moving(str(id)) or adventure.immersive.aboard(str(id))}
 	var foes: Array = []
 	for enemy in opponents: foes.append({"pos":[roundi(enemy["pos"].x),roundi(enemy["pos"].y)],"hp":enemy["hp"],"max_hp":enemy["max_hp"],"type":enemy["type"],"sprite":str(enemy.get("sprite",enemy["type"])),"boss":enemy["boss"],"lane":int(enemy.get("lane",0)),"finale_actor":bool(enemy.get("finale_actor",false)),"health_gem":bool(enemy.get("health_gem",false)),"depth_boss":bool(enemy.get("depth_boss",false)),"hidden_until":float(enemy.get("hidden_until",0)),"aim":enemy.get("aim",[0,0]),"action":str(enemy.get("action","")),"hurt":float(enemy.get("hurt",0)),"strike":float(enemy.get("strike",0)),"total":float(enemy.get("total",0)),"left":float(enemy.get("left",0)),"facing":float(enemy.get("facing",0)),"moving":float(enemy.get("moving",0)),"gait":float(enemy.get("gait",0)),"warning":float(enemy.get("warning",-1)),"melee_warning":float(enemy.get("melee_warning",0)),"melee_x":float(enemy.get("melee_x",0)),"melee_y":float(enemy.get("melee_y",1)),"v143_pose":float(enemy.get("v143_pose",0)),"veilbound":bool(enemy.get("veilbound",false)),"veil_pose":float(enemy.get("veil_pose",0)),"cinder_pose":float(enemy.get("cinder_pose",0)),"expansion_boss":bool(enemy.get("expansion_boss",false)),"trial_index":int(enemy.get("trial_index",-1)),"generation":int(enemy.get("generation",0)),"uid":int(enemy.get("uid",0)),"down_time":float(enemy.get("down_time",0)),"growth":float(enemy.get("growth",0)),"school_group":str(enemy.get("school_group","")),"ghost":float(enemy.get("ghost",0)),"hit_radius":float(enemy.get("hit_radius",18)),"quest_group":str(enemy.get("quest_group","")),"buried":bool(enemy.get("buried",false)),"immersive":bool(enemy.get("immersive",false)),"campaign_hero":bool(enemy.get("campaign_hero",false)),"between_guardian":bool(enemy.get("between_guardian",false)),"source_realm":str(enemy.get("source_realm","")),"name":str(enemy.get("name",enemy_defs.get(str(enemy.type),{}).get("name",""))),"windup":float(enemy.get("windup",0)),"range299":enemy.get("range299",{}).duplicate(true)})
 	var shots: Array = []
@@ -1975,7 +1979,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 			if late:_add_player(remote_id,roster.size()-1)
 			if role=="host":
 				random_builds[remote_id]=data.get("random_builds",{}) if data.get("random_builds",{}) is Dictionary else {}
-				lobby_heroes[remote_id]=str(data.get("hero","ram")) if characters.has(str(data.get("hero",""))) else "ram";lobby_builds[remote_id]=legacy.sanitize_build(data.get("build",{}));_send_arena_rules()
+				lobby_heroes[remote_id]=str(data.get("hero","ram")) if bool(characters.get(str(data.get("hero","")),{}).get("event_active",characters.has(str(data.get("hero",""))))) else "ram";lobby_builds[remote_id]=legacy.sanitize_build(data.get("build",{}));_send_arena_rules()
 			if role=="host" and not legacy.builds.has(remote_id):legacy.builds[remote_id]=legacy.sanitize_build(data.get("build",{}))
 			if role=="host" and positions.has(remote_id) and not food_registered.has(remote_id):
 				var offered=str(data.get("consumable",""))
@@ -1986,14 +1990,14 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				food_loadouts[remote_id]=piece if provisions.defs.has(piece) else ""
 				food_slots[remote_id]="" if mode=="arena" and arena_no_items else food_loadouts[remote_id]
 			if role == "host": player_cosmetics[remote_id]=data.get("cosmetic",{})
-			if role == "host" and characters.has(str(data.get("hero",""))):
+			if role == "host" and characters.has(str(data.get("hero",""))) and bool(characters[str(data.hero)].get("event_active",true)):
 				hero_ids[remote_id] = str(data["hero"]);health[remote_id] = _max_hp(remote_id)
 			if late:
 				party_tools.late_pending.erase(remote_id);match_party_size=positions.size();levels[remote_id]=1;xp[remote_id]=0;invincible_until[remote_id]=Time.get_ticks_msec()+3000
 				var config:=match_config();config.type="late_start";_send_channel(remote_id,config);_send_channel(remote_id,_snapshot())
 		"dodge":
 			if arena_world.shatter.active():arena_world.shatter.action(remote_id,"secondary",Vector2.from_angle(float(aim_angles.get(remote_id,0))));return
-			if role == "host" and started and int(health.get(remote_id,0)) > 0 and not adventure.combat.stunned(adventure.combat.player_key(remote_id)) and not adventure.combat.robot.transformed(remote_id) and not adventure.immersive.aboard(remote_id) and not adventure.combat.v48.moving(remote_id) and not adventure.combat.classics.locked(remote_id) and not adventure.combat.v78.locked(remote_id) and not adventure.combat.v79.moving(remote_id) and not adventure.combat.v110.charging(remote_id) and not adventure.combat.halloween.moving(remote_id) and Time.get_ticks_msec() >= int(dodge_at.get(remote_id,0)):
+			if role == "host" and started and not adventure.combat.events.clamped(remote_id) and int(health.get(remote_id,0)) > 0 and not adventure.combat.stunned(adventure.combat.player_key(remote_id)) and not adventure.combat.robot.transformed(remote_id) and not adventure.immersive.aboard(remote_id) and not adventure.combat.v48.moving(remote_id) and not adventure.combat.classics.locked(remote_id) and not adventure.combat.v78.locked(remote_id) and not adventure.combat.v79.moving(remote_id) and not adventure.combat.v110.charging(remote_id) and not adventure.combat.halloween.moving(remote_id) and Time.get_ticks_msec() >= int(dodge_at.get(remote_id,0)):
 				dodge_at[remote_id] = Time.get_ticks_msec()+2500;invincible_until[remote_id] = Time.get_ticks_msec()+220
 		"late_start":
 			if role=="guest" and remote_id==host_id and not started:_packet(remote_id,dict_with_start(data));recovery.resync_local=true
@@ -2023,7 +2027,7 @@ func _packet(remote_id: String, data: Dictionary) -> void:
 				if is_finite(float(data.get("primary_angle",0))):adventure.combat.v56.holding(remote_id,bool(data.get("primary_held",false)),Vector2.from_angle(float(data.get("primary_angle",0))))
 			if role == "host" and started and positions.has(remote_id) and int(health.get(remote_id,0))>0:
 				var requested := Vector2(float(data.get("x",0)),float(data.get("y",0))).clamp(FIELD.position+Vector2(25,25),FIELD.end-Vector2(25,25))
-				if not adventure.combat.stunned(adventure.combat.player_key(remote_id)) and not adventure.combat.twister.chanting(remote_id) and not charges.has(remote_id) and not adventure.combat.stance_heroes.moving(remote_id) and not adventure.combat.v90.moving(remote_id) and not adventure.combat.v98.moving(remote_id) and not adventure.combat.chain.moving(remote_id) and not adventure.combat.classics.locked(remote_id) and not adventure.combat.v78.locked(remote_id) and not adventure.combat.v79.moving(remote_id) and not adventure.combat.v110.charging(remote_id) and not adventure.combat.halloween.moving(remote_id) and not adventure.combat.release_heroes.locked(remote_id) and not adventure.immersive.aboard(remote_id) and not adventure.combat.v48.moving(remote_id) and positions[remote_id].distance_to(requested)<180 and _clear_path(positions[remote_id],requested): positions[remote_id] = requested
+				if not adventure.combat.stunned(adventure.combat.player_key(remote_id)) and not adventure.combat.twister.chanting(remote_id) and not charges.has(remote_id) and not adventure.combat.stance_heroes.moving(remote_id) and not adventure.combat.v90.moving(remote_id) and not adventure.combat.v98.moving(remote_id) and not adventure.combat.chain.moving(remote_id) and not adventure.combat.classics.locked(remote_id) and not adventure.combat.v78.locked(remote_id) and not adventure.combat.v79.moving(remote_id) and not adventure.combat.v110.charging(remote_id) and not adventure.combat.halloween.moving(remote_id) and not adventure.combat.release_heroes.locked(remote_id) and not adventure.immersive.aboard(remote_id) and not adventure.combat.v48.moving(remote_id) and not adventure.combat.events.following(remote_id) and positions[remote_id].distance_to(requested)<180 and _clear_path(positions[remote_id],requested): positions[remote_id] = requested
 				smoothing.push("p:"+remote_id,positions[remote_id],Time.get_ticks_msec()/1000.0)
 				# The host owns the match assignment; movement packets cannot change heroes. 
 		"attack":
@@ -2382,7 +2386,7 @@ func _draw() -> void:
 		if str(foe.type) in adventure.tech.TYPES:size=adventure.tech.body_size(str(foe.type))
 		if str(foe.type) in adventure.school.TYPES:size=adventure.school.body_size(str(foe.type))
 		if float(foe.get("down_time",0))>0:size=Vector2(70,28)
-		if str(foe["type"]) in ["gongbreaker","silence_regent","rootbound_keeper"]: size=Vector2(120,128)
+		if str(foe["type"]) in ["gongbreaker","silence_regent","rootbound_keeper","wayfarer_hollowroot"]: size=Vector2(120,128)
 		if str(foe["type"])=="gilded_usurper":size*=1.0 if int(foe.get("generation",0))==0 else .78 if int(foe.get("generation",0))==1 else .56
 		if bool(foe.get("depth_boss",false)):size=descent.visual_size(foe)
 		preload("res://scripts/starter_boss.gd").draw_warning(self,foe,pos)
@@ -2431,7 +2435,7 @@ func _draw() -> void:
 		elif hero_id=="snail" and adventure.combat.v79.moving(str(id)):pose="shell"
 		if hero_id=="sunflower" and adventure.combat.charging_sun(str(id)):pose="special"
 		if pose=="attack" and art.has(hero_id+"_attack2") and int(visual_time*12)%2==1:pose="attack2"
-		var texture: Texture2D = core_art.picture(str(id),hero_id,pose,_player_draw_position(str(id),pos+camera),walking,visual_time,adventure.combat.classics.channeling(str(id)),charges.has(id) or adventure.combat.classics.moving(str(id))) if hero_id in core_art.HEROES else art.get(hero_id+"_"+pose)
+		var texture: Texture2D = core_art.picture(str(id),hero_id,"special" if adventure.combat.events.flying(str(id)) else pose,_player_draw_position(str(id),pos+camera),walking,visual_time,adventure.combat.classics.channeling(str(id)),charges.has(id) or adventure.combat.classics.moving(str(id))) if hero_id in core_art.HEROES else art.get(hero_id+"_"+pose)
 		var tint := Color.WHITE if int(health.get(id,0)) > 0 else Color(0.5,0.5,0.5,0.45)
 		if Time.get_ticks_msec() < int(stealth_until.get(id,0)): tint.a = 0.43
 		if Time.get_ticks_msec()<int(hit_flash.get(id,0)):tint=Color(1,.45,.4)
@@ -2441,7 +2445,7 @@ func _draw() -> void:
 		adventure.combat.halloween.draw_mount(self,str(id),camera)
 		if custom_party.runtimes.has(str(id)) and custom_party.runtimes[str(id)].form_texture()!=null:texture=custom_party.runtimes[str(id)].form_texture()
 		var hero_rect:Rect2=adventure.combat.v78.visual_rect(str(id),pos) if hero_id=="gopher" else fish_motion.sprite_rect(str(id),pos) if hero_id=="ripplejaw" else wing_motion.sprite_rect(str(id),pos) if hero_id=="velvetwing" else basketball_motion.sprite_rect(str(id),pos) if hero_id=="basketball" else Rect2(pos+adventure.combat.v48.visual_offset(str(id))-Vector2(28,42),Vector2(56,64))
-		hero_rect.position+=adventure.combat.stance_heroes.visual_offset(str(id))+adventure.combat.release_heroes.visual_offset(str(id))+adventure.combat.v79.visual_offset(str(id))+motion_v85.offset(hero_id)+motion_v85.actor_offset(str(id),hero_id)+adventure.combat.halloween.visual_offset(str(id))
+		hero_rect.position+=adventure.combat.events.offset(str(id))+adventure.combat.stance_heroes.visual_offset(str(id))+adventure.combat.release_heroes.visual_offset(str(id))+adventure.combat.v79.visual_offset(str(id))+motion_v85.offset(hero_id)+motion_v85.actor_offset(str(id),hero_id)+adventure.combat.halloween.visual_offset(str(id))
 		hero_rect.position+=adventure.combat.classics.body_offset(str(id))
 		if hero_id=="navigator":hero_rect.position.y-=3+sin(visual_time*2.8)*2.5
 		hero_rect=adventure.combat.v110.resize(str(id),hero_rect)
@@ -2579,7 +2583,7 @@ func _draw_world() -> void:
 		if terrain_cache!=null:terrain_cache.hide()
 	elif mode=="battlegrounds" and (spectating() or terrain_cache==null):
 		preload("res://scripts/battleground_art262.gd").overview(self,battlegrounds)
-	elif mode!="descent" and (spectating() or terrain_cache==null):
+	elif mode!="descent" and not adventure.quests.active and (spectating() or terrain_cache==null):
 		for tx in range(int(camera.x/tile_size),int((camera.x+VIEW.x)/tile_size)+1):
 			for ty in range(int(camera.y/tile_size),int((camera.y+VIEW.y)/tile_size)+1):
 				var point := Vector2(tx*tile_size+tile_size/2,ty*tile_size+tile_size/2)
@@ -2752,7 +2756,7 @@ func _draw_hero_cooldowns(font: Font) -> void:
 	var hero: Dictionary = characters.get(str(hero_ids.get(my_id,"ram")),{})
 	var keys: Array[String] = ["primary","secondary","special"]
 	var labels: Array[String] = ["LMB","RMB","SPC"]
-	if mobile.enabled: labels.assign(["AIM","2ND","SPC"])
+	if mobile.enabled: labels.assign(["ATK","2ND","SPC"])
 
 	for index in range(3):
 		var key: String = keys[index]

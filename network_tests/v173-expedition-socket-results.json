@@ -1,0 +1,42 @@
+{
+  "build": "V173-preview",
+  "protocol": 8,
+  "results": [
+    {
+      "correction": 0,
+      "fee": 0,
+      "kind": "between",
+      "resumed": true,
+      "role": "host",
+      "settled": true,
+      "snapshots": 92
+    },
+    {
+      "correction": 0,
+      "fee": 0,
+      "kind": "between",
+      "resumed": true,
+      "role": "guest",
+      "settled": true,
+      "snapshots": 91
+    },
+    {
+      "correction": 0,
+      "fee": 300,
+      "kind": "overcharge",
+      "resumed": true,
+      "role": "host",
+      "settled": false,
+      "snapshots": 53
+    },
+    {
+      "correction": 0,
+      "fee": 300,
+      "kind": "overcharge",
+      "resumed": true,
+      "role": "guest",
+      "settled": false,
+      "snapshots": 53
+    }
+  ]
+}

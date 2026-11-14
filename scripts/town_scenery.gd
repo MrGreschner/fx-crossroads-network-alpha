@@ -1,4 +1,5 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 const POND=Vector2(200,365)
 const POND_RADII=Vector2(200,112)
 const POND_BENCH=Vector2(345,565)
@@ -16,8 +17,8 @@ var patrols:Array=[]
 var patrol_times:Array=[]
 var patrol_cycles:Array=[]
 func _init()->void:
-	routes.append([Vector2(-1150,1230),Vector2(-1150,1260),Vector2(-1180,1260),Vector2(-1180,1230)])
-	routes.append([Vector2(-980,1230),Vector2(-980,1260),Vector2(-1010,1260),Vector2(-1010,1230)])
+	routes.append([Vector2(-1183,1230),Vector2(-1183,1260),Vector2(-1194,1260),Vector2(-1194,1230)])
+	routes.append([Vector2(-980,1230)+Town311.DESCENT_SHIFT,Vector2(-980,1260)+Town311.DESCENT_SHIFT,Vector2(-1010,1260)+Town311.DESCENT_SHIFT,Vector2(-1010,1230)+Town311.DESCENT_SHIFT])
 	for x in range(70,3100,125):trees.append(Vector2(x,-510))
 	for y in [-350,-180,-20]:
 		trees.append(Vector2(65,y));trees.append(Vector2(3040,y))
@@ -41,7 +42,7 @@ func _init()->void:
 	trees=trees.filter(func(p:Vector2):return not (p.x<320 and p.y>500))
 	for y in range(250,2250,190):trees.append(Vector2(-1360,y))
 	trees=trees.filter(func(p:Vector2):return not Rect2(300,520,130,125).has_point(p))
-	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_plan.gd").reserved(p))
+	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_plan.gd").reserved(p) and not preload("res://scripts/town_atlas307.gd").FOOTPRINT.grow(30).has_point(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/marina_life.gd").reserved(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_refresh46.gd").reserved(p))
 	for tree in trees:
@@ -81,9 +82,9 @@ func guard_position(index:int)->Vector2:
 		if elapsed<1.2:return finish
 		elapsed-=1.2
 	return route[0]
-func guard(c:CanvasItem,point:Vector2,moving:bool)->void:
+func guard(c:CanvasItem,point:Vector2,moving:bool,id:String="")->void:
 	c.draw_circle(point+Vector2(0,4),13,Color(0,0,0,.2))
-	preload("res://scripts/town_cast230.gd").draw(c,"guard_melee",point+Vector2(0,6),clock,moving)
+	preload("res://scripts/town_cast230.gd").draw(c,"guard_melee",point+Vector2(0,6),clock,moving,preload("res://scripts/town_conversations313.gd").HEIGHTS.get(id,1.0))
 func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	var visible:Rect2=Rect2(camera,c.get_viewport_rect().size).grow(210)
 	for tree in trees:
@@ -118,11 +119,12 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 		var tower:Vector2=TOWER-camera
 		c.draw_circle(tower+Vector2(0,-132),16,Color(1,.8,.3,.1+.03*sin(clock*3)))
 	# Two small guard stations at the arena entrance.
-	for station in [Vector2(-70,1335),Vector2(330,1335)]:
+	for index in 2:
+		var station:Vector2=preload("res://scripts/town_conversations313.gd").POSTS[index]
 		if not visible.has_point(station):continue
 		var post:Vector2=station-camera
 		preload("res://scripts/town_streets244.gd").draw(c,"guard_booth",Rect2(post+Vector2(-33,-83),Vector2(66,91)))
-		guard(c,post,false)
+		guard(c,post,false,"arena_"+str(index))
 	# Flower beds, benches and glowing mushrooms near the forest.
 	for bed in [Vector2(330,620),Vector2(1470,600),Vector2(1900,975),Vector2(840,1250),Vector2(1900,1055)]:
 		if not visible.has_point(bed):continue
@@ -176,10 +178,10 @@ func draw_patrols(c:Node2D,camera:Vector2)->void:
 	var visible=Rect2(camera,c.VIEW).grow(80)
 	for index in routes.size():
 		var point:Vector2=guard_position(index)
-		if visible.has_point(point):guard(c,point-camera,point.distance_to(_guard_at_time(index,clock-.05))>0.1)
+		if visible.has_point(point):guard(c,point-camera,point.distance_to(_guard_at_time(index,clock-.05))>0.1,"gate_"+str(index))
 		if index>=5:
 			var partner:Vector2=_guard_at_time(index,clock-.85)+Vector2(0,18)
-			if visible.has_point(partner):guard(c,partner-camera,true)
+			if visible.has_point(partner):guard(c,partner-camera,true,"partner_"+str(index))
 
 func draw_flower_source(c:Node2D,b:Vector2,small:bool)->void:
 	var half:float=30 if small else 36
@@ -190,8 +192,6 @@ func draw_flower_source(c:Node2D,b:Vector2,small:bool)->void:
 		c.draw_circle(flower,4,Color("#dcb3c9") if n%2==0 else Color("#ead29a"))
 
 func draw_pond_source(c:Node2D,camera:Vector2)->void:
-	var walk:=PackedVector2Array([Vector2(420,510)-camera,Vector2(330,525)-camera,Vector2(220,530)-camera,Vector2(180,550)-camera,Vector2(290,550)-camera])
-	c.draw_polyline(walk,Color("#8e9871"),44,true);c.draw_polyline(walk,Color("#c2b28a"),30,true)
 	for point in [Vector2(105,440),Vector2(188,456),Vector2(413,375)]:
 		var q:Vector2=point-camera; c.draw_circle(q,5,Color("#d4c495"));c.draw_circle(q+Vector2(12,6),3,Color("#dcb7c9"))
 	preload("res://scripts/pond_bank263.gd").draw(c,camera)

@@ -40,6 +40,9 @@ func draw_mill(c:Node2D,camera:Vector2)->void:
   var a:float=t+n*TAU/10;var tip:=p+Vector2.from_angle(a)*44;c.draw_line(p,tip,Color("#ccb389"),4,true);c.draw_line(tip-Vector2.from_angle(a+PI/2)*7,tip+Vector2.from_angle(a+PI/2)*7,Color("#92724b"),6,true)
  c.draw_circle(p,7,Color("#d5cfaf"))
  for n in 4:c.draw_circle(p+Vector2(22+n*10,43+sin(t*3+n)*3),2,Color(.7,.91,.95,.6))
+func guard_position(n:int)->Vector2:
+ var t:=Time.get_ticks_msec()/1000.0
+ return Vector2(1245+n*112+sin(t*.2+n)*25,1500+cos(t*.2+n)*10)
 func draw_on(c:Node2D,camera:Vector2)->void:
  building(c,camera,"tower","MISTGLASS SPIRE");building(c,camera,"barracks","RAMGUARD")
  var visible:=Rect2(camera,c.get_viewport_rect().size).grow(100);var t:=Time.get_ticks_msec()/1000.0
@@ -50,8 +53,8 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    var x=fposmod(t*15+n*19,56);c.draw_line(start+Vector2(x,-1),start+Vector2(x+7,-1),Color("#bddde0"),1.5,true)
  if visible.has_point(BARRACKS):
   for n in 3:
-   var world:=Vector2(1245+n*112+sin(t*.2+n)*25,1500+cos(t*.2+n)*10)
-   preload("res://scripts/town_cast230.gd").draw(c,"guard_ranged" if n==1 else "guard_melee",world-camera+Vector2(0,5),t,true)
+   var world:=guard_position(n)
+   preload("res://scripts/town_cast230.gd").draw(c,"guard_ranged" if n==1 else "guard_melee",world-camera+Vector2(0,5),t,true,preload("res://scripts/town_conversations313.gd").HEIGHTS["barracks_"+str(n)])
    if n==2:c.draw_arc(world-camera-Vector2(0,50),10,PI,TAU,12,Color("#e9c67c"),3,true)
   for x in [1225,1510]:
    var p:=Vector2(x,1490)-camera;c.draw_line(p,p-Vector2(0,80),Color("#8c7860"),4);c.draw_colored_polygon(PackedVector2Array([p-Vector2(0,80),p+Vector2(29,-70),p+Vector2(0,-46)]),Color("#7cabc5"))

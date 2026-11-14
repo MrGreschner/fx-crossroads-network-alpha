@@ -1,0 +1,126 @@
+{
+  "checks": 315993,
+  "failures": 0,
+  "reports": [
+    {
+      "key": "immersive_honeyglass_0",
+      "timing": {
+        "cached": true,
+        "cells": 12960,
+        "milliseconds": 0.161
+      }
+    },
+    {
+      "key": "immersive_honeyglass_1",
+      "timing": {
+        "cached": true,
+        "cells": 12960,
+        "milliseconds": 0.359
+      }
+    },
+    {
+      "key": "immersive_sunfield_0",
+      "timing": {
+        "cached": true,
+        "cells": 13345,
+        "milliseconds": 0.59
+      }
+    },
+    {
+      "key": "immersive_sunfield_1",
+      "timing": {
+        "cached": true,
+        "cells": 13345,
+        "milliseconds": 0.501
+      }
+    },
+    {
+      "key": "immersive_petalbrook_0",
+      "timing": {
+        "cached": true,
+        "cells": 12870,
+        "milliseconds": 0.223
+      }
+    },
+    {
+      "key": "immersive_petalbrook_1",
+      "timing": {
+        "cached": true,
+        "cells": 12870,
+        "milliseconds": 0.45
+      }
+    },
+    {
+      "key": "immersive_lantern_marsh_0",
+      "timing": {
+        "cached": true,
+        "cells": 13700,
+        "milliseconds": 0.215
+      }
+    },
+    {
+      "key": "immersive_lantern_marsh_1",
+      "timing": {
+        "cached": true,
+        "cells": 13700,
+        "milliseconds": 0.468
+      }
+    },
+    {
+      "key": "immersive_silverfall_0",
+      "timing": {
+        "cached": true,
+        "cells": 22225,
+        "milliseconds": 0.461
+      }
+    },
+    {
+      "key": "immersive_silverfall_1",
+      "timing": {
+        "cached": true,
+        "cells": 22225,
+        "milliseconds": 0.675
+      }
+    },
+    {
+      "key": "school_elementary",
+      "timing": {
+        "cached": true,
+        "cells": 17280,
+        "milliseconds": 0.2
+      }
+    },
+    {
+      "key": "school_middle_school",
+      "timing": {
+        "cached": true,
+        "cells": 24080,
+        "milliseconds": 0.194
+      }
+    },
+    {
+      "key": "school_high_school",
+      "timing": {
+        "cached": true,
+        "cells": 41600,
+        "milliseconds": 0.218
+      }
+    },
+    {
+      "key": "tech_neon_crucible",
+      "timing": {
+        "cached": true,
+        "cells": 12288,
+        "milliseconds": 0.172
+      }
+    },
+    {
+      "key": "quests_wayfarer",
+      "timing": {
+        "cached": true,
+        "cells": 70400,
+        "milliseconds": 0.665
+      }
+    }
+  ]
+}

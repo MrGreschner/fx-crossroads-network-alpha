@@ -1,0 +1,127 @@
+{
+  "build": "V171.3-preview",
+  "protocol": 7,
+  "passed": true,
+  "renderer": "Chromium software renderer",
+  "results": [
+    {
+      "kind": "between",
+      "touch": false,
+      "state": {
+        "build": 171,
+        "expedition": {
+          "chunks": 25,
+          "enemies": 16,
+          "haul": 0,
+          "kind": "between",
+          "page": "results",
+          "shards": 1000,
+          "ticket": false
+        },
+        "history": 10,
+        "mode": "coop",
+        "mode_controls_enabled": false,
+        "navigation": {},
+        "panel_size": [
+          850,
+          590
+        ],
+        "position": [
+          16577,
+          16512
+        ],
+        "ready": true,
+        "realm": "between",
+        "result": "cleared",
+        "result_page": "results",
+        "snapshots": 60,
+        "started": false,
+        "view_size": [
+          1280,
+          720
+        ]
+      }
+    },
+    {
+      "kind": "overcharge",
+      "touch": false,
+      "state": {
+        "build": 171,
+        "expedition": {
+          "chunks": 0,
+          "enemies": 8,
+          "haul": 0,
+          "kind": "overcharge",
+          "page": "",
+          "shards": 900,
+          "ticket": true
+        },
+        "history": 5,
+        "mode": "coop",
+        "mode_controls_enabled": false,
+        "navigation": {},
+        "panel_size": [
+          850,
+          590
+        ],
+        "position": [
+          295,
+          960
+        ],
+        "ready": true,
+        "realm": "grove",
+        "result": "",
+        "result_page": "",
+        "snapshots": 44,
+        "started": true,
+        "view_size": [
+          1280,
+          720
+        ]
+      }
+    },
+    {
+      "kind": "between",
+      "touch": true,
+      "state": {
+        "build": 171,
+        "expedition": {
+          "chunks": 25,
+          "enemies": 16,
+          "haul": 0,
+          "interact": [
+            1064,
+            642
+          ],
+          "kind": "between",
+          "page": "results",
+          "shards": 1000,
+          "ticket": false
+        },
+        "history": 9,
+        "mode": "coop",
+        "mode_controls_enabled": false,
+        "navigation": {},
+        "panel_size": [
+          850,
+          590
+        ],
+        "position": [
+          16577,
+          16512
+        ],
+        "ready": true,
+        "realm": "between",
+        "result": "cleared",
+        "result_page": "results",
+        "snapshots": 61,
+        "started": false,
+        "view_size": [
+          1558,
+          720
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

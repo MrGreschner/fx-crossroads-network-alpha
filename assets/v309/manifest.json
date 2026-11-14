@@ -1,0 +1,146 @@
+{
+  "walk_rows": {
+    "medic": 0,
+    "ferryman": 1,
+    "vesper": 2,
+    "drum": 3,
+    "garrick": 4,
+    "caelum": 5,
+    "kage": 6,
+    "hearthwarden": 7,
+    "cantor": 8,
+    "regent": 9,
+    "votary": 10,
+    "lumen": 11,
+    "mosaic": 12,
+    "quill": 13,
+    "dustmarshal": 14,
+    "twisterspell": 15,
+    "hazel_hex": 16,
+    "echo_dancer": 17,
+    "little_menace": 18,
+    "hearth_herald": 19
+  },
+  "yard": {
+    "arrow_basket": [
+      43,
+      47
+    ],
+    "bandage_station": [
+      57,
+      51
+    ],
+    "brazier": [
+      28,
+      32
+    ],
+    "chalk_box": [
+      45,
+      35
+    ],
+    "clay_jars": [
+      47,
+      48
+    ],
+    "exit_sign": [
+      60,
+      66
+    ],
+    "fence_end": [
+      67,
+      42
+    ],
+    "fern": [
+      92,
+      50
+    ],
+    "flower_bed": [
+      92,
+      42
+    ],
+    "hedge": [
+      92,
+      52
+    ],
+    "hero_book": [
+      51,
+      51
+    ],
+    "lantern": [
+      27,
+      63
+    ],
+    "launcher": [
+      43,
+      39
+    ],
+    "oak": [
+      120,
+      111
+    ],
+    "outpost": [
+      250,
+      204
+    ],
+    "pine": [
+      100,
+      147
+    ],
+    "practice_bell": [
+      64,
+      58
+    ],
+    "repair_bench": [
+      104,
+      76
+    ],
+    "rest_bench": [
+      111,
+      52
+    ],
+    "rolled_mats": [
+      52,
+      42
+    ],
+    "root_stones": [
+      92,
+      44
+    ],
+    "sandbags": [
+      65,
+      45
+    ],
+    "shield_rack": [
+      98,
+      82
+    ],
+    "stump": [
+      92,
+      56
+    ],
+    "supply_crates": [
+      55,
+      54
+    ],
+    "target_rack": [
+      110,
+      81
+    ],
+    "training_banner": [
+      43,
+      79
+    ],
+    "water_trough": [
+      89,
+      48
+    ],
+    "weapons_rack": [
+      106,
+      94
+    ],
+    "willow": [
+      120,
+      103
+    ]
+  }
+}

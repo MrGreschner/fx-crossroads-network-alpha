@@ -156,7 +156,7 @@ metadata/menu = "defense_entrance"
 metadata/hint = "Enter Gate Defense rooms"
 
 [node name="RamDescent" type="Sprite2D" parent="Points"]
-position = Vector2(-1080, 1200)
+position = Vector2(-1132, 1200)
 texture = ExtResource("11")
 visible = false
 metadata/menu = "descent_entrance"
@@ -175,7 +175,7 @@ scale = Vector2(1.6, 1.6)
 metadata/label = "NORTH GATE - DEFENCE"
 
 [node name="DescentStairs" type="Sprite2D" parent="Landmarks"]
-position = Vector2(-1080, 1170)
+position = Vector2(-1132, 1170)
 texture = ExtResource("11")
 scale = Vector2(1.6, 1.6)
 metadata/label = "CAVE DESCENT"

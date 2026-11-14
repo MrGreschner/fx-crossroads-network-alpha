@@ -1,0 +1,11 @@
+{
+  "id": "wayfarer_rimehare",
+  "name": "Rimehare",
+  "sprite": "wayfarer_rimehare",
+  "health": 74,
+  "speed": 105,
+  "damage": 11,
+  "aggro_range": 630,
+  "behaviour": "chase",
+  "expansion_only": true
+}

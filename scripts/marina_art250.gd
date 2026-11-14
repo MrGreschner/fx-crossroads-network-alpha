@@ -53,7 +53,7 @@ static func deck_source(c:Node2D,camera:Vector2)->void:
   c.draw_rect(rect,Color("#665c48"),false,3);c.draw_line(rect.position+Vector2(2,2),rect.position+Vector2(rect.size.x-2,2),Color("#d4b98b"),2)
   for p in [r.position,Vector2(r.end.x,r.position.y),r.end,Vector2(r.position.x,r.end.y)]:
    c.draw_circle(p-camera+Vector2(1,3),6,Color("#544e40"));c.draw_circle(p-camera,4.5,Color("#b39c72"));c.draw_arc(p-camera,3,0,TAU,12,Color("#dac49b"),1,true)
- for at in [Vector2(1654,2236),Vector2(2188,2236)]:lamp(c,at-camera,false,true)
+ lamp(c,Vector2(1654,2236)-camera,false,true)
  var sign=Rect2(Vector2(1667,2281)-camera,Vector2(370,39));c.draw_style_box(sign_style(),sign)
  c.draw_string(ThemeDB.fallback_font,sign.position+Vector2(0,17),"RIPPLE & REEL MARINA",HORIZONTAL_ALIGNMENT_CENTER,370,16,Color("#f1dfb1"))
  c.draw_string(ThemeDB.fallback_font,sign.position+Vector2(0,32),"Lake & coastal voyages",HORIZONTAL_ALIGNMENT_CENTER,370,11,Color("#b6d1cc"))

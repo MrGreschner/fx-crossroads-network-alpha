@@ -7,6 +7,7 @@ var moved=false
 var attacked=false
 var attack_ready=false
 var initial_position=Vector2.ZERO
+const KEEPER_HEALTH=275.0
 const BEACON=Vector2(470,600)
 var timer:=0.0
 var defeated:=0
@@ -25,7 +26,7 @@ func spawn_wave()->void:
  for n in count:
   var kind:String="bramble" if wave==1 or n%3!=2 else "archer"
   var point:=Vector2(1300,600) if wave==4 else Vector2(650+n*110,380 if wave%2 else 780)
-  game.enemies.append({"uid":900000+wave*10+n,"pos":point,"hp":220.0 if wave==4 else 30.0+wave*6,"max_hp":220.0 if wave==4 else 30.0+wave*6,"attack_timer":1.5,"secondary_timer":3.0,"windup":0.0,"boss":wave==4,"type":"boss" if wave==4 else kind,"tutorial":true,"first_keeper299":wave==4,"name":"Dawnstone Keeper" if wave==4 else kind})
+  game.enemies.append({"uid":900000+wave*10+n,"pos":point,"hp":KEEPER_HEALTH if wave==4 else 30.0+wave*6,"max_hp":KEEPER_HEALTH if wave==4 else 30.0+wave*6,"attack_timer":1.5,"secondary_timer":3.0,"windup":0.0,"boss":wave==4,"type":"boss" if wave==4 else kind,"tutorial":true,"first_keeper299":wave==4,"name":"Dawnstone Keeper" if wave==4 else kind})
  game.health=minf(game.max_health(),game.health+20)
  game.message="";game.message_time=0
 func step(delta:float)->void:
@@ -48,7 +49,9 @@ func damage(index:int,amount:float)->void:
  game.add_float_text(foe.pos-Vector2(18,42),"−"+str(int(actual)),Color("#ffe3ae"));game.journey.cue("hit")
  if float(foe.hp)>0:return
  game.enemies.remove_at(index);defeated+=1;game.kills+=1
- var next:int=mini(6,1+int(defeated*.75));var old:int=game.level
+ var milestones:=[1,3,5,6]
+ var completed:=clampi(wave-(0 if game.enemies.is_empty() else 1),0,3)
+ var next:int=milestones[completed];var old:int=game.level
  game.level=next;game.highest_level=next;game.experience=defeated*10
  if old<3 and next>=3:unlock_queue.append("secondary")
  if old<5 and next>=5:unlock_queue.append("passive")
@@ -96,7 +99,10 @@ func draw_world(c:Node2D,camera:Vector2)->void:
  if not started:
   var p=BEACON-camera;var pulse=sin(game.visual_clock*3)*.5+.5
   c.draw_circle(p,26,Color(.4,.8,.8,.09));c.draw_arc(p,27,0,TAU,24,Color("#7ccfc6"),2,true)
-  c.draw_string(game.font,p+Vector2(-62,43),"Interact" if game.mobile.enabled else "E • Begin waves",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#f2dfa6"))
+  var prompt := "Interact • Begin waves" if game.mobile.enabled else "E • Begin waves"
+  var text_width: float = game.font.get_string_size(prompt,HORIZONTAL_ALIGNMENT_LEFT,-1,18).x
+  c.draw_style_box(preload("res://scripts/studio_ui.gd").box("#102c39","#294d5e",6,4),Rect2(p+Vector2(-text_width*.5-10,34),Vector2(text_width+20,31)))
+  c.draw_string(game.font,p+Vector2(-text_width*.5,55),prompt,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#a7e8ff"))
  for foe in game.enemies:
   if bool(foe.get("first_keeper299",false)):preload("res://scripts/first_keeper299.gd").draw_cues(c,game,foe,camera);continue
   if not foe.get("tutorial",false) or float(foe.get("windup",0))<=0:continue

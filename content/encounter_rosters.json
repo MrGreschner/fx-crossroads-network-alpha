@@ -118,16 +118,16 @@
     "boss:bramble_boss"
   ],
   "wayfarer": [
-    "briar_bandit",
-    "glowcap_slinger",
-    "rootbound_keeper",
-    "rootwarden",
-    "ice_archer",
-    "frostling",
-    "summit_golem",
-    "sluice_beetle",
-    "tidebinder",
-    "inkfin"
+    "wayfarer_thornveil",
+    "wayfarer_ambercap",
+    "wayfarer_hollowroot",
+    "wayfarer_heartwood",
+    "wayfarer_rimehare",
+    "wayfarer_hoarfletch",
+    "wayfarer_bellstone",
+    "wayfarer_brassback",
+    "wayfarer_valvewright",
+    "wayfarer_reedjaw"
   ],
   "between": [],
   "cinderheart": [

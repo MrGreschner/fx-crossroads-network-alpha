@@ -1,0 +1,14 @@
+{
+  "build": "V177-preview",
+  "passed": true,
+  "results": [
+    "Private rooms excluded from discovery",
+    "Welcome visible below HUD then expires after eight active seconds",
+    "Landscape/portrait rotation retains attached loadout row",
+    "Mobile host creates discoverable public room on T4 authority",
+    "Room-code join and live hero choice replicated to actual party sprites",
+    "Real browser host/guest match starts, receives authoritative snapshots, hides active room from discovery",
+    "Leaving match restores usable graphical host/join lobby"
+  ],
+  "errors": []
+}

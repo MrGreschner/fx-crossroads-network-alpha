@@ -1,4 +1,4 @@
 extends RefCounted
-const GAME_BUILD=304
-const BUILD="V304-performance"
+const GAME_BUILD=334
+const BUILD="V334-event-heroes"
 const REPORT_SCHEMA=3

@@ -1,8 +1,15 @@
 extends RefCounted
+const Art326=preload("res://scripts/hero_art326.gd")
+const Art324=preload("res://scripts/hero_art324.gd")
+const Art321=preload("res://scripts/hero_art321.gd")
+const Art320=preload("res://scripts/hero_art320.gd")
+const Walk312=preload("res://scripts/hero_walk312.gd")
+const RamArt=preload("res://scripts/ram_art310.gd")
+const Polish=preload("res://scripts/visual_polish309.gd")
 ## Six poses per hero: idle, two movement, primary, secondary, special.
 ## Neutral front-facing poses in every travel direction; no sprite flipping.
 ## No combat, movement, camera or timing changes.
-const HEROES=["teapot","rook","beaver","iris","robot","cloudloom","cairnheart","caelum","dustdevil","merrymask","sunflower","snowman","veyra","drum","harbor","magnet","pippa","spindle","patch","bracken","elara","aurel","rune_duelist","garrick","nera","dawnblade","stormscribe","bailiff","tempo","quill","cindervane","tova","dunecook","dustmarshal","wick","cobbleclaw","twisterspell","goalie","baseball","golfer","soccer","welder","velvetwing","gopher","nullweaver","kage","agent","thistlebond","chronicle","ram","cat","book","mosaic","vesper","morrow","ferryman","medic","navigator","wanderlight","ripplejaw","hearthwarden","snail","kite","tidewright","cantor","shuttle","regent","apiary","mantis","recess","votary","teacher","lumen","briar","hollow_rider","hazel_hex","echo_dancer","little_menace","hearth_herald"]
+const HEROES=["lockjaw","anjali","santa","reindeer","teapot","rook","beaver","iris","robot","cloudloom","cairnheart","caelum","dustdevil","merrymask","sunflower","snowman","veyra","drum","harbor","magnet","pippa","spindle","patch","bracken","elara","aurel","rune_duelist","garrick","nera","dawnblade","stormscribe","bailiff","tempo","quill","cindervane","tova","dunecook","dustmarshal","wick","cobbleclaw","twisterspell","goalie","baseball","golfer","soccer","welder","velvetwing","gopher","nullweaver","kage","agent","thistlebond","chronicle","ram","cat","book","mosaic","vesper","morrow","ferryman","medic","navigator","wanderlight","ripplejaw","hearthwarden","snail","kite","tidewright","cantor","shuttle","regent","apiary","mantis","recess","votary","teacher","lumen","briar","hollow_rider","hazel_hex","echo_dancer","little_menace","hearth_herald"]
 const NEW_HEROES=["mosaic","vesper","morrow","ferryman"]
 const LATEST=["dawnblade", "stormscribe", "bailiff", "tempo", "quill", "cindervane", "tova", "dunecook", "dustmarshal", "wick", "cobbleclaw", "twisterspell"]
 const UPGRADED=["goalie", "baseball", "golfer", "soccer", "welder", "velvetwing", "gopher", "nullweaver", "kage", "agent", "thistlebond", "chronicle", "ferryman", "elder_ram"]
@@ -15,7 +22,7 @@ const REFRESHED222=["navigator","hazel_hex","hearth_herald"]
 const REFRESHED225=["hazel_hex","hearth_herald","cat","echo_dancer","twisterspell"]
 const REFRESHED226=["twisterspell"]
 const ROOT="res://assets/core204/"
-const POSES={"teapot":[0,1,2,3,4,5],"rook":[0,1,2,3,4,5],"beaver":[0,1,2,3,4,5],"iris":[0,1,2,3,4,5],"robot":[0,1,2,3,4,5],"cloudloom":[0,1,2,3,4,5],"cairnheart":[0,1,2,3,4,5],"caelum":[0,1,2,3,4,5],"dustdevil":[0,1,2,3,4,5],"merrymask":[0,1,2,3,4,5],"sunflower":[0,1,2,3,4,5],"snowman":[0,1,2,3,4,5],"veyra":[0,1,2,3,4,5],"drum":[0,1,2,3,4,5],"harbor":[0,1,2,3,4,5],"magnet":[0,1,2,3,4,5],"pippa":[0,1,2,3,4,5],"spindle":[0,1,2,3,4,5],"patch":[0,1,2,3,4,5],"bracken":[0,1,2,3,4,5],"elara":[0,1,2,3,4,5],"aurel":[0,1,2,3,4,5],"rune_duelist":[0,1,2,3,4,5],"garrick":[0,1,2,3,4,5],"nera":[0,1,2,3,4,5],"dawnblade":[0,1,2,3,4,5],"stormscribe":[0,1,2,3,4,5],"bailiff":[0,1,2,3,4,5],"tempo":[0,1,2,3,4,5],"quill":[0,1,2,3,4,5],"cindervane":[0,1,2,3,4,5],"tova":[0,1,2,3,4,5],"dunecook":[0,1,2,3,4,5],"dustmarshal":[0,1,2,3,4,5],"wick":[0,1,2,3,4,5],"cobbleclaw":[0,1,2,3,4,5],"twisterspell":[0,1,2,3,4,5],"ram":[0,1,3,6,7,9],"cat":[0,1,2,3,4,5],"book":[0,2,4,6,7,10],"mosaic":[0,1,2,3,4,5],"vesper":[0,1,2,3,4,5],"morrow":[0,1,2,3,4,5],"ferryman":[0,1,2,3,4,5],"goalie":[0,1,2,3,4,5],"baseball":[0,1,2,3,4,5],"golfer":[0,1,2,3,4,5],"soccer":[0,1,2,3,4,5],"welder":[0,1,2,3,4,5],"velvetwing":[0,1,2,3,4,5],"gopher":[0,1,2,3,4,5],"nullweaver":[0,1,2,3,4,5],"kage":[0,1,2,3,4,5],"agent":[0,1,2,3,4,5],"thistlebond":[0,1,2,3,4,5],"chronicle":[0,1,2,3,4,5],"elder_ram":[0,1,2,3,4,5],"medic":[0,1,2,3,4,5],"navigator":[0,1,2,3,4,5],"wanderlight":[0,1,2,3,4,5],"ripplejaw":[0,1,2,3,4,5],"hearthwarden":[0,1,2,3,4,5],"snail":[0,1,2,3,4,5],"kite":[0,1,2,3,4,5],"tidewright":[0,1,2,3,4,5],"cantor":[0,1,2,3,4,5],"shuttle":[0,1,2,3,4,5],"regent":[0,1,2,3,4,5],"apiary":[0,1,2,3,4,5],"mantis":[0,1,2,3,4,5],"recess":[0,1,2,3,4,5],"votary":[0,1,2,3,4,5],"teacher":[0,1,2,3,4,5],"lumen":[0,1,2,3,4,5],"briar":[0,1,2,3,4,5],"hollow_rider":[0,1,2,3,4,5],"hazel_hex":[0,1,2,3,4,5],"echo_dancer":[0,1,2,3,4,5],"little_menace":[0,1,2,3,4,5],"hearth_herald":[0,1,2,3,4,5]}
+const POSES={"lockjaw":[0,1,2,3,4,5],"anjali":[0,1,2,3,4,5],"santa":[0,1,2,3,4,5],"reindeer":[0,1,2,3,4,5],"teapot":[0,1,2,3,4,5],"rook":[0,1,2,3,4,5],"beaver":[0,1,2,3,4,5],"iris":[0,1,2,3,4,5],"robot":[0,1,2,3,4,5],"cloudloom":[0,1,2,3,4,5],"cairnheart":[0,1,2,3,4,5],"caelum":[0,1,2,3,4,5],"dustdevil":[0,1,2,3,4,5],"merrymask":[0,1,2,3,4,5],"sunflower":[0,1,2,3,4,5],"snowman":[0,1,2,3,4,5],"veyra":[0,1,2,3,4,5],"drum":[0,1,2,3,4,5],"harbor":[0,1,2,3,4,5],"magnet":[0,1,2,3,4,5],"pippa":[0,1,2,3,4,5],"spindle":[0,1,2,3,4,5],"patch":[0,1,2,3,4,5],"bracken":[0,1,2,3,4,5],"elara":[0,1,2,3,4,5],"aurel":[0,1,2,3,4,5],"rune_duelist":[0,1,2,3,4,5],"garrick":[0,1,2,3,4,5],"nera":[0,1,2,3,4,5],"dawnblade":[0,1,2,3,4,5],"stormscribe":[0,1,2,3,4,5],"bailiff":[0,1,2,3,4,5],"tempo":[0,1,2,3,4,5],"quill":[0,1,2,3,4,5],"cindervane":[0,1,2,3,4,5],"tova":[0,1,2,3,4,5],"dunecook":[0,1,2,3,4,5],"dustmarshal":[0,1,2,3,4,5],"wick":[0,1,2,3,4,5],"cobbleclaw":[0,1,2,3,4,5],"twisterspell":[0,1,2,3,4,5],"ram":[0,1,3,6,7,9],"cat":[0,1,2,3,4,5],"book":[0,2,4,6,7,10],"mosaic":[0,1,2,3,4,5],"vesper":[0,1,2,3,4,5],"morrow":[0,1,2,3,4,5],"ferryman":[0,1,2,3,4,5],"goalie":[0,1,2,3,4,5],"baseball":[0,1,2,3,4,5],"golfer":[0,1,2,3,4,5],"soccer":[0,1,2,3,4,5],"welder":[0,1,2,3,4,5],"velvetwing":[0,1,2,3,4,5],"gopher":[0,1,2,3,4,5],"nullweaver":[0,1,2,3,4,5],"kage":[0,1,2,3,4,5],"agent":[0,1,2,3,4,5],"thistlebond":[0,1,2,3,4,5],"chronicle":[0,1,2,3,4,5],"elder_ram":[0,1,2,3,4,5],"medic":[0,1,2,3,4,5],"navigator":[0,1,2,3,4,5],"wanderlight":[0,1,2,3,4,5],"ripplejaw":[0,1,2,3,4,5],"hearthwarden":[0,1,2,3,4,5],"snail":[0,1,2,3,4,5],"kite":[0,1,2,3,4,5],"tidewright":[0,1,2,3,4,5],"cantor":[0,1,2,3,4,5],"shuttle":[0,1,2,3,4,5],"regent":[0,1,2,3,4,5],"apiary":[0,1,2,3,4,5],"mantis":[0,1,2,3,4,5],"recess":[0,1,2,3,4,5],"votary":[0,1,2,3,4,5],"teacher":[0,1,2,3,4,5],"lumen":[0,1,2,3,4,5],"briar":[0,1,2,3,4,5],"hollow_rider":[0,1,2,3,4,5],"hazel_hex":[0,1,2,3,4,5],"echo_dancer":[0,1,2,3,4,5],"little_menace":[0,1,2,3,4,5],"hearth_herald":[0,1,2,3,4,5]}
 static var textures:Dictionary={}
 static var atlas:Texture2D
 static var atlas_frames:Dictionary={}
@@ -27,6 +34,14 @@ static func prepare_atlas()->void:
  atlas_frames=JSON.parse_string(FileAccess.get_file_as_string("res://assets/runtime237/heroes.json"))
  var image=Image.new();image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/runtime237/heroes.png"));atlas=ImageTexture.create_from_image(image)
 static func portrait_texture(sprite:String)->Texture2D:
+ var matched:=Art326.pose(sprite,0)
+ if matched!=null:return matched
+ var batch:=Art321.pose(sprite,0)
+ if batch!=null:return batch
+ var newer:=Art320.pose(sprite,0)
+ if newer!=null:return newer
+ var ram:=RamArt.pose(sprite,0)
+ if ram!=null:return ram
  prepare_atlas()
  if not portrait_frames.has(sprite):return null
  if not portraits.has(sprite):
@@ -35,6 +50,11 @@ static func portrait_texture(sprite:String)->Texture2D:
 static func visible_size(sprite:String,pose:String="walk1")->Vector2:
  var tex=texture(sprite,pose)
  if tex==null:return Vector2(.8,.8)
+ var refreshed:=override_texture(sprite,frame_index(sprite,pose))
+ if refreshed!=null:
+  var image:=refreshed.get_image()
+  if image!=null:return Vector2(image.get_used_rect().size)/80.0
+ prepare_atlas()
  var key=sprite+"_"+str(frame_index(sprite,pose)).pad_zeros(2);var bounds:Array=atlas_frames[key].bounds
  return Vector2(bounds[2],bounds[3])/80.0
 static func frame_index(sprite:String,pose:String)->int:
@@ -47,7 +67,23 @@ static func frame_index(sprite:String,pose:String)->int:
  if sprite=="elder_ram" and index>=6:index=1
  return index
 var actions:Dictionary={}
+static func override_texture(sprite:String,index:int)->Texture2D:
+ var matched:=Art326.pose(sprite,index)
+ if matched!=null:return matched
+ var batch324=Art324.pose(sprite,index)
+ if batch324!=null:return batch324
+ var batch:=Art321.pose(sprite,index)
+ if batch!=null:return batch
+ var newer:=Art320.pose(sprite,index)
+ if newer!=null:return newer
+ var ram:=RamArt.pose(sprite,index)
+ if ram!=null:return ram
+ if sprite in Walk312.IDS:return Walk312.texture(sprite,index)
+ return Polish.hero(sprite,index)
+
 static func texture(sprite:String,pose:String="idle")->Texture2D:
+ var updated:=override_texture(sprite,frame_index(sprite,pose))
+ if updated!=null:return updated
  prepare_atlas()
  var key=sprite+"_"+str(frame_index(sprite,pose)).pad_zeros(2)
  if not atlas_frames.has(key):return null
@@ -87,6 +123,10 @@ func index_for(id:String,sprite:String,pose:String,point:Vector2,walking:bool,cl
  return int(frames[0])
 static func movement_index(sprite:String,frames:Array,walking:bool,clock:float)->int:
  if not walking:return int(frames[0])
+ if sprite in Walk312.IDS:return Walk312.movement(sprite,clock)
+ if sprite in Polish.WALK_HEROES:
+  var cadence:=9.6 if sprite=="quill" else 14.0
+  return Polish.FIRST_WALK_FRAME+posmod(int(clock*cadence),4)
  if sprite=="book":return int(frames[1] if sin(clock*3.0)>=0 else frames[2])
  return int(frames[1] if int(clock*(4.8 if sprite=="quill" else 7.0))%2==0 else frames[2])
 func picture(id:String,sprite:String,pose:String,point:Vector2,walking:bool,clock:float,channel:bool=false,charging:bool=false)->Texture2D:

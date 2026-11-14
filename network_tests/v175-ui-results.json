@@ -1,0 +1,17 @@
+{
+  "build": "V175-preview",
+  "passed": true,
+  "results": [
+    {
+      "touch": false,
+      "honeyglassViews": 3,
+      "passed": true
+    },
+    {
+      "touch": true,
+      "honeyglassViews": 3,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

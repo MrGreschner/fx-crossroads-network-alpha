@@ -15,6 +15,8 @@ func step(id:String,point:Vector2,delta:float,enabled:bool)->void:
  state.phase=phase
 func sprite_rect(id:String,point:Vector2)->Rect2:
  var phase:float=float(states.get(id,{}).get("phase",0))
+ return pose_rect(point,phase)
+static func pose_rect(point:Vector2,phase:float)->Rect2:
  var height:=92*phase*(1-phase)
  var impact:=maxf(0,1-minf(phase,1-phase)/.1) if phase>0 else 0.0
  var stretch:=sin(phase*PI)*.035

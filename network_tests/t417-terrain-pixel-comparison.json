@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "comparison_area": [
+    0,
+    40,
+    1280,
+    720
+  ],
+  "excluded": "Unrelated autoload Student/Teacher overlay in top 40 pixels; first run full-screen pairs also matched.",
+  "scenarios": [
+    {
+      "scenario": "grass-true",
+      "identical_terrain_pixels": true
+    },
+    {
+      "scenario": "school_sand-false",
+      "identical_terrain_pixels": true
+    },
+    {
+      "scenario": "forest-false",
+      "identical_terrain_pixels": true
+    },
+    {
+      "scenario": "forest-true",
+      "identical_terrain_pixels": true
+    },
+    {
+      "scenario": "clock_floor-false",
+      "identical_terrain_pixels": true
+    },
+    {
+      "scenario": "storm_floor-false",
+      "identical_terrain_pixels": true
+    }
+  ]
+}

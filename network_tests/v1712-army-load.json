@@ -1,0 +1,21 @@
+{
+  "build": "V171.2-preview",
+  "errors": 0,
+  "max_compressed_snapshot_bytes": 7068,
+  "max_full_snapshot_bytes": 72358,
+  "max_tick_ms": 31.212,
+  "mean_work_ms": 7.22517222222222,
+  "p95_tick_ms": 15.526,
+  "p99_tick_ms": 22.938,
+  "passed": true,
+  "remaining_troops": 75,
+  "scope": "Synthetic local full-army fixture with snapshot encoding; not network cadence, classroom FPS or a long soak.",
+  "simulated_seconds": 15,
+  "strategy_work": {
+    "max_units_ms": 5.443,
+    "step_ms": 0.418,
+    "units_ms": 0.35
+  },
+  "ticks": 900,
+  "wall_ms": 6502.655
+}

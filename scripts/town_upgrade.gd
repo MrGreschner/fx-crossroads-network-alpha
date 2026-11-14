@@ -1,4 +1,5 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 const CLINIC_SPAWN=Vector2(1960,790)
 const POINTS={"food":Vector2(1150,1150),"healer":Vector2(1960,740),"wayfinder":Vector2(1580,790),"seedhouse":Vector2(900,1615)}
 var clock:=0.0
@@ -86,14 +87,18 @@ func label(c:Node2D,font:Font,point:Vector2,text:String)->void:
  preload("res://scripts/town_streets244.gd").plaque(c,Rect2(point+Vector2(-size.x/2-8,-18),Vector2(size.x+16,24)))
  c.draw_string(font,point+Vector2(-size.x/2,0),text,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#f3e1b5"))
 func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
- # Side tables display shields, tools and bottled supplies outside the stall.
- for table in [Vector2(1135,625),Vector2(1425,625)]:
-  if not Rect2(camera,c.get_viewport_rect().size).grow(100).has_point(table):continue
-  var p:Vector2=table-camera
-  c.draw_rect(Rect2(p+Vector2(-25,-10),Vector2(50,13)),Color("#b39467"))
-  for side in [-1,1]:c.draw_rect(Rect2(p+Vector2(side*20-2,3),Vector2(4,13)),Color("#6e5c43"))
-  c.draw_circle(p+Vector2(-12,-15),8,Color("#8bafb6"));c.draw_line(p+Vector2(-12,-22),p+Vector2(-12,-9),Color("#d8c998"),2)
-  c.draw_rect(Rect2(p+Vector2(5,-25),Vector2(8,14)),Color("#a4c7ad"));c.draw_rect(Rect2(p+Vector2(7,-30),Vector2(4,5)),Color("#e4c48c"))
+ # The two displays reuse the town's detailed woodworking and item art.
+ var display_art=preload("res://scripts/training_environment303.gd")
+ var icons=preload("res://scripts/item_icons.gd")
+ for index in 2:
+  var table:Vector2=Town311.SUPPLY_DISPLAYS[index]
+  if not Rect2(camera,c.VIEW).grow(100).has_point(table):continue
+  var p=table-camera
+  c.draw_texture_rect(display_art.frame("repair_bench"),Rect2(p-Vector2(32,29),Vector2(64,50)),false)
+  var goods=["shield","hammer"] if index==0 else ["potion","trail_boots"]
+  for n in 2:
+   var item=icons.texture(goods[n])
+   if item!=null:c.draw_texture_rect(item,Rect2(p+Vector2(-20+n*24,-31),Vector2(20,20)),false)
  npc(c,Vector2(1290,635)-camera,Color("#a07b56"),"ram")
  npc(c,POINTS.food-camera,Color("#9b7f64"),"cook")
  npc(c,POINTS.healer-camera,Color("#779dac"),"healer")

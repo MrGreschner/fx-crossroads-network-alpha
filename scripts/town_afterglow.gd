@@ -1,6 +1,8 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## Bounded, culled facade accents; emissive details render after the ambient tint.
-const TORCHES=[Vector2(-1205,1210),Vector2(-955,1210),Vector2(-1105,430),Vector2(-955,430)]
+const CAVE_EYES=Town311.DESCENT_ENTRY-Vector2(0,14)
+const TORCHES=[Vector2(-1205,1210)+Town311.DESCENT_SHIFT,Vector2(-955,1210)+Town311.DESCENT_SHIFT,Vector2(-1105,430),Vector2(-955,430)]
 const WINDOWS={
  "character_hall_v65":[Vector2(360,255),[Rect2(72,126,16,41),Rect2(283,126,16,41)]],
  "healer_shack":[Vector2(290,220),[Rect2(52,117,44,33),Rect2(212,117,25,33)]],
@@ -13,7 +15,7 @@ static func panes(g:Node2D)->Array:
 static func light_sources(g:Node2D)->Array:
  var lights:Array=[]
  for at in [Vector2(1245,1705),Vector2(1495,1705)]:lights.append({"at":at-Vector2(0,30),"radius":155.0,"strength":1.0})
- lights.append({"at":Vector2(1460,1860),"radius":125.0,"strength":.85})
+ lights.append({"at":preload("res://scripts/town_props240.gd").REST_FOUNTAIN-Vector2(0,20),"radius":125.0,"strength":.85})
  for at in TORCHES:lights.append({"at":at-Vector2(0,26),"radius":185.0,"strength":1.1})
  lights.append_array(preload("res://scripts/town_landmarks241.gd").light_sources())
  lights.append_array(preload("res://scripts/town_shops242.gd").light_sources(g))
@@ -42,7 +44,7 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_nature243.gd").draw_emission(g,camera,night)
  for at in [Vector2(1245,1705),Vector2(1495,1705)]:
   if view.has_point(at):preload("res://scripts/town_calendar.gd").draw_lantern(g,at-camera,night)
- var fountain=Vector2(1460,1880)
+ var fountain=preload("res://scripts/town_props240.gd").REST_FOUNTAIN
  if night>.01 and view.has_point(fountain):
   var p=fountain-camera;var glow=night*(.65+.2*sin(t*1.2))
   var rim=PackedVector2Array()
@@ -55,8 +57,7 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
  for at in TORCHES:
   if view.has_point(at):flame(g,at-camera,t+at.x,night)
  # Eyes open, blink, fade away, then reappear elsewhere INSIDE the dark tunnel.
- var center=Vector2(-1080,1186)-camera
- if view.has_point(Vector2(-1080,1186)):
+ if view.has_point(CAVE_EYES):
   for n in 2:
    var cycle:float=floor((t+n*5.9)/9.7);var phase:float=fposmod(t+n*5.9,9.7)
    if phase>6.2:continue
@@ -69,4 +70,4 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
     g.draw_colored_polygon(outline,Color(.95,.76,.31,alpha))
 
 static func cave_eye_point(cycle:float,index:int)->Vector2:
- return Vector2(-1080,1186)+Vector2(sin(cycle*2.37+index*3.1)*18,-3+sin(cycle*4.17+index)*6)
+ return CAVE_EYES+Vector2(sin(cycle*2.37+index*3.1)*18,-3+sin(cycle*4.17+index)*6)

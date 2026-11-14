@@ -1,8 +1,9 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 const UI=preload("res://scripts/studio_ui.gd")
 const FISH=preload("res://scripts/fishing_catalog.gd")
-const ENTRY=Vector2(1035,600)
-const WALL=Rect2(957,403,156,192)
+const ENTRY=Town311.RECORDS+Vector2(0,40)
+const WALL=Rect2(Town311.RECORDS-Vector2(78,157),Vector2(156,192))
 # Aggregate realm popularity is a top-ten list too; named speed boards are separate.
 const SUMMARY_LIMITS={"heroes":10,"realms":10,"between":5}
 var legacy:Node
@@ -338,9 +339,19 @@ static func interact(g:Node)->bool:
  if Input.is_action_just_pressed("interact"):g.legacy.community.open()
  return true
 static func draw_on(g:Node2D,camera:Vector2)->void:
- var c=Vector2(1035,560)-camera
+ var c=Town311.RECORDS-camera
  preload("res://scripts/town_art246.gd").draw(g,"records",Rect2(c+Vector2(-78,-157),Vector2(156,184)))
- g.draw_string(g.font,c+Vector2(-70,2),"COMMUNITY RECORDS",HORIZONTAL_ALIGNMENT_CENTER,140,11,Color("#f4e0b3"))
+ # The inset wood panel spans y=-19 through y=-7 in the board sprite.
+ const TITLE = "COMMUNITY RECORDS"
+ const TITLE_FONT = preload("res://assets/fonts/CrossroadsUI.ttf")
+ const TITLE_SIZE = 10
+ var width := TITLE_FONT.get_string_size(TITLE,HORIZONTAL_ALIGNMENT_LEFT,-1,TITLE_SIZE).x
+ var baseline := -13.0 + (TITLE_FONT.get_ascent(TITLE_SIZE)-TITLE_FONT.get_descent(TITLE_SIZE))*.5
+ var label_position := Vector2(-width*.5,0)
+ g.draw_set_transform((c+Vector2(0,baseline)).round(),0,Vector2(minf(1,96.0/(width+4)),1))
+ g.draw_string_outline(TITLE_FONT,label_position,TITLE,HORIZONTAL_ALIGNMENT_LEFT,-1,TITLE_SIZE,2,Color("#352016"))
+ g.draw_string(TITLE_FONT,label_position,TITLE,HORIZONTAL_ALIGNMENT_LEFT,-1,TITLE_SIZE,Color("#fff0c5"))
+ g.draw_set_transform(Vector2.ZERO)
 
 const FISH_BOARD_KEYS=["fish_all","fish_week","rarest_all","rarest_week"]
 static func valid_fish_boards(boards:Variant)->bool:

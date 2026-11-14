@@ -1,4 +1,5 @@
 extends RefCounted
+const Polish=preload("res://scripts/visual_polish309.gd")
 const ALLY=Vector2(650,620)
 var ally_health:float=50
 var full_time:float=0
@@ -6,8 +7,15 @@ var runner_phase:float=0
 var clock:float=0
 var next_shots:Array[float]=[1.0,2.1]
 const HERO_BOOK=Vector2(660,400)
-var outpost:Texture2D=preload("res://scripts/training_environment303.gd").frame("outpost")
-var book:Texture2D=preload("res://scripts/training_environment303.gd").frame("hero_book")
+const OUTPOST_RECT=Rect2(202,169,322,264)
+const GUIDE_ANCHOR=Vector2(.28,1.065)
+const FIRE_ANCHOR=Vector2(.61,.985)
+const FROST_ANCHOR=Vector2(.79,.92)
+const GUIDE_POSITION=OUTPOST_RECT.position+OUTPOST_RECT.size*GUIDE_ANCHOR
+static func building_anchor(camera:Vector2,anchor:Vector2)->Vector2:
+ return OUTPOST_RECT.position+OUTPOST_RECT.size*anchor-camera
+
+
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
 const LAUNCHERS=[Vector2(1460,410),Vector2(1460,790)]
 func reset()->void:ally_health=50;full_time=0;clock=0;runner_phase=0;next_shots=[1.0,2.1]
@@ -49,8 +57,9 @@ func draw_on(game:Node,camera:Vector2)->void:
  for n in LAUNCHERS.size():
   var point:Vector2=LAUNCHERS[n]-camera
   var warning:float=clampf(1-(next_shots[n]-clock)/.6,0,1)
-  game.draw_texture_rect(preload("res://scripts/training_environment303.gd").frame("launcher"),Rect2(point+Vector2(-30,-42),Vector2(60,62)),false)
-  if warning>.1:game.draw_circle(point+Vector2(-25,-20),3,Color("#edb574"))
+  var cannon:=Polish.yard_rect("launcher",point+Vector2(0,14))
+  game.draw_texture_rect(Polish.yard_texture("launcher"),cannon,false)
+  if warning>.1:game.draw_circle(cannon.position+cannon.size*Vector2(.14,.28),2,Color("#edb574"))
   game.draw_string(font,point+Vector2(-55,48),"SHOT PRACTICE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e1d3a8"))
  for foe in game.enemies:
   if str(foe.get("type",""))=="training_runner":
@@ -59,23 +68,30 @@ func draw_on(game:Node,camera:Vector2)->void:
    game.draw_string(font,point+Vector2(-50,53),"MOVING TARGET",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#e1d3a8"))
 
 func draw_outpost(game:Node2D,camera:Vector2)->void:
- var base:=Vector2(160,215)-camera
- game.draw_texture_rect(outpost,Rect2(base,Vector2(420,230)),false)
- game.draw_string(font,base+Vector2(43,98),"CROSSROADS TRAINING",HORIZONTAL_ALIGNMENT_CENTER,193,13,Color("#f5ddb0"))
+ var outpost:=Rect2(OUTPOST_RECT.position-camera,OUTPOST_RECT.size)
+ game.draw_texture_rect(Polish.yard_texture("outpost"),outpost,false)
+ var title_at:=building_anchor(camera,Vector2(.38,.55))
+ game.draw_string(font,title_at-Vector2(52,0),"CROSSROADS TRAINING",HORIZONTAL_ALIGNMENT_CENTER,104,8,Color("#f4e2b9"))
  var b:Vector2=HERO_BOOK-camera
- game.draw_circle(b,48,Color(.3,.65,.83,.09))
- game.draw_texture_rect(book,Rect2(b-Vector2(36,84),Vector2(72,100)),false)
+ game.draw_circle(b,38,Color(.3,.65,.83,.09))
+ game.draw_texture_rect(Polish.yard_texture("hero_book"),Polish.yard_rect("hero_book",b+Vector2(0,8)),false)
  var nearby:bool=game.position_in_world.distance_to(HERO_BOOK)<85
- game.draw_arc(b,45,0,TAU,24,Color("#f2d394") if nearby else Color(.4,.76,.9,.45),2)
+ game.draw_arc(b,36,0,TAU,24,Color("#f2d394") if nearby else Color(.4,.76,.9,.45),2)
  game.draw_string(font,b+Vector2(-80,42),"HERO BOOK",HORIZONTAL_ALIGNMENT_CENTER,160,14,Color("#f5ddb0"))
  # A tiny ember bucket and frost staff: bounded decoration only, never combat.
- var fire:=Vector2(420,407)-camera
+ var fire:=building_anchor(camera,FIRE_ANCHOR)
+ game.draw_circle(fire+Vector2(0,1),10,Color(0,0,0,.26))
+ game.draw_rect(Rect2(fire+Vector2(-10,-12),Vector2(20,12)),Color("#4b5050"))
+ game.draw_line(fire+Vector2(-11,-12),fire+Vector2(11,-12),Color("#99917d"),2)
  for n in 5:
   var h:=12+sin(clock*5+n*1.7)*4;var x:=float(n-2)*3
   game.draw_colored_polygon(PackedVector2Array([fire+Vector2(x-5,-11),fire+Vector2(x+sin(clock*3+n)*3,-11-h),fire+Vector2(x+5,-11)]),Color("#e99245"))
- var frost:=Vector2(520,335)-camera
+ var staff:=building_anchor(camera,FROST_ANCHOR)
+ var frost:=staff+Vector2(-8,-61)
+ game.draw_line(staff,frost,Color("#483a37"),5)
+ game.draw_line(staff+Vector2(1,-3),frost+Vector2(2,5),Color("#8c7760"),2)
  game.draw_circle(frost,15+sin(clock*2)*2,Color(.35,.76,1,.13))
  game.draw_circle(frost,5,Color("#91e4f1"))
  for n in 7:
-  var point:=frost+Vector2(sin(n*2.4)*21,fmod(clock*12+n*11,65)-12)
+  var point:=frost+Vector2(sin(n*2.4)*14,-fmod(clock*13+n*11,39)+8)
   game.draw_circle(point,1.5,Color(.75,.9,1,.65))

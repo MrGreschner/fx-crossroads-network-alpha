@@ -1,4 +1,5 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## The ambient town uses wall time, including while the game is closed.
 ## Real Edmonton civil time. No accelerated day, offline rewards, or profile writes.
 const DAY_SECONDS=86400.0
@@ -106,7 +107,6 @@ func weather()->String:
  return preload("res://scripts/town_weather.gd").at(day_number,hour)
 
 func draw_props(c:Node2D,camera:Vector2)->void:
- draw_puddles(c,camera)
  var view=Rect2(camera,c.VIEW).grow(130)
  var lit=night_amount()
  for spot in LAMPS+EXISTING_LAMPS:
@@ -240,7 +240,7 @@ func interact(g:Node)->bool:
   g.hint="E · Friday midnight fireflies"
   if Input.is_action_just_pressed("interact"):g.message="The fireflies trace a hidden message above the reeds: 'Every road leads home.'";g.message_time=5
   return true
- if weekday==0 and hour>=6.0 and hour<7.0 and g.position_in_world.distance_to(Vector2(-1030,1010))<80:
+ if weekday==0 and hour>=6.0 and hour<7.0 and g.position_in_world.distance_to(Town311.WEST_FOUNTAIN)<80:
   g.hint="E · Monday dawn inscription"
   if Input.is_action_just_pressed("interact"):g.message="In the first light, old letters shine on the fountain: 'A town is the people who return to it.'";g.message_time=5
   return true
@@ -280,20 +280,33 @@ func puddles_in(bounds:Rect2)->Array[Dictionary]:
    var puddle:Dictionary=puddle_cells[cell]
    if not puddle.is_empty() and bounds.grow(40).has_point(puddle.world):result.append(puddle)
  return result
+var puddle_frames:Array[Texture2D]=[]
 func draw_puddles(c:Node2D,camera:Vector2)->void:
  if weather()!="Rain":return
+ if puddle_frames.is_empty():
+  var image=Image.new()
+  if image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/town306/puddles.png"))!=OK:return
+  var atlas=ImageTexture.create_from_image(image)
+  for i in 4:
+   var frame=AtlasTexture.new();frame.atlas=atlas;frame.region=Rect2(i*96,0,96,48);frame.filter_clip=true
+   puddle_frames.append(frame)
  var drawn=0
+ var dock=preload("res://scripts/town_marina.gd")
+ var river=c.town_chapter.RIVER
  for puddle in puddles_in(Rect2(camera,c.VIEW)):
   if drawn>=28:break
   var world:Vector2=puddle.world
-  if not c.can_stand_at(world):continue
-  var p=world-camera;var polygon=PackedVector2Array()
-  for n in 14:
-   var angle=n*TAU/14
-   polygon.append(p+(Vector2(cos(angle)*puddle.width,sin(angle)*puddle.depth)*(1+sin(n*2+puddle.salt)*.21)).rotated(puddle.turn))
-  c.draw_colored_polygon(polygon,Color(.23,.43,.53,.65))
-  c.draw_line(p+Vector2(-puddle.width*.5,-1),p+Vector2(puddle.width*.3,-1),Color(.74,.86,.88,.48),1.5,true)
-  if int(puddle.salt)%3==0:c.draw_arc(p,3+fposmod(animation_seconds()*5+puddle.salt,8),0,TAU,14,Color(.75,.88,.91,.24),1,true)
+  if dock.wet(world) or dock.on_deck(world) or river.has_point(world) or not c.can_stand_at(world):continue
+  var p=world-camera
+  var size=Vector2(puddle.width*2.15,puddle.depth*2.4)
+  var seed_value=int(puddle.salt)
+  c.draw_texture_rect(puddle_frames[seed_value%4],Rect2(p-size*.5,size),false)
+  if seed_value%3==0:
+   var cycle=fposmod(animation_seconds()*.7+seed_value*.13,1.0)
+   var radius=lerpf(1.0,minf(size.y*.38,7.0),cycle)
+   var arc=PackedVector2Array()
+   for i in 13:arc.append(p+Vector2(cos(i*TAU/12)*radius,sin(i*TAU/12)*radius*.45))
+   c.draw_polyline(arc,Color(.79,.89,.88,(1-cycle)*.32),1,true)
   drawn+=1
 
 func animation_seconds()->float:

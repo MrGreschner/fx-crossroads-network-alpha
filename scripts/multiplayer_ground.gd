@@ -92,7 +92,7 @@ func sync()->void:
  var layout_key=str(game.battlegrounds.map_id)+str(game.battlegrounds.lanes) if game.mode=="battlegrounds" else ""
  if layout_key!=battleground_layout:reset();battleground_layout=layout_key
  if game.mode=="coop" and game.realm_id in ["sunfield","ice","confluence","folded_coast","moonburrow"]:hide();return
- if game.mode=="descent":hide();return
+ if game.mode=="descent" or (game.mode=="coop" and game.realm_id=="wayfarer"):hide();return
  if game.mode=="coop" and game.realm_id in ["moonveil","silverfall"]:hide();return
  visible=game.started and not game.spectating() and not (game.session_menu!=null and game.session_menu.page in ["main","clear","options"])
  if not visible:return

@@ -577,12 +577,12 @@ func receive_net(data:Dictionary)->void:
    client_perf.work("snapshot_apply",Time.get_ticks_usec()-apply_began)
    if not own.is_empty():
     var point=Vector2(float(own.pos[0]),float(own.pos[1]))
-    var travelling=bool(own.get("charging",false)) or bool(own.get("stance_moving",false))
+    var travelling=bool(own.get("charging",false)) or bool(own.get("stance_moving",false)) or adventure.combat.events.slides.has(my_id)
     if bool(own.get("charging",false)):
      local_pos=point;positions[my_id]=point;pending_correction=Vector2.ZERO
     if received_point_ready and last_received_point.distance_to(point)>160 or before_ability_hp<=0 and int(own.get("hp",0))>0:
      ability_view.reset();local_view.reset(local_pos)
-    else:ability_view.receive(travelling,before_ability_draw,point,_charge_view_speed() if bool(own.get("charging",false)) else 0)
+    else:ability_view.receive(travelling,before_ability_draw,point,_charge_view_speed() if bool(own.get("charging",false)) else 410.0 if adventure.combat.events.slides.has(my_id) else 0)
     last_received_point=point;received_point_ready=true
    shots_view.path_clear=Callable(self,"_clear_path");shots_view.local_owner=my_id;shots_view.latency=float(metrics.rtt_ms)/1000.0
   "input_resync":
@@ -694,10 +694,10 @@ func _process(delta:float)->void:
  missiles.assign(shots_view.samples(Time.get_ticks_msec()/1000.0))
  for shot in render_shots:
   if str(shot.owner)!=my_id and not bool(shot.get("custom",false)):missiles.append({"pos":shot.draw_pos,"owner":shot.owner,"color":shot.color})
- adventure.combat.held_cast.local_input(delta,not descent.falling() and not descent.resting() and not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
- if not descent.falling() and not descent.resting() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
+ adventure.combat.held_cast.local_input(delta,session_menu.page.is_empty() and not fishing.busy() and not descent.falling() and not descent.resting() and not arena_world.shatter.active() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and Time.get_ticks_msec()-last_state_at<400)
+ if session_menu.page.is_empty() and not descent.falling() and not descent.resting() and net_ready and shop_open.is_empty() and presentation.page.is_empty() and not fishing.busy() and Time.get_ticks_msec()-last_state_at<400:
   if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):_attack_request("primary")
-  if Input.is_action_pressed("secondary"):_attack_request("secondary")
+  if (Input.is_action_just_pressed("secondary") if str(characters.get(selected_hero,{}).get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard"] else Input.is_action_pressed("secondary")):_attack_request("secondary")
   if Input.is_action_just_pressed("special"):_attack_request("special")
  _refresh_draw_camera()
  _sync_dash_view(delta)
@@ -768,8 +768,9 @@ func _physics_process(_delta:float)->void:
  var direction:Vector2=mobile.movement if mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
  if not presentation.page.is_empty() or not shop_open.is_empty() or fishing.busy():direction=Vector2.ZERO
  var aim:Vector2=mobile.aim if mobile.enabled else (media_mouse_world()-local_pos).normalized()
- if arena_world.shatter.active() and Input.is_action_just_pressed("dodge"):arena_world.shatter.request("secondary")
- if not arena_world.shatter.active() and Input.is_action_just_pressed("dodge") and Move.movable(self,my_id) and Time.get_ticks_msec()>=int(dodge_at.get(my_id,0)):
+ var dodge_pressed: bool = mobile.take_dodge() or Input.is_action_just_pressed("dodge")
+ if arena_world.shatter.active() and dodge_pressed:arena_world.shatter.request("secondary")
+ if not arena_world.shatter.active() and dodge_pressed and not adventure.combat.events.clamped(my_id) and Move.movable(self,my_id) and Time.get_ticks_msec()>=int(dodge_at.get(my_id,0)):
   var dash_direction=direction.normalized() if not direction.is_zero_approx() else aim
   net_dash[my_id]={"time":.26,"direction":dash_direction};dodge_at[my_id]=Time.get_ticks_msec()+2500
   _send_channel(host_id,{"type":"dodge","direction":[dash_direction.x,dash_direction.y]})

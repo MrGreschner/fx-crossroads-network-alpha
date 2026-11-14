@@ -1,0 +1,405 @@
+{
+  "errors": [],
+  "reports": [
+    {
+      "states": 264,
+      "acks": 12,
+      "accepted": 10,
+      "closed": 0,
+      "damageSnapshots": 183,
+      "welcome": {
+        "id": "fbfa2d21aaaf4b9d",
+        "build": "T4",
+        "protocol": 3
+      },
+      "latest": {
+        "authority_hz": 60,
+        "buffer_holds": 18,
+        "buffer_ms": 106.293053501489,
+        "build": "T4.2",
+        "clock_resyncs": 3,
+        "confirmed_damage_events": 24,
+        "disconnect_reason": "",
+        "fps": 15,
+        "max_handoff_error_px": 0,
+        "max_world_backlog_ms": 300,
+        "prediction_queue": 8,
+        "projectile_confirmations": 39,
+        "projectile_handoffs": 7,
+        "protocol": 3,
+        "recent_hit_events": [
+          {
+            "amount": 5,
+            "tick": 432,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 432,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 435,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 441,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 477,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 477,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 486,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 489,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 525,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 528,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 540,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 543,
+            "victim": "79c73e8fc13fb2e9"
+          }
+        ],
+        "rtt_ms": 80,
+        "simulation_ms": 1.233,
+        "snapshot_ms": 1.121,
+        "state_age_ms": 2,
+        "wire_bytes": 328028,
+        "jsHeapBytes": 199000000
+      },
+      "players": {
+        "79c73e8fc13fb2e9": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {
+            "attack": "Bullet Seed",
+            "kind": "hero",
+            "name": "Sunpetal",
+            "player": "Tester",
+            "sprite": "sunflower"
+          },
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "ram",
+          "hp": 120,
+          "invincible": 0,
+          "items": [],
+          "kills": 0,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            480,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 784,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 1,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        },
+        "fbfa2d21aaaf4b9d": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {},
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "sunflower",
+          "hp": 100,
+          "invincible": 0,
+          "items": [],
+          "kills": 1,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            1314.5,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 772,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 0,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        }
+      }
+    },
+    {
+      "states": 264,
+      "acks": 14,
+      "accepted": 11,
+      "closed": 0,
+      "damageSnapshots": 183,
+      "welcome": {
+        "id": "79c73e8fc13fb2e9",
+        "build": "T4",
+        "protocol": 3
+      },
+      "latest": {
+        "authority_hz": 60,
+        "buffer_holds": 20,
+        "buffer_ms": 84.9748791660012,
+        "build": "T4.2",
+        "clock_resyncs": 0,
+        "confirmed_damage_events": 24,
+        "disconnect_reason": "",
+        "fps": 11,
+        "max_handoff_error_px": 0,
+        "max_world_backlog_ms": 250,
+        "prediction_queue": 11,
+        "projectile_confirmations": 0,
+        "projectile_handoffs": 0,
+        "protocol": 3,
+        "recent_hit_events": [
+          {
+            "amount": 5,
+            "tick": 423,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 432,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 432,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 438,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 477,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 477,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 483,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 492,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 528,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 531,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 540,
+            "victim": "79c73e8fc13fb2e9"
+          },
+          {
+            "amount": 5,
+            "tick": 543,
+            "victim": "79c73e8fc13fb2e9"
+          }
+        ],
+        "rtt_ms": 138,
+        "simulation_ms": 1.497,
+        "snapshot_ms": 1.433,
+        "state_age_ms": 3,
+        "wire_bytes": 316240,
+        "jsHeapBytes": 199000000
+      },
+      "players": {
+        "79c73e8fc13fb2e9": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {
+            "attack": "Bullet Seed",
+            "kind": "hero",
+            "name": "Sunpetal",
+            "player": "Tester",
+            "sprite": "sunflower"
+          },
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "ram",
+          "hp": 120,
+          "invincible": 0,
+          "items": [],
+          "kills": 0,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            480,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 784,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 1,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        },
+        "fbfa2d21aaaf4b9d": {
+          "branch": "",
+          "build": {},
+          "charging": false,
+          "cooldowns": {
+            "primary": 0,
+            "secondary": 0,
+            "special": 0
+          },
+          "cosmetic": {
+            "balanced": false,
+            "custom": false
+          },
+          "dash": [
+            0,
+            0,
+            0
+          ],
+          "defeat": {},
+          "food": "",
+          "food_ready": false,
+          "gold": 100,
+          "haste": 0,
+          "haste_scale": 1.35,
+          "hero": "sunflower",
+          "hp": 100,
+          "invincible": 0,
+          "items": [],
+          "kills": 1,
+          "level": 10,
+          "mastery": "",
+          "pos": [
+            1314.5,
+            900
+          ],
+          "pose": 0,
+          "position_ack": 772,
+          "shield": 0,
+          "shield_reduction": 0.75,
+          "stance_moving": false,
+          "stealth": 0,
+          "team": 0,
+          "velocity": [
+            0,
+            0
+          ],
+          "xp": 0
+        }
+      }
+    }
+  ]
+}

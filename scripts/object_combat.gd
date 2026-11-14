@@ -6,6 +6,7 @@ var feedback:Node
 var v112:Node
 var v110:Node
 var halloween:Node
+var events:Node
 var held_cast:Node
 var twister:Node
 var v98:Node
@@ -70,6 +71,7 @@ func _ready()->void:
 	feedback=preload("res://scripts/combat_feedback.gd").new();add_child(feedback);feedback.combat=self
 	v112=preload("res://scripts/v112_combat.gd").new();add_child(v112);v112.combat=self
 	v110=preload("res://scripts/v110_combat.gd").new();add_child(v110);v110.combat=self
+	events=preload("res://scripts/event_combat334.gd").new();add_child(events);events.combat=self
 	halloween=preload("res://scripts/halloween_combat.gd").new();add_child(halloween);halloween.combat=self
 	held_cast=preload("res://scripts/held_cast.gd").new();add_child(held_cast);held_cast.combat=self
 	twister=preload("res://scripts/twister_combat.gd").new();add_child(twister);twister.combat=self
@@ -111,6 +113,7 @@ func setup(id:String)->void:
 	v112.reset()
 	v110.reset()
 	halloween.reset()
+	events.reset()
 	held_cast.reset()
 	twister.reset()
 	v98.reset()
@@ -287,6 +290,8 @@ func speed_factor(key:String)->float:
 	if stunned(key):return 0
 	var factor:=float(statuses.get(key,{}).get("slow",{}).get("value",.55)) if effect_time(key,"slow")>0 else 1.0
 	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.85 if twister.charges.has(key.substr(2)) else .65 if casts.any(func(e):return str(e.owner)==key.substr(2) and str(e.style)=="charged_beam") else .45
+	factor*=events.speed_factor(key)
+	if effect_time(key,"event_haste")>0:factor*=1.2
 	if effect_time(key,"scout_stride")>0:factor*=float(statuses[key].scout_stride.value)
 	if effect_time(key,"rune_stride")>0:factor*=1.3
 	if key.begins_with("p:") and robot.transformed(key.substr(2)):factor*=.42
@@ -307,6 +312,7 @@ func reduction(id:String)->float:
 	base=base+(1-base)*v98.defence(id)
 	base=base+(1-base)*v48.defence(id)
 	base=base+(1-base)*v90.defence(id)
+	base=base+(1-base)*events.defence(id)
 	return base+(1-base)*robot.reduction(id)
 func display_reduction(id:String)->float:
 	var g:Node=adventure.game;var remain:=1.0-reduction(id)
@@ -377,6 +383,7 @@ func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
 	if held_cast.cast(owner,stats,aim,amount):return true
 	if v112.cast(owner,stats,aim,amount):return true
 	if v110.cast(owner,stats,aim,amount):return true
+	if events.cast(owner,stats,aim,amount):return true
 	if halloween.cast(owner,stats,aim,amount):return true
 	if twister.cast(owner,stats,aim,amount):return true
 	if v98.cast(owner,stats,aim,amount):return true
@@ -618,6 +625,7 @@ func step(delta:float)->void:
 	v112.step(delta)
 	v110.step(delta)
 	halloween.step(delta)
+	events.step(delta)
 	held_cast.step(delta)
 	twister.step(delta)
 	v98.step(delta)
@@ -830,6 +838,8 @@ func step_projectiles(delta:float)->void:
 			projectiles.remove_at(i)
 			var center:=vec(shot["pos"]);var owner:=str(shot["owner"])
 			if impact.is_empty() or blocked:adventure.immersive.marsh_encounters.impact(shot,"",center,false)
+			if not impact.is_empty() and not blocked and str(shot["style"])=="gift_toss" and passive(owner,"gift_wrap"):
+				events.gifts[owner]=mini(3,int(events.gifts.get(owner,0))+1)
 			match str(shot["style"]):
 				"rolling_snow":
 					var blast:=70+ratio*55;var amount:=float(shot["damage"])+ratio*36
@@ -905,12 +915,13 @@ func indicators()->Array:
 			if effect_time(key,kind)>0:flags.append(kind)
 		if not flags.is_empty():result.append({"key":str(key),"pos":point_array(target["pos"]),"flags":flags})
 	return result
-func snapshot()->Dictionary:return {"combo215":polish.combos,"golf":golf.balls,"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
+func snapshot()->Dictionary:return {"combo215":polish.combos,"golf":golf.balls,"starfield":starfield.marks,"held_cast":held_cast.snapshot(),"v112":v112.snapshot(),"v110":v110.snapshot(),"events334":events.snapshot(),"halloween":halloween.snapshot(),"twister":twister.snapshot(),"v98":v98.snapshot(),"v90":v90.snapshot(),"stance_heroes":stance_heroes.snapshot(),"party_heroes":party_heroes.snapshot(),"release_heroes":release_heroes.snapshot(),"mantis":mantis.snapshot(),"morrow":morrow.snapshot(),"confluence":confluence.snapshot(),"v79":v79.snapshot(),"v78":v78.snapshot(),"v75":v75.snapshot(),"chronicle":chronicle.snapshot(),"mastery_combat":mastery_combat.snapshot(),"pact":pact.snapshot(),"agent":agent.snapshot(),"ninja":ninja.snapshot(),"v59":v59.snapshot(),"v58":v58.snapshot(),"v56":v56.snapshot(),"fern":fern.snapshot(),"robot":robot.snapshot(),"v48":v48.snapshot(),"runebearer":runebearer.snapshot(),"classics":classics.snapshot(),"chain":chain.snapshot(),"courier":courier.snapshot(),"variants":variants.snapshot(),"mines":mines,"orbits":orbits,"vortices":vortices,"statuses":statuses,"projectiles":projectiles,"rings":rings,"casts":casts,"auras":auras,"anchors":anchors,"wires":wires,"pools":pools,"visuals":visuals,"indicators":indicators(),"coast":coast.snapshot()}
 func receive(data:Dictionary)->void:
 	golf.balls=data.get("golf",[]).duplicate(true)
 	starfield.marks=data.get("starfield",{})
 	v112.receive(data.get("v112",{}))
 	v110.receive(data.get("v110",{}))
+	events.receive(data.get("events334",{}))
 	halloween.receive(data.get("halloween",{}))
 	held_cast.receive(data.get("held_cast",{}))
 	twister.receive(data.get("twister",{}))
@@ -955,6 +966,7 @@ func _draw_on_measured(canvas:Node2D,camera:Vector2)->void:
 	v112.draw_on(canvas,camera)
 	v110.draw_on(canvas,camera)
 	halloween.draw_on(canvas,camera)
+	events.draw_on(canvas,camera)
 	held_cast.draw_on(canvas,camera)
 	twister.draw_on(canvas,camera)
 	v98.draw_on(canvas,camera)
@@ -1176,6 +1188,7 @@ func _draw_projectile_measured(canvas:Node2D,shot:Dictionary,camera:Vector2)->vo
 	if not bool(shot.get("net_rendered",false)) and not adventure.authoritative() and adventure.game.get("net_ready")==true:point+=vec(shot["aim"])*float(shot.get("speed",0))*clampf((Time.get_ticks_msec()-received_at)/1000.0,0,.12)
 	if adventure.arcade and adventure.game.has_method("object_projectile_display"):point=adventure.game.object_projectile_display(shot,point+camera)-camera
 	if not preload("res://scripts/combat_cues.gd").visible(canvas,point,maxf(radius,48)):return
+	if preload("res://scripts/event_effects343.gd").projectile(canvas,point,vec(shot.aim),str(shot.get("stats",{}).get("style",""))):return
 	if preload("res://scripts/descent203_art.gd").spell(canvas,shot,point,clock):return
 	if preload("res://scripts/lantern_marsh_encounters.gd").draw_projectile(canvas,shot,point,clock):return
 	if preload("res://scripts/silverfall_art.gd").draw_bolt(canvas,shot,point,clock):return

@@ -1,0 +1,243 @@
+{
+  "baseline": {
+    "done": true,
+    "phases": [
+      {
+        "balanced": true,
+        "draw_calls": 938,
+        "frame_median_ms": 36,
+        "frame_p95_ms": 46.3,
+        "primitives": 27882,
+        "profile": {
+          "actors_effects_draw": {
+            "max_ms": 5.1,
+            "median_ms": 1,
+            "p95_ms": 2.1,
+            "samples": 60
+          },
+          "adventure_draw": {
+            "max_ms": 14.2,
+            "median_ms": 6.1,
+            "p95_ms": 11.3,
+            "samples": 60
+          },
+          "combat_draw": {
+            "max_ms": 14.1,
+            "median_ms": 6,
+            "p95_ms": 11.1,
+            "samples": 60
+          },
+          "draw_commands": {
+            "max_ms": 15.9,
+            "median_ms": 8.1,
+            "p95_ms": 13.1,
+            "samples": 60
+          },
+          "hud_draw": {
+            "max_ms": 4.1,
+            "median_ms": 0.3,
+            "p95_ms": 0.4,
+            "samples": 60
+          },
+          "world_draw": {
+            "max_ms": 2.6,
+            "median_ms": 0.3,
+            "p95_ms": 0.5,
+            "samples": 60
+          }
+        }
+      }
+    ],
+    "pool_count": 48,
+    "state_unchanged": true
+  },
+  "candidate": {
+    "done": true,
+    "phases": [
+      {
+        "balanced": true,
+        "draw_calls": 92,
+        "frame_median_ms": 20.2,
+        "frame_p95_ms": 25.8,
+        "ground_effects": {
+          "culled": 32,
+          "drawn": 24,
+          "magma": 16,
+          "poison": 8,
+          "shadows": 3
+        },
+        "primitives": 3760,
+        "profile": {
+          "actors_effects_draw": {
+            "max_ms": 4.6,
+            "median_ms": 0.9,
+            "p95_ms": 2.6,
+            "samples": 60
+          },
+          "adventure_draw": {
+            "max_ms": 5.4,
+            "median_ms": 1.8,
+            "p95_ms": 5.1,
+            "samples": 60
+          },
+          "combat_draw": {
+            "max_ms": 5.3,
+            "median_ms": 1.7,
+            "p95_ms": 5,
+            "samples": 60
+          },
+          "draw_commands": {
+            "max_ms": 7.2,
+            "median_ms": 3.4,
+            "p95_ms": 6.9,
+            "samples": 60
+          },
+          "ground_family_draw": {
+            "max_ms": 4.5,
+            "median_ms": 1,
+            "p95_ms": 4.3,
+            "samples": 60
+          },
+          "hud_draw": {
+            "max_ms": 3.2,
+            "median_ms": 0.3,
+            "p95_ms": 2.3,
+            "samples": 60
+          },
+          "world_draw": {
+            "max_ms": 0.7,
+            "median_ms": 0.3,
+            "p95_ms": 0.5,
+            "samples": 60
+          }
+        }
+      },
+      {
+        "balanced": false,
+        "draw_calls": 394,
+        "frame_median_ms": 25.8,
+        "frame_p95_ms": 32.2,
+        "ground_effects": {
+          "culled": 0,
+          "drawn": 0,
+          "magma": 0,
+          "poison": 0,
+          "shadows": 0
+        },
+        "primitives": 13226,
+        "profile": {
+          "actors_effects_draw": {
+            "max_ms": 2.2,
+            "median_ms": 1,
+            "p95_ms": 1.4,
+            "samples": 60
+          },
+          "adventure_draw": {
+            "max_ms": 9,
+            "median_ms": 3.1,
+            "p95_ms": 7.1,
+            "samples": 60
+          },
+          "combat_draw": {
+            "max_ms": 9,
+            "median_ms": 3,
+            "p95_ms": 7.1,
+            "samples": 60
+          },
+          "draw_commands": {
+            "max_ms": 12,
+            "median_ms": 4.8,
+            "p95_ms": 8.7,
+            "samples": 60
+          },
+          "ground_family_draw": {
+            "max_ms": 6.7,
+            "median_ms": 2.1,
+            "p95_ms": 5.9,
+            "samples": 60
+          },
+          "hud_draw": {
+            "max_ms": 3.4,
+            "median_ms": 0.2,
+            "p95_ms": 0.3,
+            "samples": 60
+          },
+          "world_draw": {
+            "max_ms": 0.5,
+            "median_ms": 0.3,
+            "p95_ms": 0.5,
+            "samples": 60
+          }
+        }
+      },
+      {
+        "balanced": true,
+        "draw_calls": 92,
+        "frame_median_ms": 19.5,
+        "frame_p95_ms": 24,
+        "ground_effects": {
+          "culled": 32,
+          "drawn": 24,
+          "magma": 16,
+          "poison": 8,
+          "shadows": 3
+        },
+        "primitives": 3760,
+        "profile": {
+          "actors_effects_draw": {
+            "max_ms": 1.3,
+            "median_ms": 0.8,
+            "p95_ms": 1.1,
+            "samples": 60
+          },
+          "adventure_draw": {
+            "max_ms": 5.3,
+            "median_ms": 1.7,
+            "p95_ms": 4,
+            "samples": 60
+          },
+          "combat_draw": {
+            "max_ms": 5.2,
+            "median_ms": 1.6,
+            "p95_ms": 3.7,
+            "samples": 60
+          },
+          "draw_commands": {
+            "max_ms": 6.9,
+            "median_ms": 3.1,
+            "p95_ms": 6.8,
+            "samples": 60
+          },
+          "ground_family_draw": {
+            "max_ms": 4.5,
+            "median_ms": 0.9,
+            "p95_ms": 3.1,
+            "samples": 60
+          },
+          "hud_draw": {
+            "max_ms": 3.7,
+            "median_ms": 0.2,
+            "p95_ms": 0.5,
+            "samples": 60
+          },
+          "world_draw": {
+            "max_ms": 0.4,
+            "median_ms": 0.3,
+            "p95_ms": 0.4,
+            "samples": 60
+          }
+        }
+      }
+    ],
+    "pool_count": 48,
+    "state_unchanged": true
+  },
+  "comparison": {
+    "baseline_draw_median_ms": 8.1,
+    "candidate_balanced_draw_medians_ms": [
+      3.4,
+      3.1
+    ],
+    "software_renderer": true
+  }
+}

@@ -90,8 +90,11 @@ func launch()->void:
  game.message="MISTGLASS RIFT • defeat your selected echoes";game.message_time=5
 func step(delta:float)->void:
  if not active:return
+ var lodge:bool=game.lodges!=null and game.lodges.active
+ var movement:Rect2=game.lodges.trial_bounds().grow(-18) if lodge else Rect2(Vector2(70,220),game.VIEW-Vector2(140,285))
+ var shots:Rect2=game.lodges.trial_bounds().grow(45) if lodge else Rect2(45,190,game.VIEW.x-90,game.VIEW.y-235)
  for n in range(game.enemy_shots.size()-1,-1,-1):
-  if not Rect2(45,190,game.VIEW.x-90,game.VIEW.y-235).has_point(game.enemy_shots[n].pos):game.enemy_shots.remove_at(n)
+  if not shots.has_point(game.enemy_shots[n].pos):game.enemy_shots.remove_at(n)
  step_lobs(delta)
  if not active:return
  for index in game.enemies.size():
@@ -103,7 +106,7 @@ func step(delta:float)->void:
   var diff:Vector2=target-foe.pos;var distance=diff.length();var behavior=str(d.get("behaviour","melee"));var ranged=game.adventure.combat.ranged_enemy(foe,d)
   var direction=game.adventure.combat.ranged_direction(foe,target) if ranged else diff.normalized()
   game.move_enemy_around_obstacles(foe,direction*float(d.get("speed",90))*game.adventure.combat.speed_factor(key)*delta,bool(d.get("flying",false)))
-  foe.pos=foe.pos.clamp(Vector2(70,220),game.VIEW-Vector2(70,65))
+  foe.pos=foe.pos.clamp(movement.position,movement.end)
   foe.attack_timer=maxf(0,float(foe.attack_timer)-delta);foe.secondary_timer=maxf(0,float(foe.secondary_timer)-delta)
   if behavior=="summoner" and foe.secondary_timer<=0 and game.enemies.size()<16:
    foe.secondary_timer=float(d.get("summon_cooldown",7))
@@ -111,7 +114,7 @@ func step(delta:float)->void:
    for n in 2:
     if game.enemies.size()>=16:break
     var hp=float(child_def.get("health",35))
-    game.enemies.append({"uid":game.next_enemy_uid,"type":str(d.get("summon_type","bramble")),"name":str(child_def.get("name","Echo minion")),"sprite":str(child_def.get("sprite","bramble")),"pos":(foe.pos+Vector2(50 if n==0 else -50,30)).clamp(Vector2(70,220),game.VIEW-Vector2(70,65)),"hp":hp,"max_hp":hp,"boss":false,"rift":true,"summoned":true,"rift_definition":child_def,"rift_secondary":"stomp","attack_timer":1.2,"secondary_timer":5.0,"windup":0.0,"strike_flash":0.0});game.next_enemy_uid+=1
+    game.enemies.append({"uid":game.next_enemy_uid,"type":str(d.get("summon_type","bramble")),"name":str(child_def.get("name","Echo minion")),"sprite":str(child_def.get("sprite","bramble")),"pos":(foe.pos+Vector2(50 if n==0 else -50,30)).clamp(movement.position,movement.end),"hp":hp,"max_hp":hp,"boss":false,"rift":true,"summoned":true,"rift_definition":child_def,"rift_secondary":"stomp","attack_timer":1.2,"secondary_timer":5.0,"windup":0.0,"strike_flash":0.0});game.next_enemy_uid+=1
   if "heal" in str(d.get("custom_attack","")) and foe.secondary_timer<=0:
    foe.secondary_timer=5
    for friend in game.enemies:
@@ -175,33 +178,30 @@ func finish(won:bool,abandoned:bool=false)->void:
  game.presentation.button(game.presentation.content,"Replay this battle",func():game.presentation.close();launch())
  game.presentation.button(game.presentation.content,"Change the enemy lineup",open)
  game.presentation.button(game.presentation.content,"Explore town",game.presentation.close)
+const FLOOR_ART = "res://assets/mistglass341/spiral.webp"
+var floor_texture: Texture2D
+
+func draw_floor(c:Node2D,camera:Vector2)->void:
+ if floor_texture == null:
+  var floor_image := Image.new()
+  if floor_image.load_webp_from_buffer(FileAccess.get_file_as_bytes(FLOOR_ART)) == OK:
+   floor_texture = ImageTexture.create_from_image(floor_image)
+ var view:Vector2 = game.VIEW
+ var arena := Rect2(Vector2(0,150)-camera,Vector2(view.x,maxf(1,view.y-150)))
+ c.draw_rect(Rect2(-camera,view),Color("#19282f"))
+ if floor_texture != null:
+  c.draw_texture_rect(floor_texture,arena,false)
+ var tint := Color("#b8d7d9")
+ for i in 6:
+  var side := -1 if i%2==0 else 1
+  var phase: float = game.visual_clock*.22+i*1.7
+  var pos := Vector2(-camera.x+view.x*.5+side*view.x*(.44+.018*sin(phase)),arena.get_center().y+sin(phase*.65)*arena.size.y*.37)
+  var length := 26.0+float(i%3)*10.0
+  c.draw_line(pos,pos+Vector2(side*length,4),Color(tint,.045+.025*sin(phase)),3,true)
+
 func draw_on(c:Node2D,camera:Vector2)->void:
  if not active:return
  if game.lodges!=null and game.lodges.active:game.lodges.draw_map(c,camera);return
- var view:Vector2=game.VIEW
- var center=Vector2(view.x*.5,(view.y+170)*.5)-camera
- c.draw_rect(Rect2(-camera,view),Color("#132d3b"))
- var oval=PackedVector2Array()
- for n in 65:
-  var a=n*TAU/64;oval.append(center+Vector2(cos(a)*(view.x*.47),sin(a)*(view.y-185)*.46))
- c.draw_colored_polygon(oval,Color("#2c4552"));c.draw_polyline(oval,Color("#668e98"),5,true)
- for ring in [0,1]:
-  var outline=PackedVector2Array()
-  for n in 49:
-   var a=n*TAU/48;outline.append(center+Vector2(cos(a)*(view.x*.4-ring*35),sin(a)*(view.y-220)*.38-ring*15))
-  c.draw_polyline(outline,Color(.55,.8,.84,.13),1.5,true)
- for n in 12:
-  var a=n*TAU/12;var p=center+Vector2(cos(a)*view.x*.39,sin(a)*(view.y-220)*.38)
-  c.draw_arc(p,6,0,PI*1.6,8,Color("#93b9ad"),1.2,true);c.draw_line(p-Vector2(0,9),p-Vector2(0,15),Color("#b4c7a8"),1.2,true)
- for n in 18:
-  var p=Vector2(70+posmod(n*127,int(view.x-140)),210+posmod(n*83,int(maxf(100,view.y-290))))-camera
-  c.draw_line(p,p+Vector2(21,6),Color(.52,.65,.66,.12),1)
- # Flowing mist and rising motes replace the digital grid.
- for n in 8:
-  var p=center+Vector2(sin(game.visual_clock*.15+n*1.9)*view.x*.37,cos(game.visual_clock*.2+n)*90)
-  c.draw_arc(p,35+n*5,0,PI,16,Color(.5,.8,.84,.07),7,true)
- for p in [Vector2(60,205),Vector2(view.x-60,205),Vector2(60,view.y-50),view-Vector2(60,50)]:
-  var q:Vector2=p-camera;c.draw_circle(q,20,Color(.35,.8,.9,.10));c.draw_arc(q,15,game.visual_clock*.2,game.visual_clock*.2+TAU*.8,24,Color("#7bc4c5"),2,true)
  for shot in lobs:
   var progress=clampf(float(shot.age)/float(shot.flight),0,1);var point:Vector2=shot.start.lerp(shot.target,progress)-Vector2(0,sin(progress*PI)*110)
   c.draw_circle(shot.target-camera,shot.radius,Color(Color(shot.color),.15));c.draw_arc(shot.target-camera,shot.radius,0,TAU,24,Color(shot.color),2);c.draw_circle(point-camera,10,Color(shot.color));c.draw_circle(point-camera,4,Color.WHITE)
@@ -210,7 +210,7 @@ func draw_on(c:Node2D,camera:Vector2)->void:
 func _process(delta:float)->void:
  if not is_instance_valid(end_button):build_end_button()
  end_button.visible=active and not (game.lodges!=null and game.lodges.active)
- if active:
+ if active and not game.lodges.active:
   end_button.position=Vector2(game.VIEW.x-204,104)
   game.region.size=[game.VIEW.x,game.VIEW.y]
   game.position_in_world=game.position_in_world.clamp(Vector2(65,220),game.VIEW-Vector2(65,65))
@@ -220,7 +220,7 @@ func _process(delta:float)->void:
  if is_instance_valid(panel):
   var view=get_viewport().get_visible_rect().size;var fit=minf(1,minf((view.x-20)/1100,(view.y-20)/670));panel.scale=Vector2.ONE*fit;panel.position=(view-Vector2(1100,670)*fit)*.5
  if active and game.menu=="rift_countdown":
-  countdown=maxf(0,countdown-delta);game.message="RIFT OPENS IN "+str(int(ceil(countdown)));game.message_time=1
+  countdown=maxf(0,countdown-delta);game.message=("CHALLENGE STARTS IN " if game.lodges.active else "RIFT OPENS IN ")+str(int(ceil(countdown)));game.message_time=1
   if countdown<=0:game.menu="";game.message="" if game.lodges.active else "MISTGLASS RIFT • defeat your selected echoes";game.message_time=0 if game.lodges.active else 4;game.mobile.reset_controls()
 func _unhandled_input(event:InputEvent)->void:
  if is_instance_valid(panel) and event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:close();get_viewport().set_input_as_handled()

@@ -6,6 +6,7 @@ var arcade:=false
 var panel:Control
 var feedback:Control
 var modal:PanelContainer
+const DIALOGUE_SIZE=Vector2(510,355)
 var content:VBoxContainer
 var mute:Button
 var skip:Button
@@ -20,8 +21,6 @@ var rings:Array=[]
 var before:Dictionary={}
 var before_town:Dictionary={}
 var last_result:=""
-var pending_skill=""
-var unlock_until=0.0
 var unlock_buttons:Array=[]
 var read_until=0.0
 func setup(owner:Node,multi:bool)->void:
@@ -43,7 +42,7 @@ func style_button(b:Button)->void:preload("res://scripts/top_button_style.gd").a
 func button(parent:Node,value:String,action:Callable)->Button:
  var b:=Button.new();b.text=value;b.custom_minimum_size.y=46;b.add_theme_font_size_override("font_size",18);b.pressed.connect(action);style_button(b);b.focus_mode=Control.FOCUS_ALL;parent.add_child(b);return b
 func close()->void:
- pending_skill="";unlock_buttons.clear()
+ unlock_buttons.clear()
  if is_instance_valid(modal):modal.hide();modal.queue_free();modal=null
  if not arcade and game.menu=="presentation":game.menu=""
  page="";game.mobile.reset_controls()
@@ -53,7 +52,9 @@ func window(title:String,kind:String)->void:
  game.mobile.reset_controls()
  modal=PanelContainer.new();modal.position=Vector2(105,65);modal.size=Vector2(1070,590);panel.add_child(modal)
  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#112b34");skin.border_color=Color("#c6af79");skin.set_border_width_all(2);skin.set_corner_radius_all(14);skin.content_margin_left=24;skin.content_margin_right=24;skin.content_margin_top=20;skin.content_margin_bottom=20;modal.add_theme_stylebox_override("panel",skin)
- var col:=VBoxContainer.new();col.add_theme_constant_override("separation",12);modal.add_child(col);label(col,title,30).modulate=Color("#ecd6a0")
+ var col:=VBoxContainer.new();col.add_theme_constant_override("separation",12);modal.add_child(col)
+ if kind=="town_conversation":modal.size=DIALOGUE_SIZE
+ else:label(col,title,30).modulate=Color("#ecd6a0")
  var scroll:=ScrollContainer.new();preload("res://scripts/touch_list_scroll.gd").attach(scroll);scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
  content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_theme_constant_override("separation",14);scroll.add_child(content)
  if kind=="results":
@@ -73,13 +74,17 @@ func window(title:String,kind:String)->void:
   if not arcade or not game.has_method("return_to_network_menu"):button(footer,"Back to town",func():
    if arcade:game._town()
    else:return_to_town())
- elif kind=="skill_unlock":button(col,"Got it — continue training",close)
- elif kind not in ["unlock_celebration","elder_guidance"]:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
+ elif kind=="skill_unlock":button(col,"Continue training",close)
+ elif kind=="town_conversation":
+  var back:=button(col,"Close",close)
+  back.size_flags_horizontal=Control.SIZE_SHRINK_END
+  back.custom_minimum_size=Vector2(92,42)
+ elif kind not in ["elder_guidance"]:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
 func _unhandled_input(event:InputEvent)->void:
  if not event is InputEventKey or not event.pressed or event.echo:return
  if page=="starter" and event.keycode>=KEY_1 and event.keycode<=KEY_9:
   var id:String=str(game.manifest.characters[event.keycode-KEY_1]);close();game.tutorial.start(id);get_viewport().set_input_as_handled();return
- if page=="unlock_celebration" or page=="skill_unlock" and clock<read_until:return
+ if page=="skill_unlock" and clock<read_until:return
  if event.keycode==KEY_ESCAPE and not page.is_empty():
   if page=="starter":skip_intro()
   elif page=="results" and not arcade:return_to_town()
@@ -95,8 +100,6 @@ func _process(delta:float)->void:
  if not arcade and game.get_tree().root.has_meta("fx_inspect_hero"):
   var hero_id:String=str(game.get_tree().root.get_meta("fx_inspect_hero"));game.get_tree().root.remove_meta("fx_inspect_hero");asked=true;game.legacy.open_hero(hero_id)
  clock+=delta
- if page=="unlock_celebration" and clock>=unlock_until and not pending_skill.is_empty():
-  var kind=pending_skill;pending_skill="";show_skill_unlock(kind)
  if page=="skill_unlock" and clock>=read_until and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
   for item in unlock_buttons:
    if is_instance_valid(item):item.disabled=false
@@ -107,8 +110,9 @@ func _process(delta:float)->void:
   adventure_button.visible=game.mode=="town" and game.menu.is_empty();preload("res://scripts/town_top_bar.gd").place(adventure_button,"adventures",get_viewport().get_visible_rect().size)
  if is_instance_valid(modal):
   var view:=get_viewport().get_visible_rect().size
-  var fit:=minf(1,minf((view.x-24)/1070,(view.y-24)/590))
-  modal.scale=Vector2.ONE*fit;modal.position=(view-Vector2(1070,590)*fit)*.5
+  var base:=DIALOGUE_SIZE if page=="town_conversation" else Vector2(1070,590)
+  var fit:=minf(1,minf((view.x-24)/base.x,(view.y-24)/base.y))
+  modal.scale=Vector2.ONE*fit;modal.position=(view-base*fit)*.5
  if not arcade and not game.has_node("FXIntro") and not get_tree().root.has_meta("fx_show_main") and game.menu.is_empty() and game.session_menu.page.is_empty():
   asked=true
   if game.mode=="town" and get_tree().root.has_meta("fx_start_tutorial"):
@@ -127,36 +131,100 @@ func starter()->void:
  var grid:=GridContainer.new();grid.columns=3;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",12);content.add_child(grid)
  for id in game.manifest.characters.slice(0,9):
   var b:=button(grid,str(game.characters[id].name)+"\n"+starter_role(str(id)),func():close();game.tutorial.start(str(id)))
-  b.custom_minimum_size=Vector2(325,88);b.icon=game.art.get(str(game.characters[id].get("sprite",id))+"_idle");b.expand_icon=true;b.add_theme_constant_override("icon_max_width",50);b.tooltip_text=str(game.characters[id].primary.get("description",game.characters[id].primary.get("name","Primary attack")))
+  b.custom_minimum_size=Vector2(325,88);b.icon=starter_portrait(str(id),64);b.expand_icon=true;b.add_theme_constant_override("icon_max_width",64);b.tooltip_text=str(game.characters[id].primary.get("description",game.characters[id].primary.get("name","Primary attack")))
+func starter_portrait(id:String,side:int)->Texture2D:
+ var sprite:=str(game.characters[id].get("sprite",id))
+ var texture:Texture2D=game.art.get(sprite+"_idle")
+ if texture==null:return null
+ var pixels:=texture.get_image()
+ if pixels==null:return null
+ if pixels.is_compressed() and pixels.decompress()!=OK:return texture
+ var bounds:=pixels.get_used_rect()
+ if not bounds.has_area():return texture
+ var portrait:=pixels.get_region(bounds)
+ portrait.convert(Image.FORMAT_RGBA8)
+ var relative_size := float({"basketball":.63,"book":.74,"cat":.81,"soccer":.73,"ram":.93,"golfer":.93}.get(id,1.0))
+ var ratio:=float(side-8)*relative_size/float(maxi(bounds.size.x,bounds.size.y))
+ var size:=Vector2i(maxi(1,roundi(bounds.size.x*ratio)),maxi(1,roundi(bounds.size.y*ratio)))
+ portrait.resize(size.x,size.y,Image.INTERPOLATE_NEAREST)
+ var tile:=Image.create_empty(side,side,false,Image.FORMAT_RGBA8)
+ tile.blit_rect(portrait,Rect2i(Vector2i.ZERO,size),Vector2i((side-size.x)/2,side-4-size.y))
+ return ImageTexture.create_from_image(tile)
+
 func starter_role(id:String)->String:
  var roles={"book":"Melee / Ranged","soccer":"Ranged / Support","basketball":"Melee / Summoner","baseball":"Ranged / Melee","goalie":"Melee / Defender","welder":"Melee / Ranged"}
  if roles.has(id):return roles[id]
  var tags:Array=game.hero_hall.library.entry(id,game.characters.get(id,{})).get("tags",["Melee"])
  return " / ".join(PackedStringArray(tags))
+const ABILITY_MILESTONES=[["primary",1],["secondary",3],["passive",5],["special",6]]
+
 func skill_unlock(kind:String)->void:
- if not page.is_empty() and page in ["unlock_celebration","skill_unlock"]:return
- window("NEW ABILITY AWAKENED", "unlock_celebration")
- pending_skill=kind;unlock_until=clock+1.0
- label(content,"LEVEL "+str(game.level)+" • "+kind.to_upper(),32).modulate=Color("#ffdc84")
- label(content,"A new way to play is ready. Take a breath — the battle is paused.",23)
- burst(get_viewport().get_visible_rect().size*.5,false);game.journey.cue("level")
- disable_modal_buttons()
+ if page=="skill_unlock":return
+ show_skill_unlock(kind)
+ burst(get_viewport().get_visible_rect().size*.5,false)
+ game.journey.cue("level")
+
 func disable_modal_buttons()->void:
  unlock_buttons.clear()
  for node in modal.find_children("*","Button",true,false):node.disabled=true;unlock_buttons.append(node)
+
+func progression_panel(parent:Node,fill:Color,edge:Color)->VBoxContainer:
+ var frame:=PanelContainer.new()
+ var skin:=StyleBoxFlat.new()
+ skin.bg_color=fill;skin.border_color=edge;skin.set_border_width_all(2);skin.set_corner_radius_all(10)
+ skin.content_margin_left=14;skin.content_margin_right=14;skin.content_margin_top=11;skin.content_margin_bottom=11
+ frame.add_theme_stylebox_override("panel",skin)
+ frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ parent.add_child(frame)
+ var body:=VBoxContainer.new()
+ body.add_theme_constant_override("separation",6)
+ frame.add_child(body)
+ return body
+
 func show_skill_unlock(kind:String)->void:
- var touch:bool=game.mobile.enabled
- var title:String="SECONDARY UNLOCKED • Level 3" if kind=="secondary" else "SPECIAL UNLOCKED • Level 6" if kind=="special" else "PASSIVE ACTIVE • Level 5"
- window(title,"skill_unlock")
+ window("WAVE %d CLEARED  •  LEVEL %d" % [game.tutorial.wave,game.level],"skill_unlock")
+ var header:=HBoxContainer.new()
+ header.add_theme_constant_override("separation",18)
+ content.add_child(header)
+ var portrait:=TextureRect.new()
+ portrait.texture=starter_portrait(game.selected_character,120)
+ portrait.custom_minimum_size=Vector2(120,120)
+ portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
+ portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+ portrait.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+ header.add_child(portrait)
+ var callout:=progression_panel(header,Color("#263e3c"),Color("#e1b85d"))
+ label(callout,str(game.hero.name)+"  /  "+kind.to_upper()+" UNLOCKED",20).modulate=Color("#ffdb83")
  var spec:Dictionary=game.hero.get(kind,{}) if kind!="passive" else {}
- label(content,str(spec.get("name",game.hero.get("passive","Passive"))),28)
- var instruction:String="Tap or hold the circular SECONDARY button." if touch else "Click or hold RIGHT MOUSE to use your secondary attack."
- if kind=="special":instruction="Tap the circular SPECIAL button to cast." if touch else "Press or hold SPACE to use your special attack."
- if kind=="passive":instruction="Your passive works automatically — no extra button needed."
- label(content,instruction,24).modulate=Color("#ffda82")
- label(content,str(spec.get("description",game.ability_info(spec,kind))) if kind!="passive" else str(game.hero.get("passive_description","")),20)
- label(content,"Aim with the right stick, then tap your ability. Hold the movement stick with your other thumb." if touch and kind!="passive" else "Aim toward an enemy, watch the attack effect and try it in the next wave." if kind!="passive" else "Watch for its effect while you fight.",18)
- read_until=clock+.65;disable_modal_buttons()
+ var ability_name:=str(spec.get("name",game.hero.get("passive","Passive")))
+ var description:=str(game.hero.get("passive_description","")) if kind=="passive" else str(spec.get("description",game.ability_info(spec,kind)))
+ label(callout,ability_name,24)
+ if not description.is_empty() and description!=ability_name:label(callout,description,17)
+ var touch:bool=game.mobile.enabled
+ var control:="Right mouse button" if kind=="secondary" else "Space bar"
+ if touch:control="Tap "+kind.to_upper()+" on the combat controls."
+ if kind=="passive":control="Active automatically during combat."
+ label(callout,control,17).modulate=Color("#ffdb83")
+ var track:=HBoxContainer.new()
+ track.add_theme_constant_override("separation",10)
+ content.add_child(track)
+ for row in ABILITY_MILESTONES:
+  var slot:String=row[0]
+  var milestone:int=row[1]
+  var new_skill:=slot==kind
+  var active:bool=game.level>=milestone
+  var tint:=Color("#ffdb83") if new_skill else Color("#a6d8c1") if active else Color("#aec0ca")
+  var card:=progression_panel(track,Color("#394635") if new_skill else Color("#1b333c"),tint if new_skill else Color("#385662"))
+  card.custom_minimum_size.x=210
+  label(card,slot.to_upper()+"  •  LV "+str(milestone),15).modulate=tint
+  var title:=str(game.hero.get("passive","Passive")).split(":",true,1)[0] if slot=="passive" else str(game.hero.get(slot,{}).get("name",slot.capitalize()))
+  label(card,title,19)
+  label(card,"NEW ABILITY" if new_skill else "Available" if active else "Locked",15).modulate=tint
+ var button_footer:=modal.find_children("*","Button",true,false)
+ if not button_footer.is_empty():preload("res://scripts/studio_ui.gd").accent(button_footer[0])
+ read_until=clock+.65
+ disable_modal_buttons()
+
 func tutorial_end(won:bool,skipped:bool)->void:
  close()
  if won or skipped:elder_guide.welcome();return
@@ -386,7 +454,7 @@ func burst(point:Vector2,world:bool=true)->void:
  if rings.size()<16:rings.append({"pos":[point.x,point.y],"world":world,"age":0.0})
 func paint()->void:
  var size:=get_viewport().get_visible_rect().size
- if not page.is_empty():panel.draw_rect(Rect2(Vector2.ZERO,size),Color(.02,.045,.055,.65))
+ if not page.is_empty():panel.draw_rect(Rect2(Vector2.ZERO,size),Color(.02,.045,.055,.24 if page=="town_conversation" else .65))
 func paint_feedback()->void:
  var size:=get_viewport().get_visible_rect().size
  if flash>0:

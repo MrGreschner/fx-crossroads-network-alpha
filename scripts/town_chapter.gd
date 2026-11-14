@@ -1,9 +1,10 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 const RIVER=Rect2(2280,-560,160,3460)
 const BRIDGE=Rect2(2250,1090,220,130)
 const HOME_BRIDGE=Rect2(2250,2025,220,110)
 const POST=Vector2(550,1490)
-const GUIDE=Vector2(290,400)
+const GUIDE=preload("res://scripts/training_yard.gd").GUIDE_POSITION
 const FOREST=Rect2(2490,940,650,780)
 const CAMP_CLEARING=Rect2(2760,1330,300,230)
 var forest_trees:Array[Vector2]=[]
@@ -17,6 +18,9 @@ func _init()->void:
    forest_trees.append(point)
  forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115 and not preload("res://scripts/town_neighborhood.gd").reserved(p))
 func blocked(p:Vector2)->bool:
+ if Town311.BATTLE_PAD.has_point(p):
+  for wall in Town311.MUSTER_WALLS:
+   if wall.has_point(p):return true
  if preload("res://scripts/town_refresh46.gd").blocked(p):return true
  if preload("res://scripts/marina_life.gd").blocked(p):return true
  if preload("res://scripts/town_marina.gd").blocked(p):return true
@@ -29,7 +33,7 @@ func blocked(p:Vector2)->bool:
   for tree in forest_trees:
    if p.distance_squared_to(tree)<625:return true
  return false
-func draw_ground_source(c:Node2D,camera:Vector2)->void:
+func draw_ground_source(c:Node2D,camera:Vector2,draw_cliffs:bool=true)->void:
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
  if visible.intersects(FOREST):
   c.draw_rect(Rect2(FOREST.position-camera,FOREST.size),Color("#526d50"))
@@ -61,7 +65,7 @@ func draw_ground_source(c:Node2D,camera:Vector2)->void:
    var p:=Vector2(-290+n*85,1798)-camera
    c.draw_circle(p,4,Color("#99b977"));c.draw_circle(p+Vector2(6,-3),3,Color("#e0c997"))
  # Continuous western massif; the cave mouths sit on its accessible eastern apron.
- preload("res://scripts/town_refresh46.gd").cliffs(c,camera)
+ if draw_cliffs:preload("res://scripts/town_refresh46.gd").cliffs(c,camera)
  # A compact communal garden fits between the southern homes, leaving the central street clear.
  if visible.intersects(Rect2(800,1780,285,350)):
   for row in 3:
@@ -78,38 +82,27 @@ static func river_surface_visible(point:Vector2)->bool:
  # Decks are already baked into the ground layer; live water must stay beneath them.
  return not BRIDGE.grow(4).has_point(point) and not HOME_BRIDGE.grow(4).has_point(point)
 func draw_ground(c:Node2D,camera:Vector2)->void:
- # The existing northern approach belongs below the gate artwork, never across its roof.
- if Rect2(camera,c.VIEW).grow(50).intersects(Rect2(850,-210,100,400)):
-  c.draw_line(Vector2(900,-210)-camera,Vector2(900,190)-camera,Color("#9b916d"),100)
  preload("res://scripts/town_art39.gd").draw(c,"chapter_ground",camera)
  preload("res://scripts/marina_art250.gd").shore(c,camera)
+ preload("res://scripts/town_visuals311.gd").ground(c,camera)
+func farmer_position(t:float)->Vector2:
+ var phase:=fposmod(t*.006,1)
+ var travel:=phase*2 if phase<.5 else 2-phase*2
+ return Vector2(1030,1890+travel*200)
+
+func draw_ground_details(c:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_nature243.gd").garden(c,camera);preload("res://scripts/town_nature243.gd").river_reeds(c,camera)
  var t:=Time.get_ticks_msec()/1000.0
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
  if visible.intersects(Rect2(800,1780,285,350)):
-  var phase=fposmod(t*.006,1);var travel=phase*2 if phase<.5 else 2-phase*2
-  var farmer=Vector2(1030,1890+travel*200)-camera
+  var farmer:=farmer_position(t)-camera
   c.draw_circle(farmer+Vector2(0,1),19,Color(0,0,0,.18))
   preload("res://scripts/town_cast230.gd").draw(c,"ox_farmer",farmer,t,true)
  for spot in [Vector2(2540,980),Vector2(2850,1080)]:
   if visible.has_point(spot):preload("res://scripts/town_calendar.gd").draw_lantern(c,spot-camera,c.town_life.calendar.night_amount())
 func draw_pads(c:Node2D,camera:Vector2)->void:
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
- if visible.intersects(Rect2(600,-500,600,720)):
-  var battle:=Vector2(900,-250)-camera;var clock:=Time.get_ticks_msec()/1000.0
-  c.draw_rect(Rect2(Vector2(650,-450)-camera,Vector2(500,420)),Color("#59685a"))
-  for x in [-92,92]:
-   c.draw_line(battle+Vector2(x,-52),battle+Vector2(x,35),Color("#8f7760"),5)
-   c.draw_colored_polygon(PackedVector2Array([battle+Vector2(x,-52),battle+Vector2(x+25,-42),battle+Vector2(x,-28)]),Color("#6db8ce") if x<0 else Color("#cd8773"))
-
-  for n in 6:
-   var p:=Vector2(680+(n%2)*440,-380+int(n/2)*100)-camera
-   c.draw_circle(p,27,Color("#3d4741"));c.draw_circle(p,17,Color("#292e2d"))
-  for n in 4:
-   var p:=Vector2(750+n*100,-380)-camera;c.draw_line(p-Vector2(15,15),p+Vector2(15,15),Color("#817c69"),6);c.draw_line(p+Vector2(-15,15),p+Vector2(15,-15),Color("#817c69"),6)
-  c.draw_circle(battle,32,Color(.36,.8,.85,.22+.08*sin(clock*3)))
-  c.draw_arc(battle,35,0,TAU,32,Color("#a4e9de"),3)
-  c.draw_string(ThemeDB.fallback_font,battle+Vector2(-105,52),"BATTLEGROUNDS • E",HORIZONTAL_ALIGNMENT_CENTER,210,16,Color("#ffe6a3"))
+ preload("res://scripts/town_visuals311.gd").muster_sign(c,camera)
  for entry in [[Vector2(600,570),"CHARACTER HALL"],[Vector2(1290,650),"SUPPLY VENDOR"],[Vector2(260,1165),"GLADIATOR ARENA"]]:
   if not visible.has_point(entry[0]):continue
   var p:Vector2=entry[0]-camera;var near:bool=c.position_in_world.distance_to(entry[0])<95

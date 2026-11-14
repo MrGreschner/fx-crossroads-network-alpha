@@ -1,0 +1,115 @@
+{
+  "build": "T4.16",
+  "existing_network_suite": "passed",
+  "new_budget_recovery": "passed",
+  "raster_input": {
+    "passed": true,
+    "results": [
+      {
+        "clicks": 1,
+        "local": "(300.0, 390.0)",
+        "logical": "(1280.0, 720.0)",
+        "mouse": "(400.0, 345.0)",
+        "pixels": "(1280.0, 720.0)",
+        "scale": 1
+      },
+      {
+        "clicks": 2,
+        "local": "(300.0, 390.0)",
+        "logical": "(1280.0, 720.0)",
+        "mouse": "(399.9999, 345.0)",
+        "pixels": "(1088.0, 612.0)",
+        "scale": 0.85
+      },
+      {
+        "clicks": 3,
+        "local": "(300.0, 390.0)",
+        "logical": "(1280.0, 720.0)",
+        "mouse": "(400.0, 345.0)",
+        "pixels": "(896.0, 504.0)",
+        "scale": 0.7
+      },
+      {
+        "clicks": 5,
+        "local": "(300.0, 390.0)",
+        "logical": "(1280.0, 720.0)",
+        "mouse": "(400.0, 345.0)",
+        "pixels": "(1280.0, 720.0)",
+        "scale": 1
+      }
+    ],
+    "mouseAndTouch": true,
+    "errors": []
+  },
+  "mobile_input": {
+    "passed": true,
+    "roomJoined": true,
+    "playerName": "Phone tester",
+    "independentFields": 3,
+    "nativeTouchFocus": true,
+    "maxLength": 6,
+    "resizedTouchFocus": true,
+    "hiddenDuringGameplay": true,
+    "errors": [],
+    "note": "Browser touch emulation verifies native input focus and real game/server text delivery. Actual iOS/Android software-keyboard appearance requires a physical-device check."
+  },
+  "eight_player_browser": {
+    "passed": true,
+    "software_renderer": true,
+    "same_player_resumed": true,
+    "final_build": "T4.16",
+    "final_server_build": "T4.16",
+    "final_recovery_active": false,
+    "final_prediction_queue": 7,
+    "resume_attempts": 1,
+    "errors": []
+  },
+  "patched_server_soak": {
+    "protocol": 3,
+    "rooms": 1,
+    "players": 8,
+    "seconds": 60.032474397,
+    "errors": [],
+    "restarts": [
+      1
+    ],
+    "states": [
+      1202,
+      1202,
+      1202,
+      1202,
+      1202,
+      1202,
+      1202,
+      1202
+    ],
+    "accepted": [
+      88,
+      44,
+      44,
+      51,
+      91,
+      41,
+      43,
+      45
+    ],
+    "damage": [
+      899.2,
+      640.2,
+      377.5,
+      504,
+      916.8,
+      606.2,
+      489.5,
+      439.625
+    ],
+    "closed": 0,
+    "maxQueue": 2,
+    "snapshotGapP95": 54.28187199999957,
+    "snapshotGapMax": 59.605272000000696,
+    "rttP95": 16.615489000000025,
+    "actionWaitP95": 20,
+    "downloadBytes": 23801444
+  },
+  "sql_report_validation": "passed"
+}

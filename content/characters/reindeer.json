@@ -1,0 +1,42 @@
+{
+  "id": "reindeer",
+  "sprite": "reindeer",
+  "name": "Snowbell",
+  "max_health": 135,
+  "speed": 250,
+  "lore": "The winter courier’s lead reindeer knows how to find a safe path through the thickest storm.",
+  "run_cost": 0,
+  "role": "Melee",
+  "passive": "Surefooted: keep moving to build momentum for your next Antler Sweep.",
+  "passive_effect": "surefooted",
+  "mastery": {},
+  "event": "Winter Holiday",
+  "event_active": true,
+  "primary": {
+    "name": "Antler Sweep",
+    "style": "antler_sweep",
+    "damage": 20,
+    "cooldown": 0.72,
+    "range": 84,
+    "description": "A close sweep that pushes enemies aside.",
+    "ui_brief": "A close sweep that pushes enemies aside."
+  },
+  "secondary": {
+    "name": "Sleighbreak Charge",
+    "style": "sleigh_charge",
+    "damage": 26,
+    "cooldown": 7,
+    "range": 175,
+    "description": "Charge along the ground and leave a trail that speeds allies.",
+    "ui_brief": "Charge along the ground and leave a trail that speeds allies."
+  },
+  "special": {
+    "name": "Flying Reindeer",
+    "style": "flying_reindeer",
+    "damage": 38,
+    "cooldown": 20,
+    "range": 115,
+    "description": "Rise off the ground, then steer for 4 seconds. Falling snow heals allies and slows enemies. A countdown and ground ring mark the landing slam.",
+    "ui_brief": "Rise off the ground, then steer for 4 seconds. Falling snow heals allies and slows enemies. A countdown and ground ring mark the landing slam."
+  }
+}

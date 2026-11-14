@@ -110,6 +110,8 @@ func step(delta:float)->void:
      var f:Dictionary=combat.actor(key)
      if f.is_empty() or not bool(f.alive):continue
      if Geometry2D.get_closest_point_to_segment(f.pos,p,next).distance_to(f.pos)<=10+combat.v110.target_radius(key,9) and combat.path_clear(p,f.pos):
+      var contact:Vector2=Geometry2D.get_closest_point_to_segment(f.pos,p,next)
+      pool(id,contact if combat.path_clear(p,contact) else p,bool(e.frost))
       combat.damage(key,float(e.damage),id);combat.apply_status(key,"slow",2,id,.5 if bool(e.frost) else .65);e.time=0;struck=true;break
     if not struck:
      if impact or next.distance_to(end)<2 or e.time<=0:pool(id,p if impact else next,bool(e.frost));e.time=0

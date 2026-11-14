@@ -1,0 +1,31 @@
+{
+  "build": "V172-preview",
+  "protocol": 8,
+  "passed": true,
+  "results": [
+    {
+      "correction": 0,
+      "history": 3,
+      "realm": "grove",
+      "resumed": true,
+      "snapshots": 43,
+      "travel": 202.114471435547
+    },
+    {
+      "correction": 0,
+      "history": 3,
+      "realm": "quarry",
+      "resumed": true,
+      "snapshots": 43,
+      "travel": 202.114471435547
+    },
+    {
+      "correction": 0,
+      "history": 2,
+      "realm": "wayfarer",
+      "resumed": true,
+      "snapshots": 43,
+      "travel": 202.11653137207
+    }
+  ]
+}

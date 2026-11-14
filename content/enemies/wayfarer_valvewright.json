@@ -1,0 +1,12 @@
+{
+  "id": "wayfarer_valvewright",
+  "name": "Valvewright",
+  "sprite": "wayfarer_valvewright",
+  "health": 115,
+  "speed": 95,
+  "damage": 13,
+  "behaviour": "custom",
+  "aggro_range": 560,
+  "expansion_only": true,
+  "custom_attack": "tide_cross"
+}

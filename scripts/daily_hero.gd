@@ -17,7 +17,7 @@ static func open(hall:Node)->void:
  var col=VBoxContainer.new();col.add_theme_constant_override("separation",12);dialog.add_child(col)
  var label=Label.new();label.text=str(hero.name)+"\nEarn 10% more Glimmers during gameplay with today's hero.\nTown trades keep their normal prices.";label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.custom_minimum_size.x=460;col.add_child(label)
  var art=TextureRect.new();art.texture=portrait(hall.game,hero_id);art.custom_minimum_size=Vector2(130,130);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;col.add_child(art)
- dialog.confirmed.connect(func():hall.collection=0;hall.custom_only=false;hall.collection_picker.select(0);hall.select(hero_id);dialog.queue_free());dialog.canceled.connect(dialog.queue_free);hall.add_child(dialog);dialog.popup_centered(Vector2i(520,300))
+ dialog.confirmed.connect(func():hall.set_collection(hall.OFFICIAL);hall.select(hero_id);dialog.queue_free());dialog.canceled.connect(dialog.queue_free);hall.add_child(dialog);dialog.popup_centered(Vector2i(520,300))
 
 static func portrait(g:Node,hero_id:String)->Texture2D:
  return preload("res://scripts/hero_portrait.gd").texture(g,hero_id)

@@ -1,4 +1,5 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## Residential footprint and doorstep routes are shared with collision and navigation.
 const HOMES=[
  {"name":"Cliffside Cottage","art":"cliff_cottage","wall":Rect2(-1190,1418,280,200),"door":Vector2(-1050,1630)},
@@ -17,7 +18,7 @@ const ROADS=[
  [Vector2(2250,2080),Vector2(2470,2080)],
  [Vector2(-850,1025),Vector2(-1150,1025)]]
 const COURT=Rect2(-1190,930,340,165)
-const FOUNTAIN=Vector2(-1030,1010)
+const FOUNTAIN=Town311.WEST_FOUNTAIN
 const TREES=[Vector2(-775,1430),Vector2(-875,1690),Vector2(460,2040),Vector2(775,2260),Vector2(1410,2070),Vector2(2570,1950),Vector2(2940,1950)]
 var textures:Dictionary={}
 func blocked(p:Vector2)->bool:

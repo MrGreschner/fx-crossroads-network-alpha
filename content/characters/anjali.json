@@ -1,0 +1,45 @@
+{
+  "id": "anjali",
+  "sprite": "anjali",
+  "name": "Anjali Dawnbloom",
+  "max_health": 110,
+  "speed": 235,
+  "lore": "A proud court archer from a hill town where archers plant a flowering branch to mark the ground they have sworn to defend. She came to Crossroads looking for a rival who could match her aim.",
+  "run_cost": 0,
+  "role": "Ranged",
+  "passive": "Stand Tall: a fully drawn Courtbow near your branch grants a brief shield.",
+  "passive_effect": "stand_tall",
+  "mastery": {},
+  "primary": {
+    "name": "Courtbow",
+    "style": "courtbow",
+    "damage": 19,
+    "cooldown": 0.7,
+    "range": 465,
+    "description": "Tap for one arrow. Hold to fill four ticks for up to four arrows. Volley arrows deal 78% damage each.",
+    "ui_brief": "Tap for one arrow. Hold to fill four ticks for up to four arrows. Volley arrows deal 78% damage each.",
+    "hold_charge": {
+      "seconds": 1.2
+    },
+    "speed": 570,
+    "color": "#ffe4a1"
+  },
+  "secondary": {
+    "name": "Plant the Standard",
+    "style": "flower_standard",
+    "damage": 0,
+    "cooldown": 9,
+    "range": 0,
+    "description": "Plant a flowering branch for 7 seconds. Press Secondary again to teleport back any number of times before it expires.",
+    "ui_brief": "Plant a flowering branch for 7 seconds. Press Secondary again to teleport back any number of times before it expires."
+  },
+  "special": {
+    "name": "Dawn Garden",
+    "style": "dawn_garden",
+    "damage": 35,
+    "cooldown": 17,
+    "range": 380,
+    "description": "Aim at the ground. A flowering tree erupts after a warning and leaves three shield pickups for you or your allies.",
+    "ui_brief": "Aim at the ground. A flowering tree erupts after a warning and leaves three shield pickups for you or your allies."
+  }
+}

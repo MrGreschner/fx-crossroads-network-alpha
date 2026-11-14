@@ -1,0 +1,40 @@
+{
+  "id": "lockjaw",
+  "sprite": "lockjaw",
+  "name": "Lockjaw",
+  "max_health": 150,
+  "speed": 195,
+  "lore": "A clockwork crocodile built to pull jammed sluice gates free. Now he keeps watch over the Foundry’s lower channels.",
+  "run_cost": 0,
+  "role": "Melee",
+  "passive": "Pressure Valve: the first hit from a clamped target powers your next Snap.",
+  "passive_effect": "jaw_pressure",
+  "mastery": {},
+  "primary": {
+    "name": "Snap",
+    "style": "jaw_snap",
+    "damage": 22,
+    "cooldown": 0.65,
+    "range": 75,
+    "description": "Short bite. Stored pressure adds 9 damage.",
+    "ui_brief": "Short bite. Stored pressure adds 9 damage."
+  },
+  "secondary": {
+    "name": "Clamp",
+    "style": "jaw_clamp",
+    "damage": 28,
+    "cooldown": 14,
+    "range": 110,
+    "description": "Heavy lunge and bite. Slows and disables dodge for up to 6s, dealing 8 damage each second. Recast to release. Damage equal to 40% of your HP at latch breaks it. You take 15% less damage while attached.",
+    "ui_brief": "Heavy lunge and bite. Slows and disables dodge for up to 6s, dealing 8 damage each second. Recast to release. Damage equal to 40% of your HP at latch breaks it. You take 15% less damage while attached."
+  },
+  "special": {
+    "name": "Spring Jaw",
+    "style": "jaw_brace",
+    "damage": 39,
+    "cooldown": 16,
+    "range": 95,
+    "description": "Hold your jaws open for up to 5 seconds. The first incoming hit is reduced and triggers a counterbite. Press Special again to snap early.",
+    "ui_brief": "Hold your jaws open for up to 5 seconds. The first incoming hit is reduced and triggers a counterbite. Press Special again to snap early."
+  }
+}

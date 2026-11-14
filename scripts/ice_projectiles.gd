@@ -1,5 +1,5 @@
 extends RefCounted
-static func matches(kind:String)->bool:return kind in ["ice_archer","snow_oracle"]
+static func matches(kind:String)->bool:return kind in ["ice_archer","snow_oracle","wayfarer_hoarfletch"]
 static func fire(g:Node,enemy:Dictionary,aim:Vector2,definition:Dictionary,boss=false)->void:
  preload("res://scripts/enemy_visual227.gd").mark(g.adventure,enemy)
  var oracle=boss or str(enemy.get("type",""))=="snow_oracle"

@@ -49,21 +49,20 @@ func draw_on(g:Node2D,camera:Vector2)->void:
 
 func crate(g:Node2D,p:Vector2,size:Vector2)->void:
  preload("res://scripts/town_streets244.gd").draw(g,"cargo",Rect2(p,size))
-func ram_worker(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
- if not Rect2(Vector2.ZERO,g.VIEW).grow(65).has_point(p):return
- worker_body(g,p,t,carrying)
-func worker_body(g:Node2D,p:Vector2,t:float,carrying:bool)->void:
- preload("res://scripts/town_cast230.gd").draw(g,"exchange_worker",p+Vector2(0,5),t,true)
- if carrying:crate(g,p-Vector2(12,27),Vector2(24,19))
 func draw_market(g:Node2D,camera:Vector2)->void:
  g.draw_texture_rect(preload("res://scripts/town_terrain247.gd").png("market"),Rect2(Vector2(-535,455)-camera,Vector2(745,345)),false)
- var t=Time.get_ticks_msec()*.001
- ram_worker(g,Vector2(-430+sin(t*.45)*25,715)-camera,t,true)
- ram_worker(g,Vector2(33+sin(t*.35)*22,751)-camera,t+1,false)
- ram_worker(g,Vector2(-275+sin(t*.3)*55,776)-camera,t+2,true)
- # A loading cart follows a short safe loop; no simulation entities or particles.
- var cart=Vector2(-485+fposmod(t*12,80),758)-camera
- preload("res://scripts/town_streets244.gd").draw(g,"loading_cart",Rect2(cart-Vector2(10,22),Vector2(54,38)));crate(g,cart-Vector2(4,32),Vector2(28,24))
+ var calendar:Variant=g.town_life.calendar
+ var time:=Time.get_ticks_msec()*.001
+ var workers:=preload("res://scripts/town_workers314.gd").active("market",calendar.hour,calendar.weekday)
+ for worker in workers:
+  var point:Vector2=worker.pos-camera
+  if not Rect2(Vector2.ZERO,g.VIEW).grow(65).has_point(point):continue
+  preload("res://scripts/town_cast230.gd").draw(g,"exchange_worker",point+Vector2(0,5),time,worker.moving)
+  if worker.task=="parcel":crate(g,point-Vector2(12,27),Vector2(24,19))
+  if str(worker.task).begins_with("cart"):
+   var cart:=point+Vector2(27,6)
+   preload("res://scripts/town_streets244.gd").draw(g,"loading_cart",Rect2(cart-Vector2(10,22),Vector2(54,38)))
+   if worker.task=="cart_loaded":crate(g,cart-Vector2(4,32),Vector2(26,21))
  g.draw_arc(DOOR-camera,28,0,TAU,32,Color("#efc77b") if g.position_in_world.distance_to(DOOR)<85 else Color(.9,.8,.5,.35),2,true)
  g.draw_string(font,DOOR-camera+Vector2(-105,36),"ENTER THE BUSINESS DISTRICT",HORIZONTAL_ALIGNMENT_CENTER,210,13,Color("#ecd39b"))
 

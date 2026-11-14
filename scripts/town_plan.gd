@@ -1,4 +1,5 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## One street graph: civic square, service street, creative campus and southern walk.
 ## Each building has a short doorstep spur; no roads cross a river except the bridge.
 const ROADS=[
@@ -10,7 +11,7 @@ const ROADS=[
  [Vector2(-1030,540),Vector2(-1030,900)],
  [Vector2(-580,490),Vector2(-580,775),Vector2(-180,775)],
  [Vector2(-100,1680),Vector2(-100,1740)],
- [Vector2(900,300),Vector2(900,640)],
+ [Vector2(900,-80),Vector2(900,300),Vector2(900,640)],
  [Vector2(900,640),Vector2(1040,640),Vector2(1040,850)],
  [Vector2(450,850),Vector2(2110,850)],
  [Vector2(600,570),Vector2(600,850)],
@@ -18,11 +19,12 @@ const ROADS=[
  [Vector2(1960,740),Vector2(1960,850)],
  [Vector2(1580,790),Vector2(1580,850)],
  [Vector2(760,850),Vector2(760,1180)],
- [Vector2(-1080,1200),Vector2(-1000,1200),Vector2(-1000,900),Vector2(760,900)],
+ [Town311.DESCENT_ENTRY,Vector2(-1000,1200),Vector2(-1000,900),Vector2(760,900)],
  [Vector2(-180,775),Vector2(-180,900)],
  [Vector2(130,900),Vector2(-125,900),Vector2(-125,1280),Vector2(130,1280)],
  [Vector2(1150,1150),Vector2(1150,1180)],
  [Vector2(420,530),Vector2(420,850)],
+ [Vector2(-180,548),Vector2(92,548),Vector2(196,548),Vector2(300,536),Vector2(420,530)],
  [Vector2(760,1180),Vector2(2220,1180),Vector2(2220,1150),Vector2(2510,1150)],
  [Vector2(1470,850),Vector2(1470,1180)],
  [Vector2(1650,1050),Vector2(1650,1180)],

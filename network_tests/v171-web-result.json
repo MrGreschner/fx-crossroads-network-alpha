@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "engine": "Godot 4.5.1 Web",
+  "browser": "Chromium software renderer",
+  "serverClient": "Gate Defence",
+  "screens": [
+    "town",
+    "profile",
+    "fishing",
+    "portal",
+    "network",
+    "results",
+    "mobile"
+  ],
+  "state": {
+    "build": 171,
+    "history": 0,
+    "mode": "defense",
+    "mode_controls_enabled": true,
+    "panel_size": [
+      850,
+      590
+    ],
+    "ready": false,
+    "snapshots": 116,
+    "started": false,
+    "view_size": [
+      1558,
+      720
+    ]
+  },
+  "errors": []
+}

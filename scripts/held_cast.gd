@@ -19,7 +19,7 @@ func stats_for(id:String,kind:String)->Dictionary:
  return combat.effective_stats(id,kind,hero(id).get(kind,{}))
 func supports(id:String,kind:String)->bool:
  var s:Dictionary=stats_for(id,kind)
- return s.has("hold_charge") or float(s.get("travel_speed",0))>0 or str(s.get("style",""))=="rift_triangle"
+ return s.has("hold_charge") or float(s.get("travel_speed",0))>0 or str(s.get("style","")) in ["rift_triangle","care_parcel","dawn_garden"]
 func suppressed(id:String,kind:String)->bool:
  return (supports(id,kind) or charges.has(id)) and not context.has(id)
 func ready(id:String,kind:String)->bool:
@@ -35,6 +35,11 @@ func ready(id:String,kind:String)->bool:
 func begin(id:String,kind:String,aim:Vector2,target:Vector2)->void:
  if charges.has(id) or not supports(id,kind) or not ready(id,kind):return
  charges[id]={"kind":kind,"age":0.0,"aim":combat.point_array(aim.normalized()),"target":combat.point_array(target),"hero":str(hero(id).get("id","")),"heartbeat":0.0,"last_seen":0.0}
+func cancel_local(id:String,kind:String)->void:
+ if str(charges.get(id,{}).get("kind","")) != kind:return
+ charges.erase(id)
+ if combat.adventure.arcade and combat.adventure.game.role=="guest":
+  send("cancel",kind,Vector2.RIGHT,Vector2.ZERO)
 func local_input(delta:float,active:bool)->void:
  var game:Node=combat.adventure.game
  if preload("res://scripts/ability_guide.gd").blocks(game):active=false
@@ -190,11 +195,19 @@ func draw_on(c:Node2D,camera:Vector2)->void:
   if not combat.adventure.alive(str(id)):continue
   var q:Dictionary=visible[id];var s:Dictionary=stats_for(str(id),str(q.kind));var t:float=power(q,s)
   var p:Vector2=combat.owner_pos(str(id))-camera;var aim:Vector2=combat.vec(q.aim);var tint:=Color(str(s.get("color","#ffe2a0")))
-  c.draw_arc(p-Vector2(0,39),13,-PI*.5,-PI*.5+TAU*maxf(.01,t),24,tint,3,true)
-  if float(s.get("travel_speed",0))>0 or str(s.get("style",""))=="rift_triangle":
+  if str(s.get("style",""))=="courtbow":
+   var count: int = combat.events.arrow_count(t)
+   for n in 4:c.draw_rect(Rect2(p+Vector2(-14+n*8,-48),Vector2(5,5)),tint if n<count else Color(tint,.24))
+   if str(id)==local and game.mobile.enabled and not game.mobile.cancel_selected:
+    var reach := minf(265,float(s.get("range",265)))
+    for n in count:
+     var ray := aim.rotated((n-(count-1)*.5)*.13)
+     c.draw_line(p+aim*12,p+ray*reach,Color(tint,.45),2,true)
+  else:c.draw_arc(p-Vector2(0,39),13,-PI*.5,-PI*.5+TAU*maxf(.01,t),24,tint,3,true)
+  if float(s.get("travel_speed",0))>0 or str(s.get("style","")) in ["rift_triangle","care_parcel","dawn_garden"]:
    if str(id)==local and str(s.get("style",""))!="rift_triangle":
     var target:Vector2=target_point(str(id),q,s)-camera
-    var radius:float=float(s.get("blast_radius",s.get("radius",70)))*lerpf(1,float(s.get("hold_charge",{}).get("blast",1)),t)
+    var radius:float=float(s.get("blast_radius",s.get("radius",27 if str(s.get("style",""))=="care_parcel" else 102 if str(s.get("style",""))=="dawn_garden" else 70)))*lerpf(1,float(s.get("hold_charge",{}).get("blast",1)),t)
     c.draw_arc(target,radius,0,TAU,40,Color(tint,.65),2,true);c.draw_circle(target,4,tint)
   else:
    var r:float=lerpf(4,11,t);c.draw_circle(p+aim*26,r,Color(tint,.55))

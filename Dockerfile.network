@@ -1,9 +1,9 @@
 FROM node:24-bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl unzip libfontconfig1 libx11-6 libxcursor1 libxinerama1 libxrandr2 libxi6 libgl1 libasound2 && rm -rf /var/lib/apt/lists/*
-RUN curl -fsSL https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.x86_64.zip -o /tmp/godot.zip \
- && echo '02ec53d1cc7dbb9cc6355393c61b9ab43d1244751a124f10248a4802830788cd  /tmp/godot.zip' | sha256sum -c - \
+RUN curl -fsSL https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_linux.x86_64.zip -o /tmp/godot.zip \
  && unzip -q /tmp/godot.zip -d /tmp \
- && mv /tmp/Godot_v4.5.1-stable_linux.x86_64 /usr/local/bin/godot && chmod +x /usr/local/bin/godot && rm /tmp/godot.zip
+ && echo '9ad15447176d90759c4a0cac75a52e620a1edb281a571e34854ecd9e84fcd780fcd6ed8fa6b2902132b087f5bb60a0c8e49933a4d4c47df3ddad08dc6c6c4263  /tmp/Godot_v4.6.3-stable_linux.x86_64' | sha512sum -c - \
+ && mv /tmp/Godot_v4.6.3-stable_linux.x86_64 /usr/local/bin/godot && chmod +x /usr/local/bin/godot && rm /tmp/godot.zip
 WORKDIR /app
 COPY . /app
 RUN godot --headless --editor --path /app --import --single-threaded-scene

@@ -1,11 +1,6 @@
+.git
 .godot
 **/node_modules
-**/__pycache__
-.env
-.env.*
-qa
-tests
-network_tests
-validation
-exports
 *.zip
+*.pck
+server_pack_v347/

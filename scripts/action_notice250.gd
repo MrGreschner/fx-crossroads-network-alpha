@@ -7,8 +7,7 @@ var notice:PanelContainer
 var keycap:Button
 var prompt:Label
 var speaker:Label
-var text:Label
-var scroll:ScrollContainer
+var text:RichTextLabel
 var signature=""
 var settle=0
 var released=false
@@ -31,17 +30,27 @@ func _ready()->void:
  keycap=Button.new();keycap.name="InteractKey";keycap.text="E";keycap.focus_mode=Control.FOCUS_NONE;keycap.custom_minimum_size=Vector2(44,40);keycap.add_theme_font_override("font",FONT);keycap.add_theme_font_size_override("font_size",21);keycap.add_theme_color_override("font_color",Color("#fff2c6"));keycap.add_theme_stylebox_override("normal",skin("#3c4b46","#eed394"));keycap.add_theme_stylebox_override("disabled",skin("#283d43","#799d9d"));keycap.add_theme_color_override("font_color_disabled",Color("#e0e9e0"));keycap.pressed.connect(interact);row.add_child(keycap)
  prompt=label(20,"#fff4d4");prompt.name="InteractionText";prompt.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;prompt.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(prompt)
  notice=PanelContainer.new();notice.name="DialogueCard";notice.add_theme_stylebox_override("panel",skin("#102932","#799d9d"));add_child(notice)
- var col=VBoxContainer.new();col.add_theme_constant_override("separation",6);notice.add_child(col)
- var heading=HBoxContainer.new();col.add_child(heading)
- speaker=label(14,"#e8cd91");speaker.name="Speaker";speaker.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(speaker)
- var dismiss=Button.new();dismiss.name="DismissNotice";dismiss.text="×";dismiss.tooltip_text="Dismiss notice";dismiss.focus_mode=Control.FOCUS_NONE;dismiss.custom_minimum_size=Vector2(28,24);heading.add_child(dismiss)
+ var heading:=HBoxContainer.new()
+ heading.add_theme_constant_override("separation",12)
+ notice.add_child(heading)
+ var col:=VBoxContainer.new()
+ col.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ col.add_theme_constant_override("separation",6)
+ heading.add_child(col)
+ speaker=label(14,"#e8cd91");speaker.name="Speaker";speaker.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_child(speaker)
+ var dismiss=Button.new();dismiss.name="DismissNotice";dismiss.text="×";dismiss.tooltip_text="Dismiss notice";dismiss.focus_mode=Control.FOCUS_NONE;dismiss.custom_minimum_size=Vector2(28,24);dismiss.size_flags_vertical=Control.SIZE_SHRINK_BEGIN;heading.add_child(dismiss)
  dismiss.pressed.connect(func():
   if arcade:notice_left259=0
   else:game.message_time=0
   notice.hide()
  )
- scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;col.add_child(scroll)
- text=label(18,"#f0f4ec");text.name="DialogueText";text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;text.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(text)
+ text=RichTextLabel.new()
+ text.name="DialogueText"
+ text.add_theme_font_override("normal_font",FONT)
+ text.add_theme_color_override("default_color",Color("#f0f4ec"))
+ text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+ text.fit_content=false
+ col.add_child(text)
  action.hide();notice.hide()
 func interact()->void:
  if not action.visible or keycap.disabled:return
@@ -56,6 +65,14 @@ static func split_notice(value:String)->Array:
  if colon>0 and colon<36 and not value.substr(0,colon).contains("/"):
   return [value.substr(0,colon),value.substr(colon+1).strip_edges()]
  return ["NOTICE",value]
+static func display_notice(value:String)->String:
+ value=value.strip_edges()
+ var body:=str(split_notice(value)[1]).replace("\u200b","").replace("\u200c","").replace("\u200d","").replace("\u2060","").replace("\ufeff","").replace("\u00a0"," ").strip_edges()
+ if body.to_lower()=="crossroads update":return ""
+ for i in body.length():
+  if not body[i] in [" ","\t","\n","\r",".","…","-","—","–","•",":"]:return value
+ return ""
+
 func allowed()->bool:
  if not is_instance_valid(game) or not game.is_visible_in_tree():return false
  if game.get("media")!=null and game.media.clean_view and not game.has_meta("qa_show_notices"):return false
@@ -64,25 +81,26 @@ func allowed()->bool:
  if game.session_menu!=null and game.session_menu.page in ["main","options","clear"]:return false
  return game.started and game.shop_open.is_empty() if arcade else game.menu.is_empty()
 func transient_message259(value:String,context:String,dt:float)->String:
- value=value.strip_edges()
+ value=display_notice(value)
  if context!=context259:context259=context;last_message259="";notice_left259=0
  if value!=last_message259:
   last_message259=value;notice_left259=NOTICE_SECONDS259 if not value.is_empty() else 0.0
  else:notice_left259=maxf(0,notice_left259-maxf(0,dt))
- return value if notice_left259>0 and not str(split_notice(value)[1]).is_empty() else ""
+ return value if notice_left259>0 else ""
 func _process(_dt:float)->void:
  if released:
   var event=InputEventAction.new();event.action="interact";event.pressed=false;Input.parse_input_event(event);released=false
  var arcade_message=""
- if arcade:arcade_message=transient_message259(str(game.status_label.text),str(game.mode)+":"+str(game.started),_dt)
+ if arcade:
+  var status:="" if game.mode=="descent" else str(game.status_label.text)
+  arcade_message=transient_message259(status,str(game.mode)+":"+str(game.started),_dt)
  visible=allowed()
  if not visible:return
  var hint=hint_text().strip_edges();var message=""
  if arcade:
   message=arcade_message
  elif game.message_time>0:
-  message=str(game.message).strip_edges()
-  if str(split_notice(message)[1]).is_empty():message=""
+  message=display_notice(str(game.message))
  var viewport=get_viewport().get_visible_rect().size;var mobile=game.mobile.enabled;var run=arcade or game.mode=="run"
  var changed=state.is_empty() or hint!=str(state.get("hint","")) or message!=str(state.get("message","")) or viewport!=state.get("viewport",Vector2.ZERO) or mobile!=bool(state.get("mobile",false)) or run!=bool(state.get("run",false))
  if changed:
@@ -92,23 +110,35 @@ func reflow()->void:
  var v:Vector2=state.viewport;var compact:bool=bool(state.mobile) or v.x<760;var margin=16.0 if compact else 24.0
  var width=minf(760,v.x-margin*2);var action_width=minf(680,v.x-margin*2)
  var hint=str(state.hint)
+ var marina:bool=hint==preload("res://scripts/water_voyage.gd").PIER_HINT
+ if marina:action_width=minf(280.0,v.x-margin*2)
  var interactable=hint.begins_with("E ") or hint.begins_with("E•") or hint.begins_with("E·")
  if interactable:hint=hint.substr(1).strip_edges().trim_prefix("•").trim_prefix("·").strip_edges()
  var pad=10 if compact else 14
- action.get_theme_stylebox("panel").set_content_margin_all(pad);notice.get_theme_stylebox("panel").set_content_margin_all(pad);keycap.get_theme_stylebox("normal").set_content_margin_all(6);keycap.get_theme_stylebox("disabled").set_content_margin_all(6)
- prompt.text=hint;prompt.add_theme_font_size_override("font_size",17 if compact else 20);prompt.custom_minimum_size.x=maxf(80,action_width-108);keycap.text=("TAP" if bool(state.mobile) else "E") if interactable else "TIP";keycap.disabled=not interactable;keycap.mouse_filter=Control.MOUSE_FILTER_STOP
+ action.get_theme_stylebox("panel").set_content_margin_all(8 if marina else pad);notice.get_theme_stylebox("panel").set_content_margin_all(pad);keycap.get_theme_stylebox("normal").set_content_margin_all(6);keycap.get_theme_stylebox("disabled").set_content_margin_all(6)
+ prompt.text=hint;prompt.add_theme_font_size_override("font_size",16 if marina else 17 if compact else 20);prompt.custom_minimum_size.x=maxf(80,action_width-108);keycap.text=("TAP" if bool(state.mobile) else "E") if interactable else "TIP";keycap.disabled=not interactable;keycap.mouse_filter=Control.MOUSE_FILTER_STOP
  action.visible=not str(state.hint).is_empty();action.size=Vector2(action_width,0)
- var parts=split_notice(str(state.message));speaker.text=parts[0] if str(parts[0])!="NOTICE" else "CAVE DESCENT" if arcade and game.mode=="descent" else "CROSSROADS UPDATE";text.text=parts[1];text.add_theme_font_size_override("font_size",16 if compact else 18);text.custom_minimum_size.x=maxf(100,width-36)
- scroll.custom_minimum_size=Vector2(width-28,0);scroll.size=Vector2(width-28,0);scroll.scroll_vertical=0
- notice.visible=not str(state.message).is_empty();notice.size=Vector2(width,0)
- var line_height=FONT.get_height(16 if compact else 18);var max_height=minf(140,maxf(70,v.y*.24));var estimated=FONT.get_multiline_string_size(text.text,HORIZONTAL_ALIGNMENT_LEFT,width-40,16 if compact else 18).y
- # The scroll region keeps long dialogue readable without covering the whole game.
- text.custom_minimum_size.y=maxf(line_height,estimated);scroll.custom_minimum_size.y=minf(max_height,maxf(line_height,estimated));scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO
+ var parts:=split_notice(str(state.message))
+ speaker.text=str(parts[0]) if parts[0]!="NOTICE" and str(parts[0]).strip_edges().to_lower()!="crossroads update" else ""
+ speaker.visible=not speaker.text.is_empty()
+ text.text=str(parts[1])
+ var font_size:=16 if compact else 18
+ text.add_theme_font_size_override("normal_font_size",font_size)
+ var line_height:=FONT.get_height(font_size)+4
+ var message_width:=maxf(64,width-pad*2-54)
+ var estimated:=FONT.get_multiline_string_size(text.text,HORIZONTAL_ALIGNMENT_LEFT,message_width,font_size).y
+ text.custom_minimum_size.y=clampf(estimated+4,line_height,minf(140.0,maxf(line_height,v.y*.24)))
+ text.scroll_to_line(0)
+ notice.visible=not str(state.message).is_empty()
+ notice.size=Vector2(width,0)
+
 func place()->void:
  var v:Vector2=state.viewport;var base=88.0 if bool(state.mobile) else 116.0 if bool(state.run) else 22.0
  action.size.y=action.get_combined_minimum_size().y
- var budget=maxf(24,v.y-base-108-(action.size.y+10 if action.visible else 0)-48)
- if notice.visible:scroll.custom_minimum_size.y=minf(scroll.custom_minimum_size.y,budget)
+ var available:float=v.y-base-108-(action.size.y+10 if action.visible else 0)-60
+ if notice.visible:
+  var minimum:=FONT.get_height(text.get_theme_font_size("normal_font_size"))+4
+  text.custom_minimum_size.y=minf(text.custom_minimum_size.y,maxf(minimum,available))
  var notice_size=notice.get_combined_minimum_size();notice.size.y=notice_size.y
  notice.position=Vector2((v.x-notice.size.x)*.5,v.y-base-notice.size.y)
  var bottom=v.y-base-(notice.size.y+12 if notice.visible else 0)

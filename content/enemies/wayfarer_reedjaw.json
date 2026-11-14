@@ -1,0 +1,11 @@
+{
+  "id": "wayfarer_reedjaw",
+  "name": "Reedjaw",
+  "sprite": "wayfarer_reedjaw",
+  "health": 55,
+  "speed": 95,
+  "damage": 8,
+  "behaviour": "chase",
+  "aggro_range": 650,
+  "expansion_only": true
+}

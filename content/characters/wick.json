@@ -104,5 +104,7 @@
   },
   "id": "wick",
   "sprite": "wick",
-  "run_cost": 0
+  "run_cost": 0,
+  "event": "Halloween",
+  "event_active": false
 }

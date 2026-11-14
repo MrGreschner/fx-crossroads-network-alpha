@@ -126,7 +126,11 @@ func build_encounters(parent:Node,id:String)->void:
     label(parent,"BOSSES",16).modulate=Color("#efd09c")
     boss_grid=HFlowContainer.new();boss_grid.name="BossPortraits";boss_grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;boss_grid.add_theme_constant_override("h_separation",8);boss_grid.add_theme_constant_override("v_separation",8);parent.add_child(boss_grid)
    target_grid=boss_grid
-  var known:bool=str(kind) in game.legacy.data.get("encounters",{}).get(id,[])
+  var encountered:Array=game.legacy.data.get("encounters",{}).get(id,[])
+  var known:bool=str(kind) in encountered
+  if id=="wayfarer" and not known:
+   var previous:String=preload("res://scripts/wayfarer_art305.gd").PREVIOUS.get(str(kind),"")
+   known=previous in encountered
   var box:=PanelContainer.new();box.name="Encounter_"+str(kind).replace(":","_");box.custom_minimum_size=Vector2(102,102);target_grid.add_child(box)
   var skin:=StyleBoxFlat.new();skin.bg_color=Color("#493f37") if is_boss(id,str(kind)) else Color("#24434a");skin.set_corner_radius_all(6);
   if is_boss(id,str(kind)):skin.border_color=Color("#c5a169");skin.set_border_width_all(1)
@@ -188,6 +192,8 @@ func enemy_name(id:String,kind:String)->String:
  return str(game.enemy_types.get(kind,{}).get("name",kind.replace("_"," ").capitalize()))
 func portrait(id:String,kind:String)->Texture2D:
  var prefix:String=kind.substr(5) if kind.begins_with("boss:") else str(game.enemy_types.get(kind,{}).get("sprite",kind))
+ if id=="wayfarer" and preload("res://scripts/wayfarer_art305.gd").FOES.has(prefix):
+  return preload("res://scripts/wayfarer_art305.gd").texture(prefix)
  if id=="quarry" and prefix=="bramble_boss":return preload("res://scripts/quarry_art254.gd").boss("idle")
  var updated=preload("res://scripts/enemy_art235.gd").texture(prefix)
  if updated!=null:return updated

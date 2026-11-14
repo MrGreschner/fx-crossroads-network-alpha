@@ -1,8 +1,10 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## Four small cached prop regions. Existing doors, lantern origins and collisions remain authoritative.
 static var sheet:Texture2D
 static var metadata:Dictionary={}
 static var frames:Dictionary={}
+const REST_FOUNTAIN=Vector2(1494,1828)
 const EXCHANGE_RECT=Rect2(-952,609,274,216)
 const EXCHANGE_POSTS=[Vector2(-918,807),Vector2(-712,807)]
 const EXCHANGE_WINDOWS=[Rect2(-904,744,33,40),Rect2(-760,744,33,40)]
@@ -52,5 +54,5 @@ static func light_sources()->Array:
  var result=[]
  for p in EXCHANGE_POSTS:result.append({"at":lamp_glass(p),"radius":130.0,"strength":.9})
  for window in EXCHANGE_WINDOWS:result.append({"at":window.get_center(),"radius":95.0,"strength":.75})
- for p in [Vector2(-1030,1010),Vector2(1460,1880)]:result.append({"at":p-Vector2(0,48),"radius":105.0,"strength":.55,"portal":true})
+ for p in [Town311.WEST_FOUNTAIN,REST_FOUNTAIN]:result.append({"at":p-Vector2(0,48),"radius":105.0,"strength":.55,"portal":true})
  return result

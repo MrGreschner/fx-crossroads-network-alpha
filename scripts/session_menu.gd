@@ -15,17 +15,23 @@ var options_return:="main"
 var gallery:Control
 var GAME_DOWNLOAD_URL=preload("res://scripts/brand.gd").download_url()
 var display_font:Font=preload("res://assets/fonts/CrossroadsDisplay.ttf")
-var ui_font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
+var ui_font:Font
+func menu_font()->Font:
+ var font:=FontFile.new()
+ font.data=FileAccess.get_file_as_bytes("res://assets/menu315/DejaVuSans.ttf")
+ font.oversampling=2.0
+ return font if not font.data.is_empty() else ThemeDB.fallback_font
 func setup(owner:Node,multi:bool)->void:
  game=owner;arcade=multi;layer=55
+ ui_font=menu_font()
  backdrop=ColorRect.new();backdrop.color=Color(.015,.04,.06,.88);backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);backdrop.visible=false;add_child(backdrop)
  gallery=preload("res://scripts/menu_gallery.gd").new();gallery.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);backdrop.add_child(gallery);gallery.setup(game,arcade);gallery.visible=false
- panel=PanelContainer.new();panel.size=Vector2(760,660);backdrop.add_child(panel)
+ panel=PanelContainer.new();panel.size=Vector2(760,660);backdrop.add_child(panel);panel.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR
  var skin:=StyleBoxFlat.new();skin.bg_color=Color("#112e37");skin.border_color=Color("#d7bc80");skin.set_border_width_all(2);skin.set_corner_radius_all(16);skin.set_content_margin_all(26);panel.add_theme_stylebox_override("panel",skin)
  body=VBoxContainer.new();body.add_theme_constant_override("separation",10);panel.add_child(body)
  menu_button=Button.new();menu_button.text="Menu";menu_button.size=Vector2(90,44);menu_button.position=Vector2(18,598);menu_button.pressed.connect(func():open("pause"));add_child(menu_button);preload("res://scripts/top_button_style.gd").apply(menu_button);menu_button.custom_minimum_size=Vector2(90,44)
 func style(b:Button,tint:String)->void:
- b.add_theme_font_override("font",ui_font);b.add_theme_font_size_override("font_size",18);b.custom_minimum_size.y=64
+ b.add_theme_font_override("font",ui_font);b.add_theme_font_size_override("font_size",19);b.custom_minimum_size.y=64
  for state in ["normal","hover","pressed"]:
   var skin:=StyleBoxFlat.new();skin.bg_color=Color(tint).lightened(.12 if state=="hover" else -.08 if state=="pressed" else 0);skin.set_corner_radius_all(8);skin.set_content_margin_all(18);b.add_theme_stylebox_override(state,skin)
 func text(value:String,size:int=18)->Label:
@@ -119,7 +125,8 @@ func show_options()->void:
  options_return=page if page in ["main","pause"] else "main";open("options")
 func build_options()->void:
  var stability:Node=get_tree().root.get_node("FXStability")
- text("Tune performance and sound for this device.",18)
+ text("Tune controls, performance and sound for this device.",18)
+ build_touch_options()
  text("FRAME RATE",16).modulate=Color("#f2d699")
  var fps:=OptionButton.new();fps.custom_minimum_size.y=48;fps.add_theme_font_override("font",ui_font);fps.add_theme_font_size_override("font_size",18);body.add_child(fps)
  var limits:Array=[30,60,120]
@@ -146,6 +153,30 @@ func build_options()->void:
  var guide:=CheckButton.new();guide.text="Optional melee reach guides";guide.custom_minimum_size.y=44;guide.button_pressed=game.adventure.combat.feedback.guides;guide.toggled.connect(game.adventure.combat.feedback.set_guides);body.add_child(guide)
  text("Bright contact sparks confirm damage. Green + confirms healing. Faint blue reach guides are optional; terrain can block hits. Give copied reports to your teacher — nothing is sent automatically.",15)
  button("Back",func():open(options_return),"#3e7968")
+func build_touch_options()->void:
+ var mobile: Node = game.mobile
+ text("TOUCH CONTROLS",16).modulate=Color("#f2d699")
+ var hands := CheckButton.new()
+ hands.text="Left-handed layout"
+ hands.custom_minimum_size.y=44
+ hands.button_pressed=mobile.left_handed
+ hands.toggled.connect(func(value:bool):mobile.left_handed=value;mobile.save_preferences())
+ body.add_child(hands)
+ for setting in ["size","opacity"]:
+  var field := OptionButton.new()
+  field.custom_minimum_size.y=48
+  field.add_theme_font_override("font",ui_font)
+  field.add_theme_font_size_override("font_size",18)
+  var values := [.85,1.0,1.15] if setting=="size" else [.4,.65,.82,1.0]
+  for i in values.size():
+   field.add_item(("Button size" if setting=="size" else "Control opacity")+" • "+str(roundi(values[i]*100))+"%")
+   if is_equal_approx(values[i],mobile.button_scale if setting=="size" else mobile.button_opacity):field.select(i)
+  field.item_selected.connect(func(index:int):
+   if setting=="size":mobile.button_scale=values[index]
+   else:mobile.button_opacity=values[index]
+   mobile.save_preferences()
+  )
+  body.add_child(field)
 func copy_bug_report()->void:
  preload("res://scripts/release_support.gd").copy_text(preload("res://scripts/release_support.gd").bug_report(game));message.text="Copy requested. Paste into your report and add reproduction steps. Use the notebook's Download if clipboard access is blocked."
 func open_notebook()->void:

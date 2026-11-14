@@ -149,8 +149,8 @@ func reset()->void:
  for runtime in runtimes.values():runtime.queue_free()
  runtimes.clear();held.clear();last_input.clear()
 func flags(id:String)->Dictionary:
- var p=project_for(str(game.hero_ids.get(id,game.selected_hero if id==game.my_id else "")))
- return {"custom":not p.is_empty(),"balanced":bool(game.characters.get(str(game.hero_ids.get(id,game.selected_hero if id==game.my_id else "")),{}).get("studio_checked",false))}
+ var hero_id:=str(game.hero_ids.get(id,game.selected_hero if id==game.my_id else ""))
+ return {"custom":hero_id.begins_with("custom_"),"balanced":hero_id.begins_with("custom_") and bool(game.characters.get(hero_id,{}).get("studio_checked",false))}
 func minion_actor(key:String)->Dictionary:
  var parts=key.split("|")
  if parts.size()!=3 or not runtimes.has(parts[1]):return {}

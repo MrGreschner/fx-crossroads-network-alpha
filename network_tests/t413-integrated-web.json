@@ -1,0 +1,689 @@
+{
+  "errors": [],
+  "database": {
+    "n": 5,
+    "devices": 2
+  },
+  "result": [
+    {
+      "latest": {
+        "ability_view_active": false,
+        "ability_view_offset_px": 0,
+        "ability_view_starts": 0,
+        "action_ack_wait_ms": 45,
+        "action_input_flushes": 10,
+        "active": true,
+        "active_fps_cap": 60,
+        "arena_map": "crossroads",
+        "arrival_gap_max_ms": 263.499999999993,
+        "authoritative_build": {
+          "crit_tier": 0,
+          "final_technique": false,
+          "points": 0,
+          "technique": false,
+          "tuning": [
+            0,
+            0,
+            0
+          ]
+        },
+        "authority_hz": 60.0678507283975,
+        "authority_resets": 3,
+        "buffer_holds": 3,
+        "buffer_ms": 234.555,
+        "build": "T4.13",
+        "client_elapsed_ms": 63680,
+        "client_profile": {
+          "actors_effects_draw": {
+            "max_ms": 8.9,
+            "median_ms": 1,
+            "p95_ms": 3.5,
+            "samples": 170
+          },
+          "adventure_draw": {
+            "max_ms": 11.4,
+            "median_ms": 0.9,
+            "p95_ms": 3.6,
+            "samples": 170
+          },
+          "client_physics": {
+            "max_ms": 7.5,
+            "median_ms": 0.2,
+            "p95_ms": 0.7,
+            "samples": 180
+          },
+          "client_process": {
+            "max_ms": 62.3,
+            "median_ms": 5,
+            "p95_ms": 10.9,
+            "samples": 180
+          },
+          "combat_draw": {
+            "max_ms": 11.3,
+            "median_ms": 0.8,
+            "p95_ms": 3.1,
+            "samples": 170
+          },
+          "control_decode": {
+            "max_ms": 0.4,
+            "median_ms": 0,
+            "p95_ms": 0.1,
+            "samples": 180
+          },
+          "draw_commands": {
+            "max_ms": 38.5,
+            "median_ms": 2.7,
+            "p95_ms": 6.2,
+            "samples": 180
+          },
+          "frame_interval": {
+            "max_ms": 886.9,
+            "median_ms": 132,
+            "p95_ms": 240.6,
+            "samples": 180
+          },
+          "hud_draw": {
+            "max_ms": 27.5,
+            "median_ms": 0.4,
+            "p95_ms": 1,
+            "samples": 170
+          },
+          "network_poll": {
+            "max_ms": 37.3,
+            "median_ms": 3.3,
+            "p95_ms": 8.5,
+            "samples": 180
+          },
+          "prediction_replay": {
+            "max_ms": 10.4,
+            "median_ms": 0.5,
+            "p95_ms": 2.4,
+            "samples": 150
+          },
+          "projectile_art": {
+            "max_ms": 1.4,
+            "median_ms": 0,
+            "p95_ms": 0.1,
+            "samples": 180
+          },
+          "snapshot_adventure": {
+            "max_ms": 4.6,
+            "median_ms": 0.3,
+            "p95_ms": 0.7,
+            "samples": 150
+          },
+          "snapshot_apply": {
+            "max_ms": 10.9,
+            "median_ms": 1.3,
+            "p95_ms": 4.2,
+            "samples": 150
+          },
+          "snapshot_aux": {
+            "max_ms": 2.6,
+            "median_ms": 0.1,
+            "p95_ms": 0.1,
+            "samples": 150
+          },
+          "snapshot_custom": {
+            "max_ms": 0.1,
+            "median_ms": 0,
+            "p95_ms": 0.1,
+            "samples": 150
+          },
+          "snapshot_decode": {
+            "max_ms": 5.9,
+            "median_ms": 0.4,
+            "p95_ms": 1.1,
+            "samples": 180
+          },
+          "snapshot_entities": {
+            "max_ms": 1.9,
+            "median_ms": 0.1,
+            "p95_ms": 0.3,
+            "samples": 150
+          },
+          "snapshot_finalize": {
+            "max_ms": 0.1,
+            "median_ms": 0,
+            "p95_ms": 0,
+            "samples": 150
+          },
+          "snapshot_players": {
+            "max_ms": 10.5,
+            "median_ms": 0.6,
+            "p95_ms": 3,
+            "samples": 150
+          },
+          "world_draw": {
+            "max_ms": 4.1,
+            "median_ms": 0.1,
+            "p95_ms": 0.2,
+            "samples": 170
+          }
+        },
+        "clock_resyncs": 38,
+        "coalesced_client_snapshots": 44,
+        "confirmed_damage_events": 90,
+        "contacts": 0,
+        "correction_histogram": [
+          0,
+          0,
+          0
+        ],
+        "damage_labels": 0,
+        "dash_afterimages": 0,
+        "dash_sample_owners": {},
+        "dash_samples": 0,
+        "disconnect_reason": "",
+        "draw_calls": 167,
+        "enemies": 2,
+        "engine_physics_ms": 7.6,
+        "engine_process_ms": 237.6,
+        "firing": false,
+        "fps": 8,
+        "gateway_rtt_ms": 242,
+        "graphics_mode": "balanced",
+        "hero": "soccer",
+        "hud_rebuilds": 72,
+        "ice_walls": 0,
+        "last_action": {
+          "angle": -0.0475831069052219,
+          "client_ms": 61284,
+          "kind": "primary",
+          "phase": "",
+          "seq": 33,
+          "type": "attack"
+        },
+        "last_authority_reset": "respawn",
+        "last_launch": {
+          "drawn_ms": 61285,
+          "kind": "primary",
+          "received_ms": 61658,
+          "sent_ms": 61284,
+          "seq": 33
+        },
+        "launch_drawn_ms": {
+          "max": 4,
+          "median": 1,
+          "p95": 4,
+          "samples": 33
+        },
+        "launch_received_ms": {
+          "max": 569,
+          "median": 263,
+          "p95": 462,
+          "samples": 26
+        },
+        "local_view_offset_px": 0,
+        "long_frames_50ms": 437,
+        "match_elapsed_ms": 25249,
+        "match_id": "8b103463429b3caa4b59a90ac85459fe",
+        "max_handoff_error_px": 202.310089111328,
+        "max_position_correction_px": 0.00048828125,
+        "max_world_backlog_ms": 945,
+        "memory_bytes": 0,
+        "mobile_aim": [
+          1,
+          0
+        ],
+        "mobile_attacking": false,
+        "mobile_controls": false,
+        "oldest_wall_remaining": 0,
+        "pending_packets": 0,
+        "playback_rate": 1.05,
+        "players": 2,
+        "poll_budget_yields": 0,
+        "position_corrections": 0,
+        "predicted_projectiles": 0,
+        "prediction_expiries": 0,
+        "prediction_queue": 11,
+        "primitives": 3164,
+        "projectile_confirmations": 26,
+        "projectile_handoffs": 26,
+        "projectiles": 2,
+        "protocol": 3,
+        "recent_hit_events": [
+          {
+            "amount": 5,
+            "tick": 1038,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1074,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1074,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1083,
+            "victim": ""
+          },
+          {
+            "amount": 11,
+            "tick": 1092,
+            "victim": "9726dd3f47c56ff2"
+          },
+          {
+            "amount": 5,
+            "tick": 1092,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1101,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1110,
+            "victim": ""
+          },
+          {
+            "amount": 9,
+            "tick": 1200,
+            "victim": "b1b9048a8375db72"
+          },
+          {
+            "amount": 9,
+            "tick": 1215,
+            "victim": "b1b9048a8375db72"
+          },
+          {
+            "amount": 9,
+            "tick": 1371,
+            "victim": "b1b9048a8375db72"
+          },
+          {
+            "amount": 9,
+            "tick": 1377,
+            "victim": "b1b9048a8375db72"
+          }
+        ],
+        "release_cues": 33,
+        "render_objects": 906,
+        "render_scale_mode": 2,
+        "render_size": [
+          1280,
+          720
+        ],
+        "replayed_inputs": 11,
+        "room": "199FF3",
+        "rtt_ms": 242,
+        "scenery_chunks": 85,
+        "server_build": "T4.13",
+        "simulation_ms": 1.491,
+        "snapshot_interarrival_ms": 0,
+        "snapshot_ms": 1.514,
+        "state_age_ms": 1,
+        "target_buffer_ms": 180,
+        "terrain_chunks": 8,
+        "texture_memory_bytes": 30905227,
+        "twister_effects": 0,
+        "video_memory_bytes": 218638123,
+        "viewport": [
+          1280,
+          720
+        ],
+        "walking_actors": {
+          "9726dd3f47c56ff2": false,
+          "b1b9048a8375db72": false
+        },
+        "wire_bytes": 822710
+      },
+      "uploads": {
+        "status": "saved",
+        "pending_batches": 0,
+        "pending_samples": 2,
+        "dropped": 0,
+        "match_id": "8b103463429b3caa4b59a90ac85459fe"
+      },
+      "enemies": 2,
+      "states": 508
+    },
+    {
+      "latest": {
+        "ability_view_active": false,
+        "ability_view_offset_px": 0,
+        "ability_view_starts": 0,
+        "action_ack_wait_ms": 65,
+        "action_input_flushes": 9,
+        "active": true,
+        "active_fps_cap": 60,
+        "arena_map": "crossroads",
+        "arrival_gap_max_ms": 268.799999999999,
+        "authoritative_build": {
+          "crit_tier": 0,
+          "final_technique": false,
+          "points": 0,
+          "technique": false,
+          "tuning": [
+            0,
+            0,
+            0
+          ]
+        },
+        "authority_hz": 60.0678507283975,
+        "authority_resets": 3,
+        "buffer_holds": 3,
+        "buffer_ms": 309.999999999999,
+        "build": "T4.13",
+        "client_elapsed_ms": 47243,
+        "client_profile": {
+          "actors_effects_draw": {
+            "max_ms": 10.8,
+            "median_ms": 1.1,
+            "p95_ms": 4.3,
+            "samples": 175
+          },
+          "adventure_draw": {
+            "max_ms": 10.7,
+            "median_ms": 1.2,
+            "p95_ms": 4.7,
+            "samples": 175
+          },
+          "client_physics": {
+            "max_ms": 3.6,
+            "median_ms": 0.2,
+            "p95_ms": 0.6,
+            "samples": 180
+          },
+          "client_process": {
+            "max_ms": 50.8,
+            "median_ms": 5.9,
+            "p95_ms": 14,
+            "samples": 180
+          },
+          "combat_draw": {
+            "max_ms": 10.6,
+            "median_ms": 1,
+            "p95_ms": 4.5,
+            "samples": 175
+          },
+          "control_decode": {
+            "max_ms": 0.2,
+            "median_ms": 0,
+            "p95_ms": 0.1,
+            "samples": 180
+          },
+          "draw_commands": {
+            "max_ms": 43.2,
+            "median_ms": 3.1,
+            "p95_ms": 8.8,
+            "samples": 180
+          },
+          "frame_interval": {
+            "max_ms": 544.9,
+            "median_ms": 130.7,
+            "p95_ms": 266,
+            "samples": 180
+          },
+          "hud_draw": {
+            "max_ms": 30.9,
+            "median_ms": 0.4,
+            "p95_ms": 1.6,
+            "samples": 175
+          },
+          "network_poll": {
+            "max_ms": 41.5,
+            "median_ms": 3.5,
+            "p95_ms": 9.8,
+            "samples": 180
+          },
+          "prediction_replay": {
+            "max_ms": 4.9,
+            "median_ms": 0.5,
+            "p95_ms": 1.8,
+            "samples": 162
+          },
+          "projectile_art": {
+            "max_ms": 3.6,
+            "median_ms": 0.1,
+            "p95_ms": 0.4,
+            "samples": 180
+          },
+          "snapshot_adventure": {
+            "max_ms": 7,
+            "median_ms": 0.3,
+            "p95_ms": 0.9,
+            "samples": 162
+          },
+          "snapshot_apply": {
+            "max_ms": 8.3,
+            "median_ms": 1.3,
+            "p95_ms": 4.4,
+            "samples": 162
+          },
+          "snapshot_aux": {
+            "max_ms": 3,
+            "median_ms": 0.1,
+            "p95_ms": 0.2,
+            "samples": 162
+          },
+          "snapshot_custom": {
+            "max_ms": 0.1,
+            "median_ms": 0,
+            "p95_ms": 0.1,
+            "samples": 162
+          },
+          "snapshot_decode": {
+            "max_ms": 26.5,
+            "median_ms": 0.4,
+            "p95_ms": 1.7,
+            "samples": 180
+          },
+          "snapshot_entities": {
+            "max_ms": 6.2,
+            "median_ms": 0.1,
+            "p95_ms": 0.2,
+            "samples": 162
+          },
+          "snapshot_finalize": {
+            "max_ms": 0.1,
+            "median_ms": 0,
+            "p95_ms": 0,
+            "samples": 162
+          },
+          "snapshot_players": {
+            "max_ms": 5.3,
+            "median_ms": 0.7,
+            "p95_ms": 2.7,
+            "samples": 162
+          },
+          "world_draw": {
+            "max_ms": 2.7,
+            "median_ms": 0.1,
+            "p95_ms": 0.2,
+            "samples": 175
+          }
+        },
+        "clock_resyncs": 40,
+        "coalesced_client_snapshots": 25,
+        "confirmed_damage_events": 90,
+        "contacts": 0,
+        "correction_histogram": [
+          0,
+          0,
+          0
+        ],
+        "damage_labels": 0,
+        "dash_afterimages": 0,
+        "dash_sample_owners": {},
+        "dash_samples": 0,
+        "disconnect_reason": "",
+        "draw_calls": 188,
+        "enemies": 2,
+        "engine_physics_ms": 3.7,
+        "engine_process_ms": 257.6,
+        "firing": false,
+        "fps": 9,
+        "gateway_rtt_ms": 451,
+        "graphics_mode": "balanced",
+        "hero": "sunflower",
+        "hud_rebuilds": 74,
+        "ice_walls": 0,
+        "last_action": {
+          "angle": 0,
+          "client_ms": 44531,
+          "kind": "primary",
+          "phase": "",
+          "seq": 26,
+          "type": "attack"
+        },
+        "last_authority_reset": "respawn",
+        "last_launch": {
+          "drawn_ms": 44533,
+          "kind": "primary",
+          "received_ms": -1,
+          "sent_ms": 44532,
+          "seq": 26
+        },
+        "launch_drawn_ms": {
+          "max": 9,
+          "median": 1,
+          "p95": 7,
+          "samples": 26
+        },
+        "launch_received_ms": {
+          "max": 300,
+          "median": 251,
+          "p95": 300,
+          "samples": 7
+        },
+        "local_view_offset_px": 0,
+        "long_frames_50ms": 236,
+        "match_elapsed_ms": 25499,
+        "match_id": "8b103463429b3caa4b59a90ac85459fe",
+        "max_handoff_error_px": 72,
+        "max_position_correction_px": 0,
+        "max_world_backlog_ms": 780.000000000001,
+        "memory_bytes": 0,
+        "mobile_aim": [
+          1,
+          0
+        ],
+        "mobile_attacking": false,
+        "mobile_controls": true,
+        "oldest_wall_remaining": 0,
+        "pending_packets": 0,
+        "playback_rate": 1.05,
+        "players": 2,
+        "poll_budget_yields": 0,
+        "position_corrections": 0,
+        "predicted_projectiles": 0,
+        "prediction_expiries": 52,
+        "prediction_queue": 16,
+        "primitives": 5772,
+        "projectile_confirmations": 28,
+        "projectile_handoffs": 28,
+        "projectiles": 2,
+        "protocol": 3,
+        "recent_hit_events": [
+          {
+            "amount": 5,
+            "tick": 1044,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1044,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1044,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1089,
+            "victim": ""
+          },
+          {
+            "amount": 11,
+            "tick": 1098,
+            "victim": "9726dd3f47c56ff2"
+          },
+          {
+            "amount": 5,
+            "tick": 1098,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1107,
+            "victim": ""
+          },
+          {
+            "amount": 5,
+            "tick": 1107,
+            "victim": ""
+          },
+          {
+            "amount": 9,
+            "tick": 1197,
+            "victim": "b1b9048a8375db72"
+          },
+          {
+            "amount": 9,
+            "tick": 1203,
+            "victim": "b1b9048a8375db72"
+          },
+          {
+            "amount": 9,
+            "tick": 1368,
+            "victim": "b1b9048a8375db72"
+          },
+          {
+            "amount": 9,
+            "tick": 1383,
+            "victim": "b1b9048a8375db72"
+          }
+        ],
+        "release_cues": 0,
+        "render_objects": 1035,
+        "render_scale_mode": 2,
+        "render_size": [
+          1280,
+          720
+        ],
+        "replayed_inputs": 16,
+        "room": "199FF3",
+        "rtt_ms": 451,
+        "scenery_chunks": 85,
+        "server_build": "T4.13",
+        "simulation_ms": 1.621,
+        "snapshot_interarrival_ms": 0,
+        "snapshot_ms": 2.419,
+        "state_age_ms": 1,
+        "target_buffer_ms": 180,
+        "terrain_chunks": 6,
+        "texture_memory_bytes": 30894315,
+        "twister_effects": 0,
+        "video_memory_bytes": 218667651,
+        "viewport": [
+          1280,
+          720
+        ],
+        "walking_actors": {
+          "9726dd3f47c56ff2": false,
+          "b1b9048a8375db72": false
+        },
+        "wire_bytes": 827890
+      },
+      "uploads": {
+        "status": "saved",
+        "pending_batches": 0,
+        "pending_samples": 3,
+        "dropped": 0,
+        "match_id": "8b103463429b3caa4b59a90ac85459fe"
+      },
+      "enemies": 2,
+      "states": 509
+    }
+  ]
+}

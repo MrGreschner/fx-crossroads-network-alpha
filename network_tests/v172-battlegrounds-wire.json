@@ -1,0 +1,55 @@
+{
+  "build": "V172-preview",
+  "protocol": 8,
+  "passed": true,
+  "results": [
+    {
+      "correction": 0,
+      "history": 2,
+      "map": "woodland",
+      "purchase": true,
+      "resumed": true,
+      "seats": 6,
+      "snapshots": 57,
+      "team": 1,
+      "travel": 173.243240356445,
+      "troops": 12
+    },
+    {
+      "correction": 0,
+      "history": 1,
+      "map": "warzone",
+      "purchase": true,
+      "resumed": true,
+      "seats": 6,
+      "snapshots": 57,
+      "team": 1,
+      "travel": 173.243240356445,
+      "troops": 12
+    },
+    {
+      "correction": 0,
+      "history": 2,
+      "map": "woodland",
+      "purchase": true,
+      "resumed": true,
+      "seats": 8,
+      "snapshots": 57,
+      "team": 1,
+      "travel": 173.243240356445,
+      "troops": 16
+    },
+    {
+      "correction": 0,
+      "history": 2,
+      "map": "warzone",
+      "purchase": true,
+      "resumed": true,
+      "seats": 8,
+      "snapshots": 57,
+      "team": 1,
+      "travel": 173.243240356445,
+      "troops": 16
+    }
+  ]
+}

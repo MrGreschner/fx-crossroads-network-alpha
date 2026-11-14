@@ -72,10 +72,10 @@
     "merrymask",
     "dunecook",
     "dustmarshal",
-    "wick",
+    "lockjaw",
     "cobbleclaw",
     "twisterspell",
-    "hollow_rider",
+    "anjali",
     "hazel_hex",
     "echo_dancer",
     "little_menace",
@@ -310,7 +310,17 @@
     "mistglass_skater",
     "undertow_weaver",
     "sluicewarden",
-    "unwritten_sovereign"
+    "unwritten_sovereign",
+    "wayfarer_thornveil",
+    "wayfarer_ambercap",
+    "wayfarer_hollowroot",
+    "wayfarer_heartwood",
+    "wayfarer_rimehare",
+    "wayfarer_hoarfletch",
+    "wayfarer_bellstone",
+    "wayfarer_brassback",
+    "wayfarer_valvewright",
+    "wayfarer_reedjaw"
   ],
   "regions": [
     "grove",
@@ -341,5 +351,12 @@
   ],
   "quest_regions": [
     "wayfarer"
-  ]
+  ],
+  "event_heroes": [
+    "wick",
+    "hollow_rider",
+    "santa",
+    "reindeer"
+  ],
+  "active_event": "Winter Holiday"
 }

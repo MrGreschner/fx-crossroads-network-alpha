@@ -1,0 +1,14 @@
+{
+  "result": {
+    "done": true,
+    "heroes": 80,
+    "casts": 240
+  },
+  "errors": [],
+  "output": [
+    "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org",
+    "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+    "Build configuration: Emscripten 4.0.10, single-threaded, no GDExtension support.",
+    "ROSTER RENDER PASSED: 80 heroes, 240 casts"
+  ]
+}

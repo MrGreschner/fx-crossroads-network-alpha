@@ -384,7 +384,7 @@ func valid_action(data:Dictionary)->bool:
   var d=data.get("direction",[])
   if not d is Array or d.size()!=2 or not finite_number(d[0]) or not finite_number(d[1]):return false
  return int(data.get("input_seq",-1))>=0
-func valid_hero(g:Node,id:String)->bool:return g.characters.has(id) and not id.begins_with("custom_") and not bool(g.characters[id].get("npc_only",false))
+func valid_hero(g:Node,id:String)->bool:return g.characters.has(id) and not id.begins_with("custom_") and not bool(g.characters[id].get("npc_only",false)) and bool(g.characters[id].get("event_active",true))
 func join(key:int,data:Dictionary)->void:
  var kind=str(data.type);var code=str(data.get("room","")).to_upper();var id=""
  if kind=="resume":

@@ -1,0 +1,39 @@
+{
+  "build": "V171.2-preview",
+  "protocol": 6,
+  "passed": true,
+  "results": [
+    {
+      "correction": 0,
+      "history": 2,
+      "realm": "grove",
+      "resumed": true,
+      "snapshots": 43,
+      "travel": 202.114471435547
+    },
+    {
+      "correction": 0,
+      "history": 3,
+      "realm": "high_school",
+      "resumed": true,
+      "snapshots": 43,
+      "travel": 202.122055053711
+    },
+    {
+      "correction": 0,
+      "history": 1,
+      "realm": "shattered_oath",
+      "resumed": true,
+      "snapshots": 43,
+      "travel": 202.104797363281
+    },
+    {
+      "correction": 0,
+      "history": 1,
+      "realm": "wayfarer",
+      "resumed": true,
+      "snapshots": 42,
+      "travel": 202.11653137207
+    }
+  ]
+}

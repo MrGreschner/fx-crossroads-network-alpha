@@ -117,42 +117,42 @@
           ],
           "encounters": [
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 3500,
                 1900
               ]
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 3200,
                 1600
               ]
             },
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 5900,
                 1430
               ]
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 6200,
                 1150
               ]
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 2440,
                 8150
               ]
             },
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 2800,
                 8450
@@ -193,42 +193,42 @@
           "text": "Defeat the mill raiders and their foreman",
           "encounters": [
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 4450,
                 3350
               ]
             },
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 4900,
                 3500
               ]
             },
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 4300,
                 3900
               ]
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 5000,
                 3900
               ]
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 4800,
                 3250
               ]
             },
             {
-              "type": "rootbound_keeper",
+              "type": "wayfarer_hollowroot",
               "pos": [
                 4900,
                 4100
@@ -285,21 +285,21 @@
           ],
           "encounters": [
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 6650,
                 7950
               ]
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 8300,
                 8000
               ]
             },
             {
-              "type": "rootwarden",
+              "type": "wayfarer_heartwood",
               "pos": [
                 7350,
                 9300
@@ -312,7 +312,7 @@
           "text": "Defeat the Rootbound Keeper in the heart chamber",
           "encounters": [
             {
-              "type": "rootbound_keeper",
+              "type": "wayfarer_hollowroot",
               "pos": [
                 8550,
                 10000
@@ -321,14 +321,14 @@
               "boss": false
             },
             {
-              "type": "glowcap_slinger",
+              "type": "wayfarer_ambercap",
               "pos": [
                 8150,
                 9900
               ]
             },
             {
-              "type": "briar_bandit",
+              "type": "wayfarer_thornveil",
               "pos": [
                 8800,
                 9850
@@ -363,7 +363,7 @@
       "requires": [
         "waylights"
       ],
-      "offer": "Follow the eastern trail into Rimecrest. Light the trail beacons, defeat the ice golems, and bring back the bell before the pass freezes.",
+      "offer": "Follow the eastern trail into Rimecrest. Light the trail beacons, defeat the Bellstone Sentinels, and bring back the bell before the pass freezes.",
       "reward_gold": 42,
       "stages": [
         {
@@ -389,7 +389,7 @@
           ],
           "encounters": [
             {
-              "type": "ice_archer",
+              "type": "wayfarer_hoarfletch",
               "pos": [
                 12220,
                 1370
@@ -397,7 +397,7 @@
               "hp": 110
             },
             {
-              "type": "frostling",
+              "type": "wayfarer_rimehare",
               "pos": [
                 11170,
                 1840
@@ -411,7 +411,7 @@
           "text": "Reach the snowy summit and defeat the Rimebound guardians",
           "encounters": [
             {
-              "type": "summit_golem",
+              "type": "wayfarer_bellstone",
               "pos": [
                 13220,
                 2460
@@ -419,7 +419,7 @@
               "hp": 300
             },
             {
-              "type": "summit_golem",
+              "type": "wayfarer_bellstone",
               "pos": [
                 14950,
                 2460
@@ -427,7 +427,7 @@
               "hp": 320
             },
             {
-              "type": "ice_archer",
+              "type": "wayfarer_hoarfletch",
               "pos": [
                 15250,
                 1500
@@ -435,7 +435,7 @@
               "hp": 120
             },
             {
-              "type": "summit_golem",
+              "type": "wayfarer_bellstone",
               "pos": [
                 14600,
                 760
@@ -497,7 +497,7 @@
           ],
           "encounters": [
             {
-              "type": "sluice_beetle",
+              "type": "wayfarer_brassback",
               "pos": [
                 11540,
                 4140
@@ -505,7 +505,7 @@
               "hp": 150
             },
             {
-              "type": "tidebinder",
+              "type": "wayfarer_valvewright",
               "pos": [
                 11520,
                 5500
@@ -545,7 +545,7 @@
           ],
           "encounters": [
             {
-              "type": "sluice_beetle",
+              "type": "wayfarer_brassback",
               "pos": [
                 12800,
                 4800
@@ -553,7 +553,7 @@
               "hp": 160
             },
             {
-              "type": "tidebinder",
+              "type": "wayfarer_valvewright",
               "pos": [
                 13960,
                 5410
@@ -561,7 +561,7 @@
               "hp": 140
             },
             {
-              "type": "inkfin",
+              "type": "wayfarer_reedjaw",
               "pos": [
                 15060,
                 4750
@@ -575,7 +575,7 @@
           "text": "Clear the pump-house guardians and restart the Skywell",
           "encounters": [
             {
-              "type": "tidebinder",
+              "type": "wayfarer_valvewright",
               "pos": [
                 14400,
                 4140
@@ -583,7 +583,7 @@
               "hp": 250
             },
             {
-              "type": "sluice_beetle",
+              "type": "wayfarer_brassback",
               "pos": [
                 14080,
                 4150
@@ -591,7 +591,7 @@
               "hp": 500
             },
             {
-              "type": "inkfin",
+              "type": "wayfarer_reedjaw",
               "pos": [
                 14700,
                 4110

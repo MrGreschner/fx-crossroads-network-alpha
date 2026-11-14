@@ -1,0 +1,136 @@
+{
+  "build": "V171.2-preview",
+  "protocol": 6,
+  "passed": true,
+  "renderer": "Chromium software renderer",
+  "results": [
+    {
+      "bg": {
+        "bases": 6,
+        "gold": 12,
+        "map": "woodland",
+        "page": "battlegrounds",
+        "pending": false,
+        "production": 1,
+        "production_button": [
+          636,
+          726
+        ],
+        "seats": 6,
+        "team": 1,
+        "units": 12,
+        "visual_units": 12
+      },
+      "build": 171,
+      "history": 11,
+      "mode": "battlegrounds",
+      "mode_controls_enabled": false,
+      "navigation": {},
+      "panel_size": [
+        850,
+        590
+      ],
+      "position": [
+        6160,
+        3790
+      ],
+      "ready": true,
+      "realm": "grove",
+      "result": "",
+      "result_page": "battlegrounds",
+      "snapshots": 116,
+      "started": true,
+      "view_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "bg": {
+        "bases": 8,
+        "gold": 12,
+        "map": "warzone",
+        "page": "battlegrounds",
+        "pending": false,
+        "production": 1,
+        "production_button": [
+          636,
+          726
+        ],
+        "seats": 8,
+        "team": 1,
+        "units": 16,
+        "visual_units": 16
+      },
+      "build": 171,
+      "history": 8,
+      "mode": "battlegrounds",
+      "mode_controls_enabled": false,
+      "navigation": {},
+      "panel_size": [
+        850,
+        590
+      ],
+      "position": [
+        6160,
+        3790
+      ],
+      "ready": true,
+      "realm": "grove",
+      "result": "",
+      "result_page": "battlegrounds",
+      "snapshots": 116,
+      "started": true,
+      "view_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "bg": {
+        "bases": 6,
+        "gold": 12,
+        "interact_button": [
+          1064,
+          642
+        ],
+        "map": "warzone",
+        "page": "battlegrounds",
+        "pending": false,
+        "production": 1,
+        "production_button": [
+          775,
+          726
+        ],
+        "seats": 6,
+        "team": 1,
+        "units": 12,
+        "visual_units": 12
+      },
+      "build": 171,
+      "history": 8,
+      "mode": "battlegrounds",
+      "mode_controls_enabled": false,
+      "navigation": {},
+      "panel_size": [
+        850,
+        590
+      ],
+      "position": [
+        6160,
+        3790
+      ],
+      "ready": true,
+      "realm": "grove",
+      "result": "",
+      "result_page": "battlegrounds",
+      "snapshots": 89,
+      "started": true,
+      "view_size": [
+        1558,
+        720
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -148,7 +148,7 @@ func draw_on(c:Node2D,cam:Vector2)->void:
  var night_shift=hour<7 or hour>=20;person(c,TRADER-cam,Color('#7d719d') if night_shift else Color('#4d8e92'),false,t,false)
  c.draw_string(ThemeDB.fallback_font,TRADER-cam+Vector2(-20,27),"Lio • night shift" if night_shift else "Brin • bait trader",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color('#ead9ba'))
  for n in 2:
-  var guard=patrol(game.town_life.calendar.now,n*37);game.town_scenery.guard(c,guard.pos-cam,guard.walking)
+  var guard=patrol(game.town_life.calendar.now,n*37);game.town_scenery.guard(c,guard.pos-cam,guard.walking,"harbour_"+str(n))
  for at in LAMPS:preload("res://scripts/marina_art250.gd").lamp(c,at-cam,night>.1)
  for at in [Vector2(1834,2500),Vector2(2074,2500)]:
   c.draw_rect(Rect2(at-cam-Vector2(6,5),Vector2(12,12)),Color('#4f5f59'));c.draw_rect(Rect2(at-cam-Vector2(3,3),Vector2(6,8)),Color('#f8d88f') if night>.1 else Color('#a5ad91'))

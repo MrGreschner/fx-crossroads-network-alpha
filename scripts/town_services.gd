@@ -89,11 +89,14 @@ func _unhandled_input(event:InputEvent)->void:
  if panel.visible and event is InputEventKey and event.pressed and event.keycode in [KEY_ESCAPE,KEY_ENTER]:close();get_viewport().set_input_as_handled()
 func draw_post(c:Node2D,camera:Vector2,font:Font)->void:
  if not Rect2(camera,c.VIEW).intersects(Rect2(350,1220,420,390)):return
- var origin:Vector2=Vector2(550,1490)-camera;var t=Time.get_ticks_msec()/1000.0
+ var calendar:Variant=c.town_life.calendar
+ var time:=Time.get_ticks_msec()*.001
  preload("res://scripts/town_sprite_cache.gd").draw(c,"post242",Rect2(Vector2(350,1220)-camera,Vector2(420,390)))
- for n in 2:
-  var phase:=fposmod(t*.12+n*.5,1);var p:=origin+Vector2(-70+140*phase,52+sin(phase*PI)*10)
-  preload("res://scripts/town_cast230.gd").draw(c,"postal_worker",p+Vector2(0,6),t+n*.2,true)
+ var workers:=preload("res://scripts/town_workers314.gd").active("post",calendar.hour,calendar.weekday)
+ for worker in workers:
+  var p:Vector2=worker.pos-camera
+  preload("res://scripts/town_cast230.gd").draw(c,"postal_worker",p+Vector2(0,6),time,worker.moving)
+  if worker.task=="parcel":preload("res://scripts/town_streets244.gd").draw(c,"cargo",Rect2(p-Vector2(9,24),Vector2(18,15)))
 
 func draw_post_structure(c:Node2D,camera:Vector2,font:Font)->void:
  var origin:Vector2=Vector2(550,1490)-camera

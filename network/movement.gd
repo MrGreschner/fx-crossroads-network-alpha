@@ -4,7 +4,7 @@ const DT=1.0/60.0
 static func movable(g:Node,id:String)->bool:
  if g.arena_world.shatter.active():return g.arena_world.shatter.playable(id)
  var c=g.adventure.combat
- return int(g.health.get(id,0))>0 and not c.stunned(c.player_key(id)) and not c.twister.chanting(id) and not g.charges.has(id) and not c.stance_heroes.moving(id) and not c.v90.moving(id) and not c.v98.moving(id) and not c.chain.moving(id) and not c.classics.locked(id) and not c.v78.locked(id) and not c.v79.moving(id) and not c.v110.charging(id) and not c.halloween.moving(id) and not c.release_heroes.locked(id) and not g.adventure.immersive.aboard(id) and not c.v48.moving(id)
+ return int(g.health.get(id,0))>0 and not c.stunned(c.player_key(id)) and not c.twister.chanting(id) and not g.charges.has(id) and not c.stance_heroes.moving(id) and not c.v90.moving(id) and not c.v98.moving(id) and not c.chain.moving(id) and not c.classics.locked(id) and not c.v78.locked(id) and not c.v79.moving(id) and not c.v110.charging(id) and not c.events.locks_input(id) and not c.halloween.moving(id) and not c.release_heroes.locked(id) and not g.adventure.immersive.aboard(id) and not c.v48.moving(id)
 static func advance(g:Node,id:String,p:Vector2,direction:Vector2)->Vector2:
  if g.arena_world.shatter.active():return p+direction.limit_length(1)*g.arena_world.shatter.SPEED*DT if g.arena_world.shatter.playable(id) and not g.arena_world.shatter.airborne(id) else p
  if not movable(g,id):

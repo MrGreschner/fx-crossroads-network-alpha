@@ -1,0 +1,19 @@
+{
+  "build": "V176-preview",
+  "passed": true,
+  "results": [
+    {
+      "touch": false,
+      "townViews": 4,
+      "schoolViews": 3,
+      "passed": true
+    },
+    {
+      "touch": true,
+      "townViews": 4,
+      "schoolViews": 3,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

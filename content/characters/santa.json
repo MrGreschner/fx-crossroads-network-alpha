@@ -1,0 +1,44 @@
+{
+  "id": "santa",
+  "sprite": "santa",
+  "name": "Old Nick",
+  "max_health": 120,
+  "speed": 220,
+  "lore": "A winter courier who knows every doorstep in Crossroads, even when the paths are buried in snow.",
+  "run_cost": 0,
+  "role": "Support",
+  "passive": "Gift Wrap: every third damaging parcel hit strengthens your next Care Package.",
+  "passive_effect": "gift_wrap",
+  "mastery": {},
+  "event": "Winter Holiday",
+  "event_active": true,
+  "primary": {
+    "name": "Special Delivery",
+    "style": "gift_toss",
+    "damage": 17,
+    "cooldown": 0.75,
+    "range": 410,
+    "description": "Toss a parcel that bursts on the first enemy.",
+    "ui_brief": "Toss a parcel that bursts on the first enemy.",
+    "speed": 430,
+    "color": "#eaba7c"
+  },
+  "secondary": {
+    "name": "Care Package",
+    "style": "care_parcel",
+    "damage": 0,
+    "cooldown": 7,
+    "range": 310,
+    "description": "Aim and lob a wrapped parcel that heals and shields the ally who collects it.",
+    "ui_brief": "Aim and lob a wrapped parcel that heals and shields the ally who collects it."
+  },
+  "special": {
+    "name": "Midnight Delivery",
+    "style": "midnight_delivery",
+    "damage": 24,
+    "cooldown": 18,
+    "range": 285,
+    "description": "Three parachute parcels descend to marked landing spots. They burst on impact, damaging nearby enemies and opening into healing gifts.",
+    "ui_brief": "Three parachute parcels descend to marked landing spots. They burst on impact, damaging nearby enemies and opening into healing gifts."
+  }
+}

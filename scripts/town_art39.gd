@@ -46,13 +46,12 @@ static func draw(c:Node2D,kind:String,camera:Vector2)->void:
   var uv=tile.region
   c.draw_texture_rect_region(texture,Rect2(rect.position-camera,rect.size),Rect2(uv[0],uv[1],uv[2],uv[3]))
   visible_tiles+=1
- if kind=="chapter_ground":preload("res://scripts/town_art246.gd").cliffs(c,camera)
 static func source(c:Node2D,kind:String,camera:Vector2)->void:
  match kind:
   "streets":c.town_plan.draw_ground_source(c,camera)
   "merchants","merchants_night":c.commerce_town.draw_market_structure(c,camera)
   "rails":preload("res://scripts/town_v173.gd").draw_tracks_source(c,camera)
-  "chapter_ground":c.town_chapter.draw_ground_source(c,camera)
+  "chapter_ground":c.town_chapter.draw_ground_source(c,camera,false)
   "studio":c.studio_town.draw_structure_source(c,camera)
   "academy":c.academy_town.draw_structure_source(c,camera)
   "marina_deck":preload("res://scripts/town_marina.gd").draw_structure_source(c,camera)

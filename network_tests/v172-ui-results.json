@@ -1,0 +1,15 @@
+{
+  "build": "V172-preview",
+  "passed": true,
+  "results": [
+    {
+      "touch": false,
+      "passed": true
+    },
+    {
+      "touch": true,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

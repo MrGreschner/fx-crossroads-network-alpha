@@ -1,0 +1,162 @@
+{
+  "passed": true,
+  "softwareRenderer": true,
+  "results": [
+    {
+      "terrain": "school_sand",
+      "mixed": false,
+      "original": {
+        "draw_calls": 5,
+        "geometry": {
+          "merged_quads": 6,
+          "original_quads": 384,
+          "visible_chunks": 6
+        },
+        "objects": 400,
+        "primitives": 800
+      },
+      "merged": {
+        "draw_calls": 1,
+        "geometry": {
+          "merged_quads": 6,
+          "original_quads": 384,
+          "visible_chunks": 6
+        },
+        "objects": 6,
+        "primitives": 12
+      }
+    },
+    {
+      "terrain": "forest",
+      "mixed": false,
+      "original": {
+        "draw_calls": 35,
+        "geometry": {
+          "merged_quads": 23,
+          "original_quads": 401,
+          "visible_chunks": 6
+        },
+        "objects": 401,
+        "primitives": 802
+      },
+      "merged": {
+        "draw_calls": 12,
+        "geometry": {
+          "merged_quads": 23,
+          "original_quads": 401,
+          "visible_chunks": 6
+        },
+        "objects": 23,
+        "primitives": 46
+      }
+    },
+    {
+      "terrain": "forest",
+      "mixed": true,
+      "original": {
+        "draw_calls": 136,
+        "geometry": {
+          "merged_quads": 159,
+          "original_quads": 399,
+          "visible_chunks": 6
+        },
+        "objects": 399,
+        "primitives": 798
+      },
+      "merged": {
+        "draw_calls": 120,
+        "geometry": {
+          "merged_quads": 159,
+          "original_quads": 399,
+          "visible_chunks": 6
+        },
+        "objects": 159,
+        "primitives": 318
+      }
+    },
+    {
+      "terrain": "grass",
+      "mixed": true,
+      "original": {
+        "draw_calls": 136,
+        "geometry": {
+          "merged_quads": 159,
+          "original_quads": 399,
+          "visible_chunks": 6
+        },
+        "objects": 399,
+        "primitives": 798
+      },
+      "merged": {
+        "draw_calls": 120,
+        "geometry": {
+          "merged_quads": 159,
+          "original_quads": 399,
+          "visible_chunks": 6
+        },
+        "objects": 159,
+        "primitives": 318
+      }
+    },
+    {
+      "terrain": "storm_floor",
+      "mixed": false,
+      "original": {
+        "draw_calls": 1,
+        "geometry": {
+          "merged_quads": 6,
+          "original_quads": 384,
+          "visible_chunks": 6
+        },
+        "objects": 384,
+        "primitives": 768
+      },
+      "merged": {
+        "draw_calls": 1,
+        "geometry": {
+          "merged_quads": 6,
+          "original_quads": 384,
+          "visible_chunks": 6
+        },
+        "objects": 6,
+        "primitives": 12
+      }
+    },
+    {
+      "terrain": "clock_floor",
+      "mixed": false,
+      "original": {
+        "draw_calls": 1,
+        "geometry": {
+          "merged_quads": 6,
+          "original_quads": 384,
+          "visible_chunks": 6
+        },
+        "objects": 384,
+        "primitives": 768
+      },
+      "merged": {
+        "draw_calls": 1,
+        "geometry": {
+          "merged_quads": 6,
+          "original_quads": 384,
+          "visible_chunks": 6
+        },
+        "objects": 6,
+        "primitives": 12
+      }
+    }
+  ],
+  "timing": {
+    "hidden": false,
+    "visibility_changes": 0,
+    "hidden_total_ms": 0,
+    "raf_gap_max_ms": 167,
+    "raf_over_50ms": 1,
+    "long_tasks_supported": true,
+    "long_task_max_ms": 180,
+    "long_task_total_ms": 180,
+    "long_task_count": 1
+  },
+  "errors": []
+}

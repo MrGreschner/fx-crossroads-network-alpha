@@ -24,9 +24,8 @@ const CAVES=[Rect2(200,7400,3000,1800),Rect2(5300,7500,1700,1400),Rect2(7800,750
 const ROADS=[Vector2(1400,1800),Vector2(3400,1750),Vector2(4650,3650),Vector2(4900,3700),Vector2(5700,3700),Vector2(7800,4900),Vector2(7800,1900),Vector2(6800,1900),Vector2(6000,1250),Vector2(5700,900),Vector2(4900,900),Vector2(1400,1800)]
 const NPC_TEXTURES={"quest_edda":preload("res://assets/quest_edda.png"),"quest_orrin":preload("res://assets/quest_orrin.png"),"quest_sable":preload("res://assets/quest_sable.png")}
 var npc_art:Dictionary={}
-var cottages:Array[Texture2D]=[preload("res://assets/quest_cottage0.png"),preload("res://assets/quest_cottage1.png"),preload("res://assets/quest_cottage2.png")]
+const WildArt=preload("res://scripts/wayfarer_art305.gd")
 var heal_tick:=0.0
-var cave_texture:Texture2D=preload("res://assets/moonburrow_cave.png")
 func v(a:Array)->Vector2:return Vector2(float(a[0]),float(a[1]))
 func save_path()->String:return "user://fx_quests_"+str(data.get("id","wayfarer"))+("_party" if adventure.arcade else "_solo")+".json"
 func setup(id:String)->void:
@@ -199,7 +198,7 @@ func step(delta:float)->void:
    if bool(states[str(quest.id)].accepted) and not bool(states[str(quest.id)].done):encounter(quest)
   for n in 20:
    var point:=Vector2(2900+n%5*1400,2700+n/5*680)
-   if can_stand(point):adventure.spawn("briar_bandit" if n%3 else "glowcap_slinger",point,90,false)
+   if can_stand(point):adventure.spawn("wayfarer_thornveil" if n%3 else "wayfarer_ambercap",point,90,false)
   say("WAYFARER WILDS • Speak to Edda, Orrin and Sable in Willowrest. Q / Journal shows your quests.")
  for quest in data.quests:
   var state:Dictionary=states[str(quest.id)]
@@ -271,82 +270,97 @@ func receive(packet:Dictionary)->void:
    var previous=preload("res://scripts/profile_store.gd").read(save_path())
    var checkpoint=merge_checkpoint(previous.get("states",{}) if previous is Dictionary else {},states)
    preload("res://scripts/profile_store.gd").write(save_path(),{"version":data.get("version",1),"states":checkpoint})
-func texture(canvas:Node2D,name:String,point:Vector2,size:Vector2)->void:
- var art:Dictionary=adventure.game.art
- if art.has(name):canvas.draw_texture_rect(art[name],Rect2(point-size*.5,size),false)
 func label(canvas:Node2D,point:Vector2,text:String,color:=Color("#e8dfbb"),size:=18)->void:canvas.draw_string(ThemeDB.fallback_font,point,text,HORIZONTAL_ALIGNMENT_LEFT,-1,size,color)
-func house(canvas:Node2D,point:Vector2,roof:Color)->void:
- var index:=0 if roof.b>roof.r else 1 if roof.r>roof.g else 2
- canvas.draw_texture_rect(cottages[index],Rect2(point-Vector2(128,155),Vector2(256,240)),false)
 func draw_world(canvas:Node2D,camera:Vector2)->void:
  if not active:return
- var bounds:=Rect2(camera-Vector2(200,200),adventure.game.VIEW+Vector2(400,400))
+ var view:=Rect2(camera,adventure.game.VIEW)
+ var bounds:=view.grow(220)
  if camera.y<6500:
-  canvas.draw_rect(Rect2(Vector2(5100,0)-camera,Vector2(400,6500)),Color("#376a78"))
+  WildArt.surface(canvas,"meadow",Rect2(0,0,9900,6500),camera,view)
+  for n in ROADS.size()-1:
+   WildArt.road(canvas,ROADS[n],ROADS[n+1],camera,view)
+   WildArt.plaza(canvas,ROADS[n],camera,view,65)
+  WildArt.plaza(canvas,Vector2(1500,1900),camera,view,430)
+  var river:=Rect2(5100,0,400,6500)
+  WildArt.surface(canvas,"river",river,camera,view)
+  for x in [5080,5490]:
+   WildArt.surface(canvas,"terrace",Rect2(x,0,28,6500),camera,view,Color("#adbaa3"))
   for y in [900,3700,5700]:
-   canvas.draw_rect(Rect2(Vector2(5070,y-145)-camera,Vector2(460,290)),Color("#a08b60"))
-   for k in 9:canvas.draw_line(Vector2(5080+k*54,y-145)-camera,Vector2(5080+k*54,y+145)-camera,Color("#675d4c"),3)
-  for x in range(floori(camera.x/64),ceili((camera.x+adventure.game.VIEW.x)/64)+1):
-   for y in range(floori(camera.y/64),ceili((camera.y+adventure.game.VIEW.y)/64)+1):
-    var point:=Vector2(x*64+32,y*64+32);var road:=point.distance_to(Vector2(1500,1900))<430
-    for n in ROADS.size()-1:
-     if Geometry2D.get_closest_point_to_segment(point,ROADS[n],ROADS[n+1]).distance_to(point)<65:road=true;break
-    if road and terrain(point):texture(canvas,"path",point-camera,Vector2(64,64))
+   var bridge:=Rect2(5070,y-137,460,274)
+   if not view.grow(25).intersects(bridge):continue
+   canvas.draw_rect(Rect2(bridge.position-camera+Vector2(0,9),bridge.size),Color("#354846"))
+   WildArt.surface(canvas,"wood",bridge,camera,view)
+   for edge in [bridge.position.y,bridge.end.y]:
+    canvas.draw_line(Vector2(bridge.position.x,edge)-camera,Vector2(bridge.end.x,edge)-camera,Color("#766448"),9)
  else:
-  canvas.draw_rect(Rect2(Vector2.ZERO,adventure.game.VIEW),Color("#182c30"))
-  for x in range(floori(camera.x/64),ceili((camera.x+adventure.game.VIEW.x)/64)+1):
-   for y in range(floori(camera.y/64),ceili((camera.y+adventure.game.VIEW.y)/64)+1):
-    var point:=Vector2(x*64+32,y*64+32)
-    if not terrain(point):continue
-    var top:=point-Vector2(32,32)-camera
-    canvas.draw_texture_rect(cave_texture,Rect2(top,Vector2(64,64)),false)
-    for side in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
-     if not terrain(point+side*64):canvas.draw_line(top+Vector2(32,32)+side*32-side.orthogonal()*32,top+Vector2(32,32)+side*32+side.orthogonal()*32,Color("#67907d"),6)
+  canvas.draw_rect(Rect2(Vector2.ZERO,view.size),Color("#172b2d"))
+  for room in CAVES:
+   if not bounds.intersects(room):continue
+   WildArt.surface(canvas,"cave",room.grow(-20),camera,view)
+   # Rim bands only along exposed portions. Intersecting corridors keep their open mouths.
+   for edge in [Vector2.LEFT,Vector2.RIGHT,Vector2.UP,Vector2.DOWN]:
+    var across:Vector2=edge.orthogonal().abs()
+    var half_span:float=room.size.dot(across)*.5
+    var start:Vector2=room.get_center()+edge*(room.size.dot(edge.abs())*.5-24)-across*half_span
+    for distance in range(0,int(half_span*2),96):
+     var point:Vector2=start+across*(distance+48)
+     if not bounds.has_point(point) or terrain(point+edge*54):continue
+     var rim_size:Vector2=across*96+edge.abs()*16
+     WildArt.surface(canvas,"cave",Rect2(point-rim_size*.5,rim_size),camera,view,Color("#aac9a1"))
  highlands.draw_on(canvas,camera,clock,bool(states.get("skyworks",{}).get("done",false)))
  for prop in props:
   if not bounds.has_point(prop.pos):continue
-  texture(canvas,"tree" if str(prop.kind)=="tree" else "oath_stone",prop.pos-camera-Vector2(0,40),Vector2(110,145) if str(prop.kind)=="tree" else Vector2(68,70))
- for entry in [{"pos":Vector2(1450,1200),"name":"LANTERNWRIGHT","roof":Color("#577781")},{"pos":Vector2(1900,1790),"name":"WILLOWREST","roof":Color("#7f6249")},{"pos":Vector2(1000,2070),"name":"PATHFINDER LODGE","roof":Color("#567654")},{"pos":Vector2(4650,3420),"name":"MOSSWHEEL MILL","roof":Color("#687884")}]:
-  if bounds.has_point(entry.pos):house(canvas,entry.pos-camera,entry.roof);label(canvas,entry.pos-camera+Vector2(-100,95),entry.name)
+  var tree:bool=str(prop.kind)=="tree"
+  var choice:int=posmod(int(prop.pos.x)*7+int(prop.pos.y)*13,9)
+  var trees=["willow","beech","oak"]
+  var size:=Vector2(139,163)*(0.86+choice*.045) if tree else Vector2(82,74)
+  WildArt.prop(canvas,trees[choice%3] if tree else "rocks",prop.pos-camera+Vector2(0,15),size)
+ for entry in [{"pos":Vector2(1450,1200),"name":"LANTERNWRIGHT","asset":"lanternwright"},{"pos":Vector2(1900,1790),"name":"WILLOWREST","asset":"willowrest"},{"pos":Vector2(1000,2070),"name":"PATHFINDER LODGE","asset":"lodge"},{"pos":Vector2(4650,3420),"name":"MOSSWHEEL MILL","asset":"mill"}]:
+  if bounds.has_point(entry.pos):WildArt.prop(canvas,entry.asset,entry.pos-camera+Vector2(0,58),Vector2(256,256));label(canvas,entry.pos-camera+Vector2(-100,95),entry.name)
  if bounds.has_point(Vector2(4600,3650)):
-  var wheel:=Vector2(4600,3560)-camera;canvas.draw_circle(wheel,64,Color("#725e42"));canvas.draw_arc(wheel,61,0,TAU,32,Color("#d3b982"),6)
-  for n in 8:
-   var angle:float=TAU*n/8+(clock*.4 if int(states.get("mill",{}).get("stage",0))>0 else 0);canvas.draw_line(wheel,wheel+Vector2.from_angle(angle)*60,Color("#bd9b69"),5)
+  var wheel:=Vector2(4600,3560)-camera
+  var sprite:=WildArt.texture("waterwheel")
+  var angle:=clock*.4 if int(states.get("mill",{}).get("stage",0))>0 else 0.0
+  canvas.draw_set_transform(wheel,angle)
+  canvas.draw_texture_rect(sprite,Rect2(-Vector2(79,79),Vector2(158,158)),false)
+  canvas.draw_set_transform(Vector2.ZERO)
  for entry in [{"pos":Vector2(3400,1750),"label":"ABANDONED CAMP"},{"pos":Vector2(6000,1250),"label":"FALLEN WAYSHRINE"},{"pos":Vector2(2600,8300),"label":"GLOWROOT GROTTO"},{"pos":Vector2(8550,10000),"label":"THE HEART CHAMBER"}]:
   if bounds.has_point(entry.pos):
-   for n in 6:texture(canvas,"oath_stone",entry.pos+Vector2.from_angle(n*TAU/6)*130-camera,Vector2(55,60))
+   var feature="arch" if str(entry.label)=="FALLEN WAYSHRINE" else "glowroot" if entry.pos.y>6500 else "tent"
+   WildArt.prop(canvas,feature,entry.pos-camera,Vector2(186,186))
+   for n in 4:WildArt.prop(canvas,"rocks",entry.pos+Vector2.from_angle(n*TAU/4+.5)*140-camera,Vector2(60,57))
    label(canvas,entry.pos-camera+Vector2(-110,-165),entry.label,Color("#acd4ba"))
  # Farm plots, lantern-lined roads, river reeds and ruin masonry add authored landmarks.
- for row in 4:
-  for col in 8:
-   var crop:=Vector2(2100+col*38,2150+row*38)-camera
-   if bounds.has_point(crop+camera):canvas.draw_rect(Rect2(crop,Vector2(26,26)),Color("#615d40"));canvas.draw_line(crop+Vector2(6,22),crop+Vector2(13,4),Color("#b4bc70"),3)
+ for row in 2:
+  for col in 3:
+   var crop:=Vector2(2120+col*100,2170+row*76)
+   if bounds.has_point(crop):WildArt.prop(canvas,"garden",crop-camera,Vector2(107,88))
  for n in 28:
   var point:Vector2=ROADS[n%(ROADS.size()-1)].lerp(ROADS[n%(ROADS.size()-1)+1],.25+floorf(n/12.0)*.2)+Vector2(0,-70)
   if bounds.has_point(point):
-   var pole:Vector2=point-camera;canvas.draw_line(pole,pole-Vector2(0,42),Color("#5e6550"),4);canvas.draw_rect(Rect2(pole-Vector2(7,44),Vector2(14,16)),Color("#eadc97"));canvas.draw_circle(pole-Vector2(0,35),16,Color(1,.85,.4,.08))
+   WildArt.prop(canvas,"lantern",point-camera,Vector2(67,86))
  for n in 40:
   var point:=Vector2(5060 if n%2 else 5540,120+n*155)
-  if bounds.has_point(point) and absf(point.y-900)>180 and absf(point.y-3700)>180 and absf(point.y-5700)>180:texture(canvas,"marsh_reeds",point-camera,Vector2(75,60))
+  if bounds.has_point(point) and absf(point.y-900)>180 and absf(point.y-3700)>180 and absf(point.y-5700)>180:WildArt.prop(canvas,"willow" if n%5==0 else "ferns",point-camera,Vector2(86,88))
  for n in 12:
   var point:=Vector2(700+n%4*340,7650+n/4*480)
-  if bounds.has_point(point):canvas.draw_circle(point-camera,18,Color(.4,.8,.7,.1));canvas.draw_arc(point-camera,10,PI,TAU,16,Color("#8bd7b7"),5)
+  if bounds.has_point(point):WildArt.prop(canvas,"glowroot",point-camera,Vector2(74,74))
  for center in [Vector2(6500,7800),Vector2(8500,8100),Vector2(7400,9500),Vector2(8550,10000)]:
   if bounds.has_point(center):
-   canvas.draw_arc(center-camera,160,0,TAU,48,Color("#617b6b"),8)
-   for n in 8:
-    var point:Vector2=center+Vector2.from_angle(TAU*n/8)*180;canvas.draw_line(point-camera,point-camera-Vector2(0,32),Color("#6c8974"),7)
+   WildArt.prop(canvas,"roots",center-camera,Vector2(200,160))
+   for n in 4:
+    var point:Vector2=center+Vector2.from_angle(TAU*n/4+.55)*180
+    WildArt.prop(canvas,"standing_stone",point-camera,Vector2(71,90))
  var trail_end:Vector2=v(data.spawn)-camera
  var trail_start:Vector2=v(data.spawn)+Vector2(-350,-160)-camera
- canvas.draw_line(trail_start,trail_end,Color("#88785a"),90)
- canvas.draw_line(trail_start,trail_end,Color("#b4a076"),68)
+ WildArt.road(canvas,trail_start+camera,trail_end+camera,camera,view,45)
  for n in 4:
   var post:Vector2=trail_start.lerp(trail_end,n/4.0)+Vector2(0,-56)
   canvas.draw_line(post,post-Vector2(0,28),Color("#735c43"),5)
  label(canvas,trail_end+Vector2(-110,-65),"CROSSROADS TOWN ←",Color("#f4d9a1"),18)
  var spring:=Vector2(1700,2250)-camera
  if bounds.has_point(spring+camera):
-  canvas.draw_circle(spring,48,Color("#65776b"));canvas.draw_circle(spring,38,Color("#699f9e"));canvas.draw_arc(spring,26,clock,clock+TAU*.8,32,Color("#b3e5d9"),3);label(canvas,spring+Vector2(-75,70),"RESTING SPRING",Color("#bde0c9"),15)
+  WildArt.prop(canvas,"spring",spring+Vector2(0,25),Vector2(144,144));label(canvas,spring+Vector2(-75,70),"RESTING SPRING",Color("#bde0c9"),15)
  for npc in data.npcs:
   var point:=v(npc.pos)-camera
   if bounds.has_point(v(npc.pos)):
@@ -372,8 +386,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
  for route in routes():
   var point:Vector2=route.pos-camera
   if not Rect2(Vector2(-150,-150),adventure.game.VIEW+Vector2(300,300)).has_point(point):continue
-  canvas.draw_circle(point,65,Color("#233d35"));canvas.draw_arc(point,65,PI,TAU,24,Color("#71977d"),12,true)
-  canvas.draw_rect(Rect2(point+Vector2(-43,0),Vector2(86,24)),Color("#998563"));label(canvas,point+Vector2(-110,70),str(route.name))
+  WildArt.prop(canvas,"dungeon",point+Vector2(0,17),Vector2(170,170));label(canvas,point+Vector2(-110,70),str(route.name))
   if origin.distance_to(route.pos)<115:hint="E / Interact: "+str(route.name)
  for quest in data.quests:
   var state:Dictionary=states.get(str(quest.id),{})
@@ -387,7 +400,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
    if origin.distance_to(v(target.pos))<105:hint="E / Interact: "+str(target.name)
  for npc in data.npcs:
   if origin.distance_to(v(npc.pos))<115:hint="E / Interact: Talk to "+str(npc.name)
- var stone:=v(data.spawn)-camera;canvas.draw_rect(Rect2(stone-Vector2(16,30),Vector2(32,55)),Color("#91bcb1"));label(canvas,stone+Vector2(-100,50),"WAYSTONE • RETURN TO TOWN",Color("#c5e2d0"),15)
+ var stone:=v(data.spawn)-camera;WildArt.prop(canvas,"waystone",stone+Vector2(0,9),Vector2(100,100));label(canvas,stone+Vector2(-100,50),"WAYSTONE • RETURN TO TOWN",Color("#c5e2d0"),15)
  if origin.distance_to(v(data.spawn))<100:hint="E / Interact: Return to town • quest progress saved"
  if not hint.is_empty():
   if not adventure.arcade:adventure.game.hint=hint
@@ -469,7 +482,7 @@ func draw_hud(canvas:Node2D)->void:
 func step_golems(delta:float)->void:
  if not adventure.authoritative():return
  for foe in adventure.foes():
-  if str(foe.get("type",""))!="summit_golem":continue
+  if str(foe.get("type",""))!="wayfarer_bellstone":continue
   if adventure.combat.stunned(adventure.combat.npc_key(foe)):continue
   foe["ice_cooldown"]=maxf(0,float(foe.get("ice_cooldown",2))-delta)
   if float(foe.get("ice_windup",0))>0:
@@ -494,6 +507,6 @@ func golem_warnings()->Array:
  if not adventure.authoritative():return remote_golem_warnings
  var result:Array=[]
  for foe in adventure.foes():
-  if str(foe.get("type",""))=="summit_golem" and float(foe.get("ice_windup",0))>0:
+  if str(foe.get("type",""))=="wayfarer_bellstone" and float(foe.get("ice_windup",0))>0:
    result.append({"pos":foe.ice_center,"time":foe.ice_windup})
  return result

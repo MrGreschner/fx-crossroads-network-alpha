@@ -1,0 +1,54 @@
+{
+  "errors": [],
+  "browser_clients": [
+    {
+      "players": 4,
+      "states": 327,
+      "accepted": 9,
+      "closed": 0,
+      "mobile": false,
+      "pending_packets": 0,
+      "coalesced": 26
+    },
+    {
+      "players": 4,
+      "states": 330,
+      "accepted": 13,
+      "closed": 0,
+      "mobile": true,
+      "pending_packets": 0,
+      "coalesced": 1
+    }
+  ],
+  "scripted_clients": [
+    {
+      "id": "a08df82b61310215",
+      "states": 344,
+      "players": 4,
+      "accepted": 12
+    },
+    {
+      "id": "67d93fc77aa9f866",
+      "states": 344,
+      "players": 4,
+      "accepted": 12
+    }
+  ],
+  "graphics": {
+    "native": {
+      "mode": "native",
+      "render_size": [
+        5120,
+        2880
+      ]
+    },
+    "balanced": {
+      "mode": "balanced",
+      "render_size": [
+        1280,
+        720
+      ]
+    }
+  },
+  "coalesced_before_stall": 12
+}

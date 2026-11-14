@@ -1,4 +1,5 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## V246: shared static atlases, visible-region draws, no effects/nodes per object.
 const ROOT="res://assets/town246/"
 const RIDGE=Rect2(-1650,550,430,900)
@@ -43,14 +44,13 @@ static func crop_tint(b:Dictionary,stamp:float)->Color:
  return Color.WHITE if stamp>=float(b.end) else Color(.86,.95,.83)
 static func cliffs(g:Node2D,camera:Vector2)->void:
  draw(g,"ridge",Rect2(RIDGE.position-camera,RIDGE.size))
- # Two low shoulders physically link the existing entrance rockwork to the massif.
- # Neither covers an entrance, the Lodge, or the eastern approach lane.
- for spec in [Rect2(-1370,662,185,160),Rect2(-1334,1040,157,200)]:
-  draw(g,"ridge_foot",Rect2(spec.position-camera,spec.size),Color(.87,.92,.88))
- for x in [-1205,-965]:draw(g,"descent_pillar",Rect2(Vector2(x-20,1057)-camera,Vector2(40,150)))
+ var polish=preload("res://scripts/town_polish306.gd")
+ polish.draw(g,"mine_foothill",Rect2(-1392,588,326,266),camera)
+ polish.draw(g,"descent_foothill",Rect2(-1390,928,312,299),camera)
+ for x in [-1205,-965]:draw(g,"descent_pillar",Rect2(Vector2(x-20,1057)+Town311.DESCENT_SHIFT-camera,Vector2(40,150)))
 static func ground(g:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_terrain247.gd").civic(g,camera)
- draw(g,"rest_court",Rect2(COURT.position-camera,COURT.size))
+ preload("res://scripts/town_polish306.gd").draw(g,"rest_court",COURT,camera)
 static func rest_details(g:Node2D,camera:Vector2)->void:
  var view=Rect2(camera,g.VIEW).grow(110)
  for p in SEATS:

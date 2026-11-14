@@ -51,22 +51,25 @@ func resident_state(index:int)->Dictionary:
 func interact(g:Node)->bool:
  if events.interact(g):return true
  if calendar.interact(g):return true
- for n in residents.size():
-  var state=resident_state(n)
-  if not state.visible or g.position_in_world.distance_to(state.pos)>48:continue
-  g.hint="E • Say hello to "+str(state.name)
-  if Input.is_action_just_pressed("interact"):
-   var sayings={"tea":"Lunch tastes better with company. We meet at Wayfarer’s Rest on Monday, Wednesday and Friday.","games":"Your move! Tuesday and Thursday evenings are for board games under the pavilion.","stories":"Sundays bring travellers and their stories. Sit down and listen awhile.","harbour_trade":"Fresh supplies for the marina! We meet the river traders here on Tuesday and Thursday mornings.","picnic":"We bring lunch here on Tuesdays and Thursdays. The river sounds different every day.","market":"Fresh fruit, handmade wares and fish bait for a good day by the water.","lanterns":"Walk with us. The little lanterns make the whole street feel warmer.","stars":"That constellation looks like a leaping fish, if you tilt your head.","shop":"A full shopping basket is my kind of treasure.","read":"One more page, then I really will head home.","guard":"Keeping the roads safe. My boots deserve a medal.","water":"A little water, a little patience. No shouting at seedlings.","deliver":"Special delivery! Mostly herbs. Probably no beetles.","repair":"Measure twice, hammer once. Usually.","fish":"Bramble says the big one is still out there.","rest":"Best seat in town. Listen to that fountain.","chat":"Just catching up with the neighbours.","lunch":"Moss makes a good lunch. Then it is back to work!","music":"Wednesday evenings belong to music. Come listen with us!","explore":"The forest is different every time I walk it.","camp":"A warm fire after a long walk. I fish at dawn, before the town wakes.","sleep":"Time for a good night’s sleep.","home":"Heading home. Even adventurers need a cosy doorstep."}
-   g.message=str(state.name)+": "+str(sayings.get(state.task,"Lovely day in Crossroads!"))
-   if not state.working:g.message+=" Next stop: "+str(state.destination)+"."
-   g.message_time=5
-  return true
+ if interact_residents(g,48.0):return true
  for home in neighborhood.HOMES:
   if g.position_in_world.distance_to(home.door)>65:continue
   g.hint="E • "+str(home.name)
   if Input.is_action_just_pressed("interact"):g.message=str(home.name)+" • A private home. Residents sleep here at night and follow their own weekly routines.";g.message_time=4
   return true
  return false
+
+func interact_residents(g:Node,radius:float)->bool:
+ var nearest:=""
+ var distance:=radius
+ for n in residents.size():
+  var state:=resident_state(n)
+  if not state.visible:continue
+  var d:float=g.position_in_world.distance_to(state.pos)
+  if d<distance:
+   distance=d
+   nearest=str(state.name)
+ return not nearest.is_empty() and g.town_conversations.interact_actor(g,nearest)
 
 func offer(game:Node)->bool:
  if cooldown>0:return false

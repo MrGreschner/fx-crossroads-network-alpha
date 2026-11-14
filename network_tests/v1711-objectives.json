@@ -1,0 +1,134 @@
+{
+  "build": "V171.1-preview",
+  "checks": 393,
+  "failures": 0,
+  "method": "Automated objective fixtures use simulated defeats through real damage/death hooks; not human combat playthroughs.",
+  "passed": true,
+  "records": [
+    {
+      "checks": 3,
+      "realm": "grove",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "quarry",
+      "result": "cleared"
+    },
+    {
+      "checks": 8,
+      "realm": "honeyglass",
+      "result": "cleared"
+    },
+    {
+      "checks": 9,
+      "realm": "elementary",
+      "result": "cleared"
+    },
+    {
+      "checks": 8,
+      "realm": "sunfield",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "ice",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "folded_coast",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "moonburrow",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "moonveil",
+      "result": "cleared"
+    },
+    {
+      "checks": 8,
+      "realm": "petalbrook",
+      "result": "cleared"
+    },
+    {
+      "checks": 18,
+      "realm": "middle_school",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "space",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "zombie",
+      "result": "cleared"
+    },
+    {
+      "checks": 8,
+      "realm": "lantern_marsh",
+      "result": "cleared"
+    },
+    {
+      "checks": 17,
+      "realm": "silverfall",
+      "result": "cleared"
+    },
+    {
+      "checks": 12,
+      "realm": "confluence",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "brasslock",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "clockwork_orchard",
+      "result": "cleared"
+    },
+    {
+      "checks": 12,
+      "realm": "high_school",
+      "result": "cleared"
+    },
+    {
+      "checks": 18,
+      "realm": "neon_crucible",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "astral_rift",
+      "result": "cleared"
+    },
+    {
+      "checks": 14,
+      "realm": "chimevault",
+      "result": "cleared"
+    },
+    {
+      "checks": 3,
+      "realm": "ebonwake",
+      "result": "cleared"
+    },
+    {
+      "checks": 28,
+      "realm": "shattered_oath",
+      "result": "cleared"
+    },
+    {
+      "checks": 47,
+      "realm": "wayfarer",
+      "result": "cleared"
+    }
+  ]
+}

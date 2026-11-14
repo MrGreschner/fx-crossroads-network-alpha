@@ -1,0 +1,776 @@
+{
+  "Moss": [
+    [
+      "morning",
+      "What’s simmering this early?",
+      "Barley and onions. I start the pot before the carts arrive so the porters can eat something hot."
+    ],
+    [
+      "morning",
+      "Who gets the first bowl?",
+      "Whoever carried the water. Today that was Juniper, though she insists she was just passing."
+    ],
+    [
+      "day",
+      "What keeps well on the road?",
+      "A pear travels better than a bowl of stew. Ask Rowan which ones are ripe before you pack."
+    ],
+    [
+      "day",
+      "Why is that cutting board so scarred?",
+      "The old one split down the middle. Merrit made this one from the same door the stand used to have."
+    ],
+    [
+      "evening",
+      "Why are you keeping a bowl aside?",
+      "Lio comes off the harbour shift late. He says he never gets hungry, then finishes everything."
+    ],
+    [
+      "night",
+      "Still working?",
+      "The pot’s off. I’m counting bowls by touch because the lantern keeps attracting moths."
+    ],
+    [
+      "Rain",
+      "What do you cook on wet days?",
+      "Something you can eat with one hand. Everybody has the other one busy wringing out a sleeve."
+    ],
+    [
+      "Mist",
+      "Can you see the river from here?",
+      "No, but I can hear the boats. The crews call out before they reach the bend."
+    ],
+    [
+      "Clear",
+      "What’s drying in the sun?",
+      "Apple slices. If the wind holds, I’ll have enough to put a few in the road lunches."
+    ],
+    [
+      "Cloudy",
+      "Did the bread rise?",
+      "Slowly. I moved it nearer the stove and got on with chopping instead of staring at it."
+    ],
+    [
+      "weekend",
+      "Are weekends busier?",
+      "The anglers come back together. It gets quiet right before they arrive with six versions of the same story."
+    ],
+    [
+      "midweek",
+      "Do you go hear Wren play?",
+      "I catch the last song if the washing’s done. Sometimes Wren starts it again when they see me."
+    ],
+    [
+      "friend_morning",
+      "Did you always run the stand?",
+      "I borrowed a cooking pot from the watch and never returned it empty. Eventually they asked me to stay."
+    ],
+    [
+      "friend_day",
+      "What did the Oldwater crew teach you?",
+      "Salt the fish after it’s cooked. One of them made me try both ways before she’d explain."
+    ],
+    [
+      "friend_evening",
+      "Why do you make extra?",
+      "One winter I came in too late for supper. A guard gave me half his bread. I remember that every time I measure barley."
+    ],
+    [
+      "close",
+      "What would you cook for yourself?",
+      "The onion soup my brother used to make. He always burned the toast. Now I burn one slice on purpose."
+    ]
+  ],
+  "bartle": [
+    [
+      "morning",
+      "What are you stocking first?",
+      "Bandages and lamp oil. The things people forget tend to sell before breakfast."
+    ],
+    [
+      "day",
+      "Do I need to buy everything?",
+      "Pick the problem that ended your last run. Buy for that one and leave space for what you find."
+    ],
+    [
+      "evening",
+      "What do you do with the empty crates?",
+      "Perrin takes them on his morning round. I put the good ones on top so he doesn’t have to sort them."
+    ],
+    [
+      "night",
+      "Why count stock this late?",
+      "It’s the only time I can count past eight without somebody asking where the spare straps are."
+    ],
+    [
+      "Rain",
+      "What should stay dry in my pack?",
+      "Your bandages. Fold them inside a dry pouch before you put the pouch in the bag."
+    ],
+    [
+      "Mist",
+      "Does mist change what sells?",
+      "More oil, fewer maps. People already know the road. They’re worried about not seeing the next bend."
+    ],
+    [
+      "Clear",
+      "What’s on the counter outside?",
+      "The leather straps. They smell better after an hour in the sun, and I can spot the cracked ones."
+    ],
+    [
+      "Cloudy",
+      "Are you expecting a delivery?",
+      "The market cart should be here before the clouds break. Joss has a better sense of that than I do."
+    ],
+    [
+      "weekend",
+      "Who comes in on the weekend?",
+      "First-timers, mostly. I keep the cheap kit close so they don’t feel they need a veteran’s purse."
+    ],
+    [
+      "midweek",
+      "What are you repairing today?",
+      "A buckle that came back from the Grove. The owner swears it snapped when a guardian sneezed."
+    ],
+    [
+      "friend_morning",
+      "What did you forget at Deepwell?",
+      "Lamp oil. I laid three spare buckles on the rock hoping one of them would turn into a light."
+    ],
+    [
+      "friend_day",
+      "What’s the oldest thing here?",
+      "A dented tin from my first supply run. I still use it to hold loose buttons."
+    ],
+    [
+      "friend_evening",
+      "Did someone help you out of the mine?",
+      "Orrin handed me his lamp before he asked how I’d got there. I try to remember that order."
+    ],
+    [
+      "close",
+      "What makes a good day at the shop?",
+      "Someone comes back, puts the spare bandage on the counter, and tells me they didn’t need it."
+    ]
+  ],
+  "Rowan": [
+    [
+      "morning",
+      "What are you checking in the beds?",
+      "The soil under the leaves. The surface can look dry while the roots have all the water they need."
+    ],
+    [
+      "day",
+      "What can I grow for a trip?",
+      "Start with an Antidote Pear. Leave a space for it in your food slot when you come to harvest."
+    ],
+    [
+      "evening",
+      "Why are you tying up that branch?",
+      "The weight of the pears pulled it almost to the path. I’d rather prop it than lose the whole branch."
+    ],
+    [
+      "night",
+      "What’s still out this late?",
+      "Slugs. Put the lantern down by the bed and you’ll see who’s been taking bites."
+    ],
+    [
+      "Rain",
+      "Do you like the rain?",
+      "Up to a point. I moved the seed trays under the eaves so they don’t turn into little ponds."
+    ],
+    [
+      "Mist",
+      "Why do the leaves shine?",
+      "The mist beads at their tips. Wait a minute and you’ll see each one tip under the weight."
+    ],
+    [
+      "Clear",
+      "What’s in the paper envelopes?",
+      "Seeds drying in the sun. I write the name before I fill each one after a particularly confusing spring."
+    ],
+    [
+      "Cloudy",
+      "Do sprouts mind the shade?",
+      "For a little while it helps. I put the tender ones outside when the sun’s behind the clouds."
+    ],
+    [
+      "weekend",
+      "Do you still swap seeds?",
+      "When someone brings a cup of tea and time to sit. The best swaps happen after the work is finished."
+    ],
+    [
+      "midweek",
+      "Are those cuttings for the market?",
+      "Two for the market and one for Briar. I want to see what Briar does with it."
+    ],
+    [
+      "friend_morning",
+      "Where did the first pear come from?",
+      "A boat crew gave me two. I ate one on the dock and brought the other home in my coat."
+    ],
+    [
+      "friend_day",
+      "What’s in the borrowed garden?",
+      "Mint from Briar, a lake pear, and a bean whose giver insisted it needed a name. It’s called Hal."
+    ],
+    [
+      "friend_evening",
+      "Have you ever lost a whole crop?",
+      "Yes. I planted everything at once. A cold night taught me to leave half the seeds in the drawer."
+    ],
+    [
+      "close",
+      "Which bed should I look at first?",
+      "The little crooked one by the door. It’s where I put the plants people thought wouldn’t make it."
+    ]
+  ],
+  "elder": [
+    [
+      "morning",
+      "Do you always wake this early?",
+      "I like to hear the first wagon over the bridge before the square fills up."
+    ],
+    [
+      "day",
+      "What should I see before leaving?",
+      "Take a turn past the river. Knowing how to get home makes it easier to go somewhere new."
+    ],
+    [
+      "evening",
+      "Why stay by the portal?",
+      "Someone generally arrives with a question. In the evening it’s often where to get supper."
+    ],
+    [
+      "night",
+      "Does the portal get quieter?",
+      "The square does. You can hear the stone humming when nobody’s talking over it."
+    ],
+    [
+      "Rain",
+      "Did this square always flood?",
+      "Before the drain, yes. Merrit still tells the story of fishing a bench out of the gutter."
+    ],
+    [
+      "Mist",
+      "Can fog come through the portal?",
+      "I’ve watched folks step through soaked on a clear day. What follows them through is usually their own weather."
+    ],
+    [
+      "Clear",
+      "Where do you sit on a clear day?",
+      "The west bench, if I can get it. It’s the one from which you can see who’s coming up the road."
+    ],
+    [
+      "Cloudy",
+      "Is there a storm coming?",
+      "Ask someone who works outside. I keep losing that argument to Rowan."
+    ],
+    [
+      "weekend",
+      "Who comes back on the weekend?",
+      "The people who say they’re only stopping for supplies. They usually stay until the lamps go on."
+    ],
+    [
+      "midweek",
+      "What’s the song from the square?",
+      "Wren learned it from a ferryman. The ferry stopped running years ago, but the song still makes its rounds."
+    ],
+    [
+      "friend_morning",
+      "What was here before the shops?",
+      "A few canvas roofs and a stone well. The first thing we bought together was a second bucket."
+    ],
+    [
+      "friend_day",
+      "Did you have a favourite realm?",
+      "The Grove. I could walk one trail often enough to notice what had changed since the week before."
+    ],
+    [
+      "friend_evening",
+      "When did you decide to stay?",
+      "Someone left my usual chair out while I was gone. I’d never had a usual chair before."
+    ],
+    [
+      "close",
+      "Do you miss adventuring?",
+      "Sometimes. Then a new traveler tells me what they saw, and I get to picture a place I already know through their eyes."
+    ]
+  ],
+  "reel": [
+    [
+      "morning",
+      "Why check the water before opening?",
+      "I can tell which way the wind has been blowing by what’s caught against the dock."
+    ],
+    [
+      "day",
+      "Where should I cast first?",
+      "Try the sheltered side of the pilings. Watch where the current curves and carry your line across it."
+    ],
+    [
+      "evening",
+      "How was the catch today?",
+      "Small fish near the steps. Nell stayed late after seeing something bigger turn under the boards."
+    ],
+    [
+      "night",
+      "What do you hear past the docks?",
+      "Sometimes a boat, usually the ropes knocking against the posts. Give them room to move."
+    ],
+    [
+      "Rain",
+      "Would you fish in this rain?",
+      "From the bank, yes. I’d wait before taking a small boat out if the wind rose too."
+    ],
+    [
+      "Mist",
+      "How do the crews find the landing?",
+      "By the bell and each other’s voices. The first to tie up calls the rest in."
+    ],
+    [
+      "Clear",
+      "Why is the line stretched out?",
+      "Let it dry straight. Mine spent a whole week coiled wet once and never forgave me."
+    ],
+    [
+      "Cloudy",
+      "What bait are people asking for?",
+      "Something that moves. Brin keeps the best advice near the bait counter."
+    ],
+    [
+      "weekend",
+      "Do you fish on your day off?",
+      "Of course. I walk up to Oldwater so nobody asks me to mind their line."
+    ],
+    [
+      "midweek",
+      "Who repairs your nets?",
+      "Lio if there’s time. I return the favour by making tea just before the late shift."
+    ],
+    [
+      "friend_morning",
+      "How did you learn the river?",
+      "I walked it with my aunt when I was too small to handle a rod. She made me point out somewhere safe to land."
+    ],
+    [
+      "friend_day",
+      "What did you catch on your first trip?",
+      "A boot. My aunt helped me weigh it like a prize, then threw it into the rubbish when I went to get a bucket."
+    ],
+    [
+      "friend_evening",
+      "Was there a trip you turned back from?",
+      "The mist thickened by the river mouth. I’d promised fresh fish and brought everybody home hungry. I’d make the same call again."
+    ],
+    [
+      "close",
+      "What do you still want to catch?",
+      "I’d like to take my aunt out one more time. She could spend a whole afternoon without catching a thing and call it perfect."
+    ]
+  ],
+  "Tessa": [
+    [
+      "morning",
+      "What are you preparing?",
+      "Clean wraps. The people who need them rarely arrive when I have both hands free."
+    ],
+    [
+      "day",
+      "Who taught you to set a splint?",
+      "A climber named Oak, who demonstrated how not to land first."
+    ],
+    [
+      "Rain",
+      "Why are the benches indoors?",
+      "Wet sleeves are cold enough without sitting on wet wood. Come in and warm up."
+    ],
+    [
+      "friend_evening",
+      "Do you worry when the gate gets busy?",
+      "I worry when it goes quiet before everyone has come back. That’s when I put another kettle on."
+    ],
+    [
+      "close",
+      "How do you go home after a hard shift?",
+      "I walk the long way by the river. By the second bend I can hear something besides the clinic door."
+    ]
+  ],
+  "apothecary": [
+    [
+      "morning",
+      "Why weigh the herbs twice?",
+      "The first weight includes yesterday’s rain. Give them a little time near the window."
+    ],
+    [
+      "day",
+      "Can I make my own consumables?",
+      "Bring your ingredients to the counter. I’ll show you what keeps and what you should brew just before leaving."
+    ],
+    [
+      "Rain",
+      "Does rain change a brew?",
+      "It changes what I can pick. I keep the dried leaves for days like this."
+    ],
+    [
+      "friend_evening",
+      "What was your first remedy?",
+      "A salve for Merrit’s hands. It worked, but he smelled like onions for a week."
+    ],
+    [
+      "close",
+      "Do you have a favourite recipe?",
+      "A tea that doesn’t cure anything. Mira and I drink it when we’ve both had enough of being useful."
+    ]
+  ],
+  "Brin": [
+    [
+      "morning",
+      "Where’s the first good cast?",
+      "Off the quiet side of the steps, before everyone else starts dropping tackle."
+    ],
+    [
+      "Clear",
+      "Why are the bait tins open?",
+      "I dry the empty ones between shifts. Fish are choosy, and so am I."
+    ],
+    [
+      "friend_day",
+      "What did Lio teach you?",
+      "To pay attention to where the fish are moving, even when the first bite comes somewhere else."
+    ],
+    [
+      "close",
+      "Do you ever swap shifts?",
+      "If Lio wants a whole evening free, I stay. I get to hear the late boats coming in."
+    ]
+  ],
+  "Lio": [
+    [
+      "night",
+      "What keeps you awake on the late shift?",
+      "The bell, cold tea, and trying to guess how many boats are still out."
+    ],
+    [
+      "Mist",
+      "Ever lose sight of the landing?",
+      "Not from the stand, but I can lose the far post. That’s when I move the lantern to the end."
+    ],
+    [
+      "friend_morning",
+      "Do you ever fish after work?",
+      "Sometimes I stay for dawn. I’m usually too tired to mind where my line goes."
+    ],
+    [
+      "close",
+      "What’s the best part of the night shift?",
+      "When Brin turns up early and we have the whole landing to ourselves for a few minutes."
+    ]
+  ],
+  "Wren": [
+    [
+      "evening",
+      "Which tune are you practising?",
+      "The old ferry song. I leave room after the last line for anyone who knows the missing verse."
+    ],
+    [
+      "midweek",
+      "Are you playing in the square tonight?",
+      "If the strings stay dry, yes. Ask for a song you can hum all the way home."
+    ],
+    [
+      "friend_evening",
+      "Do you get nervous before playing?",
+      "Only until somebody stops walking and listens. It helps if their back is turned."
+    ],
+    [
+      "close",
+      "Who taught you the ferry song?",
+      "My neighbour, who sang while mending nets. Her version took as long as the whole net."
+    ]
+  ],
+  "exchange": [
+    [
+      "day",
+      "What’s that dark stone worth?",
+      "Let me see a fresh face first. A good vein can look like mud until you break it open."
+    ],
+    [
+      "Rain",
+      "Why are the sacks off the floor?",
+      "Wet ore stains everything and throws the scale off. The last customer paid for a bucket’s worth of rain."
+    ],
+    [
+      "friend_day",
+      "Do you miss the mine?",
+      "I miss knowing the name of each tunnel. I don’t miss waiting for my eyes to get used to daylight."
+    ],
+    [
+      "close",
+      "Do you keep any of the stones you buy?",
+      "Just one. Orrin dropped it in my pocket the day I opened this counter."
+    ]
+  ],
+  "mine": [
+    [
+      "morning",
+      "Why tap the supports before work?",
+      "A loose wedge sounds different. It’s easier to fix before the carts start rolling."
+    ],
+    [
+      "day",
+      "Can you tell how deep you are?",
+      "The draft changes near the lower galleries. If it stops altogether, I turn back."
+    ],
+    [
+      "friend_evening",
+      "Did you lend Bartle a lamp?",
+      "I lent one to someone with no oil and more buckles than sense. You’ll have to ask Bartle about the rest."
+    ],
+    [
+      "close",
+      "Do you remember your first shift?",
+      "My hands shook so badly I spilled my tea. Nobody mentioned it, and someone poured me another."
+    ]
+  ],
+  "Briar": [
+    [
+      "Rain",
+      "Did the rain spoil your experiment?",
+      "It saved me a trip with the watering can and moved all my labels two beds downhill."
+    ],
+    [
+      "friend_day",
+      "Which flowers survived the Coast wind?",
+      "The ones nearest the wall. I spent a month breeding tougher flowers when I should’ve built a smaller wall."
+    ]
+  ],
+  "Mira": [
+    [
+      "morning",
+      "What are you brewing?",
+      "Mint from Briar. He said it was an experimental batch, which usually means he planted too much."
+    ],
+    [
+      "friend_evening",
+      "Who used to share your tea?",
+      "My neighbour from the old ferry road. She drank the first cup hot and let the second go cold while she talked."
+    ]
+  ],
+  "Alden": [
+    [
+      "Mist",
+      "Still going out in this?",
+      "Only as far as the bridge. I’ve learned the difference between an interesting detour and needing someone to come find me."
+    ],
+    [
+      "friend_day",
+      "Have you ever found a new trail?",
+      "Once, behind a fallen tree. It led to somebody’s back door, so I asked permission before putting it on my map."
+    ]
+  ],
+  "Pip": [
+    [
+      "Rain",
+      "What’s in your pocket?",
+      "A peg puzzle. The wooden pieces swell in the rain, so today getting them out is the puzzle."
+    ],
+    [
+      "friend_evening",
+      "What puzzle has you stuck?",
+      "One Ada taught me. I can win it if she makes a mistake. I’m still waiting."
+    ]
+  ],
+  "Clover": [
+    [
+      "morning",
+      "Which stall opens first?",
+      "Moss starts the soup before anyone puts out a sign. Follow the smell and you’ll usually beat the crowd."
+    ],
+    [
+      "friend_day",
+      "What do you always buy?",
+      "One thing I’ve never cooked. Juniper has rescued me from several of those decisions."
+    ]
+  ],
+  "Flint": [
+    [
+      "Rain",
+      "Can you fix a swollen door?",
+      "I can. First I have to stop its owner from shaving half an inch off while it’s wet."
+    ],
+    [
+      "friend_evening",
+      "What was your first repair?",
+      "A cart wheel that didn’t need repairing. I was thirteen and had just been given a hammer."
+    ]
+  ],
+  "Hazel": [
+    [
+      "Clear",
+      "What do you leave for the bees?",
+      "The little flowers under the beans. People keep trying to weed them for me."
+    ],
+    [
+      "friend_day",
+      "Which plant was hardest to grow?",
+      "The pear by the wall. Once I stopped moving it to find the perfect spot, it did fine."
+    ]
+  ],
+  "Theo": [
+    [
+      "evening",
+      "Got a story for tonight?",
+      "Ask me about the bridge toll that was paid with a goose. Leave time for the part where the goose gets a vote."
+    ],
+    [
+      "friend_evening",
+      "Are the stories all true?",
+      "The bridge is real. Beyond that, I try to be fair to the people who are still here to correct me."
+    ]
+  ],
+  "Nell": [
+    [
+      "Mist",
+      "Can you fish without seeing the float?",
+      "I can feel a bite through the line if I hold it lightly. It took me a long time to stop gripping it so hard."
+    ],
+    [
+      "friend_day",
+      "Have you ever let a big catch go?",
+      "One at Oldwater. It barely fit in my net, and once I’d seen it up close that was enough."
+    ]
+  ],
+  "Rowe": [
+    [
+      "Rain",
+      "Is this a good day for a walk?",
+      "Excellent, if you planned to have the path to yourself and weren’t particular about dry socks."
+    ],
+    [
+      "friend_evening",
+      "Why take the long road home?",
+      "There’s a bit where the town falls quiet. I like choosing when to turn back into it."
+    ]
+  ],
+  "Fern": [
+    [
+      "Cloudy",
+      "What are you reading?",
+      "A ledger that someone used as a diary. The margin notes are much better than the numbers."
+    ],
+    [
+      "friend_day",
+      "Where do the old books come from?",
+      "Some arrive from the lake. One was returned with a ferry ticket marking a page nobody had read for years."
+    ]
+  ],
+  "Kit": [
+    [
+      "morning",
+      "What’s your first delivery?",
+      "A letter to someone who gets up later than I do. I’ve got time to do the long loop first."
+    ],
+    [
+      "friend_day",
+      "Have you ever lost a parcel?",
+      "For half an hour. I’d delivered it to Tuck, who was busy looking for me to give it back."
+    ]
+  ],
+  "Bram": [
+    [
+      "Clear",
+      "Can you see the Coast today?",
+      "Only the far shore if you know where to look. The rooftops make it look closer than it is."
+    ],
+    [
+      "friend_evening",
+      "Why watch the cliffs after dark?",
+      "On clear nights I can see the fishing lights. It makes the whole town feel a little less far from the water."
+    ]
+  ],
+  "Lark": [
+    [
+      "morning",
+      "What bird is that?",
+      "A wagtail. Watch the tail after it lands, and you’ll be able to pick it out next time."
+    ],
+    [
+      "friend_day",
+      "Which bird took longest to spot?",
+      "A kingfisher. Nell finally told me to stop staring at the water and look at the branch above it."
+    ]
+  ],
+  "Juniper": [
+    [
+      "day",
+      "What are you making for lunch?",
+      "Pear and onion flatbread. I tried it the other way round and used twice as many pears as I meant to."
+    ],
+    [
+      "friend_evening",
+      "What did Moss teach you?",
+      "How to taste the soup before reaching for more salt. I did it to be polite and then had to admit he was right."
+    ]
+  ],
+  "Tess": [
+    [
+      "Mist",
+      "Can you sketch in the fog?",
+      "It’s the easiest time to draw the tower. Everything I’d usually have to erase has already disappeared."
+    ],
+    [
+      "friend_day",
+      "What did you draw first?",
+      "The seedhouse door. Rowan hung it inside and never told me I’d drawn the hinges on the wrong side."
+    ]
+  ],
+  "Oak": [
+    [
+      "Clear",
+      "Are you climbing today?",
+      "Once the rock warms up. I’ve spent enough mornings trying to make stiff fingers hold on."
+    ],
+    [
+      "friend_evening",
+      "Do heights ever scare you?",
+      "Yes. If I stop paying attention to that feeling, I go home and try again another day."
+    ]
+  ],
+  "Ada": [
+    [
+      "evening",
+      "Still playing tonight?",
+      "If Pip brings the board. I put the missing piece in his pocket yesterday, so he may be looking for it."
+    ],
+    [
+      "friend_day",
+      "What’s the hardest move?",
+      "Leaving a piece alone when you can move it. It took me years to learn to wait."
+    ]
+  ],
+  "Finch": [
+    [
+      "day",
+      "Which map are you marking up?",
+      "The town one. It shows where the streets are; I’m adding where you can get out of the rain."
+    ],
+    [
+      "friend_evening",
+      "Why save the old maps?",
+      "Half the alleys have moved since they were drawn. I like remembering who used to live at the other end."
+    ]
+  ],
+  "Ash": [
+    [
+      "Mist",
+      "What do you look for on the trail?",
+      "The edges of the gravel. They’re still there when you lose sight of the trees ahead."
+    ],
+    [
+      "friend_evening",
+      "Do you like walking alone?",
+      "Most days. But I’m glad when somebody asks where I’ve been when I get back."
+    ]
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "build": "V174-preview",
+  "passed": true,
+  "results": [
+    {
+      "touch": false,
+      "landscapes": 25,
+      "passed": true
+    },
+    {
+      "touch": true,
+      "landscapes": 3,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

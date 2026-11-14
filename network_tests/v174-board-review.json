@@ -1,0 +1,17 @@
+{
+  "build": "V174-preview",
+  "passed": true,
+  "results": [
+    {
+      "touch": false,
+      "board_review": true,
+      "passed": true
+    },
+    {
+      "touch": true,
+      "board_review": true,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

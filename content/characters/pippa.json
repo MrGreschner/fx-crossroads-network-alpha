@@ -9,10 +9,10 @@
   "primary": {
     "name": "Ribbon Stitch",
     "style": "ribbon_stitch",
-    "damage": 15,
+    "damage": 14,
     "cooldown": 0.8,
     "range": 380,
-    "description": "Send two intertwining living ribbons forward. Each deals 15 damage once; walls stop the weaving threads."
+    "description": "Send two intertwining living ribbons forward. Each deals 14 damage once; walls stop the weaving threads."
   },
   "secondary": {
     "name": "Fern Double",

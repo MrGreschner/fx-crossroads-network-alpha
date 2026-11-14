@@ -5,6 +5,9 @@ static func identity(key:String)->String:
  return key
 static func draw_front(c:Node2D,key:String,pose:String,rect:Rect2,tint:Color=Color.WHITE,foe:Dictionary={})->bool:
  var id=identity(key);var art=preload("res://scripts/enemy_art235.gd");var motion=preload("res://scripts/neutral_art270.gd")
+ var wayfarer=preload("res://scripts/wayfarer_art305.gd")
+ if wayfarer.FOES.has(id):
+  wayfarer.enemy(c,id,pose,rect,tint,foe);return true
  if id=="bramble_boss" and str(c.get("region_id"))=="quarry":preload("res://scripts/quarry_art254.gd").draw_boss(c,pose,rect,tint);return true
  if preload("res://scripts/enemy_animation280.gd").has(id):
   preload("res://scripts/enemy_animation280.gd").draw(c,id,pose,rect,tint,foe);return true

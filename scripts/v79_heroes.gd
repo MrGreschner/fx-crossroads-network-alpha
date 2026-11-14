@@ -36,7 +36,8 @@ func displacement(owner:String,direction:Vector2,speed:float,delta:float)->Vecto
 func dodge_factor(owner:String)->float:return .28 if hero(owner)=="snail" else 1.0
 func momentum(owner:String)->float:return clampf(float(observed.get(owner,{}).get("speed",0))/280,0,1)
 func prepare(owner:String,stats:Dictionary,aim:Vector2,target:Vector2)->bool:
- if str(stats.get("style","")) not in STYLES+combat.v112.STYLES+combat.halloween.STYLES+combat.v90.STYLES+combat.stance_heroes.STYLES+combat.party_heroes.STYLES+combat.release_heroes.STYLES+combat.morrow.STYLES+combat.mantis.STYLES+combat.confluence.STYLES+["rift_triangle","rift_pin"]:return true
+ targets.erase(owner)
+ if str(stats.get("style","")) not in combat.events.STYLES+STYLES+combat.v112.STYLES+combat.halloween.STYLES+combat.v90.STYLES+combat.stance_heroes.STYLES+combat.party_heroes.STYLES+combat.release_heroes.STYLES+combat.morrow.STYLES+combat.mantis.STYLES+combat.confluence.STYLES+["rift_triangle","rift_pin"]:return true
  var p:Vector2=combat.owner_pos(owner);var range_limit:float=float(stats.get("range",300))
  var delta:Vector2=target-p
  if target==Vector2.ZERO or not is_finite(target.x) or not is_finite(target.y):delta=aim.normalized()*range_limit

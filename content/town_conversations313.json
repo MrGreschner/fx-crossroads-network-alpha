@@ -1,0 +1,898 @@
+{
+  "Briar": {
+    "name": "Briar",
+    "role": "Garden tinkerer",
+    "questions": [
+      "What grows by the river?",
+      "What are you trying to grow?"
+    ],
+    "local": "Mint. It survives my experiments, which is a very high standard.",
+    "personal": [
+      "I keep notes on every seed I plant.",
+      "I want a flower that can survive the wind off the Coast.",
+      "My first coastal seedlings all died. I kept their labels anyway. They taught me more than the ones that grew."
+    ]
+  },
+  "Mira": {
+    "name": "Mira",
+    "role": "Tea enthusiast",
+    "questions": [
+      "Where do people meet?",
+      "What do you listen for?"
+    ],
+    "local": "Wayfarer’s Rest. A pot of tea will get a conversation started before I can.",
+    "personal": [
+      "I like hearing what people notice first about town.",
+      "Sailors tell stories starting with the weather. Miners start with whoever forgot the lantern.",
+      "I write down ordinary days, too. If all we remember are disasters and triumphs, we forget what we came home for."
+    ]
+  },
+  "Alden": {
+    "name": "Alden",
+    "role": "Curious rambler",
+    "questions": [
+      "What’s beyond the east bridge?",
+      "Do you like exploring?"
+    ],
+    "local": "The Wayfarer trail. I stay near the bridge when the woods get quiet.",
+    "personal": [
+      "I like deciding where to turn back.",
+      "I used to follow the river because a path that runs both ways feels safer.",
+      "I take a different turn each week now. I still mark the way home."
+    ]
+  },
+  "Pip": {
+    "name": "Pip",
+    "role": "Puzzle collector",
+    "questions": [
+      "What do you play at the pavilion?",
+      "Where do you get your ideas?"
+    ],
+    "local": "Board games. My best move is asking for a rematch before I lose.",
+    "personal": [
+      "I sketch little puzzles on scrap paper.",
+      "I made a game about crossing Oldwater Lake without waking the fish.",
+      "I left a way for both players to win. It took three weeks before anyone tried it."
+    ]
+  },
+  "Clover": {
+    "name": "Clover",
+    "role": "Market regular",
+    "questions": [
+      "What’s worth seeing at the market?",
+      "Do you collect anything?"
+    ],
+    "local": "Look at what the stallholders put out first. It’s usually what they’re proudest of.",
+    "personal": [
+      "Buttons. You’d be surprised how many good ones go unclaimed.",
+      "The blue ones remind me of Folded Coast.",
+      "I’m sewing them onto a coat for myself. For once I’m making something I get to keep."
+    ]
+  },
+  "Flint": {
+    "name": "Flint",
+    "role": "Practical repairer",
+    "questions": [
+      "What should I bring to Deepwell?",
+      "What do you like fixing?"
+    ],
+    "local": "Light, and enough patience to stop when you can’t see what you’re doing.",
+    "personal": [
+      "Anything with a screw I can actually reach.",
+      "My first cart repair squeaked louder than the broken wheel.",
+      "I kept the wheel. It reminds me that a good repair should make someone’s day quieter."
+    ]
+  },
+  "Hazel": {
+    "name": "Hazel",
+    "role": "Patient gardener",
+    "questions": [
+      "What do you do when rain won’t stop?",
+      "Why gardening?"
+    ],
+    "local": "Check the beds and leave the seedlings alone. They don’t need an audience.",
+    "personal": [
+      "I like work with a clear beginning.",
+      "I was terrible at waiting until I started keeping a garden.",
+      "The healthiest bed is the one I check least often. I’m still learning from that."
+    ]
+  },
+  "Theo": {
+    "name": "Theo",
+    "role": "Local storyteller",
+    "questions": [
+      "Where do stories come from?",
+      "Which stories are yours?"
+    ],
+    "local": "Half come off a boat. The other half start with someone saying they have nothing to tell.",
+    "personal": [
+      "The short ones are usually true.",
+      "I once took the wrong trail out of the Grove and ended up back at my own lunch spot.",
+      "I used to leave that part out. These days it’s my favourite part."
+    ]
+  },
+  "Nell": {
+    "name": "Nell",
+    "role": "Observant angler",
+    "questions": [
+      "Any advice for Oldwater Lake?",
+      "Why fish so early?"
+    ],
+    "local": "Watch the water between casts. It’ll tell you when the fish are moving.",
+    "personal": [
+      "No one asks me to hurry before dawn.",
+      "I started going before sunrise because I was afraid of missing the best bite.",
+      "Now I’d go even if I forgot the rod. That hour belongs to me."
+    ]
+  },
+  "Rowe": {
+    "name": "Rowe",
+    "role": "Dry-humoured walker",
+    "questions": [
+      "Is the town always this busy?",
+      "Where do you go for quiet?"
+    ],
+    "local": "No. Sometimes everyone is indoors arguing about whose turn it is to make tea.",
+    "personal": [
+      "I take the pond path and count the lamps.",
+      "I used to go farther, out toward the Wayfarer bridge.",
+      "The pond’s close enough that people know where to find me. I’m glad they do."
+    ]
+  },
+  "Fern": {
+    "name": "Fern",
+    "role": "Keen reader",
+    "questions": [
+      "What do you read about?",
+      "Do you travel, too?"
+    ],
+    "local": "The realms. I’m making a list of things two travellers saw differently.",
+    "personal": [
+      "A little. A good book never gave me wet boots.",
+      "The first time I saw Silverfall, I’d read so much that I forgot to look up.",
+      "I closed the book and stayed until the light changed. That never made it into anyone’s guide."
+    ]
+  },
+  "Kit": {
+    "name": "Kit",
+    "role": "Fast courier",
+    "questions": [
+      "What’s the quickest way across town?",
+      "What do you like delivering?"
+    ],
+    "local": "Learn where people stop to talk. The straight line is rarely the fast one.",
+    "personal": [
+      "The little parcels. They’re less work and usually more important.",
+      "I once carried a repaired lantern to the Coast and brought a shell back.",
+      "I keep the shell on my desk so I remember a trip can go both ways."
+    ]
+  },
+  "Wren": {
+    "name": "Wren",
+    "role": "Evening musician",
+    "questions": [
+      "When can I hear music?",
+      "What do you play?"
+    ],
+    "local": "Wednesday evening in the square. You can listen from the edge if you like.",
+    "personal": [
+      "Anything I can remember without looking at my hands.",
+      "I stole a rhythm from the watermill. The wheel didn’t mind.",
+      "I play it slower now. It sounds like the river when there’s nobody around."
+    ]
+  },
+  "Bram": {
+    "name": "Bram",
+    "role": "Cliff watcher",
+    "questions": [
+      "What’s it like at the western cliffs?",
+      "Do you go underground?"
+    ],
+    "local": "Listen before you speak. The cave will answer either way.",
+    "personal": [
+      "Only when someone is expecting me back.",
+      "I once missed the last lamp and had to follow my own footsteps out.",
+      "I check the lamps on my walk now. Nobody asked me to. I just like knowing they’re lit."
+    ]
+  },
+  "Lark": {
+    "name": "Lark",
+    "role": "Eager birdwatcher",
+    "questions": [
+      "What do you see around the pond?",
+      "What would you like to see?"
+    ],
+    "local": "Mostly ripples. Everything worth seeing waits until I lower the notebook.",
+    "personal": [
+      "The shorebirds along Folded Coast.",
+      "I drew one from a description once. It looked like a spoon with opinions.",
+      "I finally saw one. Mine was wrong about everything except the attitude."
+    ]
+  },
+  "Juniper": {
+    "name": "Juniper",
+    "role": "Curious home cook",
+    "questions": [
+      "What’s good at the Food Stand?",
+      "What do you cook?"
+    ],
+    "local": "Ask Moss what’s still warm. That’s always the right order.",
+    "personal": [
+      "Food that forgives being left on the stove.",
+      "I tried making a Coast stew from memory and forgot the salt.",
+      "It was the first meal I shared with my neighbours. Nobody mentioned the salt until the next week."
+    ]
+  },
+  "Tess": {
+    "name": "Tess",
+    "role": "Careful sketcher",
+    "questions": [
+      "What are you drawing today?",
+      "What do you keep in your notebook?"
+    ],
+    "local": "The Starlace Tree. The shape is different depending on where I stand.",
+    "personal": [
+      "Mostly things that won’t sit still.",
+      "I tried drawing the portal light. Every time I looked down it had changed.",
+      "I kept the worst sketch. It was the first one that felt like watching it."
+    ]
+  },
+  "Oak": {
+    "name": "Oak",
+    "role": "Fond of heights",
+    "questions": [
+      "Where’s the best view?",
+      "Do you ever get nervous up there?"
+    ],
+    "local": "The lookout. You can follow the river until the rooftops get in the way.",
+    "personal": [
+      "Only on the way down.",
+      "I used to climb for the view. Now I climb to check the weather.",
+      "Once I waited up there for a friend’s boat. I waved long before they could see me."
+    ]
+  },
+  "Ada": {
+    "name": "Ada",
+    "role": "Patient board-game player",
+    "questions": [
+      "Can I join the next game?",
+      "Do you like winning?"
+    ],
+    "local": "Yes. If someone says the rules are obvious, ask them to explain the first turn.",
+    "personal": [
+      "I like a good last turn.",
+      "My favourite games leave you with something to talk about afterward.",
+      "I keep a spare seat open. Someone who thought they were just watching might change their mind."
+    ]
+  },
+  "Finch": {
+    "name": "Finch",
+    "role": "Inquisitive map reader",
+    "questions": [
+      "What’s on the town map?",
+      "Do you make maps?"
+    ],
+    "local": "Landmarks and paths. Look for the board by the Starlace Tree.",
+    "personal": [
+      "I copy routes so I can mark where I got confused.",
+      "My first map of the Coast had a rock that turned out to be a boat.",
+      "I still draw it in the margin. It reminds me to ask what moves."
+    ]
+  },
+  "Ash": {
+    "name": "Ash",
+    "role": "Quiet trail walker",
+    "questions": [
+      "Which trail do you like?",
+      "What do you do out there?"
+    ],
+    "local": "The one across the east bridge, just far enough for town to go quiet.",
+    "personal": [
+      "I stop walking for a while.",
+      "The Grove used to make me uneasy. I thought quiet meant I was alone.",
+      "Now I can hear how much is going on when I stand still."
+    ]
+  },
+  "elder": {
+    "name": "Elder Ram",
+    "role": "Town guide",
+    "questions": [
+      "What holds Crossroads together?",
+      "What was town like when you arrived?"
+    ],
+    "local": "The portal brings people through. The neighbours give them a reason to come back.",
+    "personal": [
+      "The paths were narrower. We still argued about where to put the benches.",
+      "I used to know the realms better than the people who lived next door.",
+      "I stopped keeping a count of places I’d been. I started keeping a list of people I wanted to see again."
+    ]
+  },
+  "bartle": {
+    "name": "Bartle",
+    "role": "Supply vendor",
+    "questions": [
+      "What should I pack?",
+      "How did you get into supplies?"
+    ],
+    "local": "Buy for the problem you keep running into. It’s cheaper than packing for every possible disaster.",
+    "personal": [
+      "I got very good at forgetting one important thing.",
+      "I reached Deepwell once with three spare buckles and no lamp oil.",
+      "Now I lay out the basics first. If you leave my shop with fewer things and a better plan, I did my job."
+    ]
+  },
+  "Moss": {
+    "name": "Moss",
+    "role": "Food stand cook",
+    "questions": [
+      "What’s good before a trip?",
+      "How did you learn to cook?"
+    ],
+    "local": "Something you’ll actually remember to eat. I can help with the first part.",
+    "personal": [
+      "I started by making soup for people on late shifts.",
+      "A boat crew from Oldwater once taught me to season fish without drowning it in salt.",
+      "I still cook a little extra on cold evenings. Someone will come back hungrier than they expected."
+    ]
+  },
+  "Tessa": {
+    "name": "Tessa",
+    "role": "Town healer",
+    "questions": [
+      "What helps after a hard run?",
+      "What’s the hardest part of the work?"
+    ],
+    "local": "Sit down first. Then tell me what hurts. In that order.",
+    "personal": [
+      "Convincing people that resting counts as doing something.",
+      "When I first worked near the Grove, I thought I had to fix everything before sunset.",
+      "I learned to tell people when I didn’t know. It helped them trust me when I did."
+    ]
+  },
+  "Scout_Alden": {
+    "name": "Scout Alden",
+    "role": "Wayfinder",
+    "questions": [
+      "How should I choose a realm?",
+      "What’s your favourite route?"
+    ],
+    "local": "Pick the trip you can get home from. The hardest route can wait.",
+    "personal": [
+      "I like the first stretch of the Wayfarer trail.",
+      "I once turned back at Silverfall because I’d lost the light. I was embarrassed for a week.",
+      "The next time, I took someone who’d never seen it. I’m glad I saved that view."
+    ]
+  },
+  "Rowan": {
+    "name": "Rowan",
+    "role": "Seedhouse keeper",
+    "questions": [
+      "What makes a good seed?",
+      "What’s your favourite crop?"
+    ],
+    "local": "One you’re willing to check even after you’ve forgotten what you planted.",
+    "personal": [
+      "I like pears. They make a good excuse to come back.",
+      "I used to swap seeds at the lake and forget to write down who gave me what.",
+      "There’s a bed I call the borrowed garden. I can tell you where every seed came from now."
+    ]
+  },
+  "Brin": {
+    "name": "Brin",
+    "role": "Day-shift bait trader",
+    "questions": [
+      "What’s good bait today?",
+      "Do you fish on your days off?"
+    ],
+    "local": "Have a look at the tray. I’m always trying something different when the river changes.",
+    "personal": [
+      "Of course. I just don’t count the catch.",
+      "I started trading after a stranger shared their last hook with me.",
+      "I keep a spare in my apron. It’s amazing how often the next person needs one."
+    ]
+  },
+  "Lio": {
+    "name": "Lio",
+    "role": "Night-shift bait trader",
+    "questions": [
+      "What’s the harbour like at night?",
+      "Do you like the late shift?"
+    ],
+    "local": "Quiet enough to hear a boat before you can see it. Bring a light.",
+    "personal": [
+      "I like having time to finish a thought.",
+      "I used to watch the last boats from the cottage before taking this job.",
+      "I know which boats are home by the rhythm of their oars. Sometimes I stay out just to hear the last one."
+    ]
+  },
+  "reel": {
+    "name": "Reed",
+    "role": "Ripple & Reel keeper",
+    "questions": [
+      "Where can I try fishing?",
+      "What made you open the shop?"
+    ],
+    "local": "Start at the town pond. Oldwater will still be there when you know your rod.",
+    "personal": [
+      "I wanted somewhere dry to mend a line.",
+      "I used to carry all my tackle to the Coast in one tin. Everything tangled together.",
+      "The drawer marked “spares” is for people who make that same mistake."
+    ]
+  },
+  "exchange": {
+    "name": "Maren",
+    "role": "Deepwell Exchange keeper",
+    "questions": [
+      "What comes out of Deepwell?",
+      "Which stones do you keep?"
+    ],
+    "local": "Ore, gems, and a surprising number of scratched-up carts.",
+    "personal": [
+      "The ones with an odd shape nobody wants to pay for.",
+      "My first gem was too dull to sell. I put it on the counter anyway.",
+      "I still have it. It catches the morning light for about one minute."
+    ]
+  },
+  "mine": {
+    "name": "Orrin",
+    "role": "Deepwell foreman",
+    "questions": [
+      "What should miners know?",
+      "How did you start here?"
+    ],
+    "local": "Pay attention to the sound of the track. It tells you when a cart is coming home.",
+    "personal": [
+      "Sweeping grit off the rails.",
+      "My first shift underground felt longer than a whole winter.",
+      "I take the first shift with new miners. It’s easier to ask questions when someone else is carrying the lamp."
+    ]
+  },
+  "market": {
+    "name": "Sable",
+    "role": "Market steward",
+    "questions": [
+      "What’s the market known for?",
+      "What do you look for in a stall?"
+    ],
+    "local": "Things made by people who still live close enough to mend them.",
+    "personal": [
+      "Something someone took the time to finish properly.",
+      "I tried selling three kinds of wares at once. I forgot the price of all three.",
+      "I like helping new traders set up. Everyone deserves one day where the stall looks better than they expected."
+    ]
+  },
+  "atelier": {
+    "name": "Iris",
+    "role": "Gleam Atelier keeper",
+    "questions": [
+      "What makes a good outfit?",
+      "Where do you get your ideas?"
+    ],
+    "local": "A small detail you’ll still like after the novelty wears off.",
+    "personal": [
+      "From the colours people bring back from their trips.",
+      "I once matched a thread to sunset over Oldwater. By noon it looked completely different.",
+      "Now I leave the swatches by the window for a whole day. A colour should feel right in the morning, too."
+    ]
+  },
+  "challenge": {
+    "name": "Beren",
+    "role": "Challenge Lodge keeper",
+    "questions": [
+      "How should I start a trial?",
+      "Do you still run the trials?"
+    ],
+    "local": "Pick a style you enjoy and learn what one clear feels like.",
+    "personal": [
+      "I do, when the board needs checking.",
+      "I missed a timing mark in my own lodge because I was watching the scenery.",
+      "I leave my name off the practice list. I like having a place where I can be bad at something."
+    ]
+  },
+  "gather": {
+    "name": "Sorrel",
+    "role": "Gatherers’ Lodge keeper",
+    "questions": [
+      "Where do the crews forage?",
+      "What do you like to gather?"
+    ],
+    "local": "Willow Brook and the meadows are good places to learn what grows here.",
+    "personal": [
+      "The things that smell good even before I know their names.",
+      "One crew brought back mud in a neatly labelled sack. They’d left the herbs on the bank.",
+      "I kept the label. It’s now on the drawer for things we forgot."
+    ]
+  },
+  "apothecary": {
+    "name": "Willow",
+    "role": "Willowglass apothecary",
+    "questions": [
+      "What are your brews for?",
+      "How do you test a recipe?"
+    ],
+    "local": "A specific kind of trouble. Read the label before you pack one.",
+    "personal": [
+      "Slowly, and with a notebook I can wash.",
+      "A batch from the marsh once turned the stirring spoon green for a month.",
+      "I still use that spoon when a new apprentice is afraid of making their first mistake."
+    ]
+  },
+  "tower": {
+    "name": "Vale",
+    "role": "Mistglass Spire keeper",
+    "questions": [
+      "What happens in the Spire?",
+      "Why do you study echoes?"
+    ],
+    "local": "We observe echoes. A practice echo is easiest to learn from when you take your time.",
+    "personal": [
+      "They’re good at showing me what I overlooked.",
+      "I spent a week studying the flash before I noticed the pause that came before it.",
+      "Now I teach people to watch for the pause. It helps outside the Spire, too."
+    ]
+  },
+  "gate_0": {
+    "name": "Garran",
+    "role": "North Gate watch",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "I count everyone heading out. I’m happier counting them back in.",
+    "personal": [
+      "I can walk the gate road in the dark. I still take a lantern.",
+      "I used to keep score by how far I could march.",
+      "Now a good shift is one where every face on my list comes home."
+    ]
+  },
+  "gate_1": {
+    "name": "Marl",
+    "role": "Lookout patrol",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "If the lookout flag goes flat, the wind’s about to change.",
+    "personal": [
+      "I always look at the sky before I check my watch.",
+      "I learned the flag calls before I learned the streets.",
+      "I still write the calls on my glove. My hands remember them better than I do."
+    ]
+  },
+  "gate_2": {
+    "name": "Nessa",
+    "role": "Pond patrol",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "People hurry past the pond. I’m paid to notice what they miss.",
+    "personal": [
+      "If the ducks move out of the way, someone is coming.",
+      "I know which ducks arrive first.",
+      "I used to dislike the quiet shift. Now I trade for it."
+    ]
+  },
+  "gate_3": {
+    "name": "Rooke",
+    "role": "West cave watch",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "Mind the lamp by the west pillar. The stone gets slick when it rains.",
+    "personal": [
+      "I keep a dry rag folded beside my lantern.",
+      "I didn’t like the cave until I learned where the wind comes from.",
+      "I leave the lamp a little brighter when a new party goes in."
+    ]
+  },
+  "gate_4": {
+    "name": "Dain",
+    "role": "East cave watch",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "If someone says they’ll be right back, I wait until I can see them.",
+    "personal": [
+      "A late party can have my dinner if it means they get back safely.",
+      "My first watch felt like standing still for a year.",
+      "Now I’ve learned that waiting can be the useful part."
+    ]
+  },
+  "gate_5": {
+    "name": "Sedge",
+    "role": "Forest patrol",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "The bridge gets quieter just before the birds settle.",
+    "personal": [
+      "I like the part of the road where you can still see the roofs.",
+      "I used to think I needed a sword to be useful on this road.",
+      "Most days I just tell lost people which side of the river they’re on."
+    ]
+  },
+  "gate_6": {
+    "name": "Olla",
+    "role": "South road watch",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "If you see the lanterns coming on, the evening shift is already walking.",
+    "personal": [
+      "These boots are on their third set of soles.",
+      "I know the streets by the sound of my boots.",
+      "When someone mended the cobbles outside the pavilion, I missed the old rattle for a week."
+    ]
+  },
+  "partner_5": {
+    "name": "Tarn",
+    "role": "Forest relief",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "I take the rear on patrol. Somebody has to spot what we walked past.",
+    "personal": [
+      "I’m better at following tracks than keeping up with conversation.",
+      "I used to try to walk as fast as Sedge.",
+      "Now I keep my own pace. We spot different things that way."
+    ]
+  },
+  "partner_6": {
+    "name": "Iona",
+    "role": "South road relief",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "I carry spare wick on the south road. It always gets used.",
+    "personal": [
+      "I check a lantern with my gloves on. That’s how I’ll use it.",
+      "My first lantern went out during a rainstorm.",
+      "I still carry the wet wick from that night in a dry little pouch."
+    ]
+  },
+  "arena_0": {
+    "name": "Bex",
+    "role": "Arena west post",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "If you’re nervous before a match, watch one round before signing up.",
+    "personal": [
+      "I remember every fighter who looked relieved to lose their first round.",
+      "I used to think the crowd only watched the winner.",
+      "I hear them cheer for someone who gets up every time."
+    ]
+  },
+  "arena_1": {
+    "name": "Ronan",
+    "role": "Arena east post",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "I check the gate hinges before every match. They’re louder than the crowd.",
+    "personal": [
+      "Anything with a hinge gets a drop of oil on my shift.",
+      "I learned to fix hinges because I couldn’t stand waiting for help.",
+      "The loudest squeak is gone. I almost miss knowing who’s coming."
+    ]
+  },
+  "harbour_0": {
+    "name": "Mae",
+    "role": "Harbour watch",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "Leave the river mouth clear for the boats coming back in.",
+    "personal": [
+      "I know which board to skip so I don’t wake the boatkeepers.",
+      "I learned the harbour by walking it in fog.",
+      "I can tell which pier I’m on by how the boards creak."
+    ]
+  },
+  "harbour_1": {
+    "name": "Tobin",
+    "role": "Harbour watch",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "If you’re bound for the Coast, check the wind before you untie.",
+    "personal": [
+      "Give me a loose rope and I’ll find something to do.",
+      "I’m better at knots than I am at telling stories.",
+      "My best knot is the one I can untie with cold hands."
+    ]
+  },
+  "barracks_0": {
+    "name": "Walt",
+    "role": "Barracks drill guard",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "A clear call matters more than a loud one in the muster court.",
+    "personal": [
+      "I keep the first instruction short enough to shout in one breath.",
+      "I practised commands into a blanket as a recruit.",
+      "Now I ask the quietest person in the line to give the first call."
+    ]
+  },
+  "barracks_1": {
+    "name": "Cerys",
+    "role": "Barracks archer",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "If your boots are slipping, your aim is already off.",
+    "personal": [
+      "I count my breaths between shots. Three usually does it.",
+      "I used to aim at the middle of the shield every time.",
+      "An old coach taught me to look for the opening, then wait until it was real."
+    ]
+  },
+  "barracks_2": {
+    "name": "Holt",
+    "role": "Barracks quarterguard",
+    "questions": [
+      "What should I know about your post?",
+      "What brought you to the Ramguard?"
+    ],
+    "local": "I check the straps after drills. Nobody thanks a buckle until it breaks.",
+    "personal": [
+      "When I hear a squeak during a drill, I look at the straps first.",
+      "I kept a spare strap for one person on my first watch.",
+      "I carry two now. One for whoever asks, one for whoever won’t."
+    ]
+  },
+  "north_west": {
+    "name": "Edda",
+    "role": "North Gate sentry",
+    "questions": [
+      "How’s the gate?",
+      "What do you do off duty?"
+    ],
+    "local": "The west hinge sings in cold weather. If it goes quiet, I check it.",
+    "personal": [
+      "I bake when I’m off duty.",
+      "I make little buns shaped like the gate stones.",
+      "I leave the first tray for the dawn watch. I remember how hungry that shift gets."
+    ]
+  },
+  "north_east": {
+    "name": "Cal",
+    "role": "North Gate sentry",
+    "questions": [
+      "What do you watch for?",
+      "Do you like the gate shift?"
+    ],
+    "local": "I watch the road beyond the banners. People give themselves away by how they walk home.",
+    "personal": [
+      "I like being first to see visitors.",
+      "My first visit to Crossroads began at this very gate.",
+      "I try to greet nervous visitors the way Edda greeted me. A wave is easier than a speech."
+    ]
+  },
+  "carpenter": {
+    "name": "Merrit",
+    "role": "Town carpenter",
+    "questions": [
+      "What are you working on?",
+      "Where did you learn to build?"
+    ],
+    "local": "A replacement tread for the pavilion. The loose one has been keeping time with the musicians.",
+    "personal": [
+      "My first workbench was a plank across two crates.",
+      "The cedar I use for repairs comes through the Coast. I save every sound offcut.",
+      "I left one scratch in the pavilion table. It’s where someone learned their first game."
+    ]
+  },
+  "farmer": {
+    "name": "Hale",
+    "role": "Riverbank farmer",
+    "questions": [
+      "What’s growing?",
+      "Why farm by the river?"
+    ],
+    "local": "Beans by the fence. I plant them high enough that the river has to ask permission.",
+    "personal": [
+      "The ground does half the work if I listen.",
+      "Oldwater taught me to read the waterline before I plant.",
+      "When the beds flooded, Rowan brought seedlings. The first basket every year goes to the Seedhouse."
+    ]
+  },
+  "market_load": {
+    "name": "Perrin",
+    "role": "Market porter",
+    "questions": [
+      "What’s in the crates?",
+      "Do you like the early shift?"
+    ],
+    "local": "Fish from the lake and jars from the Coast. The jars complain louder when I set them down.",
+    "personal": [
+      "An empty cart is a good sight.",
+      "My first load was three crates taller than I was. Mira helped me carry the last one.",
+      "I still take a corner of the load when someone says they can do it all themselves."
+    ]
+  },
+  "market_sort": {
+    "name": "Edric",
+    "role": "Market stock sorter",
+    "questions": [
+      "Where do the shipments go?",
+      "Do you remember every crate?"
+    ],
+    "local": "South-bank baskets go under cover first. Give me a minute and I can tell you where anything is.",
+    "personal": [
+      "Only the interesting ones, and the ones that leaked.",
+      "Someone sent a pebble from Folded Coast marked ‘fragile.’ I delivered it in both hands.",
+      "It was a birthday gift from a child who’d never been to sea. I still wrap pebbles carefully."
+    ]
+  },
+  "market_cart": {
+    "name": "Joss",
+    "role": "Market cart handler",
+    "questions": [
+      "Does the cart always rattle?",
+      "What’s your favourite delivery?"
+    ],
+    "local": "Only if the route needs attention. Right now the cart has a lot of opinions.",
+    "personal": [
+      "Food that’s still warm when I get there.",
+      "I once took the wrong turn and brought bread to the lookout.",
+      "The guard split it with me. I keep an extra loaf on the cart when I can."
+    ]
+  },
+  "post_sort": {
+    "name": "Nim",
+    "role": "Parcel sorter",
+    "questions": [
+      "How do you sort the mail?",
+      "What’s your favourite parcel?"
+    ],
+    "local": "Town goes on the left. Anything headed up to Oldwater waits for the boat.",
+    "personal": [
+      "I like parcels with drawings on the wrapper.",
+      "Someone drew a fish on a parcel that held a boat key. It went straight to the right dock.",
+      "I keep a pencil by the window. Pictures help when a parcel has to go farther than you know how to spell."
+    ]
+  },
+  "post_dispatch": {
+    "name": "Pella",
+    "role": "Dispatch clerk",
+    "questions": [
+      "Where does the next shipment go?",
+      "Have you delivered a parcel yourself?"
+    ],
+    "local": "Downriver. We’re waiting for the boatkeeper to say the wind is right.",
+    "personal": [
+      "I used to do the marina rounds.",
+      "A coast delivery sent me home with a jar of salt and an invitation to supper.",
+      "I bring the boatkeeper a sandwich on long dispatch days. Somebody did that for me on my first route."
+    ]
+  },
+  "post_rounds": {
+    "name": "Tuck",
+    "role": "Town courier",
+    "questions": [
+      "What are you checking?",
+      "What do you like about the rounds?"
+    ],
+    "local": "The cart wheels. I’d rather find a loose one here than on the bridge.",
+    "personal": [
+      "I like the streets before the shops open.",
+      "I used to race the lamps coming on. Nowadays I stop when the work is done.",
+      "I know a bench with a view of the pond. It’s where I go when I finish early."
+    ]
+  }
+}

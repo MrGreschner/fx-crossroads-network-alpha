@@ -2,6 +2,8 @@ extends Control
 ## Opaque, lightweight title-page gallery. Art is cached once, never loaded per frame.
 var game:Node
 const SET_SECONDS=7.0
+const WildArt=preload("res://scripts/wayfarer_art305.gd")
+const Walk=preload("res://scripts/hero_walk312.gd")
 var clock:=0.0
 var redraw_tick:=0.0
 var bounds:Dictionary={}
@@ -25,18 +27,24 @@ func setup(owner:Node,multi:bool=false)->void:
   if not enemies.has(id):continue
   if str(id).begins_with("training"):continue
   var e:Dictionary=entry(enemies[id],str(id),false)
-  if e.first!=null:creatures.append(e)
+  if e.first!=null and e.second!=null:creatures.append(e)
 func entry(data:Dictionary,id:String,hero:bool)->Dictionary:
  var sprite:=str(data.get("sprite",id));var first:Texture2D=game.art.get(sprite+"_walk1",game.art.get(sprite+"_0",game.art.get(sprite+"_idle")))
  var second:Texture2D=game.art.get(sprite+"_walk2",game.art.get(sprite+"_1",first))
  if hero and sprite in preload("res://scripts/core_hero_art.gd").HEROES:
   first=preload("res://scripts/core_hero_art.gd").texture(sprite,"walk1");second=preload("res://scripts/core_hero_art.gd").texture(sprite,"walk2")
  elif not hero:
-  var updated=preload("res://scripts/enemy_art235.gd").texture(sprite,"walk1")
-  if updated!=null:first=updated;second=preload("res://scripts/enemy_art235.gd").texture(sprite,"walk2")
+  var updated=preload("res://scripts/enemy_art235.gd")
+  if sprite in WildArt.FOES:
+   first=WildArt.walk_texture(sprite,"walk1")
+   second=WildArt.walk_texture(sprite,"walk2")
+  else:
+   first=updated.texture(sprite,"walk1")
+   second=updated.texture(sprite,"walk2")
  var visible=Vector2(.8,.8)
  if first!=null:
   if hero and sprite in preload("res://scripts/core_hero_art.gd").HEROES:visible=preload("res://scripts/core_hero_art.gd").visible_size(sprite)
+  elif not hero and sprite in WildArt.FOES:visible=Vector2(.9,.85)
   elif preload("res://scripts/actor_art248.gd").has(sprite):
    var size_data:Array=preload("res://scripts/actor_art248.gd").metadata[sprite].menu_visible;visible=Vector2(size_data[0],size_data[1])
   elif preload("res://scripts/enemy_art235.gd").metadata.has(sprite):
@@ -91,7 +99,10 @@ func _draw()->void:
    draw_style_box(card_skin(side),card)
    draw_line(p+Vector2(16,117),p+Vector2(116,117),Color("#536b68"),1,true)
    draw_circle(p+Vector2(66,102),25,Color(0,0,0,.23))
-   var art:Texture2D=e.first if int(clock*4+index)%2==0 else e.second
+   var first_step:=int(clock*4+index)%2==0
+   if e.hero and str(e.sprite) in Walk.IDS and str(e.sprite) not in ["medic","ferryman","caelum","kage","vesper","hearthwarden","cantor","votary","lumen","mosaic","quill","dustmarshal","twisterspell","hazel_hex","echo_dancer","little_menace","hearth_herald"]:
+    first_step=Walk.movement(str(e.sprite),clock+index*.04)==Walk.FIRST_FRAME
+   var art:Texture2D=e.first if first_step else e.second
    if art!=null:draw_texture_rect(art,display_rect(e,p),false)
    for n in e.caption_lines.size():caption(p+Vector2(4,128+n*12 if e.caption_lines.size()>1 else 135),str(e.caption_lines[n]),11,124,Color("#e1e5d5"))
  caption(Vector2(52,664),"Every hero starts unlocked",13,277,Color("#a1b9b9"))
@@ -109,7 +120,9 @@ func card_skin(side:int)->StyleBoxFlat:
 
 func display_rect(e:Dictionary,p:Vector2)->Rect2:
  var foot=p+Vector2(66,107);var size=Vector2(56,64)*1.4
- if e.hero and str(e.sprite)=="basketball":size=Vector2.ONE*preload("res://scripts/basketball_motion.gd").DIAMETER*1.4
+ if e.hero and str(e.sprite)=="basketball":
+  var bounce:=preload("res://scripts/basketball_motion.gd").pose_rect(Vector2.ZERO,fposmod(clock*2.6,1.0))
+  return Rect2(foot+(bounce.position-Vector2(0,22))*1.4,bounce.size*1.4)
  var rect=Rect2(foot-size*Vector2(.5,.925),size)
  if e.hero:rect=preload("res://scripts/core_hero_art.gd").body_rect(str(e.sprite),rect,clock)
  elif preload("res://scripts/enemy_art235.gd").texture(str(e.sprite))!=null:rect=preload("res://scripts/enemy_art235.gd").fitted(str(e.sprite),rect)

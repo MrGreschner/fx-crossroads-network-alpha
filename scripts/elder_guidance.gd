@@ -7,6 +7,8 @@ const WELCOME=[
  ["Welcome home, traveler", "Welcome to Crossroads! I am Elder Ram, keeper of the town’s stories. This is your home between adventures: meet its people, try fishing, or discover something of your own."],
  ["Your first realm • Whispering Grove", "The central portal leads to the realms. I recommend starting with Whispering Grove: learn your hero, explore its paths and face the guardian. Return stronger, then try the other realms as they open."],
  ["Other adventures are waiting", "Cave Descent is another path: battle deeper through its floors and see how far you can go. Gate Defence, the arena and the Challenge Lodge offer other adventures too. You can find your destinations in Adventures whenever you are ready."],
+ ["Pack for the road", "Visit the Supply Shop for temporary battle and adventure items, as well as one-use consumables. You can also make your own consumables at the Apothecary."],
+ ["Food and relics", "Buy food at the Food Stand, or grow ingredients and make your own. Relics are permanent items bound to your account. Look for them in Overcharged realms once you’re attuned."],
  ["Find your own path", "My advice? Begin with the Grove through the central portal. There is no hurry — explore town first if you like. Come and speak with me whenever you need a guide. Watch for a glowing chat bubble when I have something new to share."]]
 const BETWEEN=[
  ["A new path • The Between", "Your victory has opened the medium realms — and The Between. Beyond that fractured portal is a changing wilderness made from pieces of many realms. Explore solo or with a partner; the farther you travel, the greater the danger."],

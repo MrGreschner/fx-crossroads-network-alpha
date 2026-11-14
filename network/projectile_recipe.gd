@@ -3,12 +3,13 @@ extends RefCounted
 ## Delayed casts/channels retain their authored timing; they are never fast-forwarded.
 static func seeds(stats:Dictionary,aim:Vector2,origin:Vector2,combat:Node,owner:String)->Array:
  var style=str(stats.get("style",""));var s:Dictionary=stats.duplicate(true)
- var supported=["golf_drive","navigator_bolt","projectile","ranged","homing","apiary_needle","ricochet_projectile","spiral_shot","split_lance","cross_shot","rolling_snow","magnet_pin","corkscrew_key","latchline","echo_brand","facet_spear","lantern_comet","rune_hammer","tea_shot","threaded_needles","time_dart","v91_pistol","wick_fire","mirror_fan"]
+ var supported=["golf_drive","navigator_bolt","projectile","ranged","homing","apiary_needle","ricochet_projectile","spiral_shot","split_lance","cross_shot","rolling_snow","magnet_pin","corkscrew_key","latchline","echo_brand","facet_spear","lantern_comet","rune_hammer","tea_shot","threaded_needles","time_dart","v91_pistol","wick_fire","mirror_fan","courtbow","gift_toss"]
  if style not in supported:return []
  var custom=style not in ["projectile","ranged"] or bool(s.get("released_hold",false)) or s.has("visual215")
  var count=clampi(int(s.get("count",1)),1,8)
  if style=="homing" and combat.passive(owner,"twin_orbs"):count=2
  if style=="cross_shot":count=4
+ if style=="courtbow":count=combat.events.arrow_count(float(s.get("charge_power",0)));s.spread=.13
  if style=="mirror_fan":count=3;s.spread=.23;s.mirror_shard=true
  if style=="tea_shot":count=2;s.tea_drop=true
  if style=="threaded_needles":count=2
@@ -20,6 +21,7 @@ static func seeds(stats:Dictionary,aim:Vector2,origin:Vector2,combat:Node,owner:
  for n in count:
   var direction=aim.rotated((n-(count-1)*.5)*float(s.get("spread",0)))
   var p=origin+direction*(20 if style=="v91_pistol" else 26)
+  if style in ["courtbow","gift_toss"]:p=origin+aim*12
   if style=="cross_shot":direction=aim.rotated(n*PI*.5);p=origin+direction*26
   if style=="tea_shot":direction=aim.rotated((n*2-1)*.13)
   if style=="threaded_needles":

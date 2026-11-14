@@ -1,0 +1,12 @@
+{
+  "id": "wayfarer_bellstone",
+  "name": "Bellstone Sentinel",
+  "sprite": "wayfarer_bellstone",
+  "health": 300,
+  "speed": 64,
+  "damage": 24,
+  "aggro_range": 680,
+  "behaviour": "melee",
+  "quest_slam": true,
+  "expansion_only": true
+}

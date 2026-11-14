@@ -592,12 +592,9 @@ func draw_overlay(c:Node2D)->void:
   var at=game.VIEW*.5+direction.normalized()*minf(game.VIEW.x,game.VIEW.y)*.32
   c.draw_line(at-direction.normalized()*12,at+direction.normalized()*10,Color("#f9d48c"),3,true)
   c.draw_circle(at+direction.normalized()*12,4,Color("#ffe6a0"))
- if cataclysm>0:c.draw_string(ThemeDB.fallback_font,game.VIEW*.5-Vector2(275,150),"THE UNQUENCHABLE REKINDLES",HORIZONTAL_ALIGNMENT_CENTER,550,27,Color("#ffe0a5"))
  if not falling():return
- var centre=game.VIEW*.5;var t=clampf(fall_time/.8,0,1)
  var fade=clampf((fall_time-1.1)/.65,0,1) if not fall_swapped else 1-clampf((fall_time-2.05)/1.05,0,1)
  c.draw_rect(Rect2(Vector2.ZERO,game.VIEW),Color(.02,.024,.031,fade))
- if fade>.55:c.draw_string(ThemeDB.fallback_font,centre-Vector2(180,0),"DESCENDING • "+("50.5" if game.floor_number==50 and not rest.used else str(game.floor_number+ (0 if fall_swapped else 1))),HORIZONTAL_ALIGNMENT_CENTER,360,28,Color(1,.85,.61,fade))
 
 func draw_fracture(c:Node2D)->void:
  if fall_swapped:return

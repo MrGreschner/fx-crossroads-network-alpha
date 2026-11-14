@@ -963,10 +963,6 @@ func draw_town(canvas:Node,camera:Vector2)->void:
  if bool(data.town.get("mill",false)):game.town_v109.draw_mill(canvas,camera)
  if bool(data.town.get("bakery",false)):
   preload("res://scripts/town_v176.gd").draw_bakery(canvas,camera)
- if bool(data.town.get("statue",false)):
-  var p:=Vector2(950,1122)-camera
-  canvas.draw_rect(Rect2(p-Vector2(68,14),Vector2(136,24)),Color("#334a4c"));canvas.draw_rect(Rect2(p-Vector2(68,14),Vector2(136,24)),Color("#b5a276"),false,1)
-  canvas.draw_string(font,p+Vector2(-64,3),str(data.title),HORIZONTAL_ALIGNMENT_CENTER,128,12,Color("#eddaa3"))
  if bool(data.town.get("market",false)):canvas.draw_string(font,Vector2(1160,710)-camera,"COVERED MARKET • 1 CC SAVINGS",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#ffe6a1"))
  if bool(data.town.get("library",false)):
   preload("res://scripts/town_shops242.gd").draw(canvas,"reading",camera)

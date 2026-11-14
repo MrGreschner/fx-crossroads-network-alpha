@@ -1,0 +1,11 @@
+{
+  "build": "V171.2-preview",
+  "status": "Rejected workload; admission guard added after this measurement",
+  "scope": "Local unrestricted 30-second 22-socket/4-room stress before weighted admission",
+  "rooms": 4,
+  "players": 22,
+  "measured_hz": 38.9,
+  "dropped_input_frames": 2976,
+  "work_ms_per_second": 995.3,
+  "remedy": "Battlegrounds reserves three of four room work slots; reject additional work before overload. Runtime measured-Hz guard remains."
+}

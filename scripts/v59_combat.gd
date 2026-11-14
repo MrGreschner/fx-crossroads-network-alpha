@@ -202,6 +202,19 @@ func mirror_pose(owner:String,body:Dictionary)->String:
  var clock:float=game.visual_time if combat.adventure.arcade else game.visual_clock
  var attacking:bool=Time.get_ticks_msec()<int(game.attack_pose_until.get(owner,0)) if combat.adventure.arcade else game.attack_pose_time>0
  return "attack" if attacking else ("walk1" if int(clock*7)%2==0 else "walk2") if bool(body.get("walking",false)) else "idle"
+# V323: reflections share the owner's current art, cadence and visual scale.
+func mirror_texture(owner:String,body:Dictionary)->Texture2D:
+ var game:Node=combat.adventure.game
+ var clock:float=game.visual_time if combat.adventure.arcade else game.visual_clock
+ return game.core_art.picture(owner,"caelum",mirror_pose(owner,body),combat.vec(body.pos),bool(body.get("walking",false)),clock)
+func mirror_rect(owner:String,point:Vector2)->Rect2:
+ var game:Node=combat.adventure.game
+ var clock:float=game.visual_time if combat.adventure.arcade else game.visual_clock
+ var rect:=Rect2(point-Vector2(28,42),Vector2(56,64))
+ rect=combat.v110.resize(owner,rect)
+ rect=preload("res://scripts/core_hero_art.gd").body_rect("caelum",rect,clock)
+ if combat.adventure.arcade and game.mode=="descent":rect=game.descent.hero_rect(rect)
+ return rect
 func draw_on(c:Node2D,camera:Vector2)->void:
  for owner in copies:
   var body:Dictionary=copies[owner]
@@ -211,9 +224,9 @@ func draw_on(c:Node2D,camera:Vector2)->void:
    var game:Node=combat.adventure.game
    var drawn:Vector2=game.local_pos if str(owner)==str(game.my_id) else game.remote_draw_pos.get(owner,combat.owner_pos(str(owner)))
    point+=drawn-combat.owner_pos(str(owner))
-  var art:Texture2D=combat.adventure.game.art.get("caelum_"+mirror_pose(str(owner),body))
+  var art:Texture2D=mirror_texture(str(owner),body)
   if combat.adventure.arcade:c.draw_ellipse_shadow(point)
-  if art!=null:c.draw_texture_rect(art,Rect2(point-Vector2(28,42),Vector2(56,64)),false,Color.WHITE)
+  if art!=null:c.draw_texture_rect(art,mirror_rect(str(owner),point),false,Color.WHITE)
   if combat.adventure.arcade:
    var game:Node=combat.adventure.game
    var cosmetic:Dictionary=game.player_cosmetics.get(owner,{"title":str(game.journey.data.get("title","Traveler"))} if str(owner)==str(game.my_id) else {})

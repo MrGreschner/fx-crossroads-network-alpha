@@ -27,7 +27,8 @@ func _ready()->void:
  stage=Control.new();stage.size=Vector2(1280,720);stage.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(stage)
  for asset in ["scene","leaves_left","leaves_right"]:textures[asset]=image_file("res://assets/cinematic223/"+asset+".png")
  textures.gate=image_file("res://assets/cinematic220/portal.png")
- for h in ["cat","ram","bramble"]:
+ for n in 6:textures["ram"+str(n)]=preload("res://scripts/ram_art310.gd").cinematic(n)
+ for h in ["cat","bramble"]:
   for n in (4 if h=="cat" else 6):textures[h+str(n)]=image_file("res://assets/cinematic223/"+h+"_%02d.png"%n)
  background=TextureRect.new();background.texture=textures.scene;background.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;background.size=Vector2(1280,720);background.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR;stage.add_child(background)
  var shader=Shader.new();shader.code="shader_type canvas_item; uniform float film_time=0.; uniform float night=0.; void fragment(){vec2 uv=UV;float water=smoothstep(.78,.81,uv.y);uv.x+=water*sin(uv.y*170.-film_time*2.5)*.0017;uv.y+=water*sin(uv.x*90.+film_time*1.7)*.001;vec4 c=texture(TEXTURE,uv);c.rgb*=mix(vec3(1.),vec3(.48,.62,.79),night);COLOR=c;}"

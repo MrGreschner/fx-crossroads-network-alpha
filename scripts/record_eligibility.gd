@@ -6,7 +6,7 @@ static func hero_allowed(g:Node,id:String)->bool:
  if id.is_empty():return false
  var h:Dictionary=g.characters.get(id,{})
  if h.is_empty() or bool(h.get("npc_only",false)):return false
- if id in g.manifest.characters:return not h.has("studio_project")
+ if id in g.manifest.characters or id in g.manifest.get("event_heroes",[]):return not h.has("studio_project")
  var service=g.get_tree().root.get_node_or_null("FXCommunityHeroes")
  if service==null or not service.catalog.has(id):return false
  var approved:Dictionary=service.catalog[id].project

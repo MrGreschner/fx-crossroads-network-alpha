@@ -66,7 +66,7 @@ static func draw_structure_source(c:Node2D,cam:Vector2)->void:
   for p in [deck.position,deck.position+Vector2(deck.size.x,0),deck.end,deck.position+Vector2(0,deck.size.y)]:
    c.draw_circle(p-cam+Vector2(0,3),7,Color('#4e5044'));c.draw_circle(p-cam,5,Color('#dbc291'))
  # Bank-side fittings keep the water and embarkation walk clear.
- for at in [Vector2(1654,2236),Vector2(2188,2236)]:
+ for at in [Vector2(1654,2236)]:
   c.draw_rect(Rect2(at-cam-Vector2(4,26),Vector2(8,35)),Color('#645343'));c.draw_circle(at-cam-Vector2(0,27),9,Color('#e6c184'));c.draw_circle(at-cam-Vector2(0,27),5,Color('#ffe7a9'))
  for at in [Vector2(1680,2243),Vector2(2075,2195)]:
   c.draw_rect(Rect2(at-cam-Vector2(15,12),Vector2(30,24)),Color('#98794f'));c.draw_rect(Rect2(at-cam-Vector2(15,12),Vector2(30,24)),Color('#d3b47e'),false,2);c.draw_line(at-cam-Vector2(13,10),at-cam+Vector2(13,10),Color('#594d3d'),2)

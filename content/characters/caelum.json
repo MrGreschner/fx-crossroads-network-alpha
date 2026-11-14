@@ -1,11 +1,11 @@
 {
   "id": "caelum",
-  "name": "Caelum Mirrorwright",
+  "name": "Akari Mirrorwright",
   "sprite": "caelum",
   "max_health": 110,
   "speed": 235,
   "run_cost": 0,
-  "lore": "A copper-cloaked mirror craftswoman with a braided mane and a polished hand mirror.",
+  "lore": "Akari Mirrorwright is a copper-cloaked mirror craftswoman with a steady hand and a quiet, searching curiosity. She wears her dark hair short, fastened with a small copper clasp, and carries a hand mirror she polished and framed herself.\n\nAt the Crossroads, she repairs clouded glass and studies the strange reflections brought home from the realms. She believes a good mirror reveals what is there, rather than what its owner hopes to see.\n\nIn battle, Akari shapes reflected light into crystal spears and silver shards. Her twin reflection is the final expression of her craft: a second perspective, moving beside her.",
   "primary": {
     "name": "Facet Spear",
     "style": "facet_spear",

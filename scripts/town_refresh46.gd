@@ -1,11 +1,12 @@
 extends RefCounted
+const Town311=preload("res://scripts/town_layout311.gd")
 ## Small culled props, shared collision footprints and a scheduled social destination.
 const PAVILION=Rect2(1260,1615,220,100)
 const REST=Vector2(1370,1760)
-const FOUNTAIN=Vector2(1460,1880)
+const FOUNTAIN=preload("res://scripts/town_props240.gd").REST_FOUNTAIN
 const NOTICE=Vector2(1800,1740)
 const MASSIF=Rect2(-1650,465,450,870)
-const POSTS=[Vector2(-1210,1260),Vector2(-945,1260)]
+const POSTS=[Vector2(-1210,1260)+Town311.DESCENT_SHIFT,Vector2(-945,1260)+Town311.DESCENT_SHIFT]
 static func reserved(p:Vector2)->bool:return MASSIF.grow(100).has_point(p) or Rect2(1220,1545,310,255).has_point(p) or p.distance_to(FOUNTAIN)<90 or p.distance_to(NOTICE)<65
 static func blocked(p:Vector2)->bool:
  if p.distance_to(FOUNTAIN)<47 or Rect2(NOTICE-Vector2(28,20),Vector2(56,35)).has_point(p):return true
@@ -34,10 +35,7 @@ static func interact(g:Node)->bool:
  return true
 static func cliffs(g:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_art246.gd").cliffs(g,camera)
- # Keep the cave's open stone court and exact eastern approach.
- var court=Rect2(Vector2(-1175,1195)-camera,Vector2(245,130));g.draw_rect(court,Color("#929781"))
- for y in range(1200,1325,25):
-  for x in range(-1170,-930,40):g.draw_rect(Rect2(Vector2(x+(10 if y%2 else 0),y)-camera,Vector2(36,21)),Color("#b3b29a"),false,1)
+ preload("res://scripts/town_visuals311.gd").ground(g,camera)
 
 static func draw(g:Node2D,camera:Vector2)->void:
  preload("res://scripts/town_art246.gd").rest_details(g,camera)

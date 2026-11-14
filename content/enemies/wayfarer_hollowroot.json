@@ -1,0 +1,12 @@
+{
+  "id": "wayfarer_hollowroot",
+  "name": "Hollowroot Keeper",
+  "sprite": "wayfarer_hollowroot",
+  "health": 850,
+  "speed": 95,
+  "damage": 18,
+  "behaviour": "custom",
+  "aggro_range": 560,
+  "expansion_only": true,
+  "custom_attack": "rootbound"
+}

@@ -1,0 +1,1224 @@
+{
+  "passed": true,
+  "softwareRenderer": true,
+  "oneBrowserPlusSevenNetworkPeers": true,
+  "before": {
+    "ability_view_active": false,
+    "ability_view_offset_px": 0,
+    "ability_view_starts": 0,
+    "action_ack_wait_ms": 13,
+    "action_input_flushes": 15,
+    "active": true,
+    "active_fps_cap": 60,
+    "arena_map": "sand",
+    "arrival_gap_max_ms": 109.000000000002,
+    "authoritative_build": {
+      "crit_tier": 0,
+      "final_technique": false,
+      "points": 0,
+      "technique": false,
+      "tuning": [
+        0,
+        0,
+        0
+      ]
+    },
+    "authority_hz": 59.9243479992037,
+    "authority_resets": 1,
+    "browser_timing": {
+      "hidden": false,
+      "hidden_total_ms": 0,
+      "long_task_count": 1,
+      "long_task_max_ms": 74,
+      "long_task_total_ms": 74,
+      "long_tasks_supported": true,
+      "raf_gap_max_ms": 67,
+      "raf_over_50ms": 2,
+      "visibility_changes": 0
+    },
+    "buffer_holds": 3,
+    "buffer_ms": 91.2013782062697,
+    "build": "T4.17",
+    "client_elapsed_ms": 21508,
+    "client_frame_gap_ms": 37.9,
+    "client_profile": {
+      "actors_effects_draw": {
+        "max_ms": 8.6,
+        "median_ms": 2.1,
+        "p95_ms": 5.7,
+        "samples": 180
+      },
+      "adventure_draw": {
+        "max_ms": 14.5,
+        "median_ms": 2.3,
+        "p95_ms": 6,
+        "samples": 180
+      },
+      "client_physics": {
+        "max_ms": 1,
+        "median_ms": 0.3,
+        "p95_ms": 0.7,
+        "samples": 180
+      },
+      "client_process": {
+        "max_ms": 22.5,
+        "median_ms": 3.4,
+        "p95_ms": 8.7,
+        "samples": 180
+      },
+      "combat_draw": {
+        "max_ms": 14.3,
+        "median_ms": 2.2,
+        "p95_ms": 5.9,
+        "samples": 180
+      },
+      "control_decode": {
+        "max_ms": 0.2,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 116
+      },
+      "draw_commands": {
+        "max_ms": 20,
+        "median_ms": 6.6,
+        "p95_ms": 11.2,
+        "samples": 180
+      },
+      "frame_interval": {
+        "max_ms": 75.7,
+        "median_ms": 41.1,
+        "p95_ms": 50.8,
+        "samples": 180
+      },
+      "ground_effects": {
+        "culled": 0,
+        "drawn": 4,
+        "magma": 4,
+        "poison": 0,
+        "shadows": 4
+      },
+      "ground_family_draw": {
+        "max_ms": 6.9,
+        "median_ms": 0.3,
+        "p95_ms": 2.5,
+        "samples": 180
+      },
+      "hud_draw": {
+        "max_ms": 9,
+        "median_ms": 0.4,
+        "p95_ms": 2.2,
+        "samples": 180
+      },
+      "network_poll": {
+        "max_ms": 8.7,
+        "median_ms": 2.1,
+        "p95_ms": 6.4,
+        "samples": 180
+      },
+      "prediction_replay": {
+        "max_ms": 6.2,
+        "median_ms": 0.3,
+        "p95_ms": 2.2,
+        "samples": 180
+      },
+      "projectile_art": {
+        "max_ms": 2.4,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 180
+      },
+      "snapshot_adventure": {
+        "max_ms": 3.8,
+        "median_ms": 0.3,
+        "p95_ms": 0.5,
+        "samples": 180
+      },
+      "snapshot_apply": {
+        "max_ms": 8,
+        "median_ms": 1.1,
+        "p95_ms": 4.7,
+        "samples": 180
+      },
+      "snapshot_aux": {
+        "max_ms": 6.8,
+        "median_ms": 0,
+        "p95_ms": 0.2,
+        "samples": 180
+      },
+      "snapshot_custom": {
+        "max_ms": 0.1,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 180
+      },
+      "snapshot_decode": {
+        "max_ms": 4.8,
+        "median_ms": 0.6,
+        "p95_ms": 2.8,
+        "samples": 180
+      },
+      "snapshot_entities": {
+        "max_ms": 3.7,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 180
+      },
+      "snapshot_finalize": {
+        "max_ms": 0.1,
+        "median_ms": 0,
+        "p95_ms": 0,
+        "samples": 180
+      },
+      "snapshot_players": {
+        "max_ms": 6.7,
+        "median_ms": 0.6,
+        "p95_ms": 4,
+        "samples": 180
+      },
+      "world_draw": {
+        "max_ms": 3.9,
+        "median_ms": 0.3,
+        "p95_ms": 0.6,
+        "samples": 180
+      }
+    },
+    "clock_resyncs": 1,
+    "coalesced_client_snapshots": 12,
+    "confirmed_damage_events": 13,
+    "contacts": 0,
+    "correction_histogram": [
+      0,
+      0,
+      0
+    ],
+    "damage_labels": 0,
+    "dash_afterimages": 0,
+    "dash_sample_owners": {},
+    "dash_samples": 0,
+    "delivery_gap_stalls": 0,
+    "disconnect_reason": "",
+    "draw_calls": 123,
+    "enemies": 0,
+    "engine_physics_ms": 0.9,
+    "engine_process_ms": 72.8,
+    "firing": true,
+    "fps": 25,
+    "frame_gap_peak_ms": 325.3,
+    "frame_gap_stalls": 0,
+    "gateway_metrics": {
+      "authority_cpu_percent": null,
+      "authority_metrics_age_ms": 229.897625000001,
+      "coalesced_snapshots": 0,
+      "downstream_buffer_bytes": 0,
+      "gateway_cpu_percent": 3.1,
+      "gateway_loop_p95_ms": 22.48,
+      "gateway_memory_bytes": 54575104,
+      "measured_at_ms": 1792167826697,
+      "upstream_buffer_bytes": 0
+    },
+    "gateway_rtt_ms": 89,
+    "graphics_mode": "auto",
+    "hero": "ram",
+    "hud_rebuilds": 48,
+    "ice_walls": 0,
+    "last_action": {
+      "angle": -3.06640458106995,
+      "client_ms": 21431,
+      "kind": "primary",
+      "motion_type": 0,
+      "phase": "",
+      "seq": 34,
+      "type": "attack"
+    },
+    "last_authority_reset": "initial_state",
+    "last_disconnect_reason": "",
+    "last_launch": {},
+    "last_stall_context": "none",
+    "launch_drawn_ms": {
+      "samples": 0
+    },
+    "launch_received_ms": {
+      "samples": 0
+    },
+    "local_view_offset_px": 0,
+    "long_frames_50ms": 41,
+    "match_elapsed_ms": 13350,
+    "match_id": "94099f717fa156ae0bf5a6f1f3c7440f",
+    "max_handoff_error_px": 0,
+    "max_position_correction_px": 0.00048828125,
+    "max_world_backlog_ms": 465.185,
+    "memory_bytes": 0,
+    "mobile_aim": [
+      1,
+      0
+    ],
+    "mobile_attacking": false,
+    "mobile_controls": false,
+    "oldest_wall_remaining": 0,
+    "pending_packets": 0,
+    "playback_rate": 0.988355132460742,
+    "players": 8,
+    "poll_budget_yields": 1,
+    "position_corrections": 0,
+    "predicted_projectiles": 0,
+    "prediction_expiries": 0,
+    "prediction_queue": 7,
+    "primitives": 5662,
+    "projectile_confirmations": 0,
+    "projectile_handoffs": 0,
+    "projectiles": 2,
+    "protocol": 3,
+    "quality_changes": 2,
+    "quality_scale": 0.7,
+    "received_bytes": 718383,
+    "received_packets": 384,
+    "recent_hit_events": [
+      {
+        "amount": 1,
+        "tick": 213,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 276,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 333,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 396,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 9,
+        "tick": 516,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 573,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 9,
+        "tick": 573,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 9,
+        "tick": 633,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 633,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 696,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 16.9,
+        "tick": 750,
+        "victim": "db956f306d4cf05c"
+      },
+      {
+        "amount": 1,
+        "tick": 753,
+        "victim": "1f4ccaaec390ace6"
+      }
+    ],
+    "recovery_active": false,
+    "release_cues": 0,
+    "render_objects": 892,
+    "render_scale_mode": 2,
+    "render_size": [
+      896,
+      504
+    ],
+    "replayed_inputs": 7,
+    "resume_attempts": 0,
+    "room": "40E5F1",
+    "rtt_ms": 89,
+    "scenery_chunks": 8,
+    "server_build": "T4.17",
+    "server_metrics": {
+      "authority_hz": 59.9243479992037,
+      "coalesced_snapshots": 0,
+      "connections": 8,
+      "dropped_inputs": 0,
+      "encode_ms": 0.711,
+      "input_backlog": 0,
+      "measured_at_ms": 24386,
+      "rooms": 1,
+      "snapshot_bytes": 2562,
+      "socket_poll_ms": 0.109,
+      "step_work_max_ms": 20.891,
+      "step_work_ms": 4.075
+    },
+    "server_metrics_age_ms": 2,
+    "shell_resize_count": 3,
+    "simulation_ms": 1.517,
+    "snapshot_interarrival_ms": 0,
+    "snapshot_ms": 5.889,
+    "state_age_ms": 1,
+    "state_stale_peak_ms": 325,
+    "state_stalls": 0,
+    "target_buffer_ms": 138.000000000001,
+    "terrain_chunks": 6,
+    "terrain_geometry": {
+      "merged_quads": 6,
+      "original_quads": 384,
+      "visible_chunks": 6
+    },
+    "texture_memory_bytes": 39591484,
+    "twister_effects": 0,
+    "video_memory_bytes": 237842188,
+    "viewport": [
+      1280,
+      720
+    ],
+    "visual_correction_px": 0,
+    "walking_actors": {
+      "1f4ccaaec390ace6": true,
+      "22d66be67046496a": true,
+      "23f4dcec74806d51": true,
+      "4c81488b97616395": true,
+      "788a764f48fd395d": true,
+      "794f46b9185931d9": true,
+      "db956f306d4cf05c": true,
+      "f21170a02dcf7fbe": false
+    },
+    "wire_bytes": 718383
+  },
+  "during": {
+    "ability_view_active": false,
+    "ability_view_offset_px": 0,
+    "ability_view_starts": 0,
+    "action_ack_wait_ms": 29,
+    "action_input_flushes": 17,
+    "active": true,
+    "active_fps_cap": 60,
+    "arena_map": "sand",
+    "arrival_gap_max_ms": 123.6,
+    "authoritative_build": {
+      "crit_tier": 0,
+      "final_technique": false,
+      "points": 0,
+      "technique": false,
+      "tuning": [
+        0,
+        0,
+        0
+      ]
+    },
+    "authority_hz": 59.9243479992037,
+    "authority_resets": 1,
+    "browser_timing": {
+      "hidden": false,
+      "hidden_total_ms": 0,
+      "long_task_count": 0,
+      "long_task_max_ms": 0,
+      "long_task_total_ms": 0,
+      "long_tasks_supported": true,
+      "raf_gap_max_ms": 50,
+      "raf_over_50ms": 1,
+      "visibility_changes": 0
+    },
+    "buffer_holds": 34,
+    "buffer_ms": 0,
+    "build": "T4.17",
+    "client_elapsed_ms": 23525,
+    "client_frame_gap_ms": 41.4,
+    "client_profile": {
+      "actors_effects_draw": {
+        "max_ms": 8.6,
+        "median_ms": 2.1,
+        "p95_ms": 5.8,
+        "samples": 180
+      },
+      "adventure_draw": {
+        "max_ms": 14.5,
+        "median_ms": 2.2,
+        "p95_ms": 5.9,
+        "samples": 180
+      },
+      "client_physics": {
+        "max_ms": 5.1,
+        "median_ms": 0.4,
+        "p95_ms": 0.8,
+        "samples": 180
+      },
+      "client_process": {
+        "max_ms": 22.5,
+        "median_ms": 3.2,
+        "p95_ms": 8.7,
+        "samples": 180
+      },
+      "combat_draw": {
+        "max_ms": 14.3,
+        "median_ms": 2.2,
+        "p95_ms": 5.9,
+        "samples": 180
+      },
+      "control_decode": {
+        "max_ms": 0.2,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 131
+      },
+      "draw_commands": {
+        "max_ms": 20,
+        "median_ms": 6.5,
+        "p95_ms": 11.1,
+        "samples": 180
+      },
+      "frame_interval": {
+        "max_ms": 75.7,
+        "median_ms": 40.1,
+        "p95_ms": 49.2,
+        "samples": 180
+      },
+      "ground_effects": {
+        "culled": 0,
+        "drawn": 4,
+        "magma": 4,
+        "poison": 0,
+        "shadows": 4
+      },
+      "ground_family_draw": {
+        "max_ms": 6.9,
+        "median_ms": 0.3,
+        "p95_ms": 2.5,
+        "samples": 180
+      },
+      "hud_draw": {
+        "max_ms": 9,
+        "median_ms": 0.4,
+        "p95_ms": 2.2,
+        "samples": 180
+      },
+      "network_poll": {
+        "max_ms": 8.7,
+        "median_ms": 1.9,
+        "p95_ms": 6.4,
+        "samples": 180
+      },
+      "prediction_replay": {
+        "max_ms": 6.2,
+        "median_ms": 0.3,
+        "p95_ms": 2.2,
+        "samples": 180
+      },
+      "projectile_art": {
+        "max_ms": 2.4,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 180
+      },
+      "snapshot_adventure": {
+        "max_ms": 3.8,
+        "median_ms": 0.3,
+        "p95_ms": 0.5,
+        "samples": 180
+      },
+      "snapshot_apply": {
+        "max_ms": 8,
+        "median_ms": 1.1,
+        "p95_ms": 4.7,
+        "samples": 180
+      },
+      "snapshot_aux": {
+        "max_ms": 6.8,
+        "median_ms": 0,
+        "p95_ms": 0.2,
+        "samples": 180
+      },
+      "snapshot_custom": {
+        "max_ms": 0.1,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 180
+      },
+      "snapshot_decode": {
+        "max_ms": 4.8,
+        "median_ms": 0.6,
+        "p95_ms": 2.8,
+        "samples": 180
+      },
+      "snapshot_entities": {
+        "max_ms": 3.7,
+        "median_ms": 0,
+        "p95_ms": 0.1,
+        "samples": 180
+      },
+      "snapshot_finalize": {
+        "max_ms": 0.1,
+        "median_ms": 0,
+        "p95_ms": 0,
+        "samples": 180
+      },
+      "snapshot_players": {
+        "max_ms": 6.7,
+        "median_ms": 0.6,
+        "p95_ms": 4,
+        "samples": 180
+      },
+      "world_draw": {
+        "max_ms": 3.9,
+        "median_ms": 0.3,
+        "p95_ms": 1.8,
+        "samples": 180
+      }
+    },
+    "clock_resyncs": 1,
+    "coalesced_client_snapshots": 12,
+    "confirmed_damage_events": 14,
+    "contacts": 0,
+    "correction_histogram": [
+      0,
+      0,
+      0
+    ],
+    "damage_labels": 0,
+    "dash_afterimages": 0,
+    "dash_sample_owners": {},
+    "dash_samples": 0,
+    "delivery_gap_stalls": 1,
+    "disconnect_reason": "",
+    "draw_calls": 121,
+    "enemies": 0,
+    "engine_physics_ms": 6.7,
+    "engine_process_ms": 39.6,
+    "firing": true,
+    "fps": 27,
+    "frame_gap_peak_ms": 325.3,
+    "frame_gap_stalls": 0,
+    "gateway_metrics": {
+      "authority_cpu_percent": null,
+      "authority_metrics_age_ms": 2247.541495,
+      "coalesced_snapshots": 0,
+      "downstream_buffer_bytes": 0,
+      "gateway_cpu_percent": 3.1,
+      "gateway_loop_p95_ms": 22.48,
+      "gateway_memory_bytes": 54575104,
+      "measured_at_ms": 1792167828715,
+      "upstream_buffer_bytes": 0
+    },
+    "gateway_rtt_ms": 71,
+    "graphics_mode": "auto",
+    "hero": "ram",
+    "hud_rebuilds": 56,
+    "ice_walls": 0,
+    "last_action": {
+      "angle": 0,
+      "client_ms": 23070,
+      "kind": "secondary",
+      "motion_type": 2,
+      "phase": "cancel",
+      "seq": 40,
+      "type": "held_cast"
+    },
+    "last_authority_reset": "initial_state",
+    "last_disconnect_reason": "",
+    "last_launch": {},
+    "last_stall_context": "state_delivery_gap",
+    "launch_drawn_ms": {
+      "samples": 0
+    },
+    "launch_received_ms": {
+      "samples": 0
+    },
+    "local_view_offset_px": 0,
+    "long_frames_50ms": 41,
+    "match_elapsed_ms": 14150,
+    "match_id": "94099f717fa156ae0bf5a6f1f3c7440f",
+    "max_handoff_error_px": 0,
+    "max_position_correction_px": 0.00048828125,
+    "max_world_backlog_ms": 465.185,
+    "memory_bytes": 0,
+    "mobile_aim": [
+      1,
+      0
+    ],
+    "mobile_attacking": false,
+    "mobile_controls": false,
+    "oldest_wall_remaining": 0,
+    "pending_packets": 0,
+    "playback_rate": 0.97965,
+    "players": 8,
+    "poll_budget_yields": 1,
+    "position_corrections": 0,
+    "predicted_projectiles": 0,
+    "prediction_expiries": 0,
+    "prediction_queue": 0,
+    "primitives": 5448,
+    "projectile_confirmations": 0,
+    "projectile_handoffs": 0,
+    "projectiles": 2,
+    "protocol": 3,
+    "quality_changes": 2,
+    "quality_scale": 0.7,
+    "received_bytes": 767994,
+    "received_packets": 415,
+    "recent_hit_events": [
+      {
+        "amount": 1,
+        "tick": 276,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 333,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 396,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 9,
+        "tick": 516,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 573,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 9,
+        "tick": 573,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 9,
+        "tick": 633,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 633,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 696,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 16.9,
+        "tick": 750,
+        "victim": "db956f306d4cf05c"
+      },
+      {
+        "amount": 1,
+        "tick": 753,
+        "victim": "1f4ccaaec390ace6"
+      },
+      {
+        "amount": 1,
+        "tick": 816,
+        "victim": "1f4ccaaec390ace6"
+      }
+    ],
+    "recovery_active": true,
+    "release_cues": 0,
+    "render_objects": 718,
+    "render_scale_mode": 2,
+    "render_size": [
+      896,
+      504
+    ],
+    "replayed_inputs": 6,
+    "resume_attempts": 0,
+    "room": "40E5F1",
+    "rtt_ms": 72,
+    "scenery_chunks": 8,
+    "server_build": "T4.17",
+    "server_metrics": {
+      "authority_hz": 59.9243479992037,
+      "coalesced_snapshots": 0,
+      "connections": 8,
+      "dropped_inputs": 0,
+      "encode_ms": 0.911,
+      "input_backlog": 0,
+      "measured_at_ms": 25189,
+      "rooms": 1,
+      "snapshot_bytes": 2696,
+      "socket_poll_ms": 0.43,
+      "step_work_max_ms": 20.891,
+      "step_work_ms": 1.476
+    },
+    "server_metrics_age_ms": 1242,
+    "shell_resize_count": 3,
+    "simulation_ms": 3.356,
+    "snapshot_interarrival_ms": 1235.87878787879,
+    "snapshot_ms": 2.158,
+    "state_age_ms": 1241,
+    "state_stale_peak_ms": 1241,
+    "state_stalls": 1,
+    "target_buffer_ms": 140.699999999998,
+    "terrain_chunks": 6,
+    "terrain_geometry": {
+      "merged_quads": 6,
+      "original_quads": 384,
+      "visible_chunks": 6
+    },
+    "texture_memory_bytes": 39591484,
+    "twister_effects": 0,
+    "video_memory_bytes": 237841084,
+    "viewport": [
+      1280,
+      720
+    ],
+    "visual_correction_px": 0,
+    "walking_actors": {
+      "1f4ccaaec390ace6": false,
+      "22d66be67046496a": false,
+      "23f4dcec74806d51": false,
+      "4c81488b97616395": false,
+      "788a764f48fd395d": false,
+      "794f46b9185931d9": false,
+      "db956f306d4cf05c": false,
+      "f21170a02dcf7fbe": false
+    },
+    "wire_bytes": 767994
+  },
+  "after": {
+    "sample": {
+      "ability_view_active": false,
+      "ability_view_offset_px": 0,
+      "ability_view_starts": 0,
+      "action_ack_wait_ms": 29,
+      "action_input_flushes": 21,
+      "active": true,
+      "active_fps_cap": 60,
+      "arena_map": "sand",
+      "arrival_gap_max_ms": 103.999999999999,
+      "authoritative_build": {
+        "crit_tier": 0,
+        "final_technique": false,
+        "points": 0,
+        "technique": false,
+        "tuning": [
+          0,
+          0,
+          0
+        ]
+      },
+      "authority_hz": 59.9640215870478,
+      "authority_resets": 1,
+      "browser_timing": {
+        "hidden": false,
+        "hidden_total_ms": 0,
+        "long_task_count": 1,
+        "long_task_max_ms": 56,
+        "long_task_total_ms": 56,
+        "long_tasks_supported": true,
+        "raf_gap_max_ms": 50,
+        "raf_over_50ms": 1,
+        "visibility_changes": 0
+      },
+      "buffer_holds": 2,
+      "buffer_ms": 78.9484102278095,
+      "build": "T4.17",
+      "client_elapsed_ms": 34716,
+      "client_frame_gap_ms": 33.2,
+      "client_profile": {
+        "actors_effects_draw": {
+          "max_ms": 7.9,
+          "median_ms": 2.1,
+          "p95_ms": 5.9,
+          "samples": 180
+        },
+        "adventure_draw": {
+          "max_ms": 10.3,
+          "median_ms": 2.1,
+          "p95_ms": 5.5,
+          "samples": 180
+        },
+        "client_physics": {
+          "max_ms": 4.8,
+          "median_ms": 0.4,
+          "p95_ms": 0.8,
+          "samples": 180
+        },
+        "client_process": {
+          "max_ms": 15.2,
+          "median_ms": 3.2,
+          "p95_ms": 8.6,
+          "samples": 180
+        },
+        "combat_draw": {
+          "max_ms": 10,
+          "median_ms": 2,
+          "p95_ms": 4.7,
+          "samples": 180
+        },
+        "control_decode": {
+          "max_ms": 0.2,
+          "median_ms": 0,
+          "p95_ms": 0.1,
+          "samples": 157
+        },
+        "draw_commands": {
+          "max_ms": 13.1,
+          "median_ms": 6.1,
+          "p95_ms": 10.8,
+          "samples": 180
+        },
+        "frame_interval": {
+          "max_ms": 89.9,
+          "median_ms": 36.7,
+          "p95_ms": 48,
+          "samples": 180
+        },
+        "ground_effects": {
+          "culled": 0,
+          "drawn": 3,
+          "magma": 3,
+          "poison": 0,
+          "shadows": 4
+        },
+        "ground_family_draw": {
+          "max_ms": 7.3,
+          "median_ms": 0.3,
+          "p95_ms": 1,
+          "samples": 180
+        },
+        "hud_draw": {
+          "max_ms": 4.5,
+          "median_ms": 0.3,
+          "p95_ms": 2.5,
+          "samples": 180
+        },
+        "network_poll": {
+          "max_ms": 8.6,
+          "median_ms": 2,
+          "p95_ms": 6.1,
+          "samples": 180
+        },
+        "prediction_replay": {
+          "max_ms": 6.2,
+          "median_ms": 0.3,
+          "p95_ms": 1.2,
+          "samples": 180
+        },
+        "projectile_art": {
+          "max_ms": 2.2,
+          "median_ms": 0,
+          "p95_ms": 0.1,
+          "samples": 180
+        },
+        "snapshot_adventure": {
+          "max_ms": 4.3,
+          "median_ms": 0.3,
+          "p95_ms": 3.6,
+          "samples": 180
+        },
+        "snapshot_apply": {
+          "max_ms": 8,
+          "median_ms": 1.1,
+          "p95_ms": 4.9,
+          "samples": 180
+        },
+        "snapshot_aux": {
+          "max_ms": 6.8,
+          "median_ms": 0,
+          "p95_ms": 0.1,
+          "samples": 180
+        },
+        "snapshot_custom": {
+          "max_ms": 0.1,
+          "median_ms": 0,
+          "p95_ms": 0.1,
+          "samples": 180
+        },
+        "snapshot_decode": {
+          "max_ms": 7,
+          "median_ms": 0.6,
+          "p95_ms": 3.8,
+          "samples": 180
+        },
+        "snapshot_entities": {
+          "max_ms": 0.1,
+          "median_ms": 0,
+          "p95_ms": 0.1,
+          "samples": 180
+        },
+        "snapshot_finalize": {
+          "max_ms": 0.1,
+          "median_ms": 0,
+          "p95_ms": 0,
+          "samples": 180
+        },
+        "snapshot_players": {
+          "max_ms": 6.7,
+          "median_ms": 0.6,
+          "p95_ms": 4.2,
+          "samples": 180
+        },
+        "world_draw": {
+          "max_ms": 3.6,
+          "median_ms": 0.3,
+          "p95_ms": 0.6,
+          "samples": 180
+        }
+      },
+      "clock_resyncs": 1,
+      "coalesced_client_snapshots": 12,
+      "confirmed_damage_events": 0,
+      "contacts": 0,
+      "correction_histogram": [
+        0,
+        0,
+        0
+      ],
+      "damage_labels": 0,
+      "dash_afterimages": 0,
+      "dash_sample_owners": {},
+      "dash_samples": 0,
+      "delivery_gap_stalls": 2,
+      "disconnect_reason": "",
+      "draw_calls": 118,
+      "enemies": 0,
+      "engine_physics_ms": 4.4,
+      "engine_process_ms": 41.5,
+      "firing": true,
+      "fps": 27,
+      "frame_gap_peak_ms": 325.3,
+      "frame_gap_stalls": 0,
+      "gateway_metrics": {
+        "authority_cpu_percent": null,
+        "authority_metrics_age_ms": 4310.109452,
+        "coalesced_snapshots": 0,
+        "downstream_buffer_bytes": 0,
+        "gateway_cpu_percent": 3.2,
+        "gateway_loop_p95_ms": 22.64,
+        "gateway_memory_bytes": 56545280,
+        "measured_at_ms": 1792167840800,
+        "upstream_buffer_bytes": 0
+      },
+      "gateway_rtt_ms": 76,
+      "graphics_mode": "auto",
+      "hero": "ram",
+      "hud_rebuilds": 97,
+      "ice_walls": 0,
+      "last_action": {
+        "angle": -3.06640458106995,
+        "client_ms": 34534,
+        "kind": "primary",
+        "motion_type": 0,
+        "phase": "",
+        "seq": 10,
+        "type": "attack"
+      },
+      "last_authority_reset": "initial_state",
+      "last_disconnect_reason": "socket_closed_1000: state_timeout",
+      "last_launch": {},
+      "last_stall_context": "state_delivery_gap",
+      "launch_drawn_ms": {
+        "samples": 0
+      },
+      "launch_received_ms": {
+        "samples": 0
+      },
+      "local_view_offset_px": 0,
+      "long_frames_50ms": 53,
+      "match_elapsed_ms": 26549,
+      "match_id": "94099f717fa156ae0bf5a6f1f3c7440f",
+      "max_handoff_error_px": 0,
+      "max_position_correction_px": 0,
+      "max_world_backlog_ms": 174.200440713037,
+      "memory_bytes": 0,
+      "mobile_aim": [
+        1,
+        0
+      ],
+      "mobile_attacking": false,
+      "mobile_controls": false,
+      "oldest_wall_remaining": 0,
+      "pending_packets": 0,
+      "playback_rate": 1.01220032249577,
+      "players": 8,
+      "poll_budget_yields": 1,
+      "position_corrections": 0,
+      "predicted_projectiles": 0,
+      "prediction_expiries": 0,
+      "prediction_queue": 7,
+      "primitives": 4762,
+      "projectile_confirmations": 0,
+      "projectile_handoffs": 0,
+      "projectiles": 4,
+      "protocol": 3,
+      "quality_changes": 2,
+      "quality_scale": 0.7,
+      "received_bytes": 1112292,
+      "received_packets": 568,
+      "recent_hit_events": [],
+      "recovery_active": false,
+      "release_cues": 0,
+      "render_objects": 697,
+      "render_scale_mode": 2,
+      "render_size": [
+        896,
+        504
+      ],
+      "replayed_inputs": 5,
+      "resume_attempts": 1,
+      "room": "40E5F1",
+      "rtt_ms": 76,
+      "scenery_chunks": 8,
+      "server_build": "T4.17",
+      "server_metrics": {
+        "authority_hz": 59.9640215870478,
+        "coalesced_snapshots": 0,
+        "connections": 8,
+        "dropped_inputs": 0,
+        "encode_ms": 1.302,
+        "input_backlog": 0,
+        "measured_at_ms": 37591,
+        "rooms": 1,
+        "snapshot_bytes": 3081,
+        "socket_poll_ms": 0.195,
+        "step_work_max_ms": 45.057,
+        "step_work_ms": 3.076
+      },
+      "server_metrics_age_ms": 34,
+      "shell_resize_count": 3,
+      "simulation_ms": 1.618,
+      "snapshot_interarrival_ms": 38.8888888888889,
+      "snapshot_ms": 3.052,
+      "state_age_ms": 33,
+      "state_stale_peak_ms": 4228,
+      "state_stalls": 2,
+      "target_buffer_ms": 132.799999999999,
+      "terrain_chunks": 6,
+      "terrain_geometry": {
+        "merged_quads": 6,
+        "original_quads": 384,
+        "visible_chunks": 6
+      },
+      "texture_memory_bytes": 39853968,
+      "twister_effects": 0,
+      "video_memory_bytes": 238252752,
+      "viewport": [
+        1280,
+        720
+      ],
+      "visual_correction_px": 0,
+      "walking_actors": {
+        "1f4ccaaec390ace6": true,
+        "22d66be67046496a": true,
+        "23f4dcec74806d51": true,
+        "4c81488b97616395": true,
+        "788a764f48fd395d": true,
+        "794f46b9185931d9": true,
+        "db956f306d4cf05c": true,
+        "f21170a02dcf7fbe": false
+      },
+      "wire_bytes": 1112292
+    },
+    "welcomes": [
+      {
+        "build": "T4.17",
+        "host": true,
+        "id": "f21170a02dcf7fbe",
+        "protocol": 3,
+        "room": "40E5F1",
+        "token": "1c3a6d66b10a4e0a5afcdabd4353aed5a6c5c5f213640fda",
+        "type": "welcome"
+      },
+      {
+        "build": "T4.17",
+        "host": true,
+        "id": "f21170a02dcf7fbe",
+        "protocol": 3,
+        "room": "40E5F1",
+        "token": "1c3a6d66b10a4e0a5afcdabd4353aed5a6c5c5f213640fda",
+        "type": "welcome"
+      }
+    ],
+    "match": "94099f717fa156ae0bf5a6f1f3c7440f",
+    "states": 414
+  },
+  "health": {
+    "ready": true,
+    "protocol": 3,
+    "simulationHz": 60,
+    "snapshotHz": 20,
+    "build": "T4.17",
+    "active_rooms": 1,
+    "actual_hz": 60,
+    "admission_busy": false,
+    "coalesced_snapshots": 0,
+    "connections": 8,
+    "disconnects": {
+      "socket_closed": 1
+    },
+    "dropped_input_frames": 0,
+    "encode_ms": 1.302,
+    "input_backlog_max": 0,
+    "max_tick_ms": 31.61,
+    "memory_bytes": 104593594,
+    "packets": 6394,
+    "rooms": 1,
+    "snapshot_bytes": 3081,
+    "snapshot_ms": 3.052,
+    "snapshots": 4254,
+    "step_work_max_ms": 45.057,
+    "work_ms_per_second": 253.1,
+    "gateway_cpu_percent": 3.2,
+    "gateway_memory_bytes": 56545280,
+    "gateway_loop_p95_ms": 22.64,
+    "authority_cpu_percent": null,
+    "reporting": {
+      "configured": false,
+      "ready": false,
+      "admin_configured": false,
+      "pending": 0
+    },
+    "gateway_clients": 8,
+    "gateway_coalesced_snapshots": 0,
+    "gateway_disconnects": {}
+  },
+  "bots": [
+    {
+      "states": 550,
+      "accepted": 13
+    },
+    {
+      "states": 550,
+      "accepted": 13
+    },
+    {
+      "states": 550,
+      "accepted": 26
+    },
+    {
+      "states": 550,
+      "accepted": 22
+    },
+    {
+      "states": 550,
+      "accepted": 26
+    },
+    {
+      "states": 550,
+      "accepted": 26
+    },
+    {
+      "states": 550,
+      "accepted": 26
+    }
+  ],
+  "errors": []
+}

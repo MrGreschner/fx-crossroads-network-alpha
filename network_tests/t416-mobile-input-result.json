@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "roomJoined": true,
+  "playerName": "Phone tester",
+  "independentFields": 3,
+  "nativeTouchFocus": true,
+  "maxLength": 6,
+  "resizedTouchFocus": true,
+  "hiddenDuringGameplay": true,
+  "errors": [],
+  "note": "Browser touch emulation verifies native input focus and real game/server text delivery. Actual iOS/Android software-keyboard appearance requires a physical-device check."
+}

@@ -19,7 +19,10 @@ var touch_move=Vector2.ZERO
 var speech:PanelContainer
 var clock=0.0
 var font:Font=preload("res://assets/fonts/CrossroadsUI.ttf")
-var ram:Texture2D=preload("res://assets/ram_idle.png")
+const Art=preload("res://scripts/town_visuals311.gd")
+const Core=preload("res://scripts/core_hero_art.gd")
+var ram:Texture2D=Core.texture("ram","idle")
+var walking:=false
 func setup(owner:Node)->void:
  studio=owner;refresh_progress();set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);mouse_filter=Control.MOUSE_FILTER_STOP
  hud=PanelContainer.new();hud.size=Vector2(860,105);add_child(hud);UI.apply(hud);hud.add_theme_stylebox_override("panel",UI.box("#102c38","#355b68",12,14));UI.enter(hud)
@@ -56,11 +59,13 @@ func _process(delta:float)->void:
  if is_instance_valid(progress_panel):
   var v=get_viewport().get_visible_rect().size;var f=minf(1,minf((v.x-24)/720,(v.y-24)/480));progress_panel.scale=Vector2.ONE*f;progress_panel.position=(v-progress_panel.size*f)*.5
  var screen=get_viewport().get_visible_rect().size;hud.size=Vector2(860,105);var fit=minf(1,(screen.x-32)/hud.size.x);hud.scale=Vector2.ONE*fit;hud.position=Vector2((screen.x-hud.size.x*fit)*.5,12)
+ walking=false
  if studio.game.menu=="workshop" and not is_instance_valid(speech) and not is_instance_valid(assignments) and not is_instance_valid(progress_panel):
   var direction=touch_move+Vector2(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
   var candidate=(player+direction.normalized()*170*delta).clamp(Vector2(75,130),Vector2(825,525));var blocked=false
   for spot in stations:
    if Rect2(spot-Vector2(67,34),Vector2(134,54)).grow(12).has_point(candidate):blocked=true
+  walking=not blocked and candidate.distance_squared_to(player)>.01
   if not blocked:player=candidate
   if player.y>510 and absf(player.x-450)<48:
    studio.close();queue_free();return
@@ -78,16 +83,17 @@ func _process(delta:float)->void:
 func _draw()->void:
  draw_rect(Rect2(Vector2.ZERO,size),Color("#071b24"))
  var factor=minf(size.x/900,size.y/560);var offset=(size-Vector2(900,560)*factor)*.5;draw_set_transform(offset,0,Vector2.ONE*factor)
- draw_rect(Rect2(60,115,780,395),Color("#907354"));draw_rect(Rect2(60,115,780,395),Color("#e4c792"),5)
- for x in range(60,840,30):draw_line(Vector2(x,115),Vector2(x,510),Color(.1,.05,.01,.12),1)
- draw_rect(Rect2(310,125,280,60),Color("#204c43"));draw_rect(Rect2(310,125,280,60),Color("#c4af7c"),false,5)
- draw_string(font,Vector2(345,148),"IMAGINE • TEST • IMPROVE",HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("#f3e4c5"))
+ draw_texture_rect(Art.texture("academy_floor"),Rect2(60,115,780,395),false)
+ var chalkboard:=Rect2(322,132,256,45)
+ draw_style_box(UI.box("#24443e","#b79662",4,3),chalkboard)
+ draw_string(font,Vector2(322,159),"IMAGINE • TEST • IMPROVE",HORIZONTAL_ALIGNMENT_CENTER,256,15,Color("#efe1bf"))
  for i in stations.size():station(i)
- draw_rect(Rect2(315,265,270,160),Color(.19,.36,.40,.4));draw_rect(Rect2(315,265,270,160),Color(.70,.66,.45,.5),false,3)
- draw_texture_rect(ram,Rect2(teacher-Vector2(26,45),Vector2(52,64)),false)
- draw_rect(Rect2(teacher+Vector2(-17,-4),Vector2(34,15)),Color("#344f6b"));draw_string(font,teacher+Vector2(-20,35),"Mr. G",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#f5d79a"))
- draw_texture_rect(ram,Rect2(player-Vector2(24,44+sin(clock*6)*1.5),Vector2(48,64)),false)
- draw_rect(Rect2(410,492,80,18),Color("#244957"));draw_string(font,Vector2(405,537),"Entrance",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#e6d09f"))
+ draw_texture_rect(ram,Rect2(teacher-Vector2(26,46),Vector2(52,60)),false)
+ draw_style_box(UI.box("#694b39","#b58a58",3,2),Rect2(teacher+Vector2(-30,-6),Vector2(60,24)))
+ draw_string(font,teacher+Vector2(-30,11),"Mr. G",HORIZONTAL_ALIGNMENT_CENTER,60,13,Color("#f5d79a"))
+ var player_art:=Core.texture("ram","walk1" if int(clock*7)%2==0 else "walk2") if walking else ram
+ draw_texture_rect(player_art,Rect2(player-Vector2(24,44),Vector2(48,60)),false)
+ draw_string(font,Vector2(410,531),"Entrance",HORIZONTAL_ALIGNMENT_CENTER,80,15,Color("#e6d09f"))
  if player.distance_to(teacher)<75:draw_string(font,Vector2(335,257),"E • Talk to teacher",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#ffe8a8"))
  else:
   for i in stations.size():
@@ -134,17 +140,16 @@ func open_progress()->void:
  studio.button(col,"Back to classroom",func():progress_panel.queue_free())
  var v=get_viewport().get_visible_rect().size;var fit=minf(1,minf((v.x-24)/720,(v.y-24)/480));progress_panel.scale=Vector2.ONE*fit;progress_panel.position=(v-progress_panel.size*fit)*.5
 func station(i:int)->void:
- var p:Vector2=stations[i];var color=Color("#87cad0") if i<4 else Color("#b6ad92")
- draw_rect(Rect2(p-Vector2(68,33),Vector2(136,59)),Color("#3e4d50"));draw_rect(Rect2(p-Vector2(65,30),Vector2(130,50)),Color("#a98c66"));draw_line(p+Vector2(-65,22),p+Vector2(65,22),Color("#e7c99b"),3)
- for side in [-1,1]:draw_rect(Rect2(p+Vector2(side*55-4,25),Vector2(8,12)),Color("#4a4140"))
- draw_rect(Rect2(p-Vector2(50,65),Vector2(100,49)),Color("#263f4a"));draw_rect(Rect2(p-Vector2(46,61),Vector2(92,41)),Color("#416775"));draw_rect(Rect2(p-Vector2(50,65),Vector2(100,49)),color,false,2)
+ var p:Vector2=stations[i]
+ var prop:=Art.texture("academy_station"+str(i))
+ var dimensions:=prop.get_size()
+ var rect:=Rect2(p+Vector2(-dimensions.x*.5,26-dimensions.y),dimensions)
+ draw_texture_rect(prop,rect,false)
  if i==3:
-  var codes=module_codes
-  for n in 3:
-   var x=p+Vector2(-36,-53+n*10);draw_rect(Rect2(x,Vector2(72,6)),Color("#243e4a"));draw_rect(Rect2(x,Vector2(72*progress(str(codes[n])),6)),Color("#86d4b0"))
- elif i<3:
-  for n in 3:draw_line(p+Vector2(-32,-51+n*10),p+Vector2(25-n*7,-51+n*10),color,3)
- else:
-  draw_arc(p+Vector2(0,-40),13,PI,TAU,16,color,3);draw_rect(Rect2(p+Vector2(-17,-42),Vector2(34,23)),color)
- draw_string(font,p+Vector2(-80,52),station_names[i],HORIZONTAL_ALIGNMENT_CENTER,160,14,Color("#fff0c2"))
- if player.distance_to(p+Vector2(0,44))<70:draw_rect(Rect2(p+Vector2(-53,27),Vector2(106,38)),Color(.5,.8,.83,.16));draw_rect(Rect2(p+Vector2(-53,27),Vector2(106,38)),color,false,1)
+  for n in mini(3,module_codes.size()):
+   var at:=rect.position+dimensions*Vector2(.24,.08+n*.137)
+   draw_rect(Rect2(at,Vector2(dimensions.x*.52*progress(str(module_codes[n])),3)),Color("#85c5a0"))
+ var label_rect:=Rect2(p+Vector2(-69,29),Vector2(138,19))
+ var near:bool=player.distance_to(p+Vector2(0,44))<70
+ draw_style_box(UI.box("#203b40" if near else "#302b27","#c0a272" if near else "#7f6549",4,2),label_rect)
+ draw_string(font,label_rect.position+Vector2(0,14),station_names[i],HORIZONTAL_ALIGNMENT_CENTER,138,12,Color("#f4e0b8"))

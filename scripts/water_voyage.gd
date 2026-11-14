@@ -145,9 +145,12 @@ func fishing_spot()->Dictionary:
  elif not anchored:return {}
  var spot:Dictionary=C.pools()[id].duplicate(true);spot.id=id;spot.region="night_crater" if id=="voyage_night_crater" else spot.region;spot.bank=[bank.x,bank.y];spot.water=[water.x,water.y]
  return spot
+const PIER_HINT="E • Lake & coastal voyages"
 func pier_interact()->bool:
+ # Give fishing exclusive use of the dock controls near a fishing hole or during a cast.
+ if game.fishing!=null and (game.fishing.busy() or not game.fishing.nearest().is_empty()):return false
  if game.position_in_world.distance_to(PIER)>150 and not preload("res://scripts/town_marina.gd").on_deck(game.position_in_world):return false
- game.hint="E • Ripple & Reel marina • Lake & coastal voyages"
+ game.hint=PIER_HINT
  if Input.is_action_just_pressed("interact"):open_menu("pier")
  return true
 func purchase()->void:
