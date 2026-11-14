@@ -1,19 +1,15 @@
-# T4.13 server connection repair
+# Crossroads V343 multiplayer authority
 
-The original server delta ZIP omitted dependencies needed by the older GitHub server repository. This package supplies them and a startup validation check. It was tested against a fresh archive of the actual GitHub repository.
+Extract the V343 authority pack from the accompanying V343 Web ZIP:
 
-1. Extract this ZIP.
-2. Open your GitHub repository MAIN PAGE, where network, scripts and project.godot are visible.
-3. Choose Add file -> Upload files.
-4. Drag the network and scripts FOLDERS from this ZIP into that page together. Keep these folder paths; do not upload the outer ZIP or loose files at the repository root.
-5. Commit to the branch linked to Render.
-6. In the existing Render game Web Service choose Manual Deploy -> Deploy latest commit.
-7. Wait for Live, refresh the itch.io page, then press Host test room again.
+    python3 server_pack.py Crossroads_v343_Web.zip Crossroads_v343_Server.pck
 
-Keep the existing T4.13 itch.io Web build, database, environment variables and passwords. They do not need replacing.
+The extractor verifies every pack section and the complete resulting PCK.
+Replace the game pack in the existing Render deployment. Keep the same Godot
+runtime, service configuration and network starting scene. If your deployed
+pack has a fixed filename, use that filename for the replacement.
 
-Expected: Host test room shows a six-character room code. Another player can join and the host can start the match.
+    godot --headless --main-pack Crossroads_v343_Server.pck res://network/server.tscn
 
-Contents: three missing network scripts (dash_view, scenery_view, snapshot_inbox), updated movement helper, matching Arcade base script, and server startup guard. The supplied UID files keep script identities consistent.
-
-Validation: clean Godot import of the actual repository; eight-player host/join and constrained movement; projectile travel; reconnect; Gladiator enemies and damage; actual Godot client. No script errors after repair.
+Deploy the matching V343 web client. V343 also includes the V342 changes
+to Pippa and event hero record eligibility.
