@@ -1,0 +1,312 @@
+{
+  "town_pond": [
+    {
+      "name": "Duckweed Cluster",
+      "sprite": "res://assets/shore_finds/town_pond_0.png"
+    },
+    {
+      "name": "Pondweed Sprig",
+      "sprite": "res://assets/shore_finds/town_pond_1.png"
+    },
+    {
+      "name": "Chipped Saucer",
+      "sprite": "res://assets/shore_finds/town_pond_2.png"
+    },
+    {
+      "name": "Snapped Peg",
+      "sprite": "res://assets/shore_finds/town_pond_3.png"
+    }
+  ],
+  "shared": [
+    {
+      "name": "Ribbonweed",
+      "sprite": "res://assets/shore_finds/shared_0.png"
+    },
+    {
+      "name": "Silver Reeds",
+      "sprite": "res://assets/shore_finds/shared_1.png"
+    },
+    {
+      "name": "Bent Lure",
+      "sprite": "res://assets/shore_finds/shared_2.png"
+    },
+    {
+      "name": "Chipped Bobber",
+      "sprite": "res://assets/shore_finds/shared_3.png"
+    },
+    {
+      "name": "Lake Lily Pad",
+      "sprite": "res://assets/shore_finds/shared_4.png"
+    }
+  ],
+  "town_dawn": [
+    {
+      "name": "Dawn Fanwort",
+      "sprite": "res://assets/shore_finds/town_dawn_0.png"
+    },
+    {
+      "name": "Dawn Rush",
+      "sprite": "res://assets/shore_finds/town_dawn_1.png"
+    },
+    {
+      "name": "Frayed Net Float",
+      "sprite": "res://assets/shore_finds/town_dawn_2.png"
+    },
+    {
+      "name": "Chipped Brass Bell",
+      "sprite": "res://assets/shore_finds/town_dawn_3.png"
+    }
+  ],
+  "wayfarer": [
+    {
+      "name": "Wild Watercress",
+      "sprite": "res://assets/shore_finds/wayfarer_0.png"
+    },
+    {
+      "name": "Hookleaf Reed",
+      "sprite": "res://assets/shore_finds/wayfarer_1.png"
+    },
+    {
+      "name": "Splintered Trail Marker",
+      "sprite": "res://assets/shore_finds/wayfarer_2.png"
+    },
+    {
+      "name": "Broken Basket Handle",
+      "sprite": "res://assets/shore_finds/wayfarer_3.png"
+    }
+  ],
+  "silverfall": [
+    {
+      "name": "Silvermoss",
+      "sprite": "res://assets/shore_finds/silverfall_0.png"
+    },
+    {
+      "name": "Cascade Fern",
+      "sprite": "res://assets/shore_finds/silverfall_1.png"
+    },
+    {
+      "name": "River-Stone Charm",
+      "sprite": "res://assets/shore_finds/silverfall_2.png"
+    },
+    {
+      "name": "Broken Oar Tip",
+      "sprite": "res://assets/shore_finds/silverfall_3.png"
+    }
+  ],
+  "voyage_coast": [
+    {
+      "name": "Salt Kelp",
+      "sprite": "res://assets/shore_finds/voyage_coast_0.png"
+    },
+    {
+      "name": "Tidegrass",
+      "sprite": "res://assets/shore_finds/voyage_coast_1.png"
+    },
+    {
+      "name": "Sea Glass",
+      "sprite": "res://assets/shore_finds/voyage_coast_2.png"
+    },
+    {
+      "name": "Barnacled Rope",
+      "sprite": "res://assets/shore_finds/voyage_coast_3.png"
+    }
+  ],
+  "lantern_marsh": [
+    {
+      "name": "Wickgrass",
+      "sprite": "res://assets/shore_finds/lantern_marsh_0.png"
+    },
+    {
+      "name": "Fenweed",
+      "sprite": "res://assets/shore_finds/lantern_marsh_1.png"
+    },
+    {
+      "name": "Broken Lantern Cage",
+      "sprite": "res://assets/shore_finds/lantern_marsh_2.png"
+    },
+    {
+      "name": "Bent Buckle",
+      "sprite": "res://assets/shore_finds/lantern_marsh_3.png"
+    }
+  ],
+  "descent": [
+    {
+      "name": "Cavewort",
+      "sprite": "res://assets/shore_finds/descent_0.png"
+    },
+    {
+      "name": "Mineral Moss",
+      "sprite": "res://assets/shore_finds/descent_1.png"
+    },
+    {
+      "name": "Chipped Pick Head",
+      "sprite": "res://assets/shore_finds/descent_2.png"
+    },
+    {
+      "name": "Crushed Tin Cup",
+      "sprite": "res://assets/shore_finds/descent_3.png"
+    }
+  ],
+  "defense": [
+    {
+      "name": "Spearleaf Rush",
+      "sprite": "res://assets/shore_finds/defense_0.png"
+    },
+    {
+      "name": "Moatwort",
+      "sprite": "res://assets/shore_finds/defense_1.png"
+    },
+    {
+      "name": "Battered Shield Boss",
+      "sprite": "res://assets/shore_finds/defense_2.png"
+    },
+    {
+      "name": "Torn Pennant",
+      "sprite": "res://assets/shore_finds/defense_3.png"
+    }
+  ],
+  "moonveil": [
+    {
+      "name": "Moonreeds",
+      "sprite": "res://assets/shore_finds/moonveil_0.png"
+    },
+    {
+      "name": "Ribbonleaf",
+      "sprite": "res://assets/shore_finds/moonveil_1.png"
+    },
+    {
+      "name": "Cracked Mask",
+      "sprite": "res://assets/shore_finds/moonveil_2.png"
+    },
+    {
+      "name": "Ribbon Spool",
+      "sprite": "res://assets/shore_finds/moonveil_3.png"
+    }
+  ],
+  "between_root": [
+    {
+      "name": "Rootglass Moss",
+      "sprite": "res://assets/shore_finds/between_root_0.png"
+    },
+    {
+      "name": "Glasswort",
+      "sprite": "res://assets/shore_finds/between_root_1.png"
+    },
+    {
+      "name": "Chipped Green Tile",
+      "sprite": "res://assets/shore_finds/between_root_2.png"
+    },
+    {
+      "name": "Warped Button",
+      "sprite": "res://assets/shore_finds/between_root_3.png"
+    }
+  ],
+  "between_ember": [
+    {
+      "name": "Cinderweed",
+      "sprite": "res://assets/shore_finds/between_ember_0.png"
+    },
+    {
+      "name": "Copper Rush",
+      "sprite": "res://assets/shore_finds/between_ember_1.png"
+    },
+    {
+      "name": "Broken Clay Pipe",
+      "sprite": "res://assets/shore_finds/between_ember_2.png"
+    },
+    {
+      "name": "Pitted Hinge",
+      "sprite": "res://assets/shore_finds/between_ember_3.png"
+    }
+  ],
+  "between_frost": [
+    {
+      "name": "Frostgrass",
+      "sprite": "res://assets/shore_finds/between_frost_0.png"
+    },
+    {
+      "name": "Snowmoss",
+      "sprite": "res://assets/shore_finds/between_frost_1.png"
+    },
+    {
+      "name": "Broken Ice Cleat",
+      "sprite": "res://assets/shore_finds/between_frost_2.png"
+    },
+    {
+      "name": "Split Mitten Clasp",
+      "sprite": "res://assets/shore_finds/between_frost_3.png"
+    }
+  ],
+  "between_mist": [
+    {
+      "name": "Candleweed",
+      "sprite": "res://assets/shore_finds/between_mist_0.png"
+    },
+    {
+      "name": "Mist Fern",
+      "sprite": "res://assets/shore_finds/between_mist_1.png"
+    },
+    {
+      "name": "Cracked Amber Lens",
+      "sprite": "res://assets/shore_finds/between_mist_2.png"
+    },
+    {
+      "name": "Crooked Hook",
+      "sprite": "res://assets/shore_finds/between_mist_3.png"
+    }
+  ],
+  "between_star": [
+    {
+      "name": "Starwort",
+      "sprite": "res://assets/shore_finds/between_star_0.png"
+    },
+    {
+      "name": "Crescent Sedge",
+      "sprite": "res://assets/shore_finds/between_star_1.png"
+    },
+    {
+      "name": "Dented Star Brooch",
+      "sprite": "res://assets/shore_finds/between_star_2.png"
+    },
+    {
+      "name": "Broken Compass Case",
+      "sprite": "res://assets/shore_finds/between_star_3.png"
+    }
+  ],
+  "voyage_night_crater": [
+    {
+      "name": "Crater Ribbonweed",
+      "sprite": "res://assets/shore_finds/voyage_night_crater_0.png"
+    },
+    {
+      "name": "Basalt Moss",
+      "sprite": "res://assets/shore_finds/voyage_night_crater_1.png"
+    },
+    {
+      "name": "Split Obsidian Bead",
+      "sprite": "res://assets/shore_finds/voyage_night_crater_2.png"
+    },
+    {
+      "name": "Broken Survey Marker",
+      "sprite": "res://assets/shore_finds/voyage_night_crater_3.png"
+    }
+  ],
+  "folded_coast": [
+    {
+      "name": "Paperfold Kelp",
+      "sprite": "res://assets/shore_finds/folded_coast_0.png"
+    },
+    {
+      "name": "Inkblot Weed",
+      "sprite": "res://assets/shore_finds/folded_coast_1.png"
+    },
+    {
+      "name": "Soggy Origami Boat",
+      "sprite": "res://assets/shore_finds/folded_coast_2.png"
+    },
+    {
+      "name": "Waterlogged Map Scrap",
+      "sprite": "res://assets/shore_finds/folded_coast_3.png"
+    }
+  ]
+}

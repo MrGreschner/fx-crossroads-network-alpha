@@ -4,8 +4,12 @@ const BAITS={"basic":{"name":"Bare hook \u2022 free","group":"","needs":{},"cost
 static func context(game:Node)->Dictionary:
  if game.get("voyage")!=null and game.voyage.active:return game.voyage.context()
  if game.get("town_life")!=null:
-  var result=WEATHER.context(game.town_life.calendar.now);result.weather=game.town_life.calendar.weather();return result
- return WEATHER.context(Time.get_unix_time_from_system())
+  var result=WEATHER.context(game.town_life.calendar.now)
+  result.weather=game.town_life.calendar.weather() if game.mode=="town" else WEATHER.legacy_at(int(result.day),float(result.hour))
+  return result
+ var result:=WEATHER.context(Time.get_unix_time_from_system())
+ result.weather=WEATHER.legacy_at(int(result.day),float(result.hour))
+ return result
 static func open(spec:Dictionary,ctx:Dictionary,method:String="rod",bait:String="")->bool:
  if not bait.is_empty() and spec.has("required_bait") and bait!=str(spec.required_bait):return false
  if method not in spec.get("methods",["rod"]):return false
@@ -15,7 +19,10 @@ static func open(spec:Dictionary,ctx:Dictionary,method:String="rod",bait:String=
    for day in spec.days:
     if int(day)==int(ctx.weekday):match_day=true
    if not match_day:return false
-  if spec.has("weather") and str(ctx.weather) not in spec.weather:return false
+  if spec.has("weather"):
+   var sky:=str(ctx.weather)
+   var equivalent:=str({"Fog":"Mist","Snow":"Rain"}.get(sky,sky))
+   if sky not in spec.weather and equivalent not in spec.weather:return false
   if spec.has("hours"):
    var in_window=false
    for span in spec.hours:

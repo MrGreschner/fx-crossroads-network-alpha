@@ -1,0 +1,42 @@
+{
+  "id": "nutcracker",
+  "sprite": "nutcracker",
+  "name": "Nutcracker",
+  "max_health": 132,
+  "speed": 220,
+  "lore": "A carved sentry who keeps the winter lights burning along the roads to Crossroads.",
+  "run_cost": 0,
+  "role": "Melee / Support",
+  "passive": "",
+  "passive_effect": "",
+  "mastery": {},
+  "event": "Winter Holiday",
+  "event_active": true,
+  "primary": {
+    "name": "Spear Jab",
+    "style": "spear_jab",
+    "damage": 21,
+    "cooldown": 0.55,
+    "range": 112,
+    "description": "Quick, narrow thrust with a long spear. Can hit enemies lined up in the thrust.",
+    "ui_brief": "Quick, narrow thrust with a long spear. Can hit enemies lined up in the thrust."
+  },
+  "secondary": {
+    "name": "Stand Fast",
+    "style": "parade_stance",
+    "damage": 0,
+    "cooldown": 11,
+    "range": 0,
+    "description": "Brace for 4.5 seconds. Take 25% less damage; Spear Jab gains 40% reach and 25% damage. Walk and turn more slowly. Press Secondary again to cancel.",
+    "ui_brief": "Brace for 4.5 seconds. Take 25% less damage; Spear Jab gains 40% reach and 25% damage. Walk and turn more slowly. Press Secondary again to cancel."
+  },
+  "special": {
+    "name": "Tannenbaum",
+    "style": "winter_tree",
+    "damage": 14,
+    "cooldown": 21,
+    "range": 54,
+    "description": "Plant a tree for 7.2 seconds. Its flickering cones heal allies for 5 HP per pulse. Rolling ornaments explode when they hit an enemy, dealing 14 area damage.",
+    "ui_brief": "Plant a tree for 7.2 seconds. Its flickering cones heal allies for 5 HP per pulse. Rolling ornaments explode when they hit an enemy, dealing 14 area damage."
+  }
+}

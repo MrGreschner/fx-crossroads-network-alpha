@@ -13,10 +13,12 @@ class WeatherBadge extends Control:
   if weather=="Clear":
    draw_circle(Vector2(15,15),7,sun)
    for n in 8:draw_line(Vector2(15,15)+Vector2.from_angle(n*TAU/8)*10,Vector2(15,15)+Vector2.from_angle(n*TAU/8)*14,sun,2)
-  elif weather=="Mist":
+  elif weather in ["Mist","Fog"]:
    for y in [8,15,22]:draw_line(Vector2(2,y),Vector2(28,y),cloud,3)
   else:
    draw_circle(Vector2(10,12),7,cloud);draw_circle(Vector2(20,14),8,cloud);draw_line(Vector2(4,19),Vector2(27,19),cloud,5)
+   if weather=="Snow":
+    for x in [8,16,24]:draw_circle(Vector2(x,25+x%3),1.5,cloud)
    if weather in ["Rain","Storm"]:
     for x in [8,16,24]:draw_line(Vector2(x,24),Vector2(x-3,29),Color("#8dbbde"),2)
 var badge:WeatherBadge

@@ -40,6 +40,9 @@ func open()->void:
   day.select(calendar.weekday);row.add_child(day)
   var hour=SpinBox.new();hour.custom_minimum_size.x=130;hour.min_value=0;hour.max_value=23;hour.value=floori(calendar.hour);hour.prefix="Hour ";row.add_child(hour)
   var minute=SpinBox.new();minute.min_value=0;minute.max_value=59;minute.value=floori(calendar.hour*60)%60;row.add_child(minute)
+  var seasonal=OptionButton.new();seasonal.add_item("Current calendar date")
+  for label in ["Early spring • March 10","Summer • July 15","Late fall • November 15","Winter • December 15"]:seasonal.add_item(label)
+  preview_box.add_child(seasonal)
   var weather_row=HBoxContainer.new();preview_box.add_child(weather_row)
   var weather_label=Label.new();weather_label.text="Weather ";weather_row.add_child(weather_label)
   var weather=OptionButton.new();weather.name="DevWeather";weather_row.add_child(weather);weather.add_item("Automatic • live forecast")
@@ -51,6 +54,10 @@ func open()->void:
    if not dev.active:return
    var civil=Time.get_unix_time_from_datetime_dict(calendar.local_date);var monday=floori(civil/86400.0)*86400-calendar.weekday*86400
    var chosen=monday+day.selected*86400+int(hour.value)*3600+int(minute.value)*60
+   if seasonal.selected>0:
+    var dates=[[3,10],[7,15],[11,15],[12,15]]
+    var date:Array=dates[seasonal.selected-1]
+    chosen=Time.get_unix_time_from_datetime_dict({"year":calendar.local_date.year,"month":date[0],"day":date[1],"hour":int(hour.value),"minute":int(minute.value),"second":0})
    calendar.preview_time=chosen-calendar.edmonton_offset(chosen+21600);calendar.refresh();game.town_life.step(.01);close())
   var reset=Button.new();reset.text="Return to live time & weather";preview_box.add_child(reset);reset.pressed.connect(func():calendar.preview_time=-1;calendar.preview_weather="";calendar.refresh();close())
  fit()

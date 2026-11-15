@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fishing derbies</title><link rel="stylesheet" href="/admin/dashboard.css"><main>
+<a href="/admin">← Administration</a><h1>Fishing derbies</h1>
+<section class="panel"><form id="editor">
+<p><label>Title <input name="title" maxlength="80" required></label></p>
+<p><label>Location <select name="location"><option value="">Any location</option></select></label></p>
+<p><label>Species <select name="species"><option value="">Any species</option></select></label></p>
+<p><label>Starts <input name="starts" type="datetime-local" required></label>
+<label>Ends <input name="ends" type="datetime-local" required></label></p>
+<p id="timezone"></p><button type="submit" value="draft">Save draft</button> <button type="submit" value="publish">Publish event</button> <button type="button" id="new">New event</button>
+</form><p id="status" role="status"></p></section>
+<section class="panel"><h2>Events</h2><div id="events"></div></section></main>
+<script src="/admin/derbies/editor.js" defer></script></html>

@@ -65,7 +65,7 @@ func setup(g:Node)->void:
 func records():return game.legacy.fishing_records
 func context()->Dictionary:
  var ctx=preload("res://scripts/town_weather.gd").context(game.town_life.calendar.now)
- ctx.weather=game.town_life.calendar.weather()
+ ctx.weather=game.town_life.calendar.weather() if route=="lake" else preload("res://scripts/town_weather.gd").legacy_at(int(ctx.day),float(ctx.hour))
  ctx.region="night_crater" if route=="coast" and ashore else "voyage_"+route
  ctx.hour=game.town_life.calendar.hour
  return ctx
@@ -561,6 +561,10 @@ func draw_lighting(c:Node2D,cam:Vector2)->void:
    else:darkness_texture.update(softened)
   c.draw_texture_rect(darkness_texture,Rect2(Vector2.ZERO,c.VIEW),false)
   if dark:c.draw_circle(center,68,Color(1,.78,.32,.035))
+ if weather in ["Fog","Mist"] and route=="lake":
+  preload("res://scripts/town_weather_motion.gd").fog(c,cam,c.VIEW,elapsed,.72 if weather=="Fog" else .30,game.position_in_world-cam)
+ elif weather=="Snow":
+  preload("res://scripts/town_weather_motion.gd").snow(c,cam,c.VIEW,elapsed)
  if weather in ["Rain","Storm"]:
   for i in 45:
    var p=Vector2(fposmod(i*173+elapsed*180,game.VIEW.x),fposmod(i*241+elapsed*440,game.VIEW.y));c.draw_line(p,p+Vector2(-8,23),Color('#b5d8e0',.35),1.5)

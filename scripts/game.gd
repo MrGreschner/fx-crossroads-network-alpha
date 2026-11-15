@@ -1068,6 +1068,11 @@ func max_health() -> float:
 	return total
 
 func aim_direction() -> Vector2:
+	var stance:Dictionary=adventure.combat.events.nutcracker.stance.get("solo",{})
+	if not stance.is_empty():return Vector2.from_angle(float(stance.angle))
+	return raw_aim_direction()
+
+func raw_aim_direction() -> Vector2:
 	if adventure.combat.held_cast.context.has("solo"):return adventure.combat.vec(adventure.combat.held_cast.context.solo.aim)
 	if mobile.enabled: return mobile.aim
 	var direction := (media_mouse_world() - position_in_world).normalized()

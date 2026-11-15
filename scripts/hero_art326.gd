@@ -1,6 +1,6 @@
 extends RefCounted
 ## Batch one: independently redrawn two-frame walks; no deformation or mirroring.
-const NEW_HEROES=["lockjaw","anjali","santa","reindeer"]
+const NEW_HEROES=["nutcracker","lockjaw","anjali","santa","reindeer"]
 const IDS=["ferryman","hearthwarden","cantor","caelum","votary","lumen","mosaic","quill","dustmarshal","twisterspell","hazel_hex","echo_dancer","little_menace","hearth_herald","rook","iris","cairnheart","beaver","cat","elara","aurel"]
 static var sheets:Dictionary={}
 static var frames:Dictionary={}

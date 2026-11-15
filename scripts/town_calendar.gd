@@ -99,7 +99,9 @@ func moon_amount()->float:
  return 0.0
 func label()->String:
  var minutes=floori(hour*60)
- return "%s  %02d:%02d  ·  %s" % [DAYS[weekday],minutes/60,minutes%60,weather()]
+ return "%s  %02d:%02d  ·  %s · %s" % [DAYS[weekday],minutes/60,minutes%60,season(),weather()]
+func season()->String:
+ return preload("res://scripts/town_weather.gd").season(int(local_date.get("month",6)),int(local_date.get("day",1)))
 func weather()->String:
  var dev=preload("res://scripts/profile_store.gd").dev_session()
  if dev!=null and dev.active and preview_weather in preload("res://scripts/town_weather.gd").TYPES:return preview_weather
@@ -257,7 +259,7 @@ func ambient_shade()->Color:
 
 func weather_shade(base:Color)->Color:
  var sky=weather()
- var strength=.19 if sky=="Cloudy" else .29 if sky=="Rain" else .12 if sky=="Mist" else 0.0
+ var strength=.19 if sky=="Cloudy" else .29 if sky=="Rain" else .15 if sky in ["Mist","Fog","Snow"] else 0.0
  if strength==0:return base
  # Cloud cover lowers daylight; nighttime lanterns remain readable.
  var result=base.lerp(Color("#334b61"),strength*.55)
@@ -317,7 +319,7 @@ func draw_weather(c:Node2D,camera:Vector2)->void:
  var sky=weather()
  var seconds=animation_seconds()
  var motion=preload("res://scripts/town_weather_motion.gd")
- if sky in ["Cloudy","Rain"]:
+ if sky in ["Cloudy","Rain","Snow"]:
   var strength=.14*(1-night_amount()*.70)
   for cloud in motion.particles(camera,c.VIEW,seconds,true):
    var p:Vector2=cloud.world-camera
@@ -329,13 +331,10 @@ func draw_weather(c:Node2D,camera:Vector2)->void:
   for drop in motion.particles(camera,c.VIEW,seconds,false):
    var p:Vector2=drop.world-camera
    c.draw_line(p,p+Vector2(-3,15),Color(.74,.86,.91,.56),1,true)
- elif sky=="Mist":
-  # Mist banks drift over the landscape too, rather than following the player.
-  for cloud in motion.particles(camera,c.VIEW,seconds*.3,true):
-   var p:Vector2=cloud.world-camera
-   c.draw_set_transform(p,0,Vector2(1,.18))
-   for k in range(3,0,-1):c.draw_circle(Vector2.ZERO,220+k*36,Color(.65,.8,.83,.035))
-   c.draw_set_transform(Vector2.ZERO)
+ elif sky=="Snow":
+  motion.snow(c,camera,c.VIEW,seconds)
+ elif sky in ["Fog","Mist"]:
+  motion.fog(c,camera,c.VIEW,seconds,.58 if sky=="Fog" else .25)
 
 static func draw_lantern(c:Node2D,p:Vector2,lit:float)->void:
  preload("res://scripts/town_props240.gd").lamp(c,p,lit)

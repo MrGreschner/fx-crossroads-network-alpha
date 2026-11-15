@@ -1,5 +1,7 @@
 extends Node
 ## Local collection activity. Realm combat and host simulation never pause for a cast.
+const FINDS=preload("res://scripts/shore_finds.gd")
+const DERBY=preload("res://scripts/fishing_derby.gd")
 const C=preload("res://scripts/fishing_catalog.gd")
 const UI=preload("res://scripts/studio_ui.gd")
 const SHOP=Vector2(2000,2020)
@@ -166,6 +168,7 @@ func _process(delta:float)->void:
   timer-=delta;detail.text="Watch the float. Press F / Hook when it dips!";cast_button.text="Waiting… • click to cancel";meter.visible=true;meter.value=clampf(100*(1-timer/float(cast_spot.wait)),0,100)
   var age=float(cast_spot.wait)-timer
   if bite_at>=0 and age>=bite_at:start_bite()
+  elif timer<=0 and str(pending.get("method",""))=="rod" and rng.randf()<.25 and try_find():pass
   elif timer<=0:cancel(["Not even a nibble. Try another cast.","Quiet water… no bite this time.","The fish ignored that cast. Try again."][rng.randi_range(0,2)])
  elif phase=="bite":
   timer-=delta;detail.text="BITE! Three flashes — hook now • F";cast_button.text="F • HOOK!";cast_button.modulate=Color("#ffde8f") if bite_flash() else Color("#b89b79");meter.visible=true;meter.value=timer/bite_window*100
@@ -181,6 +184,7 @@ func _unhandled_input(event:InputEvent)->void:
   if (event.keycode in [KEY_R,KEY_F] or event.physical_keycode in [KEY_R,KEY_F]) and phase=="landed" and not pending.is_empty():
    var focus=get_viewport().gui_get_focus_owner()
    if not (focus is LineEdit or focus is TextEdit):
+    if pending.has("find") and event.keycode!=KEY_R and event.physical_keycode!=KEY_R:return
     finish_catch(event.keycode==KEY_F or event.physical_keycode==KEY_F);get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(inspector):inspector.close();get_viewport().set_input_as_handled();return
   if event.keycode==KEY_ESCAPE and is_instance_valid(aquarium_panel):aquarium_panel.close();get_viewport().set_input_as_handled();return
@@ -240,7 +244,12 @@ func cancel(message:String)->void:
 func land()->void:
  if not spot_available(cast_spot):cancel("The dawn fishing window has closed.");return
  if phase!="bite" or pending.is_empty():return
+ if pending.has("find"):
+  show_find()
+  return
  if basket_index<0 and not E.open(C.fish()[pending.species],E.context(game),str(pending.get("method","rod")),str(pending.get("bait","basic"))):cancel("This species stopped feeding as the conditions changed.");return
+ pending.caught_at=Time.get_unix_time_from_system() if basket_index<0 else pending.get("caught_at",0)
+ if str(pending.get("method",""))=="rod":DERBY.submit(self,pending)
  phase="landed";catch_frame=PanelContainer.new();UI.apply(catch_frame);hud.add_child(catch_frame)
  catch_frame.position=Vector2(game.get_viewport_rect().size.x-365,205);catch_frame.custom_minimum_size=Vector2(340,0)
  var col=VBoxContainer.new();catch_frame.add_child(col);var spec:Dictionary=C.fish()[pending.species]
@@ -270,7 +279,25 @@ func fit_catch_frame()->void:
  var view=game.get_viewport_rect().size;var dims=catch_frame.get_combined_minimum_size().max(Vector2(340,0))
  var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)))
  catch_frame.size=dims;catch_frame.scale=Vector2.ONE*fit;catch_frame.position=Vector2(view.x-dims.x*fit-12,(view.y-dims.y*fit)*.5)
+func try_find()->bool:
+ var find:=FINDS.roll(str(cast_spot.get("id","")),rng)
+ if find.is_empty():return false
+ pending={"find":find}
+ start_bite()
+ return true
+func show_find()->void:
+ phase="landed"
+ catch_frame=PanelContainer.new();UI.apply(catch_frame);hud.add_child(catch_frame)
+ var col=VBoxContainer.new();catch_frame.add_child(col)
+ label(col,str(pending.find.name),23)
+ var icon=TextureRect.new();icon.texture=FINDS.texture(str(pending.find.sprite));icon.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+ icon.custom_minimum_size=Vector2(88,88);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;col.add_child(icon)
+ button(col,"R • Discard",finish_catch.bind(false))
+ fit_catch_frame()
 func finish_catch(keep:bool)->void:
+ if pending.has("find"):
+  cancel("Returned "+str(pending.find.name)+" to the water.")
+  return
  if not multi and game.get("voyage")!=null and game.voyage.active:
   if phase!="landed" or pending.is_empty():return
   if game.voyage.stow(pending,keep):records().progress.spend_bait(rng);cancel("Catch kept aboard • return alive for XP and records." if keep else "Released • no cargo slot used. Bonus XP awaits a safe return.")
