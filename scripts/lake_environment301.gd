@@ -1,5 +1,7 @@
 extends RefCounted
 const Geo=preload("res://scripts/lake_geometry301.gd")
+const Fall=preload("res://scripts/fall_art356.gd")
+const Spring=preload("res://scripts/spring_art357.gd")
 static var textures:Dictionary={}
 static var frames:Dictionary={}
 static var manifest:Dictionary={}
@@ -28,10 +30,14 @@ static func frame(id:String)->Texture2D:
   var r=manifest[id];var box=r.region;var t=AtlasTexture.new();t.atlas=texture(str(r.get("texture","props")));t.region=Rect2(box[0],box[1],box[2],box[3]);frames[id]=t
  return frames[id]
 static func bounds(p:Dictionary)->Rect2:return Rect2(Vector2(p.pos[0],p.pos[1])-Vector2(p.size[0]*.5,p.size[1]*.94),Vector2(p.size[0],p.size[1]))
-static func prop(c:Node2D,cam:Vector2,p:Dictionary,hero:Vector2)->void:
+static func prop(c:Node2D,cam:Vector2,p:Dictionary,hero:Vector2,season:String)->void:
  var r=bounds(p);var alpha=float(p.alpha)
  if not bool(p.flat) and r.grow(20).has_point(hero):alpha*=.27
- c.draw_texture_rect(frame(str(p.kind)),Rect2(r.position-cam,r.size),false,Color(.78,.89,.83,alpha) if alpha<.6 and p.flat else Color(1,1,1,alpha))
+ var art:Texture2D
+ if season=="Fall":art=Fall.lake_plant(str(p.kind))
+ elif season=="Spring":art=Spring.lake_plant(str(p.kind))
+ if art==null:art=frame(str(p.kind))
+ c.draw_texture_rect(art,Rect2(r.position-cam,r.size),false,Color(.78,.89,.83,alpha) if alpha<.6 and p.flat else Color(1,1,1,alpha))
  visible_props+=1
 static func draw(v:Node,c:Node2D,cam:Vector2)->void:
  prepare();Geo.prepare();visible_pages=0;visible_props=0;visible_rocks=0
@@ -41,14 +47,28 @@ static func draw(v:Node,c:Node2D,cam:Vector2)->void:
  for p in pages:
   var r=Rect2(p.x,p.y,p.w,p.h)
   if view.intersects(r):c.draw_texture_rect(texture(p.id),Rect2(r.position-cam,r.size),false);visible_pages+=1
+ var season:String=v.game.town_life.calendar.season()
+ var winter=season=="Winter"
+ if season=="Fall":Fall.draw_shore(c,cam,view,v.islands())
+ if winter:
+  preload("res://scripts/winter_art353.gd").lake_bank(c,cam,view)
+  for isle in v.islands():
+   if not view.grow(float(isle.r)+40).has_point(isle.p):continue
+   var snowline:=PackedVector2Array()
+   for n in 81:
+    var angle:=n*TAU/80
+    snowline.append(isle.p+Vector2.from_angle(angle)*(Geo.radius(isle,angle)-12)-cam)
+   c.draw_polyline(snowline,Color("#c2d2d8"),19,true)
+  preload("res://scripts/ice_cove353.gd").draw(c,cam,view)
  for p in placements:
-  if bool(p.flat) and view.intersects(bounds(p)):prop(c,cam,p,v.game.position_in_world)
+  if bool(p.flat) and view.intersects(bounds(p)):prop(c,cam,p,v.game.position_in_world,season)
  # Sparse wind glints and short current strokes are cosmetic; current_at is untouched.
  var accents=0
  for x in range(floori(view.position.x/260)*260,int(view.end.x),260):
   for y in range(floori(view.position.y/240)*240,int(view.end.y),240):
    if accents>=40:break
    var at=Vector2(x+posmod(x*17+y*13,131),y+posmod(y*11+x*7,113))
+   if winter and preload("res://scripts/ice_cove353.gd").contains(at):continue
    if at.x<Geo.coast_x(at.y)+85 or v.islands().any(func(i):return v.ISLES.contains(i,at)):continue
    var drift=Vector2(sin(v.elapsed*.6+x*.01)*5,cos(v.elapsed*.4+y*.01)*2);var p=at-cam+drift;var flow=v.current_at(at).normalized()
    c.draw_line(p-Vector2(11,1),p+Vector2(13,0),Color(.72,.84,.79,.19),1.3,true)
@@ -66,10 +86,10 @@ static func draw(v:Node,c:Node2D,cam:Vector2)->void:
   outline.append(outline[0]);c.draw_polyline(outline,Color(.19,.36,.38,.75),12,true)
   c.draw_polyline(outline,Color(.75,.85,.79,.43+.1*sin(v.elapsed*.8+rock.p.x)),3,true)
   var src=Geo.data.rocks[Geo.variant(rock)].region
-  c.draw_texture_rect_region(rock_atlas,Rect2(rock.p-cam-Vector2.ONE*float(rock.r),Vector2.ONE*float(rock.r)*2),Rect2(src[0],src[1],src[2],src[3]))
+  c.draw_texture_rect_region(rock_atlas,Rect2(rock.p-cam-Vector2.ONE*float(rock.r),Vector2.ONE*float(rock.r)*2),Rect2(src[0],src[1],src[2],src[3]),Color("#dcf0ff") if winter else Color.WHITE)
  # Raised scenery has no added invisible colliders and fades beside the hero.
  for p in placements:
-  if not bool(p.flat) and view.intersects(bounds(p)):prop(c,cam,p,v.game.position_in_world)
+  if not bool(p.flat) and view.intersects(bounds(p)):prop(c,cam,p,v.game.position_in_world,season)
  for isle in v.islands():
   var at:Vector2=isle.p-cam-Vector2(0,Geo.radius(isle,-PI*.5)+45)
   if not Rect2(Vector2.ZERO,c.VIEW).grow(80).has_point(at):continue

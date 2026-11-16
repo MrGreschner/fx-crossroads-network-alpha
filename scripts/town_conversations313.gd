@@ -17,7 +17,6 @@ const SERVICES=[
  ["Moss",Vector2(1150,1150),70,"Browse food"],
  ["Tessa",Vector2(1960,740),70,"Healer services"],
  ["Scout_Alden",Vector2(1580,790),70,"Plan a route"],
- ["Rowan",Vector2(900,1615),70,"Seedhouse services"],
  ["reel",Vector2(2000,2020),70,"Enter Ripple & Reel"],
  ["exchange",Vector2(-815,825),64,"Open Deepwell Exchange"],
  ["mine",Vector2(-1080,800),68,"Open the mine"],
@@ -257,7 +256,9 @@ func open_service(g:Node,id:String)->void:
   "Moss":g.menu="food"
   "Tessa":g.menu="healer"
   "Scout_Alden":g.menu="wayfinder"
-  "Rowan":g.menu="seedhouse"
+  "Rowan":
+   if is_instance_valid(g.town_services.greenhouse):g.town_services.greenhouse.open_garden("shop")
+   else:g.menu="seedhouse"
   "reel":g.fishing.open_shop()
   "exchange":g.legacy.commerce.open()
   "mine":g.legacy.mine.open()

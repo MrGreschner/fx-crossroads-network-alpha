@@ -1,4 +1,16 @@
 {
+  "hot_chocolate": {
+    "name": "Hot Chocolate",
+    "cost": 20,
+    "shop": false,
+    "effect": "heal",
+    "threshold": 0.2,
+    "max_health_fraction": 0.1,
+    "speed_multiplier": 1.25,
+    "speed_seconds": 3,
+    "colour": "#e7b780",
+    "description": "Automatically drinks when damage leaves you alive at 20% health or less. Restores 10% of max HP and boosts movement speed by 25% for 3 seconds. One use."
+  },
   "berry_bun": {
     "name": "Berry Bun",
     "cost": 15,

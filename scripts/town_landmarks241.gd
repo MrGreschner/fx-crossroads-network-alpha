@@ -21,7 +21,11 @@ static func texture(id:String)->Texture2D:
 static func draw(g:Node2D,id:String,camera:Vector2,grand:bool=false)->void:
  var rect:Rect2=RECTS[id]
  if not Rect2(camera,g.VIEW).grow(8).intersects(rect):return
- g.draw_texture_rect(texture(id),Rect2(rect.position-camera,rect.size),false)
+ var art:=texture(id)
+ var screen:=Rect2(rect.position-camera,rect.size)
+ g.draw_texture_rect(art,screen,false)
+ var winter=preload("res://scripts/winter_art353.gd")
+ if winter.active(g):g.draw_texture_rect(winter.roof(id,art),screen,false)
  var sign:Rect2=SIGNS[id];var p=rect.position+sign.position-camera
  if id=="studio":
   g.draw_string(font,p+Vector2(0,11),"CROSSROADS",HORIZONTAL_ALIGNMENT_CENTER,sign.size.x,11,Color("#efd9a3"))

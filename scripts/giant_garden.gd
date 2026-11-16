@@ -108,7 +108,7 @@ func build(parent:Node)->void:
   UI.label(details,"%d / 7 daily visits • +%.0f%% size from care & planting mastery" % [a.care.size(),size_bonus(a)*100],16)
   if not garden.note.is_empty():UI.label(details,garden.note,15).modulate=Color("#efd08c")
  UI.label(card,"Free daily care adds 6% size. Compost uses one Common or Uncommon harvested item for 8% instead. Up to seven visits; missing a day never ruins the crop. Yield, ingredient and seed mastery contribute up to 20% when planted. Ordinary growth-time perks do not shorten the seven days.",16)
- UI.label(card,"Size also varies naturally. Harvest earns 24,000 Gardening XP and one usable produce. Monthly records follow the planting month (Edmonton time).",15)
+ UI.label(card,"Size also varies naturally. Harvest earns 24,000 Gardening XP and one usable produce. Monthly records follow the planting month on the Crossroads calendar.",15)
  if not state().last.is_empty():UI.label(parent,"Last harvest: %s • %.3f kg" % [garden.crops()[state().last.crop].name,float(state().last.kg)],20)
  UI.button(parent,"View community garden records",func():garden.legacy.community.category="garden";garden.legacy.community.open())
  UI.label(parent,"THE YEAR AHEAD",20)

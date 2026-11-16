@@ -46,14 +46,19 @@ static func draw_structure_source(c:Node2D,cam:Vector2)->void:
  var t=Time.get_ticks_msec()/1000.0;var bank=PackedVector2Array(WATER.slice(0,9));var shifted=PackedVector2Array()
  for p in WATER:shifted.append(p-cam)
  # Cover the former grass and the old river bank at the inlet mouth.
- c.draw_colored_polygon(shifted,Color('#347889'))
+ var winter=preload("res://scripts/winter_art353.gd").active(c)
+ if winter:
+  var uv=PackedVector2Array()
+  for p in WATER:uv.append(p/128)
+  c.draw_polygon(shifted,PackedColorArray([Color.WHITE]),uv,preload("res://scripts/tidecross359.gd").ice_texture())
+ else:c.draw_colored_polygon(shifted,Color('#347889'))
  var shore=PackedVector2Array()
  for p in bank:shore.append(p-cam)
  c.draw_polyline(shore,Color('#6c8171'),19,true);c.draw_polyline(shore,Color('#b4ad83'),7,true)
  # Shallows follow the bank while the centre remains an open navigable channel.
  var shallow=PackedVector2Array()
  for p in bank:shallow.append(p.lerp(Vector2(1980,2460),.04)-cam)
- c.draw_polyline(shallow,Color('#509594',.7),14,true)
+ c.draw_polyline(shallow,Color("#bed1d7") if winter else Color('#509594',.7),14,true)
  # Mooring ropes lead to the fingers, away from the river channel.
  for ends in [[Vector2(1740,2360),Vector2(1815,2350)],[Vector2(1920,2340),Vector2(1855,2345)],[Vector2(2155,2340),Vector2(2095,2345)],[Vector2(1850,2610),Vector2(1834,2510)]]:
   var rope=PackedVector2Array([ends[0]-cam,(ends[0]+ends[1])*.5-cam+Vector2(0,5),ends[1]-cam]);c.draw_polyline(rope,Color('#c6b186'),2,true)
@@ -74,14 +79,16 @@ static func draw_structure_source(c:Node2D,cam:Vector2)->void:
   var at=Vector2(1665+n*68,2690+sin(n)*12)-cam
   for k in 3:c.draw_line(at+Vector2(k*4,0),at+Vector2(k*6-4,-12-k*3),Color('#8ea77b'),2)
  c.draw_string(ThemeDB.fallback_font,Vector2(1690,2298)-cam,"RIPPLE & REEL • MARINA",HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color('#f4dfb6'))
- c.draw_string(ThemeDB.fallback_font,Vector2(1750,2317)-cam,"E • Lake & coastal voyages",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color('#d4dcca'))
+ c.draw_string(ThemeDB.fallback_font,Vector2(1700,2317)-cam,"FERRIES PAUSED • USE THE WALKING TRAILS" if winter else "E • Lake voyages & ferries",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color('#d4dcca'))
 
 static func draw(c:Node2D,cam:Vector2)->void:
  var view=Rect2(cam,c.VIEW).grow(100)
  if not view.intersects(Rect2(1540,2150,930,620)):return
- preload("res://scripts/town_art39.gd").draw(c,"marina_deck",cam)
+ var winter=preload("res://scripts/winter_art353.gd").active(c)
+ if winter:draw_structure_source(c,cam)
+ else:preload("res://scripts/town_art39.gd").draw(c,"marina_deck",cam)
  var t=Time.get_ticks_msec()/1000.0
- for n in 53:
+ for n in (0 if winter else 53):
   var at=Vector2(1660+posmod(n*113,760),2305+posmod(n*67,355));at.x+=sin(t*.55+n)*5
   if wet(at) and not on_deck(at):c.draw_line(at-cam,at-cam+Vector2(12+posmod(n,3)*6,0),Color(.66,.87,.85,.28),1.5,true)
  for n in BERTHS.size():

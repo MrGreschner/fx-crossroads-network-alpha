@@ -20,7 +20,7 @@ func interact(game:Node)->bool:
   return true
  for key in POINTS:
   if game.position_in_world.distance_to(POINTS[key])<90:
-   game.hint="E • "+{"food":"Talk to Moss at the Food Stand","healer":"Talk to Tessa, town healer","wayfinder":"Plan a route with Scout Alden","seedhouse":"Talk to Rowan, the gardener"}[key]
+   game.hint="E • "+{"food":"Talk to Moss at the Food Stand","healer":"Talk to Tessa, town healer","wayfinder":"Plan a route with Scout Alden","seedhouse":"Enter the Seedhouse greenhouse"}[key]
    if Input.is_action_just_pressed("interact"):game.menu=key
    return true
  return false
@@ -103,7 +103,6 @@ func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
  npc(c,POINTS.food-camera,Color("#9b7f64"),"cook")
  npc(c,POINTS.healer-camera,Color("#779dac"),"healer")
  npc(c,POINTS.wayfinder-camera,Color("#59786c"),"human")
- npc(c,POINTS.seedhouse-camera,Color("#79915b"),"ram")
  for sign in [[Vector2(600,548),"CHARACTER HALL"],[Vector2(1290,517),"SUPPLY VENDOR • BARTLE"],[Vector2(1150,1198),"FOOD STAND"],[Vector2(1960,553),"HEALER HOUSE"],[Vector2(1580,613),"WAYFINDER LODGE"],[Vector2(900,1670),"SEEDHOUSE"]]:label(c,font,sign[0]-camera,sign[1])
  # Benches flank the statue plaza. Construction has a working carpenter.
  for place in [Vector2(820,1100),Vector2(1040,1030),Vector2(1760,720)]:
@@ -119,6 +118,4 @@ func draw_on(c:Node2D,camera:Vector2,font:Font)->void:
   npc(c,carpenter,Color("#a1825d"),"human")
   var hammer:Vector2=carpenter+Vector2(17,-26-sin(clock*4)*8)
   c.draw_line(carpenter+Vector2(11,-18),hammer,Color("#d1b080"),3);c.draw_rect(Rect2(hammer+Vector2(-5,-3),Vector2(13,7)),Color("#788b91"))
- if c.provisions.crop=="ready":
-  var p:Vector2=POINTS.seedhouse-camera+Vector2(0,-67)
-  c.draw_circle(p,12,Color("#cce2a2"));c.draw_string(font,p+Vector2(-6,5),"!",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("#354f3c"))
+

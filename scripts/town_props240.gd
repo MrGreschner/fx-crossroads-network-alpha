@@ -20,8 +20,12 @@ static func lamp_glass(p:Vector2)->Vector2:return p-Vector2(0,55)
 static func lamp(g:CanvasItem,p:Vector2,night:float)->void:
  draw(g,"lamp",Rect2(p-Vector2(9,70),Vector2(18,70)))
  if night>.01:g.draw_rect(Rect2(lamp_glass(p)-Vector2(3,4),Vector2(6,8)),Color(1,.8,.43,night*.75))
-static func fountain(g:CanvasItem,p:Vector2,t:float,night:float=0)->void:
- draw(g,"fountain",Rect2(p+Vector2(-56,-62),Vector2(112,98)))
+static func fountain(g:CanvasItem,p:Vector2,t:float,night:float=0,frozen:bool=false)->void:
+ var bounds=Rect2(p+Vector2(-56,-62),Vector2(112,98))
+ if frozen:
+  g.draw_texture_rect(preload("res://scripts/town_winter358.gd").texture("fountain"),bounds,false)
+  return
+ draw(g,"fountain",bounds)
  for n in 3:
   var u=fposmod(t*.42+n*.33,1);var radius=9+u*30;var points=PackedVector2Array()
   for k in 25:points.append(p+Vector2(cos(k*TAU/24)*radius,2+sin(k*TAU/24)*radius*.45))

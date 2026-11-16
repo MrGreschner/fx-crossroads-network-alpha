@@ -334,7 +334,10 @@ func draw_weather(c:Node2D,camera:Vector2)->void:
  elif sky=="Snow":
   motion.snow(c,camera,c.VIEW,seconds)
  elif sky in ["Fog","Mist"]:
-  motion.fog(c,camera,c.VIEW,seconds,.58 if sky=="Fog" else .25)
+  var strength=(.72 if season()=="Fall" else .58) if sky=="Fog" else .25
+  motion.fog(c,camera,c.VIEW,seconds,strength)
+ if season()=="Fall" and sky not in ["Rain","Snow"]:
+  preload("res://scripts/fall_art356.gd").gust(c,camera,seconds)
 
 static func draw_lantern(c:Node2D,p:Vector2,lit:float)->void:
  preload("res://scripts/town_props240.gd").lamp(c,p,lit)

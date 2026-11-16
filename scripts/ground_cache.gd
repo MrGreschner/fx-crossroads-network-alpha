@@ -6,6 +6,7 @@ const LIMIT=48
 var game:Node2D
 var chunks:Dictionary={}
 var age:=0
+var ground_season:=""
 var coverage_key=""
 var visibility_updates:=0
 static var atlas:Texture2D
@@ -39,7 +40,7 @@ class Chunk extends Node2D:
    if tile.size()==3:draw_texture_rect_region(tile[0],tile[1],tile[2])
    else:draw_texture_rect(tile[0],tile[1],false)
   # Keep a shared wildflower atlas together after the base terrain batch.
-  for overlay in overlays:draw_texture_rect(overlay[0],overlay[1],false)
+  for overlay in overlays:draw_texture_rect(overlay[0],overlay[1],false,overlay[2] if overlay.size()>2 else Color.WHITE)
 func reset()->void:
  for chunk in chunks.values():chunk.queue_free()
  chunks.clear();coverage_key=""
@@ -50,6 +51,8 @@ func sync()->void:
  position=game.media.offset()-game.camera*game.media.factor();scale=Vector2.ONE*game.media.factor()
  var bounds:=Rect2(game.camera,game.VIEW)
  var first:=Vector2i(floori(bounds.position.x/EDGE),floori(bounds.position.y/EDGE));var last:=Vector2i(floori(bounds.end.x/EDGE),floori(bounds.end.y/EDGE))
+ var season:String=game.town_life.calendar.season() if game.mode=="town" else ""
+ if season!=ground_season:reset();ground_season=season
  var next_key=str(first)+str(last)+str(game.region_id)+str(game.mode)
  if next_key==coverage_key:return
  coverage_key=next_key;visibility_updates+=1
@@ -69,7 +72,9 @@ func sync()->void:
       if game.mode=="town" and tile in ["grass","path"]:preload("res://scripts/town_terrain247.gd").append(chunk,tx,ty,local,tile,game)
       else:append_tile(chunk,tile,Rect2(local,Vector2(64,64)))
       var seed:int=(tx*37+ty*71+tx*ty*11)%19
-      if game.mode=="town" and tile!="path":preload("res://scripts/town_art246.gd").scatter(chunk,tx,ty,local,game)
+      if game.mode=="town" and tile=="grass":
+       if season=="Fall":preload("res://scripts/fall_art356.gd").scatter(chunk,tx,ty,local)
+       elif season!="Winter":preload("res://scripts/town_art246.gd").scatter(chunk,tx,ty,local,game)
       if game.mode!="town" and game.region_id!="grove" and tile!="path" and seed==3 and base not in ["ash","moonburrow_grass"] and game.art.get("flower")!=null and (game.mode!="town" or not preload("res://scripts/town_plan.gd").reserved(Vector2(tx*64+32,ty*64+26))):
        append_tile(chunk,"flower",Rect2(local+Vector2(12,6),Vector2(40,40)))
     chunks[key]=chunk;add_child(chunk);chunk.queue_redraw()

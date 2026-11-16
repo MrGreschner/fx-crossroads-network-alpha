@@ -24,9 +24,6 @@ func blocked(p:Vector2)->bool:
  if preload("res://scripts/town_refresh46.gd").blocked(p):return true
  if preload("res://scripts/marina_life.gd").blocked(p):return true
  if preload("res://scripts/town_marina.gd").blocked(p):return true
- for row in 3:
-  for col in 2:
-   if Rect2(Vector2(805 if col==0 else 962,1840+row*85),Vector2(50 if col==0 else 90,42)).grow(5).has_point(p):return true
  if RIVER.has_point(p) and not BRIDGE.has_point(p) and not HOME_BRIDGE.has_point(p):return true
  if Rect2(-1370,560,120,740).has_point(p) and not Rect2(-1310,1025,160,95).has_point(p):return true
  if FOREST.grow(30).has_point(p):
@@ -66,18 +63,6 @@ func draw_ground_source(c:Node2D,camera:Vector2,draw_cliffs:bool=true)->void:
    c.draw_circle(p,4,Color("#99b977"));c.draw_circle(p+Vector2(6,-3),3,Color("#e0c997"))
  # Continuous western massif; the cave mouths sit on its accessible eastern apron.
  if draw_cliffs:preload("res://scripts/town_refresh46.gd").cliffs(c,camera)
- # A compact communal garden fits between the southern homes, leaving the central street clear.
- if visible.intersects(Rect2(800,1780,285,350)):
-  for row in 3:
-   for col in 2:
-    var world=Vector2(805 if col==0 else 962,1840+row*85)
-    var size=Vector2(50 if col==0 else 90,42);var p=world-camera
-    c.draw_rect(Rect2(p,size),Color("#70543d"));c.draw_rect(Rect2(p,size),Color("#bba378"),false,3)
-    for n in (2 if col==0 else 4):
-     var plant=p+Vector2(13+n*19,27);c.draw_line(plant,plant-Vector2(0,16),Color("#83b574"),3);c.draw_circle(plant-Vector2(0,18),5,Color("#deb171") if row==1 else Color("#9ac084"))
-  for x in [800,1080]:
-   c.draw_line(Vector2(x,1790)-camera,Vector2(x,2110)-camera,Color("#a99068"),4)
-   for y in range(1790,2111,64):c.draw_line(Vector2(x-10,y)-camera,Vector2(x+10,y)-camera,Color("#7f684c"),5)
 static func river_surface_visible(point:Vector2)->bool:
  # Decks are already baked into the ground layer; live water must stay beneath them.
  return not BRIDGE.grow(4).has_point(point) and not HOME_BRIDGE.grow(4).has_point(point)

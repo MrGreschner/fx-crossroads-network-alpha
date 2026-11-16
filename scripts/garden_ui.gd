@@ -7,7 +7,7 @@ static func label(parent:Node,title:String,size:int=17)->Label:
 static func icon(parent:Node,id:String,stage:int,dimensions:Vector2=Vector2(100,90))->void:
  var image=TextureRect.new();image.texture=preload("res://scripts/source_art.gd").texture("res://assets/seedhouse/"+id+"_"+str(stage)+".svg");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size=dimensions;parent.add_child(image)
 static func refresh(g:RefCounted)->void:g.legacy.render()
-static func go(g:RefCounted,page:String)->void:g.page=page;g.inventory_page=0;refresh(g);g.legacy.profile_scroll.set_deferred("scroll_vertical",0)
+static func go(g:RefCounted,page:String)->void:g.page=page;g.focused_bed=-1;g.inventory_page=0;refresh(g);g.legacy.profile_scroll.set_deferred("scroll_vertical",0)
 static func build(g:RefCounted,parent:Node)->void:
  g.labels.clear();var lv=g.level();var state=g.state();var stock=g.seed_summary()
  label(parent,"GARDENING • Lv %d / 100 • %d XP • %d beds • %d Glimmers" % [lv,int(state.xp),g.capacity(),g.legacy.glimmers.balance()],20)
@@ -26,15 +26,18 @@ static func build(g:RefCounted,parent:Node)->void:
  label(parent,"Plant one owned seed per bed. The picker lists seeds you can plant now; harvesting creates produce for food, ingredients or sale. Seeds and harvested produce are separate stocks.",16)
  if stock.locked>0:label(parent,"%d owned seeds need a higher Gardening level. Seeds & harvests shows the exact requirements; they remain safely in your stock." % stock.locked,16).modulate=Color("#e1bf8e")
  var grid=GridContainer.new();grid.columns=1 if g.legacy.get_viewport().get_visible_rect().size.x<1000 else 2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(grid)
- var shown=maxi(g.capacity(),1)
+ var shown=[]
  for i in state.beds.size():
-  if not state.beds[i].is_empty():shown=maxi(shown,i+1)
+  if g.bed_available(i) or not state.beds[i].is_empty():shown.append(i)
+ if g.focused_bed in shown:
+  shown=[g.focused_bed]
+  button(parent,"Show all greenhouse beds",go.bind(g,"beds"))
  for i in shown:
-  var b:Dictionary=state.beds[i];var card=UI.card(grid,"BED "+str(i+1),"");card.get_parent().custom_minimum_size.x=minf(425,maxf(250,g.legacy.get_viewport().get_visible_rect().size.x-110));card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  var b:Dictionary=state.beds[i];var card=UI.card(grid,("BED "+str(i+1)) if i<g.SHARED_BEDS else ("PRIVATE BED "+str(i-g.SHARED_BEDS+1)),"");card.get_parent().custom_minimum_size.x=minf(425,maxf(250,g.legacy.get_viewport().get_visible_rect().size.x-110));card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
   if not b.is_empty():icon(card,str(b.seed),preload("res://scripts/town_art246.gd").crop_stage(b,g.now()))
   var status=label(card,g.bed_text(i));g.labels.append({"label":status,"index":i})
   if b.is_empty():
-   if i>=g.capacity():label(card,"Unlock more beds through Gardening levels and mastery.",16);continue
+   if not g.bed_available(i):label(card,"Unlock more beds through Gardening levels and mastery.",16);continue
    var ids=g.plantable_seeds();var select=OptionButton.new();select.name="PlantSeedPicker";select.fit_to_longest_item=false;select.custom_minimum_size.y=40;select.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.add_child(select)
    for id in ids:select.add_item(str(g.crops()[id].name)+" • %d owned • Lv %d" % [g.seed_count(id),int(g.crops()[id].level)])
    if ids.is_empty():

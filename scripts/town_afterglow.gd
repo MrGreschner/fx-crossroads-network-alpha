@@ -17,6 +17,9 @@ static func light_sources(g:Node2D)->Array:
  for at in [Vector2(1245,1705),Vector2(1495,1705)]:lights.append({"at":at-Vector2(0,30),"radius":155.0,"strength":1.0})
  lights.append({"at":preload("res://scripts/town_props240.gd").REST_FOUNTAIN-Vector2(0,20),"radius":125.0,"strength":.85})
  for at in TORCHES:lights.append({"at":at-Vector2(0,26),"radius":185.0,"strength":1.1})
+ var shore=preload("res://scripts/tidecross359.gd")
+ for at in shore.PORT_LAMPS+shore.COVE_LAMPS:
+  lights.append({"at":at-Vector2(0,55),"radius":145.0,"strength":.95})
  lights.append_array(preload("res://scripts/town_landmarks241.gd").light_sources())
  lights.append_array(preload("res://scripts/town_shops242.gd").light_sources(g))
  return lights
@@ -45,7 +48,7 @@ static func draw_on(g:Node2D,camera:Vector2)->void:
  for at in [Vector2(1245,1705),Vector2(1495,1705)]:
   if view.has_point(at):preload("res://scripts/town_calendar.gd").draw_lantern(g,at-camera,night)
  var fountain=preload("res://scripts/town_props240.gd").REST_FOUNTAIN
- if night>.01 and view.has_point(fountain):
+ if night>.01 and view.has_point(fountain) and not preload("res://scripts/town_winter358.gd").SEASON.active(g):
   var p=fountain-camera;var glow=night*(.65+.2*sin(t*1.2))
   var rim=PackedVector2Array()
   for k in 33:rim.append(p+Vector2(cos(k*TAU/32)*32,2+sin(k*TAU/32)*13))

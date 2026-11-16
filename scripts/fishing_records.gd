@@ -224,6 +224,7 @@ static func valid_voyage(v:Variant)->bool:
  if not v is Dictionary:return false
  if v.is_empty():return true
  if v.get("version",0)!=1 or v.get("route","") not in ["lake","coast"]:return false
+ if not v.get("from_cove",false) is bool or v.get("from_cove",false) and v.route!="lake":return false
  for key in ["night_seed","island_found_night"]:
   if v.has(key) and (not (v[key] is int or v[key] is float) or not is_finite(float(v[key])) or float(v[key])!=floor(float(v[key])) or float(v[key])<(-1 if key=="island_found_night" else 0) or float(v[key])>10000000):return false
  if not v.get("boat",null) is Array or v.boat.size()!=2:return false

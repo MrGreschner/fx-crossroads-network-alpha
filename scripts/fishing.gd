@@ -1,5 +1,7 @@
 extends Node
 ## Local collection activity. Realm combat and host simulation never pause for a cast.
+const BAY=preload("res://scripts/oldwater_bay361.gd")
+const TOWN_ICE=preload("res://scripts/town_winter358.gd")
 const FINDS=preload("res://scripts/shore_finds.gd")
 const DERBY=preload("res://scripts/fishing_derby.gd")
 const C=preload("res://scripts/fishing_catalog.gd")
@@ -112,14 +114,29 @@ func interact()->bool:
  if Input.is_action_just_pressed("interact"):open_shop()
  return true
 func spot_available(spot:Dictionary)->bool:
+ var seasonal=str(spot.get("seasonal",""))
+ if not seasonal.is_empty():
+  if multi or game.mode!="town":return false
+  var winter=TOWN_ICE.SEASON.active(game)
+  return winter if seasonal=="winter" else not winter
  if str(spot.get("id",""))!="town_dawn":return true
  return not multi and game.mode=="town" and game.town_life.calendar.dawn_fishing_open()
+func winter_town_spot(spot:Dictionary)->Dictionary:
+ if not multi and game.mode=="town" and TOWN_ICE.SEASON.active(game):
+  return BAY.spot(TOWN_ICE.ice_spot(spot),game.town_life.calendar.day_number)
+ return spot
+func cast_available()->bool:
+ if not spot_available(cast_spot):return false
+ if cast_spot.has("cove_rotation") and int(cast_spot.cove_rotation)!=BAY.rotation(game.town_life.calendar.day_number):return false
+ if not TOWN_ICE.HOLES.has(cast_spot.get("id","")):return true
+ return bool(cast_spot.get("ice",false))==(not multi and game.mode=="town" and TOWN_ICE.SEASON.active(game))
 func nearest()->Dictionary:
  if not multi and game.get("voyage")!=null and game.voyage.active:return game.voyage.fishing_spot()
- for spot in spots:
-  if not spot_available(spot):continue
+ for base in spots:
+  if not spot_available(base):continue
+  var spot=winter_town_spot(base)
   var bank=Vector2(float(spot.bank[0]),float(spot.bank[1]))
-  if local_pos().distance_to(bank)<100:return spot
+  if local_pos().distance_to(bank)<(68 if spot.get("ice",false) else 100):return spot
  return {}
 func _process(delta:float)->void:
  if game==null:return
@@ -150,7 +167,7 @@ func _process(delta:float)->void:
  if is_instance_valid(journal_panel):fit_panel(journal_panel,Vector2(1000,610))
  if is_instance_valid(catch_frame):fit_catch_frame()
  if is_instance_valid(room):panel.visible=false;return
- if busy() and not spot_available(cast_spot):cancel("The dawn shoal has vanished. Return between 4 and 6 am.")
+ if busy() and not cast_available():cancel("This fishing spot has changed. Cast again at an open spot.")
  if busy() and (not playable() or local_pos().distance_to(cast_pos)>18 or local_hp()<cast_hp or region!=cast_region):cancel("Cast cancelled — moving, damage or a menu interrupted it.")
  var spot=nearest()
  if playable() and not spot.is_empty() and not (not multi and game.get("voyage")!=null and game.voyage.active):records().discover_pool(str(spot.id))
@@ -219,6 +236,9 @@ func activate()->void:
  var spot=nearest()
  if spot.is_empty():return
  var prog=records().progress;var method=str(records().state().method)
+ var checking_basket=method=="pot" and has_basket(str(spot.id))
+ if (str(spot.id).begins_with("voyage_lake_ice_") or spot.get("ice",false)) and method!="rod" and not checking_basket:
+  status="Ice fishing uses the rod. Select Rod to fish this hole.";return
  if not prog.method_unlocked(method):status="This equipment is not unlocked. Visit the workshop.";return
  if method=="pot" and region_key()=="between":status="These waters are unstable. Use a rod or net; set baskets in permanent realm waters.";return
  if method=="pot" and not multi and game.get("voyage")!=null and game.voyage.active:game.voyage.cage_action();return
@@ -227,9 +247,9 @@ func activate()->void:
   for i in prog.state().pots.size():
    if str(prog.state().pots[i].pool)!=str(spot.id):continue
    if now<float(prog.state().pots[i].ready):status=prog.basket_summary(now);return
-   basket_index=i;pending=prog.state().pots[i].catch;cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();phase="bite";land();return
+   basket_index=i;pending=prog.state().pots[i].catch;cast_pos=local_pos();cast_hp=local_hp();cast_region=region_key();cast_spot=spot.duplicate();phase="bite";land();return
   status=prog.place(str(spot.id),now,rng);game.message=status;game.message_time=5;return
- if not E.bait_usable(prog.bait(),method,str(spot.region)):status="This bait is for "+("cages/baskets only." if prog.bait()=="roe" else "ocean water only.");return
+ if not E.bait_usable(prog.bait(),method,str(spot.get("habitat_region",spot.region))):status="This bait is for "+("cages/baskets only." if prog.bait()=="roe" else "ocean water only.");return
  pending=C.roll(str(spot.id),rng,E.context(game),method,prog.bait(),prog.level(),prog.trophy_bonus(),prog.rarity_bonus(method))
  if pending.is_empty():status="No suitable catches for this method and conditions. Try a different method, water or time.";return
  cast_spot=spot.duplicate();cast_spot.wait=(rng.randf_range(.7,1.4) if method=="net" else rng.randf_range(8.0,14.0))*prog.wait_scale(method)
@@ -242,7 +262,7 @@ func cancel(message:String)->void:
  if is_instance_valid(catch_frame):catch_frame.queue_free()
  catch_frame=null
 func land()->void:
- if not spot_available(cast_spot):cancel("The dawn fishing window has closed.");return
+ if not cast_available():cancel("This fishing spot has changed. Cast again at an open spot.");return
  if phase!="bite" or pending.is_empty():return
  if pending.has("find"):
   show_find()
@@ -416,11 +436,16 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   preload("res://scripts/town_shops242.gd").draw(canvas,"fishing",camera)
   var p=SHOP-camera
   canvas.draw_rect(Rect2(p-Vector2(55,2),Vector2(110,38)),Color(.6,.9,.87,.17 if local_pos().distance_to(SHOP)<100 else .07))
- for spot in active_spots:
-  if not spot_available(spot):continue
+ for base in active_spots:
+  if not spot_available(base):continue
+  var spot=winter_town_spot(base)
   var water=Vector2(float(spot.water[0]),float(spot.water[1]));var bank=Vector2(float(spot.bank[0]),float(spot.bank[1]))
   if not bounds.has_point(water):continue
   var p=water-camera
+  if spot.get("ice",false):
+   TOWN_ICE.draw_hole(canvas,p)
+   canvas.draw_arc(bank-camera,22,0,PI,18,Color(.60,.76,.83,.52),2)
+   continue
   if region in ["descent36","descent38","descent56","descent57"]:
    canvas.draw_circle(p,67,Color("#233f50"));canvas.draw_circle(p,54,Color("#478398"));canvas.draw_arc(p,57,0,TAU,40,Color("#9cbec2"),4)
   for n in 3:

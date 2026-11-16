@@ -16,7 +16,7 @@ const Art=preload("res://scripts/fish_art252.gd")
 static func texture(id:String)->Texture2D:return Art.texture(id)
 static func catch_texture(catch:Dictionary)->Texture2D:return Art.texture(str(catch.get("species","")),Art.variation(catch))
 static func roll(pool:String,rng:RandomNumberGenerator,ctx:Dictionary={},method:String="rod",bait:String="basic",level:int=1,trophy_bonus:float=0,rarity_bonus:float=0)->Dictionary:
- ctx=ctx.duplicate();ctx.region="night_crater" if pool=="voyage_night_crater" else str(pools().get(pool,{}).get("region",""))
+ ctx=ctx.duplicate();ctx.region="night_crater" if pool=="voyage_night_crater" else str(pools().get(pool,{}).get("habitat_region",pools().get(pool,{}).get("region","")))
  if not pools().has(pool):return {}
  var ids:Array=[];var weights:Array=[];var total=0.0
  for id in pools()[pool].fish:

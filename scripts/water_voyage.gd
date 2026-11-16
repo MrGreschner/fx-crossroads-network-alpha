@@ -2,6 +2,7 @@ extends Node
 ## Voyage cargo is deliberately separate from awarded catches until a safe landing.
 const C=preload("res://scripts/fishing_catalog.gd")
 const UI=preload("res://scripts/studio_ui.gd")
+const ICE=preload("res://scripts/ice_cove353.gd")
 const PIER=Vector2(1860,2300)
 const HOME=Vector2(1100,5650)
 const WORLD=Vector2(9000,6800)
@@ -18,12 +19,14 @@ const LIMIT=20
 var game:Node
 var active=false
 var route="lake"
+var departed_from_cove=false
 var boat=HOME
 var velocity=Vector2.ZERO
 var facing=-PI/2
 var hull=100.0
 var anchored=false
 var ashore=false
+var ice_ashore=false
 var elapsed=0.0
 var start_hour=12.0
 var impact=0.0
@@ -124,6 +127,7 @@ func rocks()->Array:
  return result
 func land_at(p:Vector2)->bool:
  if not active:return true
+ if ice_ashore:return ICE.open_for(self) and ICE.contains(p)
  for isle in islands():
   if ISLES.contains(isle,p,28):
    if route=="coast" and str(isle.name)=="Night Island" and OCEAN_GEO.crater_contains(p-night_center()):return false
@@ -138,6 +142,7 @@ func habitat()->String:
  return "voyage_coast_"+("channel" if boat.x>6500 or boat.y<1900 else "kelp" if boat.x>4100 and boat.y>3000 else "reef" if boat.y<3800 else "shoals")
 func fishing_spot()->Dictionary:
  if not active:return {}
+ if ice_ashore:return ICE.spot(game.position_in_world) if ICE.open_for(self) else {}
  var id=habitat();var bank=game.position_in_world;var water=boat+Vector2.from_angle(facing)*100
  if ashore:
   if route!="coast" or not night() or bank.distance_to(night_center()+Vector2(-240,-20))>140:return {}
@@ -145,12 +150,13 @@ func fishing_spot()->Dictionary:
  elif not anchored:return {}
  var spot:Dictionary=C.pools()[id].duplicate(true);spot.id=id;spot.region="night_crater" if id=="voyage_night_crater" else spot.region;spot.bank=[bank.x,bank.y];spot.water=[water.x,water.y]
  return spot
-const PIER_HINT="E • Lake & coastal voyages"
+const HARBOUR=preload("res://scripts/tidecross359.gd")
+const PIER_HINT="E • Marina departures"
 func pier_interact()->bool:
  # Give fishing exclusive use of the dock controls near a fishing hole or during a cast.
  if game.fishing!=null and (game.fishing.busy() or not game.fishing.nearest().is_empty()):return false
  if game.position_in_world.distance_to(PIER)>150 and not preload("res://scripts/town_marina.gd").on_deck(game.position_in_world):return false
- game.hint=PIER_HINT
+ game.hint="E • Marina timetable • ferries paused" if HARBOUR.winter(game) else PIER_HINT
  if Input.is_action_just_pressed("interact"):open_menu("pier")
  return true
 func purchase()->void:
@@ -168,6 +174,10 @@ func camp_state()->Dictionary:
  return result
 func launch(destination:String,resume:bool=false)->void:
  if active:return
+ if not resume and destination=="lake":
+  if HARBOUR.winter(game):return
+  if HARBOUR.is_cove(game.position_in_world) and game.position_in_world.distance_to(HARBOUR.BAY.BERTH)>85:return
+ if not resume and destination=="coast" and game.position_in_world.distance_to(HARBOUR.SEA_PIER)>90:return
  if destination=="coast" and not records().state().get("deep_sea_rod",false):return
  var previous:Dictionary=records().state().get("voyage",{}).duplicate(true)
  if resume and not valid_state(previous):return
@@ -176,10 +186,12 @@ func launch(destination:String,resume:bool=false)->void:
   game.message="Ended voyages cannot be resumed. Sail home before leaving to keep the rewards.";game.message_time=6;return
  if not resume and not previous.is_empty():records().state().erase("voyage");records().save()
  ocean_charted.clear()
- close_menu();night_seed=int(game.town_life.calendar.day_number);island_found_night=-1;route=destination;boat=HOME;hull=100;elapsed=0;velocity=Vector2.ZERO;anchored=false;ashore=false;cargo=[];release_log=[];xp_quote_key="";cages=[];seen=[];repairs=[];start_hour=float(preload("res://scripts/fishing_ecology.gd").context(game).hour)
+ departed_from_cove=destination=="lake" and HARBOUR.is_cove(game.position_in_world)
+ close_menu();ice_ashore=false;night_seed=int(game.town_life.calendar.day_number);island_found_night=-1;route=destination;boat=HOME;hull=100;elapsed=0;velocity=Vector2.ZERO;anchored=false;ashore=false;cargo=[];release_log=[];xp_quote_key="";cages=[];seen=[];repairs=[];start_hour=float(preload("res://scripts/fishing_ecology.gd").context(game).hour)
  if resume:
   if not valid_state(previous):return
   night_seed=int(previous.get("night_seed",night_seed));island_found_night=int(previous.get("island_found_night",-1))
+  departed_from_cove=bool(previous.get("from_cove",false))
   route=str(previous.route);boat=Vector2(previous.boat[0],previous.boat[1]);hull=float(previous.hull);elapsed=float(previous.elapsed);start_hour=float(previous.start_hour);cargo=previous.cargo.duplicate(true);release_log=previous.get("release_log",[]).duplicate(true)
   for item in cargo.duplicate():
    if not item.keep:release_log.append(item);cargo.erase(item)
@@ -202,7 +214,7 @@ func suspend()->void:
  if active:fail("Voyage ended")
 func capacity()->int:return records().progress.voyage_capacity()
 func manifest_state(banking:bool)->Dictionary:
- return {"version":1,"night_seed":night_seed,"island_found_night":island_found_night,"route":route,"boat":[boat.x,boat.y],"hull":hull,"elapsed":elapsed,"start_hour":start_hour,"cargo":cargo.duplicate(true),"release_log":release_log.duplicate(true),"cages":cages.duplicate(true),"seen":seen.duplicate(),"repairs":repairs.duplicate(),"banking":banking,"hero_hp":game.health,"camp_hp":camp_state()}
+ return {"version":1,"from_cove":departed_from_cove,"night_seed":night_seed,"island_found_night":island_found_night,"route":route,"boat":[boat.x,boat.y],"hull":hull,"elapsed":elapsed,"start_hour":start_hour,"cargo":cargo.duplicate(true),"release_log":release_log.duplicate(true),"cages":cages.duplicate(true),"seen":seen.duplicate(),"repairs":repairs.duplicate(),"banking":banking,"hero_hp":game.health,"camp_hp":camp_state()}
 func pending_xp()->int:
  var p=records().progress;var state=records().state();var key=str(cargo.size())+":"+str(release_log.size())+":"+str(state.xp)+":"+str(state.talents.hash())+":"+str(state.journal.hash())
  if key==xp_quote_key:return xp_quote
@@ -240,6 +252,11 @@ func interact()->void:
  if game.fishing.busy():return
  if not ashore and boat.distance_to(HOME)<260:
   anchored=true;open_menu("landing");return
+ if ice_ashore:
+  if game.position_in_world.distance_to(ICE.ENTRY)>100:
+   game.message="Return to the cove landing to board.";game.message_time=4;return
+  leave_ice()
+  return
  if ashore:
   if game.position_in_world.distance_to(boat)>230:game.message="Return to your boat's lantern to board.";game.message_time=4;return
   ashore=false;game.position_in_world=boat;anchored=true;checkpoint();return
@@ -248,6 +265,15 @@ func interact()->void:
  var dir=(boat-isle.p).normalized();var target:Vector2=isle.p+dir*(ISLES.radius(isle,dir.angle())-70)
  if not land_at(target):return
  ashore=true;anchored=true;game.position_in_world=target;game.update_camera();game.message="Island landing • your normal hero attacks work here. Return to the lantern to board.";game.message_time=6
+func enter_ice()->void:
+ if not ICE.open_for(self) or not harbour_access():return
+ close_menu()
+ ice_ashore=true;ashore=true;anchored=true;velocity=Vector2.ZERO
+ game.position_in_world=ICE.ENTRY;game.update_camera()
+ game.fishing.status="Walk to a marked hole and use your rod."
+func leave_ice()->void:
+ ice_ashore=false;ashore=false;anchored=true
+ game.position_in_world=boat;game.update_camera();checkpoint()
 func cage_action()->void:
  if not active or ashore or not anchored:return
  if not records().progress.method_unlocked("pot"):return
@@ -269,9 +295,12 @@ func cage_action()->void:
  progress.spend_bait(rng,"pot")
  cages.append({"pos":[boat.x,boat.y],"pool":pool,"ready":elapsed+120.0*progress.basket_minutes()/20.0,"fish":specimens})
  checkpoint();game.fishing.status="Cage lowered • fills in two active voyage minutes. Marker added to chart. Recover before returning."
+func town_landing()->Vector2:
+ if route=="coast":return HARBOUR.SEA_PIER
+ return HARBOUR.COVE_ARRIVAL if departed_from_cove else PIER-Vector2(80,0)
 func fail(reason:String)->void:
  if not active:return
- var lost=cargo.size()+release_log.size();cargo.clear();release_log.clear();cages.clear();records().state().erase("voyage");records().save();active=false;hud.hide();game.fishing.cancel("");close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=PIER-Vector2(80,0);game.update_camera();game.message=reason+" • %d unbanked catches lost. Your existing collection is safe." % lost;game.message_time=9
+ var lost=cargo.size()+release_log.size();cargo.clear();release_log.clear();cages.clear();records().state().erase("voyage");records().save();active=false;hud.hide();game.fishing.cancel("");close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=town_landing();game.update_camera();game.message=reason+" • %d unbanked catches lost. Your existing collection is safe." % lost;game.message_time=9
 func abandon(after:Callable=Callable())->void:
  var dialog=ConfirmationDialog.new();dialog.title="Abandon this voyage?";dialog.dialog_text="All unbanked catches and deployed voyage cages will be lost. Your existing collection stays safe.";game.add_child(dialog)
  dialog.confirmed.connect(func():
@@ -326,7 +355,7 @@ func bank()->void:
   total+=1
   var activity=game.get_tree().root.get_node_or_null("FXActivity")
   if activity!=null:activity.event(game,"fish_catch","completed",0,{"species_id":str(item.catch.species),"fish_level":records().progress.level(),"fish_weight":float(item.catch.kg),"fish_xp_gain":records().progress.last_xp,"fish_trophy":1 if C.is_trophy(item.catch) else 0,"fish_kept":1 if item.keep else 0})
- s.erase("voyage");records().save();is_banking=false;active=false;cages.clear();hud.hide();close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=PIER-Vector2(80,0);game.update_camera();game.message="SAFE RETURN • %d catches recorded • fishing XP, discoveries and community records updated." % total;game.message_time=8
+ s.erase("voyage");records().save();is_banking=false;active=false;cages.clear();hud.hide();close_menu();game.enter_region("town");game.health=float(game.characters.get(game.selected_character,{}).get("max_health",120));game.position_in_world=town_landing();game.update_camera();game.message="SAFE RETURN • %d catches recorded • fishing XP, discoveries and community records updated." % total;game.message_time=8
 func obstruction(from:Vector2,to:Vector2)->String:
  # Sweep the boat path so a strong wave cannot skip a narrow obstacle.
  for rock in rocks():
@@ -336,17 +365,34 @@ func obstruction(from:Vector2,to:Vector2)->String:
  var samples=maxi(1,ceili(from.distance_to(to)/16))
  for n in range(samples+1):
   var point=from.lerp(to,float(n)/samples)
+  if ICE.open_for(self) and ICE.contains(point):return "cove ice"
   if point.x<(preload("res://scripts/lake_geometry301.gd").coast_x(point.y)+40 if route=="lake" else OCEAN_GEO.coast_x(point.y)+40):return "shore"
   for isle in islands():
    if ISLES.distance_to_shore(isle,point)<40:return "shore"
  return debris.hit(from,to)
 func strike(kind:String)->void:
  if impact>0:return
+ if kind=="cove ice":
+  impact=.6;game.message="Cove ice • use the harbour landing on foot.";game.message_time=3;return
  hull-=8 if kind=="drifting debris" else 12;impact=1.2
  game.message="Hull struck "+kind+"! Steer clear of hazards; waves can push you into them.";game.message_time=4
+func sync_ice_access()->void:
+ if ice_ashore and not ICE.open_for(self):
+  close_menu();game.fishing.cancel("Thaw • returned safely to your boat.");leave_ice()
+ if not ICE.open_for(self):return
+ if not ashore and ICE.contains(boat):
+  boat=HOME;velocity=Vector2.ZERO;anchored=true
+  game.position_in_world=HOME;game.update_camera()
+  game.fishing.cancel("The cove froze • your boat moved to the harbour.")
+ for i in cages.size():
+  var cage:Dictionary=cages[i]
+  if ICE.contains(Vector2(cage.pos[0],cage.pos[1])):
+   cage.pos=[HOME.x+18,HOME.y+i*22]
+   game.message="A cage in the freezing cove was moved to the harbour.";game.message_time=5
 func step(delta:float)->bool:
  hud.visible=active and game.menu.is_empty() and game.session_menu.page.is_empty() and game.presentation.page.is_empty()
  if not active:return false
+ sync_ice_access()
  if not game.menu.is_empty() or not game.session_menu.page.is_empty() or not game.presentation.page.is_empty():return not ashore
  if not ashore:
   game.VIEW=game.get_viewport_rect().size;game.visual_clock+=delta;game.run_time+=delta;game.message_time=maxf(0,game.message_time-delta);game.hint="Anchor to fish • E near islands to land • bring catches home alive"
@@ -358,7 +404,7 @@ func step(delta:float)->bool:
  if Input.is_action_just_pressed("interact"):interact()
  
  if ashore:
-  game.hint="Island expedition • E near the boat to board"
+  game.hint="Ice fishing • E at Cove Landing to board" if ice_ashore else "Island expedition • E near the boat to board"
   if game.health<=0:fail("You fell on the island");return true
  else:
   var move:Vector2=game.mobile.movement if game.mobile.enabled else Input.get_vector("move_left","move_right","move_up","move_down")
@@ -426,6 +472,8 @@ func open_menu(kind:String)->void:
   preload("res://scripts/voyage_storage.gd").build(self,col)
  elif kind=="pier":
   f.button(col,"Sell landed fish • Ripple & Reel",func():close_menu();game.fishing.open_sales())
+  var coastal=HARBOUR.is_port(game.position_in_world)
+  var cove=HARBOUR.is_cove(game.position_in_world)
   f.label(col,"Take the helm. Move with WASD / arrows or the touch stick. Drop anchor to fish. E or Land boards islands and returns at the harbour. Bring every voyage catch home alive before it earns XP or records. A voyage is one committed attempt. Sail back alive to bank rewards. Quitting, leaving or being KO’d ends it and loses every unbanked reward.",17)
   var saved:Dictionary=records().state().get("voyage",{})
   if not saved.is_empty() and bool(saved.get("banking",false)):
@@ -434,11 +482,22 @@ func open_menu(kind:String)->void:
   else:
    if not saved.is_empty():records().state().erase("voyage");records().save();f.label(col,"The previous unfinished voyage ended. Unbanked rewards were not kept.",15)
    f.label(col,"Cargo %d • Ripple & Reel storage space %d. Sell kept fish before departing if your storage is full." % [capacity(),maxi(0,records().storage_capacity()-records().storage_count())],15)
-   var lake=UI.card(col,"UPSTREAM • OLDWATER LAKE","Open from the start • lake fish, creatures and island landings. Return alive with every catch you want to keep.");f.button(lake,"Launch lake voyage",func():launch("lake"))
-   var coast=UI.card(col,"DOWNSTREAM • COASTAL WATERS","Deep Sea Rod required • saltwater habitats, currents, surf and an island found only at night.")
-   if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
-   else:f.button(coast,"Buy Deep Sea Rod • 1,200 Glimmers",purchase)
-  f.label(col,"Lake, ocean and town share the same real 24-hour Edmonton clock and weather, throughout every voyage. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The ocean is four times its former area. Drifting logs, broken spars and floating cargo can damage the hull; the largest waves push much farther, even against an anchor. Night Island moves to an unpredictable deep-water location each night and is not charted until found. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
+   if coastal:
+    var coast=UI.card(col,"TIDECROSS • COASTAL WATERS","Sea voyages launch and return at this berth. The saltwater harbour stays open year-round.")
+    if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
+    else:f.button(coast,"Buy Deep Sea Rod • 1,200 Glimmers",purchase)
+   elif HARBOUR.winter(game):
+    f.label(col,"River ferries and lake boat departures are paused for winter. Walk south to Tidecross Harbour for sea voyages, or take the trail north of the Gatherers’ Lodge to fish on Oldwater Cove’s ice.",18)
+   elif cove:
+    var dock=UI.card(col,"OLDWATER BAY • OUTBACK DOCK","Sail the lake and return here to land your catches.")
+    f.button(dock,"Begin lake adventure",func():launch("lake"))
+   else:
+    var lake=UI.card(col,"UPSTREAM • OLDWATER LAKE","Sail and fish in the lake, or take a ferry to the walking shore.")
+    f.button(lake,"Launch lake voyage",func():launch("lake"))
+    f.button(lake,"Ferry to Oldwater Cove",func():close_menu();HARBOUR.ferry(game,HARBOUR.COVE_ARRIVAL))
+    var port=UI.card(col,"DOWNSTREAM • TIDECROSS HARBOUR","Walk or ferry to the port. Sea expeditions launch from its coastal pier.")
+    f.button(port,"Ferry to Tidecross Harbour",func():close_menu();HARBOUR.ferry(game,HARBOUR.PORT_ARRIVAL))
+  f.label(col,"Town and both voyage routes share the 24-hour Crossroads clock. Town and Oldwater Lake share seasonal weather. Coastal waters have their own forecast. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The ocean is four times its former area. Drifting logs, broken spars and floating cargo can damage the hull; the largest waves push much farther, even against an anchor. Night Island moves to an unpredictable deep-water location each night and is not charted until found. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
  else:
   f.label(col,"Released at sea: %d • Safe-return XP pool: +%d" % [release_log.size(),pending_xp()],16)
   f.label(col,"Unbanked cargo • %d/%d • Ripple & Reel storage space %d • %s" % [cargo.size(),capacity(),maxi(0,records().storage_capacity()-records().storage_count()),game.fishing.status],17)
@@ -446,6 +505,7 @@ func open_menu(kind:String)->void:
   f.label(col,"Chart: gold = harbour • cream = island • cyan = fishing habitat • orange = cage • arrows = currents. Night Island is charted only after you find it that night. Drifting debris is not marked: watch the water ahead.",15)
   if kind=="landing":
    f.label(col,"Manage older stored fish or upgrade storage here before unloading. You do not need to release your new catches. Kept catches and released catches earn XP only on safe landing. Unrecovered cages are left behind.",17)
+   if ICE.open_for(self) and harbour_access():f.button(col,"Walk onto Oldwater Ice Cove",enter_ice)
    f.button(col,"Manage stored fish • sell / move / upgrade",func():open_menu("storage"))
    f.button(col,"Land safely • record catches & earn XP",bank)
   else:
@@ -562,7 +622,8 @@ func draw_lighting(c:Node2D,cam:Vector2)->void:
   c.draw_texture_rect(darkness_texture,Rect2(Vector2.ZERO,c.VIEW),false)
   if dark:c.draw_circle(center,68,Color(1,.78,.32,.035))
  if weather in ["Fog","Mist"] and route=="lake":
-  preload("res://scripts/town_weather_motion.gd").fog(c,cam,c.VIEW,elapsed,.72 if weather=="Fog" else .30,game.position_in_world-cam)
+  var strength=(.84 if game.town_life.calendar.season()=="Fall" else .72) if weather=="Fog" else .30
+  preload("res://scripts/town_weather_motion.gd").fog(c,cam,c.VIEW,elapsed,strength,game.position_in_world-cam)
  elif weather=="Snow":
   preload("res://scripts/town_weather_motion.gd").snow(c,cam,c.VIEW,elapsed)
  if weather in ["Rain","Storm"]:

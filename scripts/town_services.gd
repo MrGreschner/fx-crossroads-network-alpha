@@ -5,6 +5,7 @@ var panel:PanelContainer
 var body:VBoxContainer
 var message:Label
 var current:=""
+var greenhouse:Control
 var field_guide=preload("res://scripts/mistglass_book.gd").new()
 var family:="orchard"
 var post_art:Texture2D # Facade now uses the shared V242 atlas.
@@ -75,8 +76,18 @@ func growth_strip(parent:Node,id:String,selected:int)->void:
   var icon=TextureRect.new();icon.texture=preload("res://scripts/source_art.gd").texture("res://assets/seedhouse/"+id+"_"+str(stage)+".svg");icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;icon.custom_minimum_size=Vector2(100,74);column.add_child(icon)
   var caption=text(column,["Seeds","Growing","Harvest"][stage]+(" • now" if selected==stage else ""),13);caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 func _process(_delta:float)->void:
- if game.menu=="seedhouse":panel.hide();current="";game.legacy.gardening.open();return
- var wanted:String=game.menu if (game.mode=="town" and game.menu in ["seedhouse","postoffice","arcane_tower","barracks"] or game.practice and game.menu=="training_guide") else ""
+ if game.mode=="town" and game.menu=="seedhouse":
+  panel.hide();current=""
+  if not game.legacy.arcade:
+   greenhouse=preload("res://scripts/seedhouse_greenhouse.gd").new()
+   add_child(greenhouse)
+   greenhouse.setup(game)
+  else:game.menu=""
+  return
+ if is_instance_valid(greenhouse):
+  if game.mode!="town" or game.menu not in ["seedhouse_room","legacy","presentation"]:
+   greenhouse.queue_free();greenhouse=null
+ var wanted:String=game.menu if (game.mode=="town" and game.menu in ["postoffice","arcane_tower","barracks"] or game.practice and game.menu=="training_guide") else ""
  panel.visible=not wanted.is_empty()
  if wanted.is_empty():current="";return
  if wanted!=current:
@@ -115,13 +126,3 @@ func draw_post_structure(c:Node2D,camera:Vector2,font:Font)->void:
  c.draw_rect(Rect2(cart,Vector2(38,18)),Color("#92704c"));c.draw_line(cart+Vector2(38,6),cart+Vector2(54,-3),Color("#685740"),3)
  for x in [7,30]:c.draw_circle(cart+Vector2(x,21),6,Color("#354849"));c.draw_circle(cart+Vector2(x,21),2,Color("#b59b6a"))
 
-func draw_garden(c:Node2D,camera:Vector2)->void:
- if not Rect2(camera,c.get_viewport_rect().size).grow(70).has_point(Vector2(1040,1620)):return
- var gardening=game.legacy.gardening;var beds=gardening.state().beds
- for i in mini(2,gardening.capacity()):
-  var at=Vector2(1040+(i%2)*100,1620+int(i/2)*74)-camera
-  preload("res://scripts/town_nature243.gd").draw(c,"garden_bed",Rect2(at-Vector2(38,13),Vector2(76,31)))
-  if beds[i].is_empty():continue
-  var b=beds[i];var stage=preload("res://scripts/town_art246.gd").crop_stage(b,gardening.now())
-  var art=preload("res://scripts/source_art.gd").texture("res://assets/seedhouse/"+str(b.seed)+"_"+str(stage)+".svg")
-  if art!=null:c.draw_texture_rect(art,Rect2(at-Vector2(56,99),Vector2(112,105)),false,preload("res://scripts/town_art246.gd").crop_tint(b,gardening.now()))

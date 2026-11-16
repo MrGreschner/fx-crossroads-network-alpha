@@ -55,4 +55,4 @@ func refresh(v:Node)->void:
  hazard.visible=not hazard.text.is_empty()
  v.anchor_button.text="Ashore" if v.ashore else "Sail" if v.anchored else "Anchor";v.anchor_button.disabled=v.ashore
  v.anchor_button.tooltip_text="Raise anchor to sail" if v.anchored else "Drop anchor to fish"
- v.dock_button.text="Board" if v.ashore else "Return" if v.boat.distance_to(v.HOME)<260 else "Land"
+ v.dock_button.text="Cove landing" if v.ice_ashore else "Board" if v.ashore else "Return" if v.boat.distance_to(v.HOME)<260 else "Land"

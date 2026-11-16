@@ -1,7 +1,7 @@
 extends RefCounted
+const WINTER=preload("res://scripts/town_winter358.gd")
 const Town311=preload("res://scripts/town_layout311.gd")
-const POND=Vector2(200,365)
-const POND_RADII=Vector2(200,112)
+const POND=WINTER.POND
 const POND_BENCH=Vector2(345,565)
 const CAMP=Vector2(2890,1450)
 const TOWER=Vector2(1720,420)
@@ -58,9 +58,8 @@ func _init()->void:
 			durations.append(duration);cycle+=duration+1.2
 		patrols.append(route);patrol_times.append(durations);patrol_cycles.append(cycle)
 func step(delta:float)->void:clock+=delta
-func blocked(point:Vector2)->bool:
-	var offset:Vector2=(point-POND)/POND_RADII
-	if offset.length()<1:return true
+func blocked(point:Vector2,frozen_pond:bool=false)->bool:
+	if not frozen_pond and WINTER.pond_contains(point):return true
 	if point.distance_to(TOWER)<40:return true
 	if point.distance_to(CAMP)<28:return true
 	var cell:=Vector2i(floori(point.x/128),floori(point.y/128))
@@ -92,6 +91,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	# A planned pond garden sits north of the cliff, with a separate waterside walk.
 	if visible.has_point(POND):
 		preload("res://scripts/town_art39.gd").draw(c,"pond",camera)
+	if visible.has_point(POND) and not WINTER.SEASON.active(c):
 		var pond:Vector2=POND-camera
 		for n in 4:
 			var angle:float=clock*(.28+n*.04)+n*1.7
@@ -192,8 +192,9 @@ func draw_flower_source(c:Node2D,b:Vector2,small:bool)->void:
 		c.draw_circle(flower,4,Color("#dcb3c9") if n%2==0 else Color("#ead29a"))
 
 func draw_pond_source(c:Node2D,camera:Vector2)->void:
-	for point in [Vector2(105,440),Vector2(188,456),Vector2(413,375)]:
-		var q:Vector2=point-camera; c.draw_circle(q,5,Color("#d4c495"));c.draw_circle(q+Vector2(12,6),3,Color("#dcb7c9"))
+	if not WINTER.SEASON.active(c):
+		for point in [Vector2(105,440),Vector2(188,456),Vector2(413,375)]:
+			var q:Vector2=point-camera; c.draw_circle(q,5,Color("#d4c495"));c.draw_circle(q+Vector2(12,6),3,Color("#dcb7c9"))
 	preload("res://scripts/pond_bank263.gd").draw(c,camera)
 
 func draw_lookout_source(c:Node2D,camera:Vector2,font:Font)->void:

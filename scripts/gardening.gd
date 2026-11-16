@@ -4,7 +4,12 @@ static var catalog:Dictionary={}
 static var talents:Dictionary={}
 var legacy:Node
 var time_for_test:float=-1
+const SHARED_BEDS=10
+const PRIVATE_BEDS=2
+const PRIVATE_LEVEL=10
+const PRIVATE_PRICE=2500
 var page="beds"
+var focused_bed=-1
 var family="all"
 var inventory_filter="owned"
 var selected_perk=""
@@ -47,13 +52,14 @@ func state()->Dictionary:
  return legacy.data.gardening
 static func valid(v:Variant)->bool:
  if not v is Dictionary or v.get("version")!=1:return false
+ if not v.get("greenhouse_plot",false) is bool:return false
  for key in ["xp","harvests","resets"]:
   if not (v.get(key) is float or v.get(key) is int) or not is_finite(float(v[key])) or float(v[key])<0 or float(v[key])>1e9:return false
  for key in ["seeds","produce"]:
   if not v.get(key) is Dictionary or v[key].size()>crops().size():return false
   for id in v[key]:
    if not crops().has(id) or not (v[key][id] is float or v[key][id] is int) or not is_finite(float(v[key][id])) or float(v[key][id])<0 or float(v[key][id])>1000000 or float(v[key][id])!=floor(float(v[key][id])):return false
- if not v.get("beds") is Array or v.beds.size()!=10 or not v.get("perks") is Dictionary or v.perks.size()>33:return false
+ if not v.get("beds") is Array or v.beds.size()!=SHARED_BEDS+(PRIVATE_BEDS if v.get("greenhouse_plot",false)==true else 0) or not v.get("perks") is Dictionary or v.perks.size()>33:return false
  for b in v.beds:
   if not b is Dictionary:return false
   if b.is_empty():continue
@@ -70,6 +76,7 @@ static func valid(v:Variant)->bool:
   if not perks().has(id) or v.perks[id]!=true:return false
  var lv=1
  while lv<100 and int(v.xp)>=threshold(lv+1):lv+=1
+ if v.get("greenhouse_plot",false) and lv<PRIVATE_LEVEL:return false
  if v.perks.size()>mini(33,lv/3):return false
  for id in v.perks:
   var p=perks()[id]
@@ -94,7 +101,21 @@ func capacity()->int:
  var n=1
  for lv in [5,15,30,50,75,90,100]:
   if level()>=lv:n+=1
- return mini(10,n+int(bonus("beds")))
+ return mini(SHARED_BEDS,n+int(bonus("beds")))+(PRIVATE_BEDS if owns_plot() else 0)
+func owns_plot()->bool:
+ return bool(state().get("greenhouse_plot",false))
+func bed_available(index:int)->bool:
+ if index<0 or index>=state().beds.size():return false
+ return index>=SHARED_BEDS or index<capacity()-(PRIVATE_BEDS if owns_plot() else 0)
+func buy_plot()->bool:
+ if owns_plot() or not allowed() or legacy.game.mode!="town" or legacy.game.menu!="seedhouse_room":return false
+ if level()<PRIVATE_LEVEL or not legacy.glimmers.debit(PRIVATE_PRICE):return false
+ var garden=state()
+ garden.greenhouse_plot=true
+ for i in PRIVATE_BEDS:
+  garden.beds.append({})
+ save()
+ return true
 func xp_gain(amount:int)->void:
  var before=level();state().xp=mini(1000000000,int(state().xp)+maxi(0,amount))
  if level()>before:preload("res://scripts/skill_celebration.gd").show_level(legacy.game,"Gardening",before,level(),0)
@@ -137,7 +158,7 @@ func grant(id:String,count:int=1)->void:
  state().seeds[id]=mini(1000000,int(state().seeds.get(id,0))+count)
  if id not in state().seen:state().seen.append(id)
 func plant(index:int,id:String)->void:
- if not allowed() or index<0 or index>=capacity() or not crops().has(id):return
+ if not allowed() or not bed_available(index) or not crops().has(id):return
  var s=state();var spec=crops()[id]
  if spec.source=="seasonal":message("Plant monthly crops in the Giant growers fair plot.");return
  if not s.beds[index].is_empty():message("Harvest this bed before planting again.");return
@@ -200,7 +221,9 @@ func find_seed(source:String,realm:String="",forced:bool=false)->String:
 func open_tree()->void:
  if is_instance_valid(tree_window):return
  tree_window=preload("res://scripts/garden_mastery_view.gd").new();legacy.add_child(tree_window);tree_window.setup(self)
-func open()->void:legacy.open_page("gardening")
+func open(bed:int=-1)->void:
+ focused_bed=bed
+ legacy.open_page("gardening")
 func build(parent:Node)->void:preload("res://scripts/garden_ui.gd").build(self,parent)
 func step(delta:float)->void:
  tick+=delta
@@ -214,7 +237,7 @@ func step(delta:float)->void:
    entry.button.disabled=not ready or not allowed();entry.button.text="Harvest now" if ready else "Still growing"
 func bed_text(index:int)->String:
  var b:Dictionary=state().beds[index]
- if b.is_empty():return "Empty • plant one owned seed" if index<capacity() else "Locked • grows with your Gardening level"
+ if b.is_empty():return "Empty • plant one owned seed" if bed_available(index) else "Locked • grows with your Gardening level"
  var remaining=maxf(0,float(b.end)-now())
  return str(crops()[b.seed].name)+" • "+("READY TO HARVEST" if remaining<=0 else duration(remaining)+" remaining • grows while away")
 static func duration(seconds:float)->String:

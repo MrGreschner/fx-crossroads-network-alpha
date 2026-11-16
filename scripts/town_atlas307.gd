@@ -7,8 +7,8 @@ const APPROACH=BOARD+Vector2(0,32)
 const CATEGORIES={"Adventure":"#b97049","Services":"#4d857d","Landmark":"#8b6c9c","Homes":"#677f4d"}
 const ROUTES=[
  ["Crossroads Town",Vector2(250,193),"Regional hub","Find the marina for voyages or head through the east bridge toward Wayfarer Wilds."],
- ["Oldwater Lake",Vector2(208,75),"Upstream • north","At Ripple & Reel Marina, choose the lake voyage. The river opens into freshwater islands and fishing grounds."],
- ["Coast & Open Sea",Vector2(202,306),"Downstream • south","At Ripple & Reel Marina, choose the coastal voyage once you own the Deep Sea Rod."],
+ ["Oldwater Lake",Vector2(208,75),"Upstream • north","Follow the trail north of the Gatherers’ Lodge to Oldwater Cove. The town marina offers ferries and boat voyages outside winter."],
+ ["Coast & Open Sea",Vector2(202,306),"Downstream • south","Follow the south road or take a warm-season ferry to Tidecross Harbour. Launch sea voyages at the coastal pier with a Deep Sea Rod."],
  ["Wayfarer Wilds",Vector2(460,177),"East • over the bridge","Follow the town road east over the river. Continue into the forest to find the Wayfarer Wilds entrance."]
 ]
 const PUBLIC=[
@@ -23,6 +23,8 @@ const PUBLIC=[
  ["Battlegrounds",Town311.BATTLE_ENTRY,"Adventure","Army battles on the far side of the north gate.",""],
  ["Wayfarer Wilds trail",Vector2(2940,1160),"Adventure","Cross the eastern bridge and continue to the forest entrance.",""],
  ["Challenge Lodge",Vector2(-1030,540),"Adventure","Challenge boards and trials on the western approach.",""],
+ ["Oldwater foot trail",Vector2(2670,580),"Landmark","Follow the marked trail north to Oldwater Cove, year-round.",""],
+ ["South road to Tidecross",Vector2(1605,2800),"Landmark","Follow the road south to the coastal harbour.",""],
  ["Gather Lodge",Vector2(2800,655),"Services","Gathering supplies and activities east of the river.","gather"],
  ["Community Records",Town311.RECORDS+Vector2(0,40),"Services","Browse community rankings and records.",""],
  ["Adventure Board",Vector2(820,935),"Adventure","Browse the adventures you can head out on.",""],
@@ -37,7 +39,7 @@ const PUBLIC=[
  ["Pondside Food Stand",Vector2(1150,1150),"Services","Buy a meal for your next adventure.","food"],
  ["Healer House",Vector2(1960,740),"Services","Healer and supply services.","healer"],
  ["Wayfinder Lodge",Vector2(1580,790),"Services","Find routes and realm information.","wayfinder"],
- ["Seedhouse",Vector2(900,1615),"Services","Gardening seeds and supplies.","seedhouse"],
+ ["Seedhouse",Vector2(900,1615),"Services","Indoor growing beds, Rowan’s seed shop and private plots.","seedhouse"],
  ["Squirrel Post",Vector2(550,1550),"Services","Profiles, post and food parcels.","post"],
  ["Apothecary",Vector2(-100,1680),"Services","Browse brews and supplies.","apothecary"],
  ["Mistglass Spire",Vector2(2090,1165),"Adventure","The arcane tower by the east bridge.","tower"],

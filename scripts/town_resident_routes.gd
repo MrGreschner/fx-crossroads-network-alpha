@@ -3,11 +3,13 @@ extends RefCounted
 const N=preload("res://scripts/town_neighborhood.gd")
 const ORIGIN=Vector2(-1400,-560)
 const CELL=32.0
+const GREENHOUSE={"at":Vector2(900,1615),"task":"water","inside":true,"label":"Seedhouse"}
+const GARDENERS=[3,11]
 const JOBS=[
  {"at":Vector2(-180,775),"task":"shop","inside":true,"label":"Market"},
  {"at":Vector2(-1000,2080),"task":"read","inside":true,"label":"Academy"},
  {"at":Vector2(1375,1520),"task":"guard","inside":true,"label":"Ramguard"},
- {"at":Vector2(1006,1640),"task":"water","inside":false,"label":"Seedhouse"},
+ {"at":Vector2(900,1740),"task":"deliver","inside":false,"label":"Seedhouse deliveries"},
  {"at":Vector2(2800,655),"task":"deliver","inside":true,"label":"Gatherers' Lodge"},
  {"at":Vector2(2000,2020),"task":"fish","inside":true,"label":"Ripple & Reel"},
  {"at":Vector2(-1080,800),"task":"repair","inside":true,"label":"Deepwell Mine"},
@@ -119,6 +121,7 @@ func daily_plan(index:int,day:int,npc:Dictionary)->Dictionary:
  var job=JOBS[index%JOBS.size()].duplicate()
  var leisure={"at":Vector2(180+index%4*37,550),"task":"fish","inside":false,"label":"Pond garden"} if index%2==0 else {"at":Vector2(2780+index%3*24,1320),"task":"explore","inside":false,"label":"Forest walk"}
  if day==6:job=leisure
+ if index==3 and day in [0,1,3,5] or index==11 and day in [1,2,4]:job=GREENHOUSE.duplicate()
  if DAY_ERRANDS.has(index):job=errand_stop(int(DAY_ERRANDS[index]))
  if NIGHT_ERRANDS.has(index):
   # These two residents take daytime rest, then cover the quieter overnight hours.

@@ -42,7 +42,7 @@ func completed(result:int,code:int,_headers:PackedStringArray,bytes:PackedByteAr
  var data=JSON.parse_string(bytes.get_string_from_utf8()) if result==HTTPRequest.RESULT_SUCCESS and code==200 else null
  if not data is Dictionary:status.text="Unable to load trends. Try again when the server is available.";return
  for child in body.get_children():child.queue_free()
- status.text="Updated • "+str(data.get("timezone","America/Edmonton"))+" • 30-day retention • offline reports are not counted"
+ status.text="Updated • "+"Crossroads time"+" • 30-day retention • offline reports are not counted"
  var totals:Dictionary=data.get("totals",{})
  line("Estimated active hours: %.1f • profiles: %d • devices: %d • sessions: %d" % [float(totals.get("active_seconds",0))/3600.0,int(totals.get("profiles",0)),int(totals.get("devices",0)),int(totals.get("sessions",0))],Color("#efcd83"))
  line("ACTIVITY • mode / realm / route • active minutes",Color("#81d4df"))

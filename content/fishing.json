@@ -828,7 +828,7 @@
       "max_length": 43,
       "habitat": "Northern Dawn Shoal \u00b7 4\u20136 am",
       "color": "#82b5ac",
-      "note": "A pale whiskered fish that feeds only at the northern dawn shoal, 4\u20136 am Edmonton time.",
+      "note": "A pale whiskered fish that feeds only at the northern dawn shoal, 4\u20136 am Crossroads time.",
       "group": "bottom",
       "methods": [
         "rod"
@@ -4466,6 +4466,118 @@
     }
   },
   "pools": {
+    "tidecross_saltwater": {
+      "name": "Tidecross • Saltwater Pier",
+      "region": "town",
+      "bank": [
+        2010,
+        3990
+      ],
+      "water": [
+        2070,
+        4048
+      ],
+      "fish": [
+        "v20_harbour_sprat",
+        "v20_sandstripe_whiting",
+        "v20_copperback_mackerel",
+        "v20_slate_mullet",
+        "v20_silver_scad",
+        "v20_shore_herring",
+        "v20_dapple_flounder",
+        "v20_amber_wrasse",
+        "v20_tidewater_garfish",
+        "v20_saffron_snapper",
+        "v20_cobalt_moray",
+        "v20_tide_glass_shrimp",
+        "v20_copper_prawn",
+        "v20_speckled_sand_eel"
+      ],
+      "habitat_region": "voyage_coast"
+    },
+    "oldwater_shore": {
+      "name": "Oldwater Cove • Shore Dock",
+      "region": "town",
+      "bank": [
+        2985,
+        -2068
+      ],
+      "water": [
+        2910,
+        -2073
+      ],
+      "fish": [
+        "v20_birchfin_dace",
+        "v20_olive_lake_perch",
+        "v20_sandbar_shiner",
+        "v20_copper_cheek_bream",
+        "v20_bluebar_trout",
+        "v20_moonspotted_char",
+        "river_sprat",
+        "russet_river_chub",
+        "bridge_shrimp",
+        "bridge_claw",
+        "v22_oldwater_mussel"
+      ],
+      "seasonal": "warm"
+    },
+    "oldwater_walk_ice_reeds": {
+      "name": "Oldwater Cove • Reed Hole",
+      "region": "town",
+      "bank": [
+        2680,
+        -1951
+      ],
+      "water": [
+        2680,
+        -1975
+      ],
+      "fish": [
+        "v20_birchfin_dace",
+        "v20_olive_lake_perch",
+        "v20_sandbar_shiner"
+      ],
+      "seasonal": "winter",
+      "ice": true
+    },
+    "oldwater_walk_ice_mid": {
+      "name": "Oldwater Cove • Middle Hole",
+      "region": "town",
+      "bank": [
+        3150,
+        -2406
+      ],
+      "water": [
+        3150,
+        -2430
+      ],
+      "fish": [
+        "v20_olive_lake_perch",
+        "v20_copper_cheek_bream",
+        "v20_bluebar_trout"
+      ],
+      "seasonal": "winter",
+      "ice": true
+    },
+    "oldwater_walk_ice_edge": {
+      "name": "Oldwater Cove • Outer Hole",
+      "region": "town",
+      "bank": [
+        3510,
+        -2866
+      ],
+      "water": [
+        3510,
+        -2890
+      ],
+      "fish": [
+        "v20_bluebar_trout",
+        "v20_olive_lake_perch",
+        "v20_moonspotted_char"
+      ],
+      "seasonal": "winter",
+      "ice": true
+    },
     "town_pond": {
       "name": "Town Pond",
       "region": "town",
@@ -4832,7 +4944,7 @@
         "dawn_shrimp",
         "dawn_claw"
       ],
-      "window": "04:00\u201306:00 Edmonton"
+      "window": "04:00\u201306:00 Crossroads time"
     },
     "between_root": {
       "name": "Rootglass Pool",
@@ -5116,6 +5228,60 @@
         1000
       ],
       "wait": 3.8
+    },
+    "voyage_lake_ice_reeds": {
+      "name": "Ice Cove • Reed Hole",
+      "region": "voyage_lake",
+      "fish": [
+        "v20_birchfin_dace",
+        "v20_olive_lake_perch",
+        "v20_sandbar_shiner"
+      ],
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "wait": 3.5
+    },
+    "voyage_lake_ice_mid": {
+      "name": "Ice Cove • Middle Hole",
+      "region": "voyage_lake",
+      "fish": [
+        "v20_olive_lake_perch",
+        "v20_copper_cheek_bream",
+        "v20_bluebar_trout"
+      ],
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "wait": 3.5
+    },
+    "voyage_lake_ice_edge": {
+      "name": "Ice Cove • Deep Edge",
+      "region": "voyage_lake",
+      "fish": [
+        "v20_bluebar_trout",
+        "v20_olive_lake_perch",
+        "v20_moonspotted_char"
+      ],
+      "bank": [
+        0,
+        0
+      ],
+      "water": [
+        0,
+        0
+      ],
+      "wait": 3.5
     },
     "voyage_lake_reeds": {
       "name": "Sheltered Reedbanks",

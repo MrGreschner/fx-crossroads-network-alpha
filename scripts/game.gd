@@ -1,4 +1,6 @@
 extends Node2D
+const Tidecross=preload("res://scripts/tidecross359.gd")
+const TownWinter=preload("res://scripts/town_winter358.gd")
 var prepared_equipment_owner="offline"
 var web_intro_covered:=false
 var web_intro_callback:JavaScriptObject
@@ -150,6 +152,7 @@ var core_art=preload("res://scripts/core_hero_art.gd").new()
 var basketball_motion=preload("res://scripts/basketball_motion.gd").new()
 var visual_clock := 0.0
 var dodge_time := 0.0
+var oldwater_glide:=Vector2.ZERO
 var dodge_cooldown := 0.0
 var dodge_direction := Vector2.RIGHT
 var attack_pose_time := 0.0
@@ -392,12 +395,14 @@ func build_scenery() -> void:
 
 func can_stand_at(point: Vector2) -> bool:
 	if voyage!=null and voyage.active:return voyage.land_at(point)
+	if mode=="town" and Tidecross.is_extension(point):return Tidecross.land(point,Tidecross.winter(self))
 	if mode=="town" and preload("res://scripts/town_marina.gd").on_deck(point):return true
 	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if lodges!=null and lodges.active:
 		if not lodges.trial_bounds().has_point(point):return false
 	elif mistglass_rift!=null and mistglass_rift.active and not Rect2(55,220,VIEW.x-110,VIEW.y-275).has_point(point):return false
-	if mode=="town" and (preload("res://scripts/town_atlas307.gd").blocked(point) or preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or idle_mine_town.blocked(point) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
+	var winter_town=mode=="town" and TownWinter.SEASON.active(self)
+	if mode=="town" and (preload("res://scripts/town_atlas307.gd").blocked(point) or preload("res://scripts/community_records.gd").blocked(point) or arena_town.blocked(point) or town_life.blocked(point) or (fishing!=null and fishing.blocked(point)) or idle_mine_town.blocked(point) or commerce_town.blocked(point) or studio_town.blocked(point) or academy_town.blocked(point) or cosmetic_town.blocked(point) or point.distance_to(town_life.WELL)<34 or (lodges!=null and lodges.blocked(point)) or town_chapter.blocked(point) or town_scenery.blocked(point,winter_town) or (winter_town and TownWinter.STALL.has_point(point)) or town_upgrade.blocked(point) or preload("res://scripts/town_v173.gd").blocked(point) or town_v109.blocked(point) or legacy!=null and legacy.town_blocked(point)):return false
 	if not adventure.can_stand(point): return false
 	for tx in range(maxi(0, int(point.x / 64) - 1), mini(int(region_size().x / 64) + 1, int(point.x / 64) + 2)):
 		for ty in range(maxi(0, int(point.y / 64) - 1), mini(int(region_size().y / 64) + 1, int(point.y / 64) + 2)):
@@ -466,10 +471,10 @@ func move_player(displacement: Vector2) -> void:
 	var steps := maxi(1, int(ceil(displacement.length() / 12.0)))
 	var step := displacement / float(steps)
 	for unused_step in steps:
-		var horizontal := (position_in_world + Vector2(step.x, 0)).clamp(Vector2(-1370,-530) if mode=="town" else Vector2(30,30), region_size() - Vector2(30, 30))
+		var horizontal := (position_in_world + Vector2(step.x, 0)).clamp(Tidecross.MIN if mode=="town" else Vector2(30,30), region_size() - Vector2(30, 30))
 		if can_stand_at(horizontal):
 			position_in_world = horizontal
-		var vertical := (position_in_world + Vector2(0, step.y)).clamp(Vector2(-1370,-530) if mode=="town" else Vector2(30,30), region_size() - Vector2(30, 30))
+		var vertical := (position_in_world + Vector2(0, step.y)).clamp(Tidecross.MIN if mode=="town" else Vector2(30,30), region_size() - Vector2(30, 30))
 		if can_stand_at(vertical):
 			position_in_world = vertical
 
@@ -478,7 +483,7 @@ func region_size() -> Vector2:
 
 func update_camera() -> void:
 	if mistglass_rift!=null and mistglass_rift.active and not (lodges!=null and lodges.active):camera=Vector2.ZERO;return
-	var effective=VIEW/media.factor();camera = (position_in_world+media.framing - effective * 0.5).clamp(Vector2(-1400,-560) if mode=="town" else Vector2.ZERO, (region_size() - effective).max(Vector2.ZERO))
+	var effective=VIEW/media.factor();camera = (position_in_world+media.framing - effective * 0.5).clamp(Vector2(-1400,Tidecross.COVE.position.y) if mode=="town" else Vector2.ZERO, (region_size() - effective).max(Vector2.ZERO))
 
 func load_realm_layout() -> bool:
 	var scene_path := str(region.get("scene", ""))
@@ -592,6 +597,7 @@ func enter_region(id: String) -> void:
 	if mistglass_rift!=null and mistglass_rift.active and id!="mistglass_rift":
 		mistglass_rift.active=false;loadout.assign(mistglass_rift.saved_pack);provisions.packed=mistglass_rift.saved_food
 	combat_epoch += 1
+	oldwater_glide=Vector2.ZERO
 	if is_instance_valid(realm_props):realm_props.queue_free()
 	realm_props=null
 	var data := load_json(REGION_DIR + id + ".json")
@@ -792,6 +798,9 @@ func _process(delta: float) -> void:
 		if preload("res://scripts/garden_hunting.gd").interact(self):
 			if Input.is_action_just_pressed("interact"):return
 	town_life.calendar.step()
+	if mode=="town":
+		TownWinter.rescue_thawed_pond(self)
+		Tidecross.thaw(self)
 	if voyage!=null and voyage.step(delta):return
 	town_life.events.step(self,delta)
 	if mode=="town" and not has_node("FXIntro") and get_tree().root.has_meta("fx_daily_launch"):
@@ -888,6 +897,8 @@ func _process(delta: float) -> void:
 	if studio_live.active():
 		speed*=studio_live.buff_speed()
 		if studio_live.hero.get("passive","")=="swift":speed*=1.08
+	var on_lake_ice=mode=="town" and Tidecross.winter(self) and Tidecross.BAY.slippery(position_in_world)
+	if not on_lake_ice or fishing.busy():oldwater_glide=Vector2.ZERO
 	var dodge_pressed: bool = mobile.take_dodge() or Input.is_action_just_pressed("dodge")
 	if mode in ["town","run"] and dodge_cooldown <= 0 and dodge_pressed and not adventure.combat.events.clamped("solo") and not adventure.combat.events.locks_input("solo") and stun_time <= 0 and not adventure.combat.stunned("p:solo") and not adventure.combat.classics.locked("solo") and not adventure.combat.v48.moving("solo") and not adventure.immersive.aboard("solo") and not adventure.combat.robot.transformed("solo") and not adventure.combat.v78.locked("solo") and not adventure.combat.v79.moving("solo") and not adventure.combat.v110.charging("solo") and not adventure.combat.halloween.moving("solo") and not adventure.combat.release_heroes.locked("solo"):
 		dodge_direction = direction if direction.length_squared() > 0 else aim_direction()
@@ -913,6 +924,9 @@ func _process(delta: float) -> void:
 		dodge_time = maxf(0.0, dodge_time - dodge_step)
 	else:
 		var walking:Vector2=adventure.combat.v79.displacement("solo",direction,speed,delta) if motion_hero=="kite" else motion_v85.displacement("solo",motion_hero,direction,speed,delta) if motion_hero in ["spindle","snowman","quill"] else (adventure.combat.v78.dig_vector("solo",direction) if motion_hero=="gopher" else direction) * speed * (skating_motion.travel_time if motion_hero=="goalie" else delta)
+		if on_lake_ice and not fishing.busy() and delta>0:
+			oldwater_glide=Tidecross.BAY.glide(oldwater_glide,walking/delta,delta)
+			walking=oldwater_glide*delta
 		move_player(adventure.polish.motion("solo",position_in_world,walking,delta) if mode=="run" else walking)
 	update_camera()
 	hint = ""
@@ -925,6 +939,12 @@ func _process(delta: float) -> void:
 func handle_town_interactions() -> void:
 	if preload("res://scripts/town_atlas307.gd").interact(self):return
 	if fishing!=null and fishing.busy():return
+	if Tidecross.interact(self):return
+	if position_in_world.distance_to(town_upgrade.POINTS.seedhouse)<70.0:
+		hint="E • Enter the Seedhouse greenhouse"
+		if Input.is_action_just_pressed("interact"):menu="seedhouse"
+		return
+	if TownWinter.interact(self):return
 	if town_conversations.nearby(self) or town_life.interact_residents(self,32.0):return
 	if marina_life!=null and marina_life.interact():return
 	if voyage!=null and voyage.pier_interact():return
@@ -1859,6 +1879,7 @@ func draw_world() -> void:
 		preload("res://scripts/town_art246.gd").ground(self,camera)
 		town_life.calendar.draw_puddles(self,camera)
 		preload("res://scripts/town_art246.gd").cliffs(self,camera)
+		Tidecross.draw_routes(self,camera)
 		town_chapter.draw_ground_details(self,camera)
 	if not retained_props and not oath_art and not first_art and not training_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
 		for decoration in decorations:
@@ -1909,10 +1930,12 @@ func draw_world() -> void:
 		academy_town.draw_on(self,camera)
 		cosmetic_town.draw_on(self,camera)
 		town_v109.draw_on(self,camera)
-		town_upgrade.draw_on(self,camera,font);town_services.draw_post(self,camera,font);town_services.draw_garden(self,camera)
+		town_upgrade.draw_on(self,camera,font);town_services.draw_post(self,camera,font)
 		if lodges!=null:lodges.draw_town(self,camera)
 		town_chapter.draw_pads(self,camera)
 		arena_town.draw_on(self,camera)
+		Tidecross.draw(self,camera)
+		TownWinter.draw_town(self,camera)
 		if fishing!=null:fishing.draw_on(self,camera)
 		if legacy!=null:legacy.draw_town(self,camera)
 		journey.draw_town(self,camera)
@@ -2269,7 +2292,7 @@ func elder_lines() -> Array[String]:
 	return ["THE ELDER RAM • YOUR GUIDE TO CROSSROADS",
 		"Character Hall: scroll through heroes and read their abilities before choosing.",
 		"Food Stand: pack one automatic meal or cure alongside your three items.",
-		"Healer House: recover here after defeat. Seedhouse: grow food after an adventure.",
+		"Healer House: recover here after defeat. Seedhouse: grow food year-round in Rowan’s greenhouse.",
 		"Training Yard: practise your attacks safely before entering an adventure.",
 		"Realms: explore, defeat enemies and challenge a guardian. Start at level 1.",
 		"School adventures: clear wings, open doors and return to the starting street.",
@@ -2327,7 +2350,7 @@ func draw_menu() -> void:
 		y += 27 if menu=="elder" else 32
 
 func _unhandled_input(event: InputEvent) -> void:
-	if menu in ["fishing_shop","fishing_journal"]:return
+	if menu in ["fishing_shop","fishing_journal","seedhouse_room"]:return
 	if menu in ["dev_desk","workshop"]:return
 	if menu in catalog_ui.MENUS:
 		catalog_ui.key(event);return

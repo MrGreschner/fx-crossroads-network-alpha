@@ -308,7 +308,9 @@ func open_page(which:String)->void:
 func open_hero(id:String)->void:
  journal_hero=id;open_page("mastery")
 func close()->void:
- root.visible=false;page="";game.menu="";game.mobile.reset_controls();save()
+ var room_open=not arcade and is_instance_valid(game.town_services) and is_instance_valid(game.town_services.greenhouse)
+ root.visible=false;page="";game.menu="seedhouse_room" if room_open and game.mode=="town" else "";game.mobile.reset_controls();save()
+ gardening.focused_bed=-1
 func render()->void:
  for child in body.get_children():body.remove_child(child);child.queue_free()
  heading.text="CROSSROADS • "+str(data.name)+(" • GAME DEV" if bool(data.teacher) else "")
@@ -907,7 +909,7 @@ func _process(delta:float)->void:
   var guidance=game.presentation.elder_guide.pending()
   if not guidance.is_empty():game.presentation.elder_guide.begin(guidance)
   else:talk("elder");open_page("elder")
- if game.menu in ["supplies","healer","seedhouse","food","wayfinder"] and game.menu!=last_menu:talk(game.menu)
+ if game.menu in ["supplies","healer","food","wayfinder"] and game.menu!=last_menu:talk(game.menu)
  last_menu=game.menu
  tick+=delta
  if tick>5:tick=0;save()

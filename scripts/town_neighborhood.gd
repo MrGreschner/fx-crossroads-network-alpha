@@ -62,7 +62,7 @@ func draw_on(g:Node2D,camera:Vector2,clock:float)->void:
   if view.has_point(tree):g.draw_sprite("tree",tree-Vector2(48,103),Vector2(96,126))
  if view.intersects(COURT):draw_fountain(g,FOUNTAIN-camera,clock)
 func draw_fountain(g:Node2D,p:Vector2,t:float)->void:
- preload("res://scripts/town_props240.gd").fountain(g,p,t,g.town_life.calendar.night_amount())
+ preload("res://scripts/town_props240.gd").fountain(g,p,t,g.town_life.calendar.night_amount(),preload("res://scripts/town_winter358.gd").SEASON.active(g))
  for side in [-1,1]:
   var bench=p+Vector2(side*108,22);preload("res://scripts/town_streets244.gd").bench(g,bench,56,-21,34)
 

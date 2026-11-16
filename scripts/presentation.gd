@@ -44,7 +44,9 @@ func button(parent:Node,value:String,action:Callable)->Button:
 func close()->void:
  unlock_buttons.clear()
  if is_instance_valid(modal):modal.hide();modal.queue_free();modal=null
- if not arcade and game.menu=="presentation":game.menu=""
+ if not arcade and game.menu=="presentation":
+  var room_open=page=="town_conversation" and is_instance_valid(game.town_services) and is_instance_valid(game.town_services.greenhouse)
+  game.menu="seedhouse_room" if room_open else ""
  page="";game.mobile.reset_controls()
 func window(title:String,kind:String)->void:
  close();page=kind

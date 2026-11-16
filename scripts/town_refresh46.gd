@@ -49,7 +49,7 @@ static func draw(g:Node2D,camera:Vector2)->void:
   for n in 3:g.draw_line(p+Vector2(199+n*6,11),p+Vector2(199+n*6+sway,24+n*3),Color("#d2bd86"),2)
  if view.has_point(FOUNTAIN):
   var p=FOUNTAIN-camera;var t=g.town_life.clock
-  preload("res://scripts/town_props240.gd").fountain(g,p,t,night)
+  preload("res://scripts/town_props240.gd").fountain(g,p,t,night,preload("res://scripts/town_winter358.gd").SEASON.active(g))
  if view.has_point(NOTICE):
   var p=NOTICE-camera
   preload("res://scripts/town_streets244.gd").draw(g,"notice",Rect2(p+Vector2(-46,-92),Vector2(92,108)))

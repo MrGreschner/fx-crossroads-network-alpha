@@ -61,7 +61,7 @@ func aquarium_controls()->bool:
  return is_instance_valid(room) and game.menu=="fishing_shop" and not is_instance_valid(room.dialogue) and not is_instance_valid(game.fishing.journal) and not is_instance_valid(game.fishing.inspector) and not is_instance_valid(game.fishing.workshop)
 
 func active_menu() -> String:
- if aquarium_controls():return ""
+ if aquarium_controls() or not arcade and game.menu=="seedhouse_room":return ""
  if game.adventure.quests.active and game.adventure.quests.journal:return "quest_journal"
  if arcade: return "lobby" if not game.started else str(game.shop_open)
  return str(game.menu)
@@ -137,7 +137,7 @@ func _process(delta: float) -> void:
   if menu_state != "hidden":reset_controls();menu_state = "hidden"
   panel.hide()
   return
- layer=70 if aquarium_controls() else 20
+ layer=70 if aquarium_controls() else 36 if not arcade and game.menu=="seedhouse_room" else 20
  if blocked():
   if menu_state!="blocked":reset_controls();menu_state="blocked"
   panel.visible=false;return

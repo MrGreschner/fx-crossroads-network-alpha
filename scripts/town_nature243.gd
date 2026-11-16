@@ -1,5 +1,7 @@
 extends RefCounted
 ## Shared offline artwork. Trunks, roads, doors, collision and all plant-state logic stay in their owners.
+const Fall=preload("res://scripts/fall_art356.gd")
+const Spring=preload("res://scripts/spring_art357.gd")
 static var sheet:Texture2D
 static var glass:Texture2D
 static var frames:Dictionary={}
@@ -26,7 +28,19 @@ static func texture(id:String)->Texture2D:
  prepare();return frames[id]
 static func draw(g:Node2D,id:String,screen:Rect2,tint:Color=Color.WHITE)->void:
  if not Rect2(Vector2.ZERO,g.VIEW).intersects(screen):return
- g.draw_texture_rect(texture(id),screen,false,tint);plant_draws+=1
+ var art:=texture(id)
+ var atlas=seasonal_atlas(id,g.town_life.calendar.season())
+ if atlas!=null:g.draw_texture_rect_region(atlas,screen,art.region,tint)
+ else:g.draw_texture_rect(art,screen,false,tint)
+ plant_draws+=1
+ var winter=preload("res://scripts/winter_art353.gd")
+ if id in ["shrub","garden_bed","tidekeeper"] and winter.active(g):
+  g.draw_texture_rect(winter.roof("nature:"+id,art),screen,false,tint)
+static func seasonal_atlas(id:String,season:String)->Texture2D:
+ if season=="Fall" and id in Fall.TOWN_PLANTS:return Fall.texture("town_canopies")
+ if season=="Spring" and id in Spring.TOWN_PLANTS:return Spring.texture("town_canopies")
+ return null
+
 static func sway(at:Vector2,clock:float)->float:
  # At most one world pixel, dephased by position; the bottom/root vertices never move.
  return roundf(sin(clock*.68+at.x*.013+at.y*.009))
@@ -37,7 +51,13 @@ static func tree(g:Node2D,id:String,screen:Rect2,at:Vector2)->void:
  var shift=Vector2(sway(at,g.town_life.clock),0)
  # One textured quad, cached UVs, fixed root edge: no extra nodes, shaders or render targets.
  var vertices=PackedVector2Array([r.position+shift,Vector2(r.end.x,r.position.y)+shift,r.end,Vector2(r.position.x,r.end.y)])
- g.draw_polygon(vertices,white,uvs[id],sheet);tree_draws+=1
+ var winter=preload("res://scripts/winter_art353.gd")
+ var season:String=g.town_life.calendar.season()
+ var canopy=seasonal_atlas(id,season)
+ if season=="Winter":canopy=winter.canopy(sheet)
+ if canopy==null:canopy=sheet
+ g.draw_polygon(vertices,white,uvs[id],canopy);tree_draws+=1
+ if season=="Spring" and id in Spring.BLOOM_TREES:Spring.petals(g,id,r,at)
 static func home(g:Node2D,id:String,camera:Vector2)->void:
  prepare();var r=rect_of(specs[id].rect);draw(g,id,Rect2(r.position-camera,r.size))
 static func chimney(id:String)->Vector2:
@@ -63,16 +83,6 @@ static func draw_emission(g:Node2D,camera:Vector2,night:float)->void:
   var p:Vector2=home_spec.door+Vector2(38,-50)
   if view.has_point(p):g.draw_rect(Rect2(p-camera-Vector2(2,4),Vector2(4,8)),Color(1,.81,.46,night*.85))
 static func garden(g:Node2D,camera:Vector2)->void:
- # Repaint only the six existing planted rectangles; crop count and positions stay identical.
- for row in 3:
-  for col in 2:
-   var at=Vector2(805 if col==0 else 962,1840+row*85);var size=Vector2(50 if col==0 else 90,42)
-   if not Rect2(camera,g.VIEW).intersects(Rect2(at,size).grow(2)):continue
-   draw(g,"garden_bed",Rect2(at-camera-Vector2(2,2),size+Vector2(4,4)))
-   for n in (2 if col==0 else 4):
-    var root=at+Vector2(13+n*19,27)
-    draw(g,"garden_blossom" if row==1 else "garden_sprout",Rect2(root-camera-Vector2(9,25),Vector2(18,25)))
- preload("res://scripts/town_streets244.gd").garden_rails(g,camera)
  # Existing tiny western civic planting accents, with their original footprints.
  for n in 9:
   var at=Vector2(-290+n*85,1798)

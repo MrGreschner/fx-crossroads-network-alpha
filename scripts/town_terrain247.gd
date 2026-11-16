@@ -11,7 +11,14 @@ static func png(name:String)->Texture2D:
 static func prepare()->void:
  if regions.is_empty():regions=JSON.parse_string(FileAccess.get_file_as_string(ROOT+"ground.json"))
 static func append(chunk:Node,tx:int,ty:int,local:Vector2,tile:String,g:Node)->void:
- prepare();var image=png("ground");var gx=posmod(tx,4)*64;var gy=posmod(ty,4)*64
+ prepare()
+ var season:String=g.town_life.calendar.season()
+ var image:Texture2D=png("ground")
+ if season=="Winter":image=preload("res://scripts/winter_art353.gd").ground()
+ elif season=="Fall":image=preload("res://scripts/fall_art356.gd").texture("town_ground")
+ elif season=="Spring":image=preload("res://scripts/spring_art357.gd").texture("town_ground")
+ var gx=posmod(tx,4)*64
+ var gy=posmod(ty,4)*64
  chunk.tiles.append([image,Rect2(local,Vector2(64,64)),Rect2(gx,gy,64,64)])
  if tile!="path":return
  var mask=0;var offsets=[Vector2i(0,-1),Vector2i(1,0),Vector2i(0,1),Vector2i(-1,0)]

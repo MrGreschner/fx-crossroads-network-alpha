@@ -1,12 +1,14 @@
 extends Node2D
 ## Three existing water shapes. All geometry/textures prepared once; redraw at 8 Hz.
 const T=preload("res://scripts/town_terrain247.gd")
+const WINTER=preload("res://scripts/town_winter358.gd")
 var game:Node2D
 var time=0.0
 var frame=-1
 var phase_for_test=-1
 var updates=0
 var last_view=Rect2()
+var frozen=false
 static var ripples:Array=[]
 var pond=PackedVector2Array()
 var pond_uv=PackedVector2Array()
@@ -26,7 +28,11 @@ func _ready():
 func sync():
  visible=game.mode=="town" and not game.practice and game.session_menu.page not in ["main","options","clear"]
  var view=Rect2(game.camera,game.VIEW)
- if view!=last_view:last_view=view;queue_redraw()
+ var winter=WINTER.SEASON.active(game)
+ if view!=last_view or frozen!=winter:
+  last_view=view
+  frozen=winter
+  queue_redraw()
  position=game.media.offset()-game.camera*game.media.factor();scale=Vector2.ONE*game.media.factor()
 func _process(dt:float):
  sync()
@@ -40,7 +46,12 @@ func _draw():
  for r in [Rect2(2280,-560,160,2850),Rect2(2280,2660,160,240)]:
   if view.intersects(r):
    draw_texture_rect(base,r,true);draw_texture_rect(ripple,r,true)
+   if frozen:draw_texture_rect(WINTER.texture("ice"),r,true,Color("#b1c6cc"))
  if view.intersects(Rect2(-20,225,445,280)):
-  draw_polygon(pond,white,pond_uv,base);draw_polygon(pond,white,pond_uv,ripple)
+  if frozen:WINTER.draw_pond(self,pond,pond_uv)
+  else:
+   draw_polygon(pond,white,pond_uv,base);draw_polygon(pond,white,pond_uv,ripple)
  if view.intersects(Rect2(1630,2260,810,440)):
-  draw_polygon(marina,white,marina_uv,base);draw_polygon(marina,white,marina_uv,ripple)
+  if frozen:draw_polygon(marina,white,marina_uv,WINTER.texture("ice"))
+  else:
+   draw_polygon(marina,white,marina_uv,base);draw_polygon(marina,white,marina_uv,ripple)

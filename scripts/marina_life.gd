@@ -72,7 +72,7 @@ func render()->void:
  panel=PanelContainer.new();UI.apply(panel);layer.add_child(panel)
  var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;panel.add_child(scroll);var col=VBoxContainer.new();col.size_flags_horizontal=Control.SIZE_EXPAND_FILL;col.add_theme_constant_override("separation",10);scroll.add_child(col)
  var head=HBoxContainer.new();col.add_child(head);game.fishing.label(head,"BRIN & LIO'S • EXOTIC BAIT",22);var close_button=game.fishing.button(head,"Close",close);close_button.size_flags_horizontal=0;close_button.custom_minimum_size.x=90
- game.fishing.label(col,"Three specialist supplies rotate at Edmonton midnight. Day and night shifts keep the stand open. Same prices and unlocks as the Angler's Workshop.",15)
+ game.fishing.label(col,"Three specialist supplies rotate at midnight on the Crossroads clock. Day and night shifts keep the stand open. Same prices and unlocks as the Angler's Workshop.",15)
  game.fishing.label(col,"Glimmers: %d • Fishing level %d" % [game.legacy.glimmers.balance(),game.legacy.fishing_records.progress.level()],17)
  if not notice.is_empty():game.fishing.label(col,notice,15)
  for id in daily_stock(shown_day):

@@ -28,10 +28,17 @@ func setup(owner:Node,multi:bool=false)->void:
 func save()->void:
  preload("res://scripts/profile_store.gd").write(SAVE,{"food":packed,"crop":crop,"paid":paid,"garden_id":garden_id,"harvests":harvests,"parcels":parcels})
 func name_of(id:String)->String:return str(defs.get(id,{}).get("name","Empty"))
+func price(id:String)->int:
+ var cost=int(defs[id].cost)
+ return game.legacy.discount(cost) if game.get("legacy")!=null else cost
 func buy(id:String)->bool:
- if arcade or not defs.has(id) or not bool(defs[id].get("shop",true)):return false
+ if arcade or not defs.has(id):return false
+ if id=="hot_chocolate":
+  var winter=preload("res://scripts/town_winter358.gd")
+  if game.mode!="town" or not winter.SEASON.active(game) or game.position_in_world.distance_to(winter.COCOA)>70:return false
+ elif not bool(defs[id].get("shop",true)):return false
  if not packed.is_empty():game.message="Your food slot is full. Refund it before choosing another.";game.message_time=4;return false
- var cost:int=game.legacy.discount(int(defs[id].cost)) if game.get("legacy")!=null else int(defs[id].cost)
+ var cost=price(id)
  if game.gold<cost:game.message="Not enough CC for "+name_of(id)+".";game.message_time=3;return false
  game.gold-=cost;paid=cost;packed=id;save();game.message="Packed "+name_of(id)+" • it will be used automatically.";game.message_time=4;return true
 func refund()->void:
@@ -87,12 +94,20 @@ func check_auto(id:String="solo",status_event:bool=false)->bool:
   if id==game.my_id:packed="";save()
  else:packed="";save()
  if str(food.effect)=="heal":
+  var amount=maximum*float(food.max_health_fraction) if food.has("max_health_fraction") else float(food.get("amount",0))
   if arcade:
-   game._heal(id,id,int(food.amount),false)
+   game._heal(id,id,maxi(1,roundi(amount)),false)
    if game.get("expedition")!=null and game.expedition.special():game.expedition.relics.food(id)
   else:
-   game.health=minf(maximum,game.health+float(food.amount)*combat.v98.heal_factor(id))
+   game.health=minf(maximum,game.health+amount*combat.v98.heal_factor(id))
    if game.get("waylight")!=null:game.waylight.combat.food()
+  if food.has("speed_seconds"):
+   if arcade:
+    game.item_haste_scale[id]=float(food.speed_multiplier)
+    game.haste_until[id]=Time.get_ticks_msec()+roundi(1000*float(food.speed_seconds))
+   else:
+    game.haste_multiplier=float(food.speed_multiplier)
+    game.haste_time=float(food.speed_seconds)
  else:
   for kind in food.statuses:
    if combat.statuses.has(key):combat.statuses[key].erase(str(kind))
