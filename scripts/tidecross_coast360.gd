@@ -89,7 +89,7 @@ static func draw_water(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  var liquid=SCENE.intersection(view)
  if not liquid.has_area():return
  var y0=liquid.position.y
- var y1=liquid.end.y
+ var y1=view.end.y
  var x0=SCENE.position.x
  var x1=SCENE.end.x
  var frame=[[x0,y0],[x1,y0],[x1,y1],[x0,y1]]

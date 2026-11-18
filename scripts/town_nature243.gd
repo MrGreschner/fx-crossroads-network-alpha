@@ -96,7 +96,7 @@ static func river_reeds(g:Node2D,camera:Vector2)->void:
    g.draw_circle(at-camera+Vector2(0,5),8,Color("#929e86"))
    tree(g,"reeds",Rect2(at-camera-Vector2(14,36),Vector2(28,38)),at)
 static func ground_cuts()->Array:
- var cuts=[Rect2(-1760,350,560,1085),Rect2(-1228,1040,44,157),Rect2(-988,1040,44,157),Rect2(-1175,1195,245,130),Rect2(848,-220,104,414)]
+ var cuts=[Rect2(2448,935,694,790),Rect2(2544,784,302,81),Rect2(2759,653,83,131),Rect2(2544,865,91,231),Rect2(-1760,350,560,1085),Rect2(-1228,1040,44,157),Rect2(-988,1040,44,157),Rect2(-1175,1195,245,130),Rect2(848,-220,104,414)]
  for row in 3:
   for col in 2:cuts.append(Rect2(Vector2(805 if col==0 else 962,1840+row*85)-Vector2(2,2),Vector2(54 if col==0 else 94,46)))
  for n in 9:cuts.append(Rect2(Vector2(-290+n*85,1798)-Vector2(6,9),Vector2(20,18)))

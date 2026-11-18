@@ -1,6 +1,7 @@
 extends Node
 
 var combat:Node
+var frost=preload("res://scripts/finch_frost367.gd").new()
 var nutcracker=preload("res://scripts/nutcracker350.gd").new()
 var clamps:Dictionary={}
 var immunity:Dictionary={}
@@ -20,9 +21,10 @@ const LAND=.38
 const AIR_TIME=RISE+FLIGHT+LAND
 const BRACE_TIME=5.0
 const ART=preload("res://scripts/event_effects343.gd")
-const STYLES=["jaw_snap","jaw_clamp","jaw_brace","courtbow","flower_standard","dawn_garden","gift_toss","care_parcel","midnight_delivery","antler_sweep","sleigh_charge","flying_reindeer","spear_jab","parade_stance","winter_tree"]
+const STYLES=["jaw_snap","jaw_clamp","jaw_brace","courtbow","flower_standard","dawn_garden","gift_toss","care_parcel","midnight_delivery","antler_sweep","sleigh_charge","flying_reindeer","spear_jab","parade_stance","winter_tree","rime_spear","white_breath","northwind_blizzard"]
 
 func reset()->void:
+ frost.reset()
  nutcracker.reset()
  clamps.clear();immunity.clear();pressure.clear();gifts.clear();momentum.clear();last_position.clear();braces.clear();branches.clear();flights.clear();fields.clear();slides.clear()
 
@@ -87,6 +89,8 @@ func cast(id:String,s:Dictionary,aim:Vector2,damage:float)->bool:
  var reach:=float(s.get("range",90))
  if aim.is_zero_approx():aim=Vector2.RIGHT
  match style:
+  "rime_spear","white_breath","northwind_blizzard":
+   frost.cast(combat,id,s,aim.normalized(),damage)
   "spear_jab":
    if nutcracker.stance.has(id):
     aim=Vector2.from_angle(float(nutcracker.stance[id].angle))
@@ -168,6 +172,11 @@ func cast(id:String,s:Dictionary,aim:Vector2,damage:float)->bool:
  return true
 
 func recast(id:String,kind:String)->bool:
+ if kind=="special" and frost.storms.has(id):
+  var g:Node=combat.adventure.game
+  var target:Vector2=combat.vec(combat.v79.targets[id]) if combat.v79.targets.has(id) else g.aimed_point(frost.STEER_RANGE)
+  frost.steer(id,target)
+  return true
  if kind=="secondary":
   if nutcracker.stance.erase(id):return true
   if release(id):return true
@@ -222,8 +231,10 @@ func step_slides(delta:float)->void:
 func step(delta:float)->void:
  if not combat.playing():
   nutcracker.reset()
+  frost.reset()
   if not clamps.is_empty() or not fields.is_empty() or not flights.is_empty() or not branches.is_empty() or not braces.is_empty() or not slides.is_empty():reset()
   return
+ frost.step(combat,delta)
  nutcracker.step(combat,self,delta)
  step_slides(delta)
  for owner in combat.adventure.points():
@@ -301,8 +312,9 @@ func step(delta:float)->void:
     var foe:Dictionary=combat.actor(key)
     if not foe.is_empty() and p.distance_to(foe.pos)<=float(f.radius):combat.apply_status(key,"slow",.6,id,.72)
 
-func snapshot()->Dictionary:return {"nutcracker":nutcracker.snapshot(),"clamps":clamps,"slides":slides,"flights":flights,"fields":fields,"branches":branches,"braces":braces,"gifts":gifts,"momentum":momentum,"pressure":pressure}
+func snapshot()->Dictionary:return {"frost":frost.snapshot(),"nutcracker":nutcracker.snapshot(),"clamps":clamps,"slides":slides,"flights":flights,"fields":fields,"branches":branches,"braces":braces,"gifts":gifts,"momentum":momentum,"pressure":pressure}
 func receive(data:Dictionary)->void:
+ frost.receive(data.get("frost",{}))
  nutcracker.receive(data.get("nutcracker",{}))
  received_msec=Time.get_ticks_msec()
  clamps=data.get("clamps",{});slides=data.get("slides",{});flights=data.get("flights",{});fields=data.get("fields",[]);branches=data.get("branches",{});braces=data.get("braces",{});gifts=data.get("gifts",{});momentum=data.get("momentum",{});pressure=data.get("pressure",{})
@@ -312,6 +324,7 @@ func display_time(time:float)->float:
  return maxf(0,time-clampf((Time.get_ticks_msec()-received_msec)*.001,0,.10))
 
 func draw_on(canvas:Node2D,camera:Vector2)->void:
+ frost.draw_on(canvas,camera,combat)
  nutcracker.draw_on(canvas,camera,combat)
  for f in fields:
   var p:Vector2=combat.vec(f.pos)-camera
@@ -340,7 +353,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
   if remaining<=1:canvas.draw_arc(p,115,0,TAU,36,Color("#f5d086"),3)
 
 func can_recast(id:String,kind:String)->bool:
- return (kind=="secondary" and (clamps.has(id) or branches.has(id) or nutcracker.stance.has(id))) or (kind=="special" and braces.has(id))
+ return (kind=="secondary" and (clamps.has(id) or branches.has(id) or nutcracker.stance.has(id))) or (kind=="special" and (braces.has(id) or frost.storms.has(id)))
 
 func defence(id:String)->float:
  return 1.0-(.75 if nutcracker.stance.has(id) else 1.0)*(.85 if clamps.has(id) else 1.0)*(.65 if braces.has(id) else 1.0)

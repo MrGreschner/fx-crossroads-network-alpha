@@ -1,5 +1,6 @@
 extends RefCounted
 const Town311=preload("res://scripts/town_layout311.gd")
+const STREETS=preload("res://scripts/town_plan.gd")
 const RIVER=Rect2(2280,-560,160,3460)
 const BRIDGE=Rect2(2250,1090,220,130)
 const HOME_BRIDGE=Rect2(2250,2025,220,110)
@@ -16,7 +17,7 @@ func _init()->void:
    if Rect2(2500,900,150,220).has_point(point):continue
    if CAMP_CLEARING.grow(50).has_point(point):continue
    forest_trees.append(point)
- forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115 and not preload("res://scripts/town_neighborhood.gd").reserved(p))
+ forest_trees=forest_trees.filter(func(p:Vector2):return p.distance_to(Vector2(2495,1340))>115 and not STREETS.reserved(p) and not preload("res://scripts/town_neighborhood.gd").reserved(p))
 func blocked(p:Vector2)->bool:
  if Town311.BATTLE_PAD.has_point(p):
   for wall in Town311.MUSTER_WALLS:
@@ -32,16 +33,6 @@ func blocked(p:Vector2)->bool:
  return false
 func draw_ground_source(c:Node2D,camera:Vector2,draw_cliffs:bool=true)->void:
  var visible:=Rect2(camera-Vector2(100,150),c.VIEW+Vector2(200,300))
- if visible.intersects(FOREST):
-  c.draw_rect(Rect2(FOREST.position-camera,FOREST.size),Color("#526d50"))
-  for n in 25:
-   var stone:=Vector2(2510+posmod(n*73,600),950+posmod(n*131,740))-camera
-   c.draw_circle(stone,2+float(n%3),Color("#81956b"))
-  var trail:=PackedVector2Array([Vector2(2450,1150)-camera,Vector2(2650,1150)-camera,Vector2(2780,1180)-camera,Vector2(2940,1160)-camera,Vector2(3120,1160)-camera])
-  preload("res://scripts/commerce_town.gd").path(c,trail)
-  var camp_trail:=PackedVector2Array([Vector2(2780,1180)-camera,Vector2(2790,1300)-camera,Vector2(2850,1390)-camera])
-  preload("res://scripts/commerce_town.gd").path(c,camp_trail)
-  c.draw_circle(Vector2(2880,1450)-camera,128,Color("#819069"));c.draw_circle(Vector2(2880,1450)-camera,92,Color("#b0a17b"))
  # A single physical river exists before the watermill project is earned.
  if visible.intersects(RIVER.grow(20)):
   for x in [2268,2440]:c.draw_rect(Rect2(Vector2(x,-560)-camera,Vector2(12,RIVER.size.y)),Color("#8b9a7c"))
@@ -53,8 +44,6 @@ func draw_ground_source(c:Node2D,camera:Vector2,draw_cliffs:bool=true)->void:
    for y in [bridge.position.y,bridge.end.y]:
     c.draw_line(Vector2(bridge.position.x,y)-camera,Vector2(bridge.end.x,y)-camera,Color("#e2c995"),6)
     for x in range(int(bridge.position.x),int(bridge.end.x)+1,44):c.draw_line(Vector2(x,y)-camera,Vector2(x,y-24)-camera,Color("#745d46"),5)
-  var chime_path:=PackedVector2Array([Vector2(2590,1150)-camera,Vector2(2590,825)-camera,Vector2(2800,825)-camera,Vector2(2800,655)-camera])
-  preload("res://scripts/commerce_town.gd").path(c,chime_path)
   draw_east_details(c,camera)
  # Western civic district: a clear plaza and individual doorstep branches.
  if visible.intersects(Rect2(-800,420,1400,1780)):
@@ -100,19 +89,6 @@ func draw_guide(c:Node2D,camera:Vector2)->void:
 
 func draw_east_details(c:Node2D,camera:Vector2)->void:
  if not Rect2(camera,c.VIEW).grow(170).intersects(Rect2(2200,300,900,1840)):return
- # Fork plaza: east continues into the woods; the narrower branch serves the bell house.
- var plaza:=Vector2(2590,1150)-camera
- c.draw_circle(plaza,53,Color("#b6a27b"))
- for n in 7:
-  var p:=plaza+Vector2(-42+n*14,-4);c.draw_line(p,p+Vector2(0,10),Color("#c7b58b"),2)
- for n in 14:
-  var p:=Vector2(2620+n*27,1080)-camera
-  c.draw_circle(p,4+float(n%2),Color("#9d967c"))
-  c.draw_circle(p+Vector2(0,152),4,Color("#9d967c"))
- for n in 11:
-  var p:=Vector2(2590+sin(n*2)*9,860+n*23)-camera;c.draw_circle(p,4,Color("#c7b58b"));c.draw_line(p+Vector2(-20,2),p+Vector2(-13,3),Color("#a1906d"),2)
- for n in 6:
-  var p:=Vector2(2640+n*26,825+sin(n)*5)-camera;c.draw_circle(p,4,Color("#c7b58b"))
  # Reeds and small stones hug the banks without spilling across the crossing.
  for y in range(310,2140,145):
   if y>1020 and y<1290:continue
@@ -124,10 +100,6 @@ func draw_east_details(c:Node2D,camera:Vector2)->void:
  c.draw_rect(Rect2(pier-Vector2(13,44),Vector2(26,66)),Color("#7c8879"))
  c.draw_rect(Rect2(pier-Vector2(17,48),Vector2(34,10)),Color("#bbc1a1"))
  for y in [-32,-15,2]:c.draw_line(pier+Vector2(-11,y),pier+Vector2(11,y),Color("#acb096"),2)
- # Trail-side lanterns mark the two destinations without obstructing either lane.
- for spot in [Vector2(2510,1010)]:
-  var p:Vector2=spot-camera;c.draw_rect(Rect2(p,Vector2(52,10)),Color("#a28662"));c.draw_line(p-Vector2(0,8),p+Vector2(52,-8),Color("#ba9e75"),4)
-  for x in [7,45]:c.draw_line(p+Vector2(x,10),p+Vector2(x,19),Color("#6b6150"),3)
 func draw_forest(c:Node2D,camera:Vector2)->void:
  var visible:=Rect2(camera-Vector2(80,160),c.VIEW+Vector2(160,320))
  if not visible.intersects(FOREST):return

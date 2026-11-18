@@ -524,6 +524,9 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
  var custom_before=g.adventure.combat.projectiles.size()
  var born:Array=[]
  var before=g.missiles.size();var style=str(data.get("style","primary"));var previous=int(g.cooldown_at.get(id,{}).get(style,0))
+ var old_storm_target:Variant=null
+ if str(data.type)=="attack" and style=="special":
+  old_storm_target=g.adventure.combat.events.frost.storms.get(id,{}).get("target")
  var dodge_before=int(g.dodge_at.get(id,0))
  g.set_meta("fx_action_seq",int(data.seq));g.set_meta("fx_shot_index",0)
  # Rewind targets for ordinary instant melee only. Projectile simulation stays in the present.
@@ -541,7 +544,8 @@ func execute_action(g:Node,id:String,data:Dictionary)->void:
   var shot:Dictionary=g.adventure.combat.projectiles[n]
   if str(shot.get("owner",""))==id:born.append(int(shot.get("shot_index",0)))
  var after=int(g.cooldown_at.get(id,{}).get(style,0))
- var accepted=after>previous or not born.is_empty() or str(data.type)!="attack"
+ var steering=old_storm_target!=null and old_storm_target!=g.adventure.combat.events.frost.storms.get(id,{}).get("target")
+ var accepted=steering or after>previous or not born.is_empty() or str(data.type)!="attack"
  send_actor(id,{"type":"action_ack","seq":int(data.seq),"style":style,"accepted":accepted,"born_indices":born,"tick":g.authority_tick,"reason":"" if accepted else "cooldown_or_state","remaining":maxi(0,after-began),"wait_ms":maxi(0,began-int(data.get("received_ms",began)))})
 func prune_idle(value:Variant)->Variant:
  # Preserve all active hero mechanics, while omitting dormant component containers.

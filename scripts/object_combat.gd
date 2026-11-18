@@ -290,7 +290,7 @@ func speed_factor(key:String)->float:
 	if stunned(key):return 0
 	var factor:=float(statuses.get(key,{}).get("slow",{}).get("value",.55)) if effect_time(key,"slow")>0 else 1.0
 	if key.begins_with("p:") and busy(key.substr(2)) and not classics.channeling(key.substr(2)) and not v110.charging(key.substr(2)):factor*=.85 if twister.charges.has(key.substr(2)) else .65 if casts.any(func(e):return str(e.owner)==key.substr(2) and str(e.style)=="charged_beam") else .45
-	factor*=events.speed_factor(key)
+	factor*=events.speed_factor(key)*events.frost.speed(key)
 	if effect_time(key,"event_haste")>0:factor*=1.2
 	if effect_time(key,"scout_stride")>0:factor*=float(statuses[key].scout_stride.value)
 	if effect_time(key,"rune_stride")>0:factor*=1.3
@@ -813,6 +813,11 @@ func step_projectiles(delta:float)->void:
 		if str(shot["style"])=="rolling_snow":
 			for offset in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
 				if not path_clear(start+offset*float(shot["radius"]),end+offset*float(shot["radius"])):blocked=true
+		if shot.style=="rime_spear":
+			if not blocked:events.frost.spear_hits(self,shot,start,end)
+			if blocked or ratio>=1:projectiles.remove_at(i)
+			else:shot.pos=point_array(end)
+			continue
 		for key in hostile(str(shot["owner"]),(start+end)*.5,start.distance_to(end)*.5+float(shot["radius"])+180):
 			var target:=actor(key)
 			if not target.is_empty() and not (shot.get("hits",[]) as Array).has(key) and projectile_near(start,end,key,target["pos"],float(shot["radius"])+v110.target_radius(key,float(target.get("npc",{}).get("hit_radius",18)))):impact=key;break

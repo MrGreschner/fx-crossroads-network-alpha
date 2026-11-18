@@ -1,0 +1,49 @@
+{
+  "id": "finch_frost",
+  "sprite": "finch_frost",
+  "name": "Finch Frost",
+  "max_health": 108,
+  "speed": 232,
+  "lore": "A blue frost creature who carries messages across the winter wilds and reads storms by the sound of snow on his scarf.",
+  "run_cost": 0,
+  "role": "Ranged / Control",
+  "passive": "Deep Winter: Ice attacks build Chill and progressively slow enemies. At full Chill, freeze them solid. Frozen enemies still take damage and gain a brief immunity to Chill after thawing.",
+  "passive_effect": "deep_winter",
+  "mastery": {},
+  "event": "Winter Holiday",
+  "event_active": true,
+  "primary": {
+    "name": "Rime Spear",
+    "style": "rime_spear",
+    "damage": 18,
+    "cooldown": 0.85,
+    "range": 520,
+    "description": "Throw one piercing ice spear. Each enemy hit takes damage and gains Chill.",
+    "ui_brief": "Throw one piercing ice spear. Each enemy hit takes damage and gains Chill.",
+    "speed": 570,
+    "projectile_radius": 7,
+    "ice_visual": "spear",
+    "color": "#a4e9ff"
+  },
+  "secondary": {
+    "name": "White Breath",
+    "style": "white_breath",
+    "damage": 4,
+    "cooldown": 9,
+    "range": 215,
+    "description": "Breathe frost in a cone for 2 seconds. The beam deals damage and builds Chill every quarter second.",
+    "ui_brief": "Breathe frost in a cone for 2 seconds. The beam deals damage and builds Chill every quarter second.",
+    "duration": 2
+  },
+  "special": {
+    "name": "Northwind Blizzard",
+    "style": "northwind_blizzard",
+    "damage": 4,
+    "cooldown": 50,
+    "range": 520,
+    "description": "Cast a wide snowstorm for 22 seconds. It hurts and chills enemies inside. Press Special again while aiming to steer it without refreshing its duration.",
+    "ui_brief": "Cast a wide snowstorm for 22 seconds. It hurts and chills enemies inside. Press Special again while aiming to steer it without refreshing its duration.",
+    "duration": 22,
+    "radius": 150
+  }
+}

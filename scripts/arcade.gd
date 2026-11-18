@@ -1301,6 +1301,7 @@ func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.Z
 		if str(items.get(str(carried_id),{}).get("effect","")) == "cooldown": delay *= 1.0-float(items[str(carried_id)].get("amount",0))/100.0
 	if mode=="descent":delay*=descent.cooldown(id)
 	delay=adventure.combat.v90.pistol_delay(id,stats,delay)
+	if str(stats.get("style",""))=="northwind_blizzard":delay=maxf(45.0,delay)
 	cd[kind] = now + int(1000.0*delay);cooldown_at[id] = cd;attack_pose_until[id] = now+240
 	core_art.record(id,kind,str(hero_ids.get(id,"ram")),delay)
 	var style := str(stats.get("style","melee"))

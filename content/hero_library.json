@@ -971,5 +971,12 @@
     "home_realm": "",
     "summary": "The winter courier’s lead reindeer knows how to find a safe path through the thickest storm.",
     "lore": "The winter courier’s lead reindeer knows how to find a safe path through the thickest storm."
+  },
+  "finch_frost": {
+    "role": "Ranged / Control",
+    "difficulty": "Intermediate",
+    "summary": "A winter courier who learned to read storms by the sound of snow on his scarf.",
+    "lore": "A winter courier who learned to read storms by the sound of snow on his scarf.",
+    "passive_brief": "At full Chill, enemies freeze briefly and can still take damage."
   }
 }

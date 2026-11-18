@@ -18,8 +18,12 @@ static func light_sources(g:Node2D)->Array:
  lights.append({"at":preload("res://scripts/town_props240.gd").REST_FOUNTAIN-Vector2(0,20),"radius":125.0,"strength":.85})
  for at in TORCHES:lights.append({"at":at-Vector2(0,26),"radius":185.0,"strength":1.1})
  var shore=preload("res://scripts/tidecross359.gd")
- for at in shore.PORT_LAMPS+shore.COVE_LAMPS:
+ for at in shore.PORT_LAMPS:
   lights.append({"at":at-Vector2(0,55),"radius":145.0,"strength":.95})
+ if shore.is_cove(g.position_in_world):
+  var clock:float=g.town_life.clock
+  lights.append({"at":shore.BAY.CAMP-Vector2(0,7),"radius":150.0,"strength":.94+.05*sin(clock*5)})
+  lights.append({"at":shore.BAY.OIL_LANTERN-Vector2(0,11),"radius":76.0,"strength":.77+.04*sin(clock*7)})
  lights.append_array(preload("res://scripts/town_landmarks241.gd").light_sources())
  lights.append_array(preload("res://scripts/town_shops242.gd").light_sources(g))
  return lights

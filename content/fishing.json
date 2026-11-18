@@ -4496,15 +4496,15 @@
       "habitat_region": "voyage_coast"
     },
     "oldwater_shore": {
-      "name": "Oldwater Cove • Shore Dock",
+      "name": "Oldwater Bay • Shore Dock",
       "region": "town",
       "bank": [
-        2985,
-        -2068
+        2903,
+        -2111
       ],
       "water": [
-        2910,
-        -2073
+        2824,
+        -2114
       ],
       "fish": [
         "v20_birchfin_dace",

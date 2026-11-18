@@ -173,6 +173,17 @@ func _process(delta:float)->void:
  if playable() and not spot.is_empty() and not (not multi and game.get("voyage")!=null and game.voyage.active):records().discover_pool(str(spot.id))
  panel.visible=playable() and (not spot.is_empty() or busy()) and not is_instance_valid(journal)
  var view=game.get_viewport_rect().size;var dims=panel.get_combined_minimum_size().max(Vector2(360,0));var fit=minf(1,minf((view.x-24)/dims.x,(view.y-24)/maxf(1,dims.y)));panel.size=dims;panel.scale=Vector2.ONE*fit;panel.position=Vector2((view.x-dims.x*fit)*.5,view.y-dims.y*fit-12)
+ var active_spot=cast_spot if busy() else spot
+ if not multi and active_spot.get("id","")=="tidecross_saltwater":
+  var float_pos=Vector2(float(active_spot.water[0]),float(active_spot.water[1]))-game.camera
+  if view.x>=680:
+   var hero_x=local_pos().x-game.camera.x
+   var target_x=(hero_x+float_pos.x)*.5
+   panel.position.x=12 if target_x>=view.x*.5 else view.x-dims.x*fit-12
+  else:
+   fit=minf(fit,.78)
+   panel.scale=Vector2.ONE*fit
+   panel.position=Vector2((view.x-dims.x*fit)*.5,minf(110,maxf(12,view.y-dims.y*fit-12)))
  if not panel.visible:return
  var unlocked=bool(records().state().rod)
  method_picker.select(["rod","net","pot"].find(str(records().state().method)))

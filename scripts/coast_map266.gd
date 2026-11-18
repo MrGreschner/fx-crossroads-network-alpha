@@ -7,8 +7,10 @@ var landings:Array[Vector2]=[]
 var solids:Array=[]
 var grid:AStarGrid2D
 var routes:Dictionary={}
+var cell_paths:Dictionary={}
+var astar_queries:int=0
 func reset()->void:
- data.clear();polygons.clear();landings.clear();solids.clear();routes.clear();grid=null
+ data.clear();polygons.clear();landings.clear();solids.clear();routes.clear();cell_paths.clear();astar_queries=0;grid=null
 func setup(source:Node)->void:
  reset();world=source;data=JSON.parse_string(FileAccess.get_file_as_string("res://assets/coast266/layout.json"))
  for shape in data.floors+data.bridges:
@@ -49,7 +51,13 @@ func route(start:Vector2,end:Vector2)->PackedVector2Array:
  if grid==null:return PackedVector2Array()
  var a=nearest(cell(start));var b=nearest(cell(end))
  if not grid.is_in_boundsv(a) or not grid.is_in_boundsv(b) or grid.is_point_solid(a) or grid.is_point_solid(b):return PackedVector2Array()
- return grid.get_point_path(a,b)
+ var key=Vector4i(a.x,a.y,b.x,b.y)
+ if cell_paths.has(key):return cell_paths[key]
+ if cell_paths.size()>=256:cell_paths.erase(cell_paths.keys()[0])
+ var path=grid.get_point_path(a,b)
+ astar_queries+=1
+ cell_paths[key]=path
+ return path
 func direction(enemy:Dictionary,target:Vector2,ranged:bool)->Vector2:
  if world.combat.path_clear(enemy.pos,target):return world.combat.ranged_direction(enemy,target) if ranged else (target-(enemy.pos as Vector2)).normalized()
  var key=str(enemy.uid);var item:Dictionary=routes.get(key,{})

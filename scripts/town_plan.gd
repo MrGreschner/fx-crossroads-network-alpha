@@ -2,7 +2,19 @@ extends RefCounted
 const Town311=preload("res://scripts/town_layout311.gd")
 ## One street graph: civic square, service street, creative campus and southern walk.
 ## Each building has a short doorstep spur; no roads cross a river except the bridge.
+const BAY_TRAILHEAD=Vector2(2528,-320)
+const HARBOUR_TRAILHEAD=Vector2(1580,2740)
+const BAY_TRAIL=[Vector2(2800,655),Vector2(2800,736),Vector2(2752,760),Vector2(2585,760),Vector2(2508,724),Vector2(2508,510),Vector2(2532,330),Vector2(2528,82),Vector2(2548,-91),BAY_TRAILHEAD]
+const HARBOUR_TRAIL=[Vector2(1580,2660),HARBOUR_TRAILHEAD,Vector2(1575,2825),Vector2(1530,2910),Vector2(1480,2957)]
+const WOODS_TRAIL=[Vector2(2450,1150),Vector2(2590,1150),Vector2(2740,1165),Vector2(2940,1160),Vector2(3120,1160),Vector2(3210,1150),Vector2(3295,1125)]
+const CAMPSITE_TRAIL=[Vector2(2784,1165),Vector2(2784,1290),Vector2(2825,1380),Vector2(2880,1430)]
+const CAMPSITE_GROUND=[Vector2(2820,1328),Vector2(2945,1328),Vector2(3006,1392),Vector2(3010,1500),Vector2(2950,1550),Vector2(2820,1550),Vector2(2756,1500),Vector2(2756,1392)]
 const ROADS=[
+ WOODS_TRAIL,
+ CAMPSITE_TRAIL,
+ BAY_TRAIL,
+ [Vector2(2590,1150),Vector2(2590,760)],
+ HARBOUR_TRAIL,
  [Vector2(-815,825),Vector2(-815,870),Vector2(-850,870),Vector2(-850,900)],
  [Vector2(1240,2152),Vector2(1130,2152),Vector2(1130,2380),Vector2(1580,2380),Vector2(1610,2300),Vector2(1650,2300)],
  [Vector2(1405,2660),Vector2(1580,2660),Vector2(1580,2380)],
@@ -67,6 +79,7 @@ func apply(g:Node)->void:
    var polygon=PackedVector2Array()
    for n in 12:polygon.append(point+Vector2.from_angle(n*TAU/12)*38)
    g.ground_patches.append({"polygon":polygon,"tile":"path"})
+ g.ground_patches.append({"polygon":PackedVector2Array(CAMPSITE_GROUND),"tile":"path"})
  # Compact central gathering square leaves room for the well and hall entrance.
  var civic=PackedVector2Array([Vector2(680,565),Vector2(1100,565),Vector2(1100,625),Vector2(1200,625),Vector2(1200,810),Vector2(1165,845),Vector2(680,845),Vector2(640,810),Vector2(640,625),Vector2(680,625)])
  g.ground_patches.append({"polygon":civic,"tile":"path"})

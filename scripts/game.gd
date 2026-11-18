@@ -483,7 +483,15 @@ func region_size() -> Vector2:
 
 func update_camera() -> void:
 	if mistglass_rift!=null and mistglass_rift.active and not (lodges!=null and lodges.active):camera=Vector2.ZERO;return
-	var effective=VIEW/media.factor();camera = (position_in_world+media.framing - effective * 0.5).clamp(Vector2(-1400,Tidecross.COVE.position.y) if mode=="town" else Vector2.ZERO, (region_size() - effective).max(Vector2.ZERO))
+	var effective=VIEW/media.factor()
+	var target=position_in_world+media.framing-effective*.5
+	var lower=Vector2.ZERO
+	var upper=(region_size()-effective).max(Vector2.ZERO)
+	if mode=="town":
+		var span=Tidecross.camera_span(position_in_world)
+		lower=Vector2(-1400,span.x)
+		upper.y=maxf(span.x,span.y-effective.y)
+	camera=target.clamp(lower,upper)
 
 func load_realm_layout() -> bool:
 	var scene_path := str(region.get("scene", ""))
@@ -792,6 +800,21 @@ func finish_run(won: bool, abandoned:bool=false) -> void:
 	menu = "results"
 	presentation.results(won,abandoned)
 
+const TOWN_MODAL_REDRAW_SECONDS=1.0/12.0
+var town_modal_redraw_left=0.0
+var last_town_modal=""
+func should_redraw_town_modal(delta:float,resized:bool)->bool:
+	var key=menu+"|"+str(presentation.page)+"|"+str(session_menu.page)
+	town_modal_redraw_left-=delta
+	if resized or key!=last_town_modal:
+		last_town_modal=key
+		town_modal_redraw_left=TOWN_MODAL_REDRAW_SECONDS
+		return true
+	if town_modal_redraw_left<=0.0:
+		town_modal_redraw_left=maxf(0.0,town_modal_redraw_left+TOWN_MODAL_REDRAW_SECONDS)
+		return true
+	return false
+
 func _process(delta: float) -> void:
 	if mode in ["town","run"] and menu.is_empty() and legacy!=null and not practice and session_menu.page.is_empty() and presentation.page.is_empty() and not tutorial.active:
 		if mode=="town" and preload("res://scripts/community_records.gd").interact(self) and Input.is_action_just_pressed("interact"):return
@@ -857,8 +880,9 @@ func _process(delta: float) -> void:
 		else:
 			floating_text[text_index] = notice
 	if menu != "":
-		queue_redraw()
+		if mode!="town" or menu not in ["characters","presentation","session"] or not message.is_empty() and message_time>0 or should_redraw_town_modal(delta,resized):queue_redraw()
 		return
+	last_town_modal=""
 	if mode == "run" and adventure.combat.v90.pending_rebirth("solo"):
 		run_time+=delta;adventure.step(delta*dev_magic.world_scale());queue_redraw();return
 	if mode == "run":
@@ -1276,6 +1300,10 @@ func pulse() -> void:
 	if adventure.combat.held_cast.suppressed("solo","special"):return
 	if adventure.combat.v90.pending_rebirth("solo"):return
 	if adventure.combat.busy("solo") or adventure.combat.stunned("p:solo"):return
+	if adventure.combat.events.frost.storms.has("solo"):
+		adventure.combat.v79.prepare("solo",hero.special,aim_direction(),aimed_point(adventure.combat.events.frost.STEER_RANGE))
+		adventure.combat.events.recast("solo","special")
+		return
 	if adventure.combat.events.recast("solo","special"):return
 	if float(cooldowns["special"]) > 0.0:
 		return
@@ -1287,6 +1315,7 @@ func pulse() -> void:
 	if not adventure.combat.pact.prepare("solo",stats,aim_direction(),aimed_point(float(stats.get("range",650)))):
 		message="Aim at a visible non-boss enemy for Change of Heart.";message_time=3;return
 	cooldowns["special"] = float(stats.get("cooldown", 7.0)) * (0.7 if mastery == "special" else 1.0)
+	if str(stats.get("style",""))=="northwind_blizzard":cooldowns["special"]=maxf(45.0,float(cooldowns.special))
 	core_art.record("solo","special",character_id)
 	pulse_time = 0.28
 	pulse_position = position_in_world
@@ -1879,7 +1908,6 @@ func draw_world() -> void:
 		preload("res://scripts/town_art246.gd").ground(self,camera)
 		town_life.calendar.draw_puddles(self,camera)
 		preload("res://scripts/town_art246.gd").cliffs(self,camera)
-		Tidecross.draw_routes(self,camera)
 		town_chapter.draw_ground_details(self,camera)
 	if not retained_props and not oath_art and not first_art and not training_art and not (mode=="run" and region_id in ["clockwork_orchard","space","zombie","astral_rift"]):
 		for decoration in decorations:

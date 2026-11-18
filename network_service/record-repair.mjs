@@ -71,7 +71,23 @@ export function matchingCopies(rows,selected){
  return out;
 }
 export function createRecordRepair({pool,accounts,admin=()=>false,invalidate=()=>{}}){
- let ready=false;const initialized=(async()=>{if(!pool)return;await accounts.initialized;await pool.query(repairSchema);ready=true;})();
+ let ready=false;
+ let retryAt=0;
+ let initialization=null;
+ function initialize(){
+  if(initialization)return initialization;
+  if(!pool||ready||Date.now()<retryAt)return Promise.resolve();
+  initialization=Promise.resolve().then(async()=>{
+   await accounts.initialized;
+   await pool.query(repairSchema);
+   ready=true;
+  }).catch(error=>{
+   retryAt=Date.now()+30000;
+   console.error('Crossroads record repair: database initialization unavailable ('+(error.code||'unknown')+')');
+  }).finally(()=>{initialization=null;});
+  return initialization;
+ }
+ const initialized=initialize();
  const send=(res,status,data)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(data));};
  const fail=(status,message)=>{throw Object.assign(Error(message),{status});};
  async function body(req){let n=0,chunks=[];for await(const c of req){n+=c.length;if(n>32768)fail(413,'Request too large');chunks.push(c);}return JSON.parse(Buffer.concat(chunks));}
@@ -82,7 +98,8 @@ export function createRecordRepair({pool,accounts,admin=()=>false,invalidate=()=
    if(req.method==='POST'&&req.headers.origin&&new URL(req.headers.origin).host!==req.headers.host)fail(403,'Origin rejected');
    if(u.pathname==='/records/admin'&&req.method==='GET'){res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store','content-security-policy':"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-ancestors 'none'"});res.end(await readFile(new URL('./record-repair.html',import.meta.url)));return true;}
    if(u.pathname==='/records/admin/ui.js'&&req.method==='GET'){res.writeHead(200,{'content-type':'text/javascript; charset=utf-8','cache-control':'no-store'});res.end(await readFile(new URL('./record-repair-ui.js',import.meta.url)));return true;}
-   if(!ready)fail(503,'Record repair is unavailable; deploy the complete server update first.');
+   if(!ready)await initialize();
+   if(!ready)fail(503,'Record repair is unavailable while the database connection is down.');
    if(u.pathname==='/records/admin/preview'&&req.method==='GET'){
     const name=(u.searchParams.get('username')||'').toLowerCase();if(!/^[a-z0-9_]{1,20}$/.test(name))fail(400,'Enter the exact username');
     const a=(await pool.query('SELECT id FROM crossroads_accounts WHERE username_key=$1',[name])).rows[0];if(!a)fail(404,'User not found');

@@ -155,10 +155,16 @@ const PIER_HINT="E • Marina departures"
 func pier_interact()->bool:
  # Give fishing exclusive use of the dock controls near a fishing hole or during a cast.
  if game.fishing!=null and (game.fishing.busy() or not game.fishing.nearest().is_empty()):return false
- if game.position_in_world.distance_to(PIER)>150 and not preload("res://scripts/town_marina.gd").on_deck(game.position_in_world):return false
+ if not HARBOUR.at_town_marina(game.position_in_world):return false
  game.hint="E • Marina timetable • ferries paused" if HARBOUR.winter(game) else PIER_HINT
  if Input.is_action_just_pressed("interact"):open_menu("pier")
  return true
+func take_ferry(destination:Vector2)->void:
+ close_menu()
+ if HARBOUR.ferry(game,destination):return
+ game.message="River ferries are paused for winter." if HARBOUR.winter(game) else "Head to the Crossroads Marina dock to board the ferry."
+ game.message_time=5
+
 func purchase()->void:
  if game.mode!="town" or records().state().get("deep_sea_rod",false):return
  if not game.legacy.glimmers.debit(PRICE):game.message="You need 1,200 Glimmers for the permanent Deep Sea Rod.";game.message_time=5;return
@@ -177,7 +183,7 @@ func launch(destination:String,resume:bool=false)->void:
  if not resume and destination=="lake":
   if HARBOUR.winter(game):return
   if HARBOUR.is_cove(game.position_in_world) and game.position_in_world.distance_to(HARBOUR.BAY.BERTH)>85:return
- if not resume and destination=="coast" and game.position_in_world.distance_to(HARBOUR.SEA_PIER)>90:return
+ if not resume and destination=="coast" and not HARBOUR.at_sea_departure(game.position_in_world):return
  if destination=="coast" and not records().state().get("deep_sea_rod",false):return
  var previous:Dictionary=records().state().get("voyage",{}).duplicate(true)
  if resume and not valid_state(previous):return
@@ -483,20 +489,21 @@ func open_menu(kind:String)->void:
    if not saved.is_empty():records().state().erase("voyage");records().save();f.label(col,"The previous unfinished voyage ended. Unbanked rewards were not kept.",15)
    f.label(col,"Cargo %d • Ripple & Reel storage space %d. Sell kept fish before departing if your storage is full." % [capacity(),maxi(0,records().storage_capacity()-records().storage_count())],15)
    if coastal:
+    f.label(col,"Harbourmaster Nell • I can get you outfitted for the open sea. Sea expeditions leave from the west pier.",18)
     var coast=UI.card(col,"TIDECROSS • COASTAL WATERS","Sea voyages launch and return at this berth. The saltwater harbour stays open year-round.")
     if records().state().get("deep_sea_rod",false):f.button(coast,"Launch coastal voyage",func():launch("coast"))
     else:f.button(coast,"Buy Deep Sea Rod • 1,200 Glimmers",purchase)
    elif HARBOUR.winter(game):
-    f.label(col,"River ferries and lake boat departures are paused for winter. Walk south to Tidecross Harbour for sea voyages, or take the trail north of the Gatherers’ Lodge to fish on Oldwater Cove’s ice.",18)
+    f.label(col,"River ferries and lake boat departures are paused for winter. Use the south trail waypoint to reach Tidecross Harbour for sea voyages. The riverside trail by the Gatherers’ Lodge leads to the Oldwater Bay waypoint and ice fishing.",18)
    elif cove:
     var dock=UI.card(col,"OLDWATER BAY • OUTBACK DOCK","Sail the lake and return here to land your catches.")
     f.button(dock,"Begin lake adventure",func():launch("lake"))
    else:
     var lake=UI.card(col,"UPSTREAM • OLDWATER LAKE","Sail and fish in the lake, or take a ferry to the walking shore.")
     f.button(lake,"Launch lake voyage",func():launch("lake"))
-    f.button(lake,"Ferry to Oldwater Cove",func():close_menu();HARBOUR.ferry(game,HARBOUR.COVE_ARRIVAL))
+    f.button(lake,"Ferry to Oldwater Bay",take_ferry.bind(HARBOUR.COVE_ARRIVAL))
     var port=UI.card(col,"DOWNSTREAM • TIDECROSS HARBOUR","Walk or ferry to the port. Sea expeditions launch from its coastal pier.")
-    f.button(port,"Ferry to Tidecross Harbour",func():close_menu();HARBOUR.ferry(game,HARBOUR.PORT_ARRIVAL))
+    f.button(port,"Ferry to Tidecross Harbour",take_ferry.bind(HARBOUR.PORT_ARRIVAL))
   f.label(col,"Town and both voyage routes share the 24-hour Crossroads clock. Town and Oldwater Lake share seasonal weather. Coastal waters have their own forecast. Nights are almost black beyond your boat lantern; it stays aboard when you land. Medium and large ocean swells push the boat, with stronger surf near shore. Steer sideways across a crest; anchoring reduces the push. The ocean is four times its former area. Drifting logs, broken spars and floating cargo can damage the hull; the largest waves push much farther, even against an anchor. Night Island moves to an unpredictable deep-water location each night and is not charted until found. The harbour is sheltered. Storms strengthen currents and slowly damage the hull. Anchoring steadies casts, but storms still matter. Island camps contain repair timber after enemies are cleared. Cages take two active voyage minutes, hold five fish before perks, and must be recovered before returning.",16)
  else:
   f.label(col,"Released at sea: %d • Safe-return XP pool: +%d" % [release_log.size(),pending_xp()],16)

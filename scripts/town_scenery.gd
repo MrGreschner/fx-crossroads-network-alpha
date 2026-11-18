@@ -1,12 +1,18 @@
 extends RefCounted
 const WINTER=preload("res://scripts/town_winter358.gd")
 const Town311=preload("res://scripts/town_layout311.gd")
+const NATURE=preload("res://scripts/town_nature243.gd")
+const STREETS=preload("res://scripts/town_plan.gd")
+const EAST_WOOD=Rect2(2670,-500,1680,2250)
+const SOUTH_WOOD=Rect2(1080,2690,2500,620)
+const LODGE_CLEARING=Rect2(2520,325,505,530)
 const POND=WINTER.POND
 const POND_BENCH=Vector2(345,565)
 const CAMP=Vector2(2890,1450)
 const TOWER=Vector2(1720,420)
 var trees:Array[Vector2]=[]
 var tree_cells:Dictionary={}
+var woodland:Array[Vector2]=[]
 var clock:float=0
 var routes:Array=[
 	[Vector2(800,295),Vector2(800,550),Vector2(790,585),Vector2(420,585),Vector2(300,550),Vector2(160,500)],
@@ -45,7 +51,14 @@ func _init()->void:
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_plan.gd").reserved(p) and not preload("res://scripts/town_atlas307.gd").FOOTPRINT.grow(30).has_point(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/marina_life.gd").reserved(p))
 	trees=trees.filter(func(p:Vector2):return not preload("res://scripts/town_refresh46.gd").reserved(p))
-	for tree in trees:
+	trees=trees.filter(func(p:Vector2):return not EAST_WOOD.has_point(p))
+	plant_woodland(EAST_WOOD,101)
+	plant_woodland(SOUTH_WOOD,203)
+	# The distant bend disappears behind the canopy after the Wayfarer entrance.
+	woodland.append(Vector2(3310,1162))
+	woodland.append(Vector2(3370,1140))
+	woodland.sort_custom(func(a:Vector2,b:Vector2):return a.y<b.y)
+	for tree in trees+woodland:
 		var cell:=Vector2i(floori(tree.x/128),floori(tree.y/128))
 		if not tree_cells.has(cell):tree_cells[cell]=[]
 		tree_cells[cell].append(tree)
@@ -57,6 +70,34 @@ func _init()->void:
 			var duration:float=route[n].distance_to(route[(n+1)%route.size()])/55.0
 			durations.append(duration);cycle+=duration+1.2
 		patrols.append(route);patrol_times.append(durations);patrol_cycles.append(cycle)
+func plant_woodland(bounds:Rect2,seed_value:int)->void:
+	var rng=RandomNumberGenerator.new()
+	rng.seed=seed_value
+	for row in range(0,int(bounds.size.y),83):
+		for col in range(0,int(bounds.size.x),82):
+			var p=bounds.position+Vector2(col+rng.randi_range(0,49),row+rng.randi_range(0,50))
+			if bounds==EAST_WOOD and (LODGE_CLEARING.has_point(p) or (p.x<3090 and p.y>=840)):
+				continue
+			if bounds==SOUTH_WOOD and (p.y<2795 or (p.x>2195 and p.x<2550)):
+				continue
+			if STREETS.reserved(p) or rng.randf()<.13:
+				continue
+			woodland.append(p)
+
+func draw_woodland(c:Node2D,camera:Vector2,view:Rect2)->void:
+	if c.position_in_world.y< -430 or c.position_in_world.y>=2800:
+		return
+	for p in woodland:
+		if not view.has_point(p):
+			continue
+		var variant=posmod(roundi(p.x*11+p.y*17),11)
+		var sizes=Vector2(118+variant*4,146+variant*5)
+		var species="ancient" if variant==4 else "knot_willow" if variant==7 else "pine"
+		var frame=Rect2(p-camera-Vector2(sizes.x*.5,sizes.y-15),sizes)
+		NATURE.tree(c,species,frame,p)
+		if variant%4==0:
+			NATURE.draw(c,"shrub",Rect2(p-camera+Vector2(-29,5),Vector2(34,24)))
+
 func step(delta:float)->void:clock+=delta
 func blocked(point:Vector2,frozen_pond:bool=false)->bool:
 	if not frozen_pond and WINTER.pond_contains(point):return true
@@ -88,6 +129,7 @@ func draw_on(c:CanvasItem,camera:Vector2,font:Font)->void:
 	var visible:Rect2=Rect2(camera,c.get_viewport_rect().size).grow(210)
 	for tree in trees:
 		if visible.has_point(tree):c.draw_sprite("tree",tree-Vector2(55,115),Vector2(110,145))
+	draw_woodland(c,camera,visible)
 	# A planned pond garden sits north of the cliff, with a separate waterside walk.
 	if visible.has_point(POND):
 		preload("res://scripts/town_art39.gd").draw(c,"pond",camera)

@@ -1,13 +1,18 @@
 extends RefCounted
 ## The lake drains south into the same channel that crosses town.
 const BOUNDS=Rect2(1900,-4080,3000,3550)
-const ARRIVAL=Vector2(3260,-2010)
-const FERRY=Vector2(3310,-1920)
-const BERTH=Vector2(3150,-2072)
-const DOCK=Rect2(2944,-2100,290,58)
-const CABIN=Rect2(3370,-2260,182,166)
-const CABIN_DOOR=Vector2(3460,-2080)
-const LAMPS=[Vector2(3240,-2044),Vector2(3330,-1905),Vector2(3430,-2081),Vector2(2970,-2052),Vector2(2885,-1552)]
+const ARRIVAL=Vector2(3445,-2000)
+const TRAIL_EXIT=Vector2(3020,-1170)
+const TRAIL_ARRIVAL=Vector2(3056,-1258)
+const FERRY=Vector2(2635,-1698)
+const FERRY_ARRIVAL=Vector2(2748,-1698)
+const BERTH=Vector2(3090,-2107)
+const DOCK=Rect2(2860,-2140,485,64)
+const FERRY_DOCK=Rect2(2550,-1730,310,64)
+const CABIN=Rect2(3540,-2350,266,214)
+const CABIN_DOOR=Vector2(3673,-2110)
+const CAMP=Vector2(3595,-1940)
+const OIL_LANTERN=Vector2(2878,-2087)
 const BANKS_WEST=[Vector2(1900,-4080),Vector2(1900,-3240),Vector2(1960,-2800),Vector2(2020,-2540),Vector2(2118,-2320),Vector2(2190,-2070),Vector2(2230,-1830),Vector2(2180,-1590),Vector2(2224,-1330),Vector2(2250,-1080),Vector2(2240,-840),Vector2(2280,-530)]
 const BANKS_EAST=[Vector2(4730,-4080),Vector2(4570,-3690),Vector2(4460,-3310),Vector2(4390,-3080),Vector2(4200,-2830),Vector2(4080,-2680),Vector2(3870,-2560),Vector2(3672,-2455),Vector2(3503,-2340),Vector2(3290,-2210),Vector2(3110,-2080),Vector2(2925,-1940),Vector2(2750,-1800),Vector2(2660,-1620),Vector2(2580,-1460),Vector2(2535,-1220),Vector2(2500,-960),Vector2(2475,-700),Vector2(2440,-530)]
 const ICE_EDGE=[Vector2(2211,-1836),Vector2(2275,-1847),Vector2(2350,-1814),Vector2(2430,-1837),Vector2(2505,-1783),Vector2(2588,-1817),Vector2(2670,-1790),Vector2(2763,-1810)]
@@ -21,7 +26,11 @@ const SNOW=[
  [3935,-2840,139,69],[3690,-2620,83,54],[2210,-2230,64,37],[3120,-2900,77,45],
  [2595,-2880,105,62],[3740,-3030,99,57],[2490,-3340,133,62],[3090,-3410,105,70]
 ]
-const ROAD=[Vector2(2760,-532),Vector2(2750,-755),Vector2(2700,-975),Vector2(2725,-1215),Vector2(2785,-1450),Vector2(2890,-1670),Vector2(3040,-1850),Vector2(3260,-2010),Vector2(3460,-2080)]
+const ROAD=[TRAIL_EXIT,Vector2(3072,-1300),Vector2(3060,-1430),Vector2(3115,-1592),Vector2(3165,-1700),Vector2(3287,-1840),ARRIVAL,Vector2(3575,-2050),CABIN_DOOR]
+const DOCK_TRAIL=[ARRIVAL,Vector2(3384,-2050),Vector2(3327,-2108)]
+const FERRY_TRAIL=[Vector2(3165,-1700),Vector2(3040,-1665),Vector2(2909,-1680),Vector2(2844,-1698)]
+const CAMP_TRAIL=[Vector2(3500,-2021),Vector2(3540,-1980),Vector2(3595,-1970)]
+const ROUTES=[ROAD,DOCK_TRAIL,FERRY_TRAIL,CAMP_TRAIL]
 const NATURE=preload("res://scripts/town_nature243.gd")
 const MARINA=preload("res://scripts/marina_art250.gd")
 const COAST=preload("res://scripts/tidecross_coast360.gd")
@@ -32,7 +41,9 @@ static var water_material:CanvasTexture
 static var ice_material:CanvasTexture
 static var snow_material:CanvasTexture
 static var grasses:Dictionary={}
-static var dirt:CanvasTexture
+static var paths:Dictionary={}
+static var trees_ready=false
+static var trunks:Dictionary={}
 static var stones:CanvasTexture
 static var water_shape=PackedVector2Array()
 static var ice_shape=PackedVector2Array()
@@ -77,14 +88,26 @@ static func snow_at(p:Vector2)->bool:
   if ((p-Vector2(patch[0],patch[1]))/Vector2(patch[2],patch[3])).length_squared()<=1.0:return true
  return false
 
+static func on_deck(p:Vector2)->bool:
+ return DOCK.has_point(p) or FERRY_DOCK.has_point(p)
+
 static func grounded(p:Vector2,frozen:bool)->bool:
- if DOCK.has_point(p):return true
- if Rect2(CABIN.position+Vector2(11,72),Vector2(CABIN.size.x-22,81)).has_point(p):return false
+ if on_deck(p):return true
+ if Rect2(CABIN.position+Vector2(15,95),Vector2(CABIN.size.x-30,112)).has_point(p) or p.distance_to(CAMP)<25:return false
+ prepare_forest()
+ var cell=Vector2i(floori(p.x/64),floori(p.y/64))
+ for y in range(cell.y-1,cell.y+2):
+  for x in range(cell.x-1,cell.x+2):
+   for root in trunks.get(Vector2i(x,y),[]):
+    if p.distance_squared_to(root)<168:return false
+ return bare_ground(p,frozen)
+
+static func bare_ground(p:Vector2,frozen:bool)->bool:
  if p.x<bank_x(BANKS_WEST,p.y) or p.x>bank_x(BANKS_EAST,p.y):return true
  return frozen and ice_at(p)
 
 static func slippery(p:Vector2)->bool:
- return not DOCK.has_point(p) and ice_at(p) and not snow_at(p)
+ return not on_deck(p) and ice_at(p) and not snow_at(p)
 
 static func glide(current:Vector2,desired:Vector2,delta:float)->Vector2:
  return current.lerp(desired*1.08,1.0-exp(-delta*(5.8 if not desired.is_zero_approx() else 4.2)))
@@ -104,7 +127,7 @@ static func spot(standard:Dictionary,day:int)->Dictionary:
 
 static func visitor(weekday:int,hour:float)->Vector2:
  if (weekday in [0,3] and hour>=6.0 and hour<10.25) or (weekday==5 and hour>=15.0 and hour<18.5):
-  return Vector2(3010,-2078)
+  return Vector2(2930,-2105)
  return Vector2.INF
 
 static func visitor_spot(weekday:int,hour:float,day:int,winter:bool)->Vector2:
@@ -117,7 +140,7 @@ static func meet(g:Node)->bool:
  var p:Vector2=g.position_in_world
  var clock=g.town_life.calendar
  var winter=COLD.SEASON.active(g)
- if p.distance_to(BERTH)<70:
+ if p.distance_to(BERTH)<58:
   g.hint="Lake voyages resume at thaw" if winter else "E • Begin an Oldwater Lake adventure"
   if not winter and Input.is_action_just_pressed("interact"):g.voyage.open_menu("pier")
   return true
@@ -139,13 +162,16 @@ static func meet(g:Node)->bool:
   return true
  return false
 
-static func decorated_ground(season:String)->Texture2D:
- if grasses.has(season):return grasses[season]
+static func town_ground(season:String)->Texture2D:
  var terrain=preload("res://scripts/town_terrain247.gd").png("ground")
  if season=="Winter":terrain=COLD.SEASON.ground()
  elif season=="Spring":terrain=preload("res://scripts/spring_art357.gd").texture("town_ground")
  elif season=="Fall":terrain=preload("res://scripts/fall_art356.gd").texture("town_ground")
- var bitmap:Image=terrain.get_image().get_region(Rect2i(0,0,256,256))
+ return terrain
+
+static func decorated_ground(season:String)->Texture2D:
+ if grasses.has(season):return grasses[season]
+ var bitmap:Image=town_ground(season).get_image().get_region(Rect2i(0,0,256,256))
  var mat=CanvasTexture.new()
  mat.diffuse_texture=ImageTexture.create_from_image(bitmap)
  mat.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -182,19 +208,18 @@ static func shore(c:Node2D,cam:Vector2,view:Rect2,bank:Array,side:float,winter:b
    var height=26+posmod(n*41,26)
    NATURE.draw(c,"reeds",Rect2(p-cam-Vector2(12,height-7),Vector2(24,height)),Color("#bacacf") if winter else Color.WHITE)
 
-static func draw_trail(c:Node2D,cam:Vector2,view:Rect2,winter:bool)->void:
- var border=Color("#a4a89d") if winter else Color("#be9d76")
- var tread=Color("#c2c4b5") if winter else Color("#ddc5a2")
- var offset=Vector2(25,0)
- var route=PackedVector2Array()
- for p in ROAD:route.append(p-cam)
- c.draw_polyline(route,border,58,true)
- for i in range(1,ROAD.size()):
-  var a:Vector2=ROAD[i-1]
-  var b:Vector2=ROAD[i]
-  if maxf(a.y,b.y)<view.position.y or minf(a.y,b.y)>view.end.y:continue
-  fill(c,PackedVector2Array([a-offset,b-offset,b+offset,a+offset]),cam,dirt,tread,256)
- fill(c,PackedVector2Array([ARRIVAL+Vector2(-33,-7),BERTH+Vector2(0,-21),BERTH+Vector2(0,19),ARRIVAL+Vector2(9,32)]),cam,dirt,tread,256)
+static func draw_trail(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
+ if not paths.has(season):
+  var atlas=town_ground(season).get_image()
+  var mat=CanvasTexture.new()
+  mat.diffuse_texture=ImageTexture.create_from_image(atlas.get_region(Rect2i(468,206,64,64)))
+  mat.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
+  paths[season]=mat
+ var art:Texture2D=paths[season]
+ for route in ROUTES:
+  var stroke=PackedVector2Array(route)
+  for outline in Geometry2D.offset_polyline(stroke,24,Geometry2D.JOIN_ROUND,Geometry2D.END_ROUND):
+   fill(c,outline,cam,art,Color.WHITE,64)
 
 static func draw_ice(c:Node2D,cam:Vector2,view:Rect2)->void:
  fill(c,ice_shape,cam,ice_material,Color("#d1e3e8"),128)
@@ -216,51 +241,132 @@ static func draw_ice(c:Node2D,cam:Vector2,view:Rect2)->void:
    c.draw_polyline(PackedVector2Array([p-cam,p-cam+Vector2(14,-7),p-cam+Vector2(29,-3),p-cam+Vector2(45,-11)]),Color("#83a8b8",.68),1.5)
 
 static func ellipse_clear_tree(rect:Rect2,p:Vector2)->bool:
- if CABIN.grow(48).intersects(rect) or DOCK.grow(30).intersects(rect):return false
- if rect.grow(45).has_point(CABIN_DOOR) or rect.grow(45).has_point(FERRY):return false
- for i in range(1,ROAD.size()):
-  if p.distance_to(Geometry2D.get_closest_point_to_segment(p,ROAD[i-1],ROAD[i]))<64:return false
+ if CABIN.grow(44).intersects(rect) or DOCK.grow(36).intersects(rect) or FERRY_DOCK.grow(33).intersects(rect):return false
+ if rect.grow(44).has_point(CAMP) or rect.grow(85).has_point(TRAIL_EXIT):return false
+ for route in ROUTES:
+  for i in range(1,route.size()):
+   var a:Vector2=route[i-1]
+   var b:Vector2=route[i]
+   if p.distance_to(Geometry2D.get_closest_point_to_segment(p,a,b))<69:return false
+   if Geometry2D.segment_intersects_segment(a,b,rect.position,Vector2(rect.end.x,rect.position.y))!=null:return false
+   if Geometry2D.segment_intersects_segment(a,b,rect.position,Vector2(rect.position.x,rect.end.y))!=null:return false
+   if Geometry2D.segment_intersects_segment(a,b,Vector2(rect.position.x,rect.end.y),rect.end)!=null:return false
+   if Geometry2D.segment_intersects_segment(a,b,Vector2(rect.end.x,rect.position.y),rect.end)!=null:return false
  return true
 
+static func prepare_forest()->void:
+ if trees_ready:return
+ trees_ready=true
+ for row in 43:
+  for col in 37:
+   var n=row*37+col
+   if posmod(n*17,13)<6:continue
+   var p=Vector2(1910+col*81+posmod(n*71,55),-4040+row*82+posmod(n*83,53))
+   if p.y>= -545 or not bare_ground(p,false):continue
+   var size=Vector2(58+posmod(n*29,52),80+posmod(n*47,65))
+   var rect=Rect2(p-Vector2(size.x*.5,size.y-10),size)
+   if not ellipse_clear_tree(rect,p):continue
+   if posmod(n,9)==0:
+    rocks.append(p)
+   else:
+    trees.append([p,rect,["pine","ancient","pine","knot_willow","pine"][n%5]])
+    var cell=Vector2i(floori(p.x/64),floori(p.y/64))
+    if not trunks.has(cell):trunks[cell]=[]
+    trunks[cell].append(p)
+
 static func forest(c:Node2D,cam:Vector2,view:Rect2)->void:
- if trees.is_empty():
-  for row in 43:
-   for col in 37:
-    var n=row*37+col
-    if posmod(n*17,13)<6:continue
-    var p=Vector2(1910+col*81+posmod(n*71,55),-4040+row*82+posmod(n*83,53))
-    if p.y>= -545 or not grounded(p,false):continue
-    var size=Vector2(58+posmod(n*29,52),80+posmod(n*47,65))
-    var rect=Rect2(p-Vector2(size.x*.5,size.y-10),size)
-    if not ellipse_clear_tree(rect,p):continue
-    if posmod(n,9)==0:rocks.append(p)
-    else:trees.append([p,rect,["pine","ancient","pine","knot_willow","pine"][n%5]])
+ prepare_forest()
  for p in rocks:
   if view.has_point(p):COAST.draw_shore_rocks(c,p-cam,Vector2(65,42))
  for tree in trees:
   var r:Rect2=tree[1]
   if view.intersects(r):NATURE.tree(c,tree[2],Rect2(r.position-cam,r.size),tree[0])
 
-static func pier(c:Node2D,cam:Vector2,winter:bool)->void:
- var screen=Rect2(DOCK.position-cam,DOCK.size)
+static func pier(c:Node2D,cam:Vector2,deck:Rect2,boat_pos:Vector2,boat_type:String,winter:bool)->void:
+ var screen=Rect2(deck.position-cam,deck.size)
  c.draw_rect(Rect2(screen.position+Vector2(3,9),screen.size).grow(2),Color("#263f49",.65))
- for p in [Vector2(2951,-2050),Vector2(3052,-2050),Vector2(3155,-2050),Vector2(3226,-2050)]:
-  c.draw_rect(Rect2(p-cam-Vector2(4,12),Vector2(9,28)),Color("#554c3f"))
  var wood=MARINA.texture("dock_wood")
- for x in range(0,int(DOCK.size.x),128):
-  var span=Vector2(minf(128,DOCK.size.x-x),DOCK.size.y)
+ for x in range(0,int(deck.size.x),128):
+  var span=Vector2(minf(128,deck.size.x-x),deck.size.y)
   c.draw_texture_rect_region(wood,Rect2(screen.position+Vector2(x,0),span),Rect2(Vector2.ZERO,span),Color("#c6cccc") if winter else Color.WHITE)
+ for x in range(10,int(deck.size.x),91):
+  var p=screen.position+Vector2(x,deck.size.y-6)
+  c.draw_rect(Rect2(p-Vector2(4,10),Vector2(9,24)),Color("#514438"))
+  c.draw_rect(Rect2(p-Vector2(4,11),Vector2(9,5)),Color("#af9371"))
  if not winter:
-  var bow=Vector2(3035,-2158)-cam+Vector2(0,sin(c.town_life.clock*1.4)*3.0)
-  c.draw_line(bow+Vector2(38,11),Vector2(3092,-2095)-cam,Color("#ad9270"),2)
-  MARINA.boat(c,"launch_blue",bow,Vector2(77,139),1.36)
+  var bow=boat_pos-cam+Vector2(0,sin(c.town_life.clock*1.4)*3.0)
+  c.draw_line(bow+Vector2(35,11),Vector2(boat_pos.x+42,deck.position.y+8)-cam,Color("#ad9270"),2)
+  MARINA.boat(c,boat_type,bow,Vector2(76,135),1.25)
+
+static func cabin(c:Node2D,cam:Vector2,winter:bool)->void:
+ var at=CABIN.position-cam
+ var art=NATURE.texture("cliff_cottage")
+ # Reuse the stone cottage's shingled roof and replace the entire facade with timber courses.
+ c.draw_texture_rect(art,Rect2(at,CABIN.size),false)
+ var top=at+Vector2(24,103)
+ var walls=Rect2(top,Vector2(218,102))
+ c.draw_rect(walls,Color("#4e372c"))
+ for row in 9:
+  var log_pos=top+Vector2(-3,row*11)
+  var shade=Color("#8e6346").lerp(Color("#73513d"),float(row%4)/5)
+  c.draw_rect(Rect2(log_pos,Vector2(225,10)),shade)
+  c.draw_rect(Rect2(log_pos+Vector2(2,1),Vector2(219,2)),shade.lightened(.19))
+  c.draw_rect(Rect2(log_pos+Vector2(1,8),Vector2(224,2)),shade.darkened(.35))
+  for n in 6:
+   var p=log_pos+Vector2(13+posmod(n*39+row*17,192),3+posmod(n+row,4))
+   c.draw_line(p,p+Vector2(7+posmod(row*n,15),0),shade.darkened(.22),1)
+  for x in [1,220]:
+   c.draw_circle(log_pos+Vector2(x,5),5,shade.lightened(.26))
+   c.draw_circle(log_pos+Vector2(x,5),2,shade.darkened(.11))
+ var door=Rect2(at+Vector2(108,139),Vector2(50,66))
+ c.draw_rect(door.grow(4),Color("#43342b"))
+ c.draw_rect(door,Color("#705145"))
+ for x in range(8,49,9):
+  c.draw_line(door.position+Vector2(x,2),door.position+Vector2(x,65),Color("#493631"),1)
+ c.draw_circle(door.position+Vector2(39,35),3,Color("#d5ae69"))
+ for x in [48,175]:
+  var pane=Rect2(at+Vector2(x,129),Vector2(41,32))
+  c.draw_rect(pane.grow(4),Color("#493a30"))
+  c.draw_rect(pane,Color("#cd9e61").lerp(Color("#4d7482"),.76-c.town_life.calendar.night_amount()*.65))
+  c.draw_line(pane.get_center()-Vector2(0,16),pane.get_center()+Vector2(0,16),Color("#c59c71"),2)
+  c.draw_line(pane.get_center()-Vector2(20,0),pane.get_center()+Vector2(20,0),Color("#c59c71"),2)
+ if winter:
+  var snow=COLD.SEASON.roof("oldwater:outback",art)
+  c.draw_texture_rect(snow,Rect2(at,CABIN.size),false)
+ var sill=Rect2(at+Vector2(90,110),Vector2(86,17))
+ c.draw_rect(sill,Color("#493b2d"))
+ c.draw_string(UI.FONT,sill.position+Vector2(0,12),"OUTBACK CABIN",HORIZONTAL_ALIGNMENT_CENTER,86,9,Color("#e9cca0"))
+ c.draw_texture_rect(MARINA.texture("cargo"),Rect2(at+Vector2(244,176),Vector2(32,34)),false)
+
+static func fire_and_lantern(c:Node2D,cam:Vector2,view:Rect2)->void:
+ var clock:float=c.town_life.clock
+ var streets=preload("res://scripts/town_streets244.gd")
+ if view.has_point(CAMP):
+  var p=CAMP-cam
+  c.draw_circle(p,50,Color(1,.58,.24,.09+.022*sin(clock*5)))
+  streets.draw(c,"camp_ring",Rect2(p-Vector2(31,18),Vector2(62,36)))
+  streets.draw(c,"log_seat",Rect2(p+Vector2(34,19),Vector2(65,22)))
+  for n in 5:
+   var base=p+Vector2(-13+6*n,3)
+   var tip=base+Vector2(sin(clock*7+n)*4,-14-7*sin(clock*5+n))
+   c.draw_colored_polygon(PackedVector2Array([base+Vector2(-5,0),tip,base+Vector2(6,0)]),Color("#ec833d"))
+   c.draw_colored_polygon(PackedVector2Array([base+Vector2(-2,0),base.lerp(tip,.61),base+Vector2(3,0)]),Color("#ffdc87"))
+  for n in 4:
+   var age=fposmod(clock*.7+n*.25,1.0)
+   c.draw_circle(p+Vector2(sin(clock*2+n)*10,-10-age*42),1.4,Color(1,.76,.32,1-age))
+ if view.has_point(OIL_LANTERN):
+  var p=OIL_LANTERN-cam
+  c.draw_circle(p-Vector2(0,10),28,Color(1,.65,.25,.17+.04*sin(clock*7)))
+  c.draw_arc(p-Vector2(0,21),5,PI,TAU,12,Color("#584434"),2,true)
+  c.draw_rect(Rect2(p-Vector2(6,18),Vector2(12,18)),Color("#563f32"))
+  c.draw_rect(Rect2(p-Vector2(4,15),Vector2(8,11)),Color("#f1ad54"))
+  c.draw_line(p-Vector2(0,13),p-Vector2(0,7),Color("#ffe0a0"),2)
 
 static func draw(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  prepare_geometry()
  if water_material==null:
   water_material=COAST.material("res://assets/lake301/deep_water.png")
   stones=COAST.material("res://assets/lake301/granite.png")
-  dirt=COAST.material("res://assets/lake301/gravel.png")
   ice_material=CanvasTexture.new()
   ice_material.diffuse_texture=COLD.texture("ice")
   ice_material.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -280,19 +386,16 @@ static func draw(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
     var p=Vector2(x*137+sin(c.town_life.clock*.65+y)*13,y*83+posmod(x*42,57))
     if not Geometry2D.is_point_in_polygon(p,water_shape) or not Geometry2D.is_point_in_polygon(p+Vector2(42,0),water_shape):continue
     c.draw_line(p-cam,p-cam+Vector2(42,0),Color(.72,.89,.88,.17+.10*sin(c.town_life.clock+y+x)),1.2)
- draw_trail(c,cam,view,winter)
+ draw_trail(c,cam,view,season)
  forest(c,cam,view)
- if view.intersects(DOCK.grow(130)):pier(c,cam,winter)
- if view.intersects(CABIN.grow(36)):
-  var art=NATURE.texture("cliff_cottage")
-  var box=Rect2(CABIN.position-cam,CABIN.size)
-  c.draw_texture_rect(art,box,false)
-  if winter:c.draw_texture_rect(COLD.SEASON.roof("oldwater:outback",art),box,false)
-  plaque(c,CABIN_DOOR-cam+Vector2(0,29),"OUTBACK CABIN",158)
- for p in LAMPS:
-  if view.has_point(p):preload("res://scripts/town_props240.gd").lamp(c,p-cam,c.town_life.calendar.night_amount())
- for item in [[FERRY,"CROSSROADS  ↓"],[ARRIVAL+Vector2(-38,46),"OLDWATER BAY"],[BERTH+Vector2(-22,46),"LAKE ADVENTURES" if not winter else "WINTER LAKE"]]:
-  if view.has_point(item[0]):plaque(c,item[0]-cam,item[1],170)
+ if view.intersects(DOCK.grow(130)):
+  pier(c,cam,DOCK,Vector2(3050,-2205),"launch_blue",winter)
+  if not winter:small_sign(c,BERTH-cam+Vector2(3,-19),"LAKE ADVENTURES",112)
+ if view.intersects(FERRY_DOCK.grow(130)):
+  pier(c,cam,FERRY_DOCK,Vector2(2592,-1797),"skiff_amber",winter)
+  small_sign(c,FERRY-cam+Vector2(15,-18),"FERRY CLOSED" if winter else "TOWN FERRY",94)
+ if view.intersects(CABIN.grow(36)):cabin(c,cam,winter)
+ fire_and_lantern(c,cam,view)
  var clock=c.town_life.calendar
  var fisher=visitor_spot(clock.weekday,clock.hour,clock.day_number,winter)
  if view.has_point(fisher):
@@ -303,7 +406,9 @@ static func draw(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
   c.draw_line(p+Vector2(-27,-43),bobber,Color("#bed2d1",.64),1.0)
   c.draw_circle(bobber,2,Color("#ce7c63"))
 
-static func plaque(c:Node2D,p:Vector2,title:String,width:float)->void:
- var rect=Rect2(p-Vector2(width*.5,23),Vector2(width,30))
- preload("res://scripts/town_streets244.gd").plaque(c,rect)
- c.draw_string(UI.FONT,p-Vector2(width*.5,3),title,HORIZONTAL_ALIGNMENT_CENTER,width,14,Color("#f6deb0"))
+static func small_sign(c:Node2D,p:Vector2,title:String,width:float)->void:
+ var rect=Rect2(p-Vector2(width*.5,16),Vector2(width,19))
+ c.draw_rect(Rect2(p-Vector2(2,2),Vector2(4,13)),Color("#4c3c33"))
+ c.draw_rect(rect,Color("#664c36"))
+ c.draw_rect(rect.grow(-1),Color("#b19160"),false,1)
+ c.draw_string(UI.FONT,p-Vector2(width*.5,3),title,HORIZONTAL_ALIGNMENT_CENTER,width,10,Color("#f8dbae"))

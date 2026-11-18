@@ -7,19 +7,25 @@ const CAST=preload("res://scripts/town_cast230.gd")
 const NATURE=preload("res://scripts/town_nature243.gd")
 const SKIFF=preload("res://scripts/marina_art250.gd")
 const ICE=preload("res://scripts/town_winter358.gd")
-const MAX=Vector2(4900,4250)
+const STREETS=preload("res://scripts/town_plan.gd")
 const MIN=Vector2(-1370,-4050)
 const TOWN_PIER=Vector2(1860,2300)
 const PORT=Rect2(1170,2860,1650,1390)
 const COVE=BAY.BOUNDS
-const SOUTH_ENTRY=Vector2(1605,2800)
-const NORTH_ENTRY=Vector2(2670,580)
+const NORTH_ENTRY=STREETS.BAY_TRAILHEAD
+const SOUTH_ENTRY=STREETS.HARBOUR_TRAILHEAD
+const HARBOUR_TRAIL_EXIT=Vector2(1490,3010)
+const TRAIL_STOPS=[NORTH_ENTRY,SOUTH_ENTRY,BAY.TRAIL_EXIT,HARBOUR_TRAIL_EXIT]
+const TRAIL_LANDINGS=[BAY.TRAIL_ARRIVAL,HARBOUR_TRAIL_EXIT+Vector2(0,68),NORTH_ENTRY+Vector2(0,82),SOUTH_ENTRY-Vector2(0,65)]
+const TRAIL_LABELS=["To Oldwater Bay","To Tidecross Harbour","To Crossroads","To Crossroads"]
 const FERRY=Vector2(2220,3575)
 const PORT_ARRIVAL=Vector2(2160,3582)
 const SEA_PIER=Vector2(1845,3882)
+const SEA_OFFICE=Vector2(1745,3740)
+const OFFICE_FRAME=Rect2(1695,3651,100,88)
+const WEST_RIDGE_HIGHLANDS=Rect2(0,2860,1260,1020)
 const BAIT=Vector2(1983,3825)
 const PORT_LAMPS=[Vector2(2118,3990),Vector2(2054,3743),Vector2(1510,3370),Vector2(1930,3630),Vector2(2180,3560),Vector2(1845,3881)]
-const COVE_LAMPS=BAY.LAMPS
 const TRADER=Vector2(1732,3530)
 const SAILOR=Vector2(1380,3760)
 const COVE_ARRIVAL=BAY.ARRIVAL
@@ -49,9 +55,9 @@ const RESIDENTS=[
 static var shore_ice:CanvasTexture
 
 static func winter(g:Node)->bool:return ICE.SEASON.active(g)
-static func is_extension(p:Vector2)->bool:return p.y>=2870 or p.y< -530 or p.x>=3070
-static func is_port(p:Vector2)->bool:return PORT.has_point(p) and p.y>=2870
-static func is_cove(p:Vector2)->bool:return COVE.has_point(p) and p.y< -530
+static func is_extension(p:Vector2)->bool:return p.y>=2800 or p.y< -430 or p.x>=3070
+static func is_port(p:Vector2)->bool:return PORT.has_point(p) and p.y>=2940
+static func is_cove(p:Vector2)->bool:return COVE.has_point(p) and p.y< -1125
 static func on_ice(p:Vector2)->bool:return BAY.ice_at(p)
 static func deck(p:Vector2)->bool:
  return COAST.on_dock(p)
@@ -59,6 +65,7 @@ static func land(p:Vector2,frozen:bool)->bool:
  if is_cove(p):
   return BAY.grounded(p,frozen)
  if not is_port(p):return false
+ if OFFICE_FRAME.has_point(p) and p.y<SEA_OFFICE.y-17:return false
  if deck(p):return true
  if not COAST.solid_land(p):return false
  for b in BUILDINGS:
@@ -107,14 +114,20 @@ static func move_to(g:Node,point:Vector2)->void:
  g.oldwater_glide=Vector2.ZERO
  g.update_camera()
 
+static func at_town_marina(point:Vector2)->bool:
+ return point.distance_to(TOWN_PIER)<=150 or preload("res://scripts/town_marina.gd").on_deck(point)
+
+static func at_sea_departure(point:Vector2)->bool:
+ return point.distance_to(SEA_OFFICE)<59 or point.distance_to(SEA_PIER)<=90
+
 static func ferry(g:Node,point:Vector2)->bool:
  if g.mode!="town" or winter(g):return false
  if point==PORT_ARRIVAL or point==COVE_ARRIVAL:
-  if g.position_in_world.distance_to(TOWN_PIER)>150:return false
+  if not at_town_marina(g.position_in_world):return false
  elif point==TOWN_PIER:
   if g.position_in_world.distance_to(FERRY)>86 and g.position_in_world.distance_to(COVE_RETURN)>86:return false
  else:return false
- move_to(g,point)
+ move_to(g,BAY.FERRY_ARRIVAL if point==COVE_ARRIVAL else point)
  return true
 
 static func thaw(g:Node)->void:
@@ -149,12 +162,29 @@ static func via_quay(a:Vector2,b:Vector2,ratio:float)->Vector2:
   remaining-=distance
  return b
 
+static func camera_span(p:Vector2)->Vector2:
+ if is_cove(p):return Vector2(COVE.position.y,COVE.end.y)
+ if is_port(p):return Vector2(PORT.position.y,PORT.end.y)
+ return Vector2(-530,3120)
+
+static func use_trail(g:Node,index:int)->bool:
+ if index<0 or index>=TRAIL_STOPS.size() or g.mode!="town" or g.position_in_world.distance_to(TRAIL_STOPS[index])>=57:return false
+ move_to(g,TRAIL_LANDINGS[index])
+ g.message="Arrived at "+["Oldwater Bay","Tidecross Harbour","Crossroads","Crossroads"][index]
+ g.message_time=2.5
+ return true
+
 static func interact(g:Node)->bool:
  var p:Vector2=g.position_in_world
+ for index in TRAIL_STOPS.size():
+  if p.distance_to(TRAIL_STOPS[index])>=57:continue
+  g.hint="E • "+TRAIL_LABELS[index]
+  if Input.is_action_just_pressed("interact"):use_trail(g,index)
+  return true
  if not is_extension(p):return false
  if is_cove(p) and BAY.meet(g):return true
- if p.distance_to(SEA_PIER)<65:
-  g.hint="E • Coastal voyage berth"
+ if p.distance_to(SEA_OFFICE)<59:
+  g.hint="E • Talk to the Sea Expeditions harbourmaster"
   if Input.is_action_just_pressed("interact"):g.voyage.open_menu("pier")
  elif p.distance_to(BAIT)<62:
   g.hint="E • Dockside Bait"
@@ -166,7 +196,7 @@ static func interact(g:Node)->bool:
   g.hint="E • Talk to Captain Ives"
   if Input.is_action_just_pressed("interact"):sailor_dialogue(g)
  elif p.distance_to(FERRY)<86 or p.distance_to(COVE_RETURN)<86:
-  g.hint="Ferries paused • follow the walking path" if winter(g) else "E • Ferry to Crossroads Marina"
+  g.hint="Ferries paused • use the trail waypoint" if winter(g) else "E • Ferry to Crossroads Marina"
   if Input.is_action_just_pressed("interact"):ferry(g,TOWN_PIER)
  else:
   var cal=g.town_life.calendar
@@ -231,29 +261,22 @@ static func plaque(c:Node2D,p:Vector2,text:String,width:float=190)->void:
  preload("res://scripts/town_streets244.gd").plaque(c,box)
  c.draw_string(UI.FONT,p-Vector2(width*.5,3),text,HORIZONTAL_ALIGNMENT_CENTER,width,14,Color("#f6deb0"))
 
-static func draw_routes(c:Node2D,cam:Vector2)->void:
- var view=Rect2(cam,c.VIEW).grow(80)
- var season:String=c.town_life.calendar.season()
- if view.intersects(Rect2(1485,2120,155,750)):
-  street(c,cam,[Vector2(1485,2160),Vector2(1605,2220),Vector2(1605,2730),Vector2(1485,2860)],43,season)
- if view.intersects(Rect2(2630,-540,300,1150)):
-  street(c,cam,[NORTH_ENTRY,Vector2(2670,-450),Vector2(2710,-490),Vector2(2760,-540)],44,season)
-
 static func draw(c:Node2D,cam:Vector2)->void:
  var view=Rect2(cam,c.VIEW).grow(100)
  var season:String=c.town_life.calendar.season()
- for mark in [[SOUTH_ENTRY,"TIDECROSS  ↓"],[NORTH_ENTRY,"OLDWATER COVE  ↑"],[Vector2(2670,-375),"OLDWATER TRAIL  ↑"]]:
-  if view.has_point(mark[0]):plaque(c,mark[0]-cam,mark[1])
- if view.intersects(PORT):draw_port(c,cam,view,season)
- if view.intersects(COVE):BAY.draw(c,cam,view,season)
-
-static func street(c:Node2D,cam:Vector2,line:Array,width:float,season:String)->void:
- var points=PackedVector2Array()
- for p in line:points.append(p-cam)
- var edge=Color("#7f8072") if season=="Winter" else Color("#8b785c")
- var fill=Color("#a3a79a") if season=="Winter" else Color("#ac9773")
- c.draw_polyline(points,edge,width+8,true)
- c.draw_polyline(points,fill,width,true)
+ var here:Vector2=c.position_in_world
+ var at_bay=is_cove(here)
+ var at_harbour=is_port(here)
+ if at_harbour:draw_port(c,cam,view,season)
+ if at_bay:BAY.draw(c,cam,view,season)
+ var signs=[2] if at_bay else [3] if at_harbour else [0,1]
+ for index in signs:
+  var stop:Vector2=TRAIL_STOPS[index]
+  if not view.has_point(stop):continue
+  var p=stop-cam
+  c.draw_arc(p,24,0,TAU,32,Color("#b7decf"),2,true)
+  if index==2:BAY.small_sign(c,p+Vector2(0,-19),"TO CROSSROADS",103)
+  else:plaque(c,p+Vector2(0,-34),TRAIL_LABELS[index].to_upper(),202)
 
 static func crate(c:Node2D,q:Vector2,s:Vector2)->void:
  c.draw_rect(Rect2(q+Vector2(2,3),s),Color("#494844"))
@@ -288,6 +311,7 @@ static func tree_clear(rect:Rect2,p:Vector2)->bool:
  for b in BUILDINGS:
   var building:Rect2=b[1]
   if building.grow(12).intersects(rect) or Rect2(Vector2(building.position.x-34,building.end.y-22),Vector2(building.size.x+68,59)).intersects(rect):return false
+ if rect.grow(20).intersects(OFFICE_FRAME):return false
  for at in [FERRY,PORT_ARRIVAL,SEA_PIER,BAIT,TRADER,SAILOR]:
   if rect.grow(18).has_point(at):return false
  for at in PORT_LAMPS:
@@ -321,9 +345,43 @@ static func draw_woodland(c:Node2D,cam:Vector2,view:Rect2)->void:
   c.draw_circle(p-cam,rect.size.x*.22,Color(.11,.16,.16,.16))
   NATURE.tree(c,tree[2],Rect2(rect.position-cam,rect.size),p)
 
+static func draw_west_ridge(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
+ if not view.intersects(WEST_RIDGE_HIGHLANDS):return
+ var ridge=preload("res://scripts/town_art246.gd").texture("ridge")
+ for n in 11:
+  var y=2812.0+n*83
+  var x=830+45*sin(n*1.48)+28*sin(n*.71)
+  var rect=Rect2(x,y,410,260)
+  if view.intersects(rect):
+   c.draw_texture_rect(ridge,Rect2(rect.position-cam,rect.size),false,Color("#aab8be") if season=="Winter" else Color("#a6ada5"))
+ # Overlap the previous straight raster boundary with loose boulders and shoulder shelves.
+ for n in 21:
+  var p=Vector2(1130+posmod(n*37,93),2880+n*43)
+  if view.has_point(p):COAST.draw_shore_rocks(c,p-cam,Vector2(124+posmod(n*17,49),81))
+ for row in 10:
+  for col in 12:
+   var index=row*12+col
+   if posmod(index*173,19)<5:continue
+   var p=Vector2(20+col*85+posmod(index*247,60),2910+row*96+posmod(index*413,67))
+   if p.x>1015 or not view.grow(104).has_point(p):continue
+   var size=Vector2(92+posmod(index*41,34),120+posmod(index*71,30))
+   if index%7==0:COAST.draw_shore_rocks(c,p-cam,Vector2(85,55))
+   else:NATURE.tree(c,"ancient" if index%6==0 else "pine",Rect2(p-cam-Vector2(size.x*.5,size.y-10),size),p)
+
+static func draw_sea_office(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
+ if not view.intersects(OFFICE_FRAME.grow(32)):return
+ var art=SKIFF.texture("bait_stall")
+ var box=Rect2(OFFICE_FRAME.position-cam,OFFICE_FRAME.size)
+ c.draw_texture_rect(art,box,false,Color("#c8b69b"))
+ if season=="Winter":c.draw_texture_rect(ICE.SEASON.roof("port:charter_booth",art),box,false)
+ var p=SEA_OFFICE-cam
+ BAY.small_sign(c,p-Vector2(0,75),"SEA EXPEDITIONS",98)
+ CAST.draw(c,"Tess",p+Vector2(22,15),c.town_life.clock)
+
 static func draw_port(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  COAST.draw_water(c,cam,view,season)
  COAST.draw_terrain(c,cam,season)
+ draw_west_ridge(c,cam,view,season)
  COAST.shore_plants(c,cam,view,season)
  draw_woodland(c,cam,view)
  for building in BUILDINGS:
@@ -356,8 +414,7 @@ static func draw_port(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  if view.has_point(Vector2(2210,4010)):cargo_ship(c,cam,Vector2(2210,4010),-1.34,1.22,Color("#b48b72"))
  if season!="Winter" and view.has_point(Vector2(2336,3626)):SKIFF.boat(c,"skiff_amber",Vector2(2336,3626)-cam,Vector2(62,115),1.22)
  if view.has_point(FERRY):plaque(c,FERRY-cam+Vector2(10,-31),"FERRY CLOSED" if season=="Winter" else "RIVER FERRY",146)
- if view.has_point(SEA_PIER):plaque(c,SEA_PIER-cam-Vector2(0,62),"SEA EXPEDITIONS",164)
- if view.has_point(Vector2(1490,3000)):plaque(c,Vector2(1510,2980)-cam,"TIDECROSS HARBOUR",218)
+ draw_sea_office(c,cam,view,season)
  var cal=c.town_life.calendar
  for n in RESIDENTS.size():
   var state=resident_state(n,cal.hour,cal.weekday)
