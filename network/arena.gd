@@ -326,13 +326,16 @@ func _capacity_changed(_index:int)->void:
  send_net({"type":"capacity","seats":capacity.get_selected_id()})
  net_status.text="Updating room capacity…"
 func net_select(id:String)->bool:
+ if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,id):return false
  if id.begins_with("custom_") and not preload("res://scripts/studio_balance.gd").hero_checked(characters.get(id,{}).get("studio_project",{})):return false
  selected_hero=id;preferred_hero=id;hero_button.text="Hero • "+str(characters[id].name)
  if net_ready:
   if id.begins_with("custom_"):net_status.text=custom_transfer.upload(id)
   else:send_net({"type":"hero","hero":id,"build_choice":legacy.payload(id)})
  return true
-func net_permission(id:String)->String:return "Save with Forced Balance enabled before multiplayer." if id.begins_with("custom_") and not preload("res://scripts/studio_balance.gd").hero_checked(characters.get(id,{}).get("studio_project",{})) else ""
+func net_permission(id:String)->String:
+ if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,id):return "Unlock this hero first. Check its goal in the Character Hall."
+ return "Save with Forced Balance enabled before multiplayer." if id.begins_with("custom_") and not preload("res://scripts/studio_balance.gd").hero_checked(characters.get(id,{}).get("studio_project",{})) else ""
 func _leave_room_connection()->void:
  if browser_peer!=null:
   var browse_drain=preload("res://network/leave_link.gd").new();get_tree().root.add_child(browse_drain);browse_drain.setup(browser_peer,false);browser_peer=null
@@ -342,6 +345,7 @@ func _leave_room_connection()->void:
  var drain=preload("res://network/leave_link.gd").new();get_tree().root.add_child(drain);drain.setup(net_peer);net_peer=null
 func return_to_network_menu()->void:
  if dedicated:return
+ if mode=="coop":preload("res://scripts/hero_goals372.gd").abandon(legacy)
  _track_card_progress();legacy.save()
  if OS.has_feature("web"):JavaScriptBridge.eval("if(window.fxReports)window.fxReports.flush('return-to-menu');",true)
  _leave_room_connection()
@@ -361,6 +365,7 @@ func return_to_network_menu()->void:
  shop_open="";economy_pending=false;battleground_render.clear();_sync_network_mode_controls();control.hide();net_panel.show();queue_redraw()
 func return_to_town()->void:
  if dedicated or has_meta("leaving_for_town"):return
+ if mode=="coop":preload("res://scripts/hero_goals372.gd").abandon(legacy)
  set_meta("leaving_for_town",true)
  _leave_room_connection();set_process(false);set_physics_process(false)
  get_tree().root.set_meta("fx_hero",selected_hero)
@@ -403,7 +408,7 @@ func poll_net()->void:
  if net_peer.get_ready_state()==WebSocketPeer.STATE_OPEN:
   if has_meta("joining"):
    var kind=str(get_meta("joining"));remove_meta("joining")
-   send_net({"type":kind,"protocol":PROTOCOL,"hero":"ram" if preferred_hero.begins_with("custom_") else preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"equipment":preload("res://scripts/prepared_equipment238.gd").ready(self),"consumable":preload("res://scripts/prepared_supply.gd").ready(items),"shop_discount":legacy.discount(10)<10,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":str(test_arena.get_item_metadata(test_arena.selected)),"token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
+   send_net({"type":kind,"protocol":PROTOCOL,"hero":"ram" if preferred_hero.begins_with("custom_") else preferred_hero,"name":net_name.text.left(24),"room":room_field.text.strip_edges().to_upper(),"mode":mode,"realm":realm_id,"build_choice":legacy.payload(preferred_hero),"cosmetic":local_cosmetic(),"food":provisions.packed,"equipment":preload("res://scripts/prepared_equipment238.gd").ready(self),"consumable":preload("res://scripts/prepared_supply.gd").ready(items),"shop_discount":legacy.discount(10)<10,"expedition_profile":ExpeditionProfile.offer(self),"expedition_tier":expedition_tier.get_selected_id(),"hero_unlock_epoch":preload("res://scripts/hero_unlocks371.gd").EPOCH,"owned_champions":preload("res://scripts/hero_unlocks371.gd").claim(legacy),"unlocked_realms":RealmCatalogue.available(legacy),"rivals":gate_rival_plan,"rule":arena_party_rule,"team_size":arena_team_size,"team":local_lobby_team,"bots":(bot_plan if preload("res://network/party_rules.gd").allows_ai(mode) else []),"difficulty":ai_difficulty,"quest_states":RealmCatalogue.saved_quests() if mode=="coop" and realm_id=="wayfarer" else {},"seats":capacity.get_selected_id(),"bg_map":bg_map,"arena_map":str(test_arena.get_item_metadata(test_arena.selected)),"token":resume_token,"public":public_toggle.button_pressed,"competition":competition_toggle.button_pressed})
   if net_ready and Time.get_ticks_msec()>=next_ping_at:
    next_ping_at=Time.get_ticks_msec()+2000;send_net({"type":"ping","sent":Time.get_ticks_msec()});send_net({"type":"transport_ping","sent":Time.get_ticks_msec()})
   # Binary protocol-3 packets are replaceable full snapshots. Drain the raw

@@ -21,12 +21,27 @@ const LAND=.38
 const AIR_TIME=RISE+FLIGHT+LAND
 const BRACE_TIME=5.0
 const ART=preload("res://scripts/event_effects343.gd")
-const STYLES=["jaw_snap","jaw_clamp","jaw_brace","courtbow","flower_standard","dawn_garden","gift_toss","care_parcel","midnight_delivery","antler_sweep","sleigh_charge","flying_reindeer","spear_jab","parade_stance","winter_tree","rime_spear","white_breath","northwind_blizzard"]
+const TECHNIQUES=preload("res://scripts/event_techniques369.gd")
+var STYLES=TECHNIQUES.STYLES+["jaw_snap","jaw_clamp","jaw_brace","courtbow","flower_standard","dawn_garden","gift_toss","care_parcel","midnight_delivery","antler_sweep","sleigh_charge","flying_reindeer","spear_jab","parade_stance","winter_tree","rime_spear","white_breath","northwind_blizzard"]
 
 func reset()->void:
  frost.reset()
  nutcracker.reset()
  clamps.clear();immunity.clear();pressure.clear();gifts.clear();momentum.clear();last_position.clear();braces.clear();branches.clear();flights.clear();fields.clear();slides.clear()
+
+func allowed_action(id:String,kind:String)->bool:
+ return not clamps.has(id) or kind=="secondary"
+
+func visual_frame(id:String,sprite:String)->int:
+ if sprite=="lockjaw":
+  if clamps.has(id):return 4
+  for f in fields:
+   if str(f.owner)==id and str(f.kind)=="bite" and display_time(float(f.time))>0:return 3 if display_time(float(f.time))>.14 else 4
+ if sprite=="nutcracker" and nutcracker.stance.has(id):
+  for f in nutcracker.flashes:
+   if str(f.get("owner",""))==id and f.get("jab",false) and display_time(float(f.time))>0:return 3
+  return 4
+ return -1
 
 func clamped(id:String)->bool:
  var key:String=combat.player_key(id)
@@ -39,6 +54,7 @@ func height(time:float)->float:
 func locks_input(id:String)->bool:
  return following(id) or (flying(id) and (float(flights[id].time)>FLIGHT+LAND or float(flights[id].time)<=LAND))
 func offset(id:String)->Vector2:
+ if clamps.has(id):return Vector2(0,-4)
  return Vector2(0,-height(display_time(float(flights[id].time)))) if flying(id) else Vector2.ZERO
 func sweep(id:String,kind:String,p:Vector2,aim:Vector2,reach:float)->void:
  field(id,kind,p,reach,.32)
@@ -88,6 +104,9 @@ func cast(id:String,s:Dictionary,aim:Vector2,damage:float)->bool:
  var p:Vector2=combat.owner_pos(id)
  var reach:=float(s.get("range",90))
  if aim.is_zero_approx():aim=Vector2.RIGHT
+ if style in TECHNIQUES.STYLES:
+  TECHNIQUES.cast(self,id,s,p,aim.normalized(),damage)
+  return true
  match style:
   "rime_spear","white_breath","northwind_blizzard":
    frost.cast(combat,id,s,aim.normalized(),damage)
@@ -98,7 +117,7 @@ func cast(id:String,s:Dictionary,aim:Vector2,damage:float)->bool:
     damage*=1.25
    nutcracker.strike(combat,id,p,aim.normalized(),reach,damage)
   "parade_stance":
-   nutcracker.stance[id]={"time":4.5,"angle":aim.angle()}
+   nutcracker.stance[id]={"time":nutcracker.BRACE_TIME,"angle":aim.angle()}
    stop_dodge(id)
   "winter_tree":
    var point:Vector2=combat.v75.clip(p,aim,54)
@@ -170,6 +189,12 @@ func cast(id:String,s:Dictionary,aim:Vector2,damage:float)->bool:
    flights[id]={"time":AIR_TIME,"drop":0.0,"damage":damage}
    stop_dodge(id)
  return true
+
+func stand_tall(id:String,p:Vector2)->void:
+ if not branches.has(id) or not combat.passive(id,"stand_tall"):return
+ if p.distance_to(combat.vec(branches[id].pos))>115 or float(branches[id].guard)>0:return
+ branches[id].guard=3.0
+ combat.apply_status(combat.player_key(id),"guard",1.5,id,.22)
 
 func recast(id:String,kind:String)->bool:
  if kind=="special" and frost.storms.has(id):
@@ -267,10 +292,14 @@ func step(delta:float)->void:
     var p:Vector2=combat.owner_pos(id)
     if q.drop<=0 and q.time<=FLIGHT+LAND and q.time>LAND:
      q.drop=.24
-     field(id,"snow",p,46,.85)
+     field(id,"escort_snow" if q.get("escort",false) else "snow",p,46,.85)
     if q.time<=0:
-     area(id,p,115,float(q.damage),Vector2.ZERO,65)
-     field(id,"landing",p,115,.35)
+     if q.get("escort",false):
+      TECHNIQUES.support(combat,id,p,115,20,0,1.8,1.2)
+      field(id,"aid_landed",p,115,.35)
+     else:
+      area(id,p,115,float(q.damage),Vector2.ZERO,65)
+      field(id,"landing",p,115,.35)
    if q.time<=0:collection.erase(id)
  for i in range(fields.size()-1,-1,-1):
   var f:Dictionary=fields[i]
@@ -296,8 +325,13 @@ func step(delta:float)->void:
      var direction:Vector2=combat.vec(f.aim).rotated(n*TAU/3)
      field(id,"blossom",combat.v75.clip(p,direction,62),22,5)
    continue
-  if f.time<=0:fields.remove_at(i);continue
-  if f.kind in ["parcel","blossom","snow","trail","healing_gift"]:
+  if f.time<=0:
+   fields.remove_at(i)
+   var aftermath:=TECHNIQUES.impact(self,f,p)
+   if not aftermath.is_empty():field(id,aftermath,p,float(f.radius),.4)
+   continue
+  TECHNIQUES.pulse(combat,f,p,delta)
+  if f.kind in ["parcel","blossom","snow","trail","healing_gift","escort_snow"]:
    for ally in combat.party_heroes.friendly_near(id,p,f.radius):
     if f.seen.has(ally):continue
     if f.kind=="parcel" and ally==id and combat.party_heroes.friendly_near(id,p,100000).size()>1:continue
@@ -305,6 +339,7 @@ func step(delta:float)->void:
     if f.kind in ["parcel","snow"]:combat.release_heroes.heal(id,str(ally),16 if f.kind=="parcel" else 2)
     if f.kind=="healing_gift":combat.release_heroes.heal(id,str(ally),12)
     if f.kind in ["parcel","blossom"]:combat.apply_status(combat.player_key(str(ally)),"guard",2.0,id,float(f.damage) if f.kind=="parcel" else .23)
+    if f.kind=="escort_snow":combat.apply_status(combat.player_key(str(ally)),"guard",1.2,id,.23)
     if f.kind=="trail":combat.apply_status(combat.player_key(str(ally)),"event_haste",.8,id,1.2)
     if f.kind in ["parcel","blossom"]:f.time=0;break
   if f.kind=="snow":
@@ -338,8 +373,7 @@ func draw_on(canvas:Node2D,camera:Vector2)->void:
  if braces.has(local):
   ART.brace(canvas,combat.owner_pos(local)-camera,float(braces[local].time))
  for id in clamps:
-  var foe:Dictionary=combat.actor(clamps[id].target)
-  if not foe.is_empty():canvas.draw_line(combat.owner_pos(id)-camera,foe.pos-camera,Color("#e6b05f"),3)
+  preload("res://scripts/event_hero_visuals375.gd").latch(canvas,camera,combat,str(id),clamps[id],str(id)==local)
  for id in gifts:
   var p:Vector2=combat.owner_pos(id)-camera
   for n in 3:canvas.draw_rect(Rect2(p+Vector2(-9+n*7,-47),Vector2(4,4)),Color("#ffcb84") if n<int(gifts[id]) else Color("#62513e"))

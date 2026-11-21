@@ -9,7 +9,70 @@
   "role": "Ranged",
   "passive": "Stand Tall: a fully drawn Courtbow near your branch grants a brief shield.",
   "passive_effect": "stand_tall",
-  "mastery": {},
+  "mastery": {
+    "title": "Warden of the Dawnbloom",
+    "technique": {
+      "name": "Thornbow",
+      "ability": "primary",
+      "description": "Swing your bow in a close arc and briefly slow enemies. A hit near your branch can activate Stand Tall.",
+      "attack": {
+        "name": "Thornbow",
+        "style": "thornbow",
+        "damage": 27,
+        "cooldown": 0.68,
+        "range": 92,
+        "description": "Swing your bow in a close arc and briefly slow enemies. A hit near your branch can activate Stand Tall.",
+        "ui_brief": "Swing your bow in a close arc and briefly slow enemies. A hit near your branch can activate Stand Tall."
+      }
+    },
+    "final_technique": {
+      "name": "Briar Circle",
+      "ability": "special",
+      "description": "Plant a circle of flowering brambles. Three pulses damage and slow enemies within it.",
+      "attack": {
+        "name": "Briar Circle",
+        "style": "briar_circle",
+        "damage": 11,
+        "cooldown": 19,
+        "range": 325,
+        "description": "Plant a circle of flowering brambles. Three pulses damage and slow enemies within it.",
+        "ui_brief": "Plant a circle of flowering brambles. Three pulses damage and slow enemies within it.",
+        "radius": 108
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  },
   "primary": {
     "name": "Courtbow",
     "style": "courtbow",

@@ -46,6 +46,8 @@ static func archive_custom_personal(profile:Dictionary)->void:
 
 static func damage_allowed(l:Node,id:String="")->bool:
  var g=l.game
+ if not l.arcade and bool(g.get("practice")):return false
+ if g.has_meta("fx_champion_duel") or g.has_meta("fx_hero_quest"):return false
  if bool(g.get_meta("records_unofficial",false)):return false
  var actual=str(g.hero_ids.get(g.my_id,g.selected_hero)) if l.arcade else str(g.character_id)
  if not hero_allowed(g,actual) or not id.is_empty() and not hero_allowed(g,id):return false

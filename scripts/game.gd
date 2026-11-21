@@ -224,6 +224,7 @@ func _ready() -> void:
 	art["training_dummy_1"] = art["training_dummy_0"]
 	respawn_clinic=bool(get_tree().root.get_meta("fx_clinic",false));get_tree().root.set_meta("fx_clinic",false)
 	legacy=preload("res://scripts/legacy.gd").new();add_child(legacy);legacy.setup(self)
+	if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character):selected_character="ram"
 	preload("res://scripts/prepared_supply.gd").restore(self)
 	preload("res://scripts/prepared_equipment238.gd").restore(self)
 	hero_workshop=preload("res://scripts/hero_workshop.gd").new();add_child(hero_workshop);hero_workshop.setup(self)
@@ -359,8 +360,8 @@ func load_profile() -> void:
 
 func save_profile() -> void:
 	if preload("res://scripts/profile_store.gd").progression_blocked():return
-	profile["selected_hero"] = selected_character
-	get_tree().root.set_meta("fx_hero", selected_character)
+	profile["selected_hero"] = selected_character if legacy==null or preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character) else "ram"
+	get_tree().root.set_meta("fx_hero", profile["selected_hero"])
 	if preload("res://scripts/profile_store.gd").write(SAVE_PATH,profile)!=OK:push_warning("Could not save local profile; download your profile before leaving.")
 
 func setup_inputs() -> void:
@@ -596,6 +597,11 @@ func combat_frame_active(epoch: int) -> bool:
 	return epoch == combat_epoch and mode == "run" and menu.is_empty()
 
 func enter_region(id: String) -> void:
+	if id=="town" and legacy!=null and mode=="run" and not practice:preload("res://scripts/hero_goals372.gd").abandon(legacy)
+	if id=="town" and get_tree().root.has_meta("fx_champion_invitation"):
+		message="Champion duels ready: "+str(get_tree().root.get_meta("fx_champion_invitation"))+" • Visit the Challenge Hall.";message_time=12
+		get_tree().root.remove_meta("fx_champion_invitation")
+	if id=="town" and legacy!=null and not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character):selected_character="ram";character_id="ram";hero=characters.ram.duplicate(true)
 	if voyage!=null and voyage.active and id not in ["voyage_lake","voyage_coast"]:
 		voyage.fail("Voyage ended");return
 	if waylight!=null:waylight.entering(id)
@@ -676,6 +682,7 @@ func start_training(at:Vector2=Vector2(650,430))->void:
 	message_time=6;queue_redraw()
 
 func start_run(is_trial: bool, realm_id: String = "grove") -> void:
+	if realm_id!="practice" and not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character):message="Unlock this hero first. Check its goal in the Character Hall.";message_time=5;return
 	if waylight!=null and not waylight.launching:
 		if waylight.special():
 			if waylight.settled:
@@ -746,6 +753,7 @@ func start_run(is_trial: bool, realm_id: String = "grove") -> void:
 	menu = ""
 	enter_region(active_realm)
 	if waylight!=null:waylight.started()
+	if not practice and not trial and not tutorial.active and not (lodges!=null and lodges.active) and not (waylight!=null and waylight.special()):preload("res://scripts/hero_goals372.gd").begin(legacy,active_realm)
 	if active_realm == "grove": journey.mark("grove")
 	if active_realm == "grove": mark_welcome("realm")
 	message = "Speak to the villagers. Q / Journal shows your quests. Progress saves here." if adventure.quests.active else "Follow the target pointer, earn XP and bounties, then face the boss."
@@ -762,6 +770,7 @@ func finish_run(won: bool, abandoned:bool=false) -> void:
 		if waylight.kind=="overcharge" and not boss_defeated:return
 		if waylight.between() and position_in_world.distance_to(waylight.expedition.ORIGIN)>120:return
 	get_tree().root.get_node("FXActivity").event(self,"complete","cleared" if won else "returned" if abandoned else "defeated",run_time,{"damage":dealt_damage,"enemies":kills,"players":1,"banked_shards":waylight.expedition.carried if waylight!=null and waylight.between() else 0})
+	if not won and not practice:preload("res://scripts/hero_goals372.gd").abandon(legacy)
 	if not won and not abandoned and not practice:legacy.cosmetics.competitive.defeated()
 	respawn_clinic=not won and not abandoned
 	var waylight_run:bool=waylight!=null and waylight.special()
@@ -816,7 +825,7 @@ func should_redraw_town_modal(delta:float,resized:bool)->bool:
 	return false
 
 func _process(delta: float) -> void:
-	if mode in ["town","run"] and menu.is_empty() and legacy!=null and not practice and session_menu.page.is_empty() and presentation.page.is_empty() and not tutorial.active:
+	if not has_meta("fx_hero_quest") and mode in ["town","run"] and menu.is_empty() and legacy!=null and not practice and session_menu.page.is_empty() and presentation.page.is_empty() and not tutorial.active:
 		if mode=="town" and preload("res://scripts/community_records.gd").interact(self) and Input.is_action_just_pressed("interact"):return
 		if preload("res://scripts/garden_hunting.gd").interact(self):
 			if Input.is_action_just_pressed("interact"):return
@@ -1059,7 +1068,7 @@ func handle_run(delta: float) -> void:
 		if studio_live.active() and not fishing.busy():studio_live.step(delta)
 		else:
 			if adventure.combat.v90.primary_pressed("solo",mobile.attacking if mobile.enabled else Input.is_action_pressed("primary")): fire("primary")
-			if (Input.is_action_just_pressed("secondary") if str(hero.get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard"] else Input.is_action_pressed("secondary")): fire("secondary")
+			if (Input.is_action_just_pressed("secondary") if str(hero.get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard","parade_stance"] else Input.is_action_pressed("secondary")): fire("secondary")
 			if Input.is_action_just_pressed("special"): pulse()
 		update_enemy_shots(delta)
 		if not combat_frame_active(epoch): return
@@ -1088,7 +1097,7 @@ func handle_run(delta: float) -> void:
 	if studio_live.active() and not fishing.busy():studio_live.step(delta)
 	if not studio_live.active() and stun_time <= 0 and charge_time <= 0 and adventure.combat.v90.primary_pressed("solo",mobile.attacking if mobile.enabled else Input.is_action_pressed("primary")):
 		fire("primary")
-	if not studio_live.active() and stun_time <= 0 and charge_time <= 0 and level >= 3 and (Input.is_action_just_pressed("secondary") if str(hero.get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard"] else Input.is_action_pressed("secondary")):
+	if not studio_live.active() and stun_time <= 0 and charge_time <= 0 and level >= 3 and (Input.is_action_just_pressed("secondary") if str(hero.get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard","parade_stance"] else Input.is_action_pressed("secondary")):
 		fire("secondary")
 	if not studio_live.active() and stun_time <= 0 and level >= 6 and Input.is_action_just_pressed("special"):
 		pulse()
@@ -1129,6 +1138,7 @@ func aimed_point(max_range: float) -> Vector2:
 	return position_in_world + aim_direction() * minf(max_range, position_in_world.distance_to(mouse_world))
 
 func fire(kind: String) -> void:
+	if not adventure.combat.events.allowed_action("solo",kind):return
 	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if fishing!=null and fishing.busy():return
 	if not dev_magic.aiming.is_empty() or Time.get_ticks_msec()<dev_magic.input_until:return
@@ -1294,6 +1304,7 @@ func activate_block(stats: Dictionary) -> void:
 	add_float_text(position_in_world + Vector2(-25, -65), "BLOCK", Color("#a9ddef"))
 
 func pulse() -> void:
+	if not adventure.combat.events.allowed_action("solo","special"):return
 	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if fishing!=null and fishing.busy():return
 	if studio_live.active():return
@@ -1771,6 +1782,7 @@ func take_player_damage(amount: float, melee_attacker:String="", cause:Dictionar
 	player_flash_time = 0.22
 	add_float_text(position_in_world + Vector2(-16, -55), "-" + str(int(amount)) + " HP", Color("#ff8d8b"))
 	if health <= 0:
+		preload("res://scripts/hero_goals372.gd").fail(legacy)
 		if adventure.combat.v59.rescue("solo"):return
 		if inventory.has("last_stand"):
 			inventory.erase("last_stand")
@@ -1802,7 +1814,7 @@ func _draw() -> void:
 	tutorial.draw_world(self,camera)
 	adventure.draw_on(self,camera)
 	if studio_live!=null:studio_live.draw_on(self,camera)
-	if mode in ["town","run"] and not practice:preload("res://scripts/garden_hunting.gd").draw_on(self,camera)
+	if not has_meta("fx_hero_quest") and mode in ["town","run"] and not practice:preload("res://scripts/garden_hunting.gd").draw_on(self,camera)
 	draw_flames()
 	journey.draw_on(self,camera)
 	if waylight!=null:waylight.draw_fog(self,camera);waylight.draw_world(self,camera)
@@ -1855,7 +1867,10 @@ func draw_world() -> void:
 	var training_art:bool=mode=="run" and practice
 	var first_art:bool=preload("res://scripts/first_environment299.gd").enabled(self)
 	var oath_art:bool=mode=="run" and region_id=="shattered_oath" and preload("res://scripts/oath_environment297.gd").enabled(adventure)
-	if adventure.finale.in_depth():
+	if has_meta("fx_hero_quest") and get("course")!=null:
+		if terrain_cache!=null:terrain_cache.hide()
+		get("course").draw_floor()
+	elif adventure.finale.in_depth():
 		if terrain_cache!=null:terrain_cache.hide()
 		adventure.finale.draw_ground(self,camera)
 	elif voyage!=null and voyage.active:
@@ -2103,7 +2118,7 @@ func draw_world() -> void:
 		var trail_rect:Rect2=preload("res://scripts/hero_visual_scale.gd").apply(str(hero.get("sprite","ram")),Rect2(trail["pos"]-Vector2(28,42),Vector2(56,64)))
 		draw_sprite(trail_sprite,trail_rect.position,trail_rect.size,Color(0.7,0.9,1.0,float(trail["time"])*1.8))
 	if voyage!=null and voyage.active and not voyage.ashore:return
-	var walking: bool = mobile.movement.length_squared() > 0 or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down")
+	var walking: bool = not adventure.combat.events.clamps.has("solo") and (mobile.movement.length_squared() > 0 or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down"))
 	var frame := int(visual_clock * 7.0) % 2 if walking and menu == "" else 0
 	var town_sprite_data: Dictionary = characters.get(selected_character, {})
 	var sprite := str(town_sprite_data.get("sprite", "ram")) if mode == "town" else str(hero.get("sprite", "ram"))
@@ -2116,6 +2131,8 @@ func draw_world() -> void:
 	if pose=="attack" and art.has(sprite+"_attack2") and int(visual_clock*12)%2==1:pose="attack2"
 	if sprite in core_art.HEROES:
 		art[sprite+"_core_frame"]=core_art.picture("solo",sprite,"special" if adventure.combat.events.flying("solo") else pose,position_in_world,walking and menu=="",visual_clock,adventure.combat.classics.channeling("solo"),charge_time>0 or adventure.combat.classics.moving("solo"))
+		var forced=adventure.combat.events.visual_frame("solo",sprite)
+		if forced>=0:art[sprite+"_core_frame"]=core_art.texture(sprite,str(forced))
 		pose="core_frame"
 	var hero_art := sprite + "_" + pose if art.has(sprite + "_" + pose) else sprite + "_" + str(frame)
 	if sprite=="goalie":skating_motion.draw_skates(self,"solo",position_in_world-camera)
@@ -2521,6 +2538,7 @@ func select_hero_entry(index: int) -> void:
 	if index < hero_scroll: hero_scroll = index
 	elif index >= hero_scroll+7: hero_scroll = index-6
 	hero_preview = id
+	if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,id):return
 	mark_welcome("hero")
 	var choice: Dictionary = characters.get(id,{})
 	var cost := int(choice.get("run_cost",0))

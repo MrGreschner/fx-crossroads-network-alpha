@@ -88,6 +88,10 @@ func setup(owner:Node,multi:bool=false)->void:
  glimmers.legacy=self;glimmers.state()
  weekly.legacy=self;fishing_records.legacy=self;fishing_records.state();lodge_economy.setup(self);daily.setup(self);cosmetics.setup(self);crowns.setup(self);mine.setup(self);commerce.setup(self);gardening.setup(self);community.setup(self)
  preload("res://scripts/named_records.gd").state(self)
+ preload("res://scripts/hero_unlocks371.gd").state(self)
+ preload("res://scripts/hero_goals372.gd").state(self);preload("res://scripts/hero_goals372.gd").sync(self,false)
+ preload("res://scripts/hero_journeys373.gd").sync(self,false)
+ Callable(preload("res://scripts/hero_unlocks371.gd"),"announce").call_deferred(self)
  layer=35
  root=Panel.new();root.clip_contents=true;root.position=Vector2(110,45);root.size=Vector2(1060,640);root.visible=false;add_child(root)
  var style:=StyleBoxFlat.new();style.bg_color=Color("#142b32");style.border_color=Color("#c7ad78");style.set_border_width_all(2);style.set_corner_radius_all(8);root.add_theme_stylebox_override("panel",style)
@@ -127,6 +131,8 @@ func save()->void:
  if mine.legacy!=null:mine.advance()
  if fishing_records.legacy!=null:fishing_records.income.advance()
  if bool(data.get("teacher",false)) and not preload("res://scripts/profile_store.gd").testing():return
+ preload("res://scripts/hero_goals372.gd").sync(self)
+ preload("res://scripts/hero_journeys373.gd").sync(self)
  preload("res://scripts/release_support.gd").scan_mastery(self)
  var serialized:=JSON.stringify(data)
  if serialized==last_saved_json and FileAccess.file_exists(PATH):return
@@ -191,6 +197,7 @@ func sanitize_build(value:Variant)->Dictionary:
   for n in mini(3,raw.size()):tuning[n]=clampi(int(raw[n]),-mini(2,remaining),mini(2,remaining));remaining-=absi(int(tuning[n]))
  return {"technique":bool(value.get("technique",false)),"final_technique":bool(value.get("final_technique",false)),"crit_tier":clampi(int(value.get("crit_tier",0)),0,3),"crown_damage":crown_amount,"crown_expiry":expiry,"tuning":tuning,"points":points}
 func build(owner:String)->Dictionary:
+ if game.has_meta("fx_hero_quest"):return {"technique":false,"final_technique":false,"points":0,"crit_tier":0,"tuning":[0,0,0],"crown_damage":0}
  if arcade and game.has_method("network_build"):return game.network_build(owner)
  var id:=hero_for(owner)
  if arcade and owner!=game.my_id:return builds.get(owner,{"technique":false,"tuning":[0,0,0]})
@@ -229,8 +236,12 @@ func add_damage(id:String,amount:float)->void:
  if amount<=0 or bool(data.teacher) or preload("res://scripts/profile_store.gd").progression_blocked() or not preload("res://scripts/record_eligibility.gd").damage_allowed(self,id):return
  cosmetics.add_damage(amount);crowns.add_damage(amount)
  record(id).damage=float(record(id).damage)+amount;data.tasks.damage=float(data.tasks.damage)+amount
+ preload("res://scripts/hero_goals372.gd").damage_changed(self,amount)
 func clear_adventure(id:String,realm:String)->void:
+ if game.has_meta("fx_hero_quest"):return
  if bool(data.teacher) or preload("res://scripts/profile_store.gd").progression_blocked():return
+ var previous_realms=preload("res://scripts/hero_journeys373.gd").realm_count(self)
+ var first_clear=not preload("res://scripts/realm_access.gd").cleared(self,realm)
  daily.realm_clear(id,realm)
  preload("res://scripts/named_records.gd").cleared(self,realm,float(game.run_time))
  var entry:=record(id);entry.clears=int(entry.clears)+1
@@ -243,7 +254,15 @@ func clear_adventure(id:String,realm:String)->void:
  if realm not in ["descent","defense","quests","town","practice"]:
   if not data.has("realm_counts") or not data.realm_counts is Dictionary:data.realm_counts={}
   data.realm_counts[realm]=realm_clears(realm)+1
+ preload("res://scripts/hero_goals372.gd").cleared(self,realm)
+ if previous_realms<3 and preload("res://scripts/hero_journeys373.gd").realm_count(self)>=3:
+  preload("res://scripts/record_toast.gd").show(game,"HERO JOURNEYS AVAILABLE • Visit the Challenge Hall")
  data.bread=true;card.cleared(realm)
+ if first_clear:
+  var champions=[]
+  for hero_id in preload("res://scripts/hero_unlocks371.gd").CHAMPIONS:
+   if preload("res://scripts/hero_unlocks371.gd").CHAMPIONS[hero_id]==realm and not preload("res://scripts/hero_unlocks371.gd").owned(self,hero_id):champions.append(str(game.characters[hero_id].name))
+  if not champions.is_empty():game.get_tree().root.set_meta("fx_champion_invitation",", ".join(champions))
  save()
 func realm_clears(id:String)->int:return maxi(0,int(data.get("realm_counts",{}).get(id,0)))
 func realm_mastered(id:String)->bool:return realm_clears(id)>=10
@@ -400,7 +419,7 @@ func settings_ui()->void:
 func portrait_ui()->void:
  button(body,"Use Traveler silhouette",card.select_portrait.bind(""))
  var grid:=GridContainer.new();grid.columns=6;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",8);body.add_child(grid)
- for id in game.manifest.characters:
+ for id in mastery_heroes():
   var unlocked:bool=card.portrait_unlocked(str(id));var title:=str(game.characters[id].name)
   var tile:=Button.new();tile.custom_minimum_size=Vector2(150,90);tile.text=title;tile.add_theme_font_size_override("font_size",13);tile.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;tile.tooltip_text=title+(" • portrait unlocked" if unlocked else " • unlock the first mastery technique to use this portrait");tile.disabled=not unlocked
   if unlocked:tile.icon=game.art.get(str(game.characters[id].get("sprite",id))+"_idle");tile.expand_icon=true;tile.add_theme_constant_override("icon_max_width",44)
@@ -443,8 +462,10 @@ func mastery_card(parent:Node,id:String,final:bool)->void:
   mastery_label(col,"%d/%d clears • %d/%d realms • %s/%s damage" % [int(rec.clears),int(req.get("clears",3)),rec.realms.size(),int(req.get("distinct_realms",2)),str(int(rec.damage)),str(int(req.get("damage",10000)))],14)
  var action:Callable=final_toggle.bind(id) if final else technique_toggle.bind(id)
  var equip:=button(col,("Switch to original" if equipped else "Equip technique") if ready else "Keep adventuring to unlock",action);equip.disabled=not ready;equip.add_theme_font_size_override("font_size",17)
+func mastery_heroes()->Array:
+ return (game.manifest.characters+game.manifest.get("event_heroes",[])).filter(func(id):return game.characters.has(id) and not game.characters[id].get("mastery",{}).is_empty())
 func mastery_ui()->void:
- var ids:Array=game.manifest.characters
+ var ids:=mastery_heroes()
  var id:=journal_hero;var rec:=record(id);var spec:Dictionary=game.characters[id].mastery
  var head:=HBoxContainer.new();head.add_theme_constant_override("separation",14);body.add_child(head)
  var portrait:=TextureRect.new();portrait.texture=game.art.get(str(game.characters[id].get("sprite",id))+"_idle");portrait.custom_minimum_size=Vector2(64,72);portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;head.add_child(portrait)
@@ -647,7 +668,7 @@ func enable_teacher()->void:
  var wallet=glimmers.state();var test_funds=maxi(0,50000-int(wallet.balance));wallet.balance+=test_funds;wallet.earned+=test_funds
  var garden=gardening.state();garden.xp=maxi(int(garden.xp),gardening.threshold(100))
  for seed in gardening.crops():garden.seeds[seed]=maxi(100,int(garden.seeds.get(seed,0)))
- for id in game.manifest.characters:
+ for id in mastery_heroes():
   var rec:=record(str(id));rec.clears=12;rec.damage=85000;rec.realms=game.manifest.regions.duplicate();rec.points=6
  for id in PROJECTS:data.town[id]=true
  data.bread=true;save()
@@ -741,6 +762,9 @@ func validate(value:Variant)->bool:
  if not value.get("progress") is Dictionary or not value.get("saves") is Dictionary:return false
  if value.progress.has("analytics_id") and (not value.progress.analytics_id is String or not preload("res://scripts/play_insights.gd").valid_id(value.progress.analytics_id)):return false
  var progress:Dictionary=value.progress
+ if progress.has("hero_goals") and not preload("res://scripts/hero_goals372.gd").valid(progress.hero_goals):return false
+ if progress.has("hero_journeys") and not preload("res://scripts/hero_journeys373.gd").valid(progress.hero_journeys):return false
+ if progress.has("hero_ownership") and not preload("res://scripts/hero_unlocks371.gd").valid(progress.hero_ownership):return false
  if not progress.get("tasks",{}) is Dictionary:return false
  if not progress.get("tasks",{}).get("realms",[]) is Array:return false
  var encounters:Variant=progress.get("encounters",{})

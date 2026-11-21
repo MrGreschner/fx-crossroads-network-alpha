@@ -45,6 +45,7 @@ func sync_lobby()->void:
   game.hero_ids[id]=hero;game.lobby_heroes[id]=hero;game.lobby_builds[id]={};game.teams[id]=int(plan[n].team) if game.mode in ["arena","battlegrounds"] else 0
 func reset()->void:states.clear();damage_seen=0
 func practice_progress()->void:
+ if game.has_meta("fx_champion_duel"):return
  if game.spectating() or bool(game.legacy.data.teacher):return
  var total:=float(game.contributions.get(game.my_id,{}).get("damage",0))
  var added:=maxf(0,total-damage_seen);damage_seen=maxf(damage_seen,total)
@@ -53,6 +54,7 @@ func practice_progress()->void:
   record.damage=float(record.damage)+added
 func step(delta:float)->void:
  if game.role!="host" or not game.started or game.start_countdown>0:return
+ if game.has_meta("fx_champion_duel"):game.champion_step(delta);return
  for n in game.bot_count:
   var id="bot:"+str(n)
   if not game.positions.has(id) or int(game.health.get(id,0))<=0:states.erase(id);continue

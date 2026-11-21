@@ -127,6 +127,7 @@ func complete(catch:Dictionary,keep:bool,to_storage:bool=false)->bool:
  legacy.cosmetics.rankings.catch_fish(catch)
  remember_catch(catch)
  legacy.community.note_fish(catch)
+ preload("res://scripts/hero_goals372.gd").catch_fish(legacy,catch)
  save();return true
 func release(id:String)->void:
  income.advance()

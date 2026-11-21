@@ -9,7 +9,73 @@
   "role": "Melee",
   "passive": "Surefooted: keep moving to build momentum for your next Antler Sweep.",
   "passive_effect": "surefooted",
-  "mastery": {},
+  "mastery": {
+    "title": "Pathfinder of the Winter Sky",
+    "technique": {
+      "name": "Driftkick",
+      "ability": "primary",
+      "description": "Kick a snowball that briefly slows its first target. Full Surefooted momentum adds 8 damage and strengthens its slow.",
+      "attack": {
+        "name": "Driftkick",
+        "style": "driftkick",
+        "damage": 17,
+        "cooldown": 0.88,
+        "range": 300,
+        "description": "Kick a snowball that briefly slows its first target. Full Surefooted momentum adds 8 damage and strengthens its slow.",
+        "ui_brief": "Kick a snowball that briefly slows its first target. Full Surefooted momentum adds 8 damage and strengthens its slow.",
+        "speed": 540,
+        "ice_visual": "orb",
+        "color": "#daeff6"
+      }
+    },
+    "final_technique": {
+      "name": "Whiteout Escort",
+      "ability": "special",
+      "description": "Steer your flight to leave shielding snow. Land with a pulse that heals allies for 20 and boosts their speed for 1.8 seconds.",
+      "attack": {
+        "name": "Whiteout Escort",
+        "style": "whiteout_escort",
+        "damage": 0,
+        "cooldown": 22,
+        "range": 115,
+        "description": "Steer your flight to leave shielding snow. Land with a pulse that heals allies for 20 and boosts their speed for 1.8 seconds.",
+        "ui_brief": "Steer your flight to leave shielding snow. Land with a pulse that heals allies for 20 and boosts their speed for 1.8 seconds.",
+        "radius": 115
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  },
   "event": "Winter Holiday",
   "event_active": true,
   "primary": {

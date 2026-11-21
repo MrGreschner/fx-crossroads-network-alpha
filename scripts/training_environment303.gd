@@ -12,12 +12,12 @@ static func prepare()->void:
  if not manifest.is_empty():return
  manifest=JSON.parse_string(FileAccess.get_file_as_string("res://assets/training303/manifest.json"))
  placements=JSON.parse_string(FileAccess.get_file_as_string("res://assets/training303/placements.json"))
- pages=JSON.parse_string(FileAccess.get_file_as_string("res://assets/training303/pages.json"))
+
 static func texture(id:String)->Texture2D:
  if not textures.has(id):
   var im=Image.new()
   if im.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/training303/"+id+".png"))!=OK:return null
-  var t=CanvasTexture.new();t.diffuse_texture=ImageTexture.create_from_image(im);t.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;textures[id]=t
+  var t=CanvasTexture.new();t.diffuse_texture=ImageTexture.create_from_image(im);t.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;t.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED;textures[id]=t
  return textures[id]
 static func frame(id:String)->Texture2D:
  prepare()
@@ -29,21 +29,18 @@ static func bounds(p:Dictionary)->Rect2:
 static func draw(g:Node2D,cam:Vector2)->void:
  prepare();visible_pages=0;visible_props=0
  var view=Rect2(cam,g.VIEW).grow(180)
- g.draw_rect(Rect2(-cam,Vector2(1800,1200)),Color("#51664b"))
- for page in pages:
-  var r=Rect2(page.x,page.y,page.w,page.h)
-  if view.intersects(r):g.draw_texture_rect(texture(str(page.id)),Rect2(r.position-cam,r.size),false);visible_pages+=1
+ # A single muted surface keeps projectiles and hero silhouettes readable.
+ var floor_rect=Rect2(-cam,Vector2(1800,1200))
+ g.draw_rect(floor_rect,Color("#77776b"))
+ g.draw_texture_rect(texture("clay"),floor_rect,true,Color(1,1,1,.16))
+ visible_pages=1
  for flat in [true,false]:
   for p in placements:
-   if bool(p.flat)!=flat:continue
+   if bool(p.flat)!=flat or bool(p.flat):continue
    var r=bounds(p)
    if not view.intersects(r):continue
    var alpha=.25 if not flat and r.grow(20).has_point(g.position_in_world) else 1.0
    g.draw_texture_rect(Polish.yard_texture(str(p.kind)),Rect2(r.position-cam,r.size),false,Color(1,1,1,alpha));visible_props+=1
- # Small drifting leaves are decorative and bounded, never projectiles.
- for n in 10:
-  var at=Vector2(fposmod(n*193+g.visual_clock*7,1800),100+fposmod(n*151+sin(g.visual_clock*.3+n)*8,1050))
-  if view.has_point(at):g.draw_line(at-cam,at-cam+Vector2(3,1),Color(.85,.86,.63,.18),1.5)
 static func exit_art(c:CanvasItem,p:Vector2)->void:
  # Keep the existing walk-out opening and text, without a portal or a new wall.
  for y in [-125,120]:

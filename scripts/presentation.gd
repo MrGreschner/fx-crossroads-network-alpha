@@ -81,12 +81,13 @@ func window(title:String,kind:String)->void:
   var back:=button(col,"Close",close)
   back.size_flags_horizontal=Control.SIZE_SHRINK_END
   back.custom_minimum_size=Vector2(92,42)
- elif kind not in ["elder_guidance"]:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
+ elif kind not in ["elder_guidance","champion_intro","champion_result"]:button(col,"Skip introduction" if kind=="starter" else "Close • Esc",skip_intro if kind=="starter" else close)
 func _unhandled_input(event:InputEvent)->void:
  if not event is InputEventKey or not event.pressed or event.echo:return
  if page=="starter" and event.keycode>=KEY_1 and event.keycode<=KEY_9:
   var id:String=str(game.manifest.characters[event.keycode-KEY_1]);close();game.tutorial.start(id);get_viewport().set_input_as_handled();return
  if page=="skill_unlock" and clock<read_until:return
+ if event.keycode==KEY_ESCAPE and page in ["champion_intro","champion_result"]:get_viewport().set_input_as_handled();return
  if event.keycode==KEY_ESCAPE and not page.is_empty():
   if page=="starter":skip_intro()
   elif page=="results" and not arcade:return_to_town()

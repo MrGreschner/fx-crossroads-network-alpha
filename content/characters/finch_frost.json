@@ -4,12 +4,78 @@
   "name": "Finch Frost",
   "max_health": 108,
   "speed": 232,
-  "lore": "A blue frost creature who carries messages across the winter wilds and reads storms by the sound of snow on his scarf.",
+  "lore": "A living ice spirit who carries messages across the winter wilds and reads storms by the sound of snow on his scarf.",
   "run_cost": 0,
   "role": "Ranged / Control",
   "passive": "Deep Winter: Ice attacks build Chill and progressively slow enemies. At full Chill, freeze them solid. Frozen enemies still take damage and gain a brief immunity to Chill after thawing.",
   "passive_effect": "deep_winter",
-  "mastery": {},
+  "mastery": {
+    "title": "Voice of the North Wind",
+    "technique": {
+      "name": "Icicle Fan",
+      "ability": "primary",
+      "description": "Fire three short-range icicles. Each deals 8 damage and builds 16 Chill. Close targets can catch all three.",
+      "attack": {
+        "name": "Icicle Fan",
+        "style": "icicle_fan",
+        "damage": 8,
+        "cooldown": 0.91,
+        "range": 240,
+        "description": "Fire three short-range icicles. Each deals 8 damage and builds 16 Chill. Close targets can catch all three.",
+        "ui_brief": "Fire three short-range icicles. Each deals 8 damage and builds 16 Chill. Close targets can catch all three.",
+        "speed": 560,
+        "ice_visual": "spear",
+        "color": "#b2ebff"
+      }
+    },
+    "final_technique": {
+      "name": "Glacier Break",
+      "ability": "special",
+      "description": "Mark an area and shatter it after a warning. Deal 34 damage and build 70 Chill, freezing chilled enemies when Deep Winter is active.",
+      "attack": {
+        "name": "Glacier Break",
+        "style": "glacier_break",
+        "damage": 34,
+        "cooldown": 36,
+        "range": 350,
+        "description": "Mark an area and shatter it after a warning. Deal 34 damage and build 70 Chill, freezing chilled enemies when Deep Winter is active.",
+        "ui_brief": "Mark an area and shatter it after a warning. Deal 34 damage and build 70 Chill, freezing chilled enemies when Deep Winter is active.",
+        "radius": 122
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  },
   "event": "Winter Holiday",
   "event_active": true,
   "primary": {
@@ -18,8 +84,8 @@
     "damage": 18,
     "cooldown": 0.85,
     "range": 520,
-    "description": "Throw one piercing ice spear. Each enemy hit takes damage and gains Chill.",
-    "ui_brief": "Throw one piercing ice spear. Each enemy hit takes damage and gains Chill.",
+    "description": "Throw one piercing ice spear. Each enemy hit takes damage and gains 35 Chill. More Chill means a stronger movement slow.",
+    "ui_brief": "Throw one piercing ice spear. Each enemy hit takes damage and gains 35 Chill. More Chill means a stronger movement slow.",
     "speed": 570,
     "projectile_radius": 7,
     "ice_visual": "spear",

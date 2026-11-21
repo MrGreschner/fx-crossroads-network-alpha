@@ -64,6 +64,7 @@ func descent_cleared(count:int,party_size:int)->void:
  weekly_survival("descent",count)
  legacy.daily.survival("descent",count,party_size)
  state().descent_best=maxi(int(state().descent_best),count)
+ preload("res://scripts/hero_goals372.gd").sync(legacy)
  if party_size<2:return
  legacy.data.tasks["coop_descent"]=maxi(int(legacy.data.tasks.get("coop_descent",0)),count)
 func weekly_survival(kind:String,count:int)->void:
@@ -86,6 +87,7 @@ func sync_match(match_id:String,mode:String,random_heroes:bool,hero:String,stats
   var total:=maxf(0,damage);var added:=maxf(0,total-float(seen.damage))
   if added>0:legacy.add_damage(hero,added)
   seen.damage=maxf(total,float(seen.damage))
+ preload("res://scripts/hero_goals372.gd").observe_deaths(legacy,int(stats.get("deaths",0)))
  seen["mode"]=mode;seen["random"]=random_heroes
  legacy.cosmetics.competitive.match_stats(match_id,mode,stats)
  if mode!="arena":return

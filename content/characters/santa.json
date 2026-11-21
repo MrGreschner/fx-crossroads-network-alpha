@@ -9,7 +9,70 @@
   "role": "Support",
   "passive": "Gift Wrap: every third damaging parcel hit strengthens your next Care Package.",
   "passive_effect": "gift_wrap",
-  "mastery": {},
+  "mastery": {
+    "title": "Keeper of the Last Lantern",
+    "technique": {
+      "name": "Doorstep Bell",
+      "ability": "primary",
+      "description": "Swing your parcel sack in a close arc. A successful swing counts once toward Gift Wrap.",
+      "attack": {
+        "name": "Doorstep Bell",
+        "style": "doorstep_bell",
+        "damage": 23,
+        "cooldown": 0.68,
+        "range": 86,
+        "description": "Swing your parcel sack in a close arc. A successful swing counts once toward Gift Wrap.",
+        "ui_brief": "Swing your parcel sack in a close arc. A successful swing counts once toward Gift Wrap."
+      }
+    },
+    "final_technique": {
+      "name": "Emergency Delivery",
+      "ability": "special",
+      "description": "Parachute a supply crate to the aimed area. On landing, heal allies for 24 and grant 30% damage reduction for 2 seconds.",
+      "attack": {
+        "name": "Emergency Delivery",
+        "style": "emergency_delivery",
+        "damage": 0,
+        "cooldown": 21,
+        "range": 310,
+        "description": "Parachute a supply crate to the aimed area. On landing, heal allies for 24 and grant 30% damage reduction for 2 seconds.",
+        "ui_brief": "Parachute a supply crate to the aimed area. On landing, heal allies for 24 and grant 30% damage reduction for 2 seconds.",
+        "radius": 98
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  },
   "event": "Winter Holiday",
   "event_active": true,
   "primary": {

@@ -22,7 +22,7 @@ func strike(combat:Node,id:String,origin:Vector2,aim:Vector2,reach:float,damage:
   if offset.dot(aim)<0 or offset.dot(aim)>reach:continue
   if Geometry2D.get_closest_point_to_segment(actor.pos,origin,tip).distance_to(actor.pos)<=17 and combat.path_clear(origin,actor.pos):
    combat.damage(key,damage,id,"Spear Jab")
- flashes.append({"from":[origin.x,origin.y],"to":[tip.x,tip.y],"time":.16,"jab":true})
+ flashes.append({"from":[origin.x,origin.y],"to":[tip.x,tip.y],"owner":id,"time":.23,"jab":true})
 
 func step(combat:Node,events:Node,delta:float)->void:
  for id in stance.keys():
@@ -94,6 +94,17 @@ func draw_on(canvas:Node2D,camera:Vector2,combat:Node)->void:
   var angle:float=stance[id].angle
   canvas.draw_arc(origin,24,angle-1.0,angle+1.0,14,Color("#d5ac71"),2)
   canvas.draw_line(origin+Vector2.from_angle(angle)*25,origin+Vector2.from_angle(angle)*37,Color("#e9c68b"),2)
+  for x in [-8,8]:canvas.draw_line(origin+Vector2(x-4,5),origin+Vector2(x+4,5),Color("#9e9b7a"),3)
+  var game:Node=combat.adventure.game
+  var local=not combat.adventure.arcade or str(id)==str(game.my_id)
+  if local:
+   var reach=112.0*1.4
+   var tip=origin+Vector2.from_angle(angle)*reach
+   canvas.draw_line(origin+Vector2.from_angle(angle)*40,tip,Color(.76,.82,.7,.34),1)
+   canvas.draw_arc(tip,5,0,TAU,12,Color("#b3c7b5"),1)
+   var seconds=combat.events.display_time(float(stance[id].time))
+   canvas.draw_style_box(preload("res://scripts/event_hero_visuals375.gd").plate(),Rect2(origin+Vector2(-84,-102),Vector2(168,22)))
+   canvas.draw_string(ThemeDB.fallback_font,origin+Vector2(-80,-86),"STAND FAST • %.1fs" % seconds,HORIZONTAL_ALIGNMENT_CENTER,160,12,Color("#e9c68b"))
  for tree in trees.values():
   var p:Vector2=combat.vec(tree.pos)-camera
   if tree.light>0:

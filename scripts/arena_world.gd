@@ -102,6 +102,7 @@ func test_enemies(reset:bool=true)->void:
 func point(a:Array)->Vector2:return Vector2(float(a[0]),float(a[1]))
 func pits()->Array:return [Vector2(850,720),Vector2(1550,1080),Vector2(1230,1420)]
 func slow(p:Vector2)->float:
+ if is_instance_valid(game) and game.has_meta("fx_champion_duel"):return 1.0
  if not is_instance_valid(game) or game.mode!="arena":return 1.0
  if map_id=="sand":
   for pit in pits():
@@ -121,6 +122,7 @@ func harm(p:Vector2,radius:float,damage:float)->void:
  for id in game.positions:
   if int(game.health.get(id,0))>0 and p.distance_to(game.positions[id])<radius:game._hurt(str(id),damage,"environment","",preload("res://scripts/defeat_credit.gd").hazard("Arena hazard"))
 func step(delta:float)->void:
+ if is_instance_valid(game) and game.has_meta("fx_champion_duel"):return
  if not is_instance_valid(game) or game.mode!="arena" or game.role!="host":return
  clock+=delta;tick+=delta;spawn_timer-=delta
  extra.step(delta)
@@ -176,6 +178,7 @@ func receive(data:Dictionary)->void:
  if shatter.active():shatter.receive(data.get("shatter",{}))
  if objective.active():objective.receive(data.get("objective",{}))
 func draw()->void:
+ if is_instance_valid(game) and game.has_meta("fx_champion_duel"):return
  if not is_instance_valid(game) or game.mode!="arena":return
  extra.draw_ground()
  objective.draw_ground()

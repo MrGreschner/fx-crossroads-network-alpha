@@ -376,6 +376,7 @@ func melee_received(id:String,attacker:String)->void:
 		if statuses.has(attacker) and statuses[attacker].has("poison"):statuses[attacker].poison["interval"]=.5
 	if passive(id,"slow_thorns"):apply_status(attacker,"slow",3,id,.55)
 func cast(owner:String,stats:Dictionary,aim:Vector2,amount:float)->bool:
+	if events.clamps.has(owner):return true
 	if passive(owner,"needle_frost"):
 		stats=stats.duplicate(true);stats["slow_duration"]=1.0;stats["slow"]=.8
 	var style:=str(stats.get("style",""))
@@ -868,6 +869,7 @@ func step_projectiles(delta:float)->void:
 						v59.impact(shot,center)
 						var stats:Dictionary=shot.get("stats",{})
 						if float(stats.get("echo_brand",0))>0:adventure.expansion.brand(owner,impact,float(stats.echo_brand))
+						if stats.get("style","")=="icicle_fan":events.frost.chill(self,impact,owner,16.0)
 						apply_hit_status(impact,stats,owner,shot.get("credit",{}))
 						if float(stats.get("slow_duration",0))>0:apply_status(impact,"slow",float(stats["slow_duration"]),owner,float(stats.get("slow_factor",.75)))
 						if float(stats.get("splash_radius",0))>0:

@@ -21,6 +21,7 @@ func change_hero(index:int)->void:
  if game.started:return
  var id=str(game.hero_picker.get_item_metadata(index))
  if not game.characters.has(id):return
+ if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,id):game.status_label.text="Unlock this hero first. Check its goal in the Character Hall.";return
  if id.begins_with("custom_") and not game.custom_party.allowed(game.custom_party.project_for(id)):game.status_label.text="Customs are off, or this public build needs Forced Balance.";return
  game.selected_hero=id;game.preferred_hero=id;game.get_tree().root.set_meta("fx_hero",id);game.session_hero_sent=false
  if not game.my_id.is_empty():game.hero_ids[game.my_id]=id;game.lobby_heroes[game.my_id]=id;game.lobby_builds[game.my_id]=game.legacy.payload(id);game.health[game.my_id]=game._max_hp(game.my_id)

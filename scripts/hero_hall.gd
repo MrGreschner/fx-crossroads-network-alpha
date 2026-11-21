@@ -70,7 +70,7 @@ func setup(owner:Node)->void:
  var right:=ScrollContainer.new();right_scroller=right;right.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;right.size_flags_vertical=Control.SIZE_EXPAND_FILL;split.add_child(right)
  details=VBoxContainer.new();details.custom_minimum_size.x=600;details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",8);right.add_child(details)
  preload("res://scripts/touch_list_scroll.gd").attach(scroller);preload("res://scripts/touch_list_scroll.gd").attach(right_scroller)
- label(col,"Swipe lists to browse. Tap an ability for details; Story opens lore.",16)
+ label(col,"Earn heroes through goals, journeys and duels. Test hero is practice only.",16)
 func label(parent:Node,text:String,size:int=18)->Label:
  var l:=Label.new();l.text=text;l.add_theme_font_size_override("font_size",size);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
 func button(parent:Node,text:String,call:Callable)->Button:
@@ -90,6 +90,7 @@ func set_collection(value:int)->void:
  collection=value
  refresh()
 func preview_id()->String:
+ if game.hero_preview in shown:return str(game.hero_preview)
  if game.selected_character in shown:return game.selected_character
  for id in shown:
   if bool(game.characters[id].get("event_active",true)):return str(id)
@@ -97,12 +98,13 @@ func preview_id()->String:
 func continue_with_preview()->void:
  var id:=preview_id()
  if id.is_empty() or not bool(game.characters[id].get("event_active",true)):return
+ if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,id):return
  if id!=game.selected_character:select(id)
  close()
 func test_hero()->void:
  var id:=preview_id()
  if id.is_empty() or not bool(game.characters[id].get("event_active",true)):return
- if id!=game.selected_character:select(id)
+ game.selected_character=id;game.hero=game.characters[id].duplicate(true)
  close(false);game.start_training()
 func close(apply_selection:bool=true)->void:
  game.menu="";game.mobile.reset_controls();Input.action_release("secondary");game.queue_redraw();panel.hide();was_open=false
@@ -115,7 +117,9 @@ func favourite(id:String)->void:
  game.legacy.data.favourites=values;game.legacy.save();refresh()
 func select(id:String)->void:
  if not bool(game.characters[id].get("event_active",true)):return
- game.hero_preview=id;game.selected_character=id;game.hero=game.characters[id].duplicate(true)
+ game.hero_preview=id
+ if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,id):refresh(false);return
+ game.selected_character=id;game.hero=game.characters[id].duplicate(true)
  if not game.practice:game.character_id=id
  if game.studio_live!=null:game.studio_live.last_hero="";game.studio_live.hide()
  game.mark_welcome("hero");game.save_profile();game.queue_redraw();refresh(false)
@@ -140,7 +144,7 @@ func refresh(reset_scroll:bool=true)->void:
  count_label.text=str(shown.size())+" / "+str(ids.size())
  for tab in collection_tabs:collection_tabs[tab].set_pressed_no_signal(tab==collection)
  var preview:=preview_id()
- continue_button.disabled=preview.is_empty() or not bool(game.characters[preview].get("event_active",true))
+ continue_button.disabled=preview.is_empty() or not bool(game.characters[preview].get("event_active",true)) or not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,preview)
  for tag in role_buttons:role_buttons[tag].set_pressed_no_signal(tag==role)
  if shown.is_empty():label(rows,"No matches. Try another filter or mark a favourite.",18)
  for id in shown:
@@ -150,6 +154,7 @@ func refresh(reset_scroll:bool=true)->void:
   var b:=button(line,("Community" if str(id).begins_with("community_") else "Custom" if str(id).begins_with("custom_") else str(library.number(game,str(id))))+". "+str(h.name)+"\n"+str(info.role)+" • "+str(info.difficulty),select.bind(id));b.custom_minimum_size.y=96;b.clip_text=true;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.add_theme_font_size_override("font_size",16)
   if collection==EVENT:
    b.text=str(h.name)+"\n"+str(h.event)+(" • Active" if h.event_active else " • Inactive");b.disabled=not h.event_active
+  if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,str(id)):b.text+=" • Locked";b.tooltip_text=preload("res://scripts/hero_unlocks371.gd").hint(game,str(id))
   if id==game.selected_character:b.modulate=Color("#ffe0a1");b.tooltip_text="Selected hero"
   var icon:Texture2D=preload("res://scripts/hero_portrait.gd").texture(game,str(id))
   if icon!=null:b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",80)
@@ -176,6 +181,11 @@ func render_details()->void:
  var test:=button(actions,"Test hero",test_hero);test.custom_minimum_size=Vector2(82,30);test.add_theme_font_size_override("font_size",13);test.tooltip_text="Try this hero at level 10 in the training yard"
  var compare=button(actions,"Compare heroes",func():var comparison=preload("res://scripts/hero_compare.gd").new();comparison.open(game));compare.custom_minimum_size=Vector2(108,30);compare.add_theme_font_size_override("font_size",13)
  var story:=button(actions,"Story",func():show_story(id));story.custom_minimum_size=Vector2(52,30);story.add_theme_font_size_override("font_size",13);story.tooltip_text="Who is "+str(h.name)+"?"
+ if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,id):
+  label(overview,preload("res://scripts/hero_unlocks371.gd").hint(game,id),15).modulate=Color("#f0d194")
+  if id in preload("res://scripts/hero_unlocks371.gd").ACTIVITY_IDS:button(actions,"View goal",func():preload("res://scripts/hero_goals372.gd").open(game,id))
+  elif preload("res://scripts/hero_journeys373.gd").catalog().has(id):button(actions,"View journey",func():preload("res://scripts/hero_journeys373.gd").open(game,id))
+  else:button(actions,"View challenge",func():preload("res://scripts/hero_unlocks371.gd").open_hall(game))
  preload("res://scripts/hero_stat_bars.gd").add_to(overview,h)
  var home:String=str(info.get("home_realm",""))
  if not home.is_empty():story.tooltip_text+=" • "+str(game.realms.get(home,{}).get("name",home))

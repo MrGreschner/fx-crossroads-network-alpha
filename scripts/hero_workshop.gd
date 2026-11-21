@@ -42,6 +42,7 @@ func setup(owner:Node)->void:
  button(title,"Code playground",func():var lab=preload("res://scripts/structured_lab.gd").new();add_child(lab);lab.setup(self));button(title,"Close",close)
  var tools=HBoxContainer.new();body.add_child(tools)
  button(tools,"Clear / Start fresh",confirm_new);button(tools,"Open project",func():choose_file("project"));button(tools,"Download project",export_project);button(tools,"Save draft",save_draft)
+ button(tools,"Teacher’s Lesson",show_unlock_lesson)
  button(tools,"Playtest",start_test);button(tools,"Finalize & Play",play_draft)
  var examples=HBoxContainer.new();body.add_child(examples);preload("res://scripts/studio_examples.gd").picker(examples,"hero",func(value:Dictionary):project=value;latest_report={};techniques=[false,false];save_draft();render())
  tabs=TabBar.new();body.add_child(tabs)
@@ -84,6 +85,7 @@ func open(classroom:bool=false)->void:
  notice.text="Local draft ready. Clear / Start fresh creates a blank project; use Load an example to explore five different designs."
 func close()->void:
  for child in get_children():
+  if child.has_meta("hero_unlock_lesson"):child.hide();child.queue_free()
   if child.get_script() in [preload("res://scripts/studio_enemy_lab.gd"),preload("res://scripts/studio_behavior_lab.gd")]:child.queue_free()
  if arena!=null and arena.time>0:finish_test()
  if is_instance_valid(hub):hub.hide()
@@ -334,6 +336,7 @@ func finish_test()->void:
  if arena==null:return
  arena.running=false;arena.cancel_holds();touch_direction=Vector2.ZERO
  latest_report=arena.report(project.notes)
+ preload("res://scripts/hero_goals372.gd").report(game.legacy,project,latest_report,arena.health>0)
  if arena.time>0:
   project.reports.append(latest_report.duplicate(true))
   preload("res://scripts/learning_store.gd").activity("Hero test completed",str(project.hero.name))
@@ -596,3 +599,20 @@ func submit_community()->void:
  var dialog=ConfirmationDialog.new();dialog.title="Submit for community review?";dialog.dialog_text="Your hero, artwork, lore and cloud username will be visible to admins. Approved heroes become playable by the community. Keep real names out of your work. Editing your draft later will not change this submitted copy.";dialog.ok_button_text="Send for review";add_child(dialog)
  dialog.confirmed.connect(func():get_tree().root.get_node("FXCommunityHeroes").submit(project,func(message:String):notice.text=message);dialog.queue_free())
  dialog.canceled.connect(dialog.queue_free);dialog.popup_centered(Vector2i(600,230))
+
+func show_unlock_lesson()->void:
+ preload("res://scripts/hero_goals372.gd").begin_lesson(game.legacy,project)
+ for child in get_children():
+  if child.has_meta("hero_unlock_lesson") or child.get_script()==preload("res://scripts/studio_intro.gd"):child.queue_free()
+ if is_instance_valid(hub):hub.hide()
+ panel.show()
+ var overlay=ColorRect.new();overlay.set_meta("hero_unlock_lesson",true);overlay.name="TeacherLesson";overlay.color=Color(0.02,0.08,0.11,.82);overlay.z_index=200;overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(overlay)
+ var center=CenterContainer.new();center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);overlay.add_child(center)
+ var frame=PanelContainer.new();frame.custom_minimum_size=Vector2(680,340);frame.add_theme_stylebox_override("panel",UI.box("#112f38","#d5b577",12,22));center.add_child(frame)
+ var col=VBoxContainer.new();col.add_theme_constant_override("separation",16);frame.add_child(col)
+ var heading=HBoxContainer.new();heading.add_theme_constant_override("separation",18);col.add_child(heading)
+ var portrait=TextureRect.new();portrait.texture=preload("res://scripts/hero_portrait.gd").texture(game,"teacher");portrait.custom_minimum_size=Vector2(64,64);portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;heading.add_child(portrait)
+ var identity=VBoxContainer.new();identity.size_flags_horizontal=Control.SIZE_EXPAND_FILL;identity.custom_minimum_size.x=540;heading.add_child(identity);label(identity,"CROSSROADS TEACHER",24).modulate=Color("#f0d194");label(identity,"Build, predict, test • Hero unlock lesson",16).modulate=Color("#b6d8dc")
+ label(col,preload("res://scripts/hero_goals372.gd").lesson_status(game.legacy,project),18).custom_minimum_size.x=636
+ label(col,"Use Hero for your name and concept, Abilities to change the primary, then Playtest → Finish & report. Your current draft is kept.",16).custom_minimum_size.x=636
+ var next=button(col,"Continue in Workshop",func():overlay.queue_free());next.name="LessonContinue";UI.accent(next)

@@ -6,6 +6,7 @@ const BREATH_TICK=.25
 const STORM_TICK=.8
 const CHILL_LIMIT=100.0
 const CHILL_HOLD=2.25
+const MIN_CHILLED_SPEED=.40
 var chills:Dictionary={}
 var breaths:Dictionary={}
 var storms:Dictionary={}
@@ -47,7 +48,7 @@ func chill(combat:Node,key:String,id:String,amount:float)->void:
  chills[key]=state
 
 func speed(key:String)->float:
- return lerpf(1.0,.57,float(chills.get(key,{}).get("amount",0.0))/CHILL_LIMIT)
+ return lerpf(1.0,MIN_CHILLED_SPEED,clampf(float(chills.get(key,{}).get("amount",0.0))/CHILL_LIMIT,0,1))
 
 func spear_hits(combat:Node,shot:Dictionary,start:Vector2,end:Vector2)->void:
  var center:Vector2=(start+end)*.5
@@ -155,3 +156,6 @@ func draw_on(canvas:Node2D,camera:Vector2,combat:Node)->void:
    canvas.draw_polyline(ice,Color("#aaf0ff"),2)
   elif float(state.amount)>0:
    canvas.draw_arc(p+Vector2(0,9),19,-PI*.5,-PI*.5+TAU*float(state.amount)/CHILL_LIMIT,14,Color("#8ddcf6"),2)
+   var percent=roundi((1.0-speed(str(key)))*100)
+   canvas.draw_style_box(preload("res://scripts/event_hero_visuals375.gd").plate(),Rect2(p+Vector2(-51,-94),Vector2(102,19)))
+   canvas.draw_string(ThemeDB.fallback_font,p+Vector2(-48,-80),"CHILL • −%d%%" % percent,HORIZONTAL_ALIGNMENT_CENTER,96,11,Color("#9edff2"))

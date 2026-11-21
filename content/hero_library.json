@@ -106,7 +106,7 @@
       "Support"
     ],
     "difficulty": "Easy to learn",
-    "home_realm": "",
+    "home_realm": "zombie",
     "summary": "Protect or sustain your team; playable solo.",
     "lore": "A masked field healer who goes where others retreat, carrying remedies for stranger dangers.",
     "passive_brief": "Recover health on a kill."
@@ -150,7 +150,7 @@
       "Ranged"
     ],
     "difficulty": "Easy to learn",
-    "home_realm": "clockwork_orchard",
+    "home_realm": "",
     "summary": "Aim, distance and attack timing.",
     "lore": "A wizard who reads the weather in the orchard clock towers.",
     "passive_brief": "Primary recharges 20% faster."
@@ -161,7 +161,7 @@
       "Ranged"
     ],
     "difficulty": "Some practice",
-    "home_realm": "",
+    "home_realm": "astral_rift",
     "summary": "Aim, distance and attack timing.",
     "lore": "A bat courier who carries lost stars between broken observatories.",
     "passive_brief": "Secondary recharges 20% faster."
@@ -185,7 +185,7 @@
       "Control"
     ],
     "difficulty": "Easy to learn",
-    "home_realm": "",
+    "home_realm": "ice",
     "summary": "Aim, distance and attack timing.",
     "lore": "A snow sculpture determined to see every season without losing his winter heart.",
     "passive_brief": "Take 10% less damage."
@@ -434,7 +434,7 @@
       "Ranged"
     ],
     "difficulty": "Some practice",
-    "home_realm": "",
+    "home_realm": "petalbrook",
     "summary": "Aim, distance and attack timing.",
     "lore": "A silk-winged moth who weaves moonlit threads to keep lost travelers safe.",
     "passive_brief": "Tripline grants armour and poison reprisal."
@@ -492,7 +492,7 @@
       "Control"
     ],
     "difficulty": "Some practice",
-    "home_realm": "",
+    "home_realm": "clockwork_orchard",
     "summary": "Protect or sustain your team; playable solo.",
     "lore": "A patient keeper of misplaced seconds, whose brass hourglass turns battlefield positions into promises.",
     "passive_brief": "Second Needle marks last six seconds."
@@ -550,7 +550,7 @@
       "Ranged"
     ],
     "difficulty": "Technical",
-    "home_realm": "quarry",
+    "home_realm": "cinderheart",
     "summary": "Aim, distance and attack timing.",
     "lore": "A volcanic snail carrying a living furnace, slowly seeking a place warm enough to call home.",
     "passive_brief": "Nearby foes lose up to 40 armour points."
@@ -729,9 +729,9 @@
       "Ranged"
     ],
     "difficulty": "Technical",
-    "home_realm": "",
+    "home_realm": "clockwork_orchard",
     "summary": "Deploy a hive and guide a ranged swarm.",
-    "lore": "A human beekeeper-engineer who built a clockwork swarm to preserve the wild gardens.",
+    "lore": "A human beekeeper-engineer who built a clockwork swarm to preserve the wild gardens. The Clockwork Orchard is home to the apiaries this engineer tends.",
     "passive_brief": "Drone capacity increases to four."
   },
   "bailiff": {
@@ -913,7 +913,7 @@
       "Control"
     ],
     "difficulty": "Technical",
-    "home_realm": "grove",
+    "home_realm": "",
     "summary": "Three fast punches, pocket-sized movement and a dangerous health trade.",
     "lore": "This mouse brawler carries a pocketful of shrinking charms and an oversized sense of courage. Small does not mean safe: his boldest strike spends his own heartbeats.",
     "passive_brief": "Small Courage: landing all three punches grants 10% damage reduction for 1.5s."
@@ -925,9 +925,9 @@
       "Melee"
     ],
     "difficulty": "Some practice",
-    "home_realm": "quarry",
+    "home_realm": "descent",
     "summary": "Enchant ally attacks with fire, share protective warmth and plant a healing banner.",
-    "lore": "An armadillo firekeeper from Ember Quarry carries the first coal of her village in a brass lantern. Her shell shelters travellers; her songs lend their weapons a little borrowed warmth.",
+    "lore": "An armadillo firekeeper from the deep cave hearths carries the first coal of her village in a brass lantern. Her shell shelters travellers; her songs lend their weapons a little borrowed warmth.",
     "passive_brief": "Nearby allies • 10% damage reduction • 170 reach"
   },
   "lockjaw": {
@@ -937,7 +937,7 @@
       "Control"
     ],
     "difficulty": "Some practice",
-    "home_realm": "",
+    "home_realm": "confluence",
     "summary": "A clockwork crocodile built to pull jammed sluice gates free. Now he keeps watch over the Foundry’s lower channels.",
     "lore": "A clockwork crocodile built to pull jammed sluice gates free. Now he keeps watch over the Foundry’s lower channels."
   },
@@ -975,8 +975,8 @@
   "finch_frost": {
     "role": "Ranged / Control",
     "difficulty": "Intermediate",
-    "summary": "A winter courier who learned to read storms by the sound of snow on his scarf.",
-    "lore": "A winter courier who learned to read storms by the sound of snow on his scarf.",
+    "summary": "A living ice spirit who carries messages across the winter wilds and reads storms by the sound of snow on his scarf.",
+    "lore": "A living ice spirit who carries messages across the winter wilds and reads storms by the sound of snow on his scarf.",
     "passive_brief": "At full Chill, enemies freeze briefly and can still take damage."
   }
 }

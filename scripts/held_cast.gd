@@ -23,6 +23,7 @@ func supports(id:String,kind:String)->bool:
 func suppressed(id:String,kind:String)->bool:
  return (supports(id,kind) or charges.has(id)) and not context.has(id)
 func ready(id:String,kind:String)->bool:
+ if not combat.events.allowed_action(id,kind):return false
  if not combat.playing() or not combat.adventure.alive(id) or combat.stunned(combat.player_key(id)) or combat.busy(id):return false
  var game:Node=combat.adventure.game
  var lv:int=int(game.levels.get(id,1)) if combat.adventure.arcade else int(game.level)

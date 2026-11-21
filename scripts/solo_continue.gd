@@ -1,7 +1,7 @@
 extends Node
 ## Practice continuation preserves the live battle but rolls back run-earned awards.
 const STORE=preload("res://scripts/profile_store.gd")
-const KEYS=["heroes","tasks","card","realm_counts","cosmetics","rolling_damage","daily","bread","quest_ids","title","backup_reminder"]
+const KEYS=["hero_journeys","hero_goals","hero_ownership","heroes","tasks","card","realm_counts","cosmetics","rolling_damage","daily","bread","quest_ids","title","backup_reminder"]
 var game:Node
 var arcade=false
 var active=false
@@ -47,7 +47,8 @@ func restore_progress()->void:
  game.legacy.save()
 func resume()->void:
  if not available():return
- restore_progress();active=true;get_tree().root.set_meta("fx_practice_continue",true)
+ preload("res://scripts/hero_goals372.gd").abandon(game.legacy)
+ restore_progress();preload("res://scripts/hero_goals372.gd").forfeit(game.legacy);active=true;get_tree().root.set_meta("fx_practice_continue",true)
  game.presentation.close();game.presentation.last_result="";game.mobile.reset_controls()
  if arcade:
   game.started=true;game.results_reason="";game.health[game.my_id]=game._max_hp(game.my_id);game.downed.erase(game.my_id);game.respawn_at.erase(game.my_id);game.invincible_until[game.my_id]=Time.get_ticks_msec()+3000

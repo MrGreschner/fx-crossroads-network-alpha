@@ -278,6 +278,9 @@ func receive(key:int,data:Dictionary)->void:
    g.equipment_loadouts[member]=preload("res://scripts/prepared_equipment238.gd").clean(room.members[member].get("equipment",[]),g.items)
    g.supply_loadouts[member]=room.members[member].get("consumable","");g.shop_discounts[member]=room.members[member].get("shop_discount",false)
    g.food_registered[member]=true;g.food_loadouts[member]=room.members[member].get("food","")
+  var champion_claims={}
+  for member in room.members:champion_claims[member]=room.members[member].get("owned_champions",[])
+  g.set_meta("champion_claims",champion_claims)
   g._start_match()
   if not g.started:fail(key,"Realm could not start: "+g.status_label.text);return
   for member in room.members:
@@ -295,7 +298,7 @@ func receive(key:int,data:Dictionary)->void:
  if kind=="hero":
   if g.started:return
   var hero=str(data.get("hero",""))
-  if valid_hero(g,hero):room.members[id].hero=hero;room.members[id].build_choice=g.legacy.sanitize_build(data.get("build_choice",{}));lobby(identity.room)
+  if valid_hero(g,hero) and preload("res://scripts/hero_unlocks371.gd").allowed_claim(hero,room.members[id].get("owned_champions",[])):room.members[id].hero=hero;room.members[id].build_choice=g.legacy.sanitize_build(data.get("build_choice",{}));lobby(identity.room)
   return
  if not g.started or str(data.get("match_id",""))!=g.match_id:return
  if kind in ["choice","upgrade","gift"]:
@@ -433,6 +436,9 @@ func join(key:int,data:Dictionary)->void:
   if room.members.size()+room.game.bot_plan.size()>=int(room.seats):fail(key,"Room full; disconnected seats are reserved for 60 seconds.");return
   var hero=str(data.get("hero","ram"))
   if not valid_hero(room.game,hero):fail(key,"Choose an official hero.");return
+  if int(data.get("hero_unlock_epoch",0))!=preload("res://scripts/hero_unlocks371.gd").EPOCH:fail(key,"Update your web game to V374 or newer for the earned hero unlock system.");return
+  var owned_champions=preload("res://scripts/hero_unlocks371.gd").clean_claim(data.get("owned_champions",[]))
+  if not preload("res://scripts/hero_unlocks371.gd").allowed_claim(hero,owned_champions):fail(key,"Unlock this hero first. Check its goal in the Character Hall.");return
   id=Crypto.new().generate_random_bytes(8).hex_encode()
   identities[id]={"room":code,"token":Crypto.new().generate_random_bytes(24).hex_encode(),"connection":key,"left":0,"last_seq":0,"action_seq":0,"event_ack":0,"event_sent":0}
   room.members[id]={"equipment":preload("res://scripts/prepared_equipment238.gd").clean(data.get("equipment",[]),room.game.items),"consumable":str(data.get("consumable","")) if room.game.items.has(str(data.get("consumable",""))) and preload("res://scripts/supply_slots.gd").consumable(room.game.items[str(data.get("consumable",""))]) else "","shop_discount":data.get("shop_discount",false)==true,"id":id,"name":str(data.get("name","Traveller")).left(24),"hero":hero,"build_choice":room.game.legacy.sanitize_build(data.get("build_choice",{})),"cosmetic":clean_cosmetic(data.get("cosmetic",{})),"food":str(data.get("food","")) if room.game.provisions.defs.has(str(data.get("food",""))) else ""}
@@ -448,6 +454,7 @@ func join(key:int,data:Dictionary)->void:
    var issue="Choose four different enemy rival heroes." if room.game.mode=="defense" and rivals.is_empty() else set_ai(room,data.get("bots",[]),data.get("difficulty","medium"))
    if not issue.is_empty():room.members.erase(id);identities.erase(id);room.game.queue_free();rooms.erase(code);fail(key,issue);return
    if room.game.mode=="defense":room.game.gate_rival_plan=rivals
+  room.members[id].owned_champions=owned_champions
   room.members[id].expedition_profile=preload("res://network/expedition_profile.gd").clean(data.get("expedition_profile",{}))
   room.members[id].unlocked=data.get("unlocked_realms",[]) if data.get("unlocked_realms",[]) is Array else []
   if room.host.is_empty():room.host=id
@@ -475,7 +482,7 @@ func lobby(code:String)->void:
  var room:Dictionary=rooms[code]
  var public=[]
  for member in room.members.values():
-  var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");public.append(copy)
+  var copy=member.duplicate();copy.erase("expedition_profile");copy.erase("unlocked");copy.erase("owned_champions");public.append(copy)
  for n in room.game.bot_plan.size():
   var bot=room.game.bot_plan[n];var i=preload("res://scripts/arena_bots.gd").IDS.find(str(bot.hero));public.append({"id":"bot:"+str(n),"name":preload("res://scripts/arena_bots.gd").NAMES[i]+" [AI]","hero":bot.hero,"team":bot.team})
  for id in room.members:send_actor(id,{"type":"lobby","unofficial":room.members.values().any(func(m):return str(m.hero).begins_with("custom_")),"rivals":room.game.gate_rival_plan,"rule":room.game.arena_party_rule,"team_size":room.game.arena_team_size,"bots":room.game.bot_plan,"difficulty":room.game.ai_difficulty,"competition":bool(room.game.get_meta("crown_competition",false)),"expedition_tier":int(room.game.get_meta("expedition_tier",1)),"public":bool(room.get("public",false)),"preparing":not room.get("preparation",{}).is_empty(),"mode":room.game.mode,"realm":room.expedition_choice if not str(room.get("expedition_choice","")).is_empty() else room.game.realm_id,"host":room.host,"seats":room.seats,"arena_map":room.game.arena_map,"bg_map":room.game.bg_map,"bg_team_size":room.game.bg_team_size,"members":public})

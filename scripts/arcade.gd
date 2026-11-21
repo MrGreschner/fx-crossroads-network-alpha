@@ -318,6 +318,7 @@ func _ready() -> void:
 	selected_hero = str(get_tree().root.get_meta("fx_hero", "ram"))
 	if not characters.has(selected_hero):selected_hero="ram";get_tree().root.set_meta("fx_hero","ram")
 	if not characters.has(selected_hero) or not bool(characters[selected_hero].get("event_active",true)): selected_hero = "ram"
+	if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_hero):selected_hero="ram"
 	preferred_hero=selected_hero
 	for sprite in ["moonburrow_grass","city_cobble","moonveil_court","moonveil_canal","oath_broken_road","oath_void","briar_arch","kiln_forge","mirror_shard_env","storm_coil","oath_stone","briar_floor","cinder_floor","mirror_floor","storm_floor","marsh_floor","river_grass","river_water","river_bridge","waterfall","river_willow","clock_floor","brass_path","clock_arch","clock_tree","astral_void","astral_floor","astral_bridge","star_obelisk","astrolabe","oath_pillar","marsh_reeds","lantern_tree","creator_board","realm_banner"]:
 		art[sprite] = load("res://assets/"+sprite+".png")
@@ -487,6 +488,7 @@ func _set_mode(value: String) -> void:
 	_update_lobby_settings()
 
 func _town() -> void:
+	if mode=="coop":preload("res://scripts/hero_goals372.gd").abandon(legacy)
 	_track_card_progress()
 	if started and mode=="arena" and not spectating() and not practice_match() and (recovery==null or not recovery.frozen):legacy.card.arena_result(match_id,arena_random,"loss")
 	legacy.save()
@@ -657,6 +659,7 @@ func match_config()->Dictionary:
 	return {"type":"start","unofficial":bool(get_meta("records_unofficial",false)),"bg_map":bg_map,"bg_team_size":bg_team_size,"mode":mode,"realm":realm_id,"rule":pvp_rule,"seed":floor_seed,"no_items":arena_no_items,"random_heroes":arena_random,"seats":arena_seats,"spectator":spectator_host,"bots":bot_count,"ai_difficulty":ai_difficulty,"opening":arena_opening,"arena_map":arena_map,"heroes":hero_ids,"match_id":match_id,"party_size":match_party_size,"teams":teams,"countdown":start_countdown,"allow_custom":allow_custom}
 
 func _start_match() -> void:
+	if get("dedicated")!=true and not preload("res://scripts/hero_unlocks371.gd").owned(legacy,preferred_hero):preferred_hero="ram";selected_hero="ram"
 	if version_check!=null and version_check.blocked():version_check.notice();return
 	if mode=="coop" and role=="host" and get("dedicated")!=true:
 		var chosen=str(realm_picker.get_item_metadata(realm_picker.selected))
@@ -668,6 +671,8 @@ func _start_match() -> void:
 	descent.reset()
 	transport.reset();smoothing.clear();motion_received.clear();position_history.clear();position_acks.clear();request_ready.clear();movement_timer=0;local_position_sequence=0
 	bots.sync_lobby();bots.reset()
+	if has_meta("fx_champion_duel"):
+		hero_ids["bot:0"]=str(get("champion_id"));lobby_heroes["bot:0"]=str(get("champion_id"))
 	if spectator_director==null:
 		spectator_director=preload("res://scripts/spectator_director.gd").new();add_child(spectator_director);spectator_director.setup(self)
 	if presentation!=null:presentation.close();presentation.begin_run()
@@ -681,7 +686,8 @@ func _start_match() -> void:
 			var ids:Array=characters.keys().filter(func(id):return not str(id).begins_with("custom_") and not bool(characters[id].get("npc_only",false)) and bool(characters[id].get("event_active",true)))
 			for id in positions:
 				if bots.is_bot(str(id)):continue
-				hero_ids[id]=str(ids[randi_range(0,ids.size()-1)])
+				var choices=ids.filter(func(hero):return preload("res://scripts/hero_unlocks371.gd").allowed_claim(str(hero),get_meta("champion_claims",{}).get(id,[])) if get("dedicated")==true else preload("res://scripts/hero_unlocks371.gd").owned(legacy,str(hero)))
+				hero_ids[id]=str(choices[randi_range(0,choices.size()-1)])
 				if id!=my_id:legacy.builds[id]=legacy.sanitize_build(random_builds.get(id,{}).get(hero_ids[id],{}))
 			selected_hero=str(hero_ids.get(my_id,preferred_hero))
 		else:
@@ -758,6 +764,7 @@ func _start_match() -> void:
 	local_pos = positions.get(my_id, _spawn_player(0))
 	media.refresh_arcade() if media.game!=null else assign_base_camera()
 	_track_card_progress();legacy.save()
+	if mode=="coop" and get("dedicated")!=true and not (get("expedition")!=null and get("expedition").special()):preload("res://scripts/hero_goals372.gd").begin(legacy,realm_id,match_id)
 	status_label.text = "Build your army • Protect your barracks • Break their heart" if mode=="battlegrounds" else "Match started. Survive together!" if mode != "arena" else "Arena started • "+("Opening Act: level 1" if arena_opening else "level 10, all attacks ready")
 
 func _make_floor() -> void:
@@ -1165,7 +1172,7 @@ func _process(delta: float) -> void:
 	media.refresh_arcade() if media.game!=null else assign_base_camera()
 	if not spectating() and not fishing.busy() and shop_open.is_empty() and presentation.page.is_empty():
 		if adventure.combat.v90.primary_pressed(my_id,mobile.attacking if mobile.enabled else Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)): _attack_request("primary")
-		if (Input.is_action_just_pressed("secondary") if str(characters.get(selected_hero,{}).get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard"] else Input.is_action_pressed("secondary")): _attack_request("secondary")
+		if (Input.is_action_just_pressed("secondary") if str(characters.get(selected_hero,{}).get("secondary",{}).get("style","")) in ["jaw_clamp","flower_standard","parade_stance"] else Input.is_action_pressed("secondary")): _attack_request("secondary")
 		if Input.is_action_just_pressed("special"): _attack_request("special")
 	if role == "host":
 		arena_world.step(delta*dev_magic.world_scale())
@@ -1228,6 +1235,7 @@ func _clear_path(start: Vector2, finish: Vector2) -> bool:
 	return true
 
 func _attack_request(style: String) -> void:
+	if not adventure.combat.events.allowed_action(my_id,style):return
 	if descent.falling() or descent.resting():return
 	if preload("res://scripts/ability_guide.gd").blocks(self):return
 	if arena_world.shatter.active():arena_world.shatter.request(style);return
@@ -1238,7 +1246,7 @@ func _attack_request(style: String) -> void:
 	if spectating() or start_countdown>0:return
 	if recovery!=null and recovery.frozen:return
 	if my_id.is_empty() or int(health.get(my_id,0)) <= 0: return
-	var stats: Dictionary = characters.get(selected_hero,{}).get(style,{})
+	var stats: Dictionary = adventure.combat.effective_stats(my_id,style,characters.get(selected_hero,{}).get(style,{}))
 	var position: Vector2 = local_pos + mobile.aim * float(stats.get("range",300)) if mobile.enabled else media_mouse_world()
 	var aim := (position - local_pos).normalized()
 	if aim.length_squared() < 0.01: aim = Vector2.RIGHT
@@ -1257,6 +1265,7 @@ func _attack_request(style: String) -> void:
 		_send_channel(host_id,{"type":"attack","style":style,"angle":aim.angle(),"target":[position.x,position.y]})
 
 func _attack(id: String, kind: String, aim: Vector2, target: Vector2 = Vector2.ZERO) -> void:
+	if not adventure.combat.events.allowed_action(id,kind):return
 	if descent.falling() or descent.resting():return
 	if arena_world.shatter.active():arena_world.shatter.action(id,kind,aim);return
 	if characters.get(str(hero_ids.get(id,"")),{}).has("studio_project"):return
@@ -1500,6 +1509,7 @@ func _hurt(id: String, amount: float, source: String = "", melee_attacker:String
 	if source == "enemy" and (inventory.get(id,[]) as Array).has("thorn_coat"):
 		for foe_index in range(opponents.size()-1,-1,-1):
 			if positions[id].distance_to(opponents[foe_index]["pos"])<70: _hit_enemy(foe_index,9.0,id);break
+	if int(health[id])==0 and id==my_id and mode=="coop":preload("res://scripts/hero_goals372.gd").fail(legacy)
 	if int(health[id])==0 and adventure.combat.v59.rescue(id):return
 	if int(health[id])==0 and (inventory.get(id,[]) as Array).has("last_stand"):
 		(inventory[id] as Array).erase("last_stand");health[id]=45
@@ -2427,7 +2437,7 @@ func _draw() -> void:
 		if arena_world.shatter.active() and arena_world.shatter.airborne(id):pos.y-=sin(PI*clampf((float(arena_world.shatter.hops[id].until)-arena_world.shatter.visual_clock())/.34,0,1))*35
 		if arena_world.shatter.active() and arena_world.shatter.dropping.has(id):
 			arena_world.shatter.draw_falling_hero(id,pos,art.get(hero_id+"_idle"),Color.WHITE);continue
-		var walking := _actor_walking(id)
+		var walking:bool = _actor_walking(id) and not adventure.combat.events.clamps.has(str(id))
 		if hero_id=="caelum" and adventure.combat.v59.copies.has(id):walking=bool(adventure.combat.v59.copies[id].get("walking",false))
 		var pose := "attack" if Time.get_ticks_msec() < maxi(int(attack_pose_until.get(id,0)),predicted_pose_until if id==my_id else 0) else ("walk1" if int(visual_time*7)%2 == 0 else "walk2") if walking else "idle"
 		if adventure.combat.classics.channeling(id):pose="open"
@@ -2437,6 +2447,8 @@ func _draw() -> void:
 		if hero_id=="sunflower" and adventure.combat.charging_sun(str(id)):pose="special"
 		if pose=="attack" and art.has(hero_id+"_attack2") and int(visual_time*12)%2==1:pose="attack2"
 		var texture: Texture2D = core_art.picture(str(id),hero_id,"special" if adventure.combat.events.flying(str(id)) else pose,_player_draw_position(str(id),pos+camera),walking,visual_time,adventure.combat.classics.channeling(str(id)),charges.has(id) or adventure.combat.classics.moving(str(id))) if hero_id in core_art.HEROES else art.get(hero_id+"_"+pose)
+		var forced=adventure.combat.events.visual_frame(str(id),hero_id)
+		if forced>=0:texture=core_art.texture(hero_id,str(forced))
 		var tint := Color.WHITE if int(health.get(id,0)) > 0 else Color(0.5,0.5,0.5,0.45)
 		if Time.get_ticks_msec() < int(stealth_until.get(id,0)): tint.a = 0.43
 		if Time.get_ticks_msec()<int(hit_flash.get(id,0)):tint=Color(1,.45,.4)
@@ -2518,6 +2530,7 @@ func _draw() -> void:
 	if get("expedition")!=null and get("expedition").special():title=("Portal attunement" if get("expedition").kind=="attunement" else "The Between" if get("expedition").between() else "Overcharged "+str(regions.get(realm_id,{}).get("name",realm_id)))+" • 2-player expedition"
 	if arena_world.shatter.active():title=arena_world.shatter.header()
 	elif arena_world.objective.active():title=arena_world.objective.header()
+	if has_meta("fx_champion_duel"):title="Champion Duel • "+str(characters.get(str(get("champion_id")),{}).get("name","Champion"))+" • First knockout wins"
 	preload("res://scripts/combat_hud.gd").header(self,title,int(gold.get(my_id,0)),float(health.get(my_id,0)),float(_max_hp(my_id)))
 	preload("res://scripts/boss_health.gd").draw_on(self)
 	_draw_hero_cooldowns(font)
@@ -3173,6 +3186,7 @@ func legacy_results()->void:
 	_track_card_progress()
 	if mode=="arena":legacy.card.arena_result(match_id,arena_random,str(arena_outcomes.get(my_id,"draw")))
 	if mode=="battlegrounds":legacy.cosmetics.competitive.result(match_id,"win" if battlegrounds.winner==int(teams.get(my_id,-1)) else "loss")
+	if mode=="coop" and not adventure_won(results_reason):preload("res://scripts/hero_goals372.gd").abandon(legacy)
 	if mode=="coop" and adventure_won(results_reason) and not (get("expedition")!=null and get("expedition").special()):
 		legacy.clear_adventure(hero_id,realm_id)
 		if realm_id=="confluence" and match_party_size>=2 and hero_id in ["tidewright","cantor"] and hero_ids.values().has("tidewright") and hero_ids.values().has("cantor"):
@@ -3411,6 +3425,7 @@ func _open_hero_grid()->void:
 	hero_grid.open(self,selected_hero,_grid_select,_grid_permission)
 func _grid_permission(id:String)->String:
 	if started or spectating():return "Hero selection is unavailable during a match or while spectating."
+	if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,id):return "Unlock this hero first. Check its goal in the Character Hall."
 	if id.begins_with("custom_") and not custom_party.allowed(custom_party.project_for(id)):return "Enable custom heroes; all multiplayer rooms require Forced Balance."
 	return ""
 func _grid_select(id:String)->bool:

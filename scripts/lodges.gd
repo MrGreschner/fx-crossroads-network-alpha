@@ -85,7 +85,8 @@ func open(which:String)->void:
  page=which;job_widgets.clear();ui_clock=null
  game.presentation.window({"challenge":"CHALLENGE LODGE","gather":"GATHERERS’ LODGE","apothecary":"WILLOWGLASS APOTHECARY"}[page],"lodge_"+page)
  var body=game.presentation.content;var header=HBoxContainer.new();body.add_child(header);image(header,page,Vector2(70,65) if page=="challenge" else Vector2(120,110))
- label(header,{"challenge":"Five challenge grounds • level 10, all skills ready. Earn medals and cosmetic rewards. Gear and food are set aside until you return.","gather":"Send a crew, let it forage while you play, then claim its findings. Trips continue while this device is closed. Rare seeds are a chance, never guaranteed.","apothecary":"Turn gathered ingredients into single-use potions. Carry one potion in its own consumable slot, alongside three equipment items. Click the bottle or press 4 during combat."}[page],19)
+ label(header,{"challenge":"Realm champion duels and five challenge grounds • level 10, all skills ready. Earn medals and cosmetic rewards. Gear and food are set aside until you return.","gather":"Send a crew, let it forage while you play, then claim its findings. Trips continue while this device is closed. Rare seeds are a chance, never guaranteed.","apothecary":"Turn gathered ingredients into single-use potions. Carry one potion in its own consumable slot, alongside three equipment items. Click the bottle or press 4 during combat."}[page],19)
+ if page=="challenge" and challenge_page>=C.TYPES.size()+1:header.hide()
  if not notice.is_empty():label(body,notice,18).modulate=Color("#eed18e")
  var nav=HBoxContainer.new();body.add_child(nav)
  if page!="challenge":
@@ -99,9 +100,13 @@ func challenge_menu(body:Node)->void:
  var nav=GridContainer.new();nav.name="ChallengeCategories";nav.columns=3;nav.add_theme_constant_override("h_separation",8);nav.add_theme_constant_override("v_separation",6);frame.add_child(nav);frame.move_child(nav,1)
  var titles=["This week's trials"]
  for spec in C.TYPES:titles.append(str(spec.name))
+ titles.append("Hero Challenges");titles.append("Hero Goals");titles.append("Hero Journeys")
  for n in titles.size():
   var choose=button(nav,titles[n],func():challenge_page=n;call_deferred("open","challenge"));choose.toggle_mode=true;choose.button_pressed=challenge_page==n;choose.custom_minimum_size.y=35;choose.size_flags_horizontal=Control.SIZE_EXPAND_FILL;choose.add_theme_font_size_override("font_size",15)
   if n==challenge_page:UI.accent(choose)
+ if challenge_page==C.TYPES.size()+1:preload("res://scripts/hero_unlocks371.gd").draw_menu(game,body);return
+ if challenge_page==C.TYPES.size()+3:preload("res://scripts/hero_journeys373.gd").draw_menu(game,body);return
+ if challenge_page==C.TYPES.size()+2:preload("res://scripts/hero_goals372.gd").draw_menu(game,body);return
  var record=state()
  label(body,"Medal points: %d    •    Bronze 1 / Silver 2 / Gold 3" % game.legacy.lodge_economy.medal_total(),16)
  if challenge_page==0:

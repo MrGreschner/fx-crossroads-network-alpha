@@ -9,7 +9,74 @@
   "role": "Melee",
   "passive": "Pressure Valve: the first hit from a clamped target powers your next Snap.",
   "passive_effect": "jaw_pressure",
-  "mastery": {},
+  "mastery": {
+    "title": "Keeper of the Lower Locks",
+    "technique": {
+      "name": "Waterhammer",
+      "ability": "primary",
+      "description": "Vent a ranged water bolt that briefly slows its first target. Stored Pressure Valve adds 9 damage.",
+      "attack": {
+        "name": "Waterhammer",
+        "style": "waterhammer",
+        "damage": 18,
+        "cooldown": 0.95,
+        "range": 275,
+        "description": "Vent a ranged water bolt that briefly slows its first target. Stored Pressure Valve adds 9 damage.",
+        "ui_brief": "Vent a ranged water bolt that briefly slows its first target. Stored Pressure Valve adds 9 damage.",
+        "speed": 500,
+        "slow_duration": 0.85,
+        "slow_factor": 0.8,
+        "color": "#8fe4da"
+      }
+    },
+    "final_technique": {
+      "name": "Sluice Gate",
+      "ability": "special",
+      "description": "Warn an aimed area, then open a sluice that damages enemies and pulls them inward.",
+      "attack": {
+        "name": "Sluice Gate",
+        "style": "sluice_gate",
+        "damage": 31,
+        "cooldown": 19,
+        "range": 275,
+        "description": "Warn an aimed area, then open a sluice that damages enemies and pulls them inward.",
+        "ui_brief": "Warn an aimed area, then open a sluice that damages enemies and pulls them inward.",
+        "radius": 105
+      }
+    },
+    "technique_requirements": {
+      "clears": 3,
+      "distinct_realms": 2,
+      "damage": 10000
+    },
+    "title_requirements": {
+      "clears": 6,
+      "distinct_realms": 3,
+      "damage": 20000
+    },
+    "final_requirements": {
+      "clears": 12,
+      "distinct_realms": 6,
+      "damage": 85000
+    },
+    "crit_milestones": [
+      {
+        "clears": 3,
+        "chance": 0.02,
+        "bonus": 0.2
+      },
+      {
+        "clears": 6,
+        "chance": 0.04,
+        "bonus": 0.4
+      },
+      {
+        "clears": 9,
+        "chance": 0.06,
+        "bonus": 0.6
+      }
+    ]
+  },
   "primary": {
     "name": "Snap",
     "style": "jaw_snap",
@@ -25,8 +92,8 @@
     "damage": 28,
     "cooldown": 14,
     "range": 110,
-    "description": "Heavy lunge and bite. Slows and disables dodge for up to 6s, dealing 8 damage each second. Recast to release. Damage equal to 40% of your HP at latch breaks it. You take 15% less damage while attached.",
-    "ui_brief": "Heavy lunge and bite. Slows and disables dodge for up to 6s, dealing 8 damage each second. Recast to release. Damage equal to 40% of your HP at latch breaks it. You take 15% less damage while attached."
+    "description": "Heavy lunge and bite. Slows and disables dodge for up to 6s, dealing 8 damage each second. Recast to release. Damage equal to 40% of your HP at latch breaks it. You take 15% less damage while attached. While attached, you cannot use other attacks or abilities.",
+    "ui_brief": "Heavy lunge and bite. Slows and disables dodge for up to 6s, dealing 8 damage each second. Recast to release. Damage equal to 40% of your HP at latch breaks it. You take 15% less damage while attached. While attached, you cannot use other attacks or abilities."
   },
   "special": {
     "name": "Spring Jaw",

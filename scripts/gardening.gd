@@ -172,6 +172,7 @@ func harvest(index:int)->void:
  var b:Dictionary=state().beds[index]
  if b.is_empty() or now()<float(b.end):message("This plant is still growing.");return
  var id=str(b.seed);var spec=crops()[id];var count=2+(1 if randf()<minf(.65,bonus("yield",str(spec.family))) else 0)
+ preload("res://scripts/hero_goals372.gd").harvest(legacy,id)
  state().beds[index]={};state().produce[id]=mini(1000000,int(state().produce.get(id,0))+count);state().harvests=int(state().harvests)+1
  var xp=int(round(float(spec.xp)*(1+minf(.6,bonus("xp",str(spec.family))))));xp_gain(xp)
  if randf()<minf(.50,.05+bonus("seed",str(spec.family))):grant(id)

@@ -15,6 +15,10 @@ static func projectile(c:Node2D,p:Vector2,aim:Vector2,style:String)->bool:
  if style=="gift_toss":
   parcel(c,p)
   return true
+ if style in ["waterhammer","clockwork_bolt","icicle_fan"]:
+  var side:=aim.orthogonal()
+  c.draw_colored_polygon(PackedVector2Array([p+aim*13,p+side*5,p-aim*12,p-side*5]),Color("#8fe4da" if style=="waterhammer" else "#f5bc81" if style=="clockwork_bolt" else "#c9f4ff"))
+  return true
  if style!="courtbow":return false
  var side:=aim.orthogonal()
  c.draw_line(p-aim*17,p+aim*8,Color("#5b382a"),4,true)
@@ -47,7 +51,8 @@ static func effect(c:Node2D,p:Vector2,f:Dictionary,combat:Node,camera:Vector2)->
  var r:=float(f.radius)
  var tint:=Color("#abebff")
  match str(f.kind):
-  "bite","antlers":
+  "bite":preload("res://scripts/event_hero_visuals375.gd").bite(c,p,f,combat)
+  "antlers","thornbow","doorstep_bell":
    var aim:Vector2=combat.vec(f.aim)
    var phase:=1.0-clampf(float(f.time)/.32,0,1)
    var a:=aim.angle()
@@ -57,7 +62,7 @@ static func effect(c:Node2D,p:Vector2,f:Dictionary,combat:Node,camera:Vector2)->
    for sign_value in [-1,1]:
     var tip:Vector2=p+aim.rotated(sign_value*1.14)*r*lerpf(.55,1.0,phase)
     c.draw_line(tip,tip-aim*12,shade,3,true)
-  "parcel_lob","parachute":
+  "parcel_lob","parachute","aid_parachute":
    var progress:=clampf(1.0-float(f.time)/float(f.total),0,1)
    var origin:Vector2=combat.vec(f.origin)-camera
    var airborne:=origin.lerp(p,progress)-Vector2(0,sin(progress*PI)*88) if f.kind=="parcel_lob" else p-Vector2(sin(progress*PI*2)*12,(1-progress)*155)
@@ -65,7 +70,7 @@ static func effect(c:Node2D,p:Vector2,f:Dictionary,combat:Node,camera:Vector2)->
    c.draw_circle(Vector2.ZERO,18,Color("#121f2b",.60))
    c.draw_set_transform(Vector2.ZERO)
    ring(c,p,20,Color("#f5cf91"))
-   if f.kind=="parachute":
+   if f.kind!="parcel_lob":
     var canopy:=airborne-Vector2(0,28)
     var cloth:=PackedVector2Array([canopy+Vector2(-22,0),canopy+Vector2(-15,-9),canopy+Vector2(0,-14),canopy+Vector2(15,-9),canopy+Vector2(22,0)])
     c.draw_colored_polygon(cloth,Color("#bb665d"))
@@ -78,6 +83,23 @@ static func effect(c:Node2D,p:Vector2,f:Dictionary,combat:Node,camera:Vector2)->
    ring(c,p,r,Color("#f5cd98"));shield(c,p-Vector2(0,6))
   "garden":
    ring(c,p,r,Color("#f1a9b2"));branch(c,p,7)
+  "briar_circle":
+   ring(c,p,r,Color("#dba5ba"))
+   for i in 9:
+    var at:=p+Vector2.from_angle(i*TAU/9)*r
+    c.draw_circle(at,5,Color("#e3a8b9"));c.draw_line(at,at-Vector2(0,14),Color("#9cae75"),3)
+  "banner_drill","clockwork_volley":
+   ring(c,p,r,Color("#e5bf82"))
+   c.draw_line(p,p-Vector2(0,34),Color("#ae8460"),3)
+   c.draw_rect(Rect2(p+Vector2(0,-34),Vector2(22,17)),Color("#ae5858"))
+   if f.kind=="clockwork_volley":c.draw_line(p,p+combat.vec(f.aim)*110,Color("#edc88a"),2)
+  "sluice_gate","sluice_splash","glacier_break","glacier_shatter":
+   ring(c,p,r,Color("#b3e8f5"))
+   for i in 6:
+    var d:=Vector2.from_angle(i*TAU/6)
+    c.draw_line(p+d*20,p+d*r*.85,Color("#b3e8f5"),2)
+  "aid_landed","escort_snow":
+   ring(c,p,r,Color("#9ee5c5"));shield(c,p-Vector2(0,8))
   _:
    ring(c,p,r,tint)
 
