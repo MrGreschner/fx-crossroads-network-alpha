@@ -151,6 +151,7 @@ static func meet(g:Node)->bool:
    ui.window("Outback Cabin","town_conversation")
    ui.label(ui.content,"Outback Cabin",24)
    ui.label(ui.content,"The cabin log tracks the bay. Ice fishing holes rotate every two Crossroads weeks. Snow gives you firm footing on the lake.",17)
+   ui.button(ui.content,"View bay map",func():load("res://scripts/town_atlas307.gd").open(g,"bay"))
   return true
  if p.distance_to(visitor_spot(clock.weekday,clock.hour,clock.day_number,winter))<50:
   g.hint="E • Talk to the angler"
@@ -300,7 +301,7 @@ static func pier(c:Node2D,cam:Vector2,deck:Rect2,boat_pos:Vector2,boat_type:Stri
 
 static func cabin(c:Node2D,cam:Vector2,winter:bool)->void:
  var at=CABIN.position-cam
- var art=NATURE.texture("cliff_cottage")
+ var art=NATURE.seasonal_texture("cliff_cottage","Winter" if winter else "Summer")
  # Reuse the stone cottage's shingled roof and replace the entire facade with timber courses.
  c.draw_texture_rect(art,Rect2(at,CABIN.size),false)
  var top=at+Vector2(24,103)
@@ -331,8 +332,9 @@ static func cabin(c:Node2D,cam:Vector2,winter:bool)->void:
   c.draw_line(pane.get_center()-Vector2(0,16),pane.get_center()+Vector2(0,16),Color("#c59c71"),2)
   c.draw_line(pane.get_center()-Vector2(20,0),pane.get_center()+Vector2(20,0),Color("#c59c71"),2)
  if winter:
-  var snow=COLD.SEASON.roof("oldwater:outback",art)
-  c.draw_texture_rect(snow,Rect2(at,CABIN.size),false)
+  for x in [46,173]:
+   c.draw_rect(Rect2(at+Vector2(x,161),Vector2(45,3)),Color("#c7dce1"))
+   c.draw_rect(Rect2(at+Vector2(x+2,160),Vector2(40,2)),Color("#e5eeed"))
  var sill=Rect2(at+Vector2(90,110),Vector2(86,17))
  c.draw_rect(sill,Color("#493b2d"))
  c.draw_string(UI.FONT,sill.position+Vector2(0,12),"OUTBACK CABIN",HORIZONTAL_ALIGNMENT_CENTER,86,9,Color("#e9cca0"))

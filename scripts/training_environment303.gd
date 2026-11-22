@@ -29,10 +29,8 @@ static func bounds(p:Dictionary)->Rect2:
 static func draw(g:Node2D,cam:Vector2)->void:
  prepare();visible_pages=0;visible_props=0
  var view=Rect2(cam,g.VIEW).grow(180)
- # A single muted surface keeps projectiles and hero silhouettes readable.
- var floor_rect=Rect2(-cam,Vector2(1800,1200))
- g.draw_rect(floor_rect,Color("#77776b"))
- g.draw_texture_rect(texture("clay"),floor_rect,true,Color(1,1,1,.16))
+ # Retained grass outskirts, connected earth paths and one small timber work deck.
+ preload("res://scripts/training_floor376.gd").sync(g,cam,texture("grass"),texture("gravel"),texture("planks"))
  visible_pages=1
  for flat in [true,false]:
   for p in placements:

@@ -674,6 +674,7 @@ func enter_region(id: String) -> void:
 	queue_redraw()
 
 func start_training(at:Vector2=Vector2(650,430))->void:
+	if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character):message="Unlock this hero before training. Check its mission in the Character Hall.";message_time=5;return
 	var saved_loadout:=loadout.duplicate()
 	start_run(false,"practice")
 	loadout.assign(saved_loadout);inventory.clear();level=10;highest_level=10;health=max_health()
@@ -682,7 +683,7 @@ func start_training(at:Vector2=Vector2(650,430))->void:
 	message_time=6;queue_redraw()
 
 func start_run(is_trial: bool, realm_id: String = "grove") -> void:
-	if realm_id!="practice" and not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character):message="Unlock this hero first. Check its goal in the Character Hall.";message_time=5;return
+	if not preload("res://scripts/hero_unlocks371.gd").owned(legacy,selected_character):message="Unlock this hero first. Check its goal in the Character Hall.";message_time=5;return
 	if waylight!=null and not waylight.launching:
 		if waylight.special():
 			if waylight.settled:

@@ -15,7 +15,8 @@ static func texture(id:String)->Texture2D:
  if not frames.has(id):
   var a:Array=metadata[id].region;var tex=AtlasTexture.new();tex.atlas=sheet;tex.region=Rect2(a[0],a[1],a[2],a[3]);frames[id]=tex
  return frames[id]
-static func draw(g:CanvasItem,id:String,rect:Rect2,tint:Color=Color.WHITE)->void:g.draw_texture_rect(texture(id),rect,false,tint)
+static func draw(g:CanvasItem,id:String,rect:Rect2,tint:Color=Color.WHITE)->void:
+ g.draw_texture_rect(preload("res://scripts/winter_buildings383.gd").canvas_texture(g,"props",id,texture(id)),rect,false,tint)
 static func lamp_glass(p:Vector2)->Vector2:return p-Vector2(0,55)
 static func lamp(g:CanvasItem,p:Vector2,night:float)->void:
  draw(g,"lamp",Rect2(p-Vector2(9,70),Vector2(18,70)))

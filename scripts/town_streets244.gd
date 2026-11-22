@@ -18,7 +18,7 @@ static func texture(id:String)->Texture2D:
  prepare();return frames[id]
 static func draw(g:CanvasItem,id:String,r:Rect2,tint:Color=Color.WHITE)->void:
  if not Rect2(Vector2.ZERO,g.get_viewport_rect().size).grow(2).intersects(r):return
- g.draw_texture_rect(texture(id),r,false,tint);draws+=1
+ g.draw_texture_rect(preload("res://scripts/winter_buildings383.gd").canvas_texture(g,"street",id,texture(id)),r,false,tint);draws+=1
 static func plaque(g:CanvasItem,r:Rect2)->void:
  prepare();g.draw_style_box(plate,r)
 static func sprite(g:Node2D,id:String,r:Rect2,tint:Color)->bool:

@@ -5,13 +5,8 @@ const Town311=preload("res://scripts/town_layout311.gd")
 const BOARD=Town311.ATLAS_BOARD
 const FOOTPRINT=Rect2(BOARD-Vector2(54,21),Vector2(108,29))
 const APPROACH=BOARD+Vector2(0,32)
-const CATEGORIES={"Adventure":"#b97049","Services":"#4d857d","Landmark":"#8b6c9c","Homes":"#677f4d"}
-const ROUTES=[
- ["Crossroads Town",Vector2(250,193),"Regional hub","Find the marina for voyages or head through the east bridge toward Wayfarer Wilds."],
- ["Oldwater Lake",Vector2(208,75),"Upstream • north","Take the riverside trail from the Gatherers’ Lodge to the Oldwater Bay waypoint. The town marina offers ferries outside winter."],
- ["Coast & Open Sea",Vector2(202,306),"Downstream • south","Use the south trail waypoint by the marina or take a warm-season ferry to Tidecross Harbour. Launch sea voyages at the coastal pier with a Deep Sea Rod."],
- ["Wayfarer Wilds",Vector2(460,177),"East • over the bridge","Follow the town road east over the river. Continue into the forest to find the Wayfarer Wilds entrance."]
-]
+const CATEGORIES={"Adventure":"#b97049","Services":"#4d857d","Landmark":"#8b6c9c","Homes":"#677f4d","Travel":"#ad8145","Fishing":"#477d94"}
+const ROUTES=preload("res://scripts/atlas_data377.gd").ROUTES
 const PUBLIC=[
  ["Character Hall",Vector2(600,570),"Services","Choose and inspect heroes.","hall"],
  ["Supply Vendor • Bartle",Vector2(1290,635),"Services","Stock up on equipment and consumables.","supply"],
@@ -24,8 +19,8 @@ const PUBLIC=[
  ["Battlegrounds",Town311.BATTLE_ENTRY,"Adventure","Army battles on the far side of the north gate.",""],
  ["Wayfarer Wilds trail",Vector2(2940,1160),"Adventure","Cross the eastern bridge and continue to the forest entrance.",""],
  ["Challenge Lodge",Vector2(-1030,540),"Adventure","Challenge boards and trials on the western approach.",""],
- ["Oldwater Bay waypoint",Streets.BAY_TRAILHEAD,"Landmark","Pass the apple tree at the Gatherers’ Lodge and follow the east bank north to this year-round waypoint.",""],
- ["Tidecross Harbour waypoint",Streets.HARBOUR_TRAILHEAD,"Landmark","Follow the marina path past Tidekeeper Cottage to this year-round waypoint.",""],
+ ["Oldwater Bay waypoint",Streets.BAY_TRAILHEAD,"Travel","Pass the apple tree at the Gatherers’ Lodge and follow the east bank north to this year-round waypoint.",""],
+ ["Tidecross Harbour waypoint",Streets.HARBOUR_TRAILHEAD,"Travel","Follow the marina path past Tidekeeper Cottage to this year-round waypoint.",""],
  ["Gather Lodge",Vector2(2800,655),"Services","Gathering supplies and activities east of the river.","gather"],
  ["Community Records",Town311.RECORDS+Vector2(0,40),"Services","Browse community rankings and records.",""],
  ["Adventure Board",Vector2(820,935),"Adventure","Browse the adventures you can head out on.",""],
@@ -48,7 +43,7 @@ const PUBLIC=[
  ["Wayfarer’s Rest",Vector2(1370,1760),"Landmark","Tea, games and travellers’ stories.","pavilion"],
  ["Town Notices",Vector2(1800,1785),"Landmark","Read the local events board.",""],
  ["Ripple & Reel",Vector2(2000,2020),"Services","Fishing shop, gear and aquarium.","fishing"],
- ["Ripple & Reel Marina",Vector2(1860,2300),"Adventure","Board lake and coastal voyages here.",""],
+ ["Ripple & Reel Marina",Vector2(1860,2300),"Adventure","Warm-season river ferries to Oldwater Bay and Tidecross Harbour; lake adventures also depart here.",""],
  ["Marina Bait Stall",Vector2(1515,2362),"Services","Daily bait stock by the harbour.","bait"],
  ["Tidekeeper Cottage",Vector2(1405,2660),"Homes","Harbourside home south of the bait stall.",""],
  ["Lookout",Vector2(1720,420),"Landmark","Watch tower on the northern service street.",""],
@@ -83,10 +78,14 @@ static func interact(g:Node)->bool:
  if g.position_in_world.distance_to(APPROACH)>68:return false
  g.hint="E • Read the town and region maps"
  if Input.is_action_just_pressed("interact"):
-  g.presentation.window("Crossroads Atlas","town_atlas")
-  var panel=preload("res://scripts/town_atlas_panel307.gd").new()
-  panel.setup(g,entries(g),ROUTES,CATEGORIES)
+  open(g)
  return true
+
+static func open(g:Node,area:String="")->void:
+ g.presentation.window("Crossroads Atlas","town_atlas")
+ var panel=preload("res://scripts/town_atlas_panel307.gd").new()
+ panel.setup(g,entries(g),ROUTES,CATEGORIES)
+ panel.set_area(preload("res://scripts/atlas_data377.gd").current_area(g.position_in_world) if area.is_empty() else area)
 
 static func draw_on(g:Node2D,camera:Vector2)->void:
  if not Rect2(camera,g.VIEW).grow(110).has_point(BOARD):return

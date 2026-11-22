@@ -1,0 +1,1120 @@
+{
+  "shops_a": [
+    {
+      "family": "shops",
+      "id": "gather",
+      "original_region": [
+        2,
+        2,
+        320,
+        290
+      ],
+      "original_used": [
+        12,
+        17,
+        310,
+        273
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "market",
+      "original_region": [
+        326,
+        2,
+        385,
+        290
+      ],
+      "original_used": [
+        0,
+        0,
+        385,
+        290
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "fishing",
+      "original_region": [
+        715,
+        2,
+        360,
+        288
+      ],
+      "original_used": [
+        21,
+        33,
+        341,
+        279
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "post",
+      "original_region": [
+        1079,
+        2,
+        360,
+        285
+      ],
+      "original_used": [
+        13,
+        17,
+        344,
+        245
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "mill",
+      "original_region": [
+        1443,
+        2,
+        250,
+        280
+      ],
+      "original_used": [
+        2,
+        45,
+        202,
+        259
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "barracks",
+      "original_region": [
+        1697,
+        2,
+        310,
+        275
+      ],
+      "original_used": [
+        6,
+        6,
+        305,
+        254
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "shops_b": [
+    {
+      "family": "shops",
+      "id": "apothecary",
+      "original_region": [
+        2,
+        296,
+        290,
+        270
+      ],
+      "original_used": [
+        7,
+        20,
+        283,
+        255
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "tower",
+      "original_region": [
+        296,
+        296,
+        300,
+        265
+      ],
+      "original_used": [
+        35,
+        14,
+        269,
+        251
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "hall",
+      "original_region": [
+        600,
+        296,
+        360,
+        255
+      ],
+      "original_used": [
+        15,
+        13,
+        345,
+        245
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "office",
+      "original_region": [
+        964,
+        296,
+        308,
+        252
+      ],
+      "original_used": [
+        0,
+        0,
+        308,
+        252
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "fellowship",
+      "original_region": [
+        1276,
+        296,
+        300,
+        240
+      ],
+      "original_used": [
+        13,
+        18,
+        287,
+        227
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "relay",
+      "original_region": [
+        1580,
+        296,
+        270,
+        235
+      ],
+      "original_used": [
+        6,
+        24,
+        263,
+        217
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "shops_c": [
+    {
+      "family": "shops",
+      "id": "atelier",
+      "original_region": [
+        2,
+        570,
+        210,
+        230
+      ],
+      "original_used": [
+        1,
+        23,
+        209,
+        225
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "supply",
+      "original_region": [
+        216,
+        570,
+        360,
+        225
+      ],
+      "original_used": [
+        8,
+        16,
+        352,
+        220
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "healer",
+      "original_region": [
+        580,
+        570,
+        290,
+        220
+      ],
+      "original_used": [
+        7,
+        32,
+        286,
+        211
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "seedhouse",
+      "original_region": [
+        874,
+        570,
+        270,
+        200
+      ],
+      "original_used": [
+        10,
+        14,
+        259,
+        191
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "training",
+      "original_region": [
+        1148,
+        570,
+        242,
+        194
+      ],
+      "original_used": [
+        15,
+        15,
+        226,
+        189
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "pavilion",
+      "original_region": [
+        1394,
+        570,
+        274,
+        188
+      ],
+      "original_used": [
+        0,
+        0,
+        274,
+        188
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "shops_d": [
+    {
+      "family": "shops",
+      "id": "wayfinder",
+      "original_region": [
+        1672,
+        570,
+        240,
+        185
+      ],
+      "original_used": [
+        8,
+        18,
+        233,
+        177
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "bakery",
+      "original_region": [
+        2,
+        804,
+        166,
+        167
+      ],
+      "original_used": [
+        0,
+        0,
+        166,
+        167
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "food",
+      "original_region": [
+        172,
+        804,
+        190,
+        155
+      ],
+      "original_used": [
+        3,
+        7,
+        190,
+        148
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "arcade",
+      "original_region": [
+        366,
+        804,
+        130,
+        128
+      ],
+      "original_used": [
+        0,
+        0,
+        130,
+        128
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "bait",
+      "original_region": [
+        500,
+        804,
+        150,
+        125
+      ],
+      "original_used": [
+        0,
+        0,
+        150,
+        125
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "shops",
+      "id": "reading",
+      "original_region": [
+        654,
+        804,
+        100,
+        58
+      ],
+      "original_used": [
+        0,
+        0,
+        100,
+        58
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "landmarks": [
+    {
+      "family": "landmarks",
+      "id": "studio",
+      "original_region": [
+        2,
+        2,
+        544,
+        403
+      ],
+      "original_used": [
+        0,
+        0,
+        544,
+        403
+      ],
+      "grid": [
+        0,
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "family": "landmarks",
+      "id": "academy",
+      "original_region": [
+        554,
+        2,
+        430,
+        379
+      ],
+      "original_used": [
+        0,
+        0,
+        430,
+        379
+      ],
+      "grid": [
+        1,
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "family": "landmarks",
+      "id": "arena",
+      "original_region": [
+        2,
+        415,
+        470,
+        330
+      ],
+      "original_used": [
+        0,
+        0,
+        470,
+        330
+      ],
+      "grid": [
+        0,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "family": "landmarks",
+      "id": "lodge",
+      "original_region": [
+        482,
+        415,
+        500,
+        310
+      ],
+      "original_used": [
+        0,
+        0,
+        500,
+        310
+      ],
+      "grid": [
+        1,
+        1,
+        2,
+        2
+      ]
+    }
+  ],
+  "structures_a": [
+    {
+      "family": "props",
+      "id": "exchange",
+      "original_region": [
+        210,
+        2,
+        288,
+        145
+      ],
+      "original_used": [
+        0,
+        0,
+        288,
+        145
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "props",
+      "id": "cave",
+      "original_region": [
+        2,
+        2,
+        192,
+        121
+      ],
+      "original_used": [
+        0,
+        0,
+        192,
+        121
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "mine",
+      "id": "entrance",
+      "original_region": [
+        384,
+        384,
+        128,
+        128
+      ],
+      "original_used": [
+        4,
+        52,
+        124,
+        124
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "mine",
+      "id": "vent",
+      "original_region": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "original_used": [
+        4,
+        18,
+        124,
+        124
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "scenery",
+      "id": "well",
+      "original_region": [
+        436,
+        2,
+        80,
+        120
+      ],
+      "original_used": [
+        0,
+        0,
+        80,
+        120
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "scenery",
+      "id": "records",
+      "original_region": [
+        520,
+        2,
+        166,
+        129
+      ],
+      "original_used": [
+        0,
+        0,
+        166,
+        129
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "structures_b": [
+    {
+      "family": "street",
+      "id": "gate",
+      "original_region": [
+        156,
+        272,
+        130,
+        96
+      ],
+      "original_used": [
+        0,
+        0,
+        130,
+        95
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "lookout",
+      "original_region": [
+        336,
+        2,
+        96,
+        168
+      ],
+      "original_used": [
+        0,
+        0,
+        96,
+        168
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "guard_booth",
+      "original_region": [
+        358,
+        272,
+        66,
+        91
+      ],
+      "original_used": [
+        0,
+        0,
+        66,
+        91
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "notice",
+      "original_region": [
+        60,
+        272,
+        92,
+        108
+      ],
+      "original_used": [
+        0,
+        0,
+        92,
+        108
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "adventure_board",
+      "original_region": [
+        290,
+        272,
+        64,
+        96
+      ],
+      "original_used": [
+        11,
+        15,
+        55,
+        92
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "event_stall",
+      "original_region": [
+        896,
+        2,
+        124,
+        116
+      ],
+      "original_used": [
+        0,
+        0,
+        124,
+        116
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "structures_c": [
+    {
+      "family": "street",
+      "id": "tent",
+      "original_region": [
+        720,
+        272,
+        96,
+        70
+      ],
+      "original_used": [
+        0,
+        0,
+        96,
+        70
+      ],
+      "grid": [
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "bastion_tower",
+      "original_region": [
+        2,
+        272,
+        54,
+        114
+      ],
+      "original_used": [
+        1,
+        1,
+        53,
+        112
+      ],
+      "grid": [
+        1,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "scaffold",
+      "original_region": [
+        2,
+        2,
+        330,
+        266
+      ],
+      "original_used": [
+        0,
+        0,
+        330,
+        266
+      ],
+      "grid": [
+        2,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "street",
+      "id": "bridge_home",
+      "original_region": [
+        666,
+        2,
+        226,
+        142
+      ],
+      "original_used": [
+        3,
+        0,
+        223,
+        142
+      ],
+      "grid": [
+        0,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "scenery",
+      "id": "railway",
+      "original_region": [
+        2,
+        817,
+        246,
+        146
+      ],
+      "original_used": [
+        12,
+        10,
+        215,
+        138
+      ],
+      "grid": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "family": "marina",
+      "id": "bait_stall",
+      "original_region": [
+        0,
+        0,
+        144,
+        140
+      ],
+      "original_used": [
+        2,
+        5,
+        142,
+        135
+      ],
+      "grid": [
+        2,
+        1,
+        3,
+        2
+      ]
+    }
+  ],
+  "planters": [
+    {
+      "family": "nature",
+      "id": "flowers",
+      "original_region": [
+        210,
+        826,
+        88,
+        40
+      ],
+      "original_used": [
+        8,
+        8,
+        80,
+        32
+      ],
+      "grid": [
+        0,
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "family": "nature",
+      "id": "flowers_small",
+      "original_region": [
+        302,
+        826,
+        88,
+        40
+      ],
+      "original_used": [
+        14,
+        8,
+        74,
+        32
+      ],
+      "grid": [
+        1,
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "family": "nature",
+      "id": "shrub",
+      "original_region": [
+        470,
+        826,
+        24,
+        20
+      ],
+      "original_used": [
+        0,
+        0,
+        24,
+        20
+      ],
+      "grid": [
+        0,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "family": "nature",
+      "id": "garden_bed",
+      "original_region": [
+        116,
+        826,
+        90,
+        42
+      ],
+      "original_used": [
+        0,
+        0,
+        90,
+        42
+      ],
+      "grid": [
+        1,
+        1,
+        2,
+        2
+      ]
+    }
+  ]
+}

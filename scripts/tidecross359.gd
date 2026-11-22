@@ -370,10 +370,9 @@ static func draw_west_ridge(c:Node2D,cam:Vector2,view:Rect2,season:String)->void
 
 static func draw_sea_office(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  if not view.intersects(OFFICE_FRAME.grow(32)):return
- var art=SKIFF.texture("bait_stall")
+ var art=preload("res://scripts/winter_buildings383.gd").texture("marina","bait_stall",season,SKIFF.texture("bait_stall"))
  var box=Rect2(OFFICE_FRAME.position-cam,OFFICE_FRAME.size)
  c.draw_texture_rect(art,box,false,Color("#c8b69b"))
- if season=="Winter":c.draw_texture_rect(ICE.SEASON.roof("port:charter_booth",art),box,false)
  var p=SEA_OFFICE-cam
  BAY.small_sign(c,p-Vector2(0,75),"SEA EXPEDITIONS",98)
  CAST.draw(c,"Tess",p+Vector2(22,15),c.town_life.clock)
@@ -387,10 +386,9 @@ static func draw_port(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  for building in BUILDINGS:
   var r:Rect2=building[1]
   if not view.intersects(r):continue
-  var art=NATURE.texture(building[0])
+  var art=NATURE.seasonal_texture(building[0],season)
   var frame=Rect2(r.position-cam,r.size)
   c.draw_texture_rect(art,frame,false)
-  if season=="Winter":c.draw_texture_rect(ICE.SEASON.roof("port:"+str(building[0]),art),frame,false)
   plaque(c,Vector2(r.get_center().x,r.end.y-10)-cam,building[2],176 if r.size.x<200 else 204)
  for p in [Vector2(1942,3726),Vector2(1968,3735),Vector2(1959,3750),Vector2(2045,3772),Vector2(1920,3668),Vector2(2090,3569),Vector2(2154,3596),Vector2(2182,3556)]:
   if view.has_point(p):
@@ -399,9 +397,8 @@ static func draw_port(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
  if view.has_point(BAIT):
   var p=BAIT-cam
   var stall_rect=Rect2(p-Vector2(55,99),Vector2(110,100))
-  var art=SKIFF.texture("bait_stall")
+  var art=preload("res://scripts/winter_buildings383.gd").texture("marina","bait_stall",season,SKIFF.texture("bait_stall"))
   c.draw_texture_rect(art,stall_rect,false)
-  if season=="Winter":c.draw_texture_rect(ICE.SEASON.roof("tidecross:bait",art),stall_rect,false)
   plaque(c,p+Vector2(0,-88),"DOCKSIDE BAIT",135)
  for p in PORT_LAMPS:
   if view.has_point(p):preload("res://scripts/town_props240.gd").lamp(c,p-cam,c.town_life.calendar.night_amount())

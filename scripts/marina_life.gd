@@ -124,7 +124,7 @@ func draw_fittings_source(c:Node2D,cam:Vector2)->void:
  var rack=Vector2(1270,2700)-cam
  for x in [0,78]:c.draw_line(rack+Vector2(x,0),rack+Vector2(x,-45),Color("#826d4f"),4)
  c.draw_line(rack-Vector2(3,40),rack+Vector2(81,-40),Color("#b4ad86"),2)
- c.draw_texture_rect(preload("res://scripts/marina_art250.gd").texture("bait_stall"),Rect2(Vector2(1440,2230)-cam,Vector2(150,125)),false)
+ c.draw_texture_rect(preload("res://scripts/winter_buildings383.gd").canvas_texture(c,"marina","bait_stall",preload("res://scripts/marina_art250.gd").texture("bait_stall")),Rect2(Vector2(1440,2230)-cam,Vector2(150,125)),false)
  c.draw_string(ThemeDB.fallback_font,STALL.position-cam+Vector2(-4,-42),"EXOTIC BAIT • DAILY DELIVERY",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("#f4dfb5"))
 
 func draw_on(c:Node2D,cam:Vector2)->void:

@@ -1,0 +1,163 @@
+{
+  "homes": {
+    "artists_duplex": {
+      "atlas_region": [
+        314.0,
+        2.0,
+        298.0,
+        290.0
+      ],
+      "generated_crop": [
+        378,
+        0,
+        380,
+        356
+      ],
+      "generated_used": [
+        13,
+        6,
+        354,
+        340
+      ],
+      "summer_used": [
+        5,
+        5,
+        289,
+        276
+      ]
+    },
+    "cliff_cottage": {
+      "atlas_region": [
+        2.0,
+        2.0,
+        308.0,
+        290.0
+      ],
+      "generated_crop": [
+        0,
+        0,
+        378,
+        356
+      ],
+      "generated_used": [
+        10,
+        6,
+        363,
+        340
+      ],
+      "summer_used": [
+        5,
+        5,
+        298,
+        276
+      ]
+    },
+    "guard_townhouse": {
+      "atlas_region": [
+        2.0,
+        296.0,
+        308.0,
+        290.0
+      ],
+      "generated_crop": [
+        0,
+        358,
+        379,
+        359
+      ],
+      "generated_used": [
+        9,
+        6,
+        364,
+        343
+      ],
+      "summer_used": [
+        5,
+        5,
+        298,
+        276
+      ]
+    },
+    "orchard_home": {
+      "atlas_region": [
+        616.0,
+        2.0,
+        308.0,
+        290.0
+      ],
+      "generated_crop": [
+        760,
+        0,
+        375,
+        357
+      ],
+      "generated_used": [
+        2,
+        3,
+        365,
+        343
+      ],
+      "summer_used": [
+        5,
+        5,
+        298,
+        276
+      ]
+    },
+    "river_home": {
+      "atlas_region": [
+        314.0,
+        296.0,
+        328.0,
+        290.0
+      ],
+      "generated_crop": [
+        380,
+        358,
+        407,
+        361
+      ],
+      "generated_used": [
+        13,
+        4,
+        387,
+        345
+      ],
+      "summer_used": [
+        5,
+        5,
+        318,
+        277
+      ]
+    },
+    "tidekeeper": {
+      "atlas_region": [
+        2.0,
+        590.0,
+        242.0,
+        232.0
+      ],
+      "generated_crop": [
+        0,
+        718,
+        305,
+        294
+      ],
+      "generated_used": [
+        6,
+        1,
+        291,
+        287
+      ],
+      "summer_used": [
+        0,
+        0,
+        242,
+        232
+      ]
+    }
+  },
+  "season": "Winter",
+  "source": "assets/town243/nature.png",
+  "version": 382
+}

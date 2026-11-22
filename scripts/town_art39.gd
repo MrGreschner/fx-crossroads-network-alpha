@@ -14,6 +14,10 @@ static func prepare()->void:
   var data=JSON.parse_string(FileAccess.get_file_as_string(ROOT+"town39.json"))
   if data is Dictionary:layers=data.get("layers",{})
   if layers.has("chapter_ground"):layers["chapter_ground"]=preload("res://scripts/town_nature243.gd").clean_ground_tiles(layers["chapter_ground"])
+  if layers.has("streets"):
+   var cuts=[]
+   for spot in [Vector2(-730,1880),Vector2(220,1640),Vector2(1780,1250)]:cuts.append(Rect2(spot-Vector2(44,20),Vector2(88,44)))
+   layers["winter_streets"]=preload("res://scripts/town_nature243.gd").clean_ground_tiles(layers["streets"],cuts)
 static func page(name:String)->Texture2D:
  if pages.has(name):return pages[name]
  var bank=preload("res://scripts/marina_art250.gd").cached_page(name)
@@ -36,16 +40,21 @@ static func draw(c:Node2D,kind:String,camera:Vector2)->void:
   preload("res://scripts/marina_art250.gd").structure(c,"fittings",camera);return
  if kind=="rails":preload("res://scripts/town_art246.gd").draw(c,"railway",Rect2(Vector2(-1160,734)-camera,Vector2(246,146)));return
  prepare();lookups+=1
- if not layers.has(kind):source(c,kind,camera);return
+ var winter_streets=kind=="streets" and preload("res://scripts/winter_art353.gd").active(c)
+ if winter_streets:kind="winter_streets"
+ if not layers.has(kind):source(c,"streets" if winter_streets else kind,camera);return
  var view=Rect2(camera,c.VIEW).grow(2)
  for tile in layers[kind]:
   var p=tile.world;var rect=Rect2(p[0],p[1],p[2],p[3])
   if not view.intersects(rect):continue
   var texture=page(str(tile.page))
-  if texture==null:source(c,kind,camera);return
+  if texture==null:source(c,"streets" if winter_streets else kind,camera);return
   var uv=tile.region
   c.draw_texture_rect_region(texture,Rect2(rect.position-camera,rect.size),Rect2(uv[0],uv[1],uv[2],uv[3]))
   visible_tiles+=1
+ if winter_streets:
+  for spot in [Vector2(-730,1880),Vector2(220,1640),Vector2(1780,1250)]:
+   preload("res://scripts/town_nature243.gd").draw(c,"flowers",Rect2(spot-camera-Vector2(44,20),Vector2(88,40)))
 static func source(c:Node2D,kind:String,camera:Vector2)->void:
  match kind:
   "streets":c.town_plan.draw_ground_source(c,camera)

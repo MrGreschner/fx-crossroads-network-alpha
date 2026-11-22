@@ -34,7 +34,7 @@ static func legacy_path(path:String)->Texture2D:
  return texture(path.get_file().get_basename(),"crops")
 static func draw(g:CanvasItem,id:String,r:Rect2,tint:Color=Color.WHITE)->void:
  if not Rect2(Vector2.ZERO,g.get_viewport_rect().size).intersects(r):return
- var t=texture(id)
+ var t=preload("res://scripts/winter_buildings383.gd").canvas_texture(g,"scenery",id,texture(id))
  if t!=null:g.draw_texture_rect(t,r,false,tint)
 static func crop_stage(b:Dictionary,stamp:float)->int:
  if stamp>=float(b.end):return 2

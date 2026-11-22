@@ -1,5 +1,6 @@
 extends CanvasLayer
 ## Native, touch-scrollable roster with independent selection and portable favourites.
+const Roster=preload("res://scripts/hero_roster376.gd")
 var info_panel:CanvasLayer
 var grid_view_button:Button
 var daily_hero_button:Button
@@ -63,14 +64,15 @@ func setup(owner:Node)->void:
  var skill:=OptionButton.new();skill.custom_minimum_size=Vector2(220,42);search_row.add_child(skill)
  for text in ["Any difficulty","Easy to learn","Some practice","Technical"]:skill.add_item(text)
  skill.item_selected.connect(func(index:int):difficulty=skill.get_item_text(index);refresh())
- count_label=label(search_row,"",16)
+ count_label=label(search_row,"",14)
+ Roster.legend(col)
  var split:=HBoxContainer.new();split.add_theme_constant_override("separation",20);split.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(split)
  scroller=ScrollContainer.new();scroller.custom_minimum_size=Vector2(395,260);scroller.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;split.add_child(scroller)
  rows=VBoxContainer.new();rows.size_flags_horizontal=Control.SIZE_EXPAND_FILL;rows.add_theme_constant_override("separation",6);scroller.add_child(rows)
  var right:=ScrollContainer.new();right_scroller=right;right.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;right.size_flags_vertical=Control.SIZE_EXPAND_FILL;split.add_child(right)
  details=VBoxContainer.new();details.custom_minimum_size.x=600;details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",8);right.add_child(details)
  preload("res://scripts/touch_list_scroll.gd").attach(scroller);preload("res://scripts/touch_list_scroll.gd").attach(right_scroller)
- label(col,"Earn heroes through goals, journeys and duels. Test hero is practice only.",16)
+ label(col,"Gold marks an available unlock mission. Unlock a hero to play or train with them.",14)
 func label(parent:Node,text:String,size:int=18)->Label:
  var l:=Label.new();l.text=text;l.add_theme_font_size_override("font_size",size);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
 func button(parent:Node,text:String,call:Callable)->Button:
@@ -80,6 +82,7 @@ func clear(node:Node)->void:
 func open_grid()->void:
  if is_instance_valid(portrait_grid):return
  portrait_grid=preload("res://scripts/hero_grid.gd").new()
+ portrait_grid.browse_locked=true
  portrait_grid.open(game,game.selected_character,func(id:String):collection=collection_for(id);select(id))
 func collection_for(id:String)->int:
  if id in game.manifest.get("event_heroes",[]):return EVENT
@@ -103,7 +106,7 @@ func continue_with_preview()->void:
  close()
 func test_hero()->void:
  var id:=preview_id()
- if id.is_empty() or not bool(game.characters[id].get("event_active",true)):return
+ if id.is_empty() or not Roster.can_test(game,id):return
  game.selected_character=id;game.hero=game.characters[id].duplicate(true)
  close(false);game.start_training()
 func close(apply_selection:bool=true)->void:
@@ -116,8 +119,9 @@ func favourite(id:String)->void:
  else:values.append(id)
  game.legacy.data.favourites=values;game.legacy.save();refresh()
 func select(id:String)->void:
- if not bool(game.characters[id].get("event_active",true)):return
+ if not game.characters.has(id):return
  game.hero_preview=id
+ if not bool(game.characters[id].get("event_active",true)):refresh(false);return
  if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,id):refresh(false);return
  game.selected_character=id;game.hero=game.characters[id].duplicate(true)
  if not game.practice:game.character_id=id
@@ -141,7 +145,7 @@ func refresh(reset_scroll:bool=true)->void:
   shown.append(id)
  var favs:Array=game.legacy.data.get("favourites",[])
  shown=shown.filter(func(id):return id in favs)+shown.filter(func(id):return id not in favs)
- count_label.text=str(shown.size())+" / "+str(ids.size())
+ count_label.text="%d / %d heroes • %d unlocked" % [shown.size(),ids.size(),shown.filter(func(id):return preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,str(id))).size()]
  for tab in collection_tabs:collection_tabs[tab].set_pressed_no_signal(tab==collection)
  var preview:=preview_id()
  continue_button.disabled=preview.is_empty() or not bool(game.characters[preview].get("event_active",true)) or not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,preview)
@@ -154,11 +158,10 @@ func refresh(reset_scroll:bool=true)->void:
   var b:=button(line,("Community" if str(id).begins_with("community_") else "Custom" if str(id).begins_with("custom_") else str(library.number(game,str(id))))+". "+str(h.name)+"\n"+str(info.role)+" • "+str(info.difficulty),select.bind(id));b.custom_minimum_size.y=96;b.clip_text=true;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.add_theme_font_size_override("font_size",16)
   if collection==EVENT:
    b.text=str(h.name)+"\n"+str(h.event)+(" • Active" if h.event_active else " • Inactive");b.disabled=not h.event_active
-  if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,str(id)):b.text+=" • Locked";b.tooltip_text=preload("res://scripts/hero_unlocks371.gd").hint(game,str(id))
-  if id==game.selected_character:b.modulate=Color("#ffe0a1");b.tooltip_text="Selected hero"
-  var icon:Texture2D=preload("res://scripts/hero_portrait.gd").texture(game,str(id))
-  if icon!=null:b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",80)
-  var progress:Dictionary={"ratio":1.0,"label":"Local custom creation"} if collection==CUSTOM else {"ratio":1.0,"label":"Published community hero"} if collection==COMMUNITY else library.progress(game,id);var small:=ProgressBar.new();small.custom_minimum_size.y=5;small.show_percentage=false;small.value=float(progress.ratio)*100;small.tooltip_text=str(progress.label);card.add_child(small)
+  var access=Roster.state(game,str(id));Roster.style(b,access,id==preview);b.name="HeroRow_"+str(id);b.set_meta("hero_id",id);b.tooltip_text=str(h.name)+" • "+Roster.description(game,str(id))
+  var icon:Texture2D=Roster.portrait(game,str(id))
+  if icon!=null:b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",64)
+  var progress:Dictionary={"ratio":1.0,"label":"Local custom creation"} if collection==CUSTOM else {"ratio":1.0,"label":"Published community hero"} if collection==COMMUNITY else library.progress(game,id);var small:=ProgressBar.new();small.custom_minimum_size.y=5;small.show_percentage=false;small.value=float(progress.ratio)*100;small.tooltip_text=str(progress.label);small.visible=access==Roster.OWNED;card.add_child(small)
  scroller.scroll_vertical=0 if reset_scroll else old
  render_details()
 func render_details()->void:
@@ -173,19 +176,23 @@ func render_details()->void:
  var overview=VBoxContainer.new();overview.name="HeroOverview";overview.add_theme_constant_override("separation",7);details.add_child(overview)
  var intro=VBoxContainer.new();intro.name="HeroIdentity";intro.size_flags_horizontal=Control.SIZE_EXPAND_FILL;overview.add_child(intro)
  var heading:=HBoxContainer.new();intro.add_child(heading)
- var texture:Texture2D=preload("res://scripts/hero_portrait.gd").texture(game,str(id))
+ var texture:Texture2D=Roster.portrait(game,str(id))
  if texture!=null:
   var pic:=TextureRect.new();pic.texture=texture;pic.custom_minimum_size=Vector2(72,72);pic.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;pic.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;heading.add_child(pic)
  var names:=VBoxContainer.new();names.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(names);label(names,(str(library.number(game,str(id)))+". " if collection==OFFICIAL else "")+str(h.name),22);label(names,str(info.difficulty)+" • "+str(h.get("event",info.role)),13)
  var actions:=HFlowContainer.new();actions.add_theme_constant_override("separation",5);names.add_child(actions)
- var test:=button(actions,"Test hero",test_hero);test.custom_minimum_size=Vector2(82,30);test.add_theme_font_size_override("font_size",13);test.tooltip_text="Try this hero at level 10 in the training yard"
+ var test:=button(actions,"Test hero",test_hero);test.custom_minimum_size=Vector2(82,30);test.add_theme_font_size_override("font_size",13);test.name="HallTestHero";test.disabled=not Roster.can_test(game,id);test.tooltip_text="Train at level 10 with this unlocked hero" if not test.disabled else "This event is inactive" if not bool(h.get("event_active",true)) else "Unlock this hero before training"
  var compare=button(actions,"Compare heroes",func():var comparison=preload("res://scripts/hero_compare.gd").new();comparison.open(game));compare.custom_minimum_size=Vector2(108,30);compare.add_theme_font_size_override("font_size",13)
  var story:=button(actions,"Story",func():show_story(id));story.custom_minimum_size=Vector2(52,30);story.add_theme_font_size_override("font_size",13);story.tooltip_text="Who is "+str(h.name)+"?"
  if not preload("res://scripts/hero_unlocks371.gd").owned(game.legacy,id):
-  label(overview,preload("res://scripts/hero_unlocks371.gd").hint(game,id),15).modulate=Color("#f0d194")
+  label(overview,Roster.description(game,id),14).modulate=Roster.colour(Roster.state(game,id))
   if id in preload("res://scripts/hero_unlocks371.gd").ACTIVITY_IDS:button(actions,"View goal",func():preload("res://scripts/hero_goals372.gd").open(game,id))
   elif preload("res://scripts/hero_journeys373.gd").catalog().has(id):button(actions,"View journey",func():preload("res://scripts/hero_journeys373.gd").open(game,id))
   else:button(actions,"View challenge",func():preload("res://scripts/hero_unlocks371.gd").open_hall(game))
+  if Roster.state(game,id)==Roster.READY:
+   var mission=actions.get_child(actions.get_child_count()-1);mission.name="HallUnlockMission";mission.custom_minimum_size.y=30;mission.add_theme_font_size_override("font_size",13);Roster.style(mission,Roster.READY)
+ else:
+  label(overview,Roster.description(game,id),13).modulate=Roster.colour(Roster.state(game,id))
  preload("res://scripts/hero_stat_bars.gd").add_to(overview,h)
  var home:String=str(info.get("home_realm",""))
  if not home.is_empty():story.tooltip_text+=" • "+str(game.realms.get(home,{}).get("name",home))

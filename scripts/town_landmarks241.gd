@@ -16,16 +16,14 @@ static func prepare()->void:
   var a:Array=metadata[id].region;var tex=AtlasTexture.new();tex.atlas=sheet;tex.region=Rect2(a[0],a[1],a[2],a[3]);frames[id]=tex
   glass[id]=[]
   for pane in metadata[id].glass:glass[id].append(Rect2(pane[0],pane[1],pane[2],pane[3]))
-static func texture(id:String)->Texture2D:
- prepare();return frames[id]
+static func texture(id:String,season:String="")->Texture2D:
+ prepare();return preload("res://scripts/winter_buildings383.gd").texture("landmarks",id,season,frames[id])
 static func draw(g:Node2D,id:String,camera:Vector2,grand:bool=false)->void:
  var rect:Rect2=RECTS[id]
  if not Rect2(camera,g.VIEW).grow(8).intersects(rect):return
- var art:=texture(id)
+ var art:=texture(id,preload("res://scripts/winter_buildings383.gd").season(g))
  var screen:=Rect2(rect.position-camera,rect.size)
  g.draw_texture_rect(art,screen,false)
- var winter=preload("res://scripts/winter_art353.gd")
- if winter.active(g):g.draw_texture_rect(winter.roof(id,art),screen,false)
  var sign:Rect2=SIGNS[id];var p=rect.position+sign.position-camera
  if id=="studio":
   g.draw_string(font,p+Vector2(0,11),"CROSSROADS",HORIZONTAL_ALIGNMENT_CENTER,sign.size.x,11,Color("#efd9a3"))

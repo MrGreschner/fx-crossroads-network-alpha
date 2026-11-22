@@ -27,7 +27,7 @@ static func prop(id:String)->Texture2D:
   var index=int(prop_metadata[id].index);var tex=AtlasTexture.new();tex.atlas=props_sheet;tex.region=Rect2(index%4*128,int(index/4)*128,128,128);prop_frames[id]=tex
  return prop_frames[id]
 static func draw_prop(c:CanvasItem,id:String,rect:Rect2,tint:Color=Color.WHITE)->void:
- var tex=prop(id)
+ var tex=preload("res://scripts/winter_buildings383.gd").canvas_texture(c,"mine",id,prop(id))
  if tex==null:return
  var b:Array=prop_metadata[id].box;var used=Vector2(float(b[2])-b[0],float(b[3])-b[1]);var scale=minf(rect.size.x/used.x,rect.size.y/used.y);var size=Vector2.ONE*128*scale
  c.draw_texture_rect(tex,Rect2(Vector2(rect.get_center().x-size.x*.5,rect.end.y-float(b[3])*scale),size),false,tint)

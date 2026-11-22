@@ -1,0 +1,9 @@
+# Residential winter variant — V382
+
+Built-in image generation edited the original assets/town243/nature.png atlas as a lighting/weather variant. generated_homes.png retains the full unmodified generated result (1254×1254 RGBA). The original summer atlas remains at its established path. No provider credentials were used.
+
+Prompt: Create a winter variant of the supplied transparent atlas. Preserve the six building placements, architecture, scale, doors, windows, chimneys and perspective. Top row: green-roof cottage, purple-roof duplex, red-roof orchard home. Second row: blue-roof guard house and teal-roof river home. Sixth: small brown-roof Tidekeeper cottage. Paint snow blankets over roof planes and ridges with broken edges and blue-grey undercuts, keeping original roof tiles visible. Cap chimneys, sills, shed roof, porch rails and planters. Replace window-box flowers and leaves with dormant brown stems under snow. Keep glass and entrances clear and the guard emblem readable. Match the source's matte storybook pixels, soft selective coloured contours and coarse square-pixel clusters. No black sticker outlines, glow, photorealism, scenery, labels or new holiday decorations. Transparent background. Keep all unrelated sprites unchanged and do not redesign the buildings.
+
+Offline assembly crops the six generated buildings, rejects nearly transparent fringe pixels, then normalizes each to its original used bounds with nearest-neighbour scaling. The original atlas supplies every non-home pixel. assets/town_winter382/homes.json records all source/crop/destination regions. Six individual normalized PNGs are included for future art work; runtime uses the single homes.png atlas.
+
+The assembly script is included here as production evidence, not runtime game code. Gameplay geometry, original lighting masks and doorway coordinates remain owned by their established scripts.

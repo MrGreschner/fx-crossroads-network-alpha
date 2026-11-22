@@ -17,8 +17,8 @@ static func prepare()->void:
   var tex=AtlasTexture.new();tex.atlas=sheet;tex.region=as_rect(specs[id].region);frames[id]=tex
   if not specs[id].emission_region.is_empty():
    var mask=AtlasTexture.new();mask.atlas=glow;mask.region=as_rect(specs[id].emission_region);emissions[id]=mask
-static func texture(id:String)->Texture2D:
- prepare();return frames[id]
+static func texture(id:String,season:String="")->Texture2D:
+ prepare();return preload("res://scripts/winter_buildings383.gd").texture("shops",id,season,frames[id])
 static func rect(id:String)->Rect2:
  prepare();return as_rect(specs[id].rect)
 static func enabled(g:Node,id:String)->bool:
@@ -26,7 +26,7 @@ static func enabled(g:Node,id:String)->bool:
  return condition.is_empty() or bool(g.legacy.data.town.get(condition,false))
 static func draw_rect(g:Node2D,id:String,screen:Rect2,tint:Color=Color.WHITE)->void:
  if not Rect2(Vector2.ZERO,g.VIEW).intersects(screen):return
- g.draw_texture_rect(texture(id),screen,false,tint)
+ g.draw_texture_rect(texture(id,preload("res://scripts/winter_buildings383.gd").season(g)),screen,false,tint)
  var v:Dictionary=specs[id]
  if v.sign.is_empty() or str(v.label).is_empty():return
  var size=Vector2(v.rect[2],v.rect[3]);var scale=screen.size/size

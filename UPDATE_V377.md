@@ -1,0 +1,20 @@
+# V377 — Accurate local atlas and illustrated region chart
+
+Complete release based on V376. Adds Oldwater Bay and Tidecross Harbour to the atlas and replaces the old regional sketch with a more detailed waterways-and-trails chart.
+
+## Maps and access
+
+- Town map marks the actual Oldwater Bay trailhead northeast of town, beyond the Gatherers’ Lodge and apple tree, and the Tidecross Harbour trailhead south past Tidekeeper Cottage. Both are travel pins, with directions that match the walking routes.
+- A local-area selector switches between Crossroads, Oldwater Bay and Tidecross Harbour. The bay directory includes the forest waypoint, Outback Cabin, campfire, lake-adventure boat, river ferry and shore fishing. The harbour directory includes its waypoint, Nell’s expedition office, the separate east fishing pier, ferry, bait stall, trading post, sailor’s hut and three homes.
+- Shorelines, buildings, docks, trails and pin anchors use the same authored coordinates as gameplay. Nearby numbered pins have short leader lines when needed to remain selectable. Mouse and touch selection account for canvas scale. Area changes clear the previous search and selection.
+- The illustrated regional chart shows Oldwater Lake north of Crossroads, Oldwater Bay on the lake’s east shore, the river flowing through town to a branching delta, Tidecross west of the river mouth, the sea south, and Wayfarer woodland east. It includes existing pixel-art building/tree illustrations, textured land, timber docks, boats, hills, forest, compass, readable label plates and numbered destinations.
+- Solid paths show walking routes; gold dashes show waypoint connections between separate areas; blue dashes show river ferries. The regional chart is labelled as not to scale. Selecting a regional destination opens directions and a View local map button for the relevant entrance area; it does not teleport the player.
+- Winter charts show the frozen bay and snow patches, use the three current ice-hole positions from the real five-slot fortnightly rotation, and explain paused river ferries/lake boats. Sea departures remain available at Nell’s office. Maps are also accessible from the cabin log, Outback boat menu and harbourmaster’s departure menu. Departure overlays close before opening the atlas.
+
+## Validation and compatibility
+
+Godot 4.7.2 checks cover actual town/bay/harbour anchors, all pin bounds and projection round-trips, every pin selected by mouse and touch at full and 75% canvas sizes, directory search/reset, regional-to-local routes, distinct sea/fishing/ferry piers, all five winter ice-hole positions, winter closure notices, and boat/harbourmaster map callbacks including closing back to gameplay. Browsing leaves position, health, inventory and Glimmers unchanged. Native summer/winter chart renders reviewed. Existing resource-cleanup warnings at process shutdown persist. No live deployment or device/browser playtest was performed.
+
+No combat, ownership, unlock requirements, physics, ferry destination logic, protocol or database schema change. V376 ownership styling and locked-hero training guards remain. Ownership EPOCH4 and protocol11 are unchanged. Web V377 provides the new atlas; an existing compatible V376 server can serve it. The full matching Server_Project is included for a complete source deployment when desired.
+
+Full standalone Web, Editable and Server_Project packages include all prior content and require no older release. Source packages include artwork, scripts, project.godot and deployment files; Server_Project keeps the Dockerfile.network workflow and does not contain a giant exported PCK. The web game data is split into parts of at most 32 MiB. Package checks verify ZIP CRCs, duplicate-free paths, final source bytes, every web part’s size/offset/SHA, assembled game data, and each PCK entry’s digest. Every individual file in Web/Server is below 100 MB. Extract the archives before copying contents; the download ZIPs themselves are not files to commit to GitHub.

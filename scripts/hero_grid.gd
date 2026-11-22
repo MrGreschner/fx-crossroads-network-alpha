@@ -1,5 +1,7 @@
 extends CanvasLayer
 ## Shared portrait selector. Browsing never commits a hero until Select is pressed.
+const Roster=preload("res://scripts/hero_roster376.gd")
+var browse_locked=false
 var game:Node
 var source:Node
 var commit:Callable
@@ -45,7 +47,7 @@ func open(owner:Node,current:String,callback:Callable,allow:Callable=Callable(),
  grid=GridContainer.new();grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",8);scroll.add_child(grid);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
  var bottom=HBoxContainer.new();col.add_child(bottom)
  info=Label.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;info.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;bottom.add_child(info)
- select_button=Button.new();select_button.text="Select";select_button.custom_minimum_size=Vector2(100,48);preload("res://scripts/studio_ui.gd").accent(select_button);bottom.add_child(select_button);select_button.pressed.connect(confirm)
+ select_button=Button.new();select_button.text="View hero" if browse_locked else "Select";select_button.custom_minimum_size=Vector2(100,48);preload("res://scripts/studio_ui.gd").accent(select_button);bottom.add_child(select_button);select_button.pressed.connect(confirm)
  resize();refresh();preload("res://scripts/studio_ui.gd").enter(panel)
 func sync_tabs()->void:
  var selected:=1 if events else 2 if community else 3 if custom else 0
@@ -81,7 +83,7 @@ func refresh()->void:
   shown.append(id)
   var tile=Button.new();tile.custom_minimum_size=Vector2(120,152)*tile_scale;tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.text="";tile.tooltip_text=str(hero.name);grid.add_child(tile)
   var contents=VBoxContainer.new();contents.mouse_filter=Control.MOUSE_FILTER_IGNORE;contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);contents.offset_left=6;contents.offset_right=-6;contents.offset_top=6;contents.offset_bottom=-6;tile.add_child(contents)
-  var picture=TextureRect.new();picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;picture.texture=preload("res://scripts/hero_portrait.gd").texture(source,str(id));picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.custom_minimum_size=Vector2(108,108)*tile_scale;picture.size_flags_vertical=Control.SIZE_EXPAND_FILL;contents.add_child(picture)
+  var picture=TextureRect.new();picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;picture.texture=Roster.portrait(source,str(id));picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.custom_minimum_size=Vector2(108,108)*tile_scale;picture.size_flags_vertical=Control.SIZE_EXPAND_FILL;contents.add_child(picture)
   var caption=Label.new();caption.mouse_filter=Control.MOUSE_FILTER_IGNORE;caption.text="Community" if community else "Custom" if custom else str(hero.get("event","Event")) if events else str(number);caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;caption.add_theme_font_size_override("font_size",int(14*tile_scale));contents.add_child(caption)
   tile.pressed.connect(choose.bind(id));tiles[id]=tile
  if shown.is_empty():
@@ -89,19 +91,22 @@ func refresh()->void:
  update_info()
 func choose(id:String)->void:candidate=id;update_info()
 func update_info()->void:
- for id in tiles:tiles[id].add_theme_stylebox_override("normal",preload("res://scripts/studio_ui.gd").box("#365e64" if id==candidate else "#244854","#f3d18a" if id==candidate else "#345763"))
+ for id in tiles:Roster.style(tiles[id],Roster.state(source,str(id)),id==candidate)
  var valid=source.characters.has(candidate) and candidate in shown
  var issue="Choose a portrait above."
  if valid:
   var hero:Dictionary=source.characters[candidate];var tags:Array=library.entry(candidate,hero).get("tags",[]).slice(0,2)
   if custom:tags=[str(hero.get("role",tags[0] if not tags.is_empty() else "Custom"))]
   issue=str(hero.name)+"\n"+" / ".join(tags)
+  if browse_locked:issue+="\n"+Roster.description(source,candidate)
   var blocked=reason(candidate)
   if not blocked.is_empty():issue+="\n"+blocked
  select_button.disabled=not valid or not reason(candidate).is_empty();info.text=issue
 func reason(id:String)->String:
+ if browse_locked:return ""
  if not bool(source.characters.get(id,{}).get("event_active",true)):return "Returns for Halloween."
- return str(permission.call(id)) if permission.is_valid() else ""
+ if permission.is_valid():return str(permission.call(id))
+ return "" if Roster.can_test(source,id) else preload("res://scripts/hero_unlocks371.gd").hint(source,id)
 func confirm()->void:
  if select_button.disabled:return
  var result=commit.call(candidate)

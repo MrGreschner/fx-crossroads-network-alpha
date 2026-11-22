@@ -481,6 +481,7 @@ func open_menu(kind:String)->void:
   var coastal=HARBOUR.is_port(game.position_in_world)
   var cove=HARBOUR.is_cove(game.position_in_world)
   f.label(col,"Take the helm. Move with WASD / arrows or the touch stick. Drop anchor to fish. E or Land boards islands and returns at the harbour. Bring every voyage catch home alive before it earns XP or records. A voyage is one committed attempt. Sail back alive to bank rewards. Quitting, leaving or being KO’d ends it and loses every unbanked reward.",17)
+  if coastal or cove:f.button(col,"View harbour map" if coastal else "View bay map",func():close_menu();load("res://scripts/town_atlas307.gd").open(game,"harbour" if coastal else "bay"))
   var saved:Dictionary=records().state().get("voyage",{})
   if not saved.is_empty() and bool(saved.get("banking",false)):
    f.label(col,"A safe landing has an unfinished reward transaction. Finish it before starting another voyage.",16)

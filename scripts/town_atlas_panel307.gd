@@ -1,5 +1,11 @@
 extends VBoxContainer
 ## Uses the regular town modal, so its focus, close button and Escape behave as elsewhere.
+const DATA=preload("res://scripts/atlas_data377.gd")
+const ART=preload("res://scripts/atlas_art377.gd")
+var base_rows:Array=[]
+var area="town"
+var area_menu:OptionButton
+var local_button:Button
 var game:Node
 var rows:Array
 var routes:Array
@@ -17,14 +23,17 @@ var active_tab=0
 var selected=-1
 
 func setup(owner:Node,locations:Array,regions:Array,categories:Dictionary)->void:
- game=owner;rows=locations;routes=regions;groups=categories;player_position=owner.position_in_world
+ game=owner;base_rows=locations;rows=locations;routes=regions;groups=categories;player_position=owner.position_in_world
  name="TownAtlas"
  game.presentation.content.add_child(self)
  add_theme_constant_override("separation",8)
  var tabs:=HBoxContainer.new();tabs.add_theme_constant_override("separation",8);add_child(tabs)
  town_tab=game.presentation.button(tabs,"Town map",show_tab.bind(0))
  region_tab=game.presentation.button(tabs,"Region map",show_tab.bind(1))
- var instructions:Label=game.presentation.label(tabs,"Select a numbered pin or look up a place.",14)
+ area_menu=OptionButton.new();area_menu.name="AtlasArea";area_menu.custom_minimum_size=Vector2(190,42);tabs.add_child(area_menu)
+ for title in DATA.TITLES:area_menu.add_item(title)
+ area_menu.item_selected.connect(func(index:int):set_area(DATA.AREAS[index]))
+ var instructions:Label=game.presentation.label(tabs,"Tap a pin or search the local directory.",14)
  instructions.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  instructions.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
  instructions.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
@@ -32,7 +41,7 @@ func setup(owner:Node,locations:Array,regions:Array,categories:Dictionary)->void
  var split:=HBoxContainer.new();split.add_theme_constant_override("separation",16);add_child(split)
  canvas=MapCanvas.new()
  canvas.custom_minimum_size=Vector2(650,360)
- canvas.rows=rows;canvas.routes=routes;canvas.groups=groups;canvas.player=player_position
+ canvas.rows=rows;canvas.routes=routes;canvas.groups=groups;canvas.player=player_position;canvas.season=game.town_life.calendar.season()
  canvas.picked.connect(select)
  split.add_child(canvas)
  var sidebar:=VBoxContainer.new();sidebar.add_theme_constant_override("separation",6)
@@ -54,16 +63,36 @@ func setup(owner:Node,locations:Array,regions:Array,categories:Dictionary)->void
  detail_body=game.presentation.label(sidebar,"",14)
  detail_body.custom_minimum_size.y=70
  detail_body.modulate=Color("#d5e3da")
+ local_button=game.presentation.button(sidebar,"View local map",view_local);local_button.custom_minimum_size.y=32;local_button.add_theme_font_size_override("font_size",14)
  show_tab(0)
- region_tab.grab_focus()
+ town_tab.grab_focus()
 
 func show_tab(tab:int)->void:
  active_tab=tab;selected=-1
- town_tab.disabled=tab==0;region_tab.disabled=tab==1
- search.visible=tab==0;canvas.regional=tab==1
+ for i in 2:
+  var button:Button=town_tab if i==0 else region_tab
+  var style=StyleBoxFlat.new();style.bg_color=Color("#365e69") if tab==i else Color("#172a2e")
+  style.border_color=Color("#e5cc87") if tab==i else Color("#4e7077");style.set_border_width_all(2 if tab==i else 1);style.set_corner_radius_all(5)
+  style.content_margin_left=12;style.content_margin_right=12
+  button.add_theme_stylebox_override("normal",style);button.add_theme_stylebox_override("hover",style)
+  button.add_theme_color_override("font_color",Color("#fff0c0") if tab==i else Color("#bdd0ce"))
+ search.visible=tab==0;area_menu.visible=tab==0;local_button.visible=tab==1;canvas.regional=tab==1
  directory.scroll_vertical=0
  refresh_list("")
  select(0 if tab==1 else -1)
+
+func set_area(value:String)->void:
+ if value not in DATA.AREAS:return
+ area=value;area_menu.select(DATA.AREAS.find(area));rows=DATA.locations(game,area,base_rows)
+ canvas.area=area;canvas.rows=rows;canvas.rebuild()
+ if is_instance_valid(search):search.text=""
+ show_tab(0)
+func view_local()->void:
+ var index=selected
+ set_area(DATA.route_area(maxi(0,index)))
+ if index==3:
+  for n in rows.size():
+   if rows[n][0]=="Wayfarer Wilds trail":select(n);break
 
 func refresh_list(_query:String)->void:
  for item in list.get_children():
@@ -86,8 +115,8 @@ func refresh_list(_query:String)->void:
 func select(index:int)->void:
  selected=index;canvas.selected=index;canvas.queue_redraw()
  if index<0:
-  detail_title.text="You are here • Town Map Board"
-  detail_body.text="Use the roads and numbered markers to find entrances. The bright marker shows your location."
+  detail_title.text=DATA.TITLES[DATA.AREAS.find(area)]+" • Local directory"
+  detail_body.text="Pins follow actual entrances, piers and paths. Choose a pin for directions. Your marker appears when you are in this area."
  elif active_tab==1:
   var route:Array=routes[index]
   detail_title.text=route[0]
@@ -105,7 +134,10 @@ func reveal_selection(tab:int,index:int)->void:
 
 class MapCanvas extends Control:
  signal picked(index:int)
- const FIELD=Rect2(-1450,-480,4690,3390)
+ const DATA=preload("res://scripts/atlas_data377.gd")
+ const ART=preload("res://scripts/atlas_art377.gd")
+ var area="town"
+ var season="Summer"
  const DESIGN=Vector2(650,360)
  const MAP=Rect2(12,32,626,286)
  const INK=Color("#344d45")
@@ -122,12 +154,17 @@ class MapCanvas extends Control:
 
  func _ready()->void:
   mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
+  clip_contents=true;rebuild()
+
+ func rebuild()->void:
+  pins.clear();footprints=DATA.footprints(area)
   for row in rows:
-   if not str(row[4]).is_empty():footprints[row[0]]=SHOPS.rect(row[4])
+   if area=="town" and not str(row[4]).is_empty():footprints[row[0]]=SHOPS.rect(row[4])
   var landmarks=preload("res://scripts/town_landmarks241.gd").RECTS
-  for pair in [["Gladiator Arena","arena"],["Challenge Lodge","lodge"],["Crossroads Academy","academy"],["Crossroads Studio","studio"]]:
+  for pair in ([] if area!="town" else [["Gladiator Arena","arena"],["Challenge Lodge","lodge"],["Crossroads Academy","academy"],["Crossroads Studio","studio"]]):
    footprints[pair[0]]=landmarks[pair[1]]
-  for home in preload("res://scripts/town_neighborhood.gd").HOMES:footprints[home.name]=home.wall
+  if area=="town":
+   for home in preload("res://scripts/town_neighborhood.gd").HOMES:footprints[home.name]=home.wall
   for row in rows:
    var anchor:=point(row[1])
    var chosen:=anchor
@@ -141,8 +178,11 @@ class MapCanvas extends Control:
     if not pins.any(func(other):return chosen.distance_to(other)<19):break
    pins.append(chosen)
 
- func point(world:Vector2)->Vector2:
-  return MAP.position+(world-FIELD.position)/FIELD.size*MAP.size
+ func field()->Rect2:return DATA.FIELDS[area]
+ func point(at:Vector2)->Vector2:
+  var f=field();return MAP.position+(at-f.position)/f.size*MAP.size
+ func world(at:Vector2)->Vector2:
+  var f=field();return f.position+(at-MAP.position)/MAP.size*f.size
 
  func _gui_input(event:InputEvent)->void:
   var position_value:Vector2
@@ -150,7 +190,7 @@ class MapCanvas extends Control:
   elif event is InputEventScreenTouch and event.pressed:position_value=event.position
   else:return
   var at:=position_value/size*DESIGN
-  var best=-1;var distance=42.0 if regional else 18.0
+  var best=-1;var distance=28.0 if regional else 18.0
   for i in (routes.size() if regional else pins.size()):
    var marker:Vector2=routes[i][1] if regional else pins[i]
    if at.distance_to(marker)<distance:best=i;distance=at.distance_to(marker)
@@ -171,17 +211,17 @@ class MapCanvas extends Control:
  func polygon(points:Array,color:Color)->void:
   draw_colored_polygon(PackedVector2Array(points),color)
 
- func pine(at:Vector2,s:float,color:Color)->void:
-  polygon([at+Vector2(0,-12)*s,at+Vector2(7,3)*s,at+Vector2(-7,3)*s],color)
-  draw_line(at+Vector2(0,1)*s,at+Vector2(0,6)*s,color,1)
+ func pine(at:Vector2,s:float,_color:Color)->void:ART.tree(self,at,s*.85)
 
  func compass(at:Vector2)->void:
   polygon([at+Vector2(0,-11),at+Vector2(5,8),at,at+Vector2(-5,8)],INK)
   caption(at+Vector2(-4,-15),"N",10)
 
  func draw_town()->void:
-  caption(Vector2(19,24),"CROSSROADS  /  TOWN DIRECTORY",15)
-  draw_rect(MAP,Color("#c8c7a0"))
+  caption(Vector2(19,24),DATA.TITLES[DATA.AREAS.find(area)].to_upper()+"  /  LOCAL MAP",14)
+  if area!="town":
+   ART.local(self);draw_pins();return
+  ART.land(self)
   draw_rect(MAP,Color("#a79d76"),false,1)
   var river:=Rect2(point(Vector2(2280,-480)),point(Vector2(2440,2910))-point(Vector2(2280,-480)))
   draw_rect(river,Color("#6b9da0"))
@@ -215,6 +255,9 @@ class MapCanvas extends Control:
    draw_rect(box,roof);draw_rect(box,Color("#686d5e"),false,1)
    draw_line(box.position+Vector2(2,box.size.y*.45),box.position+Vector2(box.size.x-2,box.size.y*.45),roof.lightened(.28),1)
   compass(Vector2(608,71))
+  draw_pins()
+
+ func draw_pins()->void:
   for i in rows.size():
    var row:Array=rows[i]
    var at:Vector2=pins[i]
@@ -223,47 +266,22 @@ class MapCanvas extends Control:
    draw_circle(at,8.4,Color(groups[row[2]]),true,-1,true)
    draw_arc(at,8.4,0,TAU,18,LIGHT,1,true)
    caption(at-Vector2(5,-3),"%02d"%(i+1),9,LIGHT)
-  if selected>=0:draw_arc(pins[selected],11.5,0,TAU,28,Color("#203e3b"),2,true)
-  var here:=point(player)
+  if selected>=0 and selected<pins.size():draw_arc(pins[selected],11.5,0,TAU,28,Color("#203e3b"),2,true)
+  var here:=point(player) if field().has_point(player) else Vector2(-100,-100)
   polygon([here+Vector2(0,-16),here+Vector2(8,-8),here,here+Vector2(-8,-8)],Color("#344d45"))
   polygon([here+Vector2(0,-13),here+Vector2(5,-8),here+Vector2(0,-3),here+Vector2(-5,-8)],Color("#fff0b6"))
   var x=20
-  for category in groups:
+  var present=[]
+  for row in rows:
+   if row[2] not in present:present.append(row[2])
+  for category in present:
    draw_circle(Vector2(x+4,337),4,Color(groups[category]))
-   caption(Vector2(x+12,341),category,12)
-   x+=103
-  caption(Vector2(452,341),"◆  You are here",12)
+   caption(Vector2(x+12,341),category,11)
+   x+=94
+  caption(Vector2(514,341),"◆ You",11)
 
  func draw_region()->void:
-  caption(Vector2(19,24),"CROSSROADS  /  REGIONAL ROUTES",15)
-  draw_rect(MAP,Color("#c5c8a0"))
-  draw_rect(MAP,Color("#a79d76"),false,1)
-  var sea=[Vector2(12,265),Vector2(63,259),Vector2(102,273),Vector2(151,254),Vector2(199,270),Vector2(258,274),Vector2(313,286),Vector2(376,273),Vector2(438,290),Vector2(494,280),Vector2(564,287),Vector2(638,272),Vector2(638,318),Vector2(12,318)]
-  polygon(sea,Color("#7ba8a6"))
-  var river=PackedVector2Array([Vector2(204,70),Vector2(215,101),Vector2(254,121),Vector2(271,145),Vector2(269,171),Vector2(247,196),Vector2(225,213),Vector2(201,232),Vector2(186,255),Vector2(203,291)])
-  draw_polyline(river,Color("#678c8e"),22,true)
-  draw_polyline(river,Color("#88b5b0"),16,true)
-  polygon([Vector2(122,63),Vector2(145,49),Vector2(188,43),Vector2(230,48),Vector2(255,63),Vector2(263,80),Vector2(239,99),Vector2(192,108),Vector2(149,99),Vector2(126,83)],Color("#81adab"))
-  for p in [Vector2(155,73),Vector2(226,63),Vector2(190,94)]:draw_circle(p,8,Color("#c7c79d"),true,-1,true)
-  for i in 34:pine(Vector2(388+posmod(i*37,192),83+posmod(i*43,150)),.75+float(i%3)*.2,Color("#83966d"))
-  var road=PackedVector2Array([Vector2(247,193),Vector2(276,177),Vector2(311,179),Vector2(348,165),Vector2(401,171),Vector2(461,177)])
-  draw_polyline(road,Color("#a98e66"),5,true)
-  draw_polyline(road,Color("#e6d4a6"),2,true)
-  draw_line(Vector2(254,182),Vector2(279,176),Color("#b08557"),8,true)
-  for i in 14:
-   var x=22+i*42
-   var y=298+posmod(i*29,13)
-   draw_arc(Vector2(x,y),7,.5,2.65,8,Color("#a5cac0"),1,true)
-  caption(Vector2(154,126),"UPRIVER",10)
-  caption(Vector2(96,232),"DOWNRIVER",10)
-  compass(Vector2(606,72))
-  for i in routes.size():
-   var at:Vector2=routes[i][1]
-   draw_circle(at,12,Color("#425e55"),true,-1,true)
-   draw_arc(at,12,0,TAU,24,LIGHT,1.5,true)
-   if selected==i:draw_arc(at,16,0,TAU,24,INK,2,true)
-   var title_at=at+Vector2(16,4)
-   if i==3:title_at=at+Vector2(-60,31)
-   if i==1:title_at=at+Vector2(59,1)
-   caption(title_at,str(routes[i][0]),15)
-  caption(Vector2(21,342),"Regional routes are schematic • Travel starts in town.",12)
+  caption(Vector2(19,24),"CROSSROADS  /  WATERWAYS & TRAILS",14)
+  ART.region(self)
+  caption(Vector2(20,337),"Solid: walking trail   •   Gold dashes: waypoint connection   •   Blue dashes: ferry",10)
+  caption(Vector2(20,351),"Regional chart • not to scale. "+("River ferries and lake boats pause in winter." if season=="Winter" else "Walking routes remain available throughout the year."),10)

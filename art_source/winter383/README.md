@@ -1,0 +1,9 @@
+# Complete town winter exterior pass — V383
+
+Nine built-in image-generation edits produced the winter artwork. The eight building/structure sheets and planter sheet are retained here unmodified, together with their prompts, original source rectangles/grid positions and the portable offline assembly script. The original summer sprites and metadata remain at their established project paths; this directory is ignored by Godot's asset scanner through art_source/.gdignore.
+
+Runtime art: assets/town_winter383/buildings.png and buildings.json contain 50 frames: 24 shops/civic facades, four landmarks, eighteen smaller exterior structures, and four dormant/snowy garden props. Existing V382 winter home art supplies six residential facade types and their reused harbour/cabin roofs. Two more derived PNGs replace embedded summer artwork in the Squirrel Post and marina-fittings caches.
+
+Offline integration: generated objects are cropped from their fixed grid cells, alpha-matted and normalized to original used bounds with nearest-neighbour scaling. Image-authored snow deposits and winter plant materials are integrated onto the original building architecture; original windows, door positions and sign panels remain aligned. Existing emission masks and blank label panels are preserved pixel-exactly. Outdoor garden props use the complete generated dormant variants. Cached composites preserve surrounding scenery and baked labels. No image generation, alpha matting, pixel scanning or resizing happens during gameplay.
+
+The winter renderer lazily decodes a single 2048×1536 atlas and two small cached composites, and reuses the same Texture2D/AtlasTexture objects. Warm seasons use the original source art. Physics, doors, collision, NPC routing and gameplay rules are unchanged. New source art may be regenerated offline with Godot using this assembly script; its ROOT resolves to the current project rather than a development computer path.

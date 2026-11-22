@@ -15,5 +15,5 @@ static func texture(id:String)->Texture2D:
  return textures[id]
 static func draw(c:CanvasItem,id:String,rect:Rect2)->void:
  if id in ["flowers","flowers_small"] and c.get("mode")=="town":preload("res://scripts/town_nature243.gd").draw(c,id,rect);return
- var image=texture(id)
+ var image=preload("res://scripts/winter_buildings383.gd").canvas_texture(c,"cache",id,texture(id))
  if image!=null:c.draw_texture_rect(image,rect,false)

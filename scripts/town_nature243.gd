@@ -26,17 +26,31 @@ static func prepare()->void:
    var mask=AtlasTexture.new();mask.atlas=glass;mask.region=rect_of(v.emission_region);masks[id]=mask
 static func texture(id:String)->Texture2D:
  prepare();return frames[id]
+static var seasonal_frames:Dictionary={}
+static func seasonal_texture(id:String,season:String)->Texture2D:
+ var original=texture(id)
+ var atlas=preload("res://scripts/town_homes382.gd").texture(id,season)
+ if atlas==null:return original
+ var key=season+":"+id
+ if not seasonal_frames.has(key):
+  var frame=AtlasTexture.new();frame.atlas=atlas;frame.region=original.region;seasonal_frames[key]=frame
+ return seasonal_frames[key]
 static func draw(g:Node2D,id:String,screen:Rect2,tint:Color=Color.WHITE)->void:
  if not Rect2(Vector2.ZERO,g.VIEW).intersects(screen):return
  var art:=texture(id)
+ var winter_frame=preload("res://scripts/winter_buildings383.gd").texture("nature",id,g.town_life.calendar.season(),null)
+ if winter_frame!=null:
+  g.draw_texture_rect(winter_frame,screen,false,tint);plant_draws+=1;return
  var atlas=seasonal_atlas(id,g.town_life.calendar.season())
  if atlas!=null:g.draw_texture_rect_region(atlas,screen,art.region,tint)
  else:g.draw_texture_rect(art,screen,false,tint)
  plant_draws+=1
  var winter=preload("res://scripts/winter_art353.gd")
- if id in ["shrub","garden_bed","tidekeeper"] and winter.active(g):
+ if id in ["shrub","garden_bed"] and winter.active(g):
   g.draw_texture_rect(winter.roof("nature:"+id,art),screen,false,tint)
 static func seasonal_atlas(id:String,season:String)->Texture2D:
+ var homes=preload("res://scripts/town_homes382.gd").texture(id,season)
+ if homes!=null:return homes
  if season=="Fall" and id in Fall.TOWN_PLANTS:return Fall.texture("town_canopies")
  if season=="Spring" and id in Spring.TOWN_PLANTS:return Spring.texture("town_canopies")
  return null
@@ -104,10 +118,11 @@ static func ground_cuts()->Array:
   if y>1020 and y<1290:continue
   for x in [2250,2470]:cuts.append(Rect2(x-12,y-30,25,44))
  return cuts
-static func clean_ground_tiles(tiles:Array)->Array:
+static func clean_ground_tiles(tiles:Array,cuts:Array=[])->Array:
  # Split cached UV rectangles ONCE to omit old flat plant paint only.
  # Bank stones/fence crossings are redrawn identically under the new foliage.
- var result=[];var cuts=ground_cuts()
+ var result=[]
+ if cuts.is_empty():cuts=ground_cuts()
  for tile in tiles:
   var original=rect_of(tile.world);var uv=rect_of(tile.region);var pieces=[original]
   for cut in cuts:

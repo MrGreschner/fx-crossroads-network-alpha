@@ -34,7 +34,7 @@ static var static_data:Dictionary={}
 static func structure(c:Node2D,id:String,camera:Vector2)->void:
  if static_data.is_empty():static_data=JSON.parse_string(FileAccess.get_file_as_string(ROOT+"static.json"))
  var b:Array=static_data[id];var r=Rect2(b[0],b[1],b[2],b[3])
- if Rect2(camera,c.VIEW).grow(3).intersects(r):c.draw_texture_rect(texture(id),Rect2(r.position-camera,r.size),false)
+ if Rect2(camera,c.VIEW).grow(3).intersects(r):c.draw_texture_rect(preload("res://scripts/winter_buildings383.gd").canvas_texture(c,"marina",id,texture(id)),Rect2(r.position-camera,r.size),false)
 static func deck(c:Node2D,camera:Vector2)->void:structure(c,"deck",camera)
 static func deck_source(c:Node2D,camera:Vector2)->void:
  var view=Rect2(camera,c.VIEW).grow(70)
