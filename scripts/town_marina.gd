@@ -3,12 +3,26 @@ extends RefCounted
 const WATER=[Vector2(2280,2290),Vector2(2170,2260),Vector2(1740,2260),Vector2(1660,2300),Vector2(1630,2390),Vector2(1640,2590),Vector2(1700,2680),Vector2(2140,2700),Vector2(2280,2660),Vector2(2440,2660),Vector2(2440,2290)]
 const DECKS=[Rect2(1640,2275,570,53),Rect2(1810,2328,48,190),Rect2(2050,2328,48,190),Rect2(2130,2220,68,108)]
 const BERTHS=[{"at":Vector2(1740,2415),"crew":1,"angle":0.0,"hull":"#a16642","trim":"#e4bf83"},{"at":Vector2(1920,2430),"crew":3,"angle":0.0,"hull":"#365c70","trim":"#dfbb7e"},{"at":Vector2(2155,2430),"crew":3,"angle":0.0,"hull":"#766c46","trim":"#e8cc8a"},{"at":Vector2(1910,2610),"crew":1,"angle":PI/2,"hull":"#995d43","trim":"#d7b386"}]
+static var ice_material:CanvasTexture
+static func ice_texture()->Texture2D:
+ if ice_material==null:
+  ice_material=CanvasTexture.new()
+  ice_material.diffuse_texture=preload("res://scripts/town_winter358.gd").texture("ice")
+  ice_material.texture_repeat=CanvasItem.TEXTURE_REPEAT_ENABLED
+ return ice_material
 static func wet(p:Vector2)->bool:return Geometry2D.is_point_in_polygon(p,PackedVector2Array(WATER))
 static func on_deck(p:Vector2)->bool:
  for deck in DECKS:
   if deck.has_point(p):return true
  return false
 static func blocked(p:Vector2)->bool:return wet(p) and not on_deck(p)
+# Only the sheltered inlet is safe ice; the main river remains impassable.
+static func safe_ice(p:Vector2)->bool:
+ if p.x>=2260:return false
+ for offset in [Vector2.ZERO,Vector2(8,0),Vector2(-8,0),Vector2(0,8),Vector2(0,-8)]:
+  if not wet(p+offset):return false
+ return true
+static func visible_berths(winter:bool)->Array:return [] if winter else BERTHS
 static func boat_size(crew:int)->Vector2:return Vector2(90,184) if crew==3 else Vector2(67,121)
 static func hull_points(size:Vector2)->PackedVector2Array:
  var w=size.x*.5;var h=size.y*.5
@@ -50,17 +64,17 @@ static func draw_structure_source(c:Node2D,cam:Vector2)->void:
  if winter:
   var uv=PackedVector2Array()
   for p in WATER:uv.append(p/128)
-  c.draw_polygon(shifted,PackedColorArray([Color.WHITE]),uv,preload("res://scripts/tidecross359.gd").ice_texture())
+  c.draw_polygon(shifted,PackedColorArray([Color("#b1c6cc")]),uv,ice_texture())
  else:c.draw_colored_polygon(shifted,Color('#347889'))
  var shore=PackedVector2Array()
  for p in bank:shore.append(p-cam)
- c.draw_polyline(shore,Color('#6c8171'),19,true);c.draw_polyline(shore,Color('#b4ad83'),7,true)
+ c.draw_polyline(shore,(Color('#d2dfe2') if winter else Color('#6c8171')),19,true);c.draw_polyline(shore,(Color('#a6bcc5') if winter else Color('#b4ad83')),7,true)
  # Shallows follow the bank while the centre remains an open navigable channel.
  var shallow=PackedVector2Array()
  for p in bank:shallow.append(p.lerp(Vector2(1980,2460),.04)-cam)
  c.draw_polyline(shallow,Color("#bed1d7") if winter else Color('#509594',.7),14,true)
  # Mooring ropes lead to the fingers, away from the river channel.
- for ends in [[Vector2(1740,2360),Vector2(1815,2350)],[Vector2(1920,2340),Vector2(1855,2345)],[Vector2(2155,2340),Vector2(2095,2345)],[Vector2(1850,2610),Vector2(1834,2510)]]:
+ for ends in ([] if winter else [[Vector2(1740,2360),Vector2(1815,2350)],[Vector2(1920,2340),Vector2(1855,2345)],[Vector2(2155,2340),Vector2(2095,2345)],[Vector2(1850,2610),Vector2(1834,2510)]]):
   var rope=PackedVector2Array([ends[0]-cam,(ends[0]+ends[1])*.5-cam+Vector2(0,5),ends[1]-cam]);c.draw_polyline(rope,Color('#c6b186'),2,true)
  for deck in DECKS:
   var rect=Rect2(deck.position-cam,deck.size);c.draw_rect(rect.grow(4),Color('#3a413b'));c.draw_rect(rect,Color('#a88a62'))
@@ -91,7 +105,7 @@ static func draw(c:Node2D,cam:Vector2)->void:
  for n in (0 if winter else 53):
   var at=Vector2(1660+posmod(n*113,760),2305+posmod(n*67,355));at.x+=sin(t*.55+n)*5
   if wet(at) and not on_deck(at):c.draw_line(at-cam,at-cam+Vector2(12+posmod(n,3)*6,0),Color(.66,.87,.85,.28),1.5,true)
- for n in BERTHS.size():
+ for n in visible_berths(winter).size():
   var spec=BERTHS[n];var at:Vector2=spec.at
   if not Rect2(at-boat_size(int(spec.crew))*.5-Vector2(15,15),boat_size(int(spec.crew))+Vector2(30,30)).intersects(Rect2(cam,c.VIEW)):continue
   var bob=sin(t*1.5+at.x*.01)*1.3

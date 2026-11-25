@@ -1,0 +1,98 @@
+{
+  "from_version": "V383",
+  "to_version": "V384",
+  "base_full_server_sha256": "5a8746318fa85000a0bfb61f9d10cec2f08ca8f2536c7c98e08bfe401fd51c81",
+  "target_full_server_sha256": "59454f3841cf485dab4b6badfa42a9dbe3a25958b95b5322b2f231e5beb3353a",
+  "deleted_files": [],
+  "files": [
+    {
+      "path": "INSTALL_V384.md",
+      "change": "added",
+      "bytes": 1655,
+      "sha256": "6d915f60356ecd392d47433e0dde46a685167124841994c466664301efb2b400",
+      "previous_sha256": null
+    },
+    {
+      "path": "UPDATE_V384.md",
+      "change": "added",
+      "bytes": 1855,
+      "sha256": "a856469333d592bae726b0de7257b70529c341ec2c94a01bc0483510c14b161b",
+      "previous_sha256": null
+    },
+    {
+      "path": "network/release.gd",
+      "change": "modified",
+      "bytes": 81,
+      "sha256": "e551e5bea1a2048d0661f95f94ded72551857da88161565954d7f76ea3414ef1",
+      "previous_sha256": "b85b8195788f4cde0995995f1bcf423ccc1157f57a35c53f9f42f2c5abf36b9d"
+    },
+    {
+      "path": "network_service/release.mjs",
+      "change": "modified",
+      "bytes": 57,
+      "sha256": "c715dc512d6fa905bc1f4d2c1c0ef3d28bc4abed3b71db21298b25aef01e4933",
+      "previous_sha256": "1543cad8fb2587cd638e834a9ef79548627a0bb7128ca47e28090aea9fb26195"
+    },
+    {
+      "path": "project.godot",
+      "change": "modified",
+      "bytes": 1852,
+      "sha256": "d396730b8e56596f7b9e30ed4c625c0f3b867f3bb549e0a42dd2668498736a6c",
+      "previous_sha256": "e6bab4e37fc0bea1942bdf689836906865ea7bea59a534a46f0385773b006a6a"
+    },
+    {
+      "path": "scripts/commerce_town.gd",
+      "change": "modified",
+      "bytes": 6622,
+      "sha256": "8cd0812b64edb8f2445f1f4a0d6f46a32282d313040284eb086022195ae77c7b",
+      "previous_sha256": "ed2dbacb25e01384545a2dc68f6ed819b48c3dc25f7f906431bb0a61e491f2f1"
+    },
+    {
+      "path": "scripts/game.gd",
+      "change": "modified",
+      "bytes": 168451,
+      "sha256": "c6e46ba5ebbee99ab051f5f02188e6b8fc98412d5d69020be5255a52ab863e30",
+      "previous_sha256": "8bad3879730c41968185a9d2c06216ac0d035c224179c9257acf8e2692b48503"
+    },
+    {
+      "path": "scripts/town_calendar.gd",
+      "change": "modified",
+      "bytes": 19506,
+      "sha256": "10902b5e57e64ffc5bf91b26ca0fc4648f172ba1f9a10321f9d051c6a3cc21c2",
+      "previous_sha256": "aae1c877593489a9c23dac01d1042ec044a70e0e95a466cb009196d44fad264d"
+    },
+    {
+      "path": "scripts/town_marina.gd",
+      "change": "modified",
+      "bytes": 8643,
+      "sha256": "1530e6bc5d1e59d38acec6d9e8663f2c7a51a0edb658c1b580946839ead763fc",
+      "previous_sha256": "287cab8ccb62364e0c6bf27fec97acccda7cf464a6bbcf24c949a944310bf968"
+    },
+    {
+      "path": "scripts/town_water247.gd",
+      "change": "modified",
+      "bytes": 4039,
+      "sha256": "2ccf02c4704295e1efd9193f057631dab6257498559650d0c4a32c207a635061",
+      "previous_sha256": "26575faf25af119233b4cc92f95ead02749df06dc383cf4cb6b7cc76513c4564"
+    },
+    {
+      "path": "scripts/town_winter358.gd",
+      "change": "modified",
+      "bytes": 7519,
+      "sha256": "ac422a14b4c08299fe38746fc714dadaf3e50627bb1de8dd23c0d24ed1227631",
+      "previous_sha256": "9e67fc69cc88ccec980f63c4e0cc4270b3ddc2094a67cbc88f04f47b2a94b9f6"
+    },
+    {
+      "path": "tools/validate_winter384.gd",
+      "change": "added",
+      "bytes": 3089,
+      "sha256": "12da438092d3ab9f696b659653ce318d1801bf75c96ad711643741af1df90820",
+      "previous_sha256": null
+    }
+  ],
+  "verification": {
+    "zip_crc": true,
+    "overlay_matches_full_v384_project": true,
+    "individual_files_under_100_MB": true
+  }
+}

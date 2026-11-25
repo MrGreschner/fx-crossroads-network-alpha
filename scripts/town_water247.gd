@@ -85,6 +85,6 @@ func _draw():
   else:
    draw_polygon(pond,white,pond_uv,base);draw_polygon(pond,white,pond_uv,ripple)
  if view.intersects(Rect2(1630,2260,810,440)):
-  if frozen:draw_polygon(marina,white,marina_uv,WINTER.texture("ice"))
+  if frozen:draw_polygon(marina,PackedColorArray([Color("#b1c6cc")]),marina_uv,WINTER.texture("ice"))
   else:
    draw_polygon(marina,white,marina_uv,base);draw_polygon(marina,white,marina_uv,ripple)

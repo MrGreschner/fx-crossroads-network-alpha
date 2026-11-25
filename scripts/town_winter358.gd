@@ -10,6 +10,7 @@ const COCOA=Vector2(433,526)
 const STALL=Rect2(389,451,88,71)
 const FOOD="hot_chocolate"
 const HOLES={
+ "town_marina":{"at":Vector2(1965,2530),"bank":Vector2(1965,2565),"name":"Marina Ice Hole"},
  "town_pond":{"at":Vector2(234,406),"bank":Vector2(234,432),"name":"Town Pond Ice Hole"},
  "town_river":{"at":Vector2(2421,1340),"bank":Vector2(2475,1340),"name":"East Bridge Ice Hole"},
  "town_dawn":{"at":Vector2(2421,480),"bank":Vector2(2475,480),"name":"Northern Dawn Ice Hole · 4–6 am"}
@@ -39,7 +40,15 @@ static func pond_contains(p:Vector2)->bool:
  return ((p-POND)/POND_RADII).length_squared()<1.0
 
 static func rescue_thawed_pond(g:Node2D)->void:
- if not pond_contains(g.position_in_world) or SEASON.active(g):return
+ if SEASON.active(g):return
+ var marina=preload("res://scripts/town_marina.gd")
+ if marina.wet(g.position_in_world) and not marina.on_deck(g.position_in_world):
+  for point in [Vector2(1834,2460),Vector2(2074,2460),Vector2(1790,2240)]:
+   if g.can_stand_at(point):
+    g.position_in_world=point
+    g.update_camera()
+    return
+ if not pond_contains(g.position_in_world):return
  var direction:Vector2=(g.position_in_world-POND).normalized()
  if direction.is_zero_approx():direction=Vector2.DOWN
  for radius in [1.12,1.32,1.6]:

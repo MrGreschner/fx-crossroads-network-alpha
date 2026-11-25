@@ -397,7 +397,7 @@ func build_scenery() -> void:
 func can_stand_at(point: Vector2) -> bool:
 	if voyage!=null and voyage.active:return voyage.land_at(point)
 	if mode=="town" and Tidecross.is_extension(point):return Tidecross.land(point,Tidecross.winter(self))
-	if mode=="town" and preload("res://scripts/town_marina.gd").on_deck(point):return true
+	if mode=="town" and (preload("res://scripts/town_marina.gd").on_deck(point) or (TownWinter.SEASON.active(self) and preload("res://scripts/town_marina.gd").safe_ice(point))):return true
 	if waylight!=null and waylight.between() and mode=="run":return waylight.expedition.open(point)
 	if lodges!=null and lodges.active:
 		if not lodges.trial_bounds().has_point(point):return false

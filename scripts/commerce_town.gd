@@ -50,7 +50,7 @@ func draw_on(g:Node2D,camera:Vector2)->void:
 func crate(g:Node2D,p:Vector2,size:Vector2)->void:
  preload("res://scripts/town_streets244.gd").draw(g,"cargo",Rect2(p,size))
 func draw_market(g:Node2D,camera:Vector2)->void:
- g.draw_texture_rect(preload("res://scripts/town_terrain247.gd").png("market"),Rect2(Vector2(-535,455)-camera,Vector2(745,345)),false)
+ draw_market_structure(g,camera)
  var calendar:Variant=g.town_life.calendar
  var time:=Time.get_ticks_msec()*.001
  var workers:=preload("res://scripts/town_workers314.gd").active("market",calendar.hour,calendar.weekday)
@@ -67,10 +67,7 @@ func draw_market(g:Node2D,camera:Vector2)->void:
  g.draw_string(font,DOOR-camera+Vector2(-105,36),"ENTER THE BUSINESS DISTRICT",HORIZONTAL_ALIGNMENT_CENTER,210,13,Color("#ecd39b"))
 
 func draw_market_structure(g:Node2D,camera:Vector2)->void:
- var p=WALL.position-camera;var yard=YARD.position-camera
- g.draw_rect(Rect2(yard,YARD.size),Color("#a99870"))
- for n in 18:
-  var q=yard+Vector2(14+n*40,15);g.draw_line(q,q+Vector2(0,YARD.size.y-30),Color(.85,.8,.63,.14),1)
+ # Keep the seasonal town terrain and connected street graph visible below the facades.
  preload("res://scripts/town_shops242.gd").draw(g,"market",camera)
  # Both arcade booths retain their own product displays and exact stock footprints.
  for x in [-505,65]:
