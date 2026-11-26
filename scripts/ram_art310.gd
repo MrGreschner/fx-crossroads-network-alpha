@@ -20,7 +20,8 @@ static func load_frame(sprite: String, index: int) -> Texture2D:
  var key := "%s_%d" % [sprite, index]
  if not frames.has(key):
   var image := Image.new()
-  if image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/ram310/" + key + ".png")) != OK:
+  var folder="res://assets/ram385/" if sprite=="ram" and index in [1,2] else "res://assets/ram310/"
+  if image.load_png_from_buffer(FileAccess.get_file_as_bytes(folder + key + ".png")) != OK:
    return null
   frames[key] = ImageTexture.create_from_image(image)
  return frames[key]

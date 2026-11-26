@@ -37,7 +37,7 @@ func setup(owner:Node)->void:
  var top:=HBoxContainer.new();col.add_child(top);label(top,"CHARACTER HALL",27).size_flags_horizontal=Control.SIZE_EXPAND_FILL
  grid_view_button=button(panel,"Grid view",open_grid)
  daily_hero_button=button(panel,"Hero of the day",func():preload("res://scripts/daily_hero.gd").open(self))
- var daily_id=preload("res://scripts/daily_hero.gd").id(game);daily_hero_button.icon=preload("res://scripts/daily_hero.gd").portrait(game,daily_id);daily_hero_button.expand_icon=true;daily_hero_button.add_theme_constant_override("icon_max_width",32);daily_hero_button.tooltip_text="Today: "+str(game.characters[daily_id].name)
+ var daily_id=preload("res://scripts/daily_hero.gd").id(game);daily_hero_button.icon=preload("res://scripts/daily_hero.gd").portrait(game,daily_id);daily_hero_button.expand_icon=true;daily_hero_button.add_theme_constant_override("icon_max_width",64);daily_hero_button.tooltip_text="Today: "+str(game.characters[daily_id].name)
  for state in ["normal","hover","pressed","focus"]:
   var outline=preload("res://scripts/studio_ui.gd").box("#31525d" if state=="normal" else "#446974","#efd395",8,9);outline.set_border_width_all(2);grid_view_button.add_theme_stylebox_override(state,outline)
  grid_view_button.add_theme_color_override("font_color",Color("#fff0c6"))
@@ -234,9 +234,9 @@ func _process(_delta:float)->void:
  panel.size=Vector2(1120,660)
  var view:=get_viewport().get_visible_rect().size;var factor:=minf(1,minf((view.x-32)/1120,(view.y-24)/660))
  panel.scale=Vector2.ONE*maxf(.35,factor);panel.position=(view-panel.size*panel.scale)*.5
- grid_view_button.position=Vector2((panel.get_global_transform().affine_inverse()*role_buttons["Summoner"].get_global_transform().origin).x,18)
- grid_view_button.size=Vector2(role_buttons["Summoner"].size.x,40)
- daily_hero_button.position=grid_view_button.position+Vector2(grid_view_button.size.x+10,0);daily_hero_button.size=Vector2(205,40)
+ grid_view_button.position=Vector2(315,18)
+ grid_view_button.size=Vector2(145,64)
+ daily_hero_button.position=grid_view_button.position+Vector2(grid_view_button.size.x+10,0);daily_hero_button.size=Vector2(260,64)
 func handle_key(event:InputEvent)->bool:
  if is_instance_valid(info_panel):
   if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:info_panel.close()

@@ -6,6 +6,8 @@ const COLOURS=[Color("#d59385"),Color("#83c7d5"),Color("#9ac39a")]
 var game:Node
 var spec:Dictionary
 var stage_index=-1
+var advance_pending=false
+var design:Dictionary={}
 var objective:Dictionary={}
 var objects:Array=[]
 var walls:Array=[]
@@ -40,9 +42,10 @@ var mirror_angles=[0,0,0]
 var rewind_armed=false
 var rewind_beacon=false
 var rewind_cast=false
+var last_stance_hit=-1
 func setup(owner:Node,data:Dictionary)->void:
  game=owner;spec=data.duplicate(true);var cart=Image.new()
- cart.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/merchant282/cart.png"));cart_texture=ImageTexture.create_from_image(cart);next_stage()
+ cart.load_png_from_buffer(FileAccess.get_file_as_bytes("res://assets/merchant282/cart.png"));cart_texture=ImageTexture.create_from_image(cart);design=preload("res://scripts/journey_design385.gd").course(game.journey_id);next_stage()
 func passable(p:Vector2,padding:float)->bool:
  if not Rect2(70,260,1860,970).grow(-padding).has_point(p):return false
  for wall in walls:
@@ -57,7 +60,9 @@ func status()->String:
 func interactive()->bool:return str(objective.get("kind","")) in ["collect","repair","sequence","polarity","mirror","rhythm","weather","sacrifice","rewind"]
 func obj(pos:Vector2,label:String,prop:String="waystone",value:int=0)->Dictionary:
  return {"pos":pos,"label":label,"prop":prop,"value":value,"done":false}
+func request_stage()->void:advance_pending=true
 func next_stage()->void:
+ advance_pending=false
  stage_index+=1
  if stage_index>=spec.stages.size():completed=true;game.finish_course(true);return
  objective=spec.stages[stage_index];count=0;age=0;hold=0;selected=-1;casts=[];hits=[];objects=[];walls=[];wave=0;next_wave=.8;escort_health=100;following=false;hazard={};warning=0;cycle=1;rewind_armed=false;rewind_beacon=false;rewind_cast=false
@@ -67,7 +72,10 @@ func next_stage()->void:
  var kind=str(objective.kind)
  route_cast=int(casts_by_kind.get(str(objective.get("requires","")),0))
  if kind in ["collect","repair","route","escort","weather"]:
-  for i in int(objective.n):objects.append(obj(POINTS[i%POINTS.size()],str(i+1),str(objective.get("prop","waystone")),i))
+  for i in int(objective.n):objects.append(obj(design.points[i%design.points.size()],str(i+1),str(objective.get("prop","waystone")),i))
+  if kind=="route" and bool(objective.get("flight",false)):
+   objects=[obj(Vector2(1000,650),"Air marker 1","arch"),obj(Vector2(1150,570),"Air marker 2","arch"),obj(Vector2(1210,780),"Air marker 3","arch")]
+   game.position_in_world=Vector2(850,650)
   if kind=="weather":
    for i in objects.size():objects[i].label=["Clear","Cloudy","Fog","Rain"][i]
   if kind=="escort":follower=Vector2(440,650);objects.append(obj(follower,"Meet travellers","tent",-1))
@@ -82,23 +90,34 @@ func next_stage()->void:
   if kind=="polarity":objects.append(obj(Vector2(1000,950),"Receiver • hold E","seal",0))
  elif kind=="mirror":
   objects=[obj(Vector2(700,500),"Mirror 1 • E","seal"),obj(Vector2(700,850),"Mirror 2 • E","seal"),obj(Vector2(1250,850),"Mirror 3 • E","seal")];mirror_angles=[0,0,0];trace_beam()
- elif kind in ["targets","volley"]:spawn_targets()
+ elif kind in ["targets","volley","freeze"]:spawn_targets()
  elif kind=="defend":objects.append(obj(Vector2(1000,700),"Protect the shelter","tent"))
  elif kind in ["parry","evade"]:objects.append(obj(Vector2(980,650),"Stand here for the lesson","seal"));cycle=2.0
  elif kind=="rewind":objects=[obj(Vector2(520,650),"Anchor • E","seal"),obj(Vector2(1000,650),"Memory beacon • E","waystone")]
+ elif kind=="ability" and objective.has("stance_hits"):
+  last_stance_hit=-1
+  var uid=game.next_enemy_uid;game.next_enemy_uid+=1
+  game.enemies.append({"uid":uid,"type":"training_dummy","pos":Vector2(950,650),"origin":Vector2(950,650),"hp":500.0,"max_hp":500.0,"boss":false,"attack_timer":100.0,"journey_target":true,"target_index":0})
+  game.position_in_world=Vector2(820,650)
  elif kind=="sacrifice":objects=[obj(Vector2(950,650),"Offering • E","seal")]
  # Clear stale gate/pillar collision after a course-specific gap has disappeared.
  game.update_camera()
 func spawn_targets()->void:
  var n=3 if objective.kind=="volley" else int(objective.n)
  for i in n:
-  var pos=POINTS[i%5]
+  var pos=design.points[i%design.points.size()]
   if objective.kind=="volley":pos=Vector2(460,650)+Vector2.RIGHT.rotated([-.195,-.065,.195][i])*350
   var uid=game.next_enemy_uid;game.next_enemy_uid+=1
   game.enemies.append({"uid":uid,"type":"training_dummy","pos":pos,"origin":pos,"hp":500.0,"max_hp":500.0,"boss":false,"attack_timer":100.0,"journey_target":true,"target_index":i})
  if objective.kind=="volley":game.position_in_world=Vector2(460,650);objects=[obj(Vector2(460,650),"Charge fully; aim at centre","seal")]
 func hit(enemy:Dictionary,amount:float)->void:
- if amount<=0 or int(enemy.uid) in hits or not game.course_active:return
+ if objective.kind=="freeze":return
+ if amount<=0 or advance_pending or int(enemy.uid) in hits or not game.course_active:return
+ if objective.has("stance_hits"):
+  if not game.adventure.combat.events.nutcracker.stance.has("solo") or count<1 or last_stance_hit==cast_serial:return
+  last_stance_hit=cast_serial;count+=1
+  if count>=int(objective.n):request_stage()
+  return
  var distance=game.position_in_world.distance_to(enemy.pos)
  if str(objective.get("distance",""))=="near" and distance>135:return
  if str(objective.get("distance",""))=="far" and distance<175:return
@@ -107,19 +126,23 @@ func hit(enemy:Dictionary,amount:float)->void:
   if clock-volley_clock>1.6 or volley_power<.99 or game.position_in_world.distance_to(Vector2(460,650))>55:return
   if int(enemy.uid) not in volley_hits:volley_hits.append(int(enemy.uid))
   count=volley_hits.size()
-  if count>=3:next_stage()
+  if count>=3:request_stage()
   return
  hits.append(int(enemy.uid));count+=1;game.enemy_flashes[int(enemy.uid)]=.2
  game.enemies.erase(enemy)
- if count>=int(objective.n):next_stage()
+ if count>=int(objective.n):request_stage()
 func cast(kind:String,power:float)->void:
+ if advance_pending or completed:return
  cast_serial+=1;casts_by_kind[kind]=int(casts_by_kind.get(kind,0))+1
  if kind=="primary":volley_clock=clock;volley_power=power;volley_hits=[]
  if objective.kind=="rewind" and rewind_beacon and kind=="secondary":rewind_cast=true
  if objective.kind!="ability":return
+ if objective.has("stance_hits"):
+  if kind=="secondary":count=1 if game.adventure.combat.events.nutcracker.stance.has("solo") else 0
+  return
  var sequence:Array=objective.casts
  if count<sequence.size() and str(sequence[count])==kind:count+=1
- if count>=sequence.size():next_stage()
+ if count>=sequence.size():request_stage()
 func new_phrase()->void:
  phrase=[[0,1,2],[2,0,1],[1,2,0]][count%3].duplicate();phrase_step=0;listen=3.1;age=0
 func near()->int:
@@ -163,7 +186,7 @@ func interact(index:int,delta:float,pressed:bool,held:bool)->void:
    if index==0 and not rewind_armed:
     rewind_armed=true;game.adventure.combat.confluence.paths.erase("solo");o.label="Return with rewind"
    elif index==1 and rewind_armed:rewind_beacon=true;o.done=true
- if count>=int(objective.n):next_stage()
+ if count>=int(objective.n):request_stage()
 func trace_beam()->void:
  beam=[Vector2(400,500)];var at=Vector2(400,500);var direction=Vector2.RIGHT
  for b in 5:
@@ -186,16 +209,21 @@ func spawn_wave()->void:
   var id=str(available[(stage_index+wave+i)%available.size()]);var hp=45.0+wave*8
   game.enemies.append({"uid":game.next_enemy_uid,"type":id,"pos":Vector2(1450+i%2*110,400+int(i/2)*350),"hp":hp,"max_hp":hp,"boss":false,"attack_timer":1.0,"journey_foe":true,"summoned":true});game.next_enemy_uid+=1
 func step(delta:float)->void:
- if completed or not game.course_active:return
+ if advance_pending:next_stage();return
+ if completed or advance_pending or not game.course_active:return
  clock+=delta;age+=delta
+ var old_stage=stage_index
  var kind=str(objective.kind)
  interact(near(),delta,Input.is_action_just_pressed("interact"),Input.is_action_pressed("interact"))
  if completed or not game.course_active:return
  # Interactions may have advanced the stage; never run old-stage mechanics afterwards.
- if kind!=str(objective.kind):return
- if kind=="mirror" and count==3:next_stage();return
+ if advance_pending or old_stage!=stage_index:return
+ if kind=="freeze":
+  for state in game.adventure.combat.events.frost.chills.values():
+   if float(state.get("freeze",0))>0:count=1;request_stage();return
+ if kind=="mirror" and count==3:request_stage();return
  if kind=="rhythm":listen=maxf(0,listen-delta)
- if kind=="rewind" and rewind_cast and rewind_beacon and game.position_in_world.distance_to(objects[0].pos)<110:count=1;next_stage();return
+ if kind=="rewind" and rewind_cast and rewind_beacon and game.position_in_world.distance_to(objects[0].pos)<110:count=1;request_stage();return
  if kind=="route":
   var active=true
   if bool(objective.get("mini",false)):active=game.adventure.combat.v110.small("solo") and game.position_in_world.x>float(objects[count].pos.x)+30
@@ -203,7 +231,7 @@ func step(delta:float)->void:
   if objective.has("requires"):active=active and int(casts_by_kind.get(str(objective.requires),0))>route_cast
   if count<objects.size() and game.position_in_world.distance_to(objects[count].pos)<65 and active:
    objects[count].done=true;count+=1;route_cast=int(casts_by_kind.get(str(objective.get("requires","")),0))
-   if count>=int(objective.n):next_stage();return
+   if count>=int(objective.n):request_stage();return
   if bool(objective.get("wind",false)):game.move_player(Vector2(sin(age*.7)*36,cos(age*.5)*18)*delta)
  if kind=="escort":
   if not following and game.position_in_world.distance_to(follower)<90:following=true;objects[-1].done=true
@@ -211,14 +239,14 @@ func step(delta:float)->void:
    var offset:Vector2=game.position_in_world-follower
    if offset.length()>65 and offset.length()<230:follower+=offset.normalized()*minf(145*delta,offset.length()-65)
    if count<int(objective.n) and follower.distance_to(objects[count].pos)<90:objects[count].done=true;count+=1
-   if count>=int(objective.n):next_stage();return
+   if count>=int(objective.n):request_stage();return
    # Raiders threaten the group; lingering next to them damages the escort.
    if wave==0 and age>4:spawn_wave()
    for foe in game.enemies:
     if not bool(foe.get("journey_target",false)) and follower.distance_to(foe.pos)<95:escort_health-=delta*8
  if kind=="defend":
   if game.enemies.is_empty():
-   if wave>=int(objective.n):count=wave;next_stage();return
+   if wave>=int(objective.n):count=wave;request_stage();return
    next_wave-=delta
    if next_wave<=0:spawn_wave();next_wave=2
   for foe in game.enemies:
@@ -255,7 +283,7 @@ func lesson(delta:float)->void:
   if inside:game.take_player_damage(10)
   else:count+=1
  hazard={}
- if count>=int(objective.n):next_stage()
+ if count>=int(objective.n):request_stage()
 func text(at:Vector2,value:String,size:int=16,tint:Color=Color("#e6d9b7"))->void:
  game.draw_string(game.font,at-game.camera+Vector2(-130,-72),value,HORIZONTAL_ALIGNMENT_CENTER,260,size,tint)
 func picture(key:String,at:Vector2,size:Vector2)->void:
@@ -266,7 +294,7 @@ func draw_floor()->void:
  var texture=Art.repeat_texture(str(spec.get("ground","meadow")))
  if texture!=null:game.draw_texture_rect(texture,Rect2(field.position-cam,field.size),true)
  # One restrained ground and a quiet path; production props frame the usable space.
- game.draw_polyline(PackedVector2Array([Vector2(340,650)-cam,Vector2(1660,650)-cam]),Color(.65,.55,.4,.25),105)
+ preload("res://scripts/journey_design385.gd").draw(game,design)
  for i in 12:
   picture("spruce" if str(spec.ground)=="snow" else "beech",Vector2(130+i*155,220),Vector2(130,150))
   picture("spruce" if str(spec.ground)=="snow" else "oak",Vector2(130+i*155,1290),Vector2(120,140))

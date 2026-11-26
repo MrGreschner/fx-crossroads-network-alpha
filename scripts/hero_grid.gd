@@ -43,8 +43,8 @@ func open(owner:Node,current:String,callback:Callable,allow:Callable=Callable(),
  sync_tabs()
  search=LineEdit.new();search.max_length=80;search.placeholder_text="Name or number";search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;filters.add_child(search);search.text_changed.connect(func(_text:String):refresh())
  var typing=preload("res://scripts/mobile_text_entry.gd").new();search.add_child(typing);typing.setup(search,"search")
- scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(scroll)
- grid=GridContainer.new();grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",8);scroll.add_child(grid);preload("res://scripts/touch_list_scroll.gd").attach(scroll)
+ scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_NEVER;scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_NEVER;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(scroll)
+ grid=GridContainer.new();grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",4);grid.add_theme_constant_override("v_separation",4);scroll.add_child(grid)
  var bottom=HBoxContainer.new();col.add_child(bottom)
  info=Label.new();info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;info.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;bottom.add_child(info)
  select_button=Button.new();select_button.text="View hero" if browse_locked else "Select";select_button.custom_minimum_size=Vector2(100,48);preload("res://scripts/studio_ui.gd").accent(select_button);bottom.add_child(select_button);select_button.pressed.connect(confirm)
@@ -57,16 +57,34 @@ func set_collection(index:int)->void:
  sync_tabs();refresh()
 func resize()->void:
  var viewport=get_viewport().get_visible_rect().size
- panel.size=Vector2(minf(1100,viewport.x-24),minf(660,viewport.y-24));panel.position=(viewport-panel.size)*.5
- var next_scale=clampf(viewport.x/maxf(1,get_window().size.x),1,2)
- var changed=not is_equal_approx(next_scale,tile_scale)
- tile_scale=next_scale
- grid.columns=maxi(2,int((panel.size.x-40)/(132*tile_scale)))
- title_label.add_theme_font_size_override("font_size",int(22*tile_scale))
- for control in [close_control,search,select_button,info]+collection_tabs:control.add_theme_font_size_override("font_size",int(17*tile_scale))
- close_control.custom_minimum_size=Vector2(72,42)*tile_scale
- select_button.custom_minimum_size=Vector2(100,48)*tile_scale
- if changed and is_instance_valid(search):refresh()
+ panel.size=Vector2(maxf(240,minf(1240,viewport.x-16)),maxf(300,viewport.y-16));panel.position=(viewport-panel.size)*.5
+ tile_scale=clampf(viewport.x/maxf(1,get_window().size.x),1,3.5)
+ title_label.text="HERO GRID" if get_window().size.x<600 else "CHOOSE YOUR HERO"
+ title_label.add_theme_font_size_override("font_size",int(20*tile_scale))
+ for control in [close_control,search,select_button,info]+collection_tabs:control.add_theme_font_size_override("font_size",int(15*tile_scale))
+ info.custom_minimum_size.y=70*tile_scale
+ close_control.custom_minimum_size=Vector2(64,42)*tile_scale;select_button.custom_minimum_size=Vector2(86,44)*tile_scale
+ for tab in collection_tabs:tab.custom_minimum_size.y=42*tile_scale
+ fit_grid()
+func fit_grid()->void:
+ if tiles.is_empty() or scroll.size.x<1 or scroll.size.y<1:return
+ var available=scroll.size-Vector2(4,4)
+ var best=0.0;var columns=1;var tile_size=Vector2.ZERO
+ var total=tiles.size()
+ for n in range(1,total+1):
+  var rows=ceili(float(total)/n)
+  var w=(available.x-(n-1)*4)/n
+  var h=(available.y-(rows-1)*4)/rows
+  var score=minf(w,h-16*tile_scale)
+  if score>best:best=score;columns=n;tile_size=Vector2(floorf(w),floorf(h))
+ if best<=0:return
+ grid.columns=columns
+ for id in tiles:
+  var tile:Button=tiles[id]
+  tile.custom_minimum_size=tile_size
+  tile.get_meta("grid_picture").custom_minimum_size=Vector2(maxf(8,tile_size.x-8),maxf(8,tile_size.y-20*tile_scale))
+  tile.get_meta("grid_caption").add_theme_font_size_override("font_size",int((10 if tile_size.x/tile_scale<55 else 12)*tile_scale))
+ scroll.scroll_vertical=0;scroll.scroll_horizontal=0
 func refresh()->void:
  for child in grid.get_children():grid.remove_child(child);child.queue_free()
  tiles.clear();shown.clear();scroll.scroll_vertical=0
@@ -81,14 +99,14 @@ func refresh()->void:
   var hero:Dictionary=source.characters[id];var number=int(library.numbers.get(id,shown.size()+1));var query=search.text.strip_edges().to_lower()
   if not query.is_empty() and not str(hero.name).to_lower().contains(query) and query!=str(number):continue
   shown.append(id)
-  var tile=Button.new();tile.custom_minimum_size=Vector2(120,152)*tile_scale;tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.text="";tile.tooltip_text=str(hero.name);grid.add_child(tile)
-  var contents=VBoxContainer.new();contents.mouse_filter=Control.MOUSE_FILTER_IGNORE;contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);contents.offset_left=6;contents.offset_right=-6;contents.offset_top=6;contents.offset_bottom=-6;tile.add_child(contents)
-  var picture=TextureRect.new();picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;picture.texture=Roster.portrait(source,str(id));picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.custom_minimum_size=Vector2(108,108)*tile_scale;picture.size_flags_vertical=Control.SIZE_EXPAND_FILL;contents.add_child(picture)
-  var caption=Label.new();caption.mouse_filter=Control.MOUSE_FILTER_IGNORE;caption.text="Community" if community else "Custom" if custom else str(hero.get("event","Event")) if events else str(number);caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;caption.add_theme_font_size_override("font_size",int(14*tile_scale));contents.add_child(caption)
+  var tile=Button.new();tile.custom_minimum_size=Vector2(20,24);tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.text="";tile.tooltip_text=str(hero.name);grid.add_child(tile)
+  var contents=VBoxContainer.new();contents.mouse_filter=Control.MOUSE_FILTER_IGNORE;contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);contents.offset_left=3;contents.offset_right=-3;contents.offset_top=2;contents.offset_bottom=-2;contents.add_theme_constant_override("separation",0);tile.add_child(contents)
+  var picture=TextureRect.new();picture.mouse_filter=Control.MOUSE_FILTER_IGNORE;picture.texture=Roster.portrait(source,str(id));picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.custom_minimum_size=Vector2(12,12);picture.size_flags_vertical=Control.SIZE_EXPAND_FILL;contents.add_child(picture);tile.set_meta("grid_picture",picture)
+  var caption=Label.new();caption.mouse_filter=Control.MOUSE_FILTER_IGNORE;caption.text="Community" if community else "Custom" if custom else str(hero.get("event","Event")) if events else str(number);caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;caption.add_theme_font_size_override("font_size",int(14*tile_scale));contents.add_child(caption);caption.clip_text=true;tile.set_meta("grid_caption",caption)
   tile.pressed.connect(choose.bind(id));tiles[id]=tile
  if shown.is_empty():
   var empty=Label.new();empty.text="No approved community heroes yet. Use Refresh in Character Hall." if community else "No custom heroes saved yet. Create one in Crossroads Studio." if custom else "No matching heroes.";empty.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;grid.add_child(empty)
- update_info()
+ fit_grid();update_info()
 func choose(id:String)->void:candidate=id;update_info()
 func update_info()->void:
  for id in tiles:Roster.style(tiles[id],Roster.state(source,str(id)),id==candidate)

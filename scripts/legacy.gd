@@ -255,8 +255,9 @@ func clear_adventure(id:String,realm:String)->void:
   if not data.has("realm_counts") or not data.realm_counts is Dictionary:data.realm_counts={}
   data.realm_counts[realm]=realm_clears(realm)+1
  preload("res://scripts/hero_goals372.gd").cleared(self,realm)
- if previous_realms<3 and preload("res://scripts/hero_journeys373.gd").realm_count(self)>=3:
-  preload("res://scripts/record_toast.gd").show(game,"HERO JOURNEYS AVAILABLE • Visit the Challenge Hall")
+ for threshold in [4,7,13]:
+  if previous_realms<threshold and preload("res://scripts/hero_journeys373.gd").realm_count(self)>=threshold:
+   preload("res://scripts/record_toast.gd").show(game,"NEW HERO JOURNEYS • Visit the Challenge Hall")
  data.bread=true;card.cleared(realm)
  if first_clear:
   var champions=[]

@@ -2,6 +2,8 @@ extends "res://scripts/arcade.gd"
 ## Isolated first-knockout duels using the same combat, hitboxes and mobile controls.
 const Unlocks=preload("res://scripts/hero_unlocks371.gd")
 var champion_id=""
+var return_hero="ram"
+var loan_kit=false
 var controller:RefCounted
 var settled=false
 var brain={"think":0.0,"wish":Vector2.ZERO,"warn":0.0,"pending":"","age":0.0}
@@ -28,6 +30,7 @@ func begin_trial()->void:
  if not Unlocks.ready(legacy,champion_id):_town();return
  selected_hero=str(plan.get("hero","ram"))
  if not characters.has(selected_hero) or not Unlocks.owned(legacy,selected_hero) or not preload("res://scripts/record_eligibility.gd").hero_allowed(self,selected_hero):selected_hero="ram"
+ return_hero=selected_hero;loan_kit=bool(plan.get("loan",false)) and load("res://scripts/hero_journeys373.gd").catalog().has(champion_id)
  preferred_hero=selected_hero
  level_cards.process_mode=Node.PROCESS_MODE_DISABLED;level_cards.panel.hide();level_cards.toast.hide()
  _set_mode("arena");arena_map="sand";_sync_arena_pickers();_reset_connection()
@@ -36,6 +39,8 @@ func begin_trial()->void:
  bot_plan=[{"hero":"npc_sable","team":1}];bot_count=1
  opening_picker.button_pressed=false;no_items_picker.button_pressed=true;random_hero_picker.button_pressed=false;rule_picker.select(0)
  bots.sync_lobby();_start_match();control.hide()
+ if loan_kit:
+  selected_hero=champion_id;preferred_hero=champion_id;hero_ids[my_id]=champion_id;lobby_heroes[my_id]=champion_id
  hero_ids["bot:0"]=champion_id;lobby_heroes["bot:0"]=champion_id
  for member in roster:
   if str(member.id)=="bot:0":member.name=str(characters[champion_id].name)
@@ -43,6 +48,7 @@ func begin_trial()->void:
  positions["solo"]=Vector2(440,500);positions["bot:0"]=Vector2(960,500);local_pos=positions.solo
  for id in positions:
   health[id]=_max_hp(str(id));levels[id]=10;inventory[id]=[];food_slots[id]="";attack_branch[id]="base";mastery_choice[id]="base"
+ if loan_kit:preload("res://scripts/journey_design385.gd").duel_arena(self,champion_id)
  status_label.text="Champion duel • "+str(characters[champion_id].name)+" • First knockout wins"
  controller=preload("res://scripts/champion_brain374.gd").new();controller.setup(self,champion_id)
  start_countdown=0.0
@@ -79,5 +85,5 @@ func legacy_results()->void:pass
 func _track_card_progress()->void:pass
 func _town()->void:
  started=false;legacy.save();set_process(true)
- get_tree().root.set_meta("fx_hero",selected_hero);get_tree().root.set_meta("fx_return_from_lobby",true)
+ get_tree().root.set_meta("fx_hero",return_hero);get_tree().root.set_meta("fx_return_from_lobby",true)
  get_tree().change_scene_to_file("res://scenes/main.tscn")

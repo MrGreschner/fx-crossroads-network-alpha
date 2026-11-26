@@ -1,0 +1,127 @@
+{
+  "from": "V384",
+  "to": "V385",
+  "deleted_files": [],
+  "files": [
+    {
+      "path": "INSTALL_V385.md",
+      "bytes": 1040,
+      "sha256": "720b933cac948c9fb6cfd52f0110403207d9b028af653b34a7aee76156cc57bb"
+    },
+    {
+      "path": "UPDATE_V385.md",
+      "bytes": 3241,
+      "sha256": "99b3983d7496348ef9bcb41e2e89c4081d455c1c0da31b3c7ec2969eb27d5bbf"
+    },
+    {
+      "path": "art_source/ram385/PROMPT.txt",
+      "bytes": 568,
+      "sha256": "6b237daa4784f26891368dc67758d7ecfd466ab46db55482cbc62b5f787e0854"
+    },
+    {
+      "path": "art_source/ram385/README.md",
+      "bytes": 659,
+      "sha256": "dd539064a00aa26b357b783a311e8919b70493c69887a31b2595be045ff92845"
+    },
+    {
+      "path": "art_source/ram385/assembly.gd",
+      "bytes": 1223,
+      "sha256": "e4ec72278dec8bce46d2a2fb8f7ab105ab64ac4ed96577fb5f61d138cfe614e5"
+    },
+    {
+      "path": "art_source/ram385/two_small_steps_source.png",
+      "bytes": 483095,
+      "sha256": "21f8b3d3751a5442bf2dc4f7d4b23ae2e4c1821f2b79762b80c53bfd17b2bcda"
+    },
+    {
+      "path": "assets/ram385/ram_1.png",
+      "bytes": 6224,
+      "sha256": "7e17eabbccb99f0ee1ae7d68b33dfa0ae6c253ea492b7ab703a11cbe6fdbf4e2"
+    },
+    {
+      "path": "assets/ram385/ram_2.png",
+      "bytes": 6212,
+      "sha256": "5c4ddef781bb49fbebe78aa2fc2bcc70c68e58fb9ff21c42f5eba2deac47460d"
+    },
+    {
+      "path": "content/hero_journeys373.json",
+      "bytes": 15116,
+      "sha256": "2b69d84a4a64f209112738ffc05a47469dc2424714015f5ff1fbbb0e4dc65925"
+    },
+    {
+      "path": "network/release.gd",
+      "bytes": 81,
+      "sha256": "857a2180d4f388d4a6958054685a4e072192940b68a39770564906605a8190eb"
+    },
+    {
+      "path": "network_service/release.mjs",
+      "bytes": 57,
+      "sha256": "d605d18768c057fc6f9894341d8a253516d9ff7f59a8fdad3f97b10dfa7a7a26"
+    },
+    {
+      "path": "project.godot",
+      "bytes": 1852,
+      "sha256": "9a559734adb9929cee7a10d3a1d298215170302c7532f3890e0549b6596c3c10"
+    },
+    {
+      "path": "scripts/champion_brain374.gd",
+      "bytes": 20712,
+      "sha256": "e91e669a6d6205372e5626f31bfceffcdfa773989e2a0d3722dcf00483e42b48"
+    },
+    {
+      "path": "scripts/champion_duel371.gd",
+      "bytes": 6184,
+      "sha256": "a714a4fa6d5e5a8d1c25724d090a8b5bf2d9dc887bdccc932718f47057e8784e"
+    },
+    {
+      "path": "scripts/hero_grid.gd",
+      "bytes": 10039,
+      "sha256": "a61fe7d4fb57e1f5b0c0f36857c55c4dcec2f283aa9cf3650e22ef508575bcaa"
+    },
+    {
+      "path": "scripts/hero_hall.gd",
+      "bytes": 24803,
+      "sha256": "c8d6f6a2dbe57bfda3fc582af4d94bffb29bae6cffc0c825d56dc3a0698ced3d"
+    },
+    {
+      "path": "scripts/hero_journey_scene373.gd",
+      "bytes": 7837,
+      "sha256": "73a7c0c97db9504cfaba284e39bcc82a3b6d70dc2d219e8169215ea062c6a0b3"
+    },
+    {
+      "path": "scripts/hero_journeys373.gd",
+      "bytes": 6687,
+      "sha256": "4f230884eb15f9000c9181f9fb9c92ae42392fbf9909c7a8987bbd86080229e5"
+    },
+    {
+      "path": "scripts/hero_trial373.gd",
+      "bytes": 19401,
+      "sha256": "854129ad8c507f505d2ef459fb1b6f14f87cf741321067ac154e48bd2e8eda8e"
+    },
+    {
+      "path": "scripts/hero_unlocks371.gd",
+      "bytes": 12148,
+      "sha256": "b66d24f8b9ff93147c7d682764c77c159b3d0c0725ea0a97b82f2a4d50e2ed84"
+    },
+    {
+      "path": "scripts/journey_design385.gd",
+      "bytes": 4429,
+      "sha256": "c60741c6525a0d7897297fdadcb4d5ebb646b2546c98d6af41ba96ff968734fb"
+    },
+    {
+      "path": "scripts/legacy.gd",
+      "bytes": 101710,
+      "sha256": "c3eeb437db364010634840cc9280eb9595decd50813b5f6733abdb8757b9f6aa"
+    },
+    {
+      "path": "scripts/ram_art310.gd",
+      "bytes": 1084,
+      "sha256": "09eabbfa8ce4d3ce5c20ec9b66067f069393b18d8b3a35caf099324f0ea5836c"
+    },
+    {
+      "path": "tools/validate_journeys385.gd",
+      "bytes": 6924,
+      "sha256": "e157d07ecb00e395345db012e192683b409cc8de529336f7334ee7f6013723df"
+    }
+  ]
+}

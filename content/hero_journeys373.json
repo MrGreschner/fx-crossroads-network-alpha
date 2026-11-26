@@ -2,143 +2,75 @@
   "dawnblade": {
     "title": "The dawn invitation",
     "place": "Challenge Hall courtyard",
-    "stages": [
-      {
-        "kind": "route",
-        "text": "Follow Mara’s markers; dodge the red warning circles.",
-        "n": 4,
-        "hazards": true
-      },
-      {
-        "kind": "defend",
-        "text": "Defeat the sparring patrol.",
-        "n": 2
-      }
-    ],
-    "loan": false,
+    "stages": [],
+    "loan": true,
     "duel": true,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 4,
+    "trial_type": "duel"
   },
   "stormscribe": {
     "title": "Read the coming weather",
     "place": "Weather observatory",
-    "stages": [
-      {
-        "kind": "sequence",
-        "text": "Read the sky panels, then repeat: cloud → rain → sun.",
-        "n": 3,
-        "order": [
-          1,
-          2,
-          0
-        ]
-      },
-      {
-        "kind": "repair",
-        "text": "Repair the three weather vanes.",
-        "n": 3,
-        "prop": "waystone"
-      },
-      {
-        "kind": "defend",
-        "text": "Disperse the storm echoes.",
-        "n": 2
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "terrace"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "drum": {
     "title": "A gathering worth hearing",
     "place": "Town rehearsal garden",
     "stages": [
       {
-        "kind": "repair",
-        "text": "Set up the instruments: hold E beside each stand.",
-        "n": 3,
-        "prop": "bell"
-      },
-      {
         "kind": "rhythm",
         "text": "Listen to each phrase, then repeat its three bells with E. A wrong note restarts only this phrase.",
         "n": 3
-      },
-      {
-        "kind": "defend",
-        "text": "Keep the rehearsal clear of escaped echoes.",
-        "n": 2
       }
     ],
-    "loan": false,
+    "loan": true,
     "duel": false,
-    "ground": "meadow"
+    "ground": "meadow",
+    "clear_requirement": 4,
+    "trial_type": "course"
   },
   "harbor": {
     "title": "The sounding bell",
     "place": "Tidecross rescue inlet",
-    "stages": [
-      {
-        "kind": "repair",
-        "text": "Secure the rescue crossings.",
-        "n": 2,
-        "prop": "rail"
-      },
-      {
-        "kind": "escort",
-        "text": "Guide the three stranded sailors to the bell. Stay close; avoid the warned waves.",
-        "n": 3
-      },
-      {
-        "kind": "defend",
-        "text": "Defend the rescued sailors.",
-        "n": 2
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "wood"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "wood",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "magnet": {
     "title": "Opposites at work",
     "place": "Workshop test floor",
     "stages": [
       {
-        "kind": "collect",
-        "text": "Collect three loose fittings.",
-        "n": 3,
-        "prop": "valve"
-      },
-      {
         "kind": "polarity",
         "text": "Set the three coils to the pattern shown above them, then hold E at the receiver.",
         "n": 3
-      },
-      {
-        "kind": "defend",
-        "text": "Contain the malfunctioning machines.",
-        "n": 2
       }
     ],
-    "loan": false,
+    "loan": true,
     "duel": false,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
   "spindle": {
     "title": "A properly wound course",
     "place": "Wind testing garden",
     "stages": [
       {
-        "kind": "repair",
-        "text": "Wind the three course keys.",
-        "n": 3,
-        "prop": "valve"
-      },
-      {
         "kind": "route",
-        "text": "Pass the numbered checkpoints against the gusts.",
+        "text": "Use Orbit Dance at each winding-course marker, then move to the next.",
         "n": 5,
-        "wind": true
+        "wind": true,
+        "requires": "secondary"
       },
       {
         "kind": "targets",
@@ -148,7 +80,9 @@
     ],
     "loan": true,
     "duel": false,
-    "ground": "meadow"
+    "ground": "meadow",
+    "clear_requirement": 4,
+    "trial_type": "course"
   },
   "patch": {
     "title": "Someone to lean on",
@@ -162,171 +96,70 @@
   "rune_duelist": {
     "title": "Distance before speed",
     "place": "Challenge Hall courtyard",
-    "stages": [
-      {
-        "kind": "targets",
-        "text": "Hit three close-range targets. Stand inside the blue circles.",
-        "n": 3,
-        "distance": "near"
-      },
-      {
-        "kind": "evade",
-        "text": "Wait for each red warning, then leave its circle before the strike.",
-        "n": 4
-      },
-      {
-        "kind": "targets",
-        "text": "Counter: strike each target while its green opening is lit.",
-        "n": 3,
-        "window": true
-      }
-    ],
-    "loan": false,
+    "stages": [],
+    "loan": true,
     "duel": true,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "garrick": {
     "title": "Three runes restored",
     "place": "Old road shrine",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Recover the three rune stones.",
-        "n": 3,
-        "prop": "standing_stone"
-      },
-      {
-        "kind": "sequence",
-        "text": "Restore courage → swiftness → shelter: red → blue → green.",
-        "n": 3,
-        "order": [
-          0,
-          1,
-          2
-        ]
-      },
-      {
-        "kind": "defend",
-        "text": "Stand with the restored shrine against two patrols.",
-        "n": 2
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "teapot": {
     "title": "Tea for the road",
     "place": "Wayfarer travellers’ camp",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Gather the three marked woodland herbs.",
-        "n": 3,
-        "prop": "ferns"
-      },
-      {
-        "kind": "sequence",
-        "text": "Brew the tea: leaves → water → warmth. Green → blue → red.",
-        "n": 3,
-        "order": [
-          2,
-          1,
-          0
-        ]
-      },
-      {
-        "kind": "escort",
-        "text": "Bring a warm cup to each traveller, then lead them to camp.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "rook": {
     "title": "A crossing worth keeping",
     "place": "Supply road crossing",
-    "stages": [
-      {
-        "kind": "repair",
-        "text": "Repair three bridge supports while raiders approach.",
-        "n": 3,
-        "prop": "rail"
-      },
-      {
-        "kind": "defend",
-        "text": "Clear two raider patrols from the crossing.",
-        "n": 2
-      },
-      {
-        "kind": "escort",
-        "text": "Escort the supply cart along all three road markers.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "wood"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "wood",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "beaver": {
     "title": "Banks that hold",
     "place": "Riverbank repair site",
     "stages": [
       {
-        "kind": "collect",
-        "text": "Gather three timber bundles.",
-        "n": 3,
-        "prop": "roots"
-      },
-      {
         "kind": "repair",
-        "text": "Reinforce each marked bank support.",
+        "text": "Reinforce three riverbank braces while debris warnings force you to reposition.",
         "n": 3,
-        "prop": "rail"
-      },
-      {
-        "kind": "defend",
-        "text": "Protect the repaired riverbank.",
-        "n": 3
+        "prop": "rail",
+        "hazards": true
       }
     ],
-    "loan": false,
+    "loan": true,
     "duel": false,
-    "ground": "meadow"
+    "ground": "meadow",
+    "clear_requirement": 4,
+    "trial_type": "course"
   },
   "iris": {
     "title": "A path in chalk",
     "place": "Academy chalk court",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Collect the missing chalk pieces.",
-        "n": 3,
-        "prop": "seal"
-      },
-      {
-        "kind": "sequence",
-        "text": "Draw the safe glyph sequence: blue → green → red → blue.",
-        "n": 4,
-        "order": [
-          1,
-          2,
-          0,
-          1
-        ]
-      },
-      {
-        "kind": "route",
-        "text": "Follow the lit chalk checkpoints; avoid the red circles.",
-        "n": 5,
-        "hazards": true
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "terrace"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "cloudloom": {
     "title": "Four skies in a day",
@@ -336,336 +169,137 @@
         "kind": "weather",
         "text": "Observe all four simulated skies. Visit the lit observation station; the chamber cycles its own weather.",
         "n": 4
-      },
-      {
-        "kind": "repair",
-        "text": "Repair three weather vanes.",
-        "n": 3,
-        "prop": "waystone"
-      },
-      {
-        "kind": "route",
-        "text": "Carry the repaired forecast through the gust course.",
-        "n": 4,
-        "wind": true
       }
     ],
-    "loan": false,
+    "loan": true,
     "duel": false,
-    "ground": "meadow"
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "course"
   },
   "cairnheart": {
     "title": "Leave a trail for others",
     "place": "High trail cairns",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Collect three trail stones.",
-        "n": 3,
-        "prop": "rocks"
-      },
-      {
-        "kind": "repair",
-        "text": "Raise the three cairns.",
-        "n": 3,
-        "prop": "standing_stone"
-      },
-      {
-        "kind": "route",
-        "text": "Patrol the marked trail and evade falling-stone warnings.",
-        "n": 5,
-        "hazards": true
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "caelum": {
     "title": "What the mirror remembers",
     "place": "Reflection workshop",
     "stages": [
       {
-        "kind": "collect",
-        "text": "Recover Akari’s three mirror fragments.",
-        "n": 3,
-        "prop": "seal"
-      },
-      {
         "kind": "mirror",
         "text": "Rotate each mirror with E until the beam reaches the receiver. Slash and backslash mirrors reflect at right angles.",
-        "n": 3
-      },
-      {
-        "kind": "defend",
-        "text": "Clear the fractured reflections.",
-        "n": 2
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "terrace"
-  },
-  "dustdevil": {
-    "title": "A clean sweep",
-    "place": "Workshop courtyard",
-    "stages": [
-      {
-        "kind": "targets",
-        "text": "Use the vacuum primary on five debris targets. Move close enough for the intake.",
-        "n": 5,
-        "distance": "near"
-      },
-      {
-        "kind": "ability",
-        "text": "Use the secondary to crush the collection, then the special to gather the escaped sparks.",
-        "n": 2,
-        "casts": [
-          "secondary",
-          "special"
-        ]
-      },
-      {
-        "kind": "defend",
-        "text": "Finish the escaped spark patrols.",
-        "n": 2
-      }
-    ],
-    "loan": true,
-    "duel": false,
-    "ground": "terrace"
-  },
-  "wanderlight": {
-    "title": "Lights for the lost",
-    "place": "Wayfarer lantern trail",
-    "stages": [
-      {
-        "kind": "repair",
-        "text": "Relight the three trail lanterns.",
-        "n": 3,
-        "prop": "lantern"
-      },
-      {
-        "kind": "escort",
-        "text": "Guide three lost travellers back to the lit camp.",
-        "n": 3
-      },
-      {
-        "kind": "defend",
-        "text": "Keep the waystone safe until the final patrol is gone.",
-        "n": 2
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
-  },
-  "agent": {
-    "title": "A quiet interception",
-    "place": "Town service passage",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Inspect three pieces of evidence.",
-        "n": 3,
-        "prop": "seal"
-      },
-      {
-        "kind": "sequence",
-        "text": "Disable the transmitter: blue → red → blue → green.",
-        "n": 4,
-        "order": [
-          1,
-          0,
-          1,
-          2
-        ]
-      },
-      {
-        "kind": "defend",
-        "text": "Survive the revealed ambush.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "terrace"
-  },
-  "thistlebond": {
-    "title": "A trail for everyone",
-    "place": "Shared woodland trail",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Hear both trail keepers at their marked stations.",
-        "n": 2,
-        "prop": "waystone"
-      },
-      {
-        "kind": "sequence",
-        "text": "Agree the shared route: green → blue → green.",
-        "n": 3,
-        "order": [
-          2,
-          1,
-          2
-        ]
-      },
-      {
-        "kind": "repair",
-        "text": "Reopen both exits and the shared rest stop.",
-        "n": 3,
-        "prop": "rail"
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
-  },
-  "hearthwarden": {
-    "title": "A shelter through the night",
-    "place": "Wayfarer shelter forge",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Collect three bundles of shelter supplies.",
-        "n": 3,
-        "prop": "roots"
-      },
-      {
-        "kind": "repair",
-        "text": "Repair the hearth and two shelter supports.",
-        "n": 3,
-        "prop": "lantern"
-      },
-      {
-        "kind": "defend",
-        "text": "Defend the shelter through three patrols.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "terrace"
-  },
-  "gopher": {
-    "title": "Under the trouble",
-    "place": "Burrow rescue course",
-    "stages": [
-      {
-        "kind": "ability",
-        "text": "Use the burrow secondary to open the rescue route.",
-        "n": 1,
-        "casts": [
-          "secondary"
-        ]
-      },
-      {
-        "kind": "route",
-        "text": "Follow the tunnel markers. Use Burrow again before each marked exit.",
-        "n": 3,
-        "requires": "secondary"
-      },
-      {
-        "kind": "escort",
-        "text": "Guide the three rescued travellers home.",
-        "n": 3
-      }
-    ],
-    "loan": true,
-    "duel": false,
-    "ground": "meadow"
-  },
-  "nullweaver": {
-    "title": "Hold the seam",
-    "place": "Mistglass seam chamber",
-    "stages": [
-      {
-        "kind": "ability",
-        "text": "Place two primary rift pins, then use the secondary to rotate them.",
-        "n": 3,
-        "casts": [
-          "primary",
-          "primary",
-          "secondary"
-        ]
-      },
-      {
-        "kind": "repair",
-        "text": "Seal the three weakened seams.",
-        "n": 3,
-        "prop": "seal"
-      },
-      {
-        "kind": "defend",
-        "text": "Disperse the rift patrols.",
         "n": 3
       }
     ],
     "loan": true,
     "duel": false,
     "ground": "terrace",
-    "requires_realm": "astral_rift"
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
-  "kite": {
-    "title": "A wind worth riding",
-    "place": "Courier gust course",
+  "dustdevil": {
+    "title": "A clean sweep",
+    "place": "Workshop courtyard",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 7,
+    "trial_type": "duel"
+  },
+  "wanderlight": {
+    "title": "Lights for the lost",
+    "place": "Wayfarer lantern trail",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
+  },
+  "agent": {
+    "title": "A quiet interception",
+    "place": "Town service passage",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "duel"
+  },
+  "thistlebond": {
+    "title": "A trail for everyone",
+    "place": "Shared woodland trail",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
+  },
+  "hearthwarden": {
+    "title": "A shelter through the night",
+    "place": "Wayfarer shelter forge",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 7,
+    "trial_type": "duel"
+  },
+  "gopher": {
+    "title": "Under the trouble",
+    "place": "Burrow rescue course",
     "stages": [
       {
         "kind": "route",
-        "text": "Swing through each numbered gust marker. Use the secondary before each marker.",
-        "n": 4,
-        "wind": true,
+        "text": "Pounce between the three tunnel mouths with Pop-up Pounce.",
+        "n": 3,
         "requires": "secondary"
-      },
-      {
-        "kind": "collect",
-        "text": "Recover the three wind-tossed parcels.",
-        "n": 3,
-        "prop": "seal"
-      },
-      {
-        "kind": "repair",
-        "text": "Deliver the parcels to the marked stands.",
-        "n": 3,
-        "prop": "waystone"
       }
     ],
     "loan": true,
     "duel": false,
-    "ground": "meadow"
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "course"
+  },
+  "nullweaver": {
+    "title": "Hold the seam",
+    "place": "Mistglass seam chamber",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "requires_realm": "astral_rift",
+    "clear_requirement": 13,
+    "trial_type": "duel"
+  },
+  "kite": {
+    "title": "A wind worth riding",
+    "place": "Courier gust course",
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "shuttle": {
     "title": "A thread through trouble",
     "place": "Wayfarer loom crossing",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Recover three spools of thread.",
-        "n": 3,
-        "prop": "roots"
-      },
-      {
-        "kind": "sequence",
-        "text": "Weave the crossing: red → blue → red → green → blue.",
-        "n": 5,
-        "order": [
-          0,
-          1,
-          0,
-          2,
-          1
-        ]
-      },
-      {
-        "kind": "escort",
-        "text": "Escort the stranded walkers across the repaired route.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "regent": {
     "title": "A moment returned",
@@ -675,46 +309,23 @@
         "kind": "rewind",
         "text": "Touch the anchor, walk to the far beacon, then use the actual rewind secondary to return to the anchor.",
         "n": 1
-      },
-      {
-        "kind": "evade",
-        "text": "Read four warned breaks in the timeline and step clear.",
-        "n": 4
-      },
-      {
-        "kind": "defend",
-        "text": "Clear the remaining time echoes.",
-        "n": 2
       }
     ],
     "loan": true,
     "duel": false,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
   "morrow": {
     "title": "No one left behind",
     "place": "Lantern remembrance path",
-    "stages": [
-      {
-        "kind": "repair",
-        "text": "Relight the three remembrance lamps.",
-        "n": 3,
-        "prop": "lantern"
-      },
-      {
-        "kind": "escort",
-        "text": "Guide the three lost spirits to the sanctuary.",
-        "n": 3
-      },
-      {
-        "kind": "defend",
-        "text": "Protect the sanctuary from two patrols.",
-        "n": 2
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 7,
+    "trial_type": "duel"
   },
   "mantis": {
     "title": "An opening, not a gamble",
@@ -724,103 +335,43 @@
         "kind": "parry",
         "text": "Use the secondary guard just before each warned strike. Land five real parries; early guards expire.",
         "n": 5
-      },
-      {
-        "kind": "targets",
-        "text": "Counter three targets during their green opening.",
-        "n": 3,
-        "window": true,
-        "distance": "near"
-      },
-      {
-        "kind": "defend",
-        "text": "Put your guard and counters to use against two patrols.",
-        "n": 2
       }
     ],
     "loan": true,
     "duel": false,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
   "votary": {
     "title": "A measured offering",
     "place": "Shelter vow courtyard",
-    "stages": [
-      {
-        "kind": "sacrifice",
-        "text": "Offer 20% of your health at the red altar. Then defend the shelter; defeat costs no supplies.",
-        "n": 1
-      },
-      {
-        "kind": "defend",
-        "text": "Defend the shelter with the strength that remains.",
-        "n": 3
-      },
-      {
-        "kind": "escort",
-        "text": "Guide the three shelter guests to safety.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "terrace"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "lumen": {
     "title": "The last delivery",
     "place": "Wayfarer night route",
-    "stages": [
-      {
-        "kind": "repair",
-        "text": "Light the three delivery lamps.",
-        "n": 3,
-        "prop": "lantern"
-      },
-      {
-        "kind": "route",
-        "text": "Carry the dispatch through the marked trail.",
-        "n": 5,
-        "hazards": true
-      },
-      {
-        "kind": "escort",
-        "text": "Deliver the dispatch to the waiting travellers.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "bailiff": {
     "title": "A fair way through",
     "place": "Woodland meeting place",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Hear both woodland witnesses.",
-        "n": 2,
-        "prop": "waystone"
-      },
-      {
-        "kind": "sequence",
-        "text": "Agree the boundary: blue → green → red.",
-        "n": 3,
-        "order": [
-          1,
-          2,
-          0
-        ]
-      },
-      {
-        "kind": "escort",
-        "text": "Escort the witnesses safely through the meeting trail.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "tempo": {
     "title": "Near beat, far beat",
@@ -837,156 +388,63 @@
         "text": "Far beat: strike three targets from the outer blue ring with the secondary.",
         "n": 3,
         "distance": "far"
-      },
-      {
-        "kind": "rhythm",
-        "text": "Repeat three short bell phrases to complete the lesson.",
-        "n": 3
       }
     ],
     "loan": true,
     "duel": false,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
   "quill": {
     "title": "A shelter of small things",
     "place": "Wayfarer quill shelter",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Gather three shelter bundles.",
-        "n": 3,
-        "prop": "roots"
-      },
-      {
-        "kind": "repair",
-        "text": "Secure the three shelter entrances.",
-        "n": 3,
-        "prop": "rail"
-      },
-      {
-        "kind": "defend",
-        "text": "Defend the shelter through three different patrols.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "merrymask": {
     "title": "Raise the curtain",
     "place": "Town puppet rehearsal",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Collect the three missing stage props.",
-        "n": 3,
-        "prop": "bell"
-      },
-      {
-        "kind": "repair",
-        "text": "Repair the puppet stage supports.",
-        "n": 3,
-        "prop": "rail"
-      },
-      {
-        "kind": "defend",
-        "text": "Complete the staged fight: clear all three echo patrols.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "wood"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "wood",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "dunecook": {
     "title": "Three meals for the road",
     "place": "Travellers’ cooking camp",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Gather three ingredient baskets.",
-        "n": 3,
-        "prop": "ferns"
-      },
-      {
-        "kind": "sequence",
-        "text": "Prepare three meals: green-red, blue-red, green-blue. Follow the full six-step recipe.",
-        "n": 6,
-        "order": [
-          2,
-          0,
-          1,
-          0,
-          2,
-          1
-        ]
-      },
-      {
-        "kind": "escort",
-        "text": "Deliver the meals to the three waiting travellers.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "dustmarshal": {
     "title": "A road under watch",
     "place": "Caravan patrol course",
-    "stages": [
-      {
-        "kind": "route",
-        "text": "Patrol all three contract markers and evade the ambush warnings.",
-        "n": 3,
-        "hazards": true
-      },
-      {
-        "kind": "defend",
-        "text": "Complete the three patrol contracts.",
-        "n": 3
-      },
-      {
-        "kind": "escort",
-        "text": "Escort the caravan through all three road markers.",
-        "n": 3
-      }
-    ],
-    "loan": false,
-    "duel": false,
-    "ground": "meadow"
+    "stages": [],
+    "loan": true,
+    "duel": true,
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "twisterspell": {
     "title": "A steady eye in the spiral",
     "place": "Mistglass weather-rift chamber",
-    "stages": [
-      {
-        "kind": "route",
-        "text": "Navigate the gust markers and keep clear of the warned surges.",
-        "n": 5,
-        "wind": true,
-        "hazards": true
-      },
-      {
-        "kind": "ability",
-        "text": "Use the secondary, then your hurricane special to settle the weather.",
-        "n": 2,
-        "casts": [
-          "secondary",
-          "special"
-        ]
-      },
-      {
-        "kind": "defend",
-        "text": "Disperse the three remaining weather-rift patrols.",
-        "n": 3
-      }
-    ],
+    "stages": [],
     "loan": true,
-    "duel": false,
-    "ground": "terrace"
+    "duel": true,
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "duel"
   },
   "anjali": {
     "title": "An arrow’s promise",
@@ -1011,35 +469,26 @@
     ],
     "loan": true,
     "duel": true,
-    "ground": "terrace"
+    "ground": "terrace",
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
   "little_menace": {
     "title": "Small doors, large problems",
     "place": "Small-door rescue course",
     "stages": [
       {
-        "kind": "ability",
-        "text": "Use the shrinking secondary, then approach the first small door.",
-        "n": 1,
-        "casts": [
-          "secondary"
-        ]
-      },
-      {
         "kind": "route",
         "text": "Pass the three small doors while shrunk. Refresh the secondary when needed.",
         "n": 3,
         "mini": true
-      },
-      {
-        "kind": "targets",
-        "text": "Defeat five oversized practice targets with your actual attacks.",
-        "n": 5
       }
     ],
     "loan": true,
     "duel": false,
-    "ground": "meadow"
+    "ground": "meadow",
+    "clear_requirement": 13,
+    "trial_type": "course"
   },
   "santa": {
     "title": "A route for Old Nick",
@@ -1052,24 +501,20 @@
       },
       {
         "kind": "ability",
-        "text": "Lob a care parcel, then call Midnight Delivery.",
+        "text": "Lob a Care Package, then call Midnight Delivery.",
         "n": 2,
         "casts": [
           "secondary",
           "special"
         ]
-      },
-      {
-        "kind": "repair",
-        "text": "Deliver the last three parcels to their stands.",
-        "n": 3,
-        "prop": "seal"
       }
     ],
     "loan": true,
     "duel": false,
     "ground": "snow",
-    "event": "winter"
+    "event": "winter",
+    "clear_requirement": 0,
+    "trial_type": "course"
   },
   "reindeer": {
     "title": "Snowbell’s first flight",
@@ -1100,7 +545,9 @@
     "loan": true,
     "duel": false,
     "ground": "snow",
-    "event": "winter"
+    "event": "winter",
+    "clear_requirement": 0,
+    "trial_type": "course"
   },
   "nutcracker": {
     "title": "Stand and shine",
@@ -1114,23 +561,23 @@
       },
       {
         "kind": "ability",
-        "text": "Plant your feet with the secondary, then summon the holiday tree.",
-        "n": 2,
+        "text": "Plant with Stand Fast, then land three planted spear jabs before it ends.",
+        "n": 4,
         "casts": [
           "secondary",
-          "special"
-        ]
-      },
-      {
-        "kind": "defend",
-        "text": "Defend the tree through three parade patrols.",
-        "n": 3
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "stance_hits": 3
       }
     ],
     "loan": true,
     "duel": false,
     "ground": "snow",
-    "event": "winter"
+    "event": "winter",
+    "clear_requirement": 0,
+    "trial_type": "course"
   },
   "finch_frost": {
     "title": "A cold front, kindly held",
@@ -1142,80 +589,54 @@
         "n": 5
       },
       {
+        "kind": "freeze",
+        "n": 1,
+        "text": "Hit the frost dummy repeatedly with ice attacks until it freezes solid."
+      },
+      {
         "kind": "ability",
-        "text": "Use frost breath, then form a blizzard with the special.",
+        "text": "Channel White Breath, then aim and redirect Northwind Blizzard.",
         "n": 2,
         "casts": [
           "secondary",
           "special"
         ]
-      },
-      {
-        "kind": "defend",
-        "text": "Direct the blizzard and clear three patrols.",
-        "n": 3
       }
     ],
     "loan": true,
     "duel": false,
     "ground": "snow",
-    "event": "winter"
+    "event": "winter",
+    "clear_requirement": 0,
+    "trial_type": "course"
   },
   "wick": {
     "title": "Lights along the hollow road",
     "place": "Halloween lantern course",
     "stages": [
       {
-        "kind": "collect",
-        "text": "Gather three lost lantern embers.",
-        "n": 3,
-        "prop": "lantern"
-      },
-      {
         "kind": "repair",
         "text": "Relight three lantern stands.",
         "n": 3,
         "prop": "lantern"
-      },
-      {
-        "kind": "defend",
-        "text": "Defend the lantern route through three patrols.",
-        "n": 3
       }
     ],
     "loan": true,
     "duel": false,
     "ground": "meadow",
-    "event": "halloween"
+    "event": "halloween",
+    "clear_requirement": 0,
+    "trial_type": "course"
   },
   "hollow_rider": {
     "title": "The midnight road",
     "place": "Halloween ride course",
-    "stages": [
-      {
-        "kind": "collect",
-        "text": "Recover the three roadside bells.",
-        "n": 3,
-        "prop": "bell"
-      },
-      {
-        "kind": "ability",
-        "text": "Use the toll secondary, then summon your spectral ride.",
-        "n": 2,
-        "casts": [
-          "secondary",
-          "special"
-        ]
-      },
-      {
-        "kind": "defend",
-        "text": "Clear the three midnight-road patrols.",
-        "n": 3
-      }
-    ],
+    "stages": [],
     "loan": true,
-    "duel": false,
+    "duel": true,
     "ground": "meadow",
-    "event": "halloween"
+    "event": "halloween",
+    "clear_requirement": 0,
+    "trial_type": "duel"
   }
 }

@@ -22,7 +22,7 @@ func begin_course()->void:
  var spec:Dictionary=j.catalog()[journey_id]
  practice=false;mode="run";region_id="hero_journey";active_realm="hero_journey";adventure.setup("hero_journey")
  region={"name":str(spec.place),"size":[2000,1300],"spawn":[420,650],"gate":{"position":[-9000,-9000]},"boss":[-9000,-9000],"boss_level":99,"background":"path"}
- character_id=journey_id if bool(spec.loan) else return_hero;hero=characters[character_id].duplicate(true)
+ character_id=journey_id;selected_character=journey_id;hero=characters[character_id].duplicate(true)
  level=10;highest_level=10;upgrade="base";mastery="base";health=max_health();bonus_health=0;bonus_damage=0;bonus_speed=0
  loadout.clear();inventory.clear();provisions.packed="";menu=""
  enemies.clear();bullets.clear();enemy_shots.clear();allies.clear();obstacles.clear();decorations.clear();ground_patches.clear();ground_index.invalidate()
