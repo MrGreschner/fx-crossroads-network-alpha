@@ -1,0 +1,1 @@
+Requires V385 server source. Copy extracted contents into the existing repository root containing Dockerfile.network and project.godot; replace matching files. GitHub Desktop commit and push. No deletions or scripts to run. Keep .git and private environment settings. Do not commit this ZIP. Full server ZIP is the independent offline archive.

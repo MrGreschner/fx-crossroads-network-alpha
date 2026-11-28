@@ -24,7 +24,9 @@ const SEA_PIER=Vector2(1845,3882)
 const SEA_OFFICE=Vector2(1745,3740)
 const OFFICE_FRAME=Rect2(1695,3651,100,88)
 const WEST_RIDGE_HIGHLANDS=Rect2(0,2860,1260,1020)
-const BAIT=Vector2(1983,3825)
+const OLD_BAIT=Vector2(1983,3825)
+const BAIT=Vector2(1985,3714)
+const BAIT_SOLID=Rect2(1937,3670,96,42)
 const PORT_LAMPS=[Vector2(2118,3990),Vector2(2054,3743),Vector2(1510,3370),Vector2(1930,3630),Vector2(2180,3560),Vector2(1845,3881)]
 const TRADER=Vector2(1732,3530)
 const SAILOR=Vector2(1380,3760)
@@ -66,6 +68,7 @@ static func land(p:Vector2,frozen:bool)->bool:
   return BAY.grounded(p,frozen)
  if not is_port(p):return false
  if OFFICE_FRAME.has_point(p) and p.y<SEA_OFFICE.y-17:return false
+ if BAIT_SOLID.has_point(p):return false
  if deck(p):return true
  if not COAST.solid_land(p):return false
  for b in BUILDINGS:
@@ -312,7 +315,7 @@ static func tree_clear(rect:Rect2,p:Vector2)->bool:
   var building:Rect2=b[1]
   if building.grow(12).intersects(rect) or Rect2(Vector2(building.position.x-34,building.end.y-22),Vector2(building.size.x+68,59)).intersects(rect):return false
  if rect.grow(20).intersects(OFFICE_FRAME):return false
- for at in [FERRY,PORT_ARRIVAL,SEA_PIER,BAIT,TRADER,SAILOR]:
+ for at in [FERRY,PORT_ARRIVAL,SEA_PIER,OLD_BAIT,TRADER,SAILOR]:
   if rect.grow(18).has_point(at):return false
  for at in PORT_LAMPS:
   if rect.grow(16).has_point(at):return false
@@ -338,6 +341,8 @@ static func draw_woodland(c:Node2D,cam:Vector2,view:Rect2)->void:
    if not tree_clear(rect,p) or footprints.any(func(q):return p.distance_to(q)<43):continue
    footprints.append(p)
    woodland.append([p,rect,["pine","pine","ancient","apple","knot_willow"][i%5]])
+ # Remove only the spruce replaced by the stall; preserve neighbouring tree placement.
+ woodland=woodland.filter(func(tree):return tree[0]!=BAIT or str(tree[2])!="pine")
  for tree in woodland:
   var p:Vector2=tree[0]
   var rect:Rect2=tree[1]
@@ -418,6 +423,6 @@ static func draw_port(c:Node2D,cam:Vector2,view:Rect2,season:String)->void:
   if not state.is_empty() and view.has_point(state.pos):
    CAST.draw(c,RESIDENTS[n][1],state.pos-cam,c.town_life.clock,state.moving)
  if view.has_point(SAILOR) and cal.hour>=8 and cal.hour<20:CAST.draw(c,"guide",SAILOR-cam+Vector2(-23,1),c.town_life.clock)
- if view.has_point(BAIT) and cal.hour>=6 and cal.hour<20:CAST.draw(c,"Lio",BAIT-cam+Vector2(26,2),c.town_life.clock)
+ if view.has_point(BAIT) and cal.hour>=6 and cal.hour<20:CAST.draw(c,"Lio",BAIT-cam+Vector2(26,16),c.town_life.clock)
  if view.has_point(TRADER) and cal.hour>=7 and cal.hour<19:CAST.draw(c,"exchange_worker",TRADER-cam+Vector2(30,0),c.town_life.clock)
 

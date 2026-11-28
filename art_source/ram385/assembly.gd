@@ -19,5 +19,23 @@ func _initialize():
   for y in frame.get_height():
    for x in frame.get_width():
     if frame.get_pixel(x,y).a<.5:frame.set_pixel(x,y,Color(0,0,0,0))
+  # Remove disconnected upper-body crop fragments (four dark pixels per old step).
+  clean_fragments(frame)
   frame.save_png(root+"assets/ram385/ram_"+str(n+1)+".png")
  quit()
+
+func clean_fragments(im:Image)->void:
+ var seen={}
+ for y in im.get_height():
+  for x in im.get_width():
+   var point=Vector2i(x,y)
+   if seen.has(point) or im.get_pixelv(point).a<.5:continue
+   var stack=[point];var group=[];seen[point]=true
+   while not stack.is_empty():
+    var p:Vector2i=stack.pop_back();group.append(p)
+    for d in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+     var next=p+d
+     if next.x<0 or next.y<0 or next.x>=im.get_width() or next.y>=im.get_height() or seen.has(next) or im.get_pixelv(next).a<.5:continue
+     seen[next]=true;stack.append(next)
+   if group.size()<8:
+    for p in group:im.set_pixelv(p,Color(0,0,0,0))
